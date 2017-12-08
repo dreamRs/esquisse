@@ -55,7 +55,9 @@ ggcode <- function(data, aes, geom, args_geom = NULL, scale = NULL, labs = NULL,
   }
 
   if (!is.null(theme)) {
-    c_theme <- paste0("theme_", theme, "()")
+    # c_theme <- paste0("theme_", theme, "()")
+    c_theme <- gsub(pattern = ".*::", replacement = "", x = theme)
+    c_theme <- paste0(c_theme, "()")
   } else {
     c_theme <- NULL
   }
