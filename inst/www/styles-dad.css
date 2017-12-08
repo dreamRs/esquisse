@@ -1,0 +1,70 @@
+.box-dad {
+  position: relative;
+  padding: 5px;
+  margin: 5px;
+  margin-top: 8px;
+  border-style: dashed;
+  border-color: steelblue;
+  border-radius: 5px;
+  border-width: 1px;
+}
+
+.label-background {
+  position: absolute;
+  bottom: 5px;
+  right: 5px;
+  z-index: -1;
+  overflow: hidden;
+  color: #E6E6E6;
+  font-size: 150%;
+}
+
+/*
+.label-dad {
+  position: relative;
+  float: left;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  color: #E6E6E6;
+  font-size: 150%;
+}
+*/
+.label-dad {
+  position: absolute;
+  padding: 10px;
+  z-index: -1;
+  overflow: hidden;
+  color: #E6E6E6;
+  font-size: 150%;
+}
+
+.label-categorical {
+  background-color: #EF562D;
+  color: #FFFFFF;
+}
+
+.label-continue {
+  background-color: #0C4C8A;
+  color: #FFFFFF;
+}
+
+.label-datetime {
+  background-color: #97D5E0;
+  color: #FFFFFF;
+}
+
+
+.badge-dad {
+  border-radius: 10px;
+  cursor: move;
+  font-size: 90%;
+  overflow: hidden;
+  margin: 3px;
+}
+
+.box-dad > .badge-dad {
+  max-width: inherit;
+}
+
+

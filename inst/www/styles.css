@@ -1,0 +1,41 @@
+
+.dreamrs-title-box {
+  background-color: rgb(16, 34, 70);
+  height: 45px;
+}
+
+.dreamrs-title {
+  color: white;
+  text-align: center;
+  font-size: 30px;
+  font-weight: bold;
+}
+
+
+
+
+.btn-group-justified-charter {
+  display: table !important;
+  width: 100%;
+  table-layout: fixed;
+  border-collapse: separate;
+}
+
+.btn-group-charter {
+  position: relative;
+  /*display: inline-block;*/
+  vertical-align: middle;
+}
+
+.btn-group-justified-charter>.btn-group-charter {
+  display: table-cell;
+  float: none;
+  width: 1%;
+}
+
+
+.btn-group-justified-charter>.btn-group-charter .btn-charter {
+    width: 100%;
+}
+
+

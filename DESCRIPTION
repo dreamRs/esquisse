@@ -1,0 +1,24 @@
+Package: esquisse
+Type: Package
+Title: Explore and Visualize Your Data Interactively
+Version: 0.1.0
+Authors@R: c(person("Fanny", "Meyer", , "fanny.meyer@dreamrs.fr", c("aut")),
+  person("Victor", "Perrier", , "victor.perrier@dreamrs.fr", c("aut", "cre")))
+Maintainer: <victor.perrier@dreamrs.fr>
+Description: A Shiny gadget to create ggplot charts interactively with drag-and-drop to map your variables.
+    You can quickly visualize your data accordingly to their type, export to 'PNG' or 'PowerPoint', and retrieve the code to reproduce the chart.
+License: GPL-3 | file LICENSE
+Encoding: UTF-8
+LazyData: true
+RoxygenNote: 6.0.1
+Imports: miniUI,
+    rstudioapi,
+    shiny,
+    htmltools,
+    shinyWidgets,
+    ggplot2,
+    ggthemes,
+    RColorBrewer,
+    scales,
+    officer,
+    rvg
