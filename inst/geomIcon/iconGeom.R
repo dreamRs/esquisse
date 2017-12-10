@@ -164,5 +164,15 @@ dev.off()
 
 
 
+# Geom tile ---------------------------------------------------------------
+
+png(filename = "inst/geomIcon/www/gg-auto.png", bg = "transparent")
+df <- expand.grid(x = 0:5, y = 0:5)
+df$z <- runif(nrow(df))
+ggplot(data = coord_circle(centre = c(0, 0), r = 1)) + geom_polygon(aes(x = x, y = y), fill = "#F6D258") + coord_fixed() + theme_void()
+p <- ggplot(data = df) + geom_tile(aes(x, y, fill = z)) + scale_fill_distiller(palette = "Greys", guide = FALSE) + theme_void()
+print(p, vp = viewport(width = unit(0.6, "npc"), height = unit(0.6, "npc")))
+dev.off()
+
 
 

@@ -11,9 +11,11 @@
 #' @importFrom officer read_pptx add_slide
 #' @importFrom rvg ph_with_vg
 #' @importFrom utils browseURL
-#' @importFrom shiny actionButton icon observeEvent dialogViewer runGadget stopApp
+#' @importFrom shiny actionButton icon observeEvent dialogViewer runGadget stopApp actionLink
 #' @importFrom miniUI miniPage miniContentPanel miniButtonBlock
-#' @importFrom shinyWidgets pickerInput updateProgressBar progressBar
+#' @importFrom shinyWidgets pickerInput updateProgressBar progressBar prettyCheckboxGroup
+#' @importFrom ggplot2 ggplot_build
+#' @importMethodsFrom ggplot2 print.ggplot2
 #'
 #' @examples
 #' \dontrun{
@@ -59,7 +61,12 @@ ggplot_to_ppt <- function(gg = NULL) {
 
     for (ggg in gg) {
       ppt <- officer::add_slide(ppt, layout = "Title and Content", master = "Office Theme")
-      ppt <- rvg::ph_with_vg(ppt, print(get(ggg, envir = globalenv())), type = "body")
+      testgg <- try(invisible(ggplot2::ggplot_build(get(ggg, envir = globalenv()))), silent = TRUE)
+      if (!"try-error" %in% class(testgg)) {
+        ppt <- rvg::ph_with_vg(ppt, print(get(ggg, envir = globalenv())), type = "body")
+      } else {
+        warning(paste0("Skipping '", ggg, "' because of : ", attr(testgg, "condition")$message))
+      }
     }
     print(ppt, target = tmp)
 
@@ -70,15 +77,21 @@ ggplot_to_ppt <- function(gg = NULL) {
     ui <- miniUI::miniPage(
       toggleBtnUi(),
       miniUI::miniContentPanel(
-        shinyWidgets::pickerInput(
-          inputId = "select_gg", label = "ggplot to export:",
-          choices = ggplots,
-          multiple = TRUE, width = "100%",
-          options = list(
-            `actions-box` = TRUE,
-            `selected-text-format`= "count > 4", size = 5,
-            `count-selected-text` = "{0} ggplot choosed (on a total of {1})"
-          )
+        # shinyWidgets::pickerInput(
+        #   inputId = "select_gg", label = "ggplot to export:",
+        #   choices = ggplots,
+        #   multiple = TRUE, width = "100%",
+        #   options = list(
+        #     `actions-box` = TRUE,
+        #     `selected-text-format`= "count > 4", size = 5,
+        #     `count-selected-text` = "{0} ggplot choosed (on a total of {1})"
+        #   )
+        # ),
+        shinyWidgets::prettyCheckboxGroup(
+          inputId = "select_gg", 
+          label = tags$span("ggplot(s) to export ", shiny::actionLink(inputId = "all", label = "(select all)")), 
+          choices = ggplots, status = "primary", 
+          icon = icon("check")
         ),
         htmltools::tags$div(
           id = "ppt-pb", style = "display: none;",
@@ -97,6 +110,12 @@ ggplot_to_ppt <- function(gg = NULL) {
     )
 
     server <- function(input, output, session) {
+      
+      shiny::observeEvent(input$all, {
+        shinyWidgets::updatePrettyCheckboxGroup(
+          session = session, inputId = "select_gg", selected = ggplots
+        )
+      })
 
       shiny::observeEvent(input$select_gg, {
         if (length(input$select_gg) > 0) {
@@ -123,7 +142,13 @@ ggplot_to_ppt <- function(gg = NULL) {
             ppt <- officer::add_slide(ppt, layout = "Title and Content", master = "Office Theme")
             shinyWidgets::updateProgressBar(session = session, id = "progress-ppt", value = count/total*100)
             count <- count + 1
-            ppt <- rvg::ph_with_vg(ppt, print(get(ggg, envir = globalenv())), type = "body")
+            # ppt <- rvg::ph_with_vg(ppt, print(get(ggg, envir = globalenv())), type = "body")
+            testgg <- try(invisible(ggplot2::ggplot_build(get(ggg, envir = globalenv()))), silent = TRUE)
+            if (!"try-error" %in% class(testgg)) {
+              ppt <- rvg::ph_with_vg(ppt, print(get(ggg, envir = globalenv())), type = "body")
+            } else {
+              warning(paste0("Skipping '", ggg, "' because of : ", attr(testgg, "condition")$message))
+            }
             shinyWidgets::updateProgressBar(session = session, id = "progress-ppt", value = count/total*100)
             count <- count + 1
           }
