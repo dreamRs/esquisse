@@ -15,7 +15,7 @@
 #' @importFrom miniUI miniPage miniContentPanel miniButtonBlock
 #' @importFrom shinyWidgets pickerInput updateProgressBar progressBar prettyCheckboxGroup
 #' @importFrom ggplot2 ggplot_build
-#' @importMethodsFrom ggplot2 print.ggplot2
+# @importMethodsFrom ggplot2 print.ggplot2
 #'
 #' @examples
 #' \dontrun{

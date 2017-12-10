@@ -379,13 +379,14 @@ ggplot_geom_vars <- function() {
     x = c("continuous", "continuous", "continuous",
           "categorical", "time", "continuous", "continuous", "categorical",
           "categorical", "continuous", "continuous", "categorical", "time",
-          "empty"),
+          "empty", "continuous"),
     y = c("empty", "empty", "empty", "empty", "empty", "categorical",
           "categorical", "continuous", "continuous", "continuous", "continuous",
-          "categorical", "continuous", "continuous"),
+          "categorical", "continuous", "continuous", "continuous"),
     geom = c("histogram", "boxplot", "density", "bar", "histogram", "boxplot",
-             "bar", "boxplot", "bar", "point", "line", "tile", "line", "line"),
-    auto = c(1, 0, 0, 1, 1, 0, 1, 0, 1, 1, 0, 1, 1, 1),
+             "bar", "boxplot", "bar", "point", "line", "tile", "line", "line",
+             "tile"),
+    auto = c(1, 0, 0, 1, 1, 0, 1, 0, 1, 1, 0, 1, 1, 1, 0),
     stringsAsFactors = FALSE
   )
 }

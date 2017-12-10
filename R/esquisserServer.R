@@ -64,7 +64,7 @@ esquisserServer <- function(input, output, session, data = NULL) {
       auto = "esquisse/geomIcon/gg-auto.png", line = "esquisse/geomIcon/gg-line.png",
       bar = "esquisse/geomIcon/gg-bar.png", histogram = "esquisse/geomIcon/gg-histo.png",
       point = "esquisse/geomIcon/gg-point.png", boxplot = "esquisse/geomIcon/gg-boxplot.png",
-      density = "esquisse/geomIcon/gg-density.png"
+      density = "esquisse/geomIcon/gg-density.png", tile = "esquisse/geomIcon/gg-tile.png"
     ), enabled = geom_possible
   )
 
