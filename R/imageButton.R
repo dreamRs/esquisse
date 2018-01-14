@@ -27,7 +27,7 @@ imageButtonUI <- function(id, imgs = list(), selected = 1, up = FALSE, width = N
         htmltools::tags$img(src = img, width = 80, height = 80),
         htmltools::tags$br(), label
       ),
-      style = "border:  none;"
+      style = "border: none;"
     )
   }
 
@@ -82,6 +82,7 @@ imageButtonUI <- function(id, imgs = list(), selected = 1, up = FALSE, width = N
 #' @param default default value
 #' @param img_ref Ids of image to toggle on/off
 #' @param enabled Images to enabled
+#' @param selected Image to select
 #'
 #' @return a reactivalues with the value of the inputs
 #' @noRd
@@ -89,13 +90,16 @@ imageButtonUI <- function(id, imgs = list(), selected = 1, up = FALSE, width = N
 #' @importFrom htmltools validateCssUnit tags tagList
 #' @importFrom shiny observeEvent reactiveValues observe
 #'
-imageButtonServer <- function(input, output, session, default = NULL, img_ref = list(), enabled = NULL) {
+imageButtonServer <- function(input, output, session, default = NULL, img_ref = list(), enabled = NULL, selected = NULL) {
 
   # Namespace
   ns <- session$ns
 
   if (is.null(enabled))
     enabled <- shiny::reactiveValues(x = NULL)
+  
+  if (is.null(selected))
+    selected <- shiny::reactiveValues(x = NULL)
 
   shiny::observeEvent(enabled$x, {
     if (!is.null(enabled$x)) {
@@ -112,7 +116,6 @@ imageButtonServer <- function(input, output, session, default = NULL, img_ref = 
   r <- shiny::reactiveValues(x = default)
 
   shiny::observe({
-
     lapply(
       X = names(input),
       FUN = function(x) {
@@ -124,8 +127,17 @@ imageButtonServer <- function(input, output, session, default = NULL, img_ref = 
         }
       }
     )
-
   })
+  
+  observeEvent(selected$x, {
+    x <- selected$x
+    x <- setdiff(x, "auto")
+    if (length(x) > 0) {
+      x <- x[1]
+      r$x <- x
+      session$sendCustomMessage(ns("update-img"), img_ref[[x]])
+    }
+  }, ignoreNULL = TRUE)
 
   return(r)
 }
