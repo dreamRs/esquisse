@@ -13,13 +13,16 @@
 #' @return a ggplot object
 #' @noRd
 #'
-#' @import ggplot2
+# @import ggplot2
 #'
 #' @examples
 #' \dontrun{
 #' ggtry(data = diamonds, x = "carat")
 #' ggtry(data = diamonds, x = "cut")
 #' }
+#' @importFrom ggplot2 ggplot aes_ scale_fill_hue scale_fill_gradient scale_fill_brewer 
+#'  scale_fill_distiller scale_color_hue scale_color_gradient scale_color_brewer 
+#'  scale_color_distiller labs coord_flip geom_smooth theme element_text
 ggtry <- function(data, x = NULL, y = NULL, fill = NULL, color = NULL, size = NULL, type = "auto", params = list(), ...) {
 
   args <- list(...)
@@ -174,6 +177,7 @@ ggtry <- function(data, x = NULL, y = NULL, fill = NULL, color = NULL, size = NU
 
 # https://stackoverflow.com/questions/10022436/do-call-in-combination-with
 # thanks Tommy
+
 do.call.tommy <- function(what, args, ...) {
   if(is.character(what)){
     fn <- strsplit(what, "::")[[1]]
@@ -278,6 +282,7 @@ guess_aes <- function(x = NULL, y = NULL, fill = NULL, color = NULL, size = NULL
 #' @return a string containing the name of a geom
 #' @noRd
 #'
+#' @importFrom ggplot2 geom_blank
 guess_geom <- function(xtype = NULL, ytype = NULL, type = "auto") {
 
   geom_cat <- ggplot_geom_vars()
@@ -310,6 +315,7 @@ guess_geom <- function(xtype = NULL, ytype = NULL, type = "auto") {
 
   return(geom)
 }
+
 
 
 
@@ -350,6 +356,12 @@ possible_geom <- function(data, x = NULL, y = NULL) {
 
 
 
+#' @importFrom ggplot2 theme_bw theme_classic theme_dark theme_gray theme_grey 
+#'  theme_light theme_linedraw theme_minimal theme_void
+#' @importFrom ggthemes theme_base theme_calc theme_economist theme_economist_white 
+#'  theme_excel theme_few theme_fivethirtyeight theme_foundation theme_gdocs theme_hc 
+#'  theme_igray theme_map theme_pander theme_par theme_solarized theme_solarized_2 
+#'  theme_solid theme_stata theme_tufte theme_wsj
 ggplot_theme <- function(package = "ggplot2") {
   themes <- list(
     ggplot2 = c(
@@ -374,6 +386,8 @@ ggplot_theme <- function(package = "ggplot2") {
 
 
 
+#' @importFrom ggplot2 geom_histogram geom_boxplot geom_density geom_bar geom_histogram geom_boxplot 
+#' geom_bar geom_boxplot geom_bar geom_point geom_line geom_tile geom_line geom_line geom_tile
 ggplot_geom_vars <- function() {
   data.frame(
     x = c("continuous", "continuous", "continuous",
