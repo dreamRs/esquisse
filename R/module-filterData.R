@@ -3,7 +3,8 @@
 #'
 #' @param id Module's id
 #'
-#' @return a \code{\link[shiny]{reactiveValues}} containing the data filtered under the slot \code{data}.
+#' @return a \code{\link[shiny]{reactiveValues}} containing the data filtered under 
+#' slot \code{data} and the R code to reproduce the filtering under slot \code{code}.
 #' @export
 #' 
 #' @name filterData-module
@@ -13,49 +14,59 @@
 #' \dontrun{
 #' 
 #' if (interactive()) {
-#'   library(shiny)
+#' library(shiny)
+#' library(shinyWidgets)
+#' library(esquisse)
+#' 
+#' ui <- fluidPage(
 #'   
-#'   ui <- fluidPage(
-#'     
-#'     tags$h1("Module Filter Data"),
-#'     
-#'     fluidRow(
-#'       column(
-#'         width = 4,
-#'         radioButtons(
-#'           inputId = "dataset", label = "Data:",
-#'           choices = c("iris", "mtcars", "Titanic")
-#'         ),
-#'         filterDataUI("ex")
+#'   tags$h1("Module Filter Data"),
+#'   
+#'   fluidRow(
+#'     column(
+#'       width = 4,
+#'       radioButtons(
+#'         inputId = "dataset", label = "Data:",
+#'         choices = c("iris", "mtcars", "Titanic")
 #'       ),
-#'       column(
-#'         width = 8,
-#'         DT::dataTableOutput(outputId = "tab")
-#'       )
+#'       filterDataUI("ex")
+#'     ),
+#'     column(
+#'       width = 8,
+#'       progressBar(id = "pbar", value = 100, total = 100, display_pct = TRUE),
+#'       DT::dataTableOutput(outputId = "tab"),
+#'       verbatimTextOutput(outputId = "code")
 #'     )
-#'     
 #'   )
 #'   
-#'   server <- function(input, output, session) {
-#'     
-#'     data <- reactive({
-#'       if (input$dataset == "iris") {
-#'         return(iris)
-#'       } else if (input$dataset == "mtcars") {
-#'         return(mtcars)
-#'       } else {
-#'         return(as.data.frame(Titanic))
-#'       }
-#'     })
-#'     
-#'     res <- callModule(module = filterDataServer, 
-#'                       id = "ex", data = data)
-#'     
-#'     output$tab <- DT::renderDataTable(res$data)
-#'     
-#'   }
+#' )
+#' 
+#' server <- function(input, output, session) {
 #'   
-#'   shinyApp(ui, server)
+#'   data <- reactive({
+#'     if (input$dataset == "iris") {
+#'       return(iris)
+#'     } else if (input$dataset == "mtcars") {
+#'       return(mtcars)
+#'     } else {
+#'       return(as.data.frame(Titanic))
+#'     }
+#'   })
+#'   
+#'   res <- callModule(module = filterDataServer, 
+#'                     id = "ex", data = data)
+#'   
+#'   observeEvent(res$data, {
+#'     updateProgressBar(session = session, id = "pbar", value = nrow(res$data), total = nrow(data()))
+#'   })
+#'   
+#'   output$tab <- DT::renderDataTable(res$data)
+#'   
+#'   output$code <- renderPrint(res$code)
+#'   
+#' }
+#' 
+#' shinyApp(ui, server)
 #' }
 #' 
 #' }
@@ -99,6 +110,7 @@ filterDataServer <- function(input, output, session, data, vars = NULL) {
     dat_ <- dat_[, vars, drop = FALSE]
     key$x <- paste(sample(letters, 10, TRUE), collapse = "")
     return_data$data <- dat_
+    return_data$code <- ""
     return(dat_)
   })
   
@@ -130,14 +142,38 @@ filterDataServer <- function(input, output, session, data, vars = NULL) {
           values <- params[[x]]
           dat <- data[[x]]
           if (inherits(x = dat, what = c("numeric", "integer"))) {
-            dat >= values[1] & dat <= values[2]
+            sprintf("%s >= %s & %s <= %s", x, values[1], x, values[2])
+            if (!num_equal(min(dat), values[1])) {
+              code1 <- sprintf("%s >= %s", x, values[1])
+            } else {
+              code1 <- ""
+            }
+            if (!num_equal(max(dat), values[2])) {
+              code2 <- sprintf("%s <= %s", x, values[2])
+            } else {
+              code2 <- ""
+            }
+            list(
+              code = code1 %+% code2,
+              ind = dat >= values[1] & dat <= values[2]
+            )
           } else {
-            dat %in% values
+            if (all(unique(dat) %in% values)) {
+              code <- ""
+            } else {
+              code <- sprintf("%s %%in%% c(%s)", x, paste(sprintf("'%s'", values), collapse = ", "))
+            }
+            list(
+              code = code,
+              ind = dat %in% values
+            )
           }
         }
       }
     )
-    ind <- Reduce(`&`, res_f)
+    ind <- Reduce(`&`, lapply(res_f, `[[`, "ind"))
+    code <- Reduce(`%+%`, lapply(res_f, `[[`, "code"))
+    return_data$code <- code
     return_data$data <- data[ind, ]
   }, ignoreInit = TRUE)
   
@@ -171,9 +207,43 @@ create_input_filter <- function(data, var, ns, key = "filter") {
     x <- unique(x[!is.na(x)])
     shiny::selectizeInput(
       inputId = ns(paste(key, var, sep = "_")), label = var,
-      choices = x, selected = x, multiple = TRUE, width = "100%",
+      choices = x, selected = x, 
+      multiple = TRUE, width = "100%",
       options = list(plugins = list("remove_button"))
     )
   }
 }
+
+
+# # @importFrom shiny updateSelectizeInput
+# update_selectize <- function(session, data, var, key = "filter") {
+#   x <- data[[var]]
+#   if (!inherits(x = x, what = c("numeric", "integer"))) {
+#     x <- unique(x[!is.na(x)])
+#     updateSelectizeInput(
+#       session = session, inputId = paste(key, var, sep = "_"),
+#       choices = x, selected = x
+#     )
+#   }
+# }
+
+
+
+num_equal <- function(x, y, tol = sqrt(.Machine$double.eps)) {
+  abs(x - y) < tol
+}
+
+`%+%` <- function(e1, e2) {
+  if (e1 != "" & e2 != "") {
+    paste(e1, e2, sep = " & ")
+  } else if (e1 != "" & e2 == "") {
+    e1
+  } else if (e1 == "" & e2 != "") {
+    e2
+  } else {
+    ""
+  }
+}
+
+
 

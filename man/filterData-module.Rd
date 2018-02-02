@@ -24,7 +24,8 @@ filterDataServer(input, output, session, data, vars = NULL)
 \item{vars}{variables for which to create filters, by default all variables in \code{data}.}
 }
 \value{
-a \code{\link[shiny]{reactiveValues}} containing the data filtered under the slot \code{data}.
+a \code{\link[shiny]{reactiveValues}} containing the data filtered under 
+slot \code{data} and the R code to reproduce the filtering under slot \code{code}.
 }
 \description{
 Modules for creating filters from a data.frame
@@ -34,49 +35,59 @@ Modules for creating filters from a data.frame
 \dontrun{
 
 if (interactive()) {
-  library(shiny)
+library(shiny)
+library(shinyWidgets)
+library(esquisse)
+
+ui <- fluidPage(
   
-  ui <- fluidPage(
-    
-    tags$h1("Module Filter Data"),
-    
-    fluidRow(
-      column(
-        width = 4,
-        radioButtons(
-          inputId = "dataset", label = "Data:",
-          choices = c("iris", "mtcars", "Titanic")
-        ),
-        filterDataUI("ex")
+  tags$h1("Module Filter Data"),
+  
+  fluidRow(
+    column(
+      width = 4,
+      radioButtons(
+        inputId = "dataset", label = "Data:",
+        choices = c("iris", "mtcars", "Titanic")
       ),
-      column(
-        width = 8,
-        DT::dataTableOutput(outputId = "tab")
-      )
+      filterDataUI("ex")
+    ),
+    column(
+      width = 8,
+      progressBar(id = "pbar", value = 100, total = 100, display_pct = TRUE),
+      DT::dataTableOutput(outputId = "tab"),
+      verbatimTextOutput(outputId = "code")
     )
-    
   )
   
-  server <- function(input, output, session) {
-    
-    data <- reactive({
-      if (input$dataset == "iris") {
-        return(iris)
-      } else if (input$dataset == "mtcars") {
-        return(mtcars)
-      } else {
-        return(as.data.frame(Titanic))
-      }
-    })
-    
-    res <- callModule(module = filterDataServer, 
-                      id = "ex", data = data)
-    
-    output$tab <- DT::renderDataTable(res$data)
-    
-  }
+)
+
+server <- function(input, output, session) {
   
-  shinyApp(ui, server)
+  data <- reactive({
+    if (input$dataset == "iris") {
+      return(iris)
+    } else if (input$dataset == "mtcars") {
+      return(mtcars)
+    } else {
+      return(as.data.frame(Titanic))
+    }
+  })
+  
+  res <- callModule(module = filterDataServer, 
+                    id = "ex", data = data)
+  
+  observeEvent(res$data, {
+    updateProgressBar(session = session, id = "pbar", value = nrow(res$data), total = nrow(data()))
+  })
+  
+  output$tab <- DT::renderDataTable(res$data)
+  
+  output$code <- renderPrint(res$code)
+  
+}
+
+shinyApp(ui, server)
 }
 
 }
