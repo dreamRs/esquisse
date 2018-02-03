@@ -32,13 +32,14 @@ imageButtonUI <- function(id, imgs = list(), selected = 1, up = FALSE, width = N
   }
 
   btn <- shiny::actionButton(
-    inputId = ns("btn-action"),# icon = shiny::icon("triangle-bottom", lib = "glyphicon"),
+    inputId = ns("btn-action"),
     label = tags$img(
       id = ns("btn-img"),
       src = imgs[[selected]]$img,
       width = 48, height = 48
     ), width = "100%",
-    class = "dropdown-toggle", `data-toggle` = "dropdown"
+    class = "dropdown-toggle", 
+    `data-toggle` = "dropdown"
   )
   dropTag <- htmltools::tags$ul(
     class = "dropdown-menu",
@@ -65,7 +66,8 @@ imageButtonUI <- function(id, imgs = list(), selected = 1, up = FALSE, width = N
     ),
     htmltools::tags$script(
       paste0(
-        "Shiny.addCustomMessageHandler('", ns("update-img"), "', function(data) {",
+        "Shiny.addCustomMessageHandler('", 
+        ns("update-img"), "', function(data) {",
         "$('#", ns("btn-img"), "').attr('src', data);",
         "});"
       )

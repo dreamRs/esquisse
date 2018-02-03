@@ -6,6 +6,8 @@
 #' @return a \code{\link[shiny]{reactiveValues}} containing the data filtered under 
 #' slot \code{data} and the R code to reproduce the filtering under slot \code{code}.
 #' @export
+#' @importFrom htmltools tags
+#' @importFrom shiny NS
 #' 
 #' @name filterData-module
 #'
@@ -33,7 +35,10 @@
 #'     ),
 #'     column(
 #'       width = 8,
-#'       progressBar(id = "pbar", value = 100, total = 100, display_pct = TRUE),
+#'       progressBar(
+#'         id = "pbar", value = 100, 
+#'         total = 100, display_pct = TRUE
+#'       ),
 #'       DT::dataTableOutput(outputId = "tab"),
 #'       verbatimTextOutput(outputId = "code")
 #'     )
@@ -57,7 +62,10 @@
 #'                     id = "ex", data = data)
 #'   
 #'   observeEvent(res$data, {
-#'     updateProgressBar(session = session, id = "pbar", value = nrow(res$data), total = nrow(data()))
+#'     updateProgressBar(
+#'       session = session, id = "pbar", 
+#'       value = nrow(res$data), total = nrow(data())
+#'     )
 #'   })
 #'   
 #'   output$tab <- DT::renderDataTable(res$data)
@@ -71,10 +79,9 @@
 #' 
 #' }
 #' 
-#' @importFrom shiny NS tags
 filterDataUI <- function(id) {
-  ns <- shiny::NS(id)
-  shiny::tags$div(id = ns("placeholder-filters"))
+  ns <- NS(id)
+  tags$div(id = ns("placeholder-filters"))
 }
 
 
@@ -89,17 +96,17 @@ filterDataUI <- function(id) {
 #' 
 #' @rdname filterData-module
 #'
-#' @importFrom shiny reactiveValues reactive is.reactive observeEvent removeUI insertUI tags reactiveValuesToList
+#' @importFrom shiny reactiveValues reactive is.reactive observeEvent removeUI insertUI reactiveValuesToList
 filterDataServer <- function(input, output, session, data, vars = NULL) {
   
   ns <- session$ns
   jns <- function(id) paste0("#", ns(id))
   key <- reactiveValues(x = NULL)
   
-  return_data <- shiny::reactiveValues(data = NULL)
+  return_data <- reactiveValues(data = NULL)
   
-  data_filter <- shiny::reactive({
-    if (shiny::is.reactive(data)) {
+  data_filter <- reactive({
+    if (is.reactive(data)) {
       dat_ <- as.data.frame(data())
     } else {
       dat_ <- as.data.frame(data)
@@ -114,24 +121,24 @@ filterDataServer <- function(input, output, session, data, vars = NULL) {
     return(dat_)
   })
   
-  shiny::observeEvent(data_filter(), {
+  observeEvent(data_filter(), {
     data <- data_filter()
     tagFilt <- lapply(
       X = names(data), FUN = create_input_filter, 
       data = data, ns = ns, key = key$x
     )
-    shiny::removeUI(selector = jns("filters-mod"))
-    shiny::insertUI(
+    removeUI(selector = jns("filters-mod"))
+    insertUI(
       selector = jns("placeholder-filters"),
-      ui = shiny::tags$div(
+      ui = tags$div(
         id = ns("filters-mod"), tagFilt
       )
     )
   })
   
   
-  shiny::observeEvent(shiny::reactiveValuesToList(input), {
-    params <- shiny::reactiveValuesToList(input)
+  observeEvent(reactiveValuesToList(input), {
+    params <- reactiveValuesToList(input)
     params <- params[grep(x = names(params), pattern = key$x)]
     names(params) <- gsub(pattern = paste0(key$x, "_"), replacement = "", x = names(params))
     data <- data_filter()
@@ -198,14 +205,14 @@ create_input_filter <- function(data, var, ns, key = "filter") {
     } else {
       step <- 1
     }
-    shiny::sliderInput(
+    sliderInput(
       inputId = ns(paste(key, var, sep = "_")), label = var, 
       min = min(x), max = max(x), width = "100%",
       value = rangx, step = step
     )
   } else {
     x <- unique(x[!is.na(x)])
-    shiny::selectizeInput(
+    selectizeInput(
       inputId = ns(paste(key, var, sep = "_")), label = var,
       choices = x, selected = x, 
       multiple = TRUE, width = "100%",

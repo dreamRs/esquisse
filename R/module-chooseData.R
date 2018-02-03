@@ -28,7 +28,7 @@ chooseDataServer <- function(input, output, session, data = NULL) {
   if (is.null(data)) {
     shiny::showModal(chooseDataModalUI("start"))
   }
-  dataStart <- shiny::callModule(module = chooseDataModalServer,id = "start")
+  dataStart <- shiny::callModule(module = chooseDataModalServer, id = "start")
 
   dataChart <- shiny::reactiveValues(x = data)
 
@@ -74,9 +74,12 @@ chooseDataModalUI <- function(id) {
   info_dfs <- unlist(info_dfs)
 
   shiny::modalDialog(
-    title = "Choose a dataset",
+    title = "Choose a dataset", fade = FALSE,
     footer = htmltools::tags$div(
-      shiny::actionButton(inputId = ns("validata"), label = "Choose", class = "btn-primary", `data-dismiss` = "modal"),
+      shiny::actionButton(
+        inputId = ns("validata"), label = "Choose", 
+        class = "btn-primary", `data-dismiss` = "modal"
+      ),
       shiny::modalButton(label = "Dismiss")
     ),
     shinyWidgets::pickerInput(

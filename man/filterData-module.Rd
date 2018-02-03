@@ -54,7 +54,10 @@ ui <- fluidPage(
     ),
     column(
       width = 8,
-      progressBar(id = "pbar", value = 100, total = 100, display_pct = TRUE),
+      progressBar(
+        id = "pbar", value = 100, 
+        total = 100, display_pct = TRUE
+      ),
       DT::dataTableOutput(outputId = "tab"),
       verbatimTextOutput(outputId = "code")
     )
@@ -78,7 +81,10 @@ server <- function(input, output, session) {
                     id = "ex", data = data)
   
   observeEvent(res$data, {
-    updateProgressBar(session = session, id = "pbar", value = nrow(res$data), total = nrow(data()))
+    updateProgressBar(
+      session = session, id = "pbar", 
+      value = nrow(res$data), total = nrow(data())
+    )
   })
   
   output$tab <- DT::renderDataTable(res$data)
