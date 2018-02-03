@@ -1,67 +1,213 @@
-#' Wrapper for module chooseData, ui part
+
+#' @title Module for choosing data.frame
+#' 
+#' @description Module for choosing data.frame from
+#' user environment and select variable to use.
 #'
-#' @noRd
-chooseDataUI <- function() {
+#' @param id Module's id.
+#'
+#' @return a \code{\link[shiny]{reactiveValues}} containing the data choosen under slot \code{data}
+#' and the name of the selected \code{data.frame} under slot \code{name}.
+#' @export
+#' 
+#' @name chooseData-module
+#' 
+#' @importFrom htmltools tagList tags
+#' @importFrom shiny NS actionButton icon singleton
+#'
+#' @examples
+#' \dontrun{
+#' 
+#' if (interactive()) {
+#' 
+#' 
+#' library(shiny)
+#' library(esquisse)
+#' 
+#' ui <- fluidPage(
+#'   tags$h2("Choose data module"),
+#'   fluidRow(
+#'     column(
+#'       width = 4,
+#'       tags$h4("Default"),
+#'       chooseDataUI(id = "choose1"),
+#'       verbatimTextOutput(outputId = "res1")
+#'     ),
+#'     column(
+#'       width = 4,
+#'       tags$h4("No var selection"),
+#'       chooseDataUI(id = "choose2"),
+#'       verbatimTextOutput(outputId = "res2")
+#'     ),
+#'     column(
+#'       width = 4,
+#'       tags$h4("Default data on start"),
+#'       chooseDataUI(id = "choose3"),
+#'       verbatimTextOutput(outputId = "res3")
+#'     )
+#'   )
+#' )
+#' 
+#' server <- function(input, output, session) {
+#'   
+#'   res_dat1 <- callModule(
+#'     chooseDataServer, id = "choose1",
+#'     launchOnStart = FALSE
+#'   )
+#'   output$res1 <- renderPrint({
+#'     str(reactiveValuesToList(res_dat1))
+#'   })
+#'   
+#'   res_dat2 <- callModule(
+#'     chooseDataServer, id = "choose2", selectVars = FALSE,
+#'     launchOnStart = FALSE
+#'   )
+#'   output$res2 <- renderPrint({
+#'     str(reactiveValuesToList(res_dat2))
+#'   })
+#'   
+#'   res_dat3 <- callModule(
+#'     chooseDataServer, id = "choose3", data = iris,
+#'     launchOnStart = FALSE
+#'   )
+#'   output$res3 <- renderPrint({
+#'     str(reactiveValuesToList(res_dat3))
+#'   })
+#'   
+#' }
+#' 
+#' shinyApp(ui, server)
+#' 
+#' 
+#' }
+#' 
+#' 
+#' }
+chooseDataUI <- function(id) {
+  
+  ns <- NS(id)
 
   tagList(
-    toggleBtnUi()
+    singleton(
+      tags$link(rel="stylesheet", type="text/css",
+                href="esquisse/styles-dad.css")
+    ),
+    toggleBtnUi(),
+    actionButton(
+      inputId = ns("changeData"), label = "Choose data",
+      icon = icon("database"), width = "100%"
+    )
   )
 }
 
-#' Wrapper for module chooseData, server part
+#' @param input standard \code{shiny} input.
+#' @param output standard \code{shiny} output.
+#' @param session standard \code{shiny} session.
+#' @param data a data.frame to use by default.
+#' @param selectVars logical, display menu to select vars to use in selected \code{data.frame}.
+#' @param launchOnStart launch modal when application is launched.
+#' @param defaultData a character vector of \code{data.frame}s to choose along if
+#' there is no \code{data.frame}s in Global environment. By default, \code{data.frame}s
+#' from \code{ggplot2} are used.
+#' 
+#' @export
 #'
-#' @param input   standard \code{shiny} input
-#' @param output  standard \code{shiny} output
-#' @param session standard \code{shiny} session
-#' @param data    a data.frame to use in the addin, if NULL a modal dialog is launched
-#'
-#' @return data chosen by the user
-#' @noRd
+#' @rdname chooseData-module
 #'
 #' @importFrom shiny showModal observeEvent reactiveValues callModule
 #'
-chooseDataServer <- function(input, output, session, data = NULL) {
+chooseDataServer <- function(input, output, session, data = NULL, selectVars = TRUE, launchOnStart = TRUE, defaultData = NULL) {
 
-  # data <- getOption("charter.ggbuilder.data")
+  ns <- session$ns
+  
+  return_data <- reactiveValues(data = data, name = "")
+  
+  if (launchOnStart) {
+    showModal(chooseDataModal(ns = ns, defaultData = defaultData, selectVars = selectVars))
+  }
 
   # Data
-  if (is.null(data)) {
-    shiny::showModal(chooseDataModalUI("start"))
-  }
-  dataStart <- shiny::callModule(module = chooseDataModalServer, id = "start")
-
-  dataChart <- shiny::reactiveValues(x = data)
-
-  shiny::observeEvent(dataStart$x, {
-    if (!is.null(dataStart$x)) {
-      dataChart$x <- dataStart$x
-      dataChart$name <- dataStart$name
-    }
+  observeEvent(input$changeData, {
+    showModal(chooseDataModal(ns = ns, defaultData = defaultData, selectVars = selectVars))
   }, ignoreInit = TRUE)
+  
+  
+  
+  output$col_chooser_ui <- renderUI({
+    req(input$data)
+    dat <- get_df(input$data)
+    res_col_type <- unlist(lapply(dat, col_type))
+    htmltools::tagList(
+      shinyWidgets::pickerInput(
+        inputId = ns("col_chooser"),
+        label = "Validate choosen variable :",
+        choices = names(res_col_type), multiple = TRUE, width = "100%",
+        selected = names(res_col_type)[unname(res_col_type) != "id"],
+        options = list(
+          `actions-box` = TRUE, `multiple-separator` = " ",
+          `selected-text-format`= "count > 4",
+          `count-selected-text` = "{0} variables choosed (on a total of {1})"
+        ),
+        choicesOpt = list(
+          content = badgeType(col_name = names(res_col_type), col_type = unname(res_col_type))
+        )
+      ),
+      htmltools::tags$em("Legend :"),
+      htmltools::HTML(paste(
+        badgeType(col_name = c("categorical", "continuous", "time", "id"),
+                  col_type = c("categorical", "continuous", "time", "id")),
+        collapse = ", "
+      ))
+    )
+  })
+  
+  toggleBtnServer(session, inputId = ns("validata"), type = "disable")
+  output$alert_no_var <- shiny::renderUI({
+    shiny::req(input$data)
+    if (length(input$col_chooser) < 1) {
+      toggleBtnServer(session, inputId = ns("validata"), type = "disable")
+      htmltools::tagList(
+        htmltools::tags$br(),
+        htmltools::tags$div(
+          class = "alert alert-warning",
+          tags$b("Warning !"), "no variable selected..."
+        )
+      )
+    } else {
+      toggleBtnServer(session, inputId = ns("validata"), type = "enable")
+      NULL
+    }
+  })
+  
+  shiny::observeEvent(input$validata, {
+    dat <- get_df(input$data)
+    dat <- as.data.frame(dat)
+    if (selectVars) {
+      dat <- dat[, input$col_chooser, drop = FALSE]
+    }
+    return_data$data <- dat
+    return_data$name <- input$data
+  })
 
-  return(dataChart)
+  return(return_data)
 }
 
 
-#' Module for choosing data (ui)
-#'
-#' @param id Module's id
-#'
+
 #' @importFrom shiny NS modalDialog modalButton uiOutput
 #' @importFrom shinyWidgets pickerInput
 #' @importFrom htmltools tags
 #' @importFrom utils data
-#'
-#' @noRd
-chooseDataModalUI <- function(id) {
+chooseDataModal <- function(ns, defaultData = NULL, selectVars = TRUE) {
 
-  # Namespace
-  ns <- shiny::NS(id)
+  if (is.null(defaultData)) {
+    defaultData <- data(package = "ggplot2", envir = environment())$results[, "Item"]
+  }
 
   # List of data.frame
   dfs <- search_obj(what = "data.frame")
   if (is.null(dfs)) {
-    dfs <- data(package = "ggplot2", envir = environment())$results[, "Item"]
+    dfs <- defaultData
   }
 
   info_dfs <- lapply(
@@ -89,8 +235,9 @@ chooseDataModalUI <- function(id) {
       options = list(title = "List of data.frame..."),
       choicesOpt = list(subtext = info_dfs)
     ),
-    shiny::uiOutput(outputId = ns("col_chooser_ui")),
-    shiny::uiOutput(outputId = ns("alert_no_var"))
+    if (selectVars) shiny::uiOutput(outputId = ns("col_chooser_ui")),
+    if (selectVars) shiny::uiOutput(outputId = ns("alert_no_var")),
+    tags$br()
   )
 }
 
@@ -115,6 +262,9 @@ chooseDataModalServer <- function(input, output, session) {
 
   dataChoosen <- reactiveValues(x = NULL)
 
+  output$test <- renderPrint({
+    reactiveValuesToList(input)
+  })
 
   output$col_chooser_ui <- renderUI({
 
@@ -153,26 +303,23 @@ chooseDataModalServer <- function(input, output, session) {
         collapse = ", "
       ))
     )
-
   })
-
 
   toggleBtnServer(session, inputId = ns("validata"), type = "disable")
   output$alert_no_var <- shiny::renderUI({
     shiny::req(input$data)
     if (length(input$col_chooser) < 1) {
-
       toggleBtnServer(session, inputId = ns("validata"), type = "disable")
       htmltools::tagList(
         htmltools::tags$br(),
-        htmltools::tags$div(class = "alert alert-warning", tags$b("Warning !"), "no variable selected...")
+        htmltools::tags$div(
+          class = "alert alert-warning",
+          tags$b("Warning !"), "no variable selected..."
+        )
       )
-
     } else {
-
       toggleBtnServer(session, inputId = ns("validata"), type = "enable")
       NULL
-
     }
   })
 
@@ -183,7 +330,6 @@ chooseDataModalServer <- function(input, output, session) {
     dataChoosen$x <- dat
     dataChoosen$name <- input$data
   })
-
 
   return(dataChoosen)
 }
