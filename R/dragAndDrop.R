@@ -113,9 +113,9 @@ dragAndDropServer <- function(input, output, session, data) {
   ns <- session$ns
 
   output$vars <- shiny::renderUI({
-    if (!is.null(data$x)) {
+    if (!is.null(data$data)) {
       res$x <- list()
-      dat <- data$x
+      dat <- data$data
       # res_col_type <- unlist(dat[, lapply(.SD, col_type)])
       res_col_type <- unlist(lapply(dat, col_type))
       htmltools::tagList(

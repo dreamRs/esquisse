@@ -14,14 +14,13 @@
 esquisserServer <- function(input, output, session, data = NULL) {
 
   esquisse.env <- get("esquisse.env", envir = parent.env(environment()))
-  dataChart <- chooseDataServer(input, output, session, esquisse.env$data)
-  shiny::observeEvent(input$changeData, {
-    varSelected <- reactiveValues(x = NULL)
-    dataChart$x <- NULL
-    options("charter.ggbuilder.data" = NULL)
-    dataChart <- chooseDataServer(input, output, session, data = NULL)
-  }, ignoreInit = TRUE)
-  observeEvent(dataChart$x, {
+  dataChart <- callModule(
+    module = chooseDataServer, 
+    id = "choose-data",
+    data = esquisse.env$data, 
+    launchOnStart = is.null(esquisse.env$data)
+  )
+  observeEvent(dataChart$data, {
     varSelected <- reactiveValues(x = NULL)
   })
 
@@ -30,7 +29,7 @@ esquisserServer <- function(input, output, session, data = NULL) {
   geom_possible <- shiny::reactiveValues(x = "auto")
   geom_controls <- shiny::reactiveValues(x = "auto")
   shiny::observeEvent(list(varSelected$x, geomSelected$x), {
-    types <- possible_geom(data = dataChart$x, x = varSelected$x$xvar, y = varSelected$x$yvar)
+    types <- possible_geom(data = dataChart$data, x = varSelected$x$xvar, y = varSelected$x$yvar)
     geom_possible$x <- c("auto", types)
 
     if ("bar" %in% types & geomSelected$x %in% c("auto", "bar")) {
@@ -71,20 +70,20 @@ esquisserServer <- function(input, output, session, data = NULL) {
 
   output$test <- shiny::renderPrint({
     # str(varSelected$x)
-    # str(dataChart$x)
+    # str(dataChart$data)
   })
 
 
   output$plooooooot <- shiny::renderPlot({
 
-    # str(dataChart$x)
-    data <- dataChart$x
+    # str(dataChart$data)
+    data <- dataChart$data
     vars <- reactiveValuesToList(varSelected)
     vars <- unlist(vars$x, use.names = FALSE)
     if (all(vars %in% names(data))) {
       res <- tryCatch({
         gg <- ggtry(
-          data = dataChart$x,
+          data = dataChart$data,
           x = varSelected$x$xvar,
           y = varSelected$x$yvar,
           fill = varSelected$x$fill,
@@ -110,11 +109,11 @@ esquisserServer <- function(input, output, session, data = NULL) {
 
   output$plot_export <- shiny::renderPlot({
 
-    # str(dataChart$x)
+    # str(dataChart$data)
     # verif_params <<- reactiveValuesToList(varSelected)
     res <- tryCatch({
       gg <- ggtry(
-        data = dataChart$x,
+        data = dataChart$data,
         x = varSelected$x$xvar,
         y = varSelected$x$yvar,
         fill = varSelected$x$fill,
@@ -148,7 +147,7 @@ esquisserServer <- function(input, output, session, data = NULL) {
   # Export PowerPoint
   shiny::observeEvent(paramsChart$export_ppt, {
     gg <- ggtry(
-      data = dataChart$x,
+      data = dataChart$data,
       x = varSelected$x$xvar,
       y = varSelected$x$yvar,
       fill = varSelected$x$fill,

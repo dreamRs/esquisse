@@ -51,8 +51,8 @@ moduleCodeServer <- function(input, output, session, varSelected, dataChart, par
 
   codegg <- shiny::reactive({
     code_geom <- guess_geom(
-      xtype = if (!is.null(varSelected$x$xvar)) col_type(dataChart$x[[varSelected$x$xvar]]),
-      ytype = if (!is.null(varSelected$x$yvar)) col_type(dataChart$x[[varSelected$x$yvar]]),
+      xtype = if (!is.null(varSelected$x$xvar)) col_type(dataChart$data[[varSelected$x$xvar]]),
+      ytype = if (!is.null(varSelected$x$yvar)) col_type(dataChart$data[[varSelected$x$yvar]]),
       type = geomSelected$x
     )
     code_aes <- guess_aes(
@@ -62,8 +62,8 @@ moduleCodeServer <- function(input, output, session, varSelected, dataChart, par
       color = varSelected$x$color,
       size = varSelected$x$size,
       geom = code_geom,
-      xtype = if (!is.null(varSelected$x$xvar)) col_type(dataChart$x[[varSelected$x$xvar]]),
-      ytype = if (!is.null(varSelected$x$yvar)) col_type(dataChart$x[[varSelected$x$yvar]])
+      xtype = if (!is.null(varSelected$x$xvar)) col_type(dataChart$data[[varSelected$x$xvar]]),
+      ytype = if (!is.null(varSelected$x$yvar)) col_type(dataChart$data[[varSelected$x$yvar]])
     )
     code_aes <- lapply(
       X = code_aes,
@@ -105,12 +105,12 @@ moduleCodeServer <- function(input, output, session, varSelected, dataChart, par
     
     # Scales
     if (!is.null(varSelected$x$fill)) {
-      filltype <- col_type(dataChart$x[[varSelected$x$fill]])
+      filltype <- col_type(dataChart$data[[varSelected$x$fill]])
     } else {
       filltype <- NULL
     }
     if (!is.null(varSelected$x$color)) {
-      colortype <- col_type(dataChart$x[[varSelected$x$color]])
+      colortype <- col_type(dataChart$data[[varSelected$x$color]])
     } else {
       colortype <- NULL
     }

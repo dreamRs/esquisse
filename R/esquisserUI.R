@@ -26,8 +26,6 @@ esquisserUI <- function() {
         miniUI::miniTitleBarButton(inputId = "close", label = "Close")
       )
     ),
-    chooseDataUI(),
-
     # page
     layoutAddin(
       top_left = htmltools::tagList(
@@ -47,10 +45,7 @@ esquisserUI <- function() {
             ), width = "240px"
           ),
           htmltools::tags$br(),
-          shiny::actionButton(
-            inputId = "changeData", label = "Change data",
-            icon = shiny::icon("database"), width = "100%"
-          )
+          chooseDataUI(id = "choose-data")
         )
       ),
       top_right = dragAndDropUi(
