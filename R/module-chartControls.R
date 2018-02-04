@@ -22,12 +22,12 @@ chartControlsUI <- function(id) {
       style = "default", label = "Labels & Title", up = TRUE
     ),
     shinyWidgets::dropdown(
-      controls_appearance(ns),
-      style = "default", label = "Appearance", up = TRUE, width = "270px"
+      controls_params(ns), controls_appearance(ns),
+      style = "default", label = "Plot options", up = TRUE, width = "270px"
     ),
     shinyWidgets::dropdown(
-      controls_params(ns),
-      style = "default", label = "Parameters", up = TRUE, right = TRUE, width = "240px"
+      "",
+      style = "default", label = "Data", up = TRUE, right = TRUE, width = "240px"
     ),
     shinyWidgets::dropdown(
       controls_code(ns),
@@ -174,18 +174,35 @@ linear_gradient <- function(cols) {
 #' @param ns Namespace from module
 #'
 #' @noRd
-#' @importFrom shiny textInput
-#' @importFrom htmltools tagList
+#' @importFrom htmltools tagList tags
 #'
 controls_labs <- function(ns) {
-  htmltools::tagList(
-    shiny::textInput(inputId = ns("title"), label = "Title :"),
-    shiny::textInput(inputId = ns("subtitle"), label = "Subtitle :"),
-    shiny::textInput(inputId = ns("caption"), label = "Caption :"),
-    shiny::textInput(inputId = ns("x"), label = "X label :"),
-    shiny::textInput(inputId = ns("y"), label = "Y label :")
+  tags$div(
+    class = "form-group",
+    textInput(inputId = ns("title"), placeholder = "Title", label = NULL),
+    textInput(inputId = ns("subtitle"), placeholder = "Subtitle", label = NULL),
+    textInput(inputId = ns("caption"), placeholder = "Caption", label = NULL),
+    textInput(inputId = ns("x"), placeholder = "X label", label = NULL),
+    textInput(inputId = ns("y"), placeholder = "Y label", label = NULL)
   )
 }
+
+#' @importFrom shiny textInput
+#' @importFrom htmltools tags
+textInputHorizontal <- function(inputId, label) {
+  tags$div(
+    class="form-group",
+    tags$label(
+      class="col-sm-4 control-label",
+      `for` = inputId, label
+    ),
+    tags$div(
+      class="col-sm-8",
+      textInput(inputId = inputId, label = NULL)
+    )
+  )
+}
+
 
 
 
