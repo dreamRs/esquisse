@@ -8,6 +8,7 @@
 #'
 #' @importFrom shinyWidgets dropdown
 #' @importFrom htmltools tags tagList
+#' @importFrom shiny icon
 #'
 chartControlsUI <- function(id) {
 
@@ -19,23 +20,31 @@ chartControlsUI <- function(id) {
     class = "btn-group-charter btn-group-justified-charter",
     shinyWidgets::dropdown(
       controls_labs(ns),
-      style = "default", label = "Labels & Title", up = TRUE
+      style = "default", label = "Labels & Title", 
+      up = TRUE, icon = icon("font"), 
+      status = "default btn-controls"
     ),
     shinyWidgets::dropdown(
       controls_params(ns), controls_appearance(ns),
-      style = "default", label = "Plot options", up = TRUE, width = "270px"
+      style = "default", label = "Plot options",
+      up = TRUE, width = "270px", 
+      icon = icon("gears"), status = "default btn-controls"
     ),
     shinyWidgets::dropdown(
       tags$div(
         style = "max-height: 400px; overflow-y: scroll; padding-left: 15px;",
         filterDataUI(id = ns("filter-data"))
       ),
-      style = "default", label = "Data", up = TRUE,
-      right = TRUE, width = "290px", inputId = "filterdrop"
+      style = "default", label = "Data", 
+      up = TRUE, icon = icon("filter"),
+      right = TRUE, width = "290px", 
+      inputId = "filterdrop", status = "default btn-controls"
     ),
     shinyWidgets::dropdown(
       controls_code(ns),
-      style = "default", label = "Export & code", up = TRUE, right = TRUE, width = "350px"
+      style = "default", label = "Export & code", 
+      up = TRUE, right = TRUE, width = "350px",
+      icon = icon("code"), status = "default btn-controls"
     ),
     htmltools::tags$script("$('.sw-dropdown').addClass('btn-group-charter');"),
     htmltools::tags$script(HTML("$('.sw-dropdown > .btn').addClass('btn-charter');")),

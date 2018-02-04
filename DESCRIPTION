@@ -22,3 +22,4 @@ Imports: miniUI,
     scales,
     officer,
     rvg
+Remotes: dreamRs/shinyWidgets

@@ -38,4 +38,7 @@
     width: 100%;
 }
 
+.btn-controls {
+  border-radius: 0;
+}
 
