@@ -4,7 +4,8 @@
 #' @param id Module's id
 #'
 #' @return a \code{\link[shiny]{reactiveValues}} containing the data filtered under 
-#' slot \code{data} and the R code to reproduce the filtering under slot \code{code}.
+#' slot \code{data}, the R code to reproduce the filtering under slot \code{code} and a logical
+#' vector for indexing data under slot \code{index}.
 #' @export
 #' @importFrom htmltools tags
 #' @importFrom shiny NS
@@ -91,17 +92,18 @@ filterDataUI <- function(id) {
 #' @param session standard \code{shiny} session.
 #' @param data a \code{data.frame} or a \code{\link[shiny]{reactive}} function returning a \code{data.frame}.
 #' @param vars variables for which to create filters, by default all variables in \code{data}.
+#' @param width the width of the input, e.g. \code{400px}, or \code{100\%}.
 #'
 #' @export
 #' 
 #' @rdname filterData-module
 #'
 #' @importFrom shiny reactiveValues reactive is.reactive observeEvent removeUI insertUI reactiveValuesToList
-filterDataServer <- function(input, output, session, data, vars = NULL) {
+filterDataServer <- function(input, output, session, data, vars = NULL, width = "100%") {
   
   ns <- session$ns
   jns <- function(id) paste0("#", ns(id))
-  key <- reactiveValues(x = NULL)
+  key <- reactiveValues(x = NULL, index = TRUE)
   
   return_data <- reactiveValues(data = NULL)
   
@@ -118,6 +120,7 @@ filterDataServer <- function(input, output, session, data, vars = NULL) {
     key$x <- paste(sample(letters, 10, TRUE), collapse = "")
     return_data$data <- dat_
     return_data$code <- ""
+    return_data$index <- rep_len(TRUE, nrow(dat_))
     return(dat_)
   })
   
@@ -125,7 +128,8 @@ filterDataServer <- function(input, output, session, data, vars = NULL) {
     data <- data_filter()
     tagFilt <- lapply(
       X = names(data), FUN = create_input_filter, 
-      data = data, ns = ns, key = key$x
+      data = data, ns = ns, key = key$x,
+      width = width
     )
     removeUI(selector = jns("filters-mod"))
     insertUI(
@@ -151,6 +155,7 @@ filterDataServer <- function(input, output, session, data, vars = NULL) {
     if (sum(res_len) > 0) {
       ind <- Reduce(`&`, lapply(res_f, `[[`, "ind"))
       code <- Reduce(`%+%`, lapply(res_f, `[[`, "code"))
+      return_data$index <- ind
       return_data$code <- code
       return_data$data <- data[ind, ]
     }
@@ -165,7 +170,7 @@ filterDataServer <- function(input, output, session, data, vars = NULL) {
 
 
 #' @importFrom shiny sliderInput selectizeInput
-create_input_filter <- function(data, var, ns, key = "filter") {
+create_input_filter <- function(data, var, ns, key = "filter", width = "100%") {
   x <- data[[var]]
   if (inherits(x = x, what = c("numeric", "integer"))) {
     x <- x[!is.na(x)]
@@ -179,7 +184,7 @@ create_input_filter <- function(data, var, ns, key = "filter") {
     }
     sliderInput(
       inputId = ns(paste(key, var, sep = "_")), label = var, 
-      min = min(x), max = max(x), width = "100%",
+      min = min(x), max = max(x), width = width,
       value = rangx, step = step
     )
   } else if (inherits(x = x, what = c("Date", "POSIXct"))) {
@@ -187,7 +192,7 @@ create_input_filter <- function(data, var, ns, key = "filter") {
     rangx <- range(x)
     sliderInput(
       inputId = ns(paste(key, var, sep = "_")), label = var, 
-      min = min(x), max = max(x), width = "100%",
+      min = min(x), max = max(x), width = width,
       value = rangx
     )
   } else {
@@ -195,7 +200,7 @@ create_input_filter <- function(data, var, ns, key = "filter") {
     selectizeInput(
       inputId = ns(paste(key, var, sep = "_")), label = var,
       choices = x, selected = x, 
-      multiple = TRUE, width = "100%",
+      multiple = TRUE, width = width,
       options = list(plugins = list("remove_button"))
     )
   }

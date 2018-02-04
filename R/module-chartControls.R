@@ -26,8 +26,12 @@ chartControlsUI <- function(id) {
       style = "default", label = "Plot options", up = TRUE, width = "270px"
     ),
     shinyWidgets::dropdown(
-      "",
-      style = "default", label = "Data", up = TRUE, right = TRUE, width = "240px"
+      tags$div(
+        style = "max-height: 400px; overflow-y: scroll; padding-left: 15px;",
+        filterDataUI(id = ns("filter-data"))
+      ),
+      style = "default", label = "Data", up = TRUE,
+      right = TRUE, width = "290px", inputId = "filterdrop"
     ),
     shinyWidgets::dropdown(
       controls_code(ns),
@@ -35,6 +39,7 @@ chartControlsUI <- function(id) {
     ),
     htmltools::tags$script("$('.sw-dropdown').addClass('btn-group-charter');"),
     htmltools::tags$script(HTML("$('.sw-dropdown > .btn').addClass('btn-charter');")),
+    tags$script("$('#sw-content-filterdrop').click(function (e) {e.stopPropagation();});"),
     toggleDisplayUi()
   )
 }
@@ -54,7 +59,7 @@ chartControlsUI <- function(id) {
 #'
 #' @importFrom shiny observeEvent reactiveValues reactiveValuesToList
 #'
-chartControlsServer <- function(input, output, session, type) {
+chartControlsServer <- function(input, output, session, type, data = NULL) {
 
   ns <- session$ns
 
@@ -95,14 +100,22 @@ chartControlsServer <- function(input, output, session, type) {
       toggleDisplayServer(session = session, id = ns("controls-size"), display = "none")
     }
   })
+  
+  res_data <- callModule(
+    module = filterDataServer, 
+    id = "filter-data", data = data, 
+    width = "90%"
+  )
 
-  outin <- shiny::reactiveValues()
+  outin <- shiny::reactiveValues(inputs = NULL)
 
   shiny::observeEvent(shiny::reactiveValuesToList(input), {
-    all_inputs <- shiny::reactiveValuesToList(input)
-    for (i in names(all_inputs)) {
-      outin[[i]] <- all_inputs[[i]]
-    }
+    outin$inputs <- shiny::reactiveValuesToList(input)
+  })
+  shiny::observeEvent(res_data$data, {
+    outin$data <- res_data$data
+    outin$code <- res_data$code
+    outin$index <- res_data$index
   })
 
   return(outin)

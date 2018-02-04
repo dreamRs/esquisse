@@ -54,7 +54,15 @@ esquisserServer <- function(input, output, session, data = NULL) {
   })
 
   # Module chart controls : title, xalabs, colors, export...
-  paramsChart <- shiny::callModule(chartControlsServer, id = "controls", type = geom_controls)
+  paramsChart <- shiny::callModule(
+    module = chartControlsServer, 
+    id = "controls", 
+    type = geom_controls, 
+    data = reactive(dataChart$data)
+  )
+  # observeEvent(paramsChart$index, {
+  #   dataChart$data_filtered <- dataChart$data[paramsChart$index, ]
+  # })
 
   # Module to choose type of charts
   geomSelected <- shiny::callModule(
@@ -75,21 +83,22 @@ esquisserServer <- function(input, output, session, data = NULL) {
 
 
   output$plooooooot <- shiny::renderPlot({
-
-    # str(dataChart$data)
     data <- dataChart$data
+    if (!is.null(paramsChart$index) && is.logical(paramsChart$index)) {
+      data <- data[paramsChart$index, ]
+    }
     vars <- reactiveValuesToList(varSelected)
     vars <- unlist(vars$x, use.names = FALSE)
     if (all(vars %in% names(data))) {
       res <- tryCatch({
         gg <- ggtry(
-          data = dataChart$data,
+          data = data,
           x = varSelected$x$xvar,
           y = varSelected$x$yvar,
           fill = varSelected$x$fill,
           color = varSelected$x$color,
           size = varSelected$x$size,
-          params = reactiveValuesToList(paramsChart),
+          params = reactiveValuesToList(paramsChart)$inputs,
           type = geomSelected$x
         )
         list(status = TRUE, gg = gg)
@@ -108,23 +117,23 @@ esquisserServer <- function(input, output, session, data = NULL) {
   })
 
   output$plot_export <- shiny::renderPlot({
-
-    # str(dataChart$data)
-    # verif_params <<- reactiveValuesToList(varSelected)
+    data <- dataChart$data
+    if (!is.null(paramsChart$index) && is.logical(paramsChart$index)) {
+      data <- data[paramsChart$index, ]
+    }
     res <- tryCatch({
       gg <- ggtry(
-        data = dataChart$data,
+        data = data,
         x = varSelected$x$xvar,
         y = varSelected$x$yvar,
         fill = varSelected$x$fill,
         color = varSelected$x$color,
         size = varSelected$x$size,
-        params = reactiveValuesToList(paramsChart),
+        params = reactiveValuesToList(paramsChart)$inputs,
         type = geomSelected$x
       )
       list(status = TRUE, gg = gg)
-    }
-    , error = function(e) {
+    }, error = function(e) {
       list(status = FALSE, gg = NULL, e = e)
     })
 
@@ -137,7 +146,7 @@ esquisserServer <- function(input, output, session, data = NULL) {
   })
 
   # Export PNG
-  shiny::observeEvent(paramsChart$export_png, {
+  shiny::observeEvent(paramsChart$inputs$export_png, {
     showModal(modalDialog(
       title = "Important message", size = "l",
       shiny::plotOutput(outputId = "plot_export")
@@ -145,15 +154,19 @@ esquisserServer <- function(input, output, session, data = NULL) {
   })
 
   # Export PowerPoint
-  shiny::observeEvent(paramsChart$export_ppt, {
+  shiny::observeEvent(paramsChart$inputs$export_ppt, {
+    data <- dataChart$data
+    if (!is.null(paramsChart$index) && is.logical(paramsChart$index)) {
+      data <- data[paramsChart$index, ]
+    }
     gg <- ggtry(
-      data = dataChart$data,
+      data = data,
       x = varSelected$x$xvar,
       y = varSelected$x$yvar,
       fill = varSelected$x$fill,
       color = varSelected$x$color,
       size = varSelected$x$size,
-      params = reactiveValuesToList(paramsChart),
+      params = reactiveValuesToList(paramsChart)$inputs,
       type = geomSelected$x
     )
     ppt <- officer::read_pptx()

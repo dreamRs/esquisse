@@ -1,7 +1,7 @@
 Package: esquisse
 Type: Package
 Title: Explore and Visualize Your Data Interactively
-Version: 0.1.0.930
+Version: 0.1.0.940
 Authors@R: c(person("Fanny", "Meyer", , "fanny.meyer@dreamrs.fr", c("aut")),
   person("Victor", "Perrier", , "victor.perrier@dreamrs.fr", c("aut", "cre")))
 Maintainer: <victor.perrier@dreamrs.fr>

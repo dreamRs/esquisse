@@ -72,7 +72,7 @@ moduleCodeServer <- function(input, output, session, varSelected, dataChart, par
       }
     )
 
-    params_chart <- shiny::reactiveValuesToList(paramsChart)
+    params_chart <- shiny::reactiveValuesToList(paramsChart)$inputs
 
     args_geom <- list()
     if (code_geom == "histogram") {
@@ -83,21 +83,21 @@ moduleCodeServer <- function(input, output, session, varSelected, dataChart, par
     }
     
     if (code_geom %in% c("bar", "histogram", "boxplot", "density") & is.null(varSelected$x$fill)) {
-      args_geom$fill <- paramsChart$fill_color %||% "#0C4C8A"
+      args_geom$fill <- params_chart$fill_color %||% "#0C4C8A"
     }
     
     if (code_geom %in% c("line", "point") & is.null(varSelected$x$color)) {
-      args_geom$color <- paramsChart$fill_color %||% "#0C4C8A"
+      args_geom$color <- params_chart$fill_color %||% "#0C4C8A"
     }
     
     if (code_geom %in% c("bar")) {
-      args_geom$position <- paramsChart$position %||% "dodge"
+      args_geom$position <- params_chart$position %||% "dodge"
       if (args_geom$position == "stack")
         args_geom$position <- NULL
     }
     
     # Coord
-    if (isTRUE(paramsChart$flip)) {
+    if (isTRUE(params_chart$flip)) {
       coord <- "flip"
     } else {
       coord <- NULL
@@ -116,7 +116,7 @@ moduleCodeServer <- function(input, output, session, varSelected, dataChart, par
     }
     code_scale <- get_code_scale(
       fill = varSelected$x$fill, color = varSelected$x$color,
-      params = paramsChart, filltype = filltype, colortype = colortype
+      params = params_chart, filltype = filltype, colortype = colortype
     )
 
     code <- ggcode(
@@ -125,7 +125,7 @@ moduleCodeServer <- function(input, output, session, varSelected, dataChart, par
       geom = code_geom,
       scale = code_scale,
       args_geom = args_geom,
-      theme = paramsChart$theme, coord = coord,
+      theme = params_chart$theme, coord = coord,
       labs = params_chart[c("title", "x", "y", "caption", "subtitle")],
       params = params_chart
     )

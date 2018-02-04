@@ -8,7 +8,7 @@
 \usage{
 filterDataUI(id)
 
-filterDataServer(input, output, session, data, vars = NULL)
+filterDataServer(input, output, session, data, vars = NULL, width = "100\%")
 }
 \arguments{
 \item{id}{Module's id}
@@ -22,10 +22,13 @@ filterDataServer(input, output, session, data, vars = NULL)
 \item{data}{a \code{data.frame} or a \code{\link[shiny]{reactive}} function returning a \code{data.frame}.}
 
 \item{vars}{variables for which to create filters, by default all variables in \code{data}.}
+
+\item{width}{the width of the input, e.g. \code{400px}, or \code{100\%}.}
 }
 \value{
 a \code{\link[shiny]{reactiveValues}} containing the data filtered under 
-slot \code{data} and the R code to reproduce the filtering under slot \code{code}.
+slot \code{data}, the R code to reproduce the filtering under slot \code{code} and a logical
+vector for indexing data under slot \code{index}.
 }
 \description{
 Modules for creating filters from a data.frame
