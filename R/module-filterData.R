@@ -144,44 +144,16 @@ filterDataServer <- function(input, output, session, data, vars = NULL) {
     data <- data_filter()
     res_f <- lapply(
       X = names(params),
-      FUN = function(x) {
-        if (x %in% names(data)) {
-          values <- params[[x]]
-          dat <- data[[x]]
-          if (inherits(x = dat, what = c("numeric", "integer"))) {
-            sprintf("%s >= %s & %s <= %s", x, values[1], x, values[2])
-            if (!num_equal(min(dat), values[1])) {
-              code1 <- sprintf("%s >= %s", x, values[1])
-            } else {
-              code1 <- ""
-            }
-            if (!num_equal(max(dat), values[2])) {
-              code2 <- sprintf("%s <= %s", x, values[2])
-            } else {
-              code2 <- ""
-            }
-            list(
-              code = code1 %+% code2,
-              ind = dat >= values[1] & dat <= values[2]
-            )
-          } else {
-            if (all(unique(dat) %in% values)) {
-              code <- ""
-            } else {
-              code <- sprintf("%s %%in%% c(%s)", x, paste(sprintf("'%s'", values), collapse = ", "))
-            }
-            list(
-              code = code,
-              ind = dat %in% values
-            )
-          }
-        }
-      }
+      FUN = generate_filters,
+      data = data, params = params
     )
-    ind <- Reduce(`&`, lapply(res_f, `[[`, "ind"))
-    code <- Reduce(`%+%`, lapply(res_f, `[[`, "code"))
-    return_data$code <- code
-    return_data$data <- data[ind, ]
+    res_len <- unlist(lapply(res_f, length))
+    if (sum(res_len) > 0) {
+      ind <- Reduce(`&`, lapply(res_f, `[[`, "ind"))
+      code <- Reduce(`%+%`, lapply(res_f, `[[`, "code"))
+      return_data$code <- code
+      return_data$data <- data[ind, ]
+    }
   }, ignoreInit = TRUE)
   
   
@@ -209,6 +181,14 @@ create_input_filter <- function(data, var, ns, key = "filter") {
       inputId = ns(paste(key, var, sep = "_")), label = var, 
       min = min(x), max = max(x), width = "100%",
       value = rangx, step = step
+    )
+  } else if (inherits(x = x, what = c("Date", "POSIXct"))) {
+    x <- x[!is.na(x)]
+    rangx <- range(x)
+    sliderInput(
+      inputId = ns(paste(key, var, sep = "_")), label = var, 
+      min = min(x), max = max(x), width = "100%",
+      value = rangx
     )
   } else {
     x <- unique(x[!is.na(x)])
@@ -252,5 +232,70 @@ num_equal <- function(x, y, tol = sqrt(.Machine$double.eps)) {
   }
 }
 
+
+
+
+generate_filters <- function(x, params, data) {
+  if (x %in% names(data)) {
+    values <- params[[x]]
+    dat <- data[[x]]
+    if (inherits(x = dat, what = c("numeric", "integer"))) {
+      if (!num_equal(min(dat), values[1])) {
+        code1 <- sprintf("%s >= %s", x, values[1])
+      } else {
+        code1 <- ""
+      }
+      if (!num_equal(max(dat), values[2])) {
+        code2 <- sprintf("%s <= %s", x, values[2])
+      } else {
+        code2 <- ""
+      }
+      list(
+        code = code1 %+% code2,
+        ind = dat >= values[1] & dat <= values[2]
+      )
+    } else if (inherits(x = dat, what = "Date")) {
+      if (min(dat) != values[1]) {
+        code1 <- sprintf("%s >= as.Date('%s')", x, values[1])
+      } else {
+        code1 <- ""
+      }
+      if (max(dat) != values[2]) {
+        code2 <- sprintf("%s <= as.Date('%s')", x, values[2])
+      } else {
+        code2 <- ""
+      }
+      list(
+        code = code1 %+% code2,
+        ind = dat >= values[1] & dat <= values[2]
+      )
+    } else if (inherits(x = dat, what = "POSIXct")) {
+      if (min(dat) != values[1]) {
+        code1 <- sprintf("%s >= as.POSIXct('%s')", x, values[1])
+      } else {
+        code1 <- ""
+      }
+      if (max(dat) != values[2]) {
+        code2 <- sprintf("%s <= as.POSIXct('%s')", x, values[2])
+      } else {
+        code2 <- ""
+      }
+      list(
+        code = code1 %+% code2,
+        ind = dat >= values[1] & dat <= values[2]
+      )
+    } else {
+      if (all(unique(dat) %in% values)) {
+        code <- ""
+      } else {
+        code <- sprintf("%s %%in%% c(%s)", x, paste(sprintf("'%s'", values), collapse = ", "))
+      }
+      list(
+        code = code,
+        ind = dat %in% values
+      )
+    }
+  }
+}
 
 
