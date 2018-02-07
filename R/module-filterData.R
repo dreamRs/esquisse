@@ -175,7 +175,7 @@ create_input_filter <- function(data, var, ns, key = "filter", width = "100%") {
   if (inherits(x = x, what = c("numeric", "integer"))) {
     x <- x[!is.na(x)]
     rangx <- range(x)
-    if (diff(rangx) < 4) {
+    if (isTRUE(diff(rangx) < 4)) {
       step <- pretty(rangx, n = 100)
       step <- step[2] - step[1]
       step <- as.numeric(prettyNum(step))
@@ -245,12 +245,12 @@ generate_filters <- function(x, params, data) {
     values <- params[[x]]
     dat <- data[[x]]
     if (inherits(x = dat, what = c("numeric", "integer"))) {
-      if (!num_equal(min(dat), values[1])) {
+      if (!isTRUE(num_equal(min(dat, na.rm = TRUE), values[1]))) {
         code1 <- sprintf("%s >= %s", x, values[1])
       } else {
         code1 <- ""
       }
-      if (!num_equal(max(dat), values[2])) {
+      if (!isTRUE(num_equal(max(dat, na.rm = TRUE), values[2]))) {
         code2 <- sprintf("%s <= %s", x, values[2])
       } else {
         code2 <- ""
@@ -260,12 +260,12 @@ generate_filters <- function(x, params, data) {
         ind = dat >= values[1] & dat <= values[2]
       )
     } else if (inherits(x = dat, what = "Date")) {
-      if (min(dat) != values[1]) {
+      if (isTRUE(min(dat, na.rm = TRUE) != values[1])) {
         code1 <- sprintf("%s >= as.Date('%s')", x, values[1])
       } else {
         code1 <- ""
       }
-      if (max(dat) != values[2]) {
+      if (isTRUE(max(dat, na.rm = TRUE) != values[2])) {
         code2 <- sprintf("%s <= as.Date('%s')", x, values[2])
       } else {
         code2 <- ""
@@ -275,12 +275,12 @@ generate_filters <- function(x, params, data) {
         ind = dat >= values[1] & dat <= values[2]
       )
     } else if (inherits(x = dat, what = "POSIXct")) {
-      if (min(dat) != values[1]) {
+      if (isTRUE(min(dat, na.rm = TRUE) != values[1])) {
         code1 <- sprintf("%s >= as.POSIXct('%s')", x, values[1])
       } else {
         code1 <- ""
       }
-      if (max(dat) != values[2]) {
+      if (isTRUE(max(dat, na.rm = TRUE) != values[2])) {
         code2 <- sprintf("%s <= as.POSIXct('%s')", x, values[2])
       } else {
         code2 <- ""
