@@ -144,17 +144,22 @@ filterDataServer <- function(input, output, session, data, vars = NULL, width = 
   observeEvent(reactiveValuesToList(input), {
     params <- reactiveValuesToList(input)
     params <- params[grep(x = names(params), pattern = key$x)]
+    params_na <- params[grep(x = names(params), pattern = "na_remove")]
+    names(params_na) <- gsub(pattern = paste0(key$x, "_"), replacement = "", x = names(params_na))
+    names(params_na) <- gsub(pattern = "_na_remove", replacement = "", x = names(params_na))
+    params <- params[-grep(x = names(params), pattern = "na_remove")]
     names(params) <- gsub(pattern = paste0(key$x, "_"), replacement = "", x = names(params))
     data <- data_filter()
     res_f <- lapply(
       X = names(params),
       FUN = generate_filters,
-      data = data, params = params
+      data = data, params = params,
+      params_na = params_na
     )
     res_len <- unlist(lapply(res_f, length))
     if (sum(res_len) > 0) {
       ind <- Reduce(`&`, lapply(res_f, `[[`, "ind"))
-      code <- Reduce(`%+%`, lapply(res_f, `[[`, "code"))
+      code <- Reduce(`%+&%`, lapply(res_f, `[[`, "code"))
       return_data$index <- ind
       return_data$code <- code
       return_data$data <- data[ind, ]
@@ -167,41 +172,79 @@ filterDataServer <- function(input, output, session, data, vars = NULL, width = 
 
 
 
-
-
-#' @importFrom shiny sliderInput selectizeInput
+#' @importFrom htmltools tagList
+#' @importFrom shinyWidgets sliderTextInput prettySwitch
+#' @importFrom shiny sliderInput selectizeInput splitLayout
 create_input_filter <- function(data, var, ns, key = "filter", width = "100%") {
   x <- data[[var]]
   if (inherits(x = x, what = c("numeric", "integer"))) {
     x <- x[!is.na(x)]
-    rangx <- range(x)
-    if (isTRUE(diff(rangx) < 4)) {
-      step <- pretty(rangx, n = 100)
-      step <- step[2] - step[1]
-      step <- as.numeric(prettyNum(step))
+    if (num_equal(max(x), min(x))) {
+      return(NULL)
     } else {
-      step <- 1
+      if (length(unique(x)) <= 30) {
+        values <- sort(unique(x))
+      } else {
+        values <- seq(from = min(x), to = max(x), length.out = 30)
+      }
+      values <- range_val(values)
+      tagList(
+        splitLayout(
+          tags$label(var), 
+          tags$div(
+            style = "text-align: right;",
+            prettySwitch(
+              inputId = ns(paste(key, var, "na_remove", sep = "_")), 
+              label = "NAs?", value = TRUE, slim = TRUE, status = "primary"
+            )
+          )
+        ),
+        sliderTextInput(
+          inputId = ns(paste(key, var, sep = "_")), label = NULL,
+          choices = values, selected = range(values), 
+          force_edges = TRUE, width = width
+        )
+      )
     }
-    sliderInput(
-      inputId = ns(paste(key, var, sep = "_")), label = var, 
-      min = min(x), max = max(x), width = width,
-      value = rangx, step = step
-    )
   } else if (inherits(x = x, what = c("Date", "POSIXct"))) {
     x <- x[!is.na(x)]
     rangx <- range(x)
-    sliderInput(
-      inputId = ns(paste(key, var, sep = "_")), label = var, 
-      min = min(x), max = max(x), width = width,
-      value = rangx
+    tagList(
+      splitLayout(
+        tags$label(var), 
+        tags$div(
+          style = "text-align: right;",
+          prettySwitch(
+            inputId = ns(paste(key, var, "na_remove", sep = "_")), 
+            label = "NAs?", value = TRUE, slim = TRUE, status = "primary"
+          )
+        )
+      ),
+      sliderInput(
+        inputId = ns(paste(key, var, sep = "_")), 
+        min = min(x), max = max(x), width = width,
+        value = rangx, label = NULL
+      )
     )
   } else {
     x <- unique(x[!is.na(x)])
-    selectizeInput(
-      inputId = ns(paste(key, var, sep = "_")), label = var,
-      choices = x, selected = x, 
-      multiple = TRUE, width = width,
-      options = list(plugins = list("remove_button"))
+    tagList(
+      splitLayout(
+        tags$label(var), 
+        tags$div(
+          style = "text-align: right;",
+          prettySwitch(
+            inputId = ns(paste(key, var, "na_remove", sep = "_")), 
+            label = "NAs?", value = TRUE, slim = TRUE, status = "primary"
+          )
+        )
+      ),
+      selectizeInput(
+        inputId = ns(paste(key, var, sep = "_")), 
+        choices = x, selected = x, label = NULL,
+        multiple = TRUE, width = width,
+        options = list(plugins = list("remove_button"))
+      )
     )
   }
 }
@@ -219,13 +262,19 @@ create_input_filter <- function(data, var, ns, key = "filter", width = "100%") {
 #   }
 # }
 
+range_val <- function(x) {
+  y <- round(x, 2)
+  y[1] <- trunc(x[1]*100)/100
+  y[length(y)] <- ceiling(x[length(x)]*100)/100
+  return(y)
+}
 
 
 num_equal <- function(x, y, tol = sqrt(.Machine$double.eps)) {
   abs(x - y) < tol
 }
 
-`%+%` <- function(e1, e2) {
+`%+&%` <- function(e1, e2) {
   if (e1 != "" & e2 != "") {
     paste(e1, e2, sep = " & ")
   } else if (e1 != "" & e2 == "") {
@@ -237,27 +286,71 @@ num_equal <- function(x, y, tol = sqrt(.Machine$double.eps)) {
   }
 }
 
+`%+|%` <- function(e1, e2) {
+  if (e1 != "" & e2 != "") {
+    paste(e1, e2, sep = " | ")
+  } else if (e1 != "" & e2 == "") {
+    e1
+  } else if (e1 == "" & e2 != "") {
+    ""
+  } else {
+    ""
+  }
+}
+
+`%+1%` <- function(e1, e2) {
+  if (e1 != "" & e2 != "") {
+    paste("(", e1, e2, ")")
+  } else if (e1 != "" & e2 == "") {
+    e1
+  } else if (e1 == "" & e2 != "") {
+    ""
+  } else {
+    ""
+  }
+}
+
+`%+%` <- function(e1, e2) {
+  if (e1 != "" & e2 != "") {
+    paste("(", e1, e2, ")")
+  } else if (e1 != "" & e2 == "") {
+    e1
+  } else if (e1 == "" & e2 != "") {
+    e2
+  } else {
+    ""
+  }
+}
 
 
 
-generate_filters <- function(x, params, data) {
+#' @importFrom stats na.omit
+generate_filters <- function(x, params, params_na, data) {
   if (x %in% names(data)) {
     values <- params[[x]]
     dat <- data[[x]]
+    na <- params_na[[x]]
     if (inherits(x = dat, what = c("numeric", "integer"))) {
-      if (!isTRUE(num_equal(min(dat, na.rm = TRUE), values[1]))) {
+      if (!isTRUE(num_equal(min(dat, na.rm = TRUE), values[1], tol = 0.009))) {
         code1 <- sprintf("%s >= %s", x, values[1])
       } else {
         code1 <- ""
       }
-      if (!isTRUE(num_equal(max(dat, na.rm = TRUE), values[2]))) {
+      if (!isTRUE(num_equal(max(dat, na.rm = TRUE), values[2], tol = 0.009))) {
         code2 <- sprintf("%s <= %s", x, values[2])
       } else {
         code2 <- ""
       }
+      if (na) {
+        codena <- sprintf("| is.na(%s)", x)
+        ind <- (dat >= values[1] & dat <= values[2]) | is.na(dat)
+      } else {
+        codena <- sprintf("& !is.na(%s)", x)
+        ind <- dat >= values[1] & dat <= values[2] & !is.na(dat)
+      }
       list(
-        code = code1 %+% code2,
-        ind = dat >= values[1] & dat <= values[2]
+        code = code1 %+&% code2 %+1% codena,
+        ind = ind
       )
     } else if (inherits(x = dat, what = "Date")) {
       if (isTRUE(min(dat, na.rm = TRUE) != values[1])) {
@@ -270,9 +363,16 @@ generate_filters <- function(x, params, data) {
       } else {
         code2 <- ""
       }
+      if (na) {
+        codena <- sprintf("| is.na(%s)", x)
+        ind <- (dat >= values[1] & dat <= values[2]) | is.na(dat)
+      } else {
+        codena <- sprintf("& !is.na(%s)", x)
+        ind <- dat >= values[1] & dat <= values[2] & !is.na(dat)
+      }
       list(
-        code = code1 %+% code2,
-        ind = dat >= values[1] & dat <= values[2]
+        code = code1 %+&% code2 %+1% codena,
+        ind = ind
       )
     } else if (inherits(x = dat, what = "POSIXct")) {
       if (isTRUE(min(dat, na.rm = TRUE) != values[1])) {
@@ -285,19 +385,40 @@ generate_filters <- function(x, params, data) {
       } else {
         code2 <- ""
       }
-      list(
-        code = code1 %+% code2,
-        ind = dat >= values[1] & dat <= values[2]
-      )
-    } else {
-      if (all(unique(dat) %in% values)) {
-        code <- ""
+      if (na) {
+        codena <- sprintf("| is.na(%s)", x)
+        ind <- (dat >= values[1] & dat <= values[2]) | is.na(dat)
       } else {
-        code <- sprintf("%s %%in%% c(%s)", x, paste(sprintf("'%s'", values), collapse = ", "))
+        codena <- sprintf("& !is.na(%s)", x)
+        ind <- dat >= values[1] & dat <= values[2] & !is.na(dat)
       }
       list(
-        code = code,
-        ind = dat %in% values
+        code = code1 %+&% code2 %+1% codena,
+        ind = ind
+      )
+    } else {
+      if (all(unique(na.omit(dat)) %in% values)) {
+        code <- ""
+        if (na) {
+          codena <- ""
+          ind <- rep_len(TRUE, length(dat))
+        } else {
+          codena <- sprintf("!is.na(%s)", x)
+          ind <- !is.na(dat)
+        }
+      } else {
+        code <- sprintf("%s %%in%% c(%s)", x, paste(sprintf("'%s'", values), collapse = ", "))
+        if (na) {
+          codena <- sprintf("| is.na(%s)", x)
+          ind <- dat %in% values | is.na(dat)
+        } else {
+          codena <- ""
+          ind <- dat %in% values
+        }
+      }
+      list(
+        code = code %+% codena,
+        ind = ind
       )
     }
   }
