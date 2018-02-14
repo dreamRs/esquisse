@@ -34,3 +34,6 @@ vignettes/*.pdf
 *.knit.md
 
 .Rproj.user
+
+# testdata
+testdata/

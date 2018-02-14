@@ -32,12 +32,12 @@ chartControlsUI <- function(id) {
     ),
     shinyWidgets::dropdown(
       tags$div(
-        style = "max-height: 400px; overflow-y: scroll; padding-left: 15px;",
+        style = "max-height: 400px; overflow-y: scroll; padding-left: 10px;",
         filterDataUI(id = ns("filter-data"))
       ),
       style = "default", label = "Data", 
       up = TRUE, icon = icon("filter"),
-      right = TRUE, width = "290px", 
+      right = TRUE, width = "310px", 
       inputId = "filterdrop", status = "default btn-controls"
     ),
     shinyWidgets::dropdown(
@@ -113,7 +113,7 @@ chartControlsServer <- function(input, output, session, type, data = NULL) {
   res_data <- callModule(
     module = filterDataServer, 
     id = "filter-data", data = data, 
-    width = "90%"
+    width = "95%"
   )
 
   outin <- shiny::reactiveValues(inputs = NULL)

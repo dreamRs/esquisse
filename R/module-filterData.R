@@ -7,8 +7,8 @@
 #' slot \code{data}, the R code to reproduce the filtering under slot \code{code} and a logical
 #' vector for indexing data under slot \code{index}.
 #' @export
-#' @importFrom htmltools tags
-#' @importFrom shiny NS
+#' @importFrom htmltools tags tagList 
+#' @importFrom shiny NS singleton
 #' 
 #' @name filterData-module
 #'
@@ -82,7 +82,12 @@
 #' 
 filterDataUI <- function(id) {
   ns <- NS(id)
-  tags$div(id = ns("placeholder-filters"))
+  tagList(
+    singleton(
+      tags$style(".selectize-big .selectize-input {height: 72px; overflow-y: scroll;}")
+    ),
+    tags$div(id = ns("placeholder-filters"))
+  )
 }
 
 
@@ -172,8 +177,8 @@ filterDataServer <- function(input, output, session, data, vars = NULL, width = 
 
 
 
-#' @importFrom htmltools tagList
-#' @importFrom shinyWidgets sliderTextInput prettySwitch
+#' @importFrom htmltools tagList HTML
+#' @importFrom shinyWidgets sliderTextInput prettySwitch prettyToggle pickerInput
 #' @importFrom shiny sliderInput selectizeInput splitLayout
 create_input_filter <- function(data, var, ns, key = "filter", width = "100%") {
   x <- data[[var]]
@@ -189,20 +194,13 @@ create_input_filter <- function(data, var, ns, key = "filter", width = "100%") {
       }
       values <- range_val(values)
       tagList(
-        splitLayout(
-          tags$label(var), 
-          tags$div(
-            style = "text-align: right;",
-            prettySwitch(
-              inputId = ns(paste(key, var, "na_remove", sep = "_")), 
-              label = "NAs?", value = TRUE, slim = TRUE, status = "primary"
-            )
-          )
+        tags$span(
+          tags$label(var), HTML("&nbsp;&nbsp;"), naInput(key, var, ns) 
         ),
         sliderTextInput(
           inputId = ns(paste(key, var, sep = "_")), label = NULL,
           choices = values, selected = range(values), 
-          force_edges = TRUE, width = width
+          force_edges = TRUE, grid = TRUE, width = width
         )
       )
     }
@@ -210,15 +208,8 @@ create_input_filter <- function(data, var, ns, key = "filter", width = "100%") {
     x <- x[!is.na(x)]
     rangx <- range(x)
     tagList(
-      splitLayout(
-        tags$label(var), 
-        tags$div(
-          style = "text-align: right;",
-          prettySwitch(
-            inputId = ns(paste(key, var, "na_remove", sep = "_")), 
-            label = "NAs?", value = TRUE, slim = TRUE, status = "primary"
-          )
-        )
+      tags$span(
+        tags$label(var), HTML("&nbsp;&nbsp;"), naInput(key, var, ns) 
       ),
       sliderInput(
         inputId = ns(paste(key, var, sep = "_")), 
@@ -227,26 +218,49 @@ create_input_filter <- function(data, var, ns, key = "filter", width = "100%") {
       )
     )
   } else {
-    x <- unique(x[!is.na(x)])
-    tagList(
-      splitLayout(
-        tags$label(var), 
-        tags$div(
-          style = "text-align: right;",
-          prettySwitch(
-            inputId = ns(paste(key, var, "na_remove", sep = "_")), 
-            label = "NAs?", value = TRUE, slim = TRUE, status = "primary"
-          )
-        )
+    x <- x[!is.na(x)]
+    if (length(x) == length(unique(x)))
+      return(NULL)
+    if (inherits(x, "factor")) {
+      x <- levels(x)
+    } else {
+      x <- unique(x)
+    }
+    
+    tags$div(
+      class = if (length(x) > 15) "selectize-big",
+      tags$span(
+        tags$label(var), HTML("&nbsp;&nbsp;"), naInput(key, var, ns) 
       ),
       selectizeInput(
-        inputId = ns(paste(key, var, sep = "_")), 
+        inputId = ns(paste(key, var, sep = "_")),
         choices = x, selected = x, label = NULL,
         multiple = TRUE, width = width,
         options = list(plugins = list("remove_button"))
       )
+      # pickerInput(
+      #   inputId = ns(paste(key, var, sep = "_")), 
+      #   choices = x, selected = x, label = NULL,
+      #   multiple = TRUE, width = width,
+      #   options = list(
+      #     `actions-box` = TRUE,
+      #     `selected-text-format`= "count > 4",
+      #     `count-selected-text` = "{0}/{1} choices"
+      #   )
+      # )
     )
   }
+}
+
+naInput <- function(key, var, ns) {
+  prettyToggle(
+    inputId = ns(paste(key, var, "na_remove", sep = "_")), 
+    value = TRUE,
+    label_on = "NA", icon_on = icon("ok", lib = "glyphicon"),
+    label_off = "NA", icon_off = icon("remove", lib = "glyphicon"),
+    status_on = "success", status_off = "danger",
+    inline = TRUE
+  )
 }
 
 
@@ -264,8 +278,8 @@ create_input_filter <- function(data, var, ns, key = "filter", width = "100%") {
 
 range_val <- function(x) {
   y <- round(x, 2)
-  y[1] <- trunc(x[1]*100)/100
-  y[length(y)] <- ceiling(x[length(x)]*100)/100
+  y[1] <- trunc(x[1]*1000)/1000
+  y[length(y)] <- ceiling(x[length(x)]*1000)/1000
   return(y)
 }
 
@@ -304,7 +318,11 @@ num_equal <- function(x, y, tol = sqrt(.Machine$double.eps)) {
   } else if (e1 != "" & e2 == "") {
     e1
   } else if (e1 == "" & e2 != "") {
-    ""
+    if (grepl(pattern = "&", x = e2)) {
+      gsub(pattern = "(&|\\|)\\s", replacement = "", x = e2)
+    } else {
+      ""
+    }
   } else {
     ""
   }
