@@ -104,6 +104,7 @@ chooseDataUI <- function(id) {
 #' @param output standard \code{shiny} output.
 #' @param session standard \code{shiny} session.
 #' @param data a data.frame to use by default.
+#' @param name character, the name of \code{data}.
 #' @param selectVars logical, display menu to select vars to use in selected \code{data.frame}.
 #' @param launchOnStart launch modal when application is launched.
 #' @param defaultData a character vector of \code{data.frame}s to choose along if
@@ -116,11 +117,11 @@ chooseDataUI <- function(id) {
 #'
 #' @importFrom shiny showModal observeEvent reactiveValues callModule
 #'
-chooseDataServer <- function(input, output, session, data = NULL, selectVars = TRUE, launchOnStart = TRUE, defaultData = NULL) {
+chooseDataServer <- function(input, output, session, data = NULL, name = NULL, selectVars = TRUE, launchOnStart = TRUE, defaultData = NULL) {
 
   ns <- session$ns
   
-  return_data <- reactiveValues(data = data, name = "")
+  return_data <- reactiveValues(data = data, name = name)
   
   if (launchOnStart) {
     showModal(chooseDataModal(ns = ns, defaultData = defaultData, selectVars = selectVars))

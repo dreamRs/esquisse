@@ -30,12 +30,13 @@ esquisser <- function(data = NULL) {
     if (!inherits(x = defaultDataValid, what = "data.frame")) {
       data <- NULL
     } else {
-      data <- as.data.frame(defaultData)
+      data <- as.data.frame(defaultDataValid)
     }
   }
 
   # options("charter.ggbuilder.data" = data)
   esquisse.env$data <- data
+  esquisse.env$name <- defaultData
 
   display <- getOption("charter.display.mode", default = "dialog")
 

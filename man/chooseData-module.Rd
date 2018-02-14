@@ -8,8 +8,8 @@
 \usage{
 chooseDataUI(id)
 
-chooseDataServer(input, output, session, data = NULL, selectVars = TRUE,
-  launchOnStart = TRUE, defaultData = NULL)
+chooseDataServer(input, output, session, data = NULL, name = NULL,
+  selectVars = TRUE, launchOnStart = TRUE, defaultData = NULL)
 }
 \arguments{
 \item{id}{Module's id.}
@@ -21,6 +21,8 @@ chooseDataServer(input, output, session, data = NULL, selectVars = TRUE,
 \item{session}{standard \code{shiny} session.}
 
 \item{data}{a data.frame to use by default.}
+
+\item{name}{character, the name of \code{data}.}
 
 \item{selectVars}{logical, display menu to select vars to use in selected \code{data.frame}.}
 

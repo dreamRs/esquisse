@@ -17,7 +17,7 @@ esquisserServer <- function(input, output, session, data = NULL) {
   dataChart <- callModule(
     module = chooseDataServer, 
     id = "choose-data",
-    data = esquisse.env$data, 
+    data = esquisse.env$data, name = esquisse.env$name,
     launchOnStart = is.null(esquisse.env$data)
   )
   observeEvent(dataChart$data, {
@@ -116,42 +116,6 @@ esquisserServer <- function(input, output, session, data = NULL) {
 
   })
 
-  output$plot_export <- shiny::renderPlot({
-    data <- dataChart$data
-    if (!is.null(paramsChart$index) && is.logical(paramsChart$index)) {
-      data <- data[paramsChart$index, ]
-    }
-    res <- tryCatch({
-      gg <- ggtry(
-        data = data,
-        x = varSelected$x$xvar,
-        y = varSelected$x$yvar,
-        fill = varSelected$x$fill,
-        color = varSelected$x$color,
-        size = varSelected$x$size,
-        params = reactiveValuesToList(paramsChart)$inputs,
-        type = geomSelected$x
-      )
-      list(status = TRUE, gg = gg)
-    }, error = function(e) {
-      list(status = FALSE, gg = NULL, e = e)
-    })
-
-    if (!res$status) {
-      print(res$e)
-    }
-
-    res$gg
-
-  })
-
-  # Export PNG
-  shiny::observeEvent(paramsChart$inputs$export_png, {
-    showModal(modalDialog(
-      title = "Important message", size = "l",
-      shiny::plotOutput(outputId = "plot_export")
-    ))
-  })
 
   # Export PowerPoint
   shiny::observeEvent(paramsChart$inputs$export_ppt, {
