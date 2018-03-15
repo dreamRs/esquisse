@@ -6,7 +6,7 @@
 #' @return code to reproduce chart
 #' @export
 #'
-#' @importFrom rstudioapi getActiveDocumentContext
+#' @importFrom rstudioapi getActiveDocumentContext isAvailable
 #' @importFrom shiny dialogViewer browserViewer runGadget paneViewer
 #'
 #' @examples
@@ -19,10 +19,13 @@ esquisser <- function(data = NULL) {
 
 
   # Get the document context.
-  context <- rstudioapi::getActiveDocumentContext()
+  if (isAvailable()) {
+    context <- getActiveDocumentContext()
+    defaultData <- context$selection[[1]]$text
+  } else {
+    defaultData <- ""
+  }
 
-  # Set the default data to use based on the selection.
-  defaultData <- context$selection[[1]]$text
 
   # Validate selection
   if (is.null(data) && defaultData %in% ls(pos = globalenv())) {
@@ -41,17 +44,17 @@ esquisser <- function(data = NULL) {
   display <- getOption("charter.display.mode", default = "dialog")
 
   if (display == "browser") {
-    inviewer <- shiny::browserViewer(browser = getOption("browser"))
+    inviewer <- browserViewer(browser = getOption("browser"))
   } else if (display == "pane") {
-    inviewer <- shiny::paneViewer(minHeight = "maximize")
+    inviewer <- paneViewer(minHeight = "maximize")
   } else {
-    inviewer <- shiny::dialogViewer(
+    inviewer <- dialogViewer(
       "Explore your data with ggplot2",
       width = 1000, height = 750
     )
   }
 
-  shiny::runGadget(app = esquisserUI(), server = esquisserServer, viewer = inviewer)
+  runGadget(app = esquisserUI(), server = esquisserServer, viewer = inviewer)
 }
 
 
