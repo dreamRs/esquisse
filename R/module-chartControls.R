@@ -19,7 +19,7 @@ chartControlsUI <- function(id) {
   htmltools::tags$div(
     class = "btn-group-charter btn-group-justified-charter",
     shinyWidgets::dropdown(
-      controls_labs(ns),
+      controls_labs(ns), inputId = "labsdrop",
       style = "default", label = "Labels & Title", 
       up = TRUE, icon = icon("font"), 
       status = "default btn-controls"
@@ -27,23 +27,23 @@ chartControlsUI <- function(id) {
     shinyWidgets::dropdown(
       controls_params(ns), controls_appearance(ns),
       style = "default", label = "Plot options",
-      up = TRUE, width = "270px", 
+      up = TRUE, inputId = "paramsdrop",
       icon = icon("gears"), status = "default btn-controls"
     ),
     shinyWidgets::dropdown(
       tags$div(
-        style = "max-height: 400px; overflow-y: scroll; padding-left: 10px;",
+        style = "max-height: 400px; overflow-y: scroll;", #  padding-left: 10px;
         filterDataUI(id = ns("filter-data"))
       ),
       style = "default", label = "Data", 
       up = TRUE, icon = icon("filter"),
-      right = TRUE, width = "310px", 
-      inputId = "filterdrop", status = "default btn-controls"
+      right = TRUE, inputId = "filterdrop",
+      status = "default btn-controls"
     ),
     shinyWidgets::dropdown(
       controls_code(ns),
       style = "default", label = "Export & code", 
-      up = TRUE, right = TRUE, width = "350px",
+      up = TRUE, right = TRUE, inputId = "codedrop",
       icon = icon("code"), status = "default btn-controls"
     ),
     htmltools::tags$script("$('.sw-dropdown').addClass('btn-group-charter');"),
