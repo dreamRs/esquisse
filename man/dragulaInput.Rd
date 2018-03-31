@@ -6,7 +6,7 @@
 \usage{
 dragulaInput(inputId, sourceLabel, targetsLabels, targetsIds = NULL,
   choices = NULL, choiceNames = NULL, choiceValues = NULL,
-  status = "primary", replace = FALSE, width = NULL, height = "100px")
+  status = "primary", replace = FALSE, width = NULL, height = "200px")
 }
 \arguments{
 \item{inputId}{The \code{input} slot that will be used to access the value.}

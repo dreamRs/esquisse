@@ -35,7 +35,7 @@
 #' 
 #' @importFrom htmltools validateCssUnit
 #' @importFrom jsonlite toJSON
-#' @importFrom shiny singleton fillRow
+#' @importFrom shiny singleton fillRow splitLayout
 #'
 #' @examples
 #' \dontrun{
@@ -74,7 +74,7 @@ dragulaInput <- function(inputId, sourceLabel, targetsLabels,
                          targetsIds = NULL,
                          choices = NULL, choiceNames = NULL,
                          choiceValues = NULL, status = "primary", 
-                         replace = FALSE, width = NULL, height = "100px") {
+                         replace = FALSE, width = NULL, height = "200px") {
   
   args <- normalizeChoicesArgs(choices, choiceNames, choiceValues)
   
@@ -87,13 +87,14 @@ dragulaInput <- function(inputId, sourceLabel, targetsLabels,
     X = seq_along(targetsLabels),
     FUN = function(i) {
       tags$div(
-        # style = "height: 95%;",
+        style = "height: 95%; margin: 0;",
         class = "box-dad xyvar", id = paste(inputId, "target", targetsIds[i], sep = "-"),
         tags$em(tags$b(targetsLabels[i], class = "label-background"))
       )
     }
   )
-  target_list$height <- height
+  target_list$style <- "height: 50%; padding-right: 0; padding-left: 0; margin-right: 0; margin-left: 0;"
+  target_list$cellArgs <- list(style = "height:90%; padding: 0; margin: 0;")
   target_list$width <- width
   
   tagList(
@@ -108,23 +109,22 @@ dragulaInput <- function(inputId, sourceLabel, targetsLabels,
     tags$div(
       class="form-group shiny-input-container shiny-input-dragula shiny-input-container-inline",
       style = if(!is.null(width)) paste("width:", htmltools::validateCssUnit(width), ";"),
+      style = if(!is.null(height)) paste("height:", htmltools::validateCssUnit(height), ";"),
       id = inputId, #style = "height: 200px;", 
       `data-source` = jsonlite::toJSON(paste(inputId, "source", sep = "-")),
       `data-targets` = jsonlite::toJSON(paste(inputId, "target", targetsIds, sep = "-")),
       `data-replace` = tolower(replace),
       tags$div(
-        style = paste("height:", htmltools::validateCssUnit(height), ";"),
+        style = "height: 50%; width: 100%; padding-right: 0; padding-left: 0; margin-right: 0; margin-left: 0;",
         class = "box-dad",
         tags$em(tags$b(sourceLabel, class = "label-background")),
         tags$div(
           id = paste(inputId, "source", sep = "-"), 
-          style = "margin: 5px; min-height: 15px;",
+          style = "margin: 5px; width: 100%; min-height: 15px; margin-right: 0;",
           makeDragulaChoices(inputId, args, status)
         )
       ),
-      fillPage(
-        do.call(fillRow, target_list)
-      )
+      do.call(splitLayout, target_list)
     )
   )
 }
