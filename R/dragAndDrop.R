@@ -122,7 +122,9 @@ dragAndDropServer <- function(input, output, session, data) {
         htmltools::tags$em(tags$b("Variables", class = "label-background")),
         htmltools::tags$div(
           id = ns("variables"), style = "margin: 5px; min-width: 50px; min-height: 15px;",
-          htmltools::HTML(paste(badgeType(col_name = names(res_col_type), col_type = unname(res_col_type)), collapse = " "))
+          htmltools::HTML(paste(htmltools::doRenderTags(
+            badgeType(col_name = names(res_col_type), col_type = unname(res_col_type))
+          ), collapse = " "))
         ),
         htmltools::tags$script(
           sprintf(

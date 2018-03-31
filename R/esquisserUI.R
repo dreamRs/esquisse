@@ -48,12 +48,18 @@ esquisserUI <- function() {
           chooseDataUI(id = "choose-data")
         )
       ),
-      top_right = dragAndDropUi(
-        id = "dragvars",
-        dragula_css = "esquisse/dragula/dragula.min.css",
-        dragula_js = "esquisse/dragula/dragula.min.js",
-        bindings = "esquisse/dragula/dragula-bindings-fun.js",
-        styles = "esquisse/styles-dad.css"
+      # top_right = dragAndDropUi(
+      #   id = "dragvars",
+      #   dragula_css = "esquisse/dragula/dragula.min.css",
+      #   dragula_js = "esquisse/dragula/dragula.min.js",
+      #   bindings = "esquisse/dragula/dragula-bindings-fun.js",
+      #   styles = "esquisse/styles-dad.css"
+      # ),
+      top_right = dragulaInput(
+        inputId = "dragvars", sourceLabel = "Variables", 
+        targetsLabels = c("X", "Y", "Fill", "Color", "Size"), 
+        targetsIds = c("xvar", "yvar", "fill", "color", "size"),
+        choices = "a", width = "100%", height = NULL
       ),
       main = htmltools::tags$div(
         style = "margin-top: 10px; padding-bottom: 25px; height: 100%;",

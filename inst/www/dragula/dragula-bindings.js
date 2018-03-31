@@ -1,45 +1,117 @@
 
-// Dragula bindings
-
-/*
-dragula([document.querySelector('#variables'), document.querySelector('#xvars')])
-.on('dragend', function(el) {
-var IDx = [];
-$('#xvars').find('span').each(function(){ IDx.push(this.id); });
-Shiny.onInputChange('xaxis', IDx);
-});
-*/
-
-//var containers = $('.xyvar').toArray();
-//containers.concat($('#variables').toArray());
-
-dragula([document.querySelector('#variables'), document.querySelector('#xvars'), document.querySelector('#yvars')], {
-  removeOnSpill: true,
-  copy: function (el, source) {
-    return source === document.getElementById('variables');
+var dragulaBinding = new Shiny.InputBinding();
+  $.extend(dragulaBinding, {
+  find: function find(scope) {
+    return $(scope).find('.shiny-input-dragula');
   },
-  accepts: function (el, target) {
-    return target !== document.getElementById('variables');
+  initialize: function initialize(el) {
+    var opts = {};
+    var $el = $(el);
+    
+    var replaceold = $(el).data("replace");
+    
+    var containersId = [];
+    
+    var targetsContainer = $(el).data("targets");
+    targetsContainer.forEach(function(element) {
+      containersId.push(document.querySelector('#' + element));
+    });
+    
+    var sourceContainer = $(el).data("source");
+    sourceContainer.forEach(function(element) {
+      containersId.push(document.querySelector('#' + element));
+    });
+    
+    if (replaceold) {
+      opts.copy = function (el, source) {
+        return source === document.getElementById(sourceContainer);
+      };
+    }
+    
+    var drake = dragula(containersId, opts).on('dragend', function(el) {
+      $(el).trigger('change');
+    });
+    
+    if (replaceold) {
+      drake.on('drop', function(el, target) {
+
+        if ( target !== document.getElementById(sourceContainer) ) { 
+          $(target).children('.label-dragula').remove();
+          target.appendChild(el);
+        }
+    
+      });
+    }
   },
-  isContainer: function (el) {
-    return el.classList.contains('xyvar');
-  }
-}).on('dragend', function(el) {
+  getValue: function getValue(el) {
+    var values = {};
+    values.source = [];
+    values.target = {};
+    var source = $(el).data("source");
+    $('#' + source).find('span.label-dragula').each(function(){ 
+      values.source.push( $(this).data('value') );
+    });
+    
+    var targets = $(el).data("targets");
+    var targetsname = [];
+    targets.forEach(function(element) {
+      targetsname.push(element.replace(/.*target-/, ''));
+    });
+    
+    for (i = 0; i < targetsname.length; i++) { 
+      values.target[targetsname[i]] = [];
+      $('#' + targets[i]).find('span.label-dragula').each(function(){ 
+        values.target[targetsname[i]].push( $(this).data('value') );
+        if (values.target[targetsname[i]].length === 0) {
+          values.target[targetsname[i]] = null;
+        }
+      });
+    }
 
-  var IDx = [];
-  $('#xvars').find('span').each(function(){ IDx.push(this.id); });
-  Shiny.onInputChange('xaxis', IDx);
+    if (values.source.length === 0) {
+      values.source = null;
+    }
 
-  var IDy = [];
-  $('#yvars').find('span').each(function(){ IDy.push(this.id); });
-  Shiny.onInputChange('yaxis', IDy);
-
-}).on('drop', function(el, target) {
-
-  if ( target == document.getElementById('xvars') ) {
-    document.getElementById('xvars').innerHTML = "";
-    document.getElementById('xvars').appendChild(el);
-  }
-
+    // console.log(values);
+    return values;
+  },
+  getType: function() {
+    return "esquisse.dragula";
+  },
+  setValue: function setValue(el, value) {
+    // Not implemented
+  },
+  subscribe: function subscribe(el, callback) {
+    $(el).on('change.dragulaBinding', function (event) {
+      callback();
+    });
+  },
+  unsubscribe: function unsubscribe(el) {
+    $(el).off('.dragulaBinding');
+  },
+  receiveMessage: function receiveMessage(el, data) {
+    var $el = $(el);
+    if (data.hasOwnProperty('choices')) {
+      var targetsContainer = $(el).data("targets");
+      targetsContainer.forEach(function(element) {
+        $('#' + element).children('.label-dragula').remove();
+      });
+      var sourceContainer = $(el).data("source");
+      sourceContainer.forEach(function(element) {
+        $('#' + element).children('.label-dragula').remove();
+        $('#' + element).html(data.choices);
+      });
+      $(el).trigger('change');
+    }
+  },
+  getRatePolicy: function getRatePolicy() {
+    return {
+      policy: 'debounce',
+      delay: 250
+    };
+  },
+  getState: function getState(el) {}
 });
+
+Shiny.inputBindings.register(dragulaBinding, "shiny.dragula");
 

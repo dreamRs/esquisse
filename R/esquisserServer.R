@@ -21,15 +21,24 @@ esquisserServer <- function(input, output, session, data = NULL) {
     launchOnStart = is.null(esquisse.env$data)
   )
   observeEvent(dataChart$data, {
-    varSelected <- reactiveValues(x = NULL)
+    # varSelected <- reactiveValues(x = NULL)
+    updateDragulaInput(
+      session = session, 
+      inputId = "dragvars", status = NULL,
+      choiceValues = names(dataChart$data), 
+      choiceNames = badgeType(
+        col_name = names(dataChart$data), 
+        col_type = col_type(dataChart$data)
+      )
+    )
   })
 
-  varSelected <- shiny::callModule(dragAndDropServer, id = "dragvars", data = dataChart)
+  # varSelected <- shiny::callModule(dragAndDropServer, id = "dragvars", data = dataChart)
 
   geom_possible <- shiny::reactiveValues(x = "auto")
   geom_controls <- shiny::reactiveValues(x = "auto")
-  shiny::observeEvent(list(varSelected$x, geomSelected$x), {
-    types <- possible_geom(data = dataChart$data, x = varSelected$x$xvar, y = varSelected$x$yvar)
+  shiny::observeEvent(list(input$dragvars$target, geomSelected$x), {
+    types <- possible_geom(data = dataChart$data, x = input$dragvars$target$xvar, y = input$dragvars$target$yvar)
     geom_possible$x <- c("auto", types)
 
     if ("bar" %in% types & geomSelected$x %in% c("auto", "bar")) {
@@ -46,7 +55,7 @@ esquisserServer <- function(input, output, session, data = NULL) {
       geom_controls$x <- "auto"
     }
     
-    if (!is.null(varSelected$x$fill) | !is.null(varSelected$x$color)) {
+    if (!is.null(input$dragvars$target$fill) | !is.null(input$dragvars$target$color)) {
       geom_controls$palette <- TRUE
     } else {
       geom_controls$palette <- FALSE
@@ -77,7 +86,7 @@ esquisserServer <- function(input, output, session, data = NULL) {
 
 
   output$test <- shiny::renderPrint({
-    # str(varSelected$x)
+    # str(input$dragvars$target)
     # str(dataChart$data)
   })
 
@@ -87,17 +96,17 @@ esquisserServer <- function(input, output, session, data = NULL) {
     if (!is.null(paramsChart$index) && is.logical(paramsChart$index)) {
       data <- data[paramsChart$index, ]
     }
-    vars <- reactiveValuesToList(varSelected)
+    vars <- input$dragvars$target
     vars <- unlist(vars$x, use.names = FALSE)
     if (all(vars %in% names(data))) {
       res <- tryCatch({
         gg <- ggtry(
           data = data,
-          x = varSelected$x$xvar,
-          y = varSelected$x$yvar,
-          fill = varSelected$x$fill,
-          color = varSelected$x$color,
-          size = varSelected$x$size,
+          x = input$dragvars$target$xvar,
+          y = input$dragvars$target$yvar,
+          fill = input$dragvars$target$fill,
+          color = input$dragvars$target$color,
+          size = input$dragvars$target$size,
           params = reactiveValuesToList(paramsChart)$inputs,
           type = geomSelected$x
         )
@@ -125,11 +134,11 @@ esquisserServer <- function(input, output, session, data = NULL) {
     }
     gg <- ggtry(
       data = data,
-      x = varSelected$x$xvar,
-      y = varSelected$x$yvar,
-      fill = varSelected$x$fill,
-      color = varSelected$x$color,
-      size = varSelected$x$size,
+      x = input$dragvars$target$xvar,
+      y = input$dragvars$target$yvar,
+      fill = input$dragvars$target$fill,
+      color = input$dragvars$target$color,
+      size = input$dragvars$target$size,
       params = reactiveValuesToList(paramsChart)$inputs,
       type = geomSelected$x
     )
@@ -144,7 +153,7 @@ esquisserServer <- function(input, output, session, data = NULL) {
   # Code
   shiny::callModule(
     moduleCodeServer, id = "code",
-    varSelected = varSelected,
+    varSelected = input$dragvars$target,
     dataChart = dataChart,
     paramsChart = paramsChart,
     geomSelected = geomSelected

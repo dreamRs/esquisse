@@ -22,7 +22,11 @@ moduleCodeUI <- function(id) {
     htmltools::tags$b("Code:"),
     shiny::uiOutput(outputId = ns("code")),
     htmltools::tags$textarea(id = "holderCode", style = "display: none;"),
-    shiny::actionLink(inputId = ns("insert_code"), label = "Insert code in script", icon = shiny::icon("arrow-circle-left")),
+    shiny::actionLink(
+      inputId = ns("insert_code"),
+      label = "Insert code in script",
+      icon = shiny::icon("arrow-circle-left")
+    ),
     htmltools::tags$br()#,
     # htmltools::tags$script(src = "esquisse/copy-clipboard.js")
   )

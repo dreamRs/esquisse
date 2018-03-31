@@ -93,7 +93,7 @@ search_obj <- function(what = "data.frame", env = globalenv()) {
 
 #' Create badge according to data type
 #'
-#' It uses conventions defined in the package, tpe are retrieve with \code{\link{col_type}}.
+#' It uses conventions defined in the package, variable type are retrieve with \code{\link{col_type}}.
 #'
 #' @param col_name Variable's name
 #' @param col_type Variable's type : 'categorical', 'time', 'continuous', 'id'
@@ -107,17 +107,17 @@ badgeType <- function(col_name, col_type) {
       col_name_i <- col_name[i]
       col_type_i <- col_type[i]
       if (col_type_i == "categorical") {
-        sprintf("<span id='%s' class='label label-categorical badge-dad'>%s</span>", col_name_i, col_name_i)
+        tags$span(class='label label-categorical badge-dad', col_name_i)
       } else if (col_type_i == "time") {
-        sprintf("<span id='%s' class='label label-datetime badge-dad'>%s</span>", col_name_i, col_name_i)
+        tags$span(class='label label-datetime badge-dad', col_name_i)
       } else if (col_type_i == "continuous") {
-        sprintf("<span id='%s' class='label label-continue badge-dad'>%s</span>", col_name_i, col_name_i)
+        tags$span(class='label label-continue badge-dad', col_name_i)
       } else if (col_type_i == "id") {
-        sprintf("<span id='%s' class='label label-default badge-dad'>%s</span>", col_name_i, col_name_i)
+        tags$span(class='label label-default badge-dad', col_name_i)
       }
     }
   )
-  unlist(res)
+  res
 }
 
 
@@ -130,22 +130,26 @@ badgeType <- function(col_name, col_type) {
 #' @noRd
 col_type <- function(x, no_id = FALSE) {
 
-  if (inherits(x, c("logical", "character", "factor"))) {
-    n <- length(x)
-    u <- length(unique(x))
-    if (u/n < 0.99 | u <= 30 | no_id) {
-      return("categorical")
-    } else {
-      return("id")
+  if (is.data.frame(x)) {
+    return(unlist(lapply(x, col_type), use.names = FALSE))
+  } else {
+    if (inherits(x, c("logical", "character", "factor"))) {
+      n <- length(x)
+      u <- length(unique(x))
+      if (u/n < 0.99 | u <= 30 | no_id) {
+        return("categorical")
+      } else {
+        return("id")
+      }
     }
-  }
-
-  if (inherits(x, c("Date", "POSIXct", "POSIXlt"))) {
-    return("time")
-  }
-
-  if (inherits(x, c("numeric", "integer", "double"))) {
-    return("continuous")
+    
+    if (inherits(x, c("Date", "POSIXct", "POSIXlt"))) {
+      return("time")
+    }
+    
+    if (inherits(x, c("numeric", "integer", "double"))) {
+      return("continuous")
+    }
   }
 
   NULL

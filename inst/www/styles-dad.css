@@ -67,4 +67,8 @@
   max-width: inherit;
 }
 
+.label-dragula {
+  cursor: move; 
+}
+
 

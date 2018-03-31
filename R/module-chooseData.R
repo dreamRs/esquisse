@@ -150,13 +150,18 @@ chooseDataServer <- function(input, output, session, data = NULL, name = NULL, s
           `count-selected-text` = "{0} variables choosed (on a total of {1})"
         ),
         choicesOpt = list(
-          content = badgeType(col_name = names(res_col_type), col_type = unname(res_col_type))
+          content = unlist(lapply(
+            X = badgeType(col_name = names(res_col_type), col_type = unname(res_col_type)),
+            FUN = htmltools::doRenderTags
+          ))
         )
       ),
       htmltools::tags$em("Legend :"),
       htmltools::HTML(paste(
-        badgeType(col_name = c("categorical", "continuous", "time", "id"),
-                  col_type = c("categorical", "continuous", "time", "id")),
+        htmltools::doRenderTags(
+          badgeType(col_name = c("categorical", "continuous", "time", "id"),
+                    col_type = c("categorical", "continuous", "time", "id"))
+        ),
         collapse = ", "
       ))
     )

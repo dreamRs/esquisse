@@ -1,7 +1,7 @@
 Package: esquisse
 Type: Package
 Title: Explore and Visualize Your Data Interactively
-Version: 0.1.0.9420
+Version: 0.1.1.9000
 Authors@R: c(person("Fanny", "Meyer", email = "fanny.meyer@dreamrs.fr", role = c("aut")),
   person("Victor", "Perrier", email = "victor.perrier@dreamrs.fr", role = c("aut", "cre")))
 Maintainer: <victor.perrier@dreamrs.fr>
@@ -15,6 +15,7 @@ Imports: miniUI,
     rstudioapi,
     shiny,
     htmltools,
+    jsonlite,
     shinyWidgets,
     ggplot2,
     ggthemes,
