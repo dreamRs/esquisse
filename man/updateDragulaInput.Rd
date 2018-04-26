@@ -5,7 +5,7 @@
 \title{Update Dragula Input}
 \usage{
 updateDragulaInput(session, inputId, choices = NULL, choiceNames = NULL,
-  choiceValues = NULL, status = "primary")
+  choiceValues = NULL, badge = TRUE, status = "primary")
 }
 \arguments{
 \item{session}{The \code{session} object passed to function given to \code{shinyServer}.}
@@ -26,7 +26,9 @@ choices must not be provided. The advantage of using both of these over a named
 list for choices is that choiceNames allows any type of UI object to be passed 
 through (tag objects, icons, HTML code, ...), instead of just simple text.}
 
-\item{status}{Choices are displayed as Bootstrap label, you can use Bootstrap
+\item{badge}{Displays choices inside a Bootstrap badge.}
+
+\item{status}{If choices are displayed into a Bootstrap badge, you can use Bootstrap
 status to color them, or \code{NULL}.}
 }
 \description{

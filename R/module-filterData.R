@@ -184,6 +184,8 @@ create_input_filter <- function(data, var, ns, key = "filter", width = "100%") {
   x <- data[[var]]
   if (inherits(x = x, what = c("numeric", "integer"))) {
     x <- x[!is.na(x)]
+    if (length(x) == 0)
+      return(NULL)
     if (num_equal(max(x), min(x))) {
       return(NULL)
     } else {
@@ -206,6 +208,8 @@ create_input_filter <- function(data, var, ns, key = "filter", width = "100%") {
     }
   } else if (inherits(x = x, what = c("Date", "POSIXct"))) {
     x <- x[!is.na(x)]
+    if (length(x) == 0)
+      return(NULL)
     rangx <- range(x)
     tagList(
       tags$span(
@@ -217,9 +221,13 @@ create_input_filter <- function(data, var, ns, key = "filter", width = "100%") {
         value = rangx, label = NULL
       )
     )
-  } else {
-    x <- x[!is.na(x)]
+  } else if (inherits(x = x, what = c("character", "factor"))) {
+    x <- x[!is.na(x) & trimws(x) != ""]
+    if (length(x) == 0)
+      return(NULL)
     if (length(x) == length(unique(x)))
+      return(NULL)
+    if (length(unique(x)) == 1)
       return(NULL)
     if (inherits(x, "factor")) {
       x <- levels(x)
@@ -249,6 +257,8 @@ create_input_filter <- function(data, var, ns, key = "filter", width = "100%") {
       #   )
       # )
     )
+  } else {
+    NULL
   }
 }
 
@@ -346,8 +356,17 @@ num_equal <- function(x, y, tol = sqrt(.Machine$double.eps)) {
 generate_filters <- function(x, params, params_na, data) {
   if (x %in% names(data)) {
     values <- params[[x]]
+    if (is.null(values)) {
+      list(
+        code = "",
+        ind = rep_len(TRUE, length(dat))
+      )
+    }
     dat <- data[[x]]
     na <- params_na[[x]]
+    if (is.null(na)) {
+      na <- FALSE
+    }
     if (inherits(x = dat, what = c("numeric", "integer"))) {
       if (!isTRUE(num_equal(min(dat, na.rm = TRUE), values[1], tol = 0.009))) {
         code1 <- sprintf("%s >= %s", x, values[1])
@@ -414,7 +433,8 @@ generate_filters <- function(x, params, params_na, data) {
         code = code1 %+&% code2 %+1% codena,
         ind = ind
       )
-    } else {
+    } else if (inherits(x = dat, what = c("character", "factor"))) {
+      dat[trimws(dat) == ""] <- NA
       if (all(unique(na.omit(dat)) %in% values)) {
         code <- ""
         if (na) {
@@ -437,6 +457,11 @@ generate_filters <- function(x, params, params_na, data) {
       list(
         code = code %+% codena,
         ind = ind
+      )
+    } else {
+      list(
+        code = "",
+        ind = rep_len(TRUE, length(dat))
       )
     }
   }

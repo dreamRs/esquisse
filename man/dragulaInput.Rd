@@ -6,7 +6,8 @@
 \usage{
 dragulaInput(inputId, sourceLabel, targetsLabels, targetsIds = NULL,
   choices = NULL, choiceNames = NULL, choiceValues = NULL,
-  status = "primary", replace = FALSE, width = NULL, height = "200px")
+  status = "primary", replace = FALSE, badge = TRUE, width = NULL,
+  height = "200px")
 }
 \arguments{
 \item{inputId}{The \code{input} slot that will be used to access the value.}
@@ -32,11 +33,14 @@ choices must not be provided. The advantage of using both of these over a named
 list for choices is that choiceNames allows any type of UI object to be passed 
 through (tag objects, icons, HTML code, ...), instead of just simple text.}
 
-\item{status}{Choices are displayed as Bootstrap label, you can use Bootstrap
+\item{status}{If choices are displayed into a Bootstrap label, you can use Bootstrap
 status to color them, or \code{NULL}.}
 
 \item{replace}{When a choice is draged in a target container already
-containing a choice, does the later be replaced by the new one ?}
+containing a choice, does the later be replaced by the new one ?#'}
+
+\item{badge}{Displays choices inside a Bootstrap badge. Use \code{FALSE}
+if you want to pass custom appearance with \code{choiceNames}.}
 
 \item{width}{Width of the input.}
 

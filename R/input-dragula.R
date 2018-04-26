@@ -19,10 +19,12 @@
 #' choices must not be provided. The advantage of using both of these over a named 
 #' list for choices is that choiceNames allows any type of UI object to be passed 
 #' through (tag objects, icons, HTML code, ...), instead of just simple text.
-#' @param status Choices are displayed as Bootstrap label, you can use Bootstrap
+#' @param badge Displays choices inside a Bootstrap badge. Use \code{FALSE}
+#'  if you want to pass custom appearance with \code{choiceNames}.
+#' @param status If choices are displayed into a Bootstrap label, you can use Bootstrap
 #'  status to color them, or \code{NULL}.
 #' @param replace When a choice is draged in a target container already
-#'  containing a choice, does the later be replaced by the new one ?
+#'  containing a choice, does the later be replaced by the new one ?#' 
 #' @param width Width of the input.
 #' @param height Height of each boxes, the total input height is this parameter X 2.
 #' 
@@ -74,7 +76,7 @@ dragulaInput <- function(inputId, sourceLabel, targetsLabels,
                          targetsIds = NULL,
                          choices = NULL, choiceNames = NULL,
                          choiceValues = NULL, status = "primary", 
-                         replace = FALSE, width = NULL, height = "200px") {
+                         replace = FALSE, badge = TRUE, width = NULL, height = "200px") {
   
   args <- normalizeChoicesArgs(choices, choiceNames, choiceValues)
   
@@ -96,6 +98,11 @@ dragulaInput <- function(inputId, sourceLabel, targetsLabels,
   target_list$style <- "height: 50%; padding-right: 0; padding-left: 0; margin-right: 0; margin-left: 0;"
   target_list$cellArgs <- list(style = "height:90%; padding: 0; margin: 0;")
   target_list$width <- width
+  
+  tgw <- 100 / length(targetsIds)
+  tgw <- tgw - 2 / length(targetsIds)
+  tgw <- paste0(tgw, "%")
+  target_list$cellWidths <- tgw
   
   tagList(
     singleton(
@@ -121,7 +128,7 @@ dragulaInput <- function(inputId, sourceLabel, targetsLabels,
         tags$div(
           id = paste(inputId, "source", sep = "-"), 
           style = "margin: 5px; width: 100%; min-height: 15px; margin-right: 0;",
-          makeDragulaChoices(inputId, args, status)
+          makeDragulaChoices(inputId = inputId, args = args, status = status, badge = badge)
         )
       ),
       do.call(splitLayout, target_list)
@@ -150,8 +157,10 @@ dragulaInput <- function(inputId, sourceLabel, targetsLabels,
 #' choices must not be provided. The advantage of using both of these over a named 
 #' list for choices is that choiceNames allows any type of UI object to be passed 
 #' through (tag objects, icons, HTML code, ...), instead of just simple text.
-#' @param status Choices are displayed as Bootstrap label, you can use Bootstrap
+#' @param badge Displays choices inside a Bootstrap badge.
+#' @param status If choices are displayed into a Bootstrap badge, you can use Bootstrap
 #'  status to color them, or \code{NULL}.
+#' 
 #'
 #' @export
 #' 
@@ -212,22 +221,25 @@ dragulaInput <- function(inputId, sourceLabel, targetsLabels,
 #' 
 #' }
 updateDragulaInput <- function(session, inputId, choices = NULL, choiceNames = NULL,
-                               choiceValues = NULL, status = "primary") {
+                               choiceValues = NULL, badge = TRUE, status = "primary") {
   args <- normalizeChoicesArgs(choices, choiceNames, choiceValues)
-  choices <- htmltools::doRenderTags(makeDragulaChoices(inputId, args, status))
+  choices <- htmltools::doRenderTags(makeDragulaChoices(
+    inputId = inputId, args = args, status = status, badge = badge
+  ))
   message <- list(choices = choices)
   session$sendInputMessage(inputId, message)
 }
 
 
 
-makeDragulaChoices <- function(inputId, args, status = NULL) {
+makeDragulaChoices <- function(inputId, args, status = NULL, badge = TRUE) {
   lapply(
     X = seq_along(args$choiceNames),
     FUN = function(i) {
       tags$span(
-        class = "label label-dragula", 
-        class = if (!is.null(status)) paste0("label-", status), 
+        class = "label-dragula",
+        class = if (badge) "label", 
+        class = if (badge & !is.null(status)) paste0("label-", status), 
         id = paste(inputId, "target", args$choiceValues[[i]], sep = "-"),
         `data-value` = args$choiceValues[[i]],
         args$choiceNames[[i]]

@@ -29,7 +29,8 @@ esquisserServer <- function(input, output, session, data = NULL) {
       choiceNames = badgeType(
         col_name = names(dataChart$data), 
         col_type = col_type(dataChart$data)
-      )
+      ),
+      badge = FALSE
     )
   })
 

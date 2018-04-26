@@ -55,19 +55,19 @@ moduleCodeServer <- function(input, output, session, varSelected, dataChart, par
 
   codegg <- shiny::reactive({
     code_geom <- guess_geom(
-      xtype = if (!is.null(varSelected$x$xvar)) col_type(dataChart$data[[varSelected$x$xvar]]),
-      ytype = if (!is.null(varSelected$x$yvar)) col_type(dataChart$data[[varSelected$x$yvar]]),
+      xtype = if (!is.null(varSelected$xvar)) col_type(dataChart$data[[varSelected$xvar]]),
+      ytype = if (!is.null(varSelected$yvar)) col_type(dataChart$data[[varSelected$yvar]]),
       type = geomSelected$x
     )
     code_aes <- guess_aes(
-      x = varSelected$x$xvar,
-      y = varSelected$x$yvar,
-      fill = varSelected$x$fill,
-      color = varSelected$x$color,
-      size = varSelected$x$size,
+      x = varSelected$xvar,
+      y = varSelected$yvar,
+      fill = varSelected$fill,
+      color = varSelected$color,
+      size = varSelected$size,
       geom = code_geom,
-      xtype = if (!is.null(varSelected$x$xvar)) col_type(dataChart$data[[varSelected$x$xvar]]),
-      ytype = if (!is.null(varSelected$x$yvar)) col_type(dataChart$data[[varSelected$x$yvar]])
+      xtype = if (!is.null(varSelected$xvar)) col_type(dataChart$data[[varSelected$xvar]]),
+      ytype = if (!is.null(varSelected$yvar)) col_type(dataChart$data[[varSelected$yvar]])
     )
     code_aes <- lapply(
       X = code_aes,
@@ -86,11 +86,11 @@ moduleCodeServer <- function(input, output, session, varSelected, dataChart, par
       args_geom$adjust <- params_chart$adjust
     }
     
-    if (code_geom %in% c("bar", "histogram", "boxplot", "density") & is.null(varSelected$x$fill)) {
+    if (code_geom %in% c("bar", "histogram", "boxplot", "density") & is.null(varSelected$fill)) {
       args_geom$fill <- params_chart$fill_color %||% "#0C4C8A"
     }
     
-    if (code_geom %in% c("line", "point") & is.null(varSelected$x$color)) {
+    if (code_geom %in% c("line", "point") & is.null(varSelected$color)) {
       args_geom$color <- params_chart$fill_color %||% "#0C4C8A"
     }
     
@@ -108,18 +108,18 @@ moduleCodeServer <- function(input, output, session, varSelected, dataChart, par
     }
     
     # Scales
-    if (!is.null(varSelected$x$fill)) {
-      filltype <- col_type(dataChart$data[[varSelected$x$fill]])
+    if (!is.null(varSelected$fill)) {
+      filltype <- col_type(dataChart$data[[varSelected$fill]])
     } else {
       filltype <- NULL
     }
-    if (!is.null(varSelected$x$color)) {
-      colortype <- col_type(dataChart$data[[varSelected$x$color]])
+    if (!is.null(varSelected$color)) {
+      colortype <- col_type(dataChart$data[[varSelected$color]])
     } else {
       colortype <- NULL
     }
     code_scale <- get_code_scale(
-      fill = varSelected$x$fill, color = varSelected$x$color,
+      fill = varSelected$fill, color = varSelected$color,
       params = params_chart, filltype = filltype, colortype = colortype
     )
 
