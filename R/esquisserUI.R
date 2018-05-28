@@ -59,7 +59,8 @@ esquisserUI <- function() {
         inputId = "dragvars", sourceLabel = "Variables", 
         targetsLabels = c("X", "Y", "Fill", "Color", "Size"), 
         targetsIds = c("xvar", "yvar", "fill", "color", "size"),
-        choices = "", badge = FALSE, width = "99%", height = "100%"
+        choices = "", badge = FALSE, width = "99%", height = "100%",
+        replace = TRUE
       ),
       main = htmltools::tags$div(
         style = "margin-top: 10px; padding-bottom: 25px; height: 100%;",
