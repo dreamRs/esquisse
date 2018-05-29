@@ -10,10 +10,10 @@ This addin allows you to interactively explore your data by visualizing it with 
 
 :construction: :warning: Under development !! :warning: :construction:
 
-If you find bugs, please open an [issue](https://github.com/dreamRs/esquisse/issues) :simple_smile:
+If you find bugs, please open an [issue](https://github.com/dreamRs/esquisse/issues)
 
 
-To try it, run : 
+## Installation
 
 ```r
 source("https://install-github.me/dreamRs/esquisse")
