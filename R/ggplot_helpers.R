@@ -102,7 +102,7 @@ ggtry <- function(data, x = NULL, y = NULL, fill = NULL, color = NULL, size = NU
         if (filltype == "categorical") {
           params_scale_fill <- ggplot2::scale_fill_brewer(palette = params$palette)
         } else {
-          params_scale_fill <- ggplot2::scale_fill_distiller(palette = params$palett)
+          params_scale_fill <- ggplot2::scale_fill_distiller(palette = params$palette)
         }
       }
     }
@@ -123,7 +123,7 @@ ggtry <- function(data, x = NULL, y = NULL, fill = NULL, color = NULL, size = NU
         if (colortype == "categorical") {
           params_scale_color <- ggplot2::scale_color_brewer(palette = params$palette)
         } else {
-          params_scale_color <- ggplot2::scale_color_distiller(palette = params$palett)
+          params_scale_color <- ggplot2::scale_color_distiller(palette = params$palette)
         }
       }
     }
@@ -165,7 +165,7 @@ ggtry <- function(data, x = NULL, y = NULL, fill = NULL, color = NULL, size = NU
   if (is.null(params$legend_position))
     params$legend_position <- "right"
 
-  fun_theme <- params$theme %||% "minimal"
+  fun_theme <- params$theme %||% "theme_minimal"
   # themes <- ggplot_theme(c("ggplot2", "ggthemes"))
   p <- p + do.call.tommy(fun_theme, list(base_size = 12))
   p <- p + theme(plot.title = element_text(lineheight = .8, face = "bold"),

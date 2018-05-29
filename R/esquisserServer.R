@@ -98,7 +98,7 @@ esquisserServer <- function(input, output, session, data = NULL) {
       data <- data[paramsChart$index, ]
     }
     vars <- input$dragvars$target
-    vars <- unlist(vars$x, use.names = FALSE)
+    vars <- unlist(vars, use.names = FALSE)
     if (all(vars %in% names(data))) {
       res <- tryCatch({
         gg <- ggtry(

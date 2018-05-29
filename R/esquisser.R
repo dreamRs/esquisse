@@ -41,7 +41,7 @@ esquisser <- function(data = NULL) {
   esquisse.env$data <- data
   esquisse.env$name <- defaultData
 
-  display <- getOption("charter.display.mode", default = "dialog")
+  display <- getOption("esquisse.display.mode", default = "dialog")
 
   if (display == "browser") {
     inviewer <- browserViewer(browser = getOption("browser"))

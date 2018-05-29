@@ -9,12 +9,79 @@
 This addin allows you to interactively explore your data by visualizing it with the ggplot2 package. It allows you to draw bar graphs, curves, scatter plots, histograms, then export the graph or retrieve the code generating the graph.
 
 :construction: :warning: Under development !! :warning: :construction:
+If find bugs, please open an [issue](https://github.com/dreamRs/esquisse/issues) :simple_smile:
 
 
 To try it, run : 
 
 ```r
 source("https://install-github.me/dreamRs/esquisse")
+
+# or with devtools:
+devtools::install_github("dreamRs/esquisse")
 ```
 
 Then launch the addin via the RStudio menu, if you don't have `data.frame` in your environment, datasets in `ggplot2` are used.
+
+
+
+## `ggplot2` builder addin
+
+Launch addin via RStudio menu or with:
+
+```r
+esquisse::esquisser()
+```
+
+First step is to choose a `data.frame`:
+
+![](img/esquisse_0.png)
+
+
+Or you can use a dataset directly with:
+
+```r
+esquisse::esquisser(data = iris)
+```
+
+
+After that, you can drag and drop variables to create a plot:
+
+![](img/esquisse_1.png)
+
+
+Four sub-menus are available under the chart to modify some parameters:
+
+### Labels
+
+Set chart's labs with this menu:
+
+![](img/esquisse_labs.png)
+
+
+### Plot options
+
+Choose color, geom parameters and theme:
+
+![](img/esquisse_plotoptions.png)
+
+
+### Filter data
+
+:warning: Experimental !
+
+Filter your data:
+
+![](img/esquisse_filters.png)
+
+
+### Code & export
+
+Export your plot and retrieve the code to reproduce it:
+
+![](img/esquisse_code.png)
+
+
+
+
+

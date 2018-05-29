@@ -8,6 +8,8 @@ var dragulaBinding = new Shiny.InputBinding();
     var opts = {};
     var $el = $(el);
     
+    opts.removeOnSpill = false;
+    
     var replaceold = $(el).data("replace");
     
     var containersId = [];
@@ -26,6 +28,9 @@ var dragulaBinding = new Shiny.InputBinding();
       opts.copy = function (el, source) {
         return source === document.getElementById(sourceContainer);
       };
+      opts.isContainer = function (el) {
+        return el.classList.contains('target');
+      };
     }
     
     var drake = dragula(containersId, opts).on('dragend', function(el) {
@@ -36,8 +41,15 @@ var dragulaBinding = new Shiny.InputBinding();
       drake.on('drop', function(el, target) {
 
         if ( target !== document.getElementById(sourceContainer) ) { 
-          $(target).children('.label-dragula').remove();
-          target.appendChild(el);
+          if (target !== null) {
+            $(target).children('.label-dragula').remove();
+            target.appendChild(el);
+          }
+        } else {
+          console.log($(el).attr("id"));
+          $(target).find('#' + $(el).attr("id")).remove();
+          //$('#' + $(el).attr("id")).remove();
+          //target.appendChild(el);
         }
     
       });
@@ -72,7 +84,7 @@ var dragulaBinding = new Shiny.InputBinding();
       values.source = null;
     }
 
-    // console.log(values);
+    console.log(values);
     return values;
   },
   getType: function() {
