@@ -9,7 +9,8 @@
 This addin allows you to interactively explore your data by visualizing it with the ggplot2 package. It allows you to draw bar graphs, curves, scatter plots, histograms, then export the graph or retrieve the code generating the graph.
 
 :construction: :warning: Under development !! :warning: :construction:
-If find bugs, please open an [issue](https://github.com/dreamRs/esquisse/issues) :simple_smile:
+
+If you find bugs, please open an [issue](https://github.com/dreamRs/esquisse/issues) :simple_smile:
 
 
 To try it, run : 
