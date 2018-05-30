@@ -67,3 +67,36 @@
 }
 
 
+
+
+/* shiny alerts */
+
+.shiny-notification-error {
+  color: #fff !important;
+  background-color: #d9534f !important;
+  border: 1px solid #d9534f !important;
+}
+
+.shiny-notification-message {
+  color: #fff !important;
+  background-color: #5cb85c !important;
+  border: 1px solid #5cb85c !important;
+}
+
+.shiny-notification {
+  font-size: 120% !important;
+  font-weight: bold !important;
+}
+
+#shiny-notification-panel {
+  width: 100% !important;
+  text-align: center !important;
+}
+
+.shiny-notification-close {
+  font-size: 26px;
+  color: #fff;
+  cursor: pointer;
+}
+
+

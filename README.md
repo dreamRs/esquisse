@@ -84,5 +84,19 @@ Export your plot and retrieve the code to reproduce it:
 
 
 
+### Display mode
+
+You can change where addin is displayed by setting option `esquisse.display.mode`, possibilities are :
+
+* `dialog` (default) : use RStudio dialog window
+* `pane` : RStudio's Viewer
+* `browser` : default browser
+
+For example, launch in browser :
+
+```r
+options("esquisse.display.mode" = "browser")
+esquisser()
+```
 
 

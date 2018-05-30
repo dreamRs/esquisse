@@ -9,7 +9,7 @@
 #' @return nothing
 #' @noRd
 #'
-#' @importFrom shiny callModule reactiveValues observeEvent renderPrint renderPlot stopApp plotOutput
+#' @importFrom shiny callModule reactiveValues observeEvent renderPrint renderPlot stopApp plotOutput showNotification
 #'
 esquisserServer <- function(input, output, session, data = NULL) {
 
@@ -118,7 +118,7 @@ esquisserServer <- function(input, output, session, data = NULL) {
       })
 
       if (!res$status) {
-        print(res$e)
+        shiny::showNotification(ui = res$e$message, type = "error")
       }
 
       res$gg
