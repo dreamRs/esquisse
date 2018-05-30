@@ -25,7 +25,10 @@ esquisser <- function(data = NULL) {
   } else {
     defaultData <- ""
   }
-
+  if (!is.null(data)) {
+    defaultData <- as.character(substitute(data))
+  }
+  
 
   # Validate selection
   if (is.null(data) && defaultData %in% ls(pos = globalenv())) {
