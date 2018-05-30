@@ -67,7 +67,7 @@ ggcode <- function(data, aes, geom, args_geom = NULL, scale = NULL, labs = NULL,
     c_coord <- NULL
   }
   
-  if (!is.null(params$smooth_add)) {
+  if (!is.null(params$smooth_add) && params$smooth_add) {
     c_sm <- sprintf(" +\n  geom_smooth(span = %s)", params$smooth_span)
     c_geom <- paste0(c_geom, c_sm)
   }
