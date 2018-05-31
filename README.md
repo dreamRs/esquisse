@@ -1,6 +1,6 @@
 # esquisse
 
-> Shiny gadget to explore data with ggplot2
+> The purpose of this add-in is to let you explore your data quickly to extract the information they hold. You can only create simple, you won't be able to use custom scales and all the power of ggplot2. This is just the start!
 
 [![Project Status: WIP – Initial development is in progress, but there has not yet been a stable, usable release suitable for the public.](http://www.repostatus.org/badges/latest/wip.svg)](http://www.repostatus.org/#wip)
 [![Travis-CI Build Status](https://travis-ci.org/dreamRs/esquisse.svg?branch=master)](https://travis-ci.org/dreamRs/esquisse)
