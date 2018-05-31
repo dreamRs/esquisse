@@ -1,9 +1,14 @@
-#' An addin to easily create chart with ggplot2
+
+# Avance sur ta route, car elle n'existe que par ta marche.
+# S-A
+
+
+#' An add-in to easily create plots with ggplot2
 #'
 #' @param data a data.frame, you can pass a data.frame explicitly to the function, 
-#' otherwise you'll have to choose one in your environment.
+#' otherwise you'll have to choose one in global environment.
 #'
-#' @return code to reproduce chart
+#' @return code to reproduce chart.
 #' @export
 #'
 #' @importFrom rstudioapi getActiveDocumentContext isAvailable
@@ -11,12 +16,17 @@
 #'
 #' @examples
 #' \dontrun{
+#' # Launch with:
 #' esquisser(iris)
+#' # If in RStudio it will be launched by default in dialog window
+#' # If not, it will be launched in browser
+#' 
+#' # change diplay mode with:
+#' options("esquisse.display.mode" = "viewer")
+#' # or
+#' options("esquisse.display.mode" = "browser")
 #' }
-#'
-#'
 esquisser <- function(data = NULL) {
-
 
   # Get the document context.
   if (isAvailable()) {
