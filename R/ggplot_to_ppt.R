@@ -1,9 +1,9 @@
 #' Utility to export ggplot objects to PowerPoint
 #'
 #' You can use the RStudio addin to interactively select ggplot objets, or
-#' directly pass them to the function.
+#' directly pass their names to the function.
 #'
-#' @param gg character. Name(s) of ggplot object(s), if NULL, launch the Shiny gadget
+#' @param gg character. Name(s) of ggplot object(s), if NULL, launch the Shiny gadget.
 #'
 #' @return Path to the temporary ppt file.
 #' @export
@@ -15,7 +15,6 @@
 #' @importFrom miniUI miniPage miniContentPanel miniButtonBlock
 #' @importFrom shinyWidgets pickerInput updateProgressBar progressBar prettyCheckboxGroup
 #' @importFrom ggplot2 ggplot_build
-# @importMethodsFrom ggplot2 print.ggplot2
 #'
 #' @examples
 #' \dontrun{
@@ -65,7 +64,7 @@ ggplot_to_ppt <- function(gg = NULL) {
       if (!"try-error" %in% class(testgg)) {
         ppt <- rvg::ph_with_vg(ppt, print(get(ggg, envir = globalenv())), type = "body")
       } else {
-        warning(paste0("Skipping '", ggg, "' because of : ", attr(testgg, "condition")$message))
+        warning(paste0("Skipping '", ggg, "' because : ", attr(testgg, "condition")$message))
       }
     }
     print(ppt, target = tmp)
@@ -77,16 +76,6 @@ ggplot_to_ppt <- function(gg = NULL) {
     ui <- miniUI::miniPage(
       toggleBtnUi(),
       miniUI::miniContentPanel(
-        # shinyWidgets::pickerInput(
-        #   inputId = "select_gg", label = "ggplot to export:",
-        #   choices = ggplots,
-        #   multiple = TRUE, width = "100%",
-        #   options = list(
-        #     `actions-box` = TRUE,
-        #     `selected-text-format`= "count > 4", size = 5,
-        #     `count-selected-text` = "{0} ggplot choosed (on a total of {1})"
-        #   )
-        # ),
         shinyWidgets::prettyCheckboxGroup(
           inputId = "select_gg", 
           label = tags$span("ggplot(s) to export ", shiny::actionLink(inputId = "all", label = "(select all)")), 

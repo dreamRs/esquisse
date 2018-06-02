@@ -141,13 +141,13 @@ chooseDataServer <- function(input, output, session, data = NULL, name = NULL, s
     htmltools::tagList(
       shinyWidgets::pickerInput(
         inputId = ns("col_chooser"),
-        label = "Validate choosen variable :",
+        label = "Validate chosen variable :",
         choices = names(res_col_type), multiple = TRUE, width = "100%",
         selected = names(res_col_type)[unname(res_col_type) != "id"],
         options = list(
           `actions-box` = TRUE, `multiple-separator` = " ",
           `selected-text-format`= "count > 4",
-          `count-selected-text` = "{0} variables choosed (on a total of {1})"
+          `count-selected-text` = "{0} variables chosen (on a total of {1})"
         ),
         choicesOpt = list(
           content = unlist(lapply(
@@ -296,7 +296,7 @@ chooseDataModalServer <- function(input, output, session) {
         options = list(
           `actions-box` = TRUE, `multiple-separator` = " ",
           `selected-text-format`= "count > 4",
-          `count-selected-text` = "{0} variables choosed (on a total of {1})"
+          `count-selected-text` = "{0} variables chosen (on a total of {1})"
         ),
         choicesOpt = list(
           content = badgeType(col_name = names(res_col_type), col_type = unname(res_col_type))

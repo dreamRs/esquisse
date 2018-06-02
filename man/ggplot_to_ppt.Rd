@@ -7,14 +7,14 @@
 ggplot_to_ppt(gg = NULL)
 }
 \arguments{
-\item{gg}{character. Name(s) of ggplot object(s), if NULL, launch the Shiny gadget}
+\item{gg}{character. Name(s) of ggplot object(s), if NULL, launch the Shiny gadget.}
 }
 \value{
 Path to the temporary ppt file.
 }
 \description{
 You can use the RStudio addin to interactively select ggplot objets, or
-directly pass them to the function.
+directly pass their names to the function.
 }
 \examples{
 \dontrun{
