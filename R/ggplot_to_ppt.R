@@ -8,12 +8,10 @@
 #' @return Path to the temporary ppt file.
 #' @export
 #'
-#' @importFrom officer read_pptx add_slide
-#' @importFrom rvg ph_with_vg
 #' @importFrom utils browseURL
 #' @importFrom shiny actionButton icon observeEvent dialogViewer runGadget stopApp actionLink
 #' @importFrom miniUI miniPage miniContentPanel miniButtonBlock
-#' @importFrom shinyWidgets pickerInput updateProgressBar progressBar prettyCheckboxGroup
+#' @importFrom shinyWidgets updateProgressBar progressBar prettyCheckboxGroup
 #' @importFrom ggplot2 ggplot_build
 #'
 #' @examples
@@ -35,6 +33,11 @@
 #'
 #' }
 ggplot_to_ppt <- function(gg = NULL) {
+  
+  if (!requireNamespace(package = "rvg"))
+    message("Package 'rvg' is required to run this function")
+  if (!requireNamespace(package = "officer"))
+    message("Package 'officer' is required to run this function")
 
   # temp file to create ppt
   tmp <- tempfile(pattern = "charter", fileext = ".pptx")

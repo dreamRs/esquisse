@@ -129,26 +129,32 @@ esquisserServer <- function(input, output, session, data = NULL) {
 
   # Export PowerPoint
   shiny::observeEvent(paramsChart$inputs$export_ppt, {
-    data <- dataChart$data
-    if (!is.null(paramsChart$index) && is.logical(paramsChart$index)) {
-      data <- data[paramsChart$index, ]
+    if (requireNamespace(package = "rvg") & requireNamespace(package = "officer")) {
+      data <- dataChart$data
+      if (!is.null(paramsChart$index) && is.logical(paramsChart$index)) {
+        data <- data[paramsChart$index, ]
+      }
+      gg <- ggtry(
+        data = data,
+        x = input$dragvars$target$xvar,
+        y = input$dragvars$target$yvar,
+        fill = input$dragvars$target$fill,
+        color = input$dragvars$target$color,
+        size = input$dragvars$target$size,
+        params = reactiveValuesToList(paramsChart)$inputs,
+        type = geomSelected$x
+      )
+      ppt <- officer::read_pptx()
+      ppt <- officer::add_slide(ppt, layout = "Title and Content", master = "Office Theme")
+      ppt <- rvg::ph_with_vg(ppt, print(gg), type = "body")
+      tmp <- tempfile(pattern = "charter", fileext = ".pptx")
+      print(ppt, target = tmp)
+      utils::browseURL(url = tmp)
+    } else {
+      warn <- "Packages 'officer' and 'rvg' are required to use this functionality."
+      warning(warn, call. = FALSE)
+      shiny::showNotification(ui = warn, type = "warning")
     }
-    gg <- ggtry(
-      data = data,
-      x = input$dragvars$target$xvar,
-      y = input$dragvars$target$yvar,
-      fill = input$dragvars$target$fill,
-      color = input$dragvars$target$color,
-      size = input$dragvars$target$size,
-      params = reactiveValuesToList(paramsChart)$inputs,
-      type = geomSelected$x
-    )
-    ppt <- officer::read_pptx()
-    ppt <- officer::add_slide(ppt, layout = "Title and Content", master = "Office Theme")
-    ppt <- rvg::ph_with_vg(ppt, print(gg), type = "body")
-    tmp <- tempfile(pattern = "charter", fileext = ".pptx")
-    print(ppt, target = tmp)
-    utils::browseURL(url = tmp)
   })
 
   # Code

@@ -77,6 +77,12 @@
   border: 1px solid #d9534f !important;
 }
 
+.shiny-notification-warning {
+  color: #fff !important;
+  background-color: #f39c12 !important;
+  border: 1px solid #f39c12 !important;
+}
+
 .shiny-notification-message {
   color: #fff !important;
   background-color: #5cb85c !important;
