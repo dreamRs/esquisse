@@ -29,6 +29,18 @@ dropNullsOrEmpty <- function (x)
 }
 
 
+# quickly clean a string
+#' @importFrom stringi stri_trans_general stri_replace_all_regex
+clean_string <- function(str) {
+  str <- stri_trans_general(str = str, id = "Latin-ASCII")
+  str <- stri_replace_all_regex(str = str, pattern = "[^a-zA-Z0-9\\._]+", replacement = "_")
+  return(str)
+}
+
+backticks <- function(x) {
+  paste0("`", x, "`")
+}
+
 
 #' Retrieve a data.frame by name from an environment
 #'

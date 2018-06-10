@@ -227,7 +227,7 @@ guess_aes <- function(x = NULL, y = NULL, fill = NULL, color = NULL, size = NULL
   vars <- lapply(
     X = vars,
     FUN = function(x) {
-      stats::as.formula(paste0("~", x))
+      stats::as.formula(paste0("~", backticks(x)))
     }
   )
 

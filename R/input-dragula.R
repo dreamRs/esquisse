@@ -240,7 +240,7 @@ makeDragulaChoices <- function(inputId, args, status = NULL, badge = TRUE) {
         class = "label-dragula",
         class = if (badge) "label", 
         class = if (badge & !is.null(status)) paste0("label-", status), 
-        id = paste(inputId, "target-label", args$choiceValues[[i]], sep = "-"),
+        id = paste(inputId, "target-label", sep = "-"),
         `data-value` = args$choiceValues[[i]],
         args$choiceNames[[i]]
       )

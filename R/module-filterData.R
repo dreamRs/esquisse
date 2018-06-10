@@ -11,6 +11,8 @@
 #' @importFrom shiny NS singleton
 #' 
 #' @name filterData-module
+#' 
+#' @note Column's names can be modified to be valid R names.
 #'
 #' @examples
 #' 
@@ -118,6 +120,8 @@ filterDataServer <- function(input, output, session, data, vars = NULL, width = 
     } else {
       dat_ <- as.data.frame(data)
     }
+    old_names <- names(dat_)
+    names(dat_) <- clean_string(old_names)
     if (is.null(vars)) {
       vars <- names(dat_)
     }
@@ -126,6 +130,7 @@ filterDataServer <- function(input, output, session, data, vars = NULL, width = 
     return_data$data <- dat_
     return_data$code <- ""
     return_data$index <- rep_len(TRUE, nrow(dat_))
+    return_data$old_names <- old_names
     return(dat_)
   })
   
@@ -197,10 +202,10 @@ create_input_filter <- function(data, var, ns, key = "filter", width = "100%") {
       values <- range_val(values)
       tagList(
         tags$span(
-          tags$label(var), HTML("&nbsp;&nbsp;"), naInput(key, var, ns) 
+          tags$label(var), HTML("&nbsp;&nbsp;"), naInput(key, clean_string(var), ns) 
         ),
         sliderTextInput(
-          inputId = ns(paste(key, var, sep = "_")), label = NULL,
+          inputId = ns(paste(key, clean_string(var), sep = "_")), label = NULL,
           choices = values, selected = range(values), 
           force_edges = TRUE, grid = TRUE, width = width
         )
@@ -213,10 +218,10 @@ create_input_filter <- function(data, var, ns, key = "filter", width = "100%") {
     rangx <- range(x)
     tagList(
       tags$span(
-        tags$label(var), HTML("&nbsp;&nbsp;"), naInput(key, var, ns) 
+        tags$label(var), HTML("&nbsp;&nbsp;"), naInput(key, clean_string(var), ns) 
       ),
       sliderInput(
-        inputId = ns(paste(key, var, sep = "_")), 
+        inputId = ns(paste(key, clean_string(var), sep = "_")), 
         min = min(x), max = max(x), width = width,
         value = rangx, label = NULL
       )
@@ -238,24 +243,14 @@ create_input_filter <- function(data, var, ns, key = "filter", width = "100%") {
     tags$div(
       class = if (length(x) > 15) "selectize-big",
       tags$span(
-        tags$label(var), HTML("&nbsp;&nbsp;"), naInput(key, var, ns) 
+        tags$label(var), HTML("&nbsp;&nbsp;"), naInput(key, clean_string(var), ns) 
       ),
       selectizeInput(
-        inputId = ns(paste(key, var, sep = "_")),
+        inputId = ns(paste(key, clean_string(var), sep = "_")),
         choices = x, selected = x, label = NULL,
         multiple = TRUE, width = width,
         options = list(plugins = list("remove_button"))
       )
-      # pickerInput(
-      #   inputId = ns(paste(key, var, sep = "_")), 
-      #   choices = x, selected = x, label = NULL,
-      #   multiple = TRUE, width = width,
-      #   options = list(
-      #     `actions-box` = TRUE,
-      #     `selected-text-format`= "count > 4",
-      #     `count-selected-text` = "{0}/{1} choices"
-      #   )
-      # )
     )
   } else {
     NULL

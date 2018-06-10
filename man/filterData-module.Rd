@@ -33,6 +33,9 @@ vector for indexing data under slot \code{index}.
 \description{
 Modules for creating filters from a data.frame
 }
+\note{
+Column's names can be modified to be valid R names.
+}
 \examples{
 
 \dontrun{
