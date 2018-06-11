@@ -167,3 +167,41 @@ col_type <- function(x, no_id = FALSE) {
   NULL
 }
 
+
+
+# utils for geom icons
+
+#' @importFrom stats setNames
+geom_icon_href <- function() {
+  href <- "esquisse/geomIcon/gg-%s.png"
+  geoms <- c("auto", "line", "bar", "histogram", 
+             "point", "boxplot", "violin", "density", "tile")
+  lapply(
+    X = setNames(geoms, geoms),
+    FUN = sprintf, fmt = href
+  )
+}
+
+geom_icon_input <- function() {
+  geoms <- c("auto", "line", "bar", "histogram", 
+             "point", "boxplot", "violin", "density", "tile")
+  href <- "esquisse/geomIcon/gg-%s.png"
+  lapply(
+    X = geoms,
+    FUN = function(x) {
+      list(inputId = x, img = sprintf(fmt = href, x), label = capitalize(x))
+    }
+  )
+}
+
+capitalize <- function(x) {
+  lo <- substring(text = x, first = 2)
+  up <- substring(text = x, first = 1, last = 1)
+  lo <- tolower(lo)
+  lo <- gsub(pattern = "_", replacement = " ", x = lo)
+  paste0(up, lo)
+}
+
+
+
+

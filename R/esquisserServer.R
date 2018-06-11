@@ -77,20 +77,8 @@ esquisserServer <- function(input, output, session, data = NULL) {
   # Module to choose type of charts
   geomSelected <- shiny::callModule(
     module = imageButtonServer, id = "geom", default = "auto",
-    img_ref = list(
-      auto = "esquisse/geomIcon/gg-auto.png", line = "esquisse/geomIcon/gg-line.png",
-      bar = "esquisse/geomIcon/gg-bar.png", histogram = "esquisse/geomIcon/gg-histo.png",
-      point = "esquisse/geomIcon/gg-point.png", boxplot = "esquisse/geomIcon/gg-boxplot.png",
-      density = "esquisse/geomIcon/gg-density.png", tile = "esquisse/geomIcon/gg-tile.png"
-    ), enabled = geom_possible, selected = geom_possible
+    img_ref = geom_icon_href(), enabled = geom_possible, selected = geom_possible
   )
-
-
-  output$test <- shiny::renderPrint({
-    # str(input$dragvars$target)
-    # str(dataChart$data)
-  })
-
 
   output$plooooooot <- shiny::renderPlot({
     data <- dataChart$data

@@ -33,16 +33,8 @@ esquisserUI <- function() {
           style = "padding: 10px;",
           imageButtonUI(
             id = "geom",
-            imgs = list(
-              list(inputId = "auto", img = "esquisse/geomIcon/gg-auto.png", label = "Auto"),
-              list(inputId = "line", img = "esquisse/geomIcon/gg-line.png", label = "Line"),
-              list(inputId = "bar", img = "esquisse/geomIcon/gg-bar.png", label = "Bar"),
-              list(inputId = "histogram", img = "esquisse/geomIcon/gg-histo.png", label = "Histogram"),
-              list(inputId = "point", img = "esquisse/geomIcon/gg-point.png", label = "point"),
-              list(inputId = "boxplot", img = "esquisse/geomIcon/gg-boxplot.png", label = "Boxplot"),
-              list(inputId = "density", img = "esquisse/geomIcon/gg-density.png", label = "Density"),
-              list(inputId = "tile", img = "esquisse/geomIcon/gg-tile.png", label = "Tile")
-            ), width = "240px"
+            imgs = geom_icon_input(), 
+            width = "240px"
           ),
           htmltools::tags$br(),
           chooseDataUI(id = "choose-data")

@@ -148,6 +148,18 @@ dev.off()
 
 
 
+# Geom violin -------------------------------------------------------------
+
+
+png(filename = "inst/geomIcon/www/gg-violin.png", bg = "transparent")
+ggplot(data = coord_circle(centre = c(0, 0), r = 1)) + geom_polygon(aes(x = x, y = y), fill = "#A9BCF5") + coord_fixed() + theme_void()
+p <- ggplot(data = iris) + 
+  geom_violin(mapping = aes(x = Species, y = Sepal.Width), adjust = .5, color = "black", fill = "white", size = 2) +
+  theme_void()
+print(p, vp = viewport(width = unit(0.6, "npc"), height = unit(0.6, "npc")))
+dev.off()
+
+
 
 
 # Geom auto ---------------------------------------------------------------

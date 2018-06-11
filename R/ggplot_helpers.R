@@ -72,7 +72,7 @@ ggtry <- function(data, x = NULL, y = NULL, fill = NULL, color = NULL, size = NU
     paramsgeom$adjust <- params$adjust
   }
 
-  if (chartgeom %in% c("bar", "histogram", "boxplot", "density") & is.null(fill)) {
+  if (chartgeom %in% c("bar", "histogram", "boxplot", "violin", "density") & is.null(fill)) {
     paramsgeom$fill <- params$fill_color %||% "#0C4C8A"
   }
   if (chartgeom %in% c("line", "point") & is.null(color)) {
@@ -235,19 +235,19 @@ guess_aes <- function(x = NULL, y = NULL, fill = NULL, color = NULL, size = NULL
   if (is.null(vars$x) & !is.null(vars$y) & geom == "line") {
     vars$x <- stats::as.formula(paste0("~seq_along(", y, ")"))
   }
-  if (!is.null(vars$x) & is.null(vars$y) & geom == "boxplot") {
+  if (!is.null(vars$x) & is.null(vars$y) & geom %in% c("boxplot", "violin")) {
     vars$y <- vars$x
     vars$x <- ""
   }
 
-  if (is.null(vars$x) & !is.null(vars$y) & geom != "boxplot") {
+  if (is.null(vars$x) & !is.null(vars$y) & geom %nin% c("boxplot", "violin")) {
     tmp <- vars$y
     vars$y <- vars$x
     vars$x <- tmp
   }
 
   # two var
-  if (!is.null(vars$x) & !is.null(vars$y) & geom == "boxplot") {
+  if (!is.null(vars$x) & !is.null(vars$y) & geom %in% c("boxplot", "violin")) {
     if (xtype == "continuous" & (!is.null(ytype) && ytype == "categorical")) {
       tmp <- vars$y
       vars$y <- vars$x
@@ -386,27 +386,36 @@ ggplot_theme <- function(package = "ggplot2") {
 
 
 
-#' @importFrom ggplot2 geom_histogram geom_boxplot geom_density geom_bar geom_histogram geom_boxplot 
-#' geom_bar geom_boxplot geom_bar geom_point geom_line geom_tile geom_line geom_line geom_tile
+#' @importFrom ggplot2 geom_histogram geom_density geom_bar  
+#' geom_boxplot geom_bar geom_point geom_line geom_tile geom_violin
 ggplot_geom_vars <- function() {
-  data.frame(
-    x = c("continuous", "continuous", "continuous",
-          "categorical", "time", "continuous", "continuous", "categorical",
-          "categorical", "continuous", "continuous", "categorical", "time",
-          "empty", "continuous"),
-    y = c("empty", "empty", "empty", "empty", "empty", "categorical",
-          "categorical", "continuous", "continuous", "continuous", "continuous",
-          "categorical", "continuous", "continuous", "continuous"),
-    geom = c("histogram", "boxplot", "density", "bar", "histogram", "boxplot",
-             "bar", "boxplot", "bar", "point", "line", "tile", "line", "line",
-             "tile"),
-    auto = c(1, 0, 0, 1, 1, 0, 1, 0, 1, 1, 0, 1, 1, 1, 0),
-    stringsAsFactors = FALSE
+  x <- matrix(
+    data = c(
+      "continuous",  "empty",       "histogram", "1", 
+      "continuous",  "empty",       "boxplot",   "0", 
+      "continuous",  "empty",       "violin",    "0", 
+      "continuous",  "empty",       "density",   "0", 
+      "categorical", "empty",       "bar",       "1", 
+      "time",        "empty",       "histogram", "1",
+      "continuous",  "categorical", "boxplot",   "0", 
+      "continuous",  "categorical", "violin",    "0", 
+      "continuous",  "categorical", "bar",       "1",
+      "categorical", "continuous",  "boxplot",   "0", 
+      "categorical", "continuous",  "violin",    "0", 
+      "categorical", "continuous",  "bar",       "1",
+      "continuous",  "continuous",  "point",     "1",
+      "continuous",  "continuous",  "line",      "0", 
+      "categorical", "categorical", "tile",      "1",
+      "time",        "continuous",  "line",      "1", 
+      "empty",       "continuous",  "line",      "1", 
+      "continuous",  "continuous",  "tile",      "0"
+    ), ncol = 4, byrow = TRUE
   )
+  x <- data.frame(x, stringsAsFactors = FALSE)
+  names(x) <- c("x", "y", "geom", "auto")
+  x$auto <- as.numeric(x$auto)
+  return(x)
 }
-
-
-
 
 
 
