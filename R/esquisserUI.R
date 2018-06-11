@@ -48,28 +48,17 @@ esquisserUI <- function() {
           chooseDataUI(id = "choose-data")
         )
       ),
-      # top_right = dragAndDropUi(
-      #   id = "dragvars",
-      #   dragula_css = "esquisse/dragula/dragula.min.css",
-      #   dragula_js = "esquisse/dragula/dragula.min.js",
-      #   bindings = "esquisse/dragula/dragula-bindings-fun.js",
-      #   styles = "esquisse/styles-dad.css"
-      # ),
       top_right = dragulaInput(
         inputId = "dragvars", sourceLabel = "Variables", 
         targetsLabels = c("X", "Y", "Fill", "Color", "Size"), 
         targetsIds = c("xvar", "yvar", "fill", "color", "size"),
-        choices = "", badge = FALSE, width = "99%", height = "100%",
+        choices = "", badge = FALSE, width = "100%", height = "100%",
         replace = TRUE
       ),
       main = htmltools::tags$div(
         style = "margin-top: 10px; padding-bottom: 25px; height: 100%;",
         shiny::plotOutput(outputId = "plooooooot", width = "100%", height = "100%")
       )
-      # main = tags$div(
-      #   style = "margin: 10px;",
-      #   verbatimTextOutput("test")
-      # )
     ),
 
     chartControlsUI(id = "controls")
