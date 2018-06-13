@@ -52,6 +52,8 @@ esquisserServer <- function(input, output, session, data = NULL) {
       geom_controls$x <- "point"
     } else if ("line" %in% types & geomSelected$x %in% c("auto", "line")) {
       geom_controls$x <- "line"
+    } else if ("violin" %in% types & geomSelected$x %in% c("violin")) {
+      geom_controls$x <- "violin"
     } else {
       geom_controls$x <- "auto"
     }

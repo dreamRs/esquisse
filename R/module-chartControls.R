@@ -93,7 +93,7 @@ chartControlsServer <- function(input, output, session, type, data = NULL) {
     } else {
       toggleDisplayServer(session = session, id = ns("controls-histogram"), display = "none")
     }
-    if (type$x %in% "density") {
+    if (type$x %in% c("density", "violin")) {
       toggleDisplayServer(session = session, id = ns("controls-density"), display = "block")
     } else {
       toggleDisplayServer(session = session, id = ns("controls-density"), display = "none")
@@ -107,6 +107,11 @@ chartControlsServer <- function(input, output, session, type, data = NULL) {
       toggleDisplayServer(session = session, id = ns("controls-size"), display = "block")
     } else {
       toggleDisplayServer(session = session, id = ns("controls-size"), display = "none")
+    }
+    if (type$x %in% "violin") {
+      toggleDisplayServer(session = session, id = ns("controls-violin"), display = "block")
+    } else {
+      toggleDisplayServer(session = session, id = ns("controls-violin"), display = "none")
     }
   })
   
@@ -254,7 +259,7 @@ controls_appearance <- function(ns) {
       id = ns("controls-spectrum"), style = "display: block;",
       shinyWidgets::spectrumInput(
         inputId = ns("fill_color"),
-        label = "Choose a color :",
+        label = "Choose a color:",
         choices = c(list(c("#0C4C8A", "#EF562D")), unname(cols$choices_colors))
       )
     ),
@@ -270,7 +275,7 @@ controls_appearance <- function(ns) {
     htmltools::tags$div(
       id = ns("controls-palette"), style = "display: none;",
       shinyWidgets::pickerInput(
-        inputId = ns("palette"), label = "Choose a palette :",
+        inputId = ns("palette"), label = "Choose a palette:",
         # choices = c(colors_pal, list("viridis" = c("viridis", "magma", "infierno"))),
         choices = c(list("Default" = "ggplot2"), cols$colors_pal),
         selected = "ggplot2", width = "100%",
@@ -283,7 +288,7 @@ controls_appearance <- function(ns) {
       )
     ),
     shinyWidgets::pickerInput(
-      inputId = ns("theme"), label = "Theme",
+      inputId = ns("theme"), label = "Theme:",
       choices = choices_themes,
       selected = "ggplot2::theme_minimal",
       options = list(size = 10)
@@ -314,38 +319,76 @@ controls_appearance <- function(ns) {
 #' @noRd
 #' @importFrom shiny sliderInput conditionalPanel
 #' @importFrom htmltools tagList tags
-#' @importFrom shinyWidgets awesomeRadio materialSwitch
+#' @importFrom shinyWidgets materialSwitch prettyRadioButtons
 #'
 controls_params <- function(ns) {
-  htmltools::tagList(
-    htmltools::tags$div(
+  tagList(
+    tags$div(
       id = ns("controls-scatter"), style = "display: none; padding-top: 10px;",
-      shinyWidgets::materialSwitch(inputId = ns("smooth_add"), label = "Smooth line", right = TRUE, status = "primary"),
-      shiny::conditionalPanel(
+      materialSwitch(
+        inputId = ns("smooth_add"), 
+        label = "Smooth line",
+        right = TRUE, 
+        status = "primary"
+      ),
+      conditionalPanel(
         condition = paste0("input['",  ns("smooth_add"), "']==true"),
-        shiny::sliderInput(inputId = ns("smooth_span"), label = "Span:", min = 0.1, max = 1, value = 0.75, step = 0.01)
+        sliderInput(
+          inputId = ns("smooth_span"), 
+          label = "Span:", 
+          min = 0.1, max = 1, 
+          value = 0.75, step = 0.01
+        )
       )
     ),
-    htmltools::tags$div(
+    tags$div(
       id = ns("controls-size"), style = "display: none;",
-      shiny::sliderInput(inputId = ns("size"), label = "Size:", min = 0.5, max = 3, value = 1)
+      sliderInput(
+        inputId = ns("size"), 
+        label = "Size:",
+        min = 0.5, max = 3,
+        value = 1
+      )
     ),
-    htmltools::tags$div(
+    tags$div(
       id = ns("controls-histogram"), style = "display: none;",
-      shiny::sliderInput(inputId = ns("bins"), label = "Numbers of bins", min = 10, max = 100, value = 30)
+      sliderInput(
+        inputId = ns("bins"), 
+        label = "Numbers of bins", 
+        min = 10, max = 100,
+        value = 30
+      )
     ),
-    htmltools::tags$div(
+    tags$div(
+      id = ns("controls-violin"), style = "display: none;",
+      prettyRadioButtons(
+        inputId = ns("scale"), label = "Scale:", inline = TRUE,
+        status = "primary", choices = c("area", "count", "width"),
+        fill = TRUE
+      )
+    ),
+    tags$div(
       id = ns("controls-density"), style = "display: none;",
-      shiny::sliderInput(inputId = ns("adjust"), label = "Bandwidth adjustment", min = 0.2, max = 6, value = 1, step = 0.1)
+      sliderInput(
+        inputId = ns("adjust"), 
+        label = "Bandwidth adjustment", 
+        min = 0.2, max = 6, 
+        value = 1, step = 0.1
+      )
     ),
-    htmltools::tags$div(
+    tags$div(
       id = ns("controls-categorical"), style = "display: none;",
-      shinyWidgets::awesomeRadio(
-        inputId = ns("position"), label = "Position :",
-        choices = c("stack", "dodge", "fill"),
-        selected = "stack", inline = TRUE, checkbox = TRUE
+      prettyRadioButtons(
+        inputId = ns("position"), label = "Position:",
+        choices = c("stack", "dodge", "fill"), inline = TRUE,
+        selected = "stack", status = "primary", fill = TRUE
       ),
-      shinyWidgets::materialSwitch(inputId = ns("flip"), label = "Flip coordinates", value = FALSE, status = "primary")
+      materialSwitch(
+        inputId = ns("flip"), 
+        label = "Flip coordinates", 
+        value = FALSE, 
+        status = "primary"
+      )
     )
   )
 }

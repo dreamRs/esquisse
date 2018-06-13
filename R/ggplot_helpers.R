@@ -67,8 +67,12 @@ ggtry <- function(data, x = NULL, y = NULL, fill = NULL, color = NULL, size = NU
   if (chartgeom == "histogram" & !is.null(params$bins)) {
     paramsgeom$bins <- params$bins
   }
+  
+  if (chartgeom == "violin" & !is.null(params$scale)) {
+    paramsgeom$scale <- params$scale
+  }
 
-  if (chartgeom == "density" & !is.null(params$adjust)) {
+  if (chartgeom %in% c("density", "violin") & !is.null(params$adjust)) {
     paramsgeom$adjust <- params$adjust
   }
 

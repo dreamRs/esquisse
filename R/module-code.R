@@ -82,11 +82,14 @@ moduleCodeServer <- function(input, output, session, varSelected, dataChart, par
     if (code_geom == "histogram") {
       args_geom$bins <- params_chart$bins
     }
-    if (code_geom == "density") {
+    if (code_geom == "violin") {
+      args_geom$scale <- params_chart$scale
+    }
+    if (code_geom %in% c("density", "violin")) {
       args_geom$adjust <- params_chart$adjust
     }
     
-    if (code_geom %in% c("bar", "histogram", "boxplot", "density") & is.null(varSelected$fill)) {
+    if (code_geom %in% c("bar", "histogram", "boxplot", "density", "violin") & is.null(varSelected$fill)) {
       args_geom$fill <- params_chart$fill_color %||% "#0C4C8A"
     }
     
