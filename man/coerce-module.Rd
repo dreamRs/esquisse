@@ -6,20 +6,26 @@
 \alias{coerceServer}
 \title{Coerce data.frame's columns module}
 \usage{
-coerceUI(id, data)
+coerceUI(id)
 
-coerceServer(input, output, session, data)
+coerceServer(input, output, session, data, reactiveValuesSlot = "data")
 }
 \arguments{
 \item{id}{Module's id}
-
-\item{data}{A \code{data.frame}.}
 
 \item{input}{standard \code{shiny} input.}
 
 \item{output}{standard \code{shiny} output.}
 
 \item{session}{standard \code{shiny} session.}
+
+\item{data}{A \code{data.frame} or a \code{reactive}
+function returning a \code{data.frame} or a 
+\code{reactivevalues} with a slot containing a \code{data.frame} 
+(use \code{reactiveValuesSlot} to identify that slot)}
+
+\item{reactiveValuesSlot}{If \code{data} is a \code{reactivevalues}, 
+specify the name of the slot containing data.}
 }
 \value{
 a \code{reactiveValues} with two slots: \code{data} original \code{data.frame}

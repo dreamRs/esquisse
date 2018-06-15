@@ -198,6 +198,7 @@ capitalize <- function(x) {
   lo <- substring(text = x, first = 2)
   up <- substring(text = x, first = 1, last = 1)
   lo <- tolower(lo)
+  up <- toupper(up)
   lo <- gsub(pattern = "_", replacement = " ", x = lo)
   paste0(up, lo)
 }

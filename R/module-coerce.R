@@ -2,7 +2,6 @@
 #' Coerce data.frame's columns module
 #'
 #' @param id Module's id
-#' @param data A \code{data.frame}.
 #' 
 #' @name coerce-module
 #'
@@ -66,7 +65,7 @@
 #' }
 #' 
 #' }
-coerceUI <- function(id, data) {
+coerceUI <- function(id) {
   ns <- NS(id)
   fluidRow(
     tags$style(
@@ -96,21 +95,21 @@ coerceUI <- function(id, data) {
       pickerInput(
         inputId = ns("var"),
         label = "Choose a variable:",
-        choices = names(data),
+        choices = NULL,# names(data),
         multiple = FALSE,
-        width = "100%",
-        choicesOpt = list(
-          subtext = unlist(lapply(
-            X = data, FUN = function(x) class(x)[1]
-          ), use.names = FALSE)
-        )
+        width = "100%" #,
+        # choicesOpt = list(
+        #   subtext = unlist(lapply(
+        #     X = data, FUN = function(x) class(x)[1]
+        #   ), use.names = FALSE)
+        # )
       )
     ),
     column(
       width = 4, class = "col-coerce",
       selectizeInput(
         inputId = ns("coerce_to"),
-        label = uiOutput(outputId = ns("coerce_to_label"), inline = TRUE),
+        label = uiOutput(outputId = ns("coerce_to_label"), inline = FALSE, style = "min-height: 15px;"),
         choices = c("character", "factor", "numeric", "Date", "POSIXct"),
         multiple = FALSE,
         width = "100%"
@@ -137,79 +136,116 @@ coerceUI <- function(id, data) {
 #' @param input standard \code{shiny} input.
 #' @param output standard \code{shiny} output.
 #' @param session standard \code{shiny} session.
+#' @param data A \code{data.frame} or a \code{reactive}
+#'  function returning a \code{data.frame} or a 
+#'  \code{reactivevalues} with a slot containing a \code{data.frame} 
+#'  (use \code{reactiveValuesSlot} to identify that slot)
+#' @param reactiveValuesSlot If \code{data} is a \code{reactivevalues}, 
+#'  specify the name of the slot containing data.
 #'
 #' @export
 #' 
 #' @rdname coerce-module
 #' 
 #' @importFrom htmltools tags
+#' @importFrom shinyWidgets updatePickerInput
 #' @importFrom shiny reactiveValues renderUI observe removeUI insertUI
 #'  textInput observeEvent showNotification updateActionButton icon
-coerceServer <- function(input, output, session, data) {
+#'  is.reactivevalues is.reactive observe req
+coerceServer <- function(input, output, session, data, reactiveValuesSlot = "data") {
   
   ns <- session$ns
   jns <- function(id) paste0("#", ns(id))
   
-  return_data <- reactiveValues(data = data, names = names(data))
+  return_data <- reactiveValues(data = NULL, names = NULL)
+  
+  observe({
+    req(data)
+    if (is.reactive(data)) {
+      data <- data()
+    } else if (is.reactivevalues(data)) {
+      req(data[[reactiveValuesSlot]])
+      data <- data[[reactiveValuesSlot]]
+    }
+    updatePickerInput(
+      session = session,
+      inputId = "var",
+      choices = names(data),
+      choicesOpt = list(
+        subtext = unlist(lapply(
+          X = data, FUN = function(x) class(x)[1]
+        ), use.names = FALSE)
+      )
+    )
+    return_data$data <- data
+    return_data$names <- names(data)
+  })
   
   output$coerce_to_label <- renderUI({
-    var <- data[[input$var]]
-    tags$span(
-      "From", tags$code(class(var)[1]), "to:"
-    )
+    req(return_data$data); req(input$var)
+    if (input$var %in% names(return_data$data)) {
+      var <- return_data$data[[input$var]]
+      tags$span(
+        "From", tags$code(class(var)[1]), "to:"
+      )
+    }
   })
   
   observe({
-    removeUI(selector = jns("options-date"))
-    classvar <- class(data[[input$var]])[1]
-    if (input$coerce_to == "Date" & classvar %in% c("character", "factor")) {
-      insertUI(
-        selector = jns("placeholder-date"),
-        ui = tags$div(
-          id = ns("options-date"),
-          textInput(
-            inputId = ns("date_format"),
-            label = "Specify format:",
-            value = "%Y-%m-%d"
+    req(return_data$data); req(input$var)
+    if (input$var %in% names(return_data$data)) {
+      data <- return_data$data
+      removeUI(selector = jns("options-date"))
+      classvar <- class(data[[input$var]])[1]
+      if (input$coerce_to == "Date" & classvar %in% c("character", "factor")) {
+        insertUI(
+          selector = jns("placeholder-date"),
+          ui = tags$div(
+            id = ns("options-date"),
+            textInput(
+              inputId = ns("date_format"),
+              label = "Specify format:",
+              value = "%Y-%m-%d"
+            )
           )
         )
-      )
-    } else if (input$coerce_to == "Date" & classvar %in% c("numeric", "integer")) {
-      insertUI(
-        selector = jns("placeholder-date"),
-        ui = tags$div(
-          id = ns("options-date"),
-          textInput(
-            inputId = ns("date_origin"),
-            label = "Specify origin:",
-            value = "1970-01-01"
+      } else if (input$coerce_to == "Date" & classvar %in% c("numeric", "integer")) {
+        insertUI(
+          selector = jns("placeholder-date"),
+          ui = tags$div(
+            id = ns("options-date"),
+            textInput(
+              inputId = ns("date_origin"),
+              label = "Specify origin:",
+              value = "1970-01-01"
+            )
           )
         )
-      )
-    } else if (input$coerce_to == "POSIXct" & classvar %in% c("character", "factor")) {
-      insertUI(
-        selector = jns("placeholder-date"),
-        ui = tags$div(
-          id = ns("options-date"),
-          textInput(
-            inputId = ns("posixct_format"),
-            label = "Specify format:",
-            value = "%Y-%m-%d %H:%M:%S"
+      } else if (input$coerce_to == "POSIXct" & classvar %in% c("character", "factor")) {
+        insertUI(
+          selector = jns("placeholder-date"),
+          ui = tags$div(
+            id = ns("options-date"),
+            textInput(
+              inputId = ns("posixct_format"),
+              label = "Specify format:",
+              value = "%Y-%m-%d %H:%M:%S"
+            )
           )
         )
-      )
-    } else if (input$coerce_to == "POSIXct" & classvar %in% c("numeric", "integer")) {
-      insertUI(
-        selector = jns("placeholder-date"),
-        ui = tags$div(
-          id = ns("options-date"),
-          textInput(
-            inputId = ns("posixct_origin"),
-            label = "Specify origin:",
-            value = "1970-01-01 00:00:00"
+      } else if (input$coerce_to == "POSIXct" & classvar %in% c("numeric", "integer")) {
+        insertUI(
+          selector = jns("placeholder-date"),
+          ui = tags$div(
+            id = ns("options-date"),
+            textInput(
+              inputId = ns("posixct_origin"),
+              label = "Specify origin:",
+              value = "1970-01-01 00:00:00"
+            )
           )
         )
-      )
+      }
     }
   })
   
@@ -234,8 +270,6 @@ coerceServer <- function(input, output, session, data) {
         args$format <- input$posixct_format
         argsup <- sprintf(", format = \"%s\"", input$posixct_format)
       }
-    } else {
-      
     }
     var <- withCallingHandlers(
       expr = tryCatch(
@@ -266,7 +300,7 @@ coerceServer <- function(input, output, session, data) {
       type = "toggleClass",
       message = list(id = ns("valid_coerce"), class = "success")
     )
-  })
+  }, ignoreInit = TRUE)
   
   observeEvent(list(input$var, input$coerce_to), {
     updateActionButton(

@@ -9,7 +9,8 @@
 chooseDataUI(id)
 
 chooseDataServer(input, output, session, data = NULL, name = NULL,
-  selectVars = TRUE, launchOnStart = TRUE, defaultData = NULL)
+  selectVars = TRUE, coerceVars = FALSE, launchOnStart = TRUE,
+  defaultData = NULL)
 }
 \arguments{
 \item{id}{Module's id.}
@@ -25,6 +26,8 @@ chooseDataServer(input, output, session, data = NULL, name = NULL,
 \item{name}{character, the name of \code{data}.}
 
 \item{selectVars}{logical, display menu to select vars to use in selected \code{data.frame}.}
+
+\item{coerceVars}{logical, display menu to coerce a variable in a different class.}
 
 \item{launchOnStart}{launch modal when application is launched.}
 

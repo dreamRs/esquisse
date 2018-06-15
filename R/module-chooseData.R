@@ -106,6 +106,7 @@ chooseDataUI <- function(id) {
 #' @param data a data.frame to use by default.
 #' @param name character, the name of \code{data}.
 #' @param selectVars logical, display menu to select vars to use in selected \code{data.frame}.
+#' @param coerceVars logical, display menu to coerce a variable in a different class.
 #' @param launchOnStart launch modal when application is launched.
 #' @param defaultData a character vector of \code{data.frame}s to choose along if
 #' there is no \code{data.frame}s in Global environment. By default, \code{data.frame}s
@@ -115,21 +116,34 @@ chooseDataUI <- function(id) {
 #'
 #' @rdname chooseData-module
 #'
-#' @importFrom shiny showModal observeEvent reactiveValues callModule
-#'
-chooseDataServer <- function(input, output, session, data = NULL, name = NULL, selectVars = TRUE, launchOnStart = TRUE, defaultData = NULL) {
+#' @importFrom shiny showModal observeEvent reactiveValues callModule observe
+#' @importFrom htmltools tags HTML
+chooseDataServer <- function(input, output, session, data = NULL, name = NULL, 
+                             selectVars = TRUE, coerceVars = FALSE, 
+                             launchOnStart = TRUE, defaultData = NULL) {
 
   ns <- session$ns
   
   return_data <- reactiveValues(data = data, name = name)
+  tmp_data <- reactiveValues(data = data, name = name)
   
   if (launchOnStart) {
-    showModal(chooseDataModal(ns = ns, defaultData = defaultData, selectVars = selectVars))
+    showModal(chooseDataModal(
+      ns = ns, 
+      defaultData = defaultData, 
+      selectVars = selectVars,
+      coerceVars = coerceVars
+    ))
   }
 
   # Data
   observeEvent(input$changeData, {
-    showModal(chooseDataModal(ns = ns, defaultData = defaultData, selectVars = selectVars))
+    showModal(chooseDataModal(
+      ns = ns, 
+      defaultData = defaultData, 
+      selectVars = selectVars, 
+      coerceVars = coerceVars
+    ))
   }, ignoreInit = TRUE)
   
   
@@ -138,8 +152,8 @@ chooseDataServer <- function(input, output, session, data = NULL, name = NULL, s
     req(input$data)
     dat <- get_df(input$data)
     res_col_type <- unlist(lapply(dat, col_type))
-    htmltools::tagList(
-      shinyWidgets::pickerInput(
+    tagList(
+      pickerInput(
         inputId = ns("col_chooser"),
         label = "Validate chosen variable :",
         choices = names(res_col_type), multiple = TRUE, width = "100%",
@@ -156,9 +170,9 @@ chooseDataServer <- function(input, output, session, data = NULL, name = NULL, s
           ))
         )
       ),
-      htmltools::tags$em("Legend :"),
-      htmltools::HTML(paste(
-        htmltools::doRenderTags(
+      tags$em("Legend :"),
+      HTML(paste(
+        doRenderTags(
           badgeType(col_name = c("categorical", "continuous", "time", "id"),
                     col_type = c("categorical", "continuous", "time", "id"))
         ),
@@ -172,9 +186,9 @@ chooseDataServer <- function(input, output, session, data = NULL, name = NULL, s
     shiny::req(input$data)
     if (length(input$col_chooser) < 1) {
       toggleBtnServer(session, inputId = ns("validata"), type = "disable")
-      htmltools::tagList(
-        htmltools::tags$br(),
-        htmltools::tags$div(
+      tagList(
+        tags$br(),
+        tags$div(
           class = "alert alert-warning",
           tags$b("Warning !"), "no variable selected..."
         )
@@ -185,14 +199,34 @@ chooseDataServer <- function(input, output, session, data = NULL, name = NULL, s
     }
   })
   
-  shiny::observeEvent(input$validata, {
+  output$coerce_ui <- renderUI({
+    req(input$data)
+    tagList(
+      tags$br(),
+      tags$div(coerceUI(id = ns("coerce")), style = "margin: 10px;")
+    )
+  })
+  
+  observe({
+    req(input$data); req(input$col_chooser)
     dat <- get_df(input$data)
     dat <- as.data.frame(dat)
-    if (selectVars) {
+    if (selectVars & all(input$col_chooser %in% names(dat))) {
       dat <- dat[, input$col_chooser, drop = FALSE]
     }
-    return_data$data <- dat
-    return_data$name <- input$data
+    tmp_data$data <- dat
+    tmp_data$name <- input$data
+  })
+  
+  coerce_data <- callModule(module = coerceServer, id = "coerce", data = tmp_data)
+  
+  observeEvent(input$validata, {
+    if (!is.null(coerce_data$data)) {
+      return_data$data <- coerce_data$data
+    } else {
+      return_data$data <- tmp_data$data
+    }
+    return_data$name <- tmp_data$name
   })
 
   return(return_data)
@@ -204,7 +238,7 @@ chooseDataServer <- function(input, output, session, data = NULL, name = NULL, s
 #' @importFrom shinyWidgets pickerInput
 #' @importFrom htmltools tags
 #' @importFrom utils data
-chooseDataModal <- function(ns, defaultData = NULL, selectVars = TRUE) {
+chooseDataModal <- function(ns, defaultData = NULL, selectVars = TRUE, coerceVars = FALSE) {
 
   if (is.null(defaultData)) {
     defaultData <- data(package = "ggplot2", envir = environment())$results[, "Item"]
@@ -243,6 +277,7 @@ chooseDataModal <- function(ns, defaultData = NULL, selectVars = TRUE) {
     ),
     if (selectVars) shiny::uiOutput(outputId = ns("col_chooser_ui")),
     if (selectVars) shiny::uiOutput(outputId = ns("alert_no_var")),
+    if (coerceVars) shiny::uiOutput(outputId = ns("coerce_ui")), 
     tags$br()
   )
 }
