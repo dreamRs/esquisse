@@ -138,6 +138,8 @@ chooseDataServer <- function(input, output, session, data = NULL, name = NULL,
 
   # Data
   observeEvent(input$changeData, {
+    tmp_data$data <- NULL
+    tmp_data$name <- NULL
     showModal(chooseDataModal(
       ns = ns, 
       defaultData = defaultData, 
@@ -216,6 +218,7 @@ chooseDataServer <- function(input, output, session, data = NULL, name = NULL,
     }
     tmp_data$data <- dat
     tmp_data$name <- input$data
+    tmp_data$timestamp <- Sys.time()
   })
   
   coerce_data <- callModule(module = coerceServer, id = "coerce", data = tmp_data)

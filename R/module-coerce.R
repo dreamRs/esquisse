@@ -165,6 +165,7 @@ coerceServer <- function(input, output, session, data, reactiveValuesSlot = "dat
       data <- data()
     } else if (is.reactivevalues(data)) {
       req(data[[reactiveValuesSlot]])
+      # data$timestamp
       data <- data[[reactiveValuesSlot]]
     }
     updatePickerInput(
