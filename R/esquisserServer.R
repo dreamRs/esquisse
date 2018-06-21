@@ -17,8 +17,10 @@ esquisserServer <- function(input, output, session, data = NULL) {
   dataChart <- callModule(
     module = chooseDataServer, 
     id = "choose-data",
-    data = esquisse.env$data, name = esquisse.env$name,
-    launchOnStart = is.null(esquisse.env$data)
+    data = esquisse.env$data,
+    name = esquisse.env$name,
+    launchOnStart = is.null(esquisse.env$data),
+    coerceVars = getOption(x = "coerceVars", default = FALSE)
   )
   observeEvent(dataChart$data, {
     # varSelected <- reactiveValues(x = NULL)
@@ -36,8 +38,8 @@ esquisserServer <- function(input, output, session, data = NULL) {
 
   # varSelected <- shiny::callModule(dragAndDropServer, id = "dragvars", data = dataChart)
 
-  geom_possible <- shiny::reactiveValues(x = "auto")
-  geom_controls <- shiny::reactiveValues(x = "auto")
+  geom_possible <- reactiveValues(x = "auto")
+  geom_controls <- reactiveValues(x = "auto")
   shiny::observeEvent(list(input$dragvars$target, geomSelected$x), {
     types <- possible_geom(data = dataChart$data, x = input$dragvars$target$xvar, y = input$dragvars$target$yvar)
     geom_possible$x <- c("auto", types)
