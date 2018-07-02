@@ -13,6 +13,7 @@
 #' @name filterData-module
 #' 
 #' @note Column's names can be modified to be valid R names.
+#'  Categorical columns with more than 50 unique values will be discarded. 
 #'
 #' @examples
 #' 
@@ -230,9 +231,11 @@ create_input_filter <- function(data, var, ns, key = "filter", width = "100%") {
     x <- x[!is.na(x) & trimws(x) != ""]
     if (length(x) == 0)
       return(NULL)
-    if (length(x) == length(unique(x)))
+    if (length(unique(x)) >= length(x) * 0.9)
       return(NULL)
     if (length(unique(x)) == 1)
+      return(NULL)
+    if (length(unique(x)) >= 50)
       return(NULL)
     if (inherits(x, "factor")) {
       x <- levels(x)

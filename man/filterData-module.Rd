@@ -35,6 +35,7 @@ Modules for creating filters from a data.frame
 }
 \note{
 Column's names can be modified to be valid R names.
+ Categorical columns with more than 50 unique values will be discarded.
 }
 \examples{
 
