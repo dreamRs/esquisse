@@ -15,8 +15,14 @@ If you find bugs, please open an [issue](https://github.com/dreamRs/esquisse/iss
 
 ## Installation
 
+Not yet on CRAN, you can install from GitHub:
+
 ```r
-source("https://install-github.me/dreamRs/esquisse")
+# with remotes
+remotes::install_github("dreamRs/esquisse")
+
+# or with install-github.me service (based on remotes)
+source("https://install-github.me/dreamRs/esquissev")
 
 # or with devtools:
 devtools::install_github("dreamRs/esquisse")
@@ -27,6 +33,8 @@ Then launch the addin via the RStudio menu, if you don't have `data.frame` in yo
 
 
 ## `ggplot2` builder addin
+
+![](img/esquisse.gif)
 
 Launch addin via RStudio menu or with:
 
