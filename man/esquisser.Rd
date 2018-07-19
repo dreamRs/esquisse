@@ -4,11 +4,18 @@
 \alias{esquisser}
 \title{An add-in to easily create plots with ggplot2}
 \usage{
-esquisser(data = NULL)
+esquisser(data = NULL, coerceVars = getOption(x = "esquisse.coerceVars",
+  default = FALSE), viewer = getOption(x = "esquisse.viewer", default =
+  "dialog"))
 }
 \arguments{
 \item{data}{a data.frame, you can pass a data.frame explicitly to the function, 
 otherwise you'll have to choose one in global environment.}
+
+\item{coerceVars}{If \code{TRUE} allow to coerce variables to different type when selecting data.}
+
+\item{viewer}{Where to display the gadget: \code{"dialog"},
+\code{"pane"} or \code{"browser"} (see \code{\link[shiny]{viewer}}).}
 }
 \value{
 code to reproduce chart.

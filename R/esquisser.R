@@ -7,6 +7,9 @@
 #'
 #' @param data a data.frame, you can pass a data.frame explicitly to the function, 
 #' otherwise you'll have to choose one in global environment.
+#' @param coerceVars If \code{TRUE} allow to coerce variables to different type when selecting data.
+#' @param viewer Where to display the gadget: \code{"dialog"},
+#'  \code{"pane"} or \code{"browser"} (see \code{\link[shiny]{viewer}}).
 #'
 #' @return code to reproduce chart.
 #' @export
@@ -26,11 +29,15 @@
 #' # or
 #' options("esquisse.display.mode" = "browser")
 #' }
-esquisser <- function(data = NULL) {
+esquisser <- function(data = NULL, 
+                      coerceVars = getOption(x = "esquisse.coerceVars", default = FALSE),
+                      viewer = getOption(x = "esquisse.viewer", default = "dialog")) {
+  
+  options("esquisse.coerceVars" = coerceVars)
 
   # Get the document context.
   if (isAvailable()) {
-    context <- getActiveDocumentContext()
+    context <- rstudioapi::getActiveDocumentContext()
     defaultData <- context$selection[[1]]$text
   } else {
     defaultData <- ""
@@ -54,11 +61,9 @@ esquisser <- function(data = NULL) {
   esquisse.env$data <- data
   esquisse.env$name <- defaultData
 
-  display <- getOption("esquisse.display.mode", default = "dialog")
-
-  if (display == "browser") {
+  if (viewer == "browser") {
     inviewer <- browserViewer(browser = getOption("browser"))
-  } else if (display == "pane") {
+  } else if (viewer == "pane") {
     inviewer <- paneViewer(minHeight = "maximize")
   } else {
     inviewer <- dialogViewer(

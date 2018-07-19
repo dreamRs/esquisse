@@ -22,7 +22,7 @@ Not yet on CRAN, you can install from GitHub:
 remotes::install_github("dreamRs/esquisse")
 
 # or with install-github.me service (based on remotes)
-source("https://install-github.me/dreamRs/esquissev")
+source("https://install-github.me/dreamRs/esquisse")
 
 # or with devtools:
 devtools::install_github("dreamRs/esquisse")

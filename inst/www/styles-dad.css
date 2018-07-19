@@ -7,6 +7,8 @@
   border-color: steelblue;
   border-radius: 5px;
   border-width: 1px;
+  overflow: auto;
+  overflow-x: hidden;
 }
 
 .label-background {
@@ -36,7 +38,7 @@
   z-index: -1;
   overflow: hidden;
   color: #E6E6E6;
-  font-size: 150%;
+  font-size: 120%;
 }
 
 .label-categorical {
