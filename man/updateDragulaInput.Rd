@@ -4,8 +4,9 @@
 \alias{updateDragulaInput}
 \title{Update Dragula Input}
 \usage{
-updateDragulaInput(session, inputId, choices = NULL, choiceNames = NULL,
-  choiceValues = NULL, badge = TRUE, status = "primary")
+updateDragulaInput(session, inputId, choices = NULL,
+  choiceNames = NULL, choiceValues = NULL, badge = TRUE,
+  status = "primary")
 }
 \arguments{
 \item{session}{The \code{session} object passed to function given to \code{shinyServer}.}

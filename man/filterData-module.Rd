@@ -8,7 +8,8 @@
 \usage{
 filterDataUI(id)
 
-filterDataServer(input, output, session, data, vars = NULL, width = "100\%")
+filterDataServer(input, output, session, data, vars = NULL,
+  width = "100\%")
 }
 \arguments{
 \item{id}{Module's id}
