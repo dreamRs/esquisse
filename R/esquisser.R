@@ -36,9 +36,13 @@ esquisser <- function(data = NULL,
   options("esquisse.coerceVars" = coerceVars)
 
   # Get the document context.
-  if (isAvailable()) {
-    context <- rstudioapi::getActiveDocumentContext()
-    defaultData <- context$selection[[1]]$text
+  if (rstudioapi::isAvailable()) {
+    context <- try(rstudioapi::getSourceEditorContext(), silent = TRUE)
+    if ("try-error" %in% class(context)) {
+      defaultData <- ""
+    } else {
+      defaultData <- context$selection[[1]]$text
+    }
   } else {
     defaultData <- ""
   }
