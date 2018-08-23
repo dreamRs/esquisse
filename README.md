@@ -1,4 +1,4 @@
-# esquisse
+# esquisse <img src="img/logo_esquisse.png" width=200 align="right" />
 
 > The purpose of this add-in is to let you explore your data quickly to extract the information they hold. You can only create simple plots, you won't be able to use custom scales and all the power of ggplot2. This is just the start!
 
