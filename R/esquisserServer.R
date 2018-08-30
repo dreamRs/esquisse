@@ -23,14 +23,18 @@ esquisserServer <- function(input, output, session, data = NULL) {
     coerceVars = getOption(x = "esquisse.coerceVars", default = FALSE)
   )
   observeEvent(dataChart$data, {
-    # varSelected <- reactiveValues(x = NULL)
+    # special case: geom_sf
+    if (inherits(dataChart$data, what = "sf")) {
+      geom_possible$x <- c("sf", geom_possible$x)
+    } 
+    var_choices <- setdiff(names(dataChart$data), attr(dataChart$data, "sf_column"))
     updateDragulaInput(
       session = session, 
       inputId = "dragvars", status = NULL,
-      choiceValues = names(dataChart$data), 
+      choiceValues = var_choices, 
       choiceNames = badgeType(
-        col_name = names(dataChart$data), 
-        col_type = col_type(dataChart$data)
+        col_name = var_choices, 
+        col_type = col_type(dataChart$data[, var_choices])
       ),
       badge = FALSE
     )

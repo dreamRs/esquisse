@@ -263,15 +263,6 @@ controls_appearance <- function(ns) {
         choices = c(list(c("#0C4C8A", "#EF562D")), unname(cols$choices_colors))
       )
     ),
-    # shinyWidgets::colorSelectorInput(
-    #   inputId = ns("fill_color"),
-    #   label = "Choose color :",
-    #   choices = c(
-    #     " " = list(c("#0C4C8A", "#EF562D")), cols$choices_colors
-    #   ),
-    #   selected = "#0C4C8A", display_label = TRUE,
-    #   mode = "radio"
-    # ),
     htmltools::tags$div(
       id = ns("controls-palette"), style = "display: none;",
       shinyWidgets::pickerInput(

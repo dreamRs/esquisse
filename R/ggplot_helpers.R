@@ -52,7 +52,7 @@ ggtry <- function(data, x = NULL, y = NULL, fill = NULL, color = NULL, size = NU
   }
 
   # geom
-  chartgeom <- guess_geom(xtype, ytype, type)
+  chartgeom <- guess_geom(xtype, ytype, type, sfobj = inherits(data, what = "sf"))
 
   # aes
   chartaes <- guess_aes(x, y, fill, color, size, chartgeom, xtype, ytype)
@@ -287,7 +287,7 @@ guess_aes <- function(x = NULL, y = NULL, fill = NULL, color = NULL, size = NULL
 #' @noRd
 #'
 #' @importFrom ggplot2 geom_blank
-guess_geom <- function(xtype = NULL, ytype = NULL, type = "auto") {
+guess_geom <- function(xtype = NULL, ytype = NULL, type = "auto", sfobj = FALSE) {
 
   geom_cat <- ggplot_geom_vars()
 
@@ -312,7 +312,11 @@ guess_geom <- function(xtype = NULL, ytype = NULL, type = "auto") {
   }
 
   if (nrow(restype) == 0) {
-    geom <- "blank"
+    if (sfobj) {
+      geom <- "sf"
+    } else {
+      geom <- "blank"
+    }
   } else {
     geom <- restype$geom
   }
@@ -353,7 +357,13 @@ possible_geom <- function(data, x = NULL, y = NULL) {
     ytype <- "empty"
   }
 
-  geom_cat[geom_cat$x == xtype & geom_cat$y %in% ytype, "geom"]
+  geoms <- geom_cat[geom_cat$x == xtype & geom_cat$y %in% ytype, "geom"]
+  
+  if (inherits(data, what = "sf")) {
+    geoms <- c(geoms, "sf")
+  } 
+  
+  return(geoms)
 }
 
 

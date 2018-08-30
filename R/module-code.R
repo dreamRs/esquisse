@@ -57,7 +57,7 @@ moduleCodeServer <- function(input, output, session, varSelected, dataChart, par
     code_geom <- guess_geom(
       xtype = if (!is.null(varSelected$xvar)) col_type(dataChart$data[[varSelected$xvar]]),
       ytype = if (!is.null(varSelected$yvar)) col_type(dataChart$data[[varSelected$yvar]]),
-      type = geomSelected$x
+      type = geomSelected$x, sfobj = inherits(dataChart$data, what = "sf")
     )
     code_aes <- guess_aes(
       x = varSelected$xvar,

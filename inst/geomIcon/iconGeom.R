@@ -188,3 +188,28 @@ dev.off()
 
 
 
+
+
+# Geom sf -----------------------------------------------------------------
+
+library(sf)
+library(rnaturalearth)
+library(dplyr)
+png(filename = "inst/geomIcon/www/gg-sf.png", bg = "transparent")
+world <- rnaturalearth::ne_countries(returnclass = "sf")
+ggplot(data = coord_circle(centre = c(0, 0), r = 1)) + geom_polygon(aes(x = x, y = y), fill = "#FAAC58") + coord_fixed() + theme_void()
+p <- ggplot(data = st_transform(world, 54032)) + 
+  geom_sf(fill = "transparent", color = "white", size = 1.2) + coord_sf(datum = NA) + theme_void()
+print(p, vp = viewport(width = unit(0.9, "npc"), height = unit(0.9, "npc")))
+dev.off()
+
+
+# ggplot(data = filter(world, !continent %in% c("Antarctica", "Seven seas (open ocean)"))) + 
+#   geom_sf() + coord_sf(crs = 102016) + theme_void()
+# ggplot(data = filter(world, !continent %in% c("Antarctica", "Seven seas (open ocean)"))) + 
+#   geom_sf() + coord_sf(crs = 54032, ndiscr = 0) + theme_void()
+# 
+# ggplot(data = st_transform(world, 54030)) + 
+#   geom_sf(fill = "transparent", color = "steelblue") + coord_sf(datum = NA) + theme_void()
+# 
+

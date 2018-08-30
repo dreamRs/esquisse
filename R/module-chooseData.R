@@ -212,8 +212,14 @@ chooseDataServer <- function(input, output, session, data = NULL, name = NULL,
   observe({
     req(input$data); req(input$col_chooser)
     dat <- get_df(input$data)
-    dat <- as.data.frame(dat)
-    if (selectVars & all(input$col_chooser %in% names(dat))) {
+    ## --->>> TODO SF <<<--- ##
+    # if (inherits(dat, what = "sf")) {
+    #   var_chosen <- c(input$col_chooser, attr(dat, "sf_column"))
+    # } else {
+      dat <- as.data.frame(dat)
+      var_chosen <- input$col_chooser
+    # }
+    if (selectVars & all(var_chosen %in% names(dat))) {
       dat <- dat[, input$col_chooser, drop = FALSE]
     }
     tmp_data$data <- dat
@@ -369,8 +375,13 @@ chooseDataModalServer <- function(input, output, session) {
 
   shiny::observeEvent(input$validata, {
     dat <- get_df(input$data)
-    dat <- as.data.frame(dat)
-    dat <- dat[, input$col_chooser, drop = FALSE]
+    ## --->>> TODO SF <<<--- ##
+    # if (inherits(dat, what = "sf")) {
+    #   dat <- dat[, c(input$col_chooser, attr(dat, "sf_column")), drop = FALSE]
+    # } else {
+      dat <- as.data.frame(dat)
+      dat <- dat[, input$col_chooser, drop = FALSE]
+    # }
     dataChoosen$x <- dat
     dataChoosen$name <- input$data
   })

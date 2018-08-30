@@ -141,6 +141,10 @@ badgeType <- function(col_name, col_type) {
 #'
 #' @noRd
 col_type <- function(x, no_id = FALSE) {
+  
+  if (is.data.frame(x) && inherits(x, what = "sf")) {
+    x <- x[, setdiff(names(x), attr(x, "sf_column")), drop = FALSE]
+  } 
 
   if (is.data.frame(x)) {
     return(unlist(lapply(x, col_type), use.names = FALSE))
@@ -173,9 +177,10 @@ col_type <- function(x, no_id = FALSE) {
 
 #' @importFrom stats setNames
 geom_icon_href <- function() {
+  ## --->>> TODO SF <<<--- ##
   href <- "esquisse/geomIcon/gg-%s.png"
   geoms <- c("auto", "line", "bar", "histogram", 
-             "point", "boxplot", "violin", "density", "tile")
+             "point", "boxplot", "violin", "density", "tile") #, "sf"
   lapply(
     X = setNames(geoms, geoms),
     FUN = sprintf, fmt = href
@@ -183,8 +188,9 @@ geom_icon_href <- function() {
 }
 
 geom_icon_input <- function() {
+  ## --->>> TODO SF <<<--- ##
   geoms <- c("auto", "line", "bar", "histogram", 
-             "point", "boxplot", "violin", "density", "tile")
+             "point", "boxplot", "violin", "density", "tile") # , "sf"
   href <- "esquisse/geomIcon/gg-%s.png"
   lapply(
     X = geoms,
