@@ -1,4 +1,4 @@
-# esquisse <img src="inst/img/logo_esquisse.png" width=200 align="right" />
+# esquisse <img src="man/figures/logo_esquisse.png" width=200 align="right" />
 
 > The purpose of this add-in is to let you explore your data quickly to extract the information they hold. You can only create simple plots, you won't be able to use custom scales and all the power of ggplot2. This is just the start!
 
@@ -33,7 +33,7 @@ Then launch the addin via the RStudio menu, if you don't have `data.frame` in yo
 
 ## `ggplot2` builder addin
 
-![](inst/img/esquisse.gif)
+![](man/figures/esquisse.gif)
 
 Launch addin via RStudio menu or with:
 
@@ -43,7 +43,7 @@ esquisse::esquisser()
 
 First step is to choose a `data.frame`:
 
-![](inst/img/esquisse_0.png)
+![](man/figures/esquisse_0.png)
 
 
 Or you can use a dataset directly with:
@@ -55,7 +55,7 @@ esquisse::esquisser(data = iris)
 
 After that, you can drag and drop variables to create a plot:
 
-![](inst/img/esquisse_1.png)
+![](man/figures/esquisse_1.png)
 
 
 Four sub-menus are available under the chart to modify some parameters:
@@ -64,14 +64,14 @@ Four sub-menus are available under the chart to modify some parameters:
 
 Set chart's labs with this menu:
 
-![](inst/img/esquisse_labs.png)
+![](man/figures/esquisse_labs.png)
 
 
 ### Plot options
 
 Choose color, geom parameters and theme:
 
-![](inst/img/esquisse_plotoptions.png)
+![](man/figures/esquisse_plotoptions.png)
 
 
 ### Filter data
@@ -80,14 +80,14 @@ Choose color, geom parameters and theme:
 
 Filter your data:
 
-![](inst/img/esquisse_filters.png)
+![](man/figures/esquisse_filters.png)
 
 
 ### Code & export
 
 Export your plot and retrieve the code to reproduce it:
 
-![](inst/img/esquisse_code.png)
+![](man/figures/esquisse_code.png)
 
 
 
