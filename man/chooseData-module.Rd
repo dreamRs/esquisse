@@ -36,7 +36,7 @@ there is no \code{data.frame}s in Global environment. By default, \code{data.fra
 from \code{ggplot2} are used.}
 }
 \value{
-a \code{\link[shiny]{reactiveValues}} containing the data choosen under slot \code{data}
+a \code{\link[shiny]{reactiveValues}} containing the data selected under slot \code{data}
 and the name of the selected \code{data.frame} under slot \code{name}.
 }
 \description{

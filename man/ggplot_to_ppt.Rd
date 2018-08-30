@@ -10,10 +10,10 @@ ggplot_to_ppt(gg = NULL)
 \item{gg}{character. Name(s) of ggplot object(s), if NULL, launch the Shiny gadget.}
 }
 \value{
-Path to the temporary ppt file.
+Path to the temporary PowerPoint file.
 }
 \description{
-You can use the RStudio addin to interactively select ggplot objets, or
+You can use the RStudio addin to interactively select ggplot objects, or
 directly pass their names to the function.
 }
 \examples{

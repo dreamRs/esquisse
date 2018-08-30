@@ -23,7 +23,7 @@
 #'  if you want to pass custom appearance with \code{choiceNames}.
 #' @param status If choices are displayed into a Bootstrap label, you can use Bootstrap
 #'  status to color them, or \code{NULL}.
-#' @param replace When a choice is draged in a target container already
+#' @param replace When a choice is dragged in a target container already
 #'  containing a choice, does the later be replaced by the new one ?#' 
 #' @param width Width of the input.
 #' @param height Height of each boxes, the total input height is this parameter X 2.

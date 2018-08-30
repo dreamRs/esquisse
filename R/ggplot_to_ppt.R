@@ -1,11 +1,11 @@
 #' Utility to export ggplot objects to PowerPoint
 #'
-#' You can use the RStudio addin to interactively select ggplot objets, or
+#' You can use the RStudio addin to interactively select ggplot objects, or
 #' directly pass their names to the function.
 #'
 #' @param gg character. Name(s) of ggplot object(s), if NULL, launch the Shiny gadget.
 #'
-#' @return Path to the temporary ppt file.
+#' @return Path to the temporary PowerPoint file.
 #' @export
 #'
 #' @importFrom utils browseURL

@@ -6,7 +6,7 @@
 #'
 #' @param id Module's id.
 #'
-#' @return a \code{\link[shiny]{reactiveValues}} containing the data choosen under slot \code{data}
+#' @return a \code{\link[shiny]{reactiveValues}} containing the data selected under slot \code{data}
 #' and the name of the selected \code{data.frame} under slot \code{name}.
 #' @export
 #' 
@@ -291,101 +291,4 @@ chooseDataModal <- function(ns, defaultData = NULL, selectVars = TRUE, coerceVar
   )
 }
 
-
-
-#' Module for choosing data (server)
-#'
-#' @param input    standard \code{shiny} input
-#' @param output   standard \code{shiny} output
-#' @param session  standard \code{shiny} session
-#'
-#' @noRd
-#'
-#' @importFrom shinyWidgets pickerInput
-#' @importFrom htmltools tags HTML tagList
-#' @importFrom shiny renderUI observeEvent req
-#'
-chooseDataModalServer <- function(input, output, session) {
-
-  # Namespace
-  ns <- session$ns
-
-  dataChoosen <- reactiveValues(x = NULL)
-
-  output$test <- renderPrint({
-    reactiveValuesToList(input)
-  })
-
-  output$col_chooser_ui <- renderUI({
-
-    req(input$data)
-
-    dat <- get_df(input$data)
-    # dat <- as.data.table(dat)
-
-    res_col_type <- unlist(lapply(dat, col_type))
-
-    htmltools::tagList(
-      # shinyWidgets::multiInput(
-      #   inputId = ns("col_chooser"), label = "Validate choosen variable :",
-      #   choiceNames = badgeType(col_name = names(res_col_type), col_type = unname(res_col_type)),
-      #   choiceValues = names(res_col_type),
-      #   selected = names(res_col_type)[unname(res_col_type) != "id"]
-      # ),
-      shinyWidgets::pickerInput(
-        inputId = ns("col_chooser"),
-        label = "Validate choosen variable :",
-        choices = names(res_col_type), multiple = TRUE, width = "100%",
-        selected = names(res_col_type)[unname(res_col_type) != "id"],
-        options = list(
-          `actions-box` = TRUE, `multiple-separator` = " ",
-          `selected-text-format`= "count > 4",
-          `count-selected-text` = "{0} variables chosen (on a total of {1})"
-        ),
-        choicesOpt = list(
-          content = badgeType(col_name = names(res_col_type), col_type = unname(res_col_type))
-        )
-      ),
-      htmltools::tags$em("Legend :"),
-      htmltools::HTML(paste(
-        badgeType(col_name = c("categorical", "continuous", "time", "id"),
-                   col_type = c("categorical", "continuous", "time", "id")),
-        collapse = ", "
-      ))
-    )
-  })
-
-  toggleBtnServer(session, inputId = ns("validata"), type = "disable")
-  output$alert_no_var <- shiny::renderUI({
-    shiny::req(input$data)
-    if (length(input$col_chooser) < 1) {
-      toggleBtnServer(session, inputId = ns("validata"), type = "disable")
-      htmltools::tagList(
-        htmltools::tags$br(),
-        htmltools::tags$div(
-          class = "alert alert-warning",
-          tags$b("Warning !"), "no variable selected..."
-        )
-      )
-    } else {
-      toggleBtnServer(session, inputId = ns("validata"), type = "enable")
-      NULL
-    }
-  })
-
-  shiny::observeEvent(input$validata, {
-    dat <- get_df(input$data)
-    ## --->>> TODO SF <<<--- ##
-    # if (inherits(dat, what = "sf")) {
-    #   dat <- dat[, c(input$col_chooser, attr(dat, "sf_column")), drop = FALSE]
-    # } else {
-      dat <- as.data.frame(dat)
-      dat <- dat[, input$col_chooser, drop = FALSE]
-    # }
-    dataChoosen$x <- dat
-    dataChoosen$name <- input$data
-  })
-
-  return(dataChoosen)
-}
 
