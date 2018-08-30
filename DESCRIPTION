@@ -1,11 +1,13 @@
 Package: esquisse
 Type: Package
 Title: Explore and Visualize Your Data Interactively
-Version: 0.1.4.920
+Version: 0.1.5
 Authors@R: c(person("Fanny", "Meyer", email = "fanny.meyer@dreamrs.fr", role = c("aut")),
   person("Victor", "Perrier", email = "victor.perrier@dreamrs.fr", role = c("aut", "cre")))
 Description: A Shiny gadget to create ggplot charts interactively with drag-and-drop to map your variables.
     You can quickly visualize your data accordingly to their type, export to 'PNG' or 'PowerPoint', and retrieve the code to reproduce the chart.
+URL: https://github.com/dreamRs/esquisse
+BugReports: https://github.com/dreamRs/esquisse/issues
 License: GPL-3 | file LICENSE
 Encoding: UTF-8
 LazyData: true

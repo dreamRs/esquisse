@@ -1,14 +1,13 @@
-# esquisse <img src="img/logo_esquisse.png" width=200 align="right" />
+# esquisse <img src="inst/img/logo_esquisse.png" width=200 align="right" />
 
 > The purpose of this add-in is to let you explore your data quickly to extract the information they hold. You can only create simple plots, you won't be able to use custom scales and all the power of ggplot2. This is just the start!
 
-[![Project Status: WIP – Initial development is in progress, but there has not yet been a stable, usable release suitable for the public.](http://www.repostatus.org/badges/latest/wip.svg)](http://www.repostatus.org/#wip)
+[![Project Status: Active – The project has reached a stable, usable state and is being actively developed.](https://www.repostatus.org/badges/latest/active.svg)](https://www.repostatus.org/#active)
 [![Travis-CI Build Status](https://travis-ci.org/dreamRs/esquisse.svg?branch=master)](https://travis-ci.org/dreamRs/esquisse)
 
 
 This addin allows you to interactively explore your data by visualizing it with the ggplot2 package. It allows you to draw bar graphs, curves, scatter plots, histograms, then export the graph or retrieve the code generating the graph.
 
-:construction: :warning: Under development !! :warning: :construction:
 
 If you find bugs, please open an [issue](https://github.com/dreamRs/esquisse/issues)
 
@@ -34,7 +33,7 @@ Then launch the addin via the RStudio menu, if you don't have `data.frame` in yo
 
 ## `ggplot2` builder addin
 
-![](img/esquisse.gif)
+![](inst/img/esquisse.gif)
 
 Launch addin via RStudio menu or with:
 
@@ -44,7 +43,7 @@ esquisse::esquisser()
 
 First step is to choose a `data.frame`:
 
-![](img/esquisse_0.png)
+![](inst/img/esquisse_0.png)
 
 
 Or you can use a dataset directly with:
@@ -56,7 +55,7 @@ esquisse::esquisser(data = iris)
 
 After that, you can drag and drop variables to create a plot:
 
-![](img/esquisse_1.png)
+![](inst/img/esquisse_1.png)
 
 
 Four sub-menus are available under the chart to modify some parameters:
@@ -65,14 +64,14 @@ Four sub-menus are available under the chart to modify some parameters:
 
 Set chart's labs with this menu:
 
-![](img/esquisse_labs.png)
+![](inst/img/esquisse_labs.png)
 
 
 ### Plot options
 
 Choose color, geom parameters and theme:
 
-![](img/esquisse_plotoptions.png)
+![](inst/img/esquisse_plotoptions.png)
 
 
 ### Filter data
@@ -81,14 +80,14 @@ Choose color, geom parameters and theme:
 
 Filter your data:
 
-![](img/esquisse_filters.png)
+![](inst/img/esquisse_filters.png)
 
 
 ### Code & export
 
 Export your plot and retrieve the code to reproduce it:
 
-![](img/esquisse_code.png)
+![](inst/img/esquisse_code.png)
 
 
 
