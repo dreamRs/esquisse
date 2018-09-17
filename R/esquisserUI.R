@@ -11,19 +11,19 @@
 esquisserUI <- function() {
 
   ### addin
-  miniUI::miniPage(
+  miniPage(
 
     # style sheet
-    htmltools::tags$link(rel="stylesheet", type="text/css", href="esquisse/styles.css"),
-    htmltools::tags$script(src = "esquisse/clipboard.min.js"),
+    tags$link(rel="stylesheet", type="text/css", href="esquisse/styles.css"),
+    tags$script(src = "esquisse/clipboard.min.js"),
 
     # title
-    htmltools::tags$div(
+    tags$div(
       class="gadget-title dreamrs-title-box",
-      htmltools::tags$h1(shiny::icon("wrench"), "ggplot2 builder", class = "dreamrs-title"),
-      htmltools::tags$div(
+      tags$h1(shiny::icon("wrench"), "ggplot2 builder", class = "dreamrs-title"),
+      tags$div(
         class = "pull-right",
-        miniUI::miniTitleBarButton(inputId = "close", label = "Close")
+        miniTitleBarButton(inputId = "close", label = "Close")
       )
     ),
     # page
