@@ -24,6 +24,8 @@ Imports: miniUI,
     RColorBrewer,
     scales,
     stringi
-Suggests: officer,
+Suggests: 
+    officer,
     rvg,
-    DT
+    DT,
+    testthat

@@ -281,8 +281,7 @@ guess_aes <- function(x = NULL, y = NULL, fill = NULL, color = NULL, size = NULL
     }
   }
 
-  # do.call(ggplot2::aes_, vars)
-  vars
+  return(vars)
 }
 
 
@@ -346,7 +345,7 @@ guess_geom <- function(xtype = NULL, ytype = NULL, type = "auto", sfobj = FALSE)
 
 
 
-#' Title
+#' Possible geoms according to data type
 #'
 #' @param data a \code{data.frame}.
 #' @param x character, variable name for x-axis.
