@@ -7,6 +7,8 @@
 
 0 errors | 0 warnings | 1 note
 
-* This is a new release. The main functionnality of this package is a Shiny application to create visualisation easily with ggplot2. Some Shiny functionalities are exported.
+* Resubmiting: the following issues have been fixed:
+  - write package names, software names and API names in single quotes;
+  
 Thank you !
 Victor
