@@ -44,7 +44,6 @@ Module for choosing data.frame from
 user environment and select variable to use.
 }
 \examples{
-\dontrun{
 
 if (interactive()) {
 
@@ -109,6 +108,4 @@ shinyApp(ui, server)
 
 }
 
-
-}
 }

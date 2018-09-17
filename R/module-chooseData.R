@@ -16,7 +16,6 @@
 #' @importFrom shiny NS actionButton icon singleton
 #'
 #' @examples
-#' \dontrun{
 #' 
 #' if (interactive()) {
 #' 
@@ -81,8 +80,6 @@
 #' 
 #' }
 #' 
-#' 
-#' }
 chooseDataUI <- function(id) {
   
   ns <- NS(id)
@@ -243,7 +240,7 @@ chooseDataServer <- function(input, output, session, data = NULL, name = NULL,
 
 
 
-#' @importFrom shiny NS modalDialog modalButton uiOutput
+#' @importFrom shiny NS modalDialog modalButton uiOutput actionButton
 #' @importFrom shinyWidgets pickerInput
 #' @importFrom htmltools tags
 #' @importFrom utils data
@@ -268,25 +265,25 @@ chooseDataModal <- function(ns, defaultData = NULL, selectVars = TRUE, coerceVar
   )
   info_dfs <- unlist(info_dfs)
 
-  shiny::modalDialog(
+  modalDialog(
     title = "Choose a dataset", fade = FALSE,
     footer = htmltools::tags$div(
-      shiny::actionButton(
+      actionButton(
         inputId = ns("validata"), label = "Choose", 
         class = "btn-primary", `data-dismiss` = "modal"
       ),
-      shiny::modalButton(label = "Dismiss")
+      modalButton(label = "Dismiss")
     ),
-    shinyWidgets::pickerInput(
+    pickerInput(
       inputId = ns("data"),
       label = "Choose a data.frame :",
       choices = dfs, width = "100%",
       options = list(title = "List of data.frame..."),
       choicesOpt = list(subtext = info_dfs)
     ),
-    if (selectVars) shiny::uiOutput(outputId = ns("col_chooser_ui")),
-    if (selectVars) shiny::uiOutput(outputId = ns("alert_no_var")),
-    if (coerceVars) shiny::uiOutput(outputId = ns("coerce_ui")), 
+    if (selectVars) uiOutput(outputId = ns("col_chooser_ui")),
+    if (selectVars) uiOutput(outputId = ns("alert_no_var")),
+    if (coerceVars) uiOutput(outputId = ns("coerce_ui")), 
     tags$br()
   )
 }

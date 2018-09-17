@@ -14,6 +14,58 @@
 
 `%nin%` <- Negate(`%in%`)
 
+`%+&%` <- function(e1, e2) {
+  if (e1 != "" & e2 != "") {
+    paste(e1, e2, sep = " & ")
+  } else if (e1 != "" & e2 == "") {
+    e1
+  } else if (e1 == "" & e2 != "") {
+    e2
+  } else {
+    ""
+  }
+}
+
+`%+|%` <- function(e1, e2) {
+  if (e1 != "" & e2 != "") {
+    paste(e1, e2, sep = " | ")
+  } else if (e1 != "" & e2 == "") {
+    e1
+  } else if (e1 == "" & e2 != "") {
+    ""
+  } else {
+    ""
+  }
+}
+
+`%+1%` <- function(e1, e2) {
+  if (e1 != "" & e2 != "") {
+    paste("(", e1, e2, ")")
+  } else if (e1 != "" & e2 == "") {
+    e1
+  } else if (e1 == "" & e2 != "") {
+    if (grepl(pattern = "&", x = e2)) {
+      gsub(pattern = "(&|\\|)\\s", replacement = "", x = e2)
+    } else {
+      ""
+    }
+  } else {
+    ""
+  }
+}
+
+`%+%` <- function(e1, e2) {
+  if (e1 != "" & e2 != "") {
+    paste("(", e1, e2, ")")
+  } else if (e1 != "" & e2 == "") {
+    e1
+  } else if (e1 == "" & e2 != "") {
+    e2
+  } else {
+    ""
+  }
+}
+
 
 # Utility : drop NULL from list
 dropNulls <- function (x) {
@@ -73,15 +125,18 @@ get_df <- function(df, env = globalenv()) {
 #' @noRd
 #'
 #' @examples
-#' \dontrun{
 #'
+#' # NULL if no data.frame
+#' search_obj("data.frame")
+#' 
+#' library(ggplot2)
+#' data("mpg")
 #' search_obj("data.frame")
 #'
 #'
 #' gg <- ggplot()
 #' search_obj("ggplot")
 #'
-#' }
 search_obj <- function(what = "data.frame", env = globalenv()) {
   all <- ls(name = env)
   objs <- lapply(

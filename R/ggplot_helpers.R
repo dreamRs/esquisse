@@ -12,17 +12,21 @@
 #'
 #' @return a ggplot object
 #' @noRd
-#'
-# @import ggplot2
-#'
-#' @examples
-#' \dontrun{
-#' ggtry(data = diamonds, x = "carat")
-#' ggtry(data = diamonds, x = "cut")
-#' }
+#' 
 #' @importFrom ggplot2 ggplot aes_ scale_fill_hue scale_fill_gradient scale_fill_brewer 
 #'  scale_fill_distiller scale_color_hue scale_color_gradient scale_color_brewer 
 #'  scale_color_distiller labs coord_flip geom_smooth theme element_text
+#'
+#'
+#' @examples
+#' if (interactive()) {
+#' 
+#' data("diamonds", package = "ggplot2")
+#' 
+#' ggtry(data = diamonds, x = "carat")
+#' ggtry(data = diamonds, x = "cut")
+#' 
+#' }
 ggtry <- function(data, x = NULL, y = NULL, fill = NULL, color = NULL, size = NULL, type = "auto", params = list(), ...) {
 
   args <- list(...)
@@ -213,7 +217,13 @@ do.call.tommy <- function(what, args, ...) {
 #'
 #' @importFrom ggplot2 aes_
 #' @importFrom stats as.formula
-#'
+#' 
+#' 
+#' @examples 
+#' guess_aes(x = "carat", xtype = "continuous")
+#' 
+#' guess_aes(x = "color", xtype = "categorical")
+#' 
 guess_aes <- function(x = NULL, y = NULL, fill = NULL, color = NULL, size = NULL, geom = "auto", xtype = NULL, ytype = NULL) {
 
   vars <- list(x = x, y = y, fill = fill, color = color, size = size)
@@ -287,6 +297,15 @@ guess_aes <- function(x = NULL, y = NULL, fill = NULL, color = NULL, size = NULL
 #' @noRd
 #'
 #' @importFrom ggplot2 geom_blank
+#' 
+#' @examples
+#' 
+#' guess_geom(xtype = "continuous")
+#' 
+#' guess_geom(xtype = "categorical")
+#' 
+#' guess_geom(xtype = "continuous", ytype = "continuous")
+#' 
 guess_geom <- function(xtype = NULL, ytype = NULL, type = "auto", sfobj = FALSE) {
 
   geom_cat <- ggplot_geom_vars()
@@ -327,6 +346,28 @@ guess_geom <- function(xtype = NULL, ytype = NULL, type = "auto", sfobj = FALSE)
 
 
 
+#' Title
+#'
+#' @param data a \code{data.frame}.
+#' @param x character, variable name for x-axis.
+#' @param y character, variable name for y-axis.
+#'
+#' @return character, geoms possible
+#' @noRd
+#'
+#' @examples
+#' 
+#' data("mpg", package = "ggplot2")
+#' 
+#' # continuous
+#' possible_geom(data = mpg, x = "cyl")
+#' 
+#' # discrete
+#' possible_geom(data = mpg, x = "manufacturer")
+#' 
+#' # two continuous variables
+#' possible_geom(data = mpg, x = "cyl", y = "displ")
+#' 
 possible_geom <- function(data, x = NULL, y = NULL) {
 
   vars <- list(x = x, y = y)

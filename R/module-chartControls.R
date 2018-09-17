@@ -214,22 +214,6 @@ controls_labs <- function(ns) {
   )
 }
 
-#' @importFrom shiny textInput
-#' @importFrom htmltools tags
-textInputHorizontal <- function(inputId, label) {
-  tags$div(
-    class="form-group",
-    tags$label(
-      class="col-sm-4 control-label",
-      `for` = inputId, label
-    ),
-    tags$div(
-      class="col-sm-8",
-      textInput(inputId = inputId, label = NULL)
-    )
-  )
-}
-
 
 
 

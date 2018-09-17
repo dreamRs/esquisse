@@ -1,10 +1,10 @@
-Name: ggplot builder
-Description: Explore your data with ggplot2.
+Name: 'ggplot2' builder
+Description: Explore your data with 'ggplot2'.
 Binding: esquisser
 Interactive: true
 
-Name: Export ggplot2 plots to PowerPoint
-Description: Export ggplot2 plots to PowerPoint.
+Name: Export 'ggplot2' plots to 'PowerPoint'
+Description: Export 'ggplot2' plots to 'PowerPoint'.
 Binding: ggplot_to_ppt
 Interactive: true
 

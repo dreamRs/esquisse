@@ -11,11 +11,10 @@
 #' @importFrom utils browseURL
 #' @importFrom shiny actionButton icon observeEvent dialogViewer runGadget stopApp actionLink
 #' @importFrom miniUI miniPage miniContentPanel miniButtonBlock
-#' @importFrom shinyWidgets updateProgressBar progressBar prettyCheckboxGroup
+#' @importFrom shinyWidgets updateProgressBar progressBar prettyCheckboxGroup updatePrettyCheckboxGroup
 #' @importFrom ggplot2 ggplot_build
 #'
 #' @examples
-#' \dontrun{
 #'
 #' # Shiny gadget
 #' if (interactive()) {
@@ -31,7 +30,6 @@
 #'
 #' ggplot_to_ppt("p")
 #'
-#' }
 ggplot_to_ppt <- function(gg = NULL) {
   
   if (!requireNamespace(package = "rvg"))
@@ -72,30 +70,30 @@ ggplot_to_ppt <- function(gg = NULL) {
     }
     print(ppt, target = tmp)
 
-    utils::browseURL(url = tmp)
+    browseURL(url = tmp)
 
   } else {
 
-    ui <- miniUI::miniPage(
+    ui <- miniPage(
       toggleBtnUi(),
-      miniUI::miniContentPanel(
-        shinyWidgets::prettyCheckboxGroup(
+      miniContentPanel(
+        prettyCheckboxGroup(
           inputId = "select_gg", 
-          label = tags$span("ggplot(s) to export ", shiny::actionLink(inputId = "all", label = "(select all)")), 
+          label = tags$span("ggplot(s) to export ", actionLink(inputId = "all", label = "(select all)")), 
           choices = ggplots, status = "primary", 
           icon = icon("check")
         ),
-        htmltools::tags$div(
+        tags$div(
           id = "ppt-pb", style = "display: none;",
-          shinyWidgets::progressBar(id = "progress-ppt", value = 0, display_pct = TRUE)
+          progressBar(id = "progress-ppt", value = 0, display_pct = TRUE)
         ),
         toggleDisplayUi(),
-        htmltools::tags$script("$(function() {$('#select_gg').selectpicker('toggle');});")
+        tags$script("$(function() {$('#select_gg').selectpicker('toggle');});")
       ),
-      miniUI::miniButtonBlock(
-        shiny::actionButton(
+      miniButtonBlock(
+        actionButton(
           inputId = "export", label = "Export",
-          icon = shiny::icon("file-powerpoint-o"),
+          icon = icon("file-powerpoint-o"),
           class = "btn-block btn-primary"
         )
       )
@@ -103,13 +101,13 @@ ggplot_to_ppt <- function(gg = NULL) {
 
     server <- function(input, output, session) {
       
-      shiny::observeEvent(input$all, {
-        shinyWidgets::updatePrettyCheckboxGroup(
+      observeEvent(input$all, {
+        updatePrettyCheckboxGroup(
           session = session, inputId = "select_gg", selected = ggplots
         )
       })
 
-      shiny::observeEvent(input$select_gg, {
+      observeEvent(input$select_gg, {
         if (length(input$select_gg) > 0) {
           toggleBtnServer(session = session, inputId = "export", type = "enable")
         } else {
@@ -117,7 +115,7 @@ ggplot_to_ppt <- function(gg = NULL) {
         }
       }, ignoreNULL = FALSE)
 
-      shiny::observeEvent(input$export, {
+      observeEvent(input$export, {
 
         toggleDisplayServer(session = session, id = "ppt-pb", display = "block")
 
@@ -127,12 +125,12 @@ ggplot_to_ppt <- function(gg = NULL) {
           count <- 1
 
           ppt <- officer::read_pptx()
-          shinyWidgets::updateProgressBar(session = session, id = "progress-ppt", value = count/total*100)
+          updateProgressBar(session = session, id = "progress-ppt", value = count/total*100)
           count <- count + 1
 
           for (ggg in input$select_gg) {
             ppt <- officer::add_slide(ppt, layout = "Title and Content", master = "Office Theme")
-            shinyWidgets::updateProgressBar(session = session, id = "progress-ppt", value = count/total*100)
+            updateProgressBar(session = session, id = "progress-ppt", value = count/total*100)
             count <- count + 1
             # ppt <- rvg::ph_with_vg(ppt, print(get(ggg, envir = globalenv())), type = "body")
             testgg <- try(invisible(ggplot2::ggplot_build(get(ggg, envir = globalenv()))), silent = TRUE)
@@ -141,28 +139,28 @@ ggplot_to_ppt <- function(gg = NULL) {
             } else {
               warning(paste0("Skipping '", ggg, "' because of : ", attr(testgg, "condition")$message))
             }
-            shinyWidgets::updateProgressBar(session = session, id = "progress-ppt", value = count/total*100)
+            updateProgressBar(session = session, id = "progress-ppt", value = count/total*100)
             count <- count + 1
           }
 
           print(ppt, target = tmp)
 
-          shinyWidgets::updateProgressBar(session = session, id = "progress-ppt", value = count/total*100)
+          updateProgressBar(session = session, id = "progress-ppt", value = count/total*100)
 
           utils::browseURL(url = tmp)
 
-          shiny::stopApp()
+          stopApp()
         }
 
       })
 
     }
 
-    inviewer <- shiny::dialogViewer(
+    inviewer <- dialogViewer(
       "Explort your ggplot2 to PowerPoint",
       width = 450, height = 180
     )
-    shiny::runGadget(app = ui, server = server, viewer = inviewer)
+    runGadget(app = ui, server = server, viewer = inviewer)
 
   }
 

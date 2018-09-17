@@ -56,7 +56,6 @@ Drag And Drop Input Widget
 The output server-side is a list with two slots: \code{source} and \code{targets}.
 }
 \examples{
-\dontrun{
 
 if (interactive()) {
 
@@ -87,7 +86,6 @@ shinyApp(ui = ui, server = server)
 
 }
 
-}
 }
 \seealso{
 \code{\link{updateDragulaInput}} to update choices server-side.

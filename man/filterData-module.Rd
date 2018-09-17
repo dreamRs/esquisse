@@ -40,8 +40,6 @@ Column's names can be modified to be valid R names.
 }
 \examples{
 
-\dontrun{
-
 if (interactive()) {
 library(shiny)
 library(shinyWidgets)
@@ -102,8 +100,6 @@ server <- function(input, output, session) {
 }
 
 shinyApp(ui, server)
-}
-
 }
 
 }

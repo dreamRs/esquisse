@@ -24,7 +24,7 @@ code to reproduce chart.
 An add-in to easily create plots with ggplot2
 }
 \examples{
-\dontrun{
+if (interactive()) {
 # Launch with:
 esquisser(iris)
 # If in RStudio it will be launched by default in dialog window

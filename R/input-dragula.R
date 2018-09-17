@@ -40,7 +40,6 @@
 #' @importFrom shiny singleton fillRow splitLayout
 #'
 #' @examples
-#' \dontrun{
 #' 
 #' if (interactive()) {
 #' 
@@ -71,7 +70,6 @@
 #' 
 #' }
 #' 
-#' }
 dragulaInput <- function(inputId, sourceLabel, targetsLabels, 
                          targetsIds = NULL,
                          choices = NULL, choiceNames = NULL,
@@ -167,7 +165,6 @@ dragulaInput <- function(inputId, sourceLabel, targetsLabels,
 #' @importFrom htmltools doRenderTags
 #'
 #' @examples
-#' \dontrun{
 #' 
 #' if (interactive()) {
 #' 
@@ -219,7 +216,6 @@ dragulaInput <- function(inputId, sourceLabel, targetsLabels,
 #' 
 #' }
 #' 
-#' }
 updateDragulaInput <- function(session, inputId, choices = NULL, choiceNames = NULL,
                                choiceValues = NULL, badge = TRUE, status = "primary") {
   args <- normalizeChoicesArgs(choices, choiceNames, choiceValues)

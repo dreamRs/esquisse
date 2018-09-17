@@ -17,7 +17,6 @@ You can use the RStudio addin to interactively select ggplot objects, or
 directly pass their names to the function.
 }
 \examples{
-\dontrun{
 
 # Shiny gadget
 if (interactive()) {
@@ -33,5 +32,4 @@ p <- ggplot(iris) +
 
 ggplot_to_ppt("p")
 
-}
 }

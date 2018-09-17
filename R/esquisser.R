@@ -18,7 +18,7 @@
 #' @importFrom shiny dialogViewer browserViewer runGadget paneViewer
 #'
 #' @examples
-#' \dontrun{
+#' if (interactive()) {
 #' # Launch with:
 #' esquisser(iris)
 #' # If in RStudio it will be launched by default in dialog window

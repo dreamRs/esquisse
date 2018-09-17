@@ -18,20 +18,20 @@
 imageButtonUI <- function(id, imgs = list(), selected = 1, up = FALSE, width = NULL) {
 
   # Namespace
-  ns <- shiny::NS(id)
+  ns <- NS(id)
 
   imgButton <- function(inputId, img, label) {
-    shiny::actionButton(
+    actionButton(
       inputId = inputId,
-      label = htmltools::tagList(
-        htmltools::tags$img(src = img, width = 80, height = 80),
-        htmltools::tags$br(), label
+      label = tagList(
+        tags$img(src = img, width = 80, height = 80),
+        tags$br(), label
       ),
       style = "border: none;"
     )
   }
 
-  btn <- shiny::actionButton(
+  btn <- actionButton(
     inputId = ns("btn-action"),
     label = tags$img(
       id = ns("btn-img"),
@@ -41,11 +41,11 @@ imageButtonUI <- function(id, imgs = list(), selected = 1, up = FALSE, width = N
     class = "dropdown-toggle", 
     `data-toggle` = "dropdown"
   )
-  dropTag <- htmltools::tags$ul(
+  dropTag <- tags$ul(
     class = "dropdown-menu",
     style = "padding: 5px;",
     style = if (!is.null(width))
-      paste0("width: ", htmltools::validateCssUnit(width), ";"),
+      paste0("width: ", validateCssUnit(width), ";"),
     lapply(
       X = imgs,
       FUN = function(x) {
@@ -58,13 +58,13 @@ imageButtonUI <- function(id, imgs = list(), selected = 1, up = FALSE, width = N
     )
   )
 
-  htmltools::tagList(
+  tagList(
     toggleInputUi(),
-    htmltools::tags$div(
+    tags$div(
       class = ifelse(up, "dropup", "dropdown"),
       btn, dropTag
     ),
-    htmltools::tags$script(
+    tags$script(
       paste0(
         "Shiny.addCustomMessageHandler('", 
         ns("update-img"), "', function(data) {",
@@ -98,12 +98,12 @@ imageButtonServer <- function(input, output, session, default = NULL, img_ref = 
   ns <- session$ns
 
   if (is.null(enabled))
-    enabled <- shiny::reactiveValues(x = NULL)
+    enabled <- reactiveValues(x = NULL)
   
   if (is.null(selected))
-    selected <- shiny::reactiveValues(x = NULL)
+    selected <- reactiveValues(x = NULL)
 
-  shiny::observeEvent(enabled$x, {
+  observeEvent(enabled$x, {
     if (!is.null(enabled$x)) {
       for (i in names(img_ref)) {
         if (i %in% enabled$x) {
@@ -115,14 +115,14 @@ imageButtonServer <- function(input, output, session, default = NULL, img_ref = 
     }
   })
 
-  r <- shiny::reactiveValues(x = default)
+  r <- reactiveValues(x = default)
 
-  shiny::observe({
+  observe({
     lapply(
       X = names(input),
       FUN = function(x) {
         if (x != "btn-action") {
-          shiny::observeEvent(input[[x]], {
+          observeEvent(input[[x]], {
             r$x <- x
             session$sendCustomMessage(ns("update-img"), img_ref[[x]])
           })

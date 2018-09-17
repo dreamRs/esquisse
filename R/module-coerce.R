@@ -14,7 +14,6 @@
 #' @importFrom shinyWidgets pickerInput
 #'
 #' @examples
-#' \dontrun{
 #' 
 #' if (interactive()) {
 #'   library(esquisse)
@@ -64,7 +63,6 @@
 #'   shinyApp(ui, server)
 #' }
 #' 
-#' }
 coerceUI <- function(id) {
   ns <- NS(id)
   fluidRow(

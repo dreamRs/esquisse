@@ -1,4 +1,4 @@
-#' Ui for addin charter
+#' Ui for addin esquisser
 #'
 #'
 #' @return a \code{shiny::\link[shiny]{tagList}} containing UI elements

@@ -17,8 +17,6 @@
 #'
 #' @examples
 #' 
-#' \dontrun{
-#' 
 #' if (interactive()) {
 #' library(shiny)
 #' library(shinyWidgets)
@@ -79,8 +77,6 @@
 #' }
 #' 
 #' shinyApp(ui, server)
-#' }
-#' 
 #' }
 #' 
 filterDataUI <- function(id) {
@@ -272,18 +268,6 @@ naInput <- function(key, var, ns) {
 }
 
 
-# # @importFrom shiny updateSelectizeInput
-# update_selectize <- function(session, data, var, key = "filter") {
-#   x <- data[[var]]
-#   if (!inherits(x = x, what = c("numeric", "integer"))) {
-#     x <- unique(x[!is.na(x)])
-#     updateSelectizeInput(
-#       session = session, inputId = paste(key, var, sep = "_"),
-#       choices = x, selected = x
-#     )
-#   }
-# }
-
 range_val <- function(x) {
   y <- round(x, 2)
   y[1] <- trunc(x[1]*1000)/1000
@@ -291,62 +275,11 @@ range_val <- function(x) {
   return(y)
 }
 
-
 num_equal <- function(x, y, tol = sqrt(.Machine$double.eps)) {
   abs(x - y) < tol
 }
 
-`%+&%` <- function(e1, e2) {
-  if (e1 != "" & e2 != "") {
-    paste(e1, e2, sep = " & ")
-  } else if (e1 != "" & e2 == "") {
-    e1
-  } else if (e1 == "" & e2 != "") {
-    e2
-  } else {
-    ""
-  }
-}
 
-`%+|%` <- function(e1, e2) {
-  if (e1 != "" & e2 != "") {
-    paste(e1, e2, sep = " | ")
-  } else if (e1 != "" & e2 == "") {
-    e1
-  } else if (e1 == "" & e2 != "") {
-    ""
-  } else {
-    ""
-  }
-}
-
-`%+1%` <- function(e1, e2) {
-  if (e1 != "" & e2 != "") {
-    paste("(", e1, e2, ")")
-  } else if (e1 != "" & e2 == "") {
-    e1
-  } else if (e1 == "" & e2 != "") {
-    if (grepl(pattern = "&", x = e2)) {
-      gsub(pattern = "(&|\\|)\\s", replacement = "", x = e2)
-    } else {
-      ""
-    }
-  } else {
-    ""
-  }
-}
-
-`%+%` <- function(e1, e2) {
-  if (e1 != "" & e2 != "") {
-    paste("(", e1, e2, ")")
-  } else if (e1 != "" & e2 == "") {
-    e1
-  } else if (e1 == "" & e2 != "") {
-    e2
-  } else {
-    ""
-  }
-}
 
 
 

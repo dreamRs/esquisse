@@ -35,7 +35,6 @@ a \code{reactiveValues} with two slots: \code{data} original \code{data.frame}
 Coerce data.frame's columns module
 }
 \examples{
-\dontrun{
 
 if (interactive()) {
   library(esquisse)
@@ -85,5 +84,4 @@ if (interactive()) {
   shinyApp(ui, server)
 }
 
-}
 }

@@ -36,7 +36,6 @@ status to color them, or \code{NULL}.}
 Update Dragula Input
 }
 \examples{
-\dontrun{
 
 if (interactive()) {
 
@@ -88,5 +87,4 @@ shinyApp(ui, server)
 
 }
 
-}
 }

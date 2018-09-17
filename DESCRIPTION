@@ -25,4 +25,5 @@ Imports: miniUI,
     scales,
     stringi
 Suggests: officer,
-    rvg
+    rvg,
+    DT
