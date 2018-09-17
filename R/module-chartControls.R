@@ -3,7 +3,7 @@
 #'
 #' @param id Module's id
 #'
-#' @return a \code{shiny::\link[shiny]{tagList}} containing UI elements
+#' @return a \code{\link[shiny]{tagList}} containing UI elements
 #' @noRd
 #'
 #' @importFrom shinyWidgets dropdown
@@ -16,21 +16,21 @@ chartControlsUI <- function(id) {
   ns <- NS(id)
 
   # ui
-  htmltools::tags$div(
+  tags$div(
     class = "btn-group-charter btn-group-justified-charter",
-    shinyWidgets::dropdown(
+    dropdown(
       controls_labs(ns), inputId = "labsdrop",
       style = "default", label = "Labels & Title", 
       up = TRUE, icon = icon("font"), 
       status = "default btn-controls"
     ),
-    shinyWidgets::dropdown(
+    dropdown(
       controls_params(ns), controls_appearance(ns),
       style = "default", label = "Plot options",
       up = TRUE, inputId = "paramsdrop",
       icon = icon("gears"), status = "default btn-controls"
     ),
-    shinyWidgets::dropdown(
+    dropdown(
       tags$div(
         style = "max-height: 400px; overflow-y: scroll;", #  padding-left: 10px;
         filterDataUI(id = ns("filter-data"))
@@ -40,14 +40,14 @@ chartControlsUI <- function(id) {
       right = TRUE, inputId = "filterdrop",
       status = "default btn-controls"
     ),
-    shinyWidgets::dropdown(
+    dropdown(
       controls_code(ns),
       style = "default", label = "Export & code", 
       up = TRUE, right = TRUE, inputId = "codedrop",
       icon = icon("code"), status = "default btn-controls"
     ),
-    htmltools::tags$script("$('.sw-dropdown').addClass('btn-group-charter');"),
-    htmltools::tags$script(HTML("$('.sw-dropdown > .btn').addClass('btn-charter');")),
+    tags$script("$('.sw-dropdown').addClass('btn-group-charter');"),
+    tags$script(HTML("$('.sw-dropdown > .btn').addClass('btn-charter');")),
     tags$script("$('#sw-content-filterdrop').click(function (e) {e.stopPropagation();});"),
     toggleDisplayUi()
   )
@@ -72,7 +72,7 @@ chartControlsServer <- function(input, output, session, type, data = NULL) {
 
   ns <- session$ns
 
-  shiny::observeEvent(type$palette, {
+  observeEvent(type$palette, {
     if (isTRUE(type$palette)) {
       toggleDisplayServer(session = session, id = ns("controls-palette"), display = "block")
       toggleDisplayServer(session = session, id = ns("controls-spectrum"), display = "none")
@@ -82,7 +82,7 @@ chartControlsServer <- function(input, output, session, type, data = NULL) {
     }
   })
   
-  shiny::observeEvent(type$x, {
+  observeEvent(type$x, {
     if (type$x %in% "bar") {
       toggleDisplayServer(session = session, id = ns("controls-categorical"), display = "block")
     } else {
@@ -121,12 +121,12 @@ chartControlsServer <- function(input, output, session, type, data = NULL) {
     width = "95%"
   )
 
-  outin <- shiny::reactiveValues(inputs = NULL)
+  outin <- reactiveValues(inputs = NULL)
 
-  shiny::observeEvent(shiny::reactiveValuesToList(input), {
-    outin$inputs <- shiny::reactiveValuesToList(input)
+  observeEvent(reactiveValuesToList(input), {
+    outin$inputs <- reactiveValuesToList(input)
   })
-  shiny::observeEvent(res_data$data, {
+  observeEvent(res_data$data, {
     outin$data <- res_data$data
     outin$code <- res_data$code
     outin$index <- res_data$index
@@ -238,18 +238,18 @@ controls_appearance <- function(ns) {
 
   cols <- colors_palettes()
 
-  htmltools::tagList(
-    htmltools::tags$div(
+  tagList(
+    tags$div(
       id = ns("controls-spectrum"), style = "display: block;",
-      shinyWidgets::spectrumInput(
+      spectrumInput(
         inputId = ns("fill_color"),
         label = "Choose a color:",
         choices = c(list(c("#0C4C8A", "#EF562D")), unname(cols$choices_colors))
       )
     ),
-    htmltools::tags$div(
+    tags$div(
       id = ns("controls-palette"), style = "display: none;",
-      shinyWidgets::pickerInput(
+      pickerInput(
         inputId = ns("palette"), label = "Choose a palette:",
         # choices = c(colors_pal, list("viridis" = c("viridis", "magma", "infierno"))),
         choices = c(list("Default" = "ggplot2"), cols$colors_pal),
@@ -262,20 +262,20 @@ controls_appearance <- function(ns) {
         )
       )
     ),
-    shinyWidgets::pickerInput(
+    pickerInput(
       inputId = ns("theme"), label = "Theme:",
       choices = choices_themes,
       selected = "ggplot2::theme_minimal",
       options = list(size = 10)
     ),
-    htmltools::tags$script(
+    tags$script(
       paste0("$('#", ns("theme"), "').addClass('dropup');")
     ),
-    shinyWidgets::radioGroupButtons(
+    radioGroupButtons(
       inputId = ns("legend_position"), label = "Legend position:",
       choiceNames = list(
-        shiny::icon("arrow-left"), shiny::icon("arrow-up"),
-        shiny::icon("arrow-down"), shiny::icon("arrow-right"), shiny::icon("close")
+        icon("arrow-left"), icon("arrow-up"),
+        icon("arrow-down"), icon("arrow-right"), icon("close")
       ),
       choiceValues = c("left", "top", "bottom", "right", "none"),
       selected = "right", justified = TRUE
@@ -381,15 +381,15 @@ controls_params <- function(ns) {
 #' @importFrom shinyWidgets actionGroupButtons
 #'
 controls_code <- function(ns) {
-  htmltools::tagList(
+  tagList(
     moduleCodeUI(id = "code"),
-    htmltools::tags$br(),
-    htmltools::tags$b("Export:"),
-    shinyWidgets::actionGroupButtons(
+    tags$br(),
+    tags$b("Export:"),
+    actionGroupButtons(
       inputIds = c(ns("export_png"), ns("export_ppt")),
       labels = list(
-        htmltools::tags$span(shiny::icon("picture-o"), "PNG"),
-        htmltools::tags$span(shiny::icon("file-powerpoint-o"), "PowerPoint")
+        tags$span(icon("picture-o"), "PNG"),
+        tags$span(icon("file-powerpoint-o"), "PowerPoint")
       ), status = "primary", fullwidth = TRUE
     )
   )
