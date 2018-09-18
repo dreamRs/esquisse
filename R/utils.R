@@ -15,6 +15,10 @@
 `%nin%` <- Negate(`%in%`)
 
 `%+&%` <- function(e1, e2) {
+  if (is.null(e2))
+    e2 <- ""
+  if (is.null(e1))
+    e1 <- ""
   if (e1 != "" & e2 != "") {
     paste(e1, e2, sep = " & ")
   } else if (e1 != "" & e2 == "") {
@@ -27,6 +31,10 @@
 }
 
 `%+|%` <- function(e1, e2) {
+  if (is.null(e2))
+    e2 <- ""
+  if (is.null(e1))
+    e1 <- ""
   if (e1 != "" & e2 != "") {
     paste(e1, e2, sep = " | ")
   } else if (e1 != "" & e2 == "") {
@@ -39,6 +47,10 @@
 }
 
 `%+1%` <- function(e1, e2) {
+  if (is.null(e2))
+    e2 <- ""
+  if (is.null(e1))
+    e1 <- ""
   if (e1 != "" & e2 != "") {
     paste("(", e1, e2, ")")
   } else if (e1 != "" & e2 == "") {
@@ -55,6 +67,10 @@
 }
 
 `%+%` <- function(e1, e2) {
+  if (is.null(e2))
+    e2 <- ""
+  if (is.null(e1))
+    e1 <- ""
   if (e1 != "" & e2 != "") {
     paste("(", e1, e2, ")")
   } else if (e1 != "" & e2 == "") {

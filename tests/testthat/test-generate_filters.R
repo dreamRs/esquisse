@@ -62,3 +62,44 @@ test_that("filter two continuous vars", {
   )
 })
 
+
+
+
+test_that("filter date var", {
+  data("economics", package = "ggplot2")
+  
+  filter_date <- generate_filters(
+    x = "date", 
+    params = list(date = as.Date(c("1979-06-08", "2003-04-23"))),
+    params_na = list(date = FALSE),
+    data = economics
+  )
+  
+  expect_length(filter_date, 2)
+  expect_identical(names(filter_date), c("code", "ind"))
+  expect_true(grepl(pattern = "date", filter_date$code))
+  expect_true(grepl(pattern = "as\\.Date", filter_date$code))
+  expect_identical(sum(filter_date$ind), 
+                   sum(economics$date >= as.Date('1979-06-08') & economics$date <= as.Date('2003-04-23')))
+})
+
+
+
+test_that("filter POSIX var", {
+  data("economics", package = "ggplot2")
+  economics$date <- as.POSIXct(economics$date)
+  
+  filter_datetime <- generate_filters(
+    x = "date", 
+    params = list(date = as.POSIXct(c("1979-06-08", "2003-04-23"))),
+    params_na = list(date = FALSE),
+    data = economics
+  )
+  
+  expect_length(filter_datetime, 2)
+  expect_identical(names(filter_datetime), c("code", "ind"))
+  expect_true(grepl(pattern = "date", filter_datetime$code))
+  expect_true(grepl(pattern = "as\\.POSIXct", filter_datetime$code))
+  expect_identical(sum(filter_datetime$ind),
+                   sum(economics$date >= as.POSIXct('1979-06-08') & economics$date <= as.POSIXct('2003-04-23')))
+})
