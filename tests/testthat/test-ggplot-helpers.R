@@ -94,7 +94,7 @@ test_that("guess_aes works", {
   aes1 <- guess_aes(x = "carat", xtype = "continuous")
   aes2 <- guess_aes(x = "carat", y = "depth")
   aes3 <- guess_aes(x = "carat", y = "depth", color = "color")
-  aesw <- guess_aes(x = "color", xtype = "categorical", y = "depth", ytype = "continuous", geom = "bar")
+  aesw <- guess_aes(x = "color", xtype = "discrete", y = "depth", ytype = "continuous", geom = "bar")
   
   expect_is(aes1, "list")
   expect_length(aes1, 1)

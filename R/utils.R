@@ -179,7 +179,7 @@ search_obj <- function(what = "data.frame", env = globalenv()) {
 #' It uses conventions defined in the package, variable type are retrieve with \code{\link{col_type}}.
 #'
 #' @param col_name Variable's name
-#' @param col_type Variable's type : 'categorical', 'time', 'continuous', 'id'
+#' @param col_type Variable's type : 'discrete', 'time', 'continuous', 'id'
 #'
 #' @noRd
 badgeType <- function(col_name, col_type) {
@@ -189,8 +189,8 @@ badgeType <- function(col_name, col_type) {
     FUN = function(i) {
       col_name_i <- col_name[i]
       col_type_i <- col_type[i]
-      if (col_type_i == "categorical") {
-        tags$span(class='label label-categorical badge-dad', col_name_i)
+      if (col_type_i == "discrete") {
+        tags$span(class='label label-discrete badge-dad', col_name_i)
       } else if (col_type_i == "time") {
         tags$span(class='label label-datetime badge-dad', col_name_i)
       } else if (col_type_i == "continuous") {
@@ -224,7 +224,7 @@ col_type <- function(x, no_id = FALSE) {
       n <- length(x)
       u <- length(unique(x))
       if (u/n < 0.99 | u <= 30 | no_id) {
-        return("categorical")
+        return("discrete")
       } else {
         return("id")
       }

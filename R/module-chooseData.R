@@ -172,8 +172,8 @@ chooseDataServer <- function(input, output, session, data = NULL, name = NULL,
       tags$em("Legend :"),
       HTML(paste(
         doRenderTags(
-          badgeType(col_name = c("categorical", "continuous", "time", "id"),
-                    col_type = c("categorical", "continuous", "time", "id"))
+          badgeType(col_name = c("discrete", "continuous", "time", "id"),
+                    col_type = c("discrete", "continuous", "time", "id"))
         ),
         collapse = ", "
       ))

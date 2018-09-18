@@ -84,9 +84,9 @@ chartControlsServer <- function(input, output, session, type, data = NULL) {
   
   observeEvent(type$x, {
     if (type$x %in% "bar") {
-      toggleDisplayServer(session = session, id = ns("controls-categorical"), display = "block")
+      toggleDisplayServer(session = session, id = ns("controls-discrete"), display = "block")
     } else {
-      toggleDisplayServer(session = session, id = ns("controls-categorical"), display = "none")
+      toggleDisplayServer(session = session, id = ns("controls-discrete"), display = "none")
     }
     if (type$x %in% "histogram") {
       toggleDisplayServer(session = session, id = ns("controls-histogram"), display = "block")
@@ -249,6 +249,7 @@ controls_appearance <- function(ns) {
     ),
     tags$div(
       id = ns("controls-palette"), style = "display: none;",
+      tags$style(".bootstrap-select .dropdown-menu li a span.text {width: 100%;}"),
       pickerInput(
         inputId = ns("palette"), label = "Choose a palette:",
         # choices = c(colors_pal, list("viridis" = c("viridis", "magma", "infierno"))),
@@ -256,7 +257,7 @@ controls_appearance <- function(ns) {
         selected = "ggplot2", width = "100%",
         choicesOpt = list(
           content = sprintf(
-            "<div style='width:100%%;padding:5px;border-radius:4px;background:%s;color:%s'>%s</div>",
+            "<div style='width:100%%;border-radius:4px;background:%s;color:%s'>%s</div>",
             unname(cols$background_pals), cols$colortext_pals, names(cols$background_pals)
           )
         )
@@ -352,7 +353,7 @@ controls_params <- function(ns) {
       )
     ),
     tags$div(
-      id = ns("controls-categorical"), style = "display: none;",
+      id = ns("controls-discrete"), style = "display: none;",
       prettyRadioButtons(
         inputId = ns("position"), label = "Position:",
         choices = c("stack", "dodge", "fill"), inline = TRUE,

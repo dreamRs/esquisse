@@ -171,14 +171,14 @@ get_code_scale <- function(fill = NULL, color = NULL, params = list(), filltype 
   if (!is.null(fill)) {
     if (!is.null(params$palette)) {
       if (params$palette == "ggplot2") {
-        # if (filltype == "categorical") {
+        # if (filltype == "discrete") {
         #   params_scale_fill <- "scale_fill_hue()"
         # } else {
         #   params_scale_fill <-" scale_fill_gradient()"
         # }
         params_scale_fill <- NULL
       } else {
-        if (filltype == "categorical") {
+        if (filltype == "discrete") {
           params_scale_fill <- sprintf("scale_fill_brewer(palette = \"%s\")", params$palette)
         } else {
           params_scale_fill <- sprintf("scale_fill_distiller(palette = \"%s\")", params$palette)
@@ -191,14 +191,14 @@ get_code_scale <- function(fill = NULL, color = NULL, params = list(), filltype 
   if (!is.null(color)) {
     if (!is.null(params$palette)) {
       if (params$palette == "ggplot2") {
-        # if (colortype == "categorical") {
+        # if (colortype == "discrete") {
         #   params_scale_color <- "scale_color_hue()"
         # } else {
         #   params_scale_color <- "scale_color_gradient()"
         # }
         params_scale_color <- NULL
       } else {
-        if (colortype == "categorical") {
+        if (colortype == "discrete") {
           params_scale_color <- sprintf("scale_color_brewer(palette = \"%s\")", params$palette)
         } else {
           params_scale_color <- sprintf("scale_color_distiller(palette = \"%s\")", params$palette)

@@ -3,12 +3,12 @@ context("test-utils")
 test_that("badgeType works", {
   
   badges <- badgeType(
-    col_name = c("categorical", "time", "continuous", "id"), 
-    col_type = c("categorical", "time", "continuous", "id")
+    col_name = c("discrete", "time", "continuous", "id"), 
+    col_type = c("discrete", "time", "continuous", "id")
   )
   
   expect_length(badges, 4)
-  expect_true(grepl(pattern = "label-categorical", x = badges[[1]]))
+  expect_true(grepl(pattern = "label-discrete", x = badges[[1]]))
   expect_true(grepl(pattern = "label-datetime", x = badges[[2]]))
   expect_true(grepl(pattern = "label-continue", x = badges[[3]]))
   expect_true(grepl(pattern = "label-default", x = badges[[4]]))
@@ -69,7 +69,7 @@ test_that("search_obj works", {
 test_that("col_type works", {
   
   discrete <- esquisse:::col_type(x = letters)
-  expect_identical(discrete, "categorical")
+  expect_identical(discrete, "discrete")
   
   id <- esquisse:::col_type(x = as.character(1:100))
   expect_identical(id, "id")

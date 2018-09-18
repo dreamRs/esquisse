@@ -101,13 +101,13 @@ ggtry <- function(data, x = NULL, y = NULL, fill = NULL, color = NULL, size = NU
   if (!is.null(fill)) {
     if (!is.null(params$palette)) {
       if (params$palette == "ggplot2") {
-        if (filltype == "categorical") {
+        if (filltype == "discrete") {
           params_scale_fill <- ggplot2::scale_fill_hue()
         } else {
           params_scale_fill <- ggplot2::scale_fill_gradient()
         }
       } else {
-        if (filltype == "categorical") {
+        if (filltype == "discrete") {
           params_scale_fill <- ggplot2::scale_fill_brewer(palette = params$palette)
         } else {
           params_scale_fill <- ggplot2::scale_fill_distiller(palette = params$palette)
@@ -122,13 +122,13 @@ ggtry <- function(data, x = NULL, y = NULL, fill = NULL, color = NULL, size = NU
   if (!is.null(color)) {
     if (!is.null(params$palette)) {
       if (params$palette == "ggplot2") {
-        if (colortype == "categorical") {
+        if (colortype == "discrete") {
           params_scale_color <- ggplot2::scale_color_hue()
         } else {
           params_scale_color <- ggplot2::scale_color_gradient()
         }
       } else {
-        if (colortype == "categorical") {
+        if (colortype == "discrete") {
           params_scale_color <- ggplot2::scale_color_brewer(palette = params$palette)
         } else {
           params_scale_color <- ggplot2::scale_color_distiller(palette = params$palette)
@@ -222,7 +222,7 @@ do.call.tommy <- function(what, args, ...) {
 #' @examples 
 #' guess_aes(x = "carat", xtype = "continuous")
 #' 
-#' guess_aes(x = "color", xtype = "categorical")
+#' guess_aes(x = "color", xtype = "discrete")
 #' 
 guess_aes <- function(x = NULL, y = NULL, fill = NULL, color = NULL, size = NULL, geom = "auto", xtype = NULL, ytype = NULL) {
 
@@ -262,7 +262,7 @@ guess_aes <- function(x = NULL, y = NULL, fill = NULL, color = NULL, size = NULL
 
   # two var
   if (!is.null(vars$x) & !is.null(vars$y) & geom %in% c("boxplot", "violin")) {
-    if (xtype == "continuous" & (!is.null(ytype) && ytype == "categorical")) {
+    if (xtype == "continuous" & (!is.null(ytype) && ytype == "discrete")) {
       tmp <- vars$y
       vars$y <- vars$x
       vars$x <- tmp
@@ -270,12 +270,12 @@ guess_aes <- function(x = NULL, y = NULL, fill = NULL, color = NULL, size = NULL
   }
 
   if (!is.null(vars$x) & !is.null(vars$y) & geom == "bar") {
-    if (xtype == "continuous" & ytype == "categorical") {
+    if (xtype == "continuous" & ytype == "discrete") {
       vars$weight <- vars$x
       vars$x <- vars$y
       vars$y <- NULL
     }
-    if (xtype == "categorical" & ytype == "continuous") {
+    if (xtype == "discrete" & ytype == "continuous") {
       vars$weight <- vars$y
       vars$y <- NULL
     }
@@ -288,8 +288,8 @@ guess_aes <- function(x = NULL, y = NULL, fill = NULL, color = NULL, size = NULL
 
 #' Try to choose the proper geom accordingly to the variables
 #'
-#' @param xtype Type of the x variable (continuous, categorical, time).
-#' @param ytype Type of the y variable (continuous, categorical, time).
+#' @param xtype Type of the x variable (continuous, discrete, time).
+#' @param ytype Type of the y variable (continuous, discrete, time).
 #' @param type Type of chart
 #'
 #' @return a string containing the name of a geom
@@ -301,7 +301,7 @@ guess_aes <- function(x = NULL, y = NULL, fill = NULL, color = NULL, size = NULL
 #' 
 #' guess_geom(xtype = "continuous")
 #' 
-#' guess_geom(xtype = "categorical")
+#' guess_geom(xtype = "discrete")
 #' 
 #' guess_geom(xtype = "continuous", ytype = "continuous")
 #' 
@@ -449,17 +449,17 @@ ggplot_geom_vars <- function() {
       "continuous",  "empty",       "boxplot",   "0", 
       "continuous",  "empty",       "violin",    "0", 
       "continuous",  "empty",       "density",   "0", 
-      "categorical", "empty",       "bar",       "1", 
+      "discrete", "empty",       "bar",       "1", 
       "time",        "empty",       "histogram", "1",
-      "continuous",  "categorical", "boxplot",   "0", 
-      "continuous",  "categorical", "violin",    "0", 
-      "continuous",  "categorical", "bar",       "1",
-      "categorical", "continuous",  "boxplot",   "0", 
-      "categorical", "continuous",  "violin",    "0", 
-      "categorical", "continuous",  "bar",       "1",
+      "continuous",  "discrete", "boxplot",   "0", 
+      "continuous",  "discrete", "violin",    "0", 
+      "continuous",  "discrete", "bar",       "1",
+      "discrete", "continuous",  "boxplot",   "0", 
+      "discrete", "continuous",  "violin",    "0", 
+      "discrete", "continuous",  "bar",       "1",
       "continuous",  "continuous",  "point",     "1",
       "continuous",  "continuous",  "line",      "0", 
-      "categorical", "categorical", "tile",      "1",
+      "discrete", "discrete", "tile",      "1",
       "time",        "continuous",  "line",      "1", 
       "empty",       "continuous",  "line",      "1", 
       "continuous",  "continuous",  "tile",      "0"

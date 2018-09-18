@@ -13,7 +13,7 @@
 #' @name filterData-module
 #' 
 #' @note Column's names can be modified to be valid R names.
-#'  Categorical columns with more than 50 unique values will be discarded. 
+#'  discrete columns with more than 50 unique values will be discarded. 
 #'
 #' @examples
 #' 
