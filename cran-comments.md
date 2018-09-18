@@ -10,6 +10,7 @@
 * Resubmiting: the following issues have been fixed:
   - write package names, software names and API names in single quotes;
   - replace \dontrun{} by if(interactive()){} in examples;
+  - added tests for non-interactive functions (116 tests, ~51% code coverage)
   
 Thank you !
 Victor
