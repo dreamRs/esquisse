@@ -15,7 +15,14 @@ If you find bugs, please open an [issue](https://github.com/dreamRs/esquisse/iss
 
 ## Installation
 
-Not yet on CRAN, you can install from GitHub:
+Install from CRAN with :
+
+```r
+# From CRAN
+install.packages("esquisse")
+```
+
+Or install dev version from GitHub :
 
 ```r
 # with remotes
