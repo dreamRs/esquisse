@@ -206,8 +206,8 @@ chooseDataServer <- function(input, output, session, data = NULL, name = NULL,
     )
   })
   
-  observe({
-    req(input$data); req(input$col_chooser)
+  observeEvent(list(input$data, input$col_chooser), {
+    # req(input$data); req(input$col_chooser)
     dat <- get_df(input$data)
     ## --->>> TODO SF <<<--- ##
     # if (inherits(dat, what = "sf")) {
@@ -216,13 +216,13 @@ chooseDataServer <- function(input, output, session, data = NULL, name = NULL,
       dat <- as.data.frame(dat)
       var_chosen <- input$col_chooser
     # }
-    if (selectVars & all(var_chosen %in% names(dat))) {
+    if (selectVars && all(var_chosen %in% names(dat))) {
       dat <- dat[, input$col_chooser, drop = FALSE]
     }
     tmp_data$data <- dat
     tmp_data$name <- input$data
     tmp_data$timestamp <- Sys.time()
-  })
+  }, ignoreInit = TRUE, ignoreNULL = FALSE)
   
   coerce_data <- callModule(module = coerceServer, id = "coerce", data = tmp_data)
   
@@ -233,7 +233,7 @@ chooseDataServer <- function(input, output, session, data = NULL, name = NULL,
       return_data$data <- tmp_data$data
     }
     return_data$name <- tmp_data$name
-  })
+  }, ignoreInit = TRUE)
 
   return(return_data)
 }

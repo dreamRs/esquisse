@@ -18,7 +18,7 @@ esquisserServer <- function(input, output, session, data = NULL) {
     module = chooseDataServer, 
     id = "choose-data",
     data = esquisse.env$data,
-    name = esquisse.env$name,
+    name = esquisse.env$data_name,
     launchOnStart = is.null(esquisse.env$data),
     coerceVars = getOption(x = "esquisse.coerceVars", default = FALSE)
   )
