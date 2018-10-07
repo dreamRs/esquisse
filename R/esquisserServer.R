@@ -1,12 +1,13 @@
-#' Server for addin esquisser
-#'
+
 #' @param input   standard \code{shiny} input
 #' @param output  standard \code{shiny} output
 #' @param session standard \code{shiny} session
 #' @param data    a \code{reactiveValues} with at least a slot \code{data} containing a \code{data.frame}
 #'  to use in the module. And a slot \code{name} corresponding to the name of the \code{data.frame}.
 #'
-#' @noRd
+#' @export
+#' 
+#' @rdname esquisse-module
 #'
 #' @importFrom shiny callModule reactiveValues observeEvent renderPrint renderPlot stopApp plotOutput showNotification
 #'
@@ -15,7 +16,7 @@ esquisserServer <- function(input, output, session, data = NULL) {
   observeEvent(data$data, {
     dataChart$data <- data$data
     dataChart$name <- data$name
-  })
+  }, ignoreInit = FALSE)
 
   esquisse.env <- get("esquisse.env", envir = parent.env(environment()))
   dataChart <- callModule(
@@ -23,7 +24,7 @@ esquisserServer <- function(input, output, session, data = NULL) {
     id = "choose-data",
     data = esquisse.env$data,
     name = esquisse.env$data_name,
-    launchOnStart = is.null(esquisse.env$data),
+    launchOnStart = is.null(esquisse.env$data) & is.null(data),
     coerceVars = getOption(x = "esquisse.coerceVars", default = FALSE)
   )
   observeEvent(dataChart$data, {
@@ -139,10 +140,10 @@ esquisserServer <- function(input, output, session, data = NULL) {
     
     if (!res$status) {
       showNotification(ui = res$e$message, type = "error")
+      ggplot()
+    } else {
+      res$gg
     }
-    
-    res$gg
-
   })
 
 
@@ -178,7 +179,7 @@ esquisserServer <- function(input, output, session, data = NULL) {
 
   # Code
   callModule(
-    moduleCodeServer, id = "code",
+    moduleCodeServer, id = "controls-code",
     varSelected = input$dragvars$target,
     dataChart = dataChart,
     paramsChart = paramsChart,

@@ -1,7 +1,7 @@
 context("test-shiny-UI")
 
 test_that("esquisserUI works", {
-  ui <- esquisserUI()
+  ui <- esquisserUI(id = "id")
   expect_is(ui, "shiny.tag.list")
   expect_is(htmltools::findDependencies(ui), "list")
   names_deps <- unlist(lapply(htmltools::findDependencies(ui), `[[`, "name"))

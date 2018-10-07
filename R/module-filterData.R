@@ -7,8 +7,8 @@
 #' slot \code{data}, the R code to reproduce the filtering under slot \code{code} and a logical
 #' vector for indexing data under slot \code{index}.
 #' @export
-#' @importFrom htmltools tags tagList 
-#' @importFrom shiny NS singleton
+#' @importFrom htmltools tags tagList singleton 
+#' @importFrom shiny NS 
 #' 
 #' @name filterData-module
 #' 

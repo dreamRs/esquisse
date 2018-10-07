@@ -1,6 +1,7 @@
 # esquisse 0.1.5.900
 
 * Support for `sf` objects.
+* Use `esquisse` as a shiny module.
 
 
 

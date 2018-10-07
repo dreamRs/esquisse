@@ -29,6 +29,11 @@
 #' }
 ggtry <- function(data, x = NULL, y = NULL, fill = NULL, color = NULL, size = NULL, type = "auto", params = list(), ...) {
 
+  check_vars <- c(x, y, fill, color, size)
+  if (is.null(check_vars) || !all(check_vars %in% names(data))) {
+    return(ggplot())
+  }
+  
   args <- list(...)
 
   vars <- list(x = x, y = y)

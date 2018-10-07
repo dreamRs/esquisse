@@ -12,8 +12,8 @@
 #' 
 #' @name chooseData-module
 #' 
-#' @importFrom htmltools tagList tags
-#' @importFrom shiny NS actionButton icon singleton
+#' @importFrom htmltools tagList tags singleton
+#' @importFrom shiny NS actionButton icon 
 #'
 #' @examples
 #' 

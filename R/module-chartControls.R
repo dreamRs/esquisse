@@ -383,7 +383,7 @@ controls_params <- function(ns) {
 #'
 controls_code <- function(ns) {
   tagList(
-    moduleCodeUI(id = "code"),
+    moduleCodeUI(id = ns("code")),
     tags$br(),
     tags$b("Export:"),
     actionGroupButtons(

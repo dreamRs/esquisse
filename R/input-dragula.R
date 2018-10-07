@@ -35,9 +35,9 @@
 #' @return a UI definition
 #' @export
 #' 
-#' @importFrom htmltools validateCssUnit
+#' @importFrom htmltools validateCssUnit singleton tags
 #' @importFrom jsonlite toJSON
-#' @importFrom shiny singleton fillRow splitLayout
+#' @importFrom shiny fillRow splitLayout
 #'
 #' @examples
 #' 
@@ -120,7 +120,7 @@ dragulaInput <- function(inputId, sourceLabel, targetsLabels,
       `data-targets` = jsonlite::toJSON(paste(inputId, "target", targetsIds, sep = "-")),
       `data-replace` = tolower(replace),
       tags$div(
-        style = "height: 50%; width: 100%; padding-right: 0; padding-left: 0; margin-right: 0; margin-left: 0;",
+        style = "height: 50%; width: 99.5%; padding-right: 0; padding-left: 0; margin-right: 0; margin-left: 0;",
         class = "box-dad",
         tags$em(tags$b(sourceLabel, class = "label-background")),
         tags$div(

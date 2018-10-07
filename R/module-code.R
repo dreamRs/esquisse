@@ -16,12 +16,12 @@ moduleCodeUI <- function(id) {
   htmltools::tagList(
     tags$button(
       class = "btn btn-default btn-xs pull-right btn-copy-code",
-      "Copy to clipboard", `data-clipboard-target` = "#codeggplot"# onclick = "ClipBoard()"
+      "Copy to clipboard", `data-clipboard-target` = paste0("#", ns("codeggplot"))
     ), htmltools::tags$script("new Clipboard('.btn-copy-code');"),
     htmltools::tags$br(),
     htmltools::tags$b("Code:"),
     shiny::uiOutput(outputId = ns("code")),
-    htmltools::tags$textarea(id = "holderCode", style = "display: none;"),
+    htmltools::tags$textarea(id = ns("holderCode"), style = "display: none;"),
     shiny::actionLink(
       inputId = ns("insert_code"),
       label = "Insert code in script",
@@ -52,6 +52,7 @@ moduleCodeUI <- function(id) {
 moduleCodeServer <- function(input, output, session, varSelected, dataChart, paramsChart, geomSelected) {
 
   ns <- session$ns
+  # print(ns("code"))
 
   codegg <- shiny::reactive({
     code_geom <- guess_geom(
@@ -151,11 +152,7 @@ moduleCodeServer <- function(input, output, session, varSelected, dataChart, par
 
   output$code <- shiny::renderUI({
     htmltools::tagList(
-      rCodeContainer(id = "codeggplot", codegg())#,
-      # htmltools::tags$button(
-      #   class="btn btn-clipboard", "Copy", `data-clipboard-target`="#code_ggplot"
-      # ),
-      # htmltools::tags$script("new Clipboard('btn-clipboard');")
+      rCodeContainer(id = ns("codeggplot"), codegg())
     )
   })
 

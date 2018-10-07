@@ -50,7 +50,13 @@ esquisser <- function(data = NULL,
     )
   }
 
-  runGadget(app = esquisserUI(), server = esquisserServer, viewer = inviewer)
+  runGadget(
+    app = esquisserUI(id = "esquisse"), 
+    server = function(input, output, session) {
+      callModule(esquisserServer, id = "esquisse")
+    }, 
+    viewer = inviewer
+  )
 }
 
 
