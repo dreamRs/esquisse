@@ -24,7 +24,7 @@ imageButtonUI <- function(id, imgs = list(), selected = 1, up = FALSE, width = N
     actionButton(
       inputId = inputId,
       label = tagList(
-        tags$img(src = img, width = 80, height = 80),
+        tags$img(src = img, width = 70, height = 70),
         tags$br(), label
       ),
       style = "border: none;"
@@ -41,9 +41,9 @@ imageButtonUI <- function(id, imgs = list(), selected = 1, up = FALSE, width = N
     class = "dropdown-toggle", 
     `data-toggle` = "dropdown"
   )
-  dropTag <- tags$ul(
-    class = "dropdown-menu",
-    style = "padding: 5px;",
+  dropTag <- tags$div(
+    class = "dropdown-menu pre-scrollable",
+    style = "padding: 5px; max-height: 80vh;",
     style = if (!is.null(width))
       paste0("width: ", validateCssUnit(width), ";"),
     lapply(
@@ -62,6 +62,7 @@ imageButtonUI <- function(id, imgs = list(), selected = 1, up = FALSE, width = N
     toggleInputUi(),
     tags$div(
       class = ifelse(up, "dropup", "dropdown"),
+      style = "margin-bottom: 1vh;",
       btn, dropTag
     ),
     tags$script(

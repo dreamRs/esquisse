@@ -26,9 +26,6 @@ to use in the module. And a slot \code{name} corresponding to the name of the \c
 
 \item{choose_data}{Logical. Display or not the button to choose data.}
 }
-\value{
-a \code{shiny::\link[shiny]{tagList}} containing UI elements
-}
 \description{
 Launch \code{esquisse} in a classic Shiny app.
 }

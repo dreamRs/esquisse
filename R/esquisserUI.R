@@ -6,7 +6,6 @@
 #' @param header Logical. Display or not \code{esquisse} header.
 #' @param choose_data Logical. Display or not the button to choose data.
 #'
-#' @return a \code{shiny::\link[shiny]{tagList}} containing UI elements
 #' @export
 #' 
 #' @name esquisse-module
@@ -50,7 +49,7 @@ esquisserUI <- function(id, header = TRUE, choose_data = TRUE) {
             imgs = geom_icon_input(), 
             width = "240px"
           ),
-          htmltools::tags$br(),
+          # htmltools::tags$br(),
           if (isTRUE(choose_data)) chooseDataUI(id = ns("choose-data"))
         )
       ),
