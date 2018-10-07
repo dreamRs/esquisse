@@ -7,7 +7,14 @@ get_data <- function(data = NULL, name = NULL) {
   
   if (!is.null(data)) {
     if (is.character(data)) {
-      esquisse_data <- try(as.data.frame(get(x = data, envir = globalenv())), silent = TRUE)
+      esquisse_data <- try({
+        dat <- get(x = data, envir = globalenv())
+        if (inherits(dat, what = "sf")) {
+          dat
+        } else {
+          as.data.frame(dat)
+        }
+      }, silent = TRUE)
       esquisse_data_name <- data
       if ("try-error" %in% class(esquisse_data)) {
         warning(paste0("'", data, "' not found"), call. = FALSE)
@@ -15,7 +22,13 @@ get_data <- function(data = NULL, name = NULL) {
         esquisse_data_name <- ""
       }
     } else if (inherits(x = data, what = "data.frame")) {
-      esquisse_data <- try(as.data.frame(data), silent = TRUE)
+      esquisse_data <- try({
+        if (inherits(data, what = "sf")) {
+          data
+        } else {
+          as.data.frame(data)
+        }
+      }, silent = TRUE)
       if ("try-error" %in% class(esquisse_data)) {
         warning(paste0("'", data, "' not found"), call. = FALSE)
         esquisse_data <- NULL
