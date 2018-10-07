@@ -51,7 +51,7 @@ get_data <- function(data = NULL, name = NULL) {
         esquisse_data_name <- ""
       } else {
         context_select <- context$selection[[1]]$text
-        if (nzchar(context_select)) {
+        if (isTRUE(nzchar(context_select))) {
           esquisse_data <- try(as.data.frame(get(x = context_select, envir = globalenv())), silent = TRUE)
           esquisse_data_name <- context_select
           if ("try-error" %in% class(esquisse_data)) {
