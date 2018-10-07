@@ -3,15 +3,19 @@
 #' @param input   standard \code{shiny} input
 #' @param output  standard \code{shiny} output
 #' @param session standard \code{shiny} session
-#' @param data    a data.frame to use in the addin, if NULL a modal dialog is launched
-#' to choose one from the user environment
+#' @param data    a \code{reactiveValues} with at least a slot \code{data} containing a \code{data.frame}
+#'  to use in the module. And a slot \code{name} corresponding to the name of the \code{data.frame}.
 #'
-#' @return nothing
 #' @noRd
 #'
 #' @importFrom shiny callModule reactiveValues observeEvent renderPrint renderPlot stopApp plotOutput showNotification
 #'
 esquisserServer <- function(input, output, session, data = NULL) {
+  
+  observeEvent(data$data, {
+    dataChart$data <- data$data
+    dataChart$name <- data$name
+  })
 
   esquisse.env <- get("esquisse.env", envir = parent.env(environment()))
   dataChart <- callModule(
@@ -91,23 +95,25 @@ esquisserServer <- function(input, output, session, data = NULL) {
   aes_r <- reactiveValues(x = NULL, y = NULL, fill = NULL, color = NULL, size = NULL)
   observeEvent(input$dragvars$target$xvar, {
     aes_r$x <- input$dragvars$target$xvar
-  })
+  }, ignoreNULL = FALSE)
   observeEvent(input$dragvars$target$yvar, {
     aes_r$y <- input$dragvars$target$yvar
-  })
+  }, ignoreNULL = FALSE)
   observeEvent(input$dragvars$target$fill, {
     aes_r$fill <- input$dragvars$target$fill
-  })
+  }, ignoreNULL = FALSE)
   observeEvent(input$dragvars$target$color, {
     aes_r$color <- input$dragvars$target$color
-  })
+  }, ignoreNULL = FALSE)
   observeEvent(input$dragvars$target$size, {
     aes_r$size <- input$dragvars$target$size
-  })
+  }, ignoreNULL = FALSE)
   
+  # i <- 0
   output$plooooooot <- renderPlot({
     req(dataChart$data); req(paramsChart$index); req(paramsChart$inputs); req(geomSelected$x)
-    
+    # i <<- i+1
+    # print(paste("EXECUTED", i))
     data <- dataChart$data
     
     if (!is.null(paramsChart$index) && is.logical(paramsChart$index)) {
