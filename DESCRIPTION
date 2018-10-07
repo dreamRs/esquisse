@@ -1,7 +1,7 @@
 Package: esquisse
 Type: Package
 Title: Explore and Visualize Your Data Interactively
-Version: 0.1.5.940
+Version: 0.1.5.950
 Authors@R: c(person("Fanny", "Meyer", email = "fanny.meyer@dreamrs.fr", role = c("aut")),
   person("Victor", "Perrier", email = "victor.perrier@dreamrs.fr", role = c("aut", "cre")))
 Description: A 'shiny' gadget to create 'ggplot2' charts interactively with drag-and-drop to map your variables.

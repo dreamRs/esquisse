@@ -46,7 +46,7 @@ get_data <- function(data = NULL, name = NULL) {
   } else {
     if (rstudioapi::isAvailable()) {
       context <- try(rstudioapi::getSourceEditorContext(), silent = TRUE)
-      if ("try-error" %in% class(context)) {
+      if ("try-error" %in% class(context) || is.null(context)) {
         esquisse_data <- NULL
         esquisse_data_name <- ""
       } else {
