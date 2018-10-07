@@ -440,7 +440,7 @@ ggplot_theme <- function(package = "ggplot2") {
 
 
 
-#' @importFrom ggplot2 geom_histogram geom_density geom_bar  
+#' @importFrom ggplot2 geom_histogram geom_density geom_bar geom_sf 
 #' geom_boxplot geom_bar geom_point geom_line geom_tile geom_violin
 ggplot_geom_vars <- function() {
   x <- matrix(

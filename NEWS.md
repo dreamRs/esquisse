@@ -1,3 +1,9 @@
+# esquisse 0.1.5.900
+
+* Support for `sf` objects.
+
+
+
 # esquisse 0.1.5
 
 * Module to coerce a variable to a different type.

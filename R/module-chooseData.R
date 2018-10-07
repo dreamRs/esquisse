@@ -210,12 +210,12 @@ chooseDataServer <- function(input, output, session, data = NULL, name = NULL,
     # req(input$data); req(input$col_chooser)
     dat <- get_df(input$data)
     ## --->>> TODO SF <<<--- ##
-    # if (inherits(dat, what = "sf")) {
-    #   var_chosen <- c(input$col_chooser, attr(dat, "sf_column"))
-    # } else {
+    if (inherits(dat, what = "sf")) {
+      var_chosen <- c(input$col_chooser, attr(dat, "sf_column"))
+    } else {
       dat <- as.data.frame(dat)
       var_chosen <- input$col_chooser
-    # }
+    }
     if (selectVars && all(var_chosen %in% names(dat))) {
       dat <- dat[, input$col_chooser, drop = FALSE]
     }

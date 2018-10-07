@@ -101,7 +101,7 @@ dropNullsOrEmpty <- function (x)
 #' @importFrom stringi stri_trans_general stri_replace_all_regex
 clean_string <- function(str) {
   str <- stri_trans_general(str = str, id = "Latin-ASCII")
-  str <- stri_replace_all_regex(str = str, pattern = "[^a-zA-Z0-9\\._]+", replacement = "_")
+  str <- stri_replace_all_regex(str = str, pattern = "[^a-zA-Z0-9_]+", replacement = "_")
   return(str)
 }
 
@@ -251,7 +251,7 @@ geom_icon_href <- function() {
   ## --->>> TODO SF <<<--- ##
   href <- "esquisse/geomIcon/gg-%s.png"
   geoms <- c("auto", "line", "bar", "histogram", 
-             "point", "boxplot", "violin", "density", "tile") #, "sf"
+             "point", "boxplot", "violin", "density", "tile", "sf") #
   lapply(
     X = setNames(geoms, geoms),
     FUN = sprintf, fmt = href
@@ -261,7 +261,7 @@ geom_icon_href <- function() {
 geom_icon_input <- function() {
   ## --->>> TODO SF <<<--- ##
   geoms <- c("auto", "line", "bar", "histogram", 
-             "point", "boxplot", "violin", "density", "tile") # , "sf"
+             "point", "boxplot", "violin", "density", "tile", "sf") # 
   href <- "esquisse/geomIcon/gg-%s.png"
   lapply(
     X = geoms,

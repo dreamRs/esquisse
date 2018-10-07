@@ -86,43 +86,62 @@ esquisserServer <- function(input, output, session, data = NULL) {
     img_ref = geom_icon_href(), enabled = geom_possible, selected = geom_possible
   )
 
-  output$plooooooot <- shiny::renderPlot({
+
+  # aesthetics from drag-and-drop
+  aes_r <- reactiveValues(x = NULL, y = NULL, fill = NULL, color = NULL, size = NULL)
+  observeEvent(input$dragvars$target$xvar, {
+    aes_r$x <- input$dragvars$target$xvar
+  })
+  observeEvent(input$dragvars$target$yvar, {
+    aes_r$y <- input$dragvars$target$yvar
+  })
+  observeEvent(input$dragvars$target$fill, {
+    aes_r$fill <- input$dragvars$target$fill
+  })
+  observeEvent(input$dragvars$target$color, {
+    aes_r$color <- input$dragvars$target$color
+  })
+  observeEvent(input$dragvars$target$size, {
+    aes_r$size <- input$dragvars$target$size
+  })
+  
+  output$plooooooot <- renderPlot({
+    req(dataChart$data); req(paramsChart$index); req(paramsChart$inputs); req(geomSelected$x)
+    
     data <- dataChart$data
+    
     if (!is.null(paramsChart$index) && is.logical(paramsChart$index)) {
-      data <- data[paramsChart$index, ]
+      data <- data[paramsChart$index, , drop = FALSE]
     }
-    vars <- input$dragvars$target
-    vars <- unlist(vars, use.names = FALSE)
-    if (all(vars %in% names(data))) {
-      res <- tryCatch({
-        gg <- ggtry(
-          data = data,
-          x = input$dragvars$target$xvar,
-          y = input$dragvars$target$yvar,
-          fill = input$dragvars$target$fill,
-          color = input$dragvars$target$color,
-          size = input$dragvars$target$size,
-          params = reactiveValuesToList(paramsChart)$inputs,
-          type = geomSelected$x
-        )
-        list(status = TRUE, gg = gg)
-      }
-      , error = function(e) {
-        list(status = FALSE, gg = NULL, e = e)
-      })
-
-      if (!res$status) {
-        shiny::showNotification(ui = res$e$message, type = "error")
-      }
-
-      res$gg
+    
+    res <- tryCatch({
+      gg <- ggtry(
+        data = data,
+        x = aes_r$x,
+        y = aes_r$y,
+        fill = aes_r$fill,
+        color = aes_r$color,
+        size = aes_r$size,
+        params = reactiveValuesToList(paramsChart)$inputs,
+        type = geomSelected$x
+      )
+      list(status = TRUE, gg = gg)
     }
+    , error = function(e) {
+      list(status = FALSE, gg = NULL, e = e)
+    })
+    
+    if (!res$status) {
+      showNotification(ui = res$e$message, type = "error")
+    }
+    
+    res$gg
 
   })
 
 
   # Export PowerPoint
-  shiny::observeEvent(paramsChart$inputs$export_ppt, {
+  observeEvent(paramsChart$inputs$export_ppt, {
     if (requireNamespace(package = "rvg") & requireNamespace(package = "officer")) {
       data <- dataChart$data
       if (!is.null(paramsChart$index) && is.logical(paramsChart$index)) {
@@ -152,7 +171,7 @@ esquisserServer <- function(input, output, session, data = NULL) {
   })
 
   # Code
-  shiny::callModule(
+  callModule(
     moduleCodeServer, id = "code",
     varSelected = input$dragvars$target,
     dataChart = dataChart,
@@ -161,7 +180,7 @@ esquisserServer <- function(input, output, session, data = NULL) {
   )
 
   # Close addin
-  shiny::observeEvent(input$close, shiny::stopApp())
+  observeEvent(input$close, shiny::stopApp())
 
 }
 
