@@ -93,12 +93,12 @@ dragulaInput <- function(inputId, sourceLabel, targetsLabels,
       )
     }
   )
-  target_list$style <- "height: 50%; padding-right: 0; padding-left: 0; margin-right: 0; margin-left: 0;"
-  target_list$cellArgs <- list(style = "height:90%; padding: 0; margin: 0;")
+  target_list$style <- "height: 50%; font-size: 0;"
+  target_list$cellArgs <- list(style = "height:90%; padding: 0; margin-right: 0.5%;")
   target_list$width <- width
   
   tgw <- 100 / length(targetsIds)
-  tgw <- tgw - 2 / length(targetsIds)
+  tgw <- tgw - 0.5 # / (length(targetsIds)-1)
   tgw <- paste0(tgw, "%")
   target_list$cellWidths <- tgw
   

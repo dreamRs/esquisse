@@ -9,6 +9,7 @@
   border-width: 1px;
   overflow: auto;
   overflow-x: hidden;
+  font-size: 12px;
 }
 
 .label-background {
