@@ -138,8 +138,8 @@ esquisserUI <- function(id, header = TRUE, choose_data = TRUE) {
       ),
       top_right = dragulaInput(
         inputId = ns("dragvars"), sourceLabel = "Variables", 
-        targetsLabels = c("X", "Y", "Fill", "Color", "Size"), 
-        targetsIds = c("xvar", "yvar", "fill", "color", "size"),
+        targetsLabels = c("X", "Y", "Fill", "Color", "Size", "Facet"), 
+        targetsIds = c("xvar", "yvar", "fill", "color", "size", "facet"),
         choices = "", badge = FALSE, width = "100%", height = "100%",
         replace = TRUE
       ),

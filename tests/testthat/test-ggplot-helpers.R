@@ -75,10 +75,12 @@ test_that("ggtry return ggplot", {
   
   data("diamonds", package = "ggplot2")
   p3 <- ggtry(data = diamonds, x = "cut", fill = "color", params = list(position = "dodge"))
-
+  p4 <- ggtry(data = diamonds, x = "carat", fill = "color", facet = "cut")
+  
   expect_is(p, "ggplot")
   expect_is(p2, "ggplot")
   expect_is(p3, "ggplot")
+  expect_is(p4, "ggplot")
 })
 
 

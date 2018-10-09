@@ -111,6 +111,9 @@ esquisserServer <- function(input, output, session, data = NULL) {
   observeEvent(input$dragvars$target$size, {
     aes_r$size <- input$dragvars$target$size
   }, ignoreNULL = FALSE)
+  observeEvent(input$dragvars$target$facet, {
+    aes_r$facet <- input$dragvars$target$facet
+  }, ignoreNULL = FALSE)
   
   i <- 0
   output$plooooooot <- renderPlot({
@@ -138,6 +141,7 @@ esquisserServer <- function(input, output, session, data = NULL) {
             fill = aes_r$fill,
             color = aes_r$color,
             size = aes_r$size,
+            facet = aes_r$facet,
             params = reactiveValuesToList(paramsChart)$inputs,
             type = geomSelected$x
           )
@@ -170,6 +174,7 @@ esquisserServer <- function(input, output, session, data = NULL) {
         fill = input$dragvars$target$fill,
         color = input$dragvars$target$color,
         size = input$dragvars$target$size,
+        facet = input$dragvars$target$facet,
         params = reactiveValuesToList(paramsChart)$inputs,
         type = geomSelected$x
       )
