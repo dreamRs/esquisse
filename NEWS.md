@@ -2,6 +2,7 @@
 
 * Support for `sf` objects.
 * Use `esquisse` as a shiny module.
+* Facets support thanks to [@itcarroll](https://github.com/itcarroll) ([#30](https://github.com/dreamRs/esquisse/pull/30))
 
 
 
