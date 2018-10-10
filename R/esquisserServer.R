@@ -95,7 +95,7 @@ esquisserServer <- function(input, output, session, data = NULL) {
 
 
   # aesthetics from drag-and-drop
-  aes_r <- reactiveValues(x = NULL, y = NULL, fill = NULL, color = NULL, size = NULL)
+  aes_r <- reactiveValues(x = NULL, y = NULL, fill = NULL, color = NULL, size = NULL, facet = NULL)
   observeEvent(input$dragvars$target$xvar, {
     aes_r$x <- input$dragvars$target$xvar
   }, ignoreNULL = FALSE)
@@ -194,7 +194,7 @@ esquisserServer <- function(input, output, session, data = NULL) {
   # Code
   callModule(
     moduleCodeServer, id = "controls-code",
-    varSelected = input$dragvars$target,
+    varSelected = aes_r,
     dataChart = dataChart,
     paramsChart = paramsChart,
     geomSelected = geomSelected

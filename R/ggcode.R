@@ -6,6 +6,7 @@
 #' @param args_geom Named list. Additional arguments for the geom, like \code{color}, \code{size},...
 #' @param scale Character, the scale to use.
 #' @param labs Named list, optional. Title, axis labels, subtitle.. for the plot.
+#' @param facet Variable to use in \code{facet_wrap}.
 #' @param theme Character. Theme used, if any.
 #' @param coord Character. Coordinate system to use.
 #' @param params List, other parameters (legend.position, ...)
@@ -26,7 +27,7 @@
 #'   geom = "histogram",
 #'   args_geom = list(fill = "steelblue", bins = 15)
 #' )
-ggcode <- function(data, aes, geom, args_geom = NULL, scale = NULL, labs = NULL, theme = NULL, coord = NULL, params = list()) {
+ggcode <- function(data, aes, geom, args_geom = NULL, scale = NULL, labs = NULL, facet = NULL, theme = NULL, coord = NULL, params = list()) {
   l2char <- function(l, quote = FALSE, sep_args = ", ") {
     if (quote) {
       l <- lapply(
@@ -71,6 +72,12 @@ ggcode <- function(data, aes, geom, args_geom = NULL, scale = NULL, labs = NULL,
     c_sm <- sprintf(" +\n  geom_smooth(span = %s)", params$smooth_span)
     c_geom <- paste0(c_geom, c_sm)
   }
+  
+  if (!is.null(facet)) {
+    c_facet <- sprintf("facet_wrap(vars(%s))", paste(facet, collapse = ", "))
+  } else {
+    c_facet <- NULL
+  }
 
   if (!is.null(aes$fill) | !is.null(aes$color) | !is.null(aes$size)) {
     if (!is.null(params$legend_position) && params$legend_position != "right") {
@@ -78,6 +85,6 @@ ggcode <- function(data, aes, geom, args_geom = NULL, scale = NULL, labs = NULL,
     }
   }
 
-  c_gg <- c(c_ggplot, c_aes, c_geom, scale, c_labs, c_theme, c_coord)
+  c_gg <- c(c_ggplot, c_aes, c_geom, scale, c_labs, c_theme, c_facet, c_coord)
   paste0(paste(c_gg, collapse = " +\n  "), "\n")
 }

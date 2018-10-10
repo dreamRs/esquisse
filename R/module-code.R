@@ -56,19 +56,19 @@ moduleCodeServer <- function(input, output, session, varSelected, dataChart, par
 
   codegg <- shiny::reactive({
     code_geom <- guess_geom(
-      xtype = if (!is.null(varSelected$xvar)) col_type(dataChart$data[[varSelected$xvar]]),
-      ytype = if (!is.null(varSelected$yvar)) col_type(dataChart$data[[varSelected$yvar]]),
+      xtype = if (!is.null(varSelected$x)) col_type(dataChart$data[[varSelected$x]]),
+      ytype = if (!is.null(varSelected$y)) col_type(dataChart$data[[varSelected$y]]),
       type = geomSelected$x, sfobj = inherits(dataChart$data, what = "sf")
     )
     code_aes <- guess_aes(
-      x = varSelected$xvar,
-      y = varSelected$yvar,
+      x = varSelected$x,
+      y = varSelected$y,
       fill = varSelected$fill,
       color = varSelected$color,
       size = varSelected$size,
       geom = code_geom,
-      xtype = if (!is.null(varSelected$xvar)) col_type(dataChart$data[[varSelected$xvar]]),
-      ytype = if (!is.null(varSelected$yvar)) col_type(dataChart$data[[varSelected$yvar]])
+      xtype = if (!is.null(varSelected$x)) col_type(dataChart$data[[varSelected$x]]),
+      ytype = if (!is.null(varSelected$y)) col_type(dataChart$data[[varSelected$y]])
     )
     code_aes <- lapply(
       X = code_aes,
@@ -133,6 +133,7 @@ moduleCodeServer <- function(input, output, session, varSelected, dataChart, par
       geom = code_geom,
       scale = code_scale,
       args_geom = args_geom,
+      facet = varSelected$facet,
       theme = params_chart$theme, coord = coord,
       labs = params_chart[c("title", "x", "y", "caption", "subtitle")],
       params = params_chart
