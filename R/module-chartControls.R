@@ -123,9 +123,17 @@ chartControlsServer <- function(input, output, session, type, data = NULL) {
 
   outin <- reactiveValues(inputs = NULL)
 
-  observeEvent(reactiveValuesToList(input), {
-    outin$inputs <- reactiveValuesToList(input)
+  observeEvent({
+    all_inputs <- reactiveValuesToList(input)
+    all_inputs[grep(pattern = "filter-data", x = names(all_inputs), invert = TRUE)]
+  }, {
+    all_inputs <- reactiveValuesToList(input)
+    # remove inputs from filterDataServer module with ID "filter-data"
+    nofilter_inputs <- all_inputs[grep(pattern = "filter-data", x = names(all_inputs), invert = TRUE)]
+    nofilter_inputs <- nofilter_inputs[order(names(nofilter_inputs))]
+    outin$inputs <- nofilter_inputs
   })
+  
   observeEvent(res_data$data, {
     outin$data <- res_data$data
     outin$code <- res_data$code

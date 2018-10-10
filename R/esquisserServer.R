@@ -10,6 +10,7 @@
 #' @rdname esquisse-module
 #'
 #' @importFrom shiny callModule reactiveValues observeEvent renderPrint renderPlot stopApp plotOutput showNotification
+#' @importFrom ggplot2 ggplot_build
 #'
 esquisserServer <- function(input, output, session, data = NULL) {
   
@@ -75,6 +76,7 @@ esquisserServer <- function(input, output, session, data = NULL) {
   })
 
   # Module chart controls : title, xalabs, colors, export...
+  paramsChart <- reactiveValues(inputs = NULL)
   paramsChart <- shiny::callModule(
     module = chartControlsServer, 
     id = "controls", 
@@ -110,40 +112,47 @@ esquisserServer <- function(input, output, session, data = NULL) {
     aes_r$size <- input$dragvars$target$size
   }, ignoreNULL = FALSE)
   
-  # i <- 0
+  i <- 0
   output$plooooooot <- renderPlot({
-    req(dataChart$data); req(paramsChart$index); req(paramsChart$inputs); req(geomSelected$x)
+    
+    req(dataChart$data)
+    req(paramsChart$index)
+    req(paramsChart$inputs)
+    req(geomSelected$x)
+    
     # i <<- i+1
     # print(paste("EXECUTED", i))
+    
     data <- dataChart$data
     
     if (!is.null(paramsChart$index) && is.logical(paramsChart$index)) {
       data <- data[paramsChart$index, , drop = FALSE]
     }
-    
-    res <- tryCatch({
-      gg <- ggtry(
-        data = data,
-        x = aes_r$x,
-        y = aes_r$y,
-        fill = aes_r$fill,
-        color = aes_r$color,
-        size = aes_r$size,
-        params = reactiveValuesToList(paramsChart)$inputs,
-        type = geomSelected$x
-      )
-      list(status = TRUE, gg = gg)
-    }
-    , error = function(e) {
-      list(status = FALSE, gg = NULL, e = e)
-    })
-    
-    if (!res$status) {
-      showNotification(ui = res$e$message, type = "error")
-      ggplot()
-    } else {
-      res$gg
-    }
+    gg <- withCallingHandlers(
+      expr = tryCatch(
+        expr = {
+          gg <- ggtry(
+            data = data,
+            x = aes_r$x,
+            y = aes_r$y,
+            fill = aes_r$fill,
+            color = aes_r$color,
+            size = aes_r$size,
+            params = reactiveValuesToList(paramsChart)$inputs,
+            type = geomSelected$x
+          )
+          gg <- ggplot_build(gg)
+          print(gg$plot)
+          gg
+        },
+        error = function(e) {
+          shiny::showNotification(ui = conditionMessage(e), type = "error", session = session)
+        }
+      ), 
+      warning = function(w) {
+        shiny::showNotification(ui = conditionMessage(w), type = "warning", session = session)
+      }
+    )
   })
 
 
