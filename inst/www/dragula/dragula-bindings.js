@@ -11,6 +11,8 @@ var dragulaBinding = new Shiny.InputBinding();
     opts.removeOnSpill = false;
     
     var replaceold = $(el).data("replace");
+    var replaceIds = $(el).data("replace-ids");
+    console.log(replaceIds);
     
     var containersId = [];
     
@@ -40,9 +42,11 @@ var dragulaBinding = new Shiny.InputBinding();
     if (replaceold) {
       drake.on('drop', function(el, target) {
 
-        if ( target !== document.getElementById(sourceContainer) ) { 
+        if ( target !== document.getElementById(sourceContainer)) { 
           if (target !== null) {
-            $(target).children('.label-dragula').remove();
+            if (replaceIds.indexOf(target.id) == -1) {
+              $(target).children('.label-dragula').remove();
+            }
             target.appendChild(el);
           }
         } else {

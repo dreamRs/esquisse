@@ -37,7 +37,7 @@ through (tag objects, icons, HTML code, ...), instead of just simple text.}
 status to color them, or \code{NULL}.}
 
 \item{replace}{When a choice is dragged in a target container already
-containing a choice, does the later be replaced by the new one ?#'}
+containing a choice, does the later be replaced by the new one ?}
 
 \item{badge}{Displays choices inside a Bootstrap badge. Use \code{FALSE}
 if you want to pass custom appearance with \code{choiceNames}.}
