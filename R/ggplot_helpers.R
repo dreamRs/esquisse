@@ -6,6 +6,7 @@
 #' @param fill Variable to map in fill
 #' @param color Variable to map in color
 #' @param size Variable to map in size
+#' @param facet Variable to call in facet_wrap
 #' @param type Geom to use
 #' @param params additionnal params, like title, xlabel...
 #' @param ... not use
@@ -13,9 +14,9 @@
 #' @return a ggplot object
 #' @noRd
 #' 
-#' @importFrom ggplot2 ggplot aes_ scale_fill_hue scale_fill_gradient scale_fill_brewer 
+#' @importFrom ggplot2 ggplot aes_ scale_fill_hue scale_fill_gradient scale_fill_brewer
 #'  scale_fill_distiller scale_color_hue scale_color_gradient scale_color_brewer 
-#'  scale_color_distiller labs coord_flip geom_smooth theme element_text
+#'  scale_color_distiller labs coord_flip geom_smooth theme element_text facet_wrap
 #'
 #'
 #' @examples
@@ -27,9 +28,9 @@
 #' ggtry(data = diamonds, x = "cut")
 #' 
 #' }
-ggtry <- function(data, x = NULL, y = NULL, fill = NULL, color = NULL, size = NULL, type = "auto", params = list(), ...) {
+ggtry <- function(data, x = NULL, y = NULL, fill = NULL, color = NULL, size = NULL, facet = NULL, type = "auto", params = list(), ...) {
 
-  check_vars <- c(x, y, fill, color, size)
+  check_vars <- c(x, y, fill, color, size, facet)
   if ((is.null(check_vars) || !all(check_vars %in% names(data))) & !inherits(data, what = "sf")) {
     return(ggplot())
   }
@@ -154,6 +155,11 @@ ggtry <- function(data, x = NULL, y = NULL, fill = NULL, color = NULL, size = NU
     caption = params$caption, subtitle = params$subtitle
   )
 
+  # Add facet
+  if (!is.null(facet)) {
+    p <- p + facet_wrap(facet)
+  }
+  
   if (!is.null(params_scale_fill)) {
     p <- p + params_scale_fill
   }
