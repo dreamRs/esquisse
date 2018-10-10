@@ -118,6 +118,16 @@ chartControlsServer <- function(input, output, session, type, data = NULL) {
     } else {
       toggleDisplay(session = session, id = ns("controls-violin"), display = "none")
     }
+    if (type$x %in% c("point", "line", "density", "violin")) {
+      toggleDisplay(session = session, id = ns("controls-xtrans"), display = "block")
+    } else {
+      toggleDisplay(session = session, id = ns("controls-xtrans"), display = "none")
+    }
+    if (type$x == "sf") {
+      toggleDisplay(session = session, id = ns("controls-ytrans"), display = "none")
+    } else {
+      toggleDisplay(session = session, id = ns("controls-ytrans"), display = "block")
+    }
   })
   
   res_data <- callModule(
@@ -312,11 +322,15 @@ controls_appearance <- function(ns) {
 #' @param ns Namespace from module
 #'
 #' @noRd
-#' @importFrom shiny sliderInput conditionalPanel
+#' @importFrom shiny sliderInput conditionalPanel selectInput
 #' @importFrom htmltools tagList tags
 #' @importFrom shinyWidgets materialSwitch prettyRadioButtons
+#' @importFrom utils apropos
 #'
 controls_params <- function(ns) {
+  trans <- sub('_trans$', '', c(
+    grep('_trans$', getNamespaceExports('scales'), value = TRUE),
+    apropos('_trans$')))
   tagList(
     tags$div(
       id = ns("controls-scatter"), style = "display: none; padding-top: 10px;",
@@ -388,6 +402,18 @@ controls_params <- function(ns) {
         value = FALSE, 
         status = "primary"
       )
+    ),
+    tags$div(
+      id = ns("controls-xtrans"), style = "display:none;",
+      selectInput(
+        inputId = ns("xtrans"), label = "X-Axis transform:",
+        selected = "identity", choices = trans)
+    ),
+    tags$div(
+      id = ns("controls-ytrans"), style = "display:none;",
+      selectInput(
+        inputId = ns("ytrans"), label = "Y-Axis transform:",
+        selected = "identity", choices = trans)
     )
   )
 }
@@ -518,6 +544,4 @@ select_geom_controls <- function(x, types) {
   } else {
     "auto"
   }
-} 
-
-
+}

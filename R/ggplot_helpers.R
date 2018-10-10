@@ -18,7 +18,7 @@
 #'  scale_fill_distiller scale_color_hue scale_color_gradient scale_color_brewer 
 #'  scale_color_distiller labs coord_flip geom_smooth theme element_text facet_wrap
 #'  scale_colour_viridis_d scale_colour_viridis_c scale_fill_viridis_d scale_fill_viridis_c
-#'
+#'  scale_y_continuous scale_x_continuous layer_scales
 #'
 #' @examples
 #' if (interactive()) {
@@ -196,6 +196,15 @@ ggtry <- function(data, x = NULL, y = NULL, fill = NULL, color = NULL, size = NU
   }
   if (!is.null(params_scale_color)) {
     p <- p + params_scale_color
+  }
+  
+  # Add continuous transforms
+  scales <- layer_scales(p)
+  if (!is.null(params$ytrans) & "ScaleContinuous" %in% class(scales$y)) {
+    p <- p + scale_y_continuous(trans = params$ytrans)  
+  }
+  if (!is.null(params$xtrans) & "ScaleContinuous" %in% class(scales$x)) {
+    p <- p + scale_x_continuous(trans = params$xtrans)  
   }
 
   # Flip coordinates for geom_bar
