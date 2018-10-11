@@ -118,7 +118,7 @@ esquisserUI <- function(id, header = TRUE, choose_data = TRUE) {
     # style sheet
     singleton(x = tagList(
       tags$link(rel="stylesheet", type="text/css", href="esquisse/styles.css"),
-      tags$script(src = "esquisse/clipboard.min.js")
+      tags$script(src = "esquisse/clipboard/clipboard.min.js")
     )),
 
     if (isTRUE(header)) box_title,
