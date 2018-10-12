@@ -10,7 +10,7 @@
 #' @rdname esquisse-module
 #'
 #' @importFrom shiny callModule reactiveValues observeEvent renderPrint renderPlot stopApp plotOutput showNotification
-#' @importFrom ggplot2 ggplot_build
+#' @importFrom ggplot2 ggplot_build ggsave
 #'
 esquisserServer <- function(input, output, session, data = NULL) {
   
@@ -115,6 +115,10 @@ esquisserServer <- function(input, output, session, data = NULL) {
     aes_r$facet <- input$dragvars$target$facet
   }, ignoreNULL = FALSE)
   
+  
+  # plot generated
+  ggplot_r <- reactiveValues(p = NULL)
+  
   i <- 0
   output$plooooooot <- renderPlot({
     
@@ -146,6 +150,7 @@ esquisserServer <- function(input, output, session, data = NULL) {
             type = geomSelected$x
           )
           gg <- ggplot_build(gg)
+          ggplot_r$p <- gg$plot
           print(gg$plot)
           gg
         },
@@ -161,33 +166,34 @@ esquisserServer <- function(input, output, session, data = NULL) {
 
 
   # Export PowerPoint
-  observeEvent(paramsChart$inputs$export_ppt, {
+  observeEvent(paramsChart$export_ppt, {
     if (requireNamespace(package = "rvg") & requireNamespace(package = "officer")) {
-      data <- dataChart$data
-      if (!is.null(paramsChart$index) && is.logical(paramsChart$index)) {
-        data <- data[paramsChart$index, ]
-      }
-      gg <- ggtry(
-        data = data,
-        x = input$dragvars$target$xvar,
-        y = input$dragvars$target$yvar,
-        fill = input$dragvars$target$fill,
-        color = input$dragvars$target$color,
-        size = input$dragvars$target$size,
-        facet = input$dragvars$target$facet,
-        params = reactiveValuesToList(paramsChart)$inputs,
-        type = geomSelected$x
-      )
+      gg <- ggplot_r$p
       ppt <- officer::read_pptx()
       ppt <- officer::add_slide(ppt, layout = "Title and Content", master = "Office Theme")
-      ppt <- rvg::ph_with_vg(ppt, print(gg), type = "body")
-      tmp <- tempfile(pattern = "charter", fileext = ".pptx")
-      print(ppt, target = tmp)
-      utils::browseURL(url = tmp)
+      ppt <- try(rvg::ph_with_vg(ppt, print(gg), type = "body"), silent = TRUE)
+      if ("try-error" %in% class(ppt)) {
+        shiny::showNotification(ui = "Export to PowerPoint failed...", type = "error")
+      } else {
+        tmp <- tempfile(pattern = "esquisse", fileext = ".pptx")
+        print(ppt, target = tmp)
+        utils::browseURL(url = tmp)
+      }
     } else {
       warn <- "Packages 'officer' and 'rvg' are required to use this functionality."
       warning(warn, call. = FALSE)
       shiny::showNotification(ui = warn, type = "warning")
+    }
+  })
+  
+  # Export png
+  observeEvent(paramsChart$export_png, {
+    tmp <- tempfile(pattern = "esquisse", fileext = ".png")
+    pngg <- try(ggsave(filename = tmp, plot = ggplot_r$p, width = 12, height = 8, dpi = "retina"))
+    if ("try-error" %in% class(pngg)) {
+      shiny::showNotification(ui = "Export to PNG failed...", type = "error")
+    } else {
+      utils::browseURL(url = tmp)
     }
   })
 

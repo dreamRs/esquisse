@@ -121,7 +121,14 @@ chartControlsServer <- function(input, output, session, type, data = NULL) {
     width = "95%"
   )
 
-  outin <- reactiveValues(inputs = NULL)
+  outin <- reactiveValues(inputs = NULL, export_ppt = NULL, export_png = NULL)
+  
+  observeEvent(input$export_ppt, {
+    outin$export_ppt <- input$export_ppt
+  }, ignoreInit = TRUE)
+  observeEvent(input$export_png, {
+    outin$export_png <- input$export_png
+  }, ignoreInit = TRUE)
 
   observeEvent({
     all_inputs <- reactiveValuesToList(input)
