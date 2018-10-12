@@ -294,7 +294,7 @@ controls_appearance <- function(ns) {
         icon("arrow-down"), icon("arrow-right"), icon("close")
       ),
       choiceValues = c("left", "top", "bottom", "right", "none"),
-      selected = "right", justified = TRUE
+      selected = "right", justified = TRUE, size = "sm"
     )
   )
 }
@@ -318,7 +318,7 @@ controls_params <- function(ns) {
       id = ns("controls-scatter"), style = "display: none; padding-top: 10px;",
       materialSwitch(
         inputId = ns("smooth_add"), 
-        label = "Smooth line",
+        label = "Smooth line:",
         right = TRUE, 
         status = "primary"
       ),
@@ -345,7 +345,7 @@ controls_params <- function(ns) {
       id = ns("controls-histogram"), style = "display: none;",
       sliderInput(
         inputId = ns("bins"), 
-        label = "Numbers of bins", 
+        label = "Numbers of bins:", 
         min = 10, max = 100,
         value = 30
       )
@@ -355,14 +355,14 @@ controls_params <- function(ns) {
       prettyRadioButtons(
         inputId = ns("scale"), label = "Scale:", inline = TRUE,
         status = "primary", choices = c("area", "count", "width"),
-        fill = TRUE
+        outline = TRUE, icon = icon("check")
       )
     ),
     tags$div(
       id = ns("controls-density"), style = "display: none;",
       sliderInput(
         inputId = ns("adjust"), 
-        label = "Bandwidth adjustment", 
+        label = "Bandwidth adjustment:", 
         min = 0.2, max = 6, 
         value = 1, step = 0.1
       )
@@ -372,11 +372,12 @@ controls_params <- function(ns) {
       prettyRadioButtons(
         inputId = ns("position"), label = "Position:",
         choices = c("stack", "dodge", "fill"), inline = TRUE,
-        selected = "stack", status = "primary", fill = TRUE
+        selected = "stack", status = "primary",
+        outline = TRUE, icon = icon("check")
       ),
       materialSwitch(
         inputId = ns("flip"), 
-        label = "Flip coordinates", 
+        label = "Flip coordinates:", 
         value = FALSE, 
         status = "primary"
       )
