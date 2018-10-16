@@ -89,7 +89,7 @@ chooseDataUI <- function(id) {
       tags$link(rel="stylesheet", type="text/css",
                 href="esquisse/styles-dad.css")
     ),
-    toggleBtnUi(),
+    useShinyUtils(),
     actionButton(
       inputId = ns("changeData"), label = "Choose data",
       icon = icon("database"), width = "100%"
@@ -180,11 +180,11 @@ chooseDataServer <- function(input, output, session, data = NULL, name = NULL,
     )
   })
   
-  toggleBtnServer(session, inputId = ns("validata"), type = "disable")
+  toggleBtn(session, inputId = ns("validata"), type = "disable")
   output$alert_no_var <- shiny::renderUI({
     shiny::req(input$data)
     if (length(input$col_chooser) < 1) {
-      toggleBtnServer(session, inputId = ns("validata"), type = "disable")
+      toggleBtn(session, inputId = ns("validata"), type = "disable")
       tagList(
         tags$br(),
         tags$div(
@@ -193,7 +193,7 @@ chooseDataServer <- function(input, output, session, data = NULL, name = NULL,
         )
       )
     } else {
-      toggleBtnServer(session, inputId = ns("validata"), type = "enable")
+      toggleBtn(session, inputId = ns("validata"), type = "enable")
       NULL
     }
   })

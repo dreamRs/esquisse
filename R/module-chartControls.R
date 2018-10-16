@@ -49,7 +49,7 @@ chartControlsUI <- function(id) {
     tags$script("$('.sw-dropdown').addClass('btn-group-charter');"),
     tags$script(HTML("$('.sw-dropdown > .btn').addClass('btn-charter');")),
     tags$script("$('#sw-content-filterdrop').click(function (e) {e.stopPropagation();});"),
-    toggleDisplayUi()
+    useShinyUtils()
   )
 }
 
@@ -74,44 +74,44 @@ chartControlsServer <- function(input, output, session, type, data = NULL) {
 
   observeEvent(type$palette, {
     if (isTRUE(type$palette)) {
-      toggleDisplayServer(session = session, id = ns("controls-palette"), display = "block")
-      toggleDisplayServer(session = session, id = ns("controls-spectrum"), display = "none")
+      toggleDisplay(session = session, id = ns("controls-palette"), display = "block")
+      toggleDisplay(session = session, id = ns("controls-spectrum"), display = "none")
     } else {
-      toggleDisplayServer(session = session, id = ns("controls-palette"), display = "none")
-      toggleDisplayServer(session = session, id = ns("controls-spectrum"), display = "block")
+      toggleDisplay(session = session, id = ns("controls-palette"), display = "none")
+      toggleDisplay(session = session, id = ns("controls-spectrum"), display = "block")
     }
   })
   
   observeEvent(type$x, {
     if (type$x %in% "bar") {
-      toggleDisplayServer(session = session, id = ns("controls-discrete"), display = "block")
+      toggleDisplay(session = session, id = ns("controls-discrete"), display = "block")
     } else {
-      toggleDisplayServer(session = session, id = ns("controls-discrete"), display = "none")
+      toggleDisplay(session = session, id = ns("controls-discrete"), display = "none")
     }
     if (type$x %in% "histogram") {
-      toggleDisplayServer(session = session, id = ns("controls-histogram"), display = "block")
+      toggleDisplay(session = session, id = ns("controls-histogram"), display = "block")
     } else {
-      toggleDisplayServer(session = session, id = ns("controls-histogram"), display = "none")
+      toggleDisplay(session = session, id = ns("controls-histogram"), display = "none")
     }
     if (type$x %in% c("density", "violin")) {
-      toggleDisplayServer(session = session, id = ns("controls-density"), display = "block")
+      toggleDisplay(session = session, id = ns("controls-density"), display = "block")
     } else {
-      toggleDisplayServer(session = session, id = ns("controls-density"), display = "none")
+      toggleDisplay(session = session, id = ns("controls-density"), display = "none")
     }
     if (type$x %in% "point") {
-      toggleDisplayServer(session = session, id = ns("controls-scatter"), display = "block")
+      toggleDisplay(session = session, id = ns("controls-scatter"), display = "block")
     } else {
-      toggleDisplayServer(session = session, id = ns("controls-scatter"), display = "none")
+      toggleDisplay(session = session, id = ns("controls-scatter"), display = "none")
     }
     if (type$x %in% c("point", "line")) {
-      toggleDisplayServer(session = session, id = ns("controls-size"), display = "block")
+      toggleDisplay(session = session, id = ns("controls-size"), display = "block")
     } else {
-      toggleDisplayServer(session = session, id = ns("controls-size"), display = "none")
+      toggleDisplay(session = session, id = ns("controls-size"), display = "none")
     }
     if (type$x %in% "violin") {
-      toggleDisplayServer(session = session, id = ns("controls-violin"), display = "block")
+      toggleDisplay(session = session, id = ns("controls-violin"), display = "block")
     } else {
-      toggleDisplayServer(session = session, id = ns("controls-violin"), display = "none")
+      toggleDisplay(session = session, id = ns("controls-violin"), display = "none")
     }
   })
   

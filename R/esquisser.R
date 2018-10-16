@@ -45,7 +45,7 @@ esquisser <- function(data = NULL,
     inviewer <- paneViewer(minHeight = "maximize")
   } else {
     inviewer <- dialogViewer(
-      "Explore your data with ggplot2",
+      "Dessine-moi un mouton...",
       width = 1000, height = 750
     )
   }

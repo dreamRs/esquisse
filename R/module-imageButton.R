@@ -59,7 +59,7 @@ imageButtonUI <- function(id, imgs = list(), selected = 1, up = FALSE, width = N
   )
 
   tagList(
-    toggleInputUi(),
+    useShinyUtils(),
     tags$div(
       class = ifelse(up, "dropup", "dropdown"),
       style = "margin-bottom: 1vh;",
@@ -108,9 +108,9 @@ imageButtonServer <- function(input, output, session, default = NULL, img_ref = 
     if (!is.null(enabled$x)) {
       for (i in names(img_ref)) {
         if (i %in% enabled$x) {
-          toggleInputServer(session = session, inputId = ns(i), enable = TRUE)
+          toggleInput(session = session, inputId = ns(i), enable = TRUE)
         } else {
-          toggleInputServer(session = session, inputId = ns(i), enable = FALSE)
+          toggleInput(session = session, inputId = ns(i), enable = FALSE)
         }
       }
     }
