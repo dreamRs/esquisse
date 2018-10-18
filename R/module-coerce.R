@@ -69,38 +69,15 @@ coerceUI <- function(id) {
     tags$style(
       ".col-coerce {padding-right: 5px; padding-left: 5px;}"
     ),
-    tags$script(
-      paste(
-        "Shiny.addCustomMessageHandler('toggleClass',",
-        "function(data) {",
-        "if (data.class == 'success') {",
-        "$('#' + data.id).removeClass('btn-primary');",
-        "$('#' + data.id).addClass('btn-success');",
-        "}",
-        "if (data.class == 'primary') {",
-        "$('#' + data.id).removeClass('btn-success');",
-        "$('#' + data.id).addClass('btn-primary');",
-        "}",
-        # "$('#' + data.id).toggleClass('btn-primary');",
-        # "$('#' + data.id).toggleClass('btn-success');",
-        "}",
-        ");",
-        sep = "\n"
-      )
-    ),
+    useShinyUtils(),
     column(
       width = 5, class = "col-coerce",
       pickerInput(
         inputId = ns("var"),
-        label = "Choose a variable:",
+        label = "Choose a variable to coerce:",
         choices = NULL,# names(data),
         multiple = FALSE,
-        width = "100%" #,
-        # choicesOpt = list(
-        #   subtext = unlist(lapply(
-        #     X = data, FUN = function(x) class(x)[1]
-        #   ), use.names = FALSE)
-        # )
+        width = "100%"
       )
     ),
     column(
@@ -118,13 +95,24 @@ coerceUI <- function(id) {
     ),
     column(
       width = 3, class = "col-coerce",
-      tags$div(style = "height: 25px;"),
+      tags$div(
+        style = "height: 25px;",
+        tags$a(
+          id = ns("help-coerce-vars"), style = "float: right;",
+          style = "color: steelblue;", icon("info-circle", class = "fa-lg"),
+          `data-toggle` = "popover", `data-trigger` = "hover", `data-animation` = "false",
+          `data-container` = "body", tabindex = "0", role = "button",
+          `data-content` = "Select a variable to change its class (for example to convert numbers into characters)",
+          tags$script(sprintf("$('#%s').popover();", ns("help-coerce-vars")))
+        )
+      ),
       actionButton(
         inputId = ns("valid_coerce"),
         label = "Coerce",
         icon = icon("play"),
         width = "100%", 
-        class = "btn-primary"
+        class = "btn-primary",
+        disabled = "disabled"
       )
     )
   )
@@ -158,6 +146,19 @@ coerceServer <- function(input, output, session, data, reactiveValuesSlot = "dat
   return_data <- reactiveValues(data = NULL, names = NULL)
   
   observe({
+    if (is.reactive(data)) {
+      toggleInput(session = session, inputId = ns("valid_coerce"), enable = TRUE)
+      toggleInput(session = session, inputId = ns("var"), enable = TRUE)
+    } else if (is.reactivevalues(data) && !is.null(data[[reactiveValuesSlot]])) {
+      toggleInput(session = session, inputId = ns("valid_coerce"), enable = TRUE)
+      toggleInput(session = session, inputId = ns("var"), enable = TRUE)
+    } else {
+      toggleInput(session = session, inputId = ns("valid_coerce"), enable = FALSE)
+      toggleInput(session = session, inputId = ns("var"), enable = FALSE)
+    }
+  })
+  
+  observe({
     req(data)
     if (is.reactive(data)) {
       data <- data()
@@ -166,6 +167,7 @@ coerceServer <- function(input, output, session, data, reactiveValuesSlot = "dat
       # data$timestamp
       data <- data[[reactiveValuesSlot]]
     }
+    
     updatePickerInput(
       session = session,
       inputId = "var",

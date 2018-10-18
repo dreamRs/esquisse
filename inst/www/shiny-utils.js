@@ -32,3 +32,20 @@ Shiny.addCustomMessageHandler('togglewidget', function(data) {
   }
 });
 
+
+// Toggle button class
+Shiny.addCustomMessageHandler('toggleClass',
+  function(data) {
+    if (data.class == 'success') {
+      $('#' + data.id).removeClass('btn-primary');
+      $('#' + data.id).addClass('btn-success');
+    }
+    if (data.class == 'primary') {
+      $('#' + data.id).removeClass('btn-success');
+      $('#' + data.id).addClass('btn-primary');
+    }
+  }
+);
+
+
+

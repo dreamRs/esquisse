@@ -6,34 +6,39 @@
 \alias{chooseDataServer}
 \title{Module for choosing data.frame}
 \usage{
-chooseDataUI(id)
+chooseDataUI(id, label = "Choose data", icon = "database")
 
-chooseDataServer(input, output, session, data = NULL, name = NULL,
-  selectVars = TRUE, coerceVars = FALSE, launchOnStart = TRUE,
-  defaultData = NULL)
+chooseDataServer(input, output, session, dataModule = c("GlobalEnv",
+  "ImportFile"), data = NULL, name = NULL, selectVars = TRUE,
+  coerceVars = FALSE, launchOnStart = TRUE, size = "m")
 }
 \arguments{
 \item{id}{Module's id.}
 
-\item{input}{standard \code{shiny} input.}
+\item{label}{Button's label.}
 
-\item{output}{standard \code{shiny} output.}
+\item{icon}{Button's icon.}
 
-\item{session}{standard \code{shiny} session.}
+\item{input}{Standard \code{shiny} input.}
 
-\item{data}{a data.frame to use by default.}
+\item{output}{Standard \code{shiny} output.}
 
-\item{name}{character, the name of \code{data}.}
+\item{session}{Standard \code{shiny} session.}
 
-\item{selectVars}{logical, display menu to select vars to use in selected \code{data.frame}.}
+\item{dataModule}{Data module to use, choose between \code{"GlobalEnv"}
+or \code{"ImportFile"}.}
 
-\item{coerceVars}{logical, display menu to coerce a variable in a different class.}
+\item{data}{A \code{data.frame} to use by default.}
 
-\item{launchOnStart}{launch modal when application is launched.}
+\item{name}{Character, object's name to use for \code{data}.}
 
-\item{defaultData}{a character vector of \code{data.frame}s to choose along if
-there is no \code{data.frame}s in Global environment. By default, \code{data.frame}s
-from \code{ggplot2} are used.}
+\item{selectVars}{Display module to select variables, \code{TRUE} by default.}
+
+\item{coerceVars}{Display module to coerce variables between different class, \code{TRUE} by default.}
+
+\item{launchOnStart}{Opens modal window when the application starts.}
+
+\item{size}{Size for the modal window.}
 }
 \value{
 a \code{\link[shiny]{reactiveValues}} containing the data selected under slot \code{data}

@@ -1,7 +1,7 @@
 Package: esquisse
 Type: Package
 Title: Explore and Visualize Your Data Interactively
-Version: 0.1.5.981
+Version: 0.1.5.990
 Authors@R: c(person("Fanny", "Meyer", email = "fanny.meyer@dreamrs.fr", role = c("aut")),
   person("Victor", "Perrier", email = "victor.perrier@dreamrs.fr", role = c("aut", "cre")),
   person("Ian", "Carroll", comment = "Facets support", role = "ctb"))
@@ -28,5 +28,6 @@ Imports: miniUI,
 Suggests: 
     officer,
     rvg,
+    rio,
     DT,
     testthat

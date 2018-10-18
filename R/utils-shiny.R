@@ -3,7 +3,7 @@
 
 #' @importFrom htmltools singleton tags
 useShinyUtils <- function() {
-  singleton(tags$script(src = "esquisse/shiny-utils.js"))
+  singleton(tags$head(tags$script(src = "esquisse/shiny-utils.js")))
 }
 
 
@@ -17,7 +17,7 @@ useShinyUtils <- function() {
 toggleInput <- function(session, inputId, enable = TRUE) {
   session$sendCustomMessage(
     type = 'toggleInput',
-    message = list(id = escape_jquery(inputId), enable = enable)
+    message = list(id = inputId, enable = enable)
   )
 }
 
@@ -41,7 +41,7 @@ toggleDisplay <- function(session, id, display = c("none", "block", "inline-bloc
   display <- match.arg(display)
   session$sendCustomMessage(
     type = 'toggleDisplay',
-    message = list(id = escape_jquery(id), display = display)
+    message = list(id = id, display = display)
   )
 }
 

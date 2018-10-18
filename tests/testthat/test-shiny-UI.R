@@ -8,14 +8,18 @@ test_that("esquisserUI works", {
   expect_true("shinyWidgets" %in% names_deps)
 })
 
-test_that("chooseData modal works", {
-  data("mpg", package = "ggplot2")
-  modal <- chooseDataModal(ns = shiny::NS("test"), defaultData = mpg)
-  expect_is(modal, "shiny.tag")
+test_that("dataImportFileUI works", {
+  importFile <- dataImportFileUI(id = "TEST")
+  expect_is(importFile, "shiny.tag.list")
+})
+
+test_that("dataGlobalEnvUI works", {
+  GlobalEnv <- dataGlobalEnvUI(id = "TEST")
+  expect_is(GlobalEnv, "shiny.tag.list")
 })
 
 test_that("coerceUI works", {
-  coerce <- esquisse:::coerceUI(id = "TEST")
+  coerce <- coerceUI(id = "TEST")
   expect_is(coerce, "shiny.tag")
 })
 
