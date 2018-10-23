@@ -113,7 +113,6 @@ chooseDataUI <- function(id, label = "Choose data", icon = "database") {
 #' @param coerceVars Display module to coerce variables between different class, \code{TRUE} by default.
 #' @param launchOnStart Opens modal window when the application starts.
 #' @param size Size for the modal window.
-
 #' 
 #' @export
 #'

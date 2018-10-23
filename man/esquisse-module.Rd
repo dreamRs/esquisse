@@ -6,7 +6,8 @@
 \alias{esquisserUI}
 \title{Esquisse Shiny module}
 \usage{
-esquisserServer(input, output, session, data = NULL)
+esquisserServer(input, output, session, data = NULL,
+  dataModule = c("GlobalEnv", "ImportFile"), sizeDataModule = "m")
 
 esquisserUI(id, header = TRUE, choose_data = TRUE)
 }
@@ -19,6 +20,11 @@ esquisserUI(id, header = TRUE, choose_data = TRUE)
 
 \item{data}{a \code{reactiveValues} with at least a slot \code{data} containing a \code{data.frame}
 to use in the module. And a slot \code{name} corresponding to the name of the \code{data.frame}.}
+
+\item{dataModule}{Data module to use, choose between \code{"GlobalEnv"}
+or \code{"ImportFile"}.}
+
+\item{sizeDataModule}{Size for the modal window for selecting data.}
 
 \item{id}{Module's id.}
 

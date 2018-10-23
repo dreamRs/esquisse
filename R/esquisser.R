@@ -14,7 +14,7 @@
 #' @return code to reproduce chart.
 #' @export
 #'
-#' @importFrom shiny dialogViewer browserViewer runGadget paneViewer
+#' @importFrom shiny dialogViewer browserViewer runGadget paneViewer reactiveValues
 #'
 #' @examples
 #' if (interactive()) {
@@ -35,9 +35,10 @@ esquisser <- function(data = NULL,
   options("esquisse.coerceVars" = coerceVars)
 
   res_data <- get_data(data, name = deparse(substitute(data)))
-
-  esquisse.env$data <- res_data$esquisse_data
-  esquisse.env$data_name <- res_data$esquisse_data_name
+  rv <- reactiveValues(
+    data = res_data$esquisse_data, 
+    name = res_data$esquisse_data_name
+  )
 
   if (viewer == "browser") {
     inviewer <- browserViewer(browser = getOption("browser"))
@@ -53,7 +54,11 @@ esquisser <- function(data = NULL,
   runGadget(
     app = esquisserUI(id = "esquisse"), 
     server = function(input, output, session) {
-      callModule(esquisserServer, id = "esquisse")
+      callModule(
+        module = esquisserServer, 
+        id = "esquisse", 
+        data = rv
+      )
     }, 
     viewer = inviewer
   )

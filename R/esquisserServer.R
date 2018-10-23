@@ -4,29 +4,33 @@
 #' @param session standard \code{shiny} session
 #' @param data    a \code{reactiveValues} with at least a slot \code{data} containing a \code{data.frame}
 #'  to use in the module. And a slot \code{name} corresponding to the name of the \code{data.frame}.
+#' @param dataModule Data module to use, choose between \code{"GlobalEnv"}
+#'  or \code{"ImportFile"}.
+#' @param sizeDataModule Size for the modal window for selecting data.
 #'
 #' @export
 #' 
 #' @rdname esquisse-module
 #'
-#' @importFrom shiny callModule reactiveValues observeEvent renderPrint renderPlot stopApp plotOutput showNotification
+#' @importFrom shiny callModule reactiveValues observeEvent renderPrint
+#'  renderPlot stopApp plotOutput showNotification isolate
 #' @importFrom ggplot2 ggplot_build ggsave
 #'
-esquisserServer <- function(input, output, session, data = NULL) {
+esquisserServer <- function(input, output, session, data = NULL, dataModule = c("GlobalEnv", "ImportFile"), sizeDataModule = "m") {
   
   observeEvent(data$data, {
     dataChart$data <- data$data
     dataChart$name <- data$name
   }, ignoreInit = FALSE)
 
-  esquisse.env <- get("esquisse.env", envir = parent.env(environment()))
   dataChart <- callModule(
     module = chooseDataServer, 
     id = "choose-data",
-    data = esquisse.env$data,
-    name = esquisse.env$data_name,
-    launchOnStart = is.null(esquisse.env$data) & is.null(data),
-    coerceVars = getOption(x = "esquisse.coerceVars", default = FALSE)
+    data = isolate(data$data),
+    name = isolate(data$name),
+    launchOnStart = is.null(isolate(data$data)),
+    coerceVars = getOption(x = "esquisse.coerceVars", default = FALSE),
+    dataModule = dataModule, size = sizeDataModule
   )
   observeEvent(dataChart$data, {
     # special case: geom_sf
