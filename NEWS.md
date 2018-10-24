@@ -1,8 +1,10 @@
-# esquisse 0.1.5.900
+# esquisse 0.1.6
 
 * Support for `sf` objects.
 * Use `esquisse` as a shiny module.
 * Facets support thanks to [@itcarroll](https://github.com/itcarroll) ([#30](https://github.com/dreamRs/esquisse/pull/30))
+* New import data modules
+* Fix a bug when launching addin in RStudio [#25](https://github.com/dreamRs/esquisse/issues/25)
 
 
 
