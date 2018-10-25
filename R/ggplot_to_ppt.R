@@ -21,7 +21,7 @@
 #'
 #' ggplot_to_ppt()
 #'
-#' }
+#' 
 #'
 #' # Or with an object's name
 #' library(ggplot2)
@@ -29,6 +29,8 @@
 #'   geom_point(aes(Sepal.Length, Sepal.Width))
 #'
 #' ggplot_to_ppt("p")
+#' 
+#' }
 #'
 ggplot_to_ppt <- function(gg = NULL) {
   
