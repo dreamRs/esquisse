@@ -40,7 +40,7 @@ ggplot_to_ppt <- function(gg = NULL) {
     message("Package 'officer' is required to run this function")
 
   # temp file to create ppt
-  tmp <- tempfile(pattern = "charter", fileext = ".pptx")
+  tmp <- tempfile(pattern = "esquisse", fileext = ".pptx")
 
   # get ggplots objects
   ggplots <- search_obj(what = "ggplot")
@@ -53,11 +53,13 @@ ggplot_to_ppt <- function(gg = NULL) {
 
   if (!is.null(gg)) {
 
-    if (!is.character(gg))
-      stop("You must supply the names of the objects")
+    if (!is.character(gg)) {
+      stop("You must provide a character vector containing the names of plots to export", call. = FALSE)
+    }
 
-    if (!all(gg %in% ggplots))
-      stop("Not all valid ggplot")
+    if (!all(gg %in% ggplots)) {
+      stop("Not all valid ggplot objects.", call. = FALSE)
+    }
 
     ppt <- officer::read_pptx()
 
@@ -88,8 +90,7 @@ ggplot_to_ppt <- function(gg = NULL) {
         tags$div(
           id = "ppt-pb", style = "display: none;",
           progressBar(id = "progress-ppt", value = 0, display_pct = TRUE)
-        ),
-        tags$script("$(function() {$('#select_gg').selectpicker('toggle');});")
+        )
       ),
       miniButtonBlock(
         actionButton(
