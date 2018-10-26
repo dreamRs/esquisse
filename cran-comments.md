@@ -5,12 +5,10 @@
 
 ## R CMD check results
 
-0 errors | 0 warnings | 1 note
+0 errors | 0 warnings | 0 note
 
-* Resubmiting: the following issues have been fixed:
-  - write package names, software names and API names in single quotes;
-  - replace \dontrun{} by if(interactive()){} in examples;
-  - added tests for non-interactive functions (116 tests, ~51% code coverage)
+* Updates to fix some bugs and add new features.
+* No reverse dependencies.
   
 Thank you !
 Victor

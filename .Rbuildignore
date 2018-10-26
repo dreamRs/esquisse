@@ -1,3 +1,4 @@
+^CRAN-RELEASE$
 ^cran-comments\.md$
 ^.*\.Rproj$
 ^\.Rproj\.user$
