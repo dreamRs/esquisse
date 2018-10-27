@@ -125,7 +125,7 @@ esquisserServer <- function(input, output, session, data = NULL, dataModule = c(
   
   i <- 0
   output$plooooooot <- renderPlot({
-    
+    req(input$play_plot, cancelOutput = TRUE)
     req(dataChart$data)
     req(paramsChart$index)
     req(paramsChart$inputs)
@@ -139,6 +139,7 @@ esquisserServer <- function(input, output, session, data = NULL, dataModule = c(
     if (!is.null(paramsChart$index) && is.logical(paramsChart$index)) {
       data <- data[paramsChart$index, , drop = FALSE]
     }
+    
     gg <- withCallingHandlers(
       expr = tryCatch(
         expr = {
