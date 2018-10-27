@@ -15,6 +15,7 @@
 #' @importFrom htmltools tags tagList singleton
 #' @importFrom shiny plotOutput icon actionButton NS
 #' @importFrom miniUI miniTitleBarButton miniPage
+#' @importFrom shinyWidgets prettyToggle
 #'
 #' @examples 
 #' 
@@ -137,14 +138,33 @@ esquisserUI <- function(id, header = TRUE, choose_data = TRUE) {
         )
       ),
       top_right = dragulaInput(
-        inputId = ns("dragvars"), sourceLabel = "Variables", 
+        inputId = ns("dragvars"), 
+        sourceLabel = "Variables", 
         targetsLabels = c("X", "Y", "Fill", "Color", "Size", "Facet"), 
         targetsIds = c("xvar", "yvar", "fill", "color", "size", "facet"),
-        choices = "", badge = FALSE, width = "100%", height = "100%",
+        choices = "",
+        badge = FALSE, 
+        width = "100%", 
+        height = "100%",
         replace = TRUE
       ),
       main = htmltools::tags$div(
         style = "margin-top: 10px; padding-bottom: 25px; height: 100%;",
+        tags$div(
+          style = "position: absolute; right: 0; top: 10px; font-weight: bold; z-index: 1000;",
+          prettyToggle(
+            inputId = ns("play_plot"), 
+            value = TRUE,
+            label_on = "Play",
+            label_off = "Pause",
+            outline = TRUE,
+            plain = TRUE,
+            bigger = TRUE, 
+            inline = TRUE,
+            icon_on = icon("play-circle-o", class = "fa-2x"),
+            icon_off = icon("pause-circle-o", class = "fa-2x")
+          )
+        ),
         shiny::plotOutput(outputId = ns("plooooooot"), width = "100%", height = "100%")
       )
     ),

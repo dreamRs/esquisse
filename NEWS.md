@@ -1,3 +1,9 @@
+# esquisse 0.1.6.900
+
+* Play/Pause button to stop reactivity when creating a plot (prevent plot to update each time you make a change)
+
+
+
 # esquisse 0.1.6
 
 * Support for `sf` objects.
