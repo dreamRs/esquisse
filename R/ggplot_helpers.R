@@ -460,20 +460,22 @@ ggplot_geom_vars <- function() {
       "continuous",  "empty",       "boxplot",   "0", 
       "continuous",  "empty",       "violin",    "0", 
       "continuous",  "empty",       "density",   "0", 
-      "discrete", "empty",       "bar",       "1", 
+      "discrete",    "empty",       "bar",       "1", 
       "time",        "empty",       "histogram", "1",
-      "continuous",  "discrete", "boxplot",   "0", 
-      "continuous",  "discrete", "violin",    "0", 
-      "continuous",  "discrete", "bar",       "1",
-      "discrete", "continuous",  "boxplot",   "0", 
-      "discrete", "continuous",  "violin",    "0", 
-      "discrete", "continuous",  "bar",       "1",
+      "continuous",  "discrete",    "boxplot",   "0", 
+      "continuous",  "discrete",    "violin",    "0", 
+      "continuous",  "discrete",    "bar",       "1",
+      "discrete",    "continuous",  "boxplot",   "0", 
+      "discrete",    "continuous",  "violin",    "0", 
+      "discrete",    "continuous",  "bar",       "1",
       "continuous",  "continuous",  "point",     "1",
       "continuous",  "continuous",  "line",      "0", 
-      "discrete", "discrete", "tile",      "1",
+      "discrete",    "discrete",    "tile",      "1",
       "time",        "continuous",  "line",      "1", 
       "empty",       "continuous",  "line",      "1", 
-      "continuous",  "continuous",  "tile",      "0"
+      "continuous",  "continuous",  "tile",      "0",
+      "discrete",    "time",        "tile",      "0",
+      "time",        "discrete",    "tile",      "0"
     ), ncol = 4, byrow = TRUE
   )
   x <- data.frame(x, stringsAsFactors = FALSE)
