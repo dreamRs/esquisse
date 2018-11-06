@@ -12,7 +12,7 @@ var dragulaBinding = new Shiny.InputBinding();
     
     var replaceold = $(el).data("replace");
     var replaceIds = $(el).data("replace-ids");
-    console.log(replaceIds);
+    //console.log(replaceIds);
     
     var containersId = [];
     

@@ -99,7 +99,8 @@ dragulaInput <- function(inputId, sourceLabel, targetsLabels,
       tags$div(
         style = "height: 95%; margin: 0;",
         class = "box-dad xyvar", id = paste(inputId, "target", targetsIds[i], sep = "-"),
-        tags$em(tags$b(targetsLabels[i], class = "label-background"))
+        # tags$em(tags$b(targetsLabels[i], class = "label-background"))
+        style = make_bg_svg(targetsLabels[i])
       )
     }
   )
@@ -133,7 +134,8 @@ dragulaInput <- function(inputId, sourceLabel, targetsLabels,
       tags$div(
         style = "height: 50%; width: 99.5%; padding-right: 0; padding-left: 0; margin-right: 0; margin-left: 0;",
         class = "box-dad",
-        tags$em(tags$b(sourceLabel, class = "label-background")),
+        style = make_bg_svg(sourceLabel),
+        # tags$em(tags$b(sourceLabel, class = "label-background")),
         tags$div(
           id = paste(inputId, "source", sep = "-"), 
           style = "margin: 5px; width: 100%; min-height: 15px; margin-right: 0;",
@@ -146,8 +148,18 @@ dragulaInput <- function(inputId, sourceLabel, targetsLabels,
 }
 
 
-
-
+#' @importFrom jsonlite base64_enc
+#' @importFrom stringi stri_replace_all_fixed
+make_bg_svg <- function(text) {
+  svg <- sprintf(
+    "<svg xmlns='http://www.w3.org/2000/svg' version='1.1'><text x='100%%' y='20' opacity='0.15' fill='E6E6E6' font-weight='bold' font-family='Helvetica, Arial, sans-serif' font-size='24' text-anchor='end'>%s</text></svg>",
+    text
+  )
+  stri_replace_all_fixed(sprintf(
+    "background-color:white; background-image:url(\"data:image/svg+xml;base64,%s\"); background-repeat:no-repeat; background-position:right bottom;", 
+    base64_enc(svg)
+  ), pattern = "\n", replacement = "")
+}
 
 
 #' Update Dragula Input
