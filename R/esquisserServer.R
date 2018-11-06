@@ -130,12 +130,11 @@ esquisserServer <- function(input, output, session, data = NULL, dataModule = c(
     req(paramsChart$index)
     req(paramsChart$inputs)
     req(geomSelected$x)
-    
+
     # i <<- i+1
     # print(paste("EXECUTED", i))
     
     data <- dataChart$data
-    
     if (!is.null(paramsChart$index) && is.logical(paramsChart$index)) {
       data <- data[paramsChart$index, , drop = FALSE]
     }

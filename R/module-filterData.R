@@ -163,6 +163,7 @@ filterDataServer <- function(input, output, session, data, vars = NULL, width = 
       data = data, params = params,
       params_na = params_na
     )
+    res_f <- dropNullsOrEmpty(res_f)
     res_len <- unlist(lapply(res_f, length))
     if (sum(res_len) > 0) {
       ind <- Reduce(`&`, lapply(res_f, `[[`, "ind"))

@@ -151,7 +151,7 @@ ggtry <- function(data, x = NULL, y = NULL, fill = NULL, color = NULL, size = NU
   # Add geom
   p <- p + do.call(paste0("geom_", chartgeom), paramsgeom)
   p <- p + ggplot2::labs(
-    title = params$title, x = params$x %|e|% x, y = params$y,
+    title = params$title, x = params$x %|e|% x, y = params$y %|e|% y,
     caption = params$caption, subtitle = params$subtitle
   )
 
