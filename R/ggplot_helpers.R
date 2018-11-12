@@ -17,6 +17,7 @@
 #' @importFrom ggplot2 ggplot aes_ scale_fill_hue scale_fill_gradient scale_fill_brewer
 #'  scale_fill_distiller scale_color_hue scale_color_gradient scale_color_brewer 
 #'  scale_color_distiller labs coord_flip geom_smooth theme element_text facet_wrap
+#'  scale_colour_viridis_d scale_colour_viridis_c scale_fill_viridis_d scale_fill_viridis_c
 #'
 #'
 #' @examples
@@ -112,6 +113,12 @@ ggtry <- function(data, x = NULL, y = NULL, fill = NULL, color = NULL, size = NU
         } else {
           params_scale_fill <- ggplot2::scale_fill_gradient()
         }
+      } else if (params$palette %in% c("viridis", "plasma", "magma", "cividis", "inferno")) {
+        if (filltype == "discrete") {
+          params_scale_fill <- ggplot2::scale_fill_viridis_d(option  = params$palette)
+        } else {
+          params_scale_fill <- ggplot2::scale_fill_viridis_c(option  = params$palette)
+        }
       } else {
         if (filltype == "discrete") {
           params_scale_fill <- ggplot2::scale_fill_brewer(palette = params$palette)
@@ -132,6 +139,12 @@ ggtry <- function(data, x = NULL, y = NULL, fill = NULL, color = NULL, size = NU
           params_scale_color <- ggplot2::scale_color_hue()
         } else {
           params_scale_color <- ggplot2::scale_color_gradient()
+        }
+      } else if (params$palette %in% c("viridis", "plasma", "magma", "cividis", "inferno")) {
+        if (colortype == "discrete") {
+          params_scale_color <- ggplot2::scale_colour_viridis_d(option  = params$palette)
+        } else {
+          params_scale_color <- ggplot2::scale_colour_viridis_c(option  = params$palette)
         }
       } else {
         if (colortype == "discrete") {

@@ -267,12 +267,11 @@ controls_appearance <- function(ns) {
       tags$style(".bootstrap-select .dropdown-menu li a span.text {width: 100%;}"),
       pickerInput(
         inputId = ns("palette"), label = "Choose a palette:",
-        # choices = c(colors_pal, list("viridis" = c("viridis", "magma", "infierno"))),
-        choices = c(list("Default" = "ggplot2"), cols$colors_pal),
+        choices = cols$colors_pal,
         selected = "ggplot2", width = "100%",
         choicesOpt = list(
           content = sprintf(
-            "<div style='width:100%%;border-radius:4px;background:%s;color:%s'>%s</div>",
+            "<div style='width:100%%;border-radius:4px; padding: 2px;background:%s;color:%s'>%s</div>",
             unname(cols$background_pals), cols$colortext_pals, names(cols$background_pals)
           )
         )
@@ -425,22 +424,26 @@ controls_code <- function(ns) {
 #'
 #' @importFrom RColorBrewer brewer.pal brewer.pal.info
 #' @importFrom scales hue_pal
+#' @importFrom viridisLite viridis magma inferno plasma cividis
 colors_palettes <- function() {
   ### colors
   # For colorSelector
   choices_colors <- list(
-    "Blues" = RColorBrewer::brewer.pal(n = 9, name = "Blues"),
-    "Greens" = RColorBrewer::brewer.pal(n = 9, name = "Greens"),
-    "Reds" = RColorBrewer::brewer.pal(n = 9, name = "Reds"),
-    "Oranges" = RColorBrewer::brewer.pal(n = 9, name = "Oranges"),
-    "Purples" = RColorBrewer::brewer.pal(n = 9, name = "Purples"),
-    "Greys" = RColorBrewer::brewer.pal(n = 9, name = "Greys"),
-    "Dark2" = RColorBrewer::brewer.pal(n = 8, name = "Dark2"),
-    "Set1" = RColorBrewer::brewer.pal(n = 8, name = "Set1"),
-    "Paired" = RColorBrewer::brewer.pal(n = 10, name = "Paired")#,
-    # "viridis" = col2Hex(viridisLite::viridis(10)),
-    # "magma" = col2Hex(viridisLite::magma(10)),
-    # "inferno" = col2Hex(viridisLite::inferno(10))
+    "viridis" = col2Hex(viridis(10)),
+    "magma" = col2Hex(magma(10)),
+    "inferno" = col2Hex(inferno(10)),
+    "plasma" = col2Hex(plasma(10)),
+    "cividis" = col2Hex(cividis(10))
+    ,
+    "Blues" = brewer.pal(n = 9, name = "Blues"),
+    "Greens" = brewer.pal(n = 9, name = "Greens"),
+    "Reds" = brewer.pal(n = 9, name = "Reds"),
+    "Oranges" = brewer.pal(n = 9, name = "Oranges"),
+    "Purples" = brewer.pal(n = 9, name = "Purples"),
+    "Greys" = brewer.pal(n = 9, name = "Greys"),
+    "Dark2" = brewer.pal(n = 8, name = "Dark2"),
+    "Set1" = brewer.pal(n = 8, name = "Set1"),
+    "Paired" = brewer.pal(n = 10, name = "Paired")
   )
 
   # For palette picker
@@ -450,21 +453,33 @@ colors_palettes <- function() {
       x = RColorBrewer::brewer.pal.info,
       f = factor(RColorBrewer::brewer.pal.info$category, labels = c("Diverging", "Qualitative", "Sequential"))
     ),
-    FUN = rownames
+    FUN = function(x) {
+      as.list(rownames(x))
+    }
   )
   background_pals <- sapply(unlist(colors_pal, use.names = FALSE), get_brewer_name)
-  background_pals <- c(list("ggplot2" = scales::hue_pal()(9)), background_pals)
-  # background_pals <- c(
-  #   background_pals, list(
-  #     "viridis" = col2Hex(viridisLite::viridis(10)),
-  #     "magma" = col2Hex(viridisLite::magma(10)),
-  #     "inferno" = col2Hex(viridisLite::inferno(10))
-  #   )
-  # )
+  # add ggplot2 hue & viridis
+  background_pals <- c(
+    list("ggplot2" = scales::hue_pal()(9)),
+    list(
+      "viridis" = col2Hex(viridis(10)),
+      "magma" = col2Hex(magma(10)),
+      "inferno" = col2Hex(inferno(10)),
+      "plasma" = col2Hex(plasma(10)),
+      "cividis" = col2Hex(cividis(10))
+    ),
+    background_pals
+  )
   background_pals <- unlist(lapply(X = background_pals, FUN = linear_gradient))
   colortext_pals <- rep(c("white", "black", "black"), times = sapply(colors_pal, length))
-  colortext_pals <- c("white", colortext_pals)
-  # colortext_pals <- c(colortext_pals, c("white", "white", "white"))
+  colortext_pals <- c("white", rep("white", 5), colortext_pals) # ggplot2 + viridis
+
+  # add ggplot2 hue & viridis
+  colors_pal <- c(
+    list("Default" = list("ggplot2")),
+    list("Viridis" = list("viridis", "magma", "inferno", "plasma", "cividis")),
+    colors_pal
+  )
 
   list(colors_pal = colors_pal,
        background_pals = background_pals,

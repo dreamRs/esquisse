@@ -175,6 +175,12 @@ get_code_scale <- function(fill = NULL, color = NULL, params = list(), filltype 
         #   params_scale_fill <-" scale_fill_gradient()"
         # }
         params_scale_fill <- NULL
+      } else if (params$palette %in% c("viridis", "plasma", "magma", "cividis", "inferno")) {
+        if (filltype == "discrete") {
+          params_scale_fill <- sprintf("scale_fill_viridis_d(option  = \"%s\")", params$palette)
+        } else {
+          params_scale_fill <- sprintf("scale_fill_viridis_c(option  = \"%s\")", params$palette)
+        }
       } else {
         if (filltype == "discrete") {
           params_scale_fill <- sprintf("scale_fill_brewer(palette = \"%s\")", params$palette)
@@ -195,6 +201,12 @@ get_code_scale <- function(fill = NULL, color = NULL, params = list(), filltype 
         #   params_scale_color <- "scale_color_gradient()"
         # }
         params_scale_color <- NULL
+      } else if (params$palette %in% c("viridis", "plasma", "magma", "cividis", "inferno")) {
+        if (colortype == "discrete") {
+          params_scale_color <- sprintf("scale_colour_viridis_d(option  = \"%s\")", params$palette)
+        } else {
+          params_scale_color <- sprintf("scale_colour_viridis_c(option  = \"%s\")", params$palette)
+        }
       } else {
         if (colortype == "discrete") {
           params_scale_color <- sprintf("scale_color_brewer(palette = \"%s\")", params$palette)
