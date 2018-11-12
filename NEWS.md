@@ -1,6 +1,7 @@
 # esquisse 0.1.6.900
 
 * Play/Pause button to stop reactivity when creating a plot (prevent plot to update each time you make a change)
+* Support for palette from [`viridisLite`](https://github.com/sjmgarnier/viridisLite)
 
 
 
