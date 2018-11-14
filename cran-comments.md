@@ -7,7 +7,7 @@
 
 0 errors | 0 warnings | 0 note
 
-* Updates to fix some bugs and add new features.
+* New features & a bug with last 'shiny' realease.
 * No reverse dependencies.
   
 Thank you !
