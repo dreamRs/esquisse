@@ -82,7 +82,7 @@
 #' 
 #' }
 #' 
-chooseDataUI <- function(id, label = "Choose data", icon = "database") {
+chooseDataUI <- function(id, label = "Data", icon = "database") {
   
   ns <- NS(id)
   

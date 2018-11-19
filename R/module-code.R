@@ -66,6 +66,7 @@ moduleCodeServer <- function(input, output, session, varSelected, dataChart, par
       fill = varSelected$fill,
       color = varSelected$color,
       size = varSelected$size,
+      group = varSelected$group,
       geom = code_geom,
       xtype = if (!is.null(varSelected$x)) col_type(dataChart$data[[varSelected$x]]),
       ytype = if (!is.null(varSelected$y)) col_type(dataChart$data[[varSelected$y]])

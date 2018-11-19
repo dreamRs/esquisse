@@ -1,3 +1,8 @@
+# esquisse 0.1.7.900
+
+* Support for group aesthetic.
+
+
 # esquisse 0.1.7
 
 * Play/Pause button to stop reactivity when creating a plot (prevent plot to update each time you make a change)

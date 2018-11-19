@@ -6,7 +6,7 @@
 \alias{chooseDataServer}
 \title{Module for choosing data.frame}
 \usage{
-chooseDataUI(id, label = "Choose data", icon = "database")
+chooseDataUI(id, label = "Data", icon = "database")
 
 chooseDataServer(input, output, session, dataModule = c("GlobalEnv",
   "ImportFile"), data = NULL, name = NULL, selectVars = TRUE,

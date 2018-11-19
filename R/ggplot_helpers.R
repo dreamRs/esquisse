@@ -29,7 +29,7 @@
 #' ggtry(data = diamonds, x = "cut")
 #' 
 #' }
-ggtry <- function(data, x = NULL, y = NULL, fill = NULL, color = NULL, size = NULL, facet = NULL, type = "auto", params = list(), ...) {
+ggtry <- function(data, x = NULL, y = NULL, fill = NULL, color = NULL, size = NULL, group = NULL, facet = NULL, type = "auto", params = list(), ...) {
 
   check_vars <- c(x, y, fill, color, size, facet)
   if ((is.null(check_vars) || !all(check_vars %in% names(data))) & !inherits(data, what = "sf")) {
@@ -63,10 +63,25 @@ ggtry <- function(data, x = NULL, y = NULL, fill = NULL, color = NULL, size = NU
   }
 
   # geom
-  chartgeom <- guess_geom(xtype, ytype, type, sfobj = inherits(data, what = "sf"))
+  chartgeom <- guess_geom(
+    xtype = xtype, 
+    ytype = ytype, 
+    type = type, 
+    sfobj = inherits(data, what = "sf")
+  )
 
   # aes
-  chartaes <- guess_aes(x, y, fill, color, size, chartgeom, xtype, ytype)
+  chartaes <- guess_aes(
+    x = x, 
+    y = y, 
+    fill = fill, 
+    color = color, 
+    size = size, 
+    group = group, 
+    geom = chartgeom, 
+    xtype = xtype, 
+    ytype = ytype
+  )
 
   # Initialize chart
   p <- ggplot2::ggplot(data = data)
@@ -248,9 +263,9 @@ do.call.tommy <- function(what, args, ...) {
 #' 
 #' guess_aes(x = "color", xtype = "discrete")
 #' 
-guess_aes <- function(x = NULL, y = NULL, fill = NULL, color = NULL, size = NULL, geom = "auto", xtype = NULL, ytype = NULL) {
+guess_aes <- function(x = NULL, y = NULL, fill = NULL, color = NULL, size = NULL, group = NULL, geom = "auto", xtype = NULL, ytype = NULL) {
 
-  vars <- list(x = x, y = y, fill = fill, color = color, size = size)
+  vars <- list(x = x, y = y, fill = fill, color = color, size = size, group = group)
   vars <- dropNulls(vars)
 
   # if (is.null(vars$fill)) {

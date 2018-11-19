@@ -13,7 +13,7 @@ layoutAddin <- function(top_left, top_right, main) {
     shiny::fillCol(
       flex = c(1, 4),
       shiny::fillRow(
-        flex = c(1, 5), width = "100%", style = "margin: auto;",
+        flex = c(1, 6), width = "100%", style = "margin: auto;",
         top_left,
         top_right
       ),
