@@ -99,11 +99,12 @@ moduleCodeServer <- function(input, output, session, varSelected, dataChart, par
       args_geom$color <- params_chart$fill_color %||% "#0C4C8A"
     }
     
-    if (code_geom %in% c("bar")) {
+    if (code_geom %in% c("bar", "line", "area")) {
       args_geom$position <- params_chart$position %||% "dodge"
       if (args_geom$position == "stack")
         args_geom$position <- NULL
     }
+    
     
     # Coord
     if (isTRUE(params_chart$flip)) {

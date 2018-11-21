@@ -213,3 +213,32 @@ dev.off()
 #   geom_sf(fill = "transparent", color = "steelblue") + coord_sf(datum = NA) + theme_void()
 # 
 
+
+
+
+
+# Geom area ---------------------------------------------------------------
+
+series <- data.frame(
+  time = c(rep(1, 4),rep(2, 4), rep(3, 4), rep(4, 4)),
+  type = rep(c('a', 'b', 'c', 'd'), 4),
+  value = rpois(16, 10)
+)
+series$type2 <- factor(series$type, levels = c('c', 'b', 'd', 'a'))
+
+png(filename = "inst/geomIcon/www/gg-area.png", bg = "transparent")
+ggplot(data = coord_circle(centre = c(0, 0), r = 1)) + geom_polygon(aes(x = x, y = y), fill = "#97cbc2") + coord_fixed() + theme_void()
+p <- ggplot(series, aes(time, value)) +
+  geom_area(aes(fill = type2)) +
+  # scale_fill_brewer(palette = "Greens", guide = FALSE) + 
+  scale_fill_manual(values = rev(c("#4b668f", "#5586a4", "#6ba4b1", "#80bebe")), guide = FALSE) +
+  theme_void()
+print(p, vp = viewport(width = unit(0.6, "npc"), height = unit(0.6, "npc")))
+dev.off()
+
+
+
+
+
+
+

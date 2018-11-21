@@ -131,7 +131,7 @@ esquisserUI <- function(id, header = TRUE, choose_data = TRUE) {
           imageButtonUI(
             id = ns("geom"),
             imgs = geom_icon_input(), 
-            width = "240px"
+            width = "220px"
           ),
           # htmltools::tags$br(),
           if (isTRUE(choose_data)) chooseDataUI(id = ns("choose-data"))

@@ -116,6 +116,9 @@ ggtry <- function(data, x = NULL, y = NULL, fill = NULL, color = NULL, size = NU
   if (chartgeom %in% c("bar")) {
     paramsgeom$position <- params$position %||% "dodge"
   }
+  if (chartgeom %in% c("line", "area")) {
+    paramsgeom$position <- params$position %||% "identity"
+  }
 
   # scale fill
   # Default
@@ -481,6 +484,7 @@ ggplot_theme <- function(package = "ggplot2") {
 
 #' @importFrom ggplot2 geom_histogram geom_density geom_bar geom_sf 
 #' geom_boxplot geom_bar geom_point geom_line geom_tile geom_violin
+#' geom_area
 ggplot_geom_vars <- function() {
   x <- matrix(
     data = c(
@@ -498,9 +502,12 @@ ggplot_geom_vars <- function() {
       "discrete",    "continuous",  "bar",       "1",
       "continuous",  "continuous",  "point",     "1",
       "continuous",  "continuous",  "line",      "0", 
+      "continuous",  "continuous",  "area",      "0",
       "discrete",    "discrete",    "tile",      "1",
       "time",        "continuous",  "line",      "1", 
-      "empty",       "continuous",  "line",      "1", 
+      "time",        "continuous",  "area",      "0", 
+      "empty",       "continuous",  "line",      "1",
+      "empty",       "continuous",  "area",      "0",
       "continuous",  "continuous",  "tile",      "0",
       "discrete",    "time",        "tile",      "0",
       "time",        "discrete",    "tile",      "0"

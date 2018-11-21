@@ -41,7 +41,7 @@ chartControlsUI <- function(id) {
       status = "default btn-controls"
     ),
     dropdown(
-      controls_code(ns),
+      controls_code(ns), width = "330px",
       style = "default", label = "Export & code", 
       up = TRUE, right = TRUE, inputId = "codedrop",
       icon = icon("code"), status = "default btn-controls"
@@ -83,10 +83,15 @@ chartControlsServer <- function(input, output, session, type, data = NULL) {
   })
   
   observeEvent(type$x, {
-    if (type$x %in% "bar") {
-      toggleDisplay(session = session, id = ns("controls-discrete"), display = "block")
+    if (type$x %in% c("bar", "line", "area")) {
+      toggleDisplay(session = session, id = ns("controls-position"), display = "block")
     } else {
-      toggleDisplay(session = session, id = ns("controls-discrete"), display = "none")
+      toggleDisplay(session = session, id = ns("controls-position"), display = "none")
+    }
+    if (type$x %in% "bar") {
+      toggleDisplay(session = session, id = ns("controls-flip"), display = "block")
+    } else {
+      toggleDisplay(session = session, id = ns("controls-flip"), display = "none")
     }
     if (type$x %in% "histogram") {
       toggleDisplay(session = session, id = ns("controls-histogram"), display = "block")
@@ -367,13 +372,16 @@ controls_params <- function(ns) {
       )
     ),
     tags$div(
-      id = ns("controls-discrete"), style = "display: none;",
+      id = ns("controls-position"), style = "display: none;",
       prettyRadioButtons(
         inputId = ns("position"), label = "Position:",
         choices = c("stack", "dodge", "fill"), inline = TRUE,
         selected = "stack", status = "primary",
         outline = TRUE, icon = icon("check")
-      ),
+      )
+    ),
+    tags$div(
+      id = ns("controls-flip"), style = "display: none;",
       materialSwitch(
         inputId = ns("flip"), 
         label = "Flip coordinates:", 

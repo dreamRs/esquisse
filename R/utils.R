@@ -250,7 +250,7 @@ col_type <- function(x, no_id = FALSE) {
 geom_icon_href <- function() {
   ## --->>> TODO SF <<<--- ##
   href <- "esquisse/geomIcon/gg-%s.png"
-  geoms <- c("auto", "line", "bar", "histogram", 
+  geoms <- c("auto", "line", "area", "bar", "histogram", 
              "point", "boxplot", "violin", "density", "tile", "sf") #
   lapply(
     X = setNames(geoms, geoms),
@@ -260,7 +260,7 @@ geom_icon_href <- function() {
 
 geom_icon_input <- function() {
   ## --->>> TODO SF <<<--- ##
-  geoms <- c("auto", "line", "bar", "histogram", 
+  geoms <- c("auto", "line", "area", "bar", "histogram", 
              "point", "boxplot", "violin", "density", "tile", "sf") # 
   href <- "esquisse/geomIcon/gg-%s.png"
   lapply(

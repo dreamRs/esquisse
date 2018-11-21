@@ -42,7 +42,7 @@ test_that("possible_geom (two vars continuous) works", {
   data("mpg", package = "ggplot2")
   geoms_2_continuous <- possible_geom(data = mpg, x = "cyl", y = "displ")
   
-  expect_length(geoms_2_continuous, 3)
+  expect_length(geoms_2_continuous, 4)
   expect_true("point" %in% geoms_2_continuous)
 })
 
@@ -53,7 +53,7 @@ test_that("possible_geom (two vars date+continuous) works", {
   data("economics", package = "ggplot2")
   geoms_date_continuous <- possible_geom(data = economics, x = "date", y = "pce")
   
-  expect_length(geoms_date_continuous, 1)
+  expect_length(geoms_date_continuous, 2)
   expect_true("line" %in% geoms_date_continuous)
 })
 

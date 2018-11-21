@@ -24,7 +24,7 @@ imageButtonUI <- function(id, imgs = list(), selected = 1, up = FALSE, width = N
     actionButton(
       inputId = inputId,
       label = tagList(
-        tags$img(src = img, width = 70, height = 70),
+        tags$img(src = img, width = 65, height = 65),
         tags$br(), label
       ),
       style = "border: none;"
