@@ -56,23 +56,7 @@ esquisserServer <- function(input, output, session, data = NULL, dataModule = c(
     types <- possible_geom(data = dataChart$data, x = input$dragvars$target$xvar, y = input$dragvars$target$yvar)
     geom_possible$x <- c("auto", types)
 
-    if ("bar" %in% types & geomSelected$x %in% c("auto", "bar")) {
-      geom_controls$x <- "bar"
-    } else if ("histogram" %in% types & geomSelected$x %in% c("auto", "histogram")) {
-      geom_controls$x <- "histogram"
-    } else if ("density" %in% types & geomSelected$x %in% c("auto", "density")) {
-      geom_controls$x <- "density"
-    } else if ("point" %in% types & geomSelected$x %in% c("auto", "point")) {
-      geom_controls$x <- "point"
-    } else if ("line" %in% types & geomSelected$x %in% c("auto", "line")) {
-      geom_controls$x <- "line"
-    } else if ("area" %in% types & geomSelected$x %in% c("auto", "area")) {
-      geom_controls$x <- "area"
-    } else if ("violin" %in% types & geomSelected$x %in% c("violin")) {
-      geom_controls$x <- "violin"
-    } else {
-      geom_controls$x <- "auto"
-    }
+    geom_controls$x <- select_geom_controls(geomSelected$x, types)
     
     if (!is.null(input$dragvars$target$fill) | !is.null(input$dragvars$target$color)) {
       geom_controls$palette <- TRUE
@@ -83,7 +67,7 @@ esquisserServer <- function(input, output, session, data = NULL, dataModule = c(
 
   # Module chart controls : title, xalabs, colors, export...
   paramsChart <- reactiveValues(inputs = NULL)
-  paramsChart <- shiny::callModule(
+  paramsChart <- callModule(
     module = chartControlsServer, 
     id = "controls", 
     type = geom_controls, 
@@ -94,7 +78,7 @@ esquisserServer <- function(input, output, session, data = NULL, dataModule = c(
   # })
 
   # Module to choose type of charts
-  geomSelected <- shiny::callModule(
+  geomSelected <- callModule(
     module = imageButtonServer, id = "geom", default = "auto",
     img_ref = geom_icon_href(), enabled = geom_possible, selected = geom_possible
   )
@@ -165,11 +149,11 @@ esquisserServer <- function(input, output, session, data = NULL, dataModule = c(
           gg
         },
         error = function(e) {
-          shiny::showNotification(ui = conditionMessage(e), type = "error", session = session)
+          showNotification(ui = conditionMessage(e), type = "error", session = session)
         }
       ), 
       warning = function(w) {
-        shiny::showNotification(ui = conditionMessage(w), type = "warning", session = session)
+        showNotification(ui = conditionMessage(w), type = "warning", session = session)
       }
     )
   })

@@ -500,6 +500,24 @@ colors_palettes <- function() {
 
 
 
-
+select_geom_controls <- function(x, types) {
+  if ("bar" %in% types & x %in% c("auto", "bar")) {
+    "bar"
+  } else if ("histogram" %in% types & x %in% c("auto", "histogram")) {
+    "histogram"
+  } else if ("density" %in% types & x %in% c("auto", "density")) {
+    "density"
+  } else if ("point" %in% types & x %in% c("auto", "point")) {
+    "point"
+  } else if ("line" %in% types & x %in% c("auto", "line")) {
+    "line"
+  } else if ("area" %in% types & x %in% c("auto", "area")) {
+    "area"
+  } else if ("violin" %in% types & x %in% c("violin")) {
+    "violin"
+  } else {
+    "auto"
+  }
+} 
 
 
