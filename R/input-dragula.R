@@ -250,7 +250,6 @@ updateDragulaInput <- function(session, inputId, choices = NULL, choiceNames = N
 }
 
 
-
 makeDragulaChoices <- function(inputId, args, status = NULL, badge = TRUE) {
   lapply(
     X = seq_along(args$choiceNames),
@@ -269,23 +268,15 @@ makeDragulaChoices <- function(inputId, args, status = NULL, badge = TRUE) {
 }
 
 
-
-
 normalizeChoicesArgs <- function (choices, choiceNames, choiceValues) {
   if (is.null(choices)) {
     if (is.null(choiceNames) || is.null(choiceValues)) {
-      # if (mustExist) {
-      #   stop("Please specify a non-empty vector for `choices` (or, ",
-      #        "alternatively, for both `choiceNames` AND `choiceValues`).")
-      # }
-      # else {
       if (!length(choiceNames) && !length(choiceValues)) {
         return(list(choiceNames = NULL, choiceValues = NULL))
       }
       else {
         stop("One of `choiceNames` or `choiceValues` was empty,",
              "but only both or neither should be.")
-#      }
       }
     }
     if (length(choiceNames) != length(choiceValues)) {

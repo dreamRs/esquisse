@@ -1,4 +1,3 @@
-
 #' Module to import a file
 #'
 #' @param id Module's id.
@@ -18,9 +17,6 @@ dataImportFileUI <- function(id, dismissOnValidate = TRUE, selectVars = TRUE, co
   
   tagList(
     useShinyUtils(),
-    # tags$script(
-    #   sprintf("Shiny.onInputChange('%s', %f);", ns("resetImportFile"), as.numeric(Sys.time()))
-    # ),
     tags$h2("Import a dataset"),
     fileInput(
       inputId = ns("file"), 
@@ -88,11 +84,6 @@ dataImportFileServer <- function(input, output, session, data = NULL, name = NUL
   select_data <- reactiveValues(data = NULL, name = NULL, timestamp = Sys.time())
   coerce_data <- reactiveValues(data = NULL, name = NULL, timestamp = Sys.time())
   
-  # observeEvent(input$resetImportFile, {
-  #   imported_data$data <- NULL
-  #   imported_data$name <- NULL
-  # })
-  
   observeEvent(input$file, {
     imported <- try(rio::import(file = input$file$datapath), silent = TRUE)
     if ("try-error" %in% class(imported) || NROW(imported) < 1) {
@@ -154,4 +145,3 @@ dataImportFileServer <- function(input, output, session, data = NULL, name = NUL
   
   return(imported_data)
 }
-

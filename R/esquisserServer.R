@@ -43,6 +43,7 @@ esquisserServer <- function(input, output, session, data = NULL, dataModule = c(
     replace = TRUE
     ))
   
+  # FIXME this was the way geom_sf was handled
   # observeEvent(dataChart$data, {
   #   # special case: geom_sf
   #   if (inherits(dataChart$data, what = "sf")) {
@@ -228,4 +229,3 @@ esquisserServer <- function(input, output, session, data = NULL, dataModule = c(
 
   return(output_module)
 }
-

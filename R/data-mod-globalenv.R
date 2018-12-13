@@ -34,9 +34,6 @@ dataGlobalEnvUI <- function(id, dismissOnValidate = TRUE, selectVars = TRUE, coe
   
   tagList(
     useShinyUtils(),
-    # tags$script(
-    #   sprintf("Shiny.onInputChange('%s', %f);", ns("dataGlobalEnv"), as.numeric(Sys.time()))
-    # ),
     tags$h2("Select a dataset"),
     pickerInput(
       inputId = ns("data"),
@@ -101,11 +98,6 @@ dataGlobalEnvServer <- function(input, output, session, data = NULL, name = NULL
   select_data <- reactiveValues(data = NULL, name = NULL, timestamp = Sys.time())
   coerce_data <- reactiveValues(data = NULL, name = NULL, timestamp = Sys.time())
   
-  # observeEvent(input$dataGlobalEnv, {
-  #   imported_data$data <- NULL
-  #   imported_data$name <- NULL
-  # })
-  
   observeEvent(input$data, {
     req(input$data)
     imported <- try(get_df(input$data), silent = TRUE)
@@ -167,7 +159,3 @@ dataGlobalEnvServer <- function(input, output, session, data = NULL, name = NULL
   
   return(imported_data)
 }
-
-
-
-
