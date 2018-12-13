@@ -138,7 +138,7 @@ chooseDataServer <- function(input, output, session, dataModule = c("GlobalEnv",
   )
 
   ns <- session$ns
-  return_data <- reactiveValues(data = data, name = name)
+  #return_data <- reactiveValues(data = data, name = name)
   
   if (isTRUE(launchOnStart)) {
     showModal(modalDialog(datModUI(

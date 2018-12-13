@@ -139,17 +139,7 @@ esquisserUI <- function(id, header = TRUE, choose_data = TRUE) {
           if (isTRUE(choose_data)) chooseDataUI(id = ns("choose-data"))
         )
       ),
-      top_right = dragulaInput(
-        inputId = ns("dragvars"), 
-        sourceLabel = "Variables", 
-        targetsLabels = c("X", "Y", "Fill", "Color", "Size", "Group", "Facet"), 
-        targetsIds = c("xvar", "yvar", "fill", "color", "size", "group", "facet"),
-        choices = "",
-        badge = FALSE, 
-        width = "100%", 
-        height = "100%",
-        replace = TRUE
-      ),
+      top_right = uiOutput(ns("dragvars")),
       main = htmltools::tags$div(
         style = "margin-top: 10px; padding-bottom: 25px; height: 100%;",
         tags$div(
