@@ -32,6 +32,9 @@ or \code{"ImportFile"}.}
 
 \item{choose_data}{Logical. Display or not the button to choose data.}
 }
+\value{
+A \code{reactiveValues} with two slots: \code{"code"}: code to generate the plot, \code{"data"} the \code{data.frame} used.
+}
 \description{
 Launch \code{esquisse} in a classic Shiny app.
 }

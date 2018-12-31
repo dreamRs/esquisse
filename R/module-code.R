@@ -158,7 +158,8 @@ moduleCodeServer <- function(input, output, session, varSelected, dataChart, par
       rCodeContainer(id = ns("codeggplot"), codegg())
     )
   })
-
+  
+  return(codegg)
 }
 
 

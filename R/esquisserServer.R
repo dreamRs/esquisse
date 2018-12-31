@@ -192,7 +192,7 @@ esquisserServer <- function(input, output, session, data = NULL, dataModule = c(
   })
 
   # Code
-  callModule(
+  res_code <- callModule(
     moduleCodeServer, id = "controls-code",
     varSelected = aes_r,
     dataChart = dataChart,
@@ -202,6 +202,19 @@ esquisserServer <- function(input, output, session, data = NULL, dataModule = c(
 
   # Close addin
   observeEvent(input$close, shiny::stopApp())
+  
+  output_module <- reactiveValues(code = NULL, data = NULL)
+  observeEvent(res_code(), {
+    output_module$code <- res_code()
+  }, ignoreInit = TRUE)
+  observeEvent(list(dataChart$data, paramsChart$index), {
+    data <- dataChart$data
+    if (!is.null(paramsChart$index) && is.logical(paramsChart$index)) {
+      data <- data[paramsChart$index, , drop = FALSE]
+    }
+    output_module$data <- data
+  }, ignoreInit = TRUE)
 
+  return(output_module)
 }
 

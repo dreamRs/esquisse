@@ -6,6 +6,8 @@
 #' @param header Logical. Display or not \code{esquisse} header.
 #' @param choose_data Logical. Display or not the button to choose data.
 #' 
+#' @return A \code{reactiveValues} with two slots: \code{"code"}: code to generate the plot, \code{"data"} the \code{data.frame} used.
+#' 
 #' @note For the module to display correctly, it is necessary to place it in a container with a fixed height.
 #'
 #' @export
