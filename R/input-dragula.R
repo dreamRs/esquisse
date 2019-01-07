@@ -37,7 +37,7 @@
 #' 
 #' @importFrom htmltools validateCssUnit singleton tags
 #' @importFrom jsonlite toJSON
-#' @importFrom shiny fillRow splitLayout
+#' @importFrom shiny fillRow splitLayout restoreInput
 #'
 #' @examples
 #' 
@@ -73,11 +73,18 @@
 dragulaInput <- function(inputId, sourceLabel, targetsLabels, 
                          targetsIds = NULL,
                          choices = NULL, choiceNames = NULL,
-                         choiceValues = NULL, status = "primary", 
+                         choiceValues = NULL, choiceTargets = NULL, status = "primary",
                          replace = FALSE, badge = TRUE, width = NULL, height = "200px") {
   
-  args <- normalizeChoicesArgs(choices, choiceNames, choiceValues)
-  
+  choiceTargets <- restoreInput(inputId, choiceTargets)
+  if (!is.null(choiceTargets)) {
+    choices <- NULL
+    choiceNames <- badgeType(choiceTargets$source, rep('continuous', length(choiceTargets$source)))
+    choiceValues <- choiceTargets$source
+    choiceTargets <- choiceTargets$target
+  }
+  args <- normalizeChoicesArgs(choices, choiceNames, choiceValues, choiceTargets)
+
   if (is.null(targetsIds)) {
     targetsIds <- gsub(pattern = "[^[:alnum:]]", replacement = "", x = targetsLabels)
   } else {
@@ -94,13 +101,17 @@ dragulaInput <- function(inputId, sourceLabel, targetsLabels,
   replace_targets <- paste0("dragvars-target-", replace_targets)
   
   target_list <- lapply(
-    X = seq_along(targetsLabels),
+    X = seq_along(targetsIds),
     FUN = function(i) {
+      match <- vapply(choiceValues, function(x) {x %in% args$choiceTargets[[i]]}, logical(1L))
+      args$choiceNames <- args$choiceNames[match]
+      args$choiceValues <- args$choiceValues[match]
       tags$div(
         style = "height: 95%; margin: 0;",
         class = "box-dad xyvar", id = paste(inputId, "target", targetsIds[i], sep = "-"),
         # tags$em(tags$b(targetsLabels[i], class = "label-background"))
-        style = make_bg_svg(targetsLabels[i])
+        style = make_bg_svg(targetsLabels[i]),
+        makeDragulaChoices(inputId = inputId, args = args, status = status, badge = badge)
       )
     }
   )
@@ -113,38 +124,37 @@ dragulaInput <- function(inputId, sourceLabel, targetsLabels,
   tgw <- paste0(tgw, "%")
   target_list$cellWidths <- tgw
   
-  tagList(
-    singleton(
-      tags$head(
-        tags$script(src = "esquisse/dragula/dragula.min.js"),
-        tags$link(rel = "stylesheet", type = "text/css", href = "esquisse/dragula/dragula.min.css"),
-        tags$script(src = "esquisse/dragula/dragula-bindings.js"),
-        tags$link(rel = "stylesheet", type = "text/css", href = "esquisse/styles-dad.css")
-      )
-    ),
-    tags$div(
-      class="form-group shiny-input-container shiny-input-dragula shiny-input-container-inline",
-      style = if(!is.null(width)) paste("width:", htmltools::validateCssUnit(width), ";"),
-      style = if(!is.null(height)) paste("height:", htmltools::validateCssUnit(height), ";"),
-      id = inputId, #style = "height: 200px;", 
-      `data-source` = jsonlite::toJSON(paste(inputId, "source", sep = "-")),
-      `data-targets` = jsonlite::toJSON(paste(inputId, "target", targetsIds, sep = "-")),
-      `data-replace` = tolower(replace),
-      `data-replace-ids` = jsonlite::toJSON(x = replace_targets),
-      tags$div(
-        style = "height: 50%; width: 99.5%; padding-right: 0; padding-left: 0; margin-right: 0; margin-left: 0;",
-        class = "box-dad",
-        style = make_bg_svg(sourceLabel),
-        # tags$em(tags$b(sourceLabel, class = "label-background")),
-        tags$div(
-          id = paste(inputId, "source", sep = "-"), 
-          style = "margin: 5px; width: 100%; min-height: 15px; margin-right: 0;",
-          makeDragulaChoices(inputId = inputId, args = args, status = status, badge = badge)
-        )
-      ),
-      do.call(splitLayout, target_list)
+  head <- singleton(
+    tags$head(
+      tags$script(src = "esquisse/dragula/dragula.min.js"),
+      tags$link(rel = "stylesheet", type = "text/css", href = "esquisse/dragula/dragula.min.css"),
+      tags$script(src = "esquisse/dragula/dragula-bindings.js"),
+      tags$link(rel = "stylesheet", type = "text/css", href = "esquisse/styles-dad.css")
     )
   )
+  input <- tags$div(
+    class="form-group shiny-input-container shiny-input-dragula shiny-input-container-inline",
+    style = if(!is.null(width)) paste("width:", htmltools::validateCssUnit(width), ";"),
+    style = if(!is.null(height)) paste("height:", htmltools::validateCssUnit(height), ";"),
+    id = inputId, #style = "height: 200px;",
+    `data-source` = jsonlite::toJSON(paste(inputId, "source", sep = "-")),
+    `data-targets` = jsonlite::toJSON(paste(inputId, "target", targetsIds, sep = "-")),
+    `data-replace` = tolower(replace),
+    `data-replace-ids` = jsonlite::toJSON(x = replace_targets),
+    tags$div(
+      style = "height: 50%; width: 99.5%; padding-right: 0; padding-left: 0; margin-right: 0; margin-left: 0;",
+      class = "box-dad",
+      style = make_bg_svg(sourceLabel),
+      # tags$em(tags$b(sourceLabel, class = "label-background")),
+      tags$div(
+        id = paste(inputId, "source", sep = "-"),
+        style = "margin: 5px; width: 100%; min-height: 15px; margin-right: 0;",
+        makeDragulaChoices(inputId = inputId, args = args, status = status, badge = badge)
+      )
+    ),
+    do.call(splitLayout, target_list)
+  )
+  tagList(head, input)
 }
 
 
@@ -268,11 +278,11 @@ makeDragulaChoices <- function(inputId, args, status = NULL, badge = TRUE) {
 }
 
 
-normalizeChoicesArgs <- function (choices, choiceNames, choiceValues) {
+normalizeChoicesArgs <- function (choices, choiceNames, choiceValues, choiceTargets = rep(list(character()), length(choiceValues))) {
   if (is.null(choices)) {
     if (is.null(choiceNames) || is.null(choiceValues)) {
       if (!length(choiceNames) && !length(choiceValues)) {
-        return(list(choiceNames = NULL, choiceValues = NULL))
+        return(list(choiceNames = NULL, choiceValues = NULL, choiceTargets = NULL))
       }
       else {
         stop("One of `choiceNames` or `choiceValues` was empty,",
@@ -294,7 +304,9 @@ normalizeChoicesArgs <- function (choices, choiceNames, choiceValues) {
     choiceNames <- names(choices)
     choiceValues <- unname(choices)
   }
-  return(list(choiceNames = as.list(choiceNames), choiceValues = as.list(as.character(choiceValues))))
+  list(choiceNames = as.list(choiceNames),
+    choiceValues = as.list(as.character(choiceValues)),
+    choiceTargets = as.list(choiceTargets)) ## FIXME error checking
 }
 
 
@@ -341,4 +353,3 @@ anyNamed <- function (x)
     return(FALSE)
   any(nzchar(nms))
 }
-

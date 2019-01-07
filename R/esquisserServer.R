@@ -17,7 +17,7 @@
 #' @importFrom ggplot2 ggplot_build ggsave
 #'
 esquisserServer <- function(input, output, session, data = NULL, dataModule = c("GlobalEnv", "ImportFile"), sizeDataModule = "m") {
-
+  
   dataChart <- callModule(
     module = chooseDataServer, 
     id = "choose-data",
@@ -28,46 +28,30 @@ esquisserServer <- function(input, output, session, data = NULL, dataModule = c(
     dataModule = dataModule, size = sizeDataModule
   )
   
-  output[["dragvars"]] <- renderUI(dragulaInput(
-    inputId = session$ns("dragvars"), 
-    sourceLabel = "Variables", 
-    targetsLabels = c("X", "Y", "Fill", "Color", "Size", "Group", "Facet"), 
-    targetsIds = c("xvar", "yvar", "fill", "color", "size", "group", "facet"),
-    choiceValues = names(dataChart$data),
-    choiceNames = badgeType(
-        col_name = names(dataChart$data), 
-        col_type = col_type(dataChart$data)),
-    badge = FALSE,
-    width = "100%",
-    height = "100%",
-    replace = TRUE
-    ))
+  observeEvent(dataChart$data, {
+    # special case: geom_sf
+    if (inherits(dataChart$data, what = "sf")) {
+      geom_possible$x <- c("sf", geom_possible$x)
+    }
+    var_choices <- setdiff(names(dataChart$data), attr(dataChart$data, "sf_column"))
+    updateDragulaInput(
+      session = session,
+      inputId = "dragvars", status = NULL,
+      choiceValues = var_choices,
+      choiceNames = badgeType(
+        col_name = var_choices,
+        col_type = col_type(dataChart$data[, var_choices])
+      ),
+      badge = FALSE
+    )
+  }, ignoreInit = FALSE) ## FIXME
   
-  # FIXME this was the way geom_sf was handled
-  # observeEvent(dataChart$data, {
-  #   # special case: geom_sf
-  #   if (inherits(dataChart$data, what = "sf")) {
-  #     geom_possible$x <- c("sf", geom_possible$x)
-  #   }
-  #   var_choices <- setdiff(names(dataChart$data), attr(dataChart$data, "sf_column"))
-  #   updateDragulaInput(
-  #     session = session, 
-  #     inputId = "dragvars", status = NULL,
-  #     choiceValues = var_choices, 
-  #     choiceNames = badgeType(
-  #       col_name = var_choices, 
-  #       col_type = col_type(dataChart$data[, var_choices])
-  #     ),
-  #     badge = FALSE
-  #   )
-  # }, ignoreInit = TRUE)
-
   geom_possible <- reactiveValues(x = "auto")
   geom_controls <- reactiveValues(x = "auto")
   shiny::observeEvent(list(input$dragvars$target, geomSelected$x), {
     types <- possible_geom(data = dataChart$data, x = input$dragvars$target$xvar, y = input$dragvars$target$yvar)
     geom_possible$x <- c("auto", types)
-
+    
     geom_controls$x <- select_geom_controls(geomSelected$x, types)
     
     if (!is.null(input$dragvars$target$fill) | !is.null(input$dragvars$target$color)) {
@@ -76,7 +60,7 @@ esquisserServer <- function(input, output, session, data = NULL, dataModule = c(
       geom_controls$palette <- FALSE
     }
   })
-
+  
   # Module chart controls : title, xalabs, colors, export...
   paramsChart <- reactiveValues(inputs = NULL)
   paramsChart <- callModule(
@@ -88,14 +72,14 @@ esquisserServer <- function(input, output, session, data = NULL, dataModule = c(
   # observeEvent(paramsChart$index, {
   #   dataChart$data_filtered <- dataChart$data[paramsChart$index, ]
   # })
-
+  
   # Module to choose type of charts
   geomSelected <- callModule(
     module = imageButtonServer, id = "geom", default = "auto",
     img_ref = geom_icon_href(), enabled = geom_possible, selected = geom_possible
   )
-
-
+  
+  
   # aesthetics from drag-and-drop
   aes_r <- reactiveValues(x = NULL, y = NULL, fill = NULL, color = NULL, size = NULL, group = NULL, facet = NULL)
   observeEvent(input$dragvars$target$xvar, {
@@ -131,7 +115,7 @@ esquisserServer <- function(input, output, session, data = NULL, dataModule = c(
     req(paramsChart$index)
     req(paramsChart$inputs)
     req(geomSelected$x)
-
+    
     # i <<- i+1
     # print(paste("EXECUTED", i))
     
@@ -169,8 +153,8 @@ esquisserServer <- function(input, output, session, data = NULL, dataModule = c(
       }
     )
   })
-
-
+  
+  
   # Export PowerPoint
   observeEvent(paramsChart$export_ppt, {
     if (requireNamespace(package = "rvg") & requireNamespace(package = "officer")) {
@@ -202,7 +186,7 @@ esquisserServer <- function(input, output, session, data = NULL, dataModule = c(
       utils::browseURL(url = tmp)
     }
   })
-
+  
   # Code
   res_code <- callModule(
     moduleCodeServer, id = "controls-code",
@@ -211,7 +195,7 @@ esquisserServer <- function(input, output, session, data = NULL, dataModule = c(
     paramsChart = paramsChart,
     geomSelected = geomSelected
   )
-
+  
   # Close addin
   observeEvent(input$close, shiny::stopApp())
   

@@ -112,16 +112,16 @@ esquisserUI <- function(id, header = TRUE, choose_data = TRUE) {
       miniTitleBarButton(inputId = ns("close"), label = "Close")
     )
   )
-
+  
   ### addin
   miniPage(
-
+    
     # style sheet
     singleton(x = tagList(
       tags$link(rel="stylesheet", type="text/css", href="esquisse/styles.css"),
       tags$script(src = "esquisse/clipboard/clipboard.min.js")
     )),
-
+    
     if (isTRUE(header)) box_title,
     # page
     layoutAddin(
@@ -137,7 +137,16 @@ esquisserUI <- function(id, header = TRUE, choose_data = TRUE) {
           if (isTRUE(choose_data)) chooseDataUI(id = ns("choose-data"))
         )
       ),
-      top_right = uiOutput(ns("dragvars")),
+      top_right = dragulaInput(
+        inputId = ns("dragvars"),
+        sourceLabel = "Variables",
+        targetsLabels = c("X", "Y", "Fill", "Color", "Size", "Group", "Facet"),
+        targetsIds = c("xvar", "yvar", "fill", "color", "size", "group", "facet"),
+        choices = "",
+        badge = FALSE,
+        width = "100%",
+        height = "100%",
+        replace = TRUE),
       main = htmltools::tags$div(
         style = "margin-top: 10px; padding-bottom: 25px; height: 100%;",
         tags$div(
@@ -158,8 +167,8 @@ esquisserUI <- function(id, header = TRUE, choose_data = TRUE) {
         shiny::plotOutput(outputId = ns("plooooooot"), width = "100%", height = "100%")
       )
     ),
-
+    
     chartControlsUI(id = ns("controls"))
   )
-
+  
 }
