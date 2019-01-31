@@ -78,15 +78,10 @@
 #' 
 #' shinyApp(ui, server)
 #' }
-#' 
+#'
 filterDataUI <- function(id) {
   ns <- NS(id)
-  tagList(
-    singleton(
-      tags$style(".selectize-big .selectize-input {height: 72px; overflow-y: scroll;}")
-    ),
-    tags$div(id = ns("placeholder-filters"))
-  )
+  uiOutput(ns("filters-mod"))
 }
 
 
@@ -107,8 +102,7 @@ filterDataServer <- function(input, output, session, data, vars = NULL, width = 
   
   ns <- session$ns
   jns <- function(id) paste0("#", ns(id))
-  key <- reactiveValues(x = NULL, index = TRUE)
-  
+
   return_data <- reactiveValues(data = NULL)
   
   data_filter <- reactive({
@@ -123,7 +117,6 @@ filterDataServer <- function(input, output, session, data, vars = NULL, width = 
       vars <- names(dat_)
     }
     dat_ <- dat_[, vars, drop = FALSE]
-    key$x <- paste(sample(letters, 10, TRUE), collapse = "")
     return_data$data <- dat_
     return_data$code <- ""
     return_data$index <- rep_len(TRUE, nrow(dat_))
@@ -135,27 +128,18 @@ filterDataServer <- function(input, output, session, data, vars = NULL, width = 
     data <- data_filter()
     tagFilt <- lapply(
       X = names(data), FUN = create_input_filter, 
-      data = data, ns = ns, key = key$x,
+      data = data, ns = ns,
       width = width
     )
-    removeUI(selector = jns("filters-mod"))
-    insertUI(
-      selector = jns("placeholder-filters"),
-      ui = tags$div(
-        id = ns("filters-mod"), tagFilt
-      )
-    )
+    output[["filters-mod"]] <- renderUI(tagFilt)
   })
   
   
   observeEvent(reactiveValuesToList(input), {
     params <- reactiveValuesToList(input)
-    params <- params[grep(x = names(params), pattern = key$x)]
     params_na <- params[grep(x = names(params), pattern = "na_remove")]
-    names(params_na) <- gsub(pattern = paste0(key$x, "_"), replacement = "", x = names(params_na))
     names(params_na) <- gsub(pattern = "_na_remove", replacement = "", x = names(params_na))
     params <- params[-grep(x = names(params), pattern = "na_remove")]
-    names(params) <- gsub(pattern = paste0(key$x, "_"), replacement = "", x = names(params))
     data <- data_filter()
     res_f <- lapply(
       X = names(params),
@@ -183,7 +167,7 @@ filterDataServer <- function(input, output, session, data, vars = NULL, width = 
 #' @importFrom htmltools tagList HTML
 #' @importFrom shinyWidgets sliderTextInput prettySwitch prettyToggle pickerInput
 #' @importFrom shiny sliderInput selectizeInput splitLayout
-create_input_filter <- function(data, var, ns, key = "filter", width = "100%") {
+create_input_filter <- function(data, var, ns, width = "100%") {
   x <- data[[var]]
   if (inherits(x = x, what = c("numeric", "integer"))) {
     x <- x[!is.na(x)]
@@ -200,10 +184,10 @@ create_input_filter <- function(data, var, ns, key = "filter", width = "100%") {
       values <- range_val(values)
       tagList(
         tags$span(
-          tags$label(var), HTML("&nbsp;&nbsp;"), naInput(key, clean_string(var), ns) 
+          tags$label(var), HTML("&nbsp;&nbsp;"), naInput(clean_string(var), ns)
         ),
         sliderTextInput(
-          inputId = ns(paste(key, clean_string(var), sep = "_")), label = NULL,
+          inputId = ns(clean_string(var)), label = NULL,
           choices = values, selected = range(values), 
           force_edges = TRUE, grid = TRUE, width = width
         )
@@ -216,10 +200,10 @@ create_input_filter <- function(data, var, ns, key = "filter", width = "100%") {
     rangx <- range(x)
     tagList(
       tags$span(
-        tags$label(var), HTML("&nbsp;&nbsp;"), naInput(key, clean_string(var), ns) 
+        tags$label(var), HTML("&nbsp;&nbsp;"), naInput(clean_string(var), ns)
       ),
       sliderInput(
-        inputId = ns(paste(key, clean_string(var), sep = "_")), 
+        inputId = ns(clean_string(var)), 
         min = min(x), max = max(x), width = width,
         value = rangx, label = NULL
       )
@@ -243,10 +227,10 @@ create_input_filter <- function(data, var, ns, key = "filter", width = "100%") {
     tags$div(
       class = if (length(x) > 15) "selectize-big",
       tags$span(
-        tags$label(var), HTML("&nbsp;&nbsp;"), naInput(key, clean_string(var), ns) 
+        tags$label(var), HTML("&nbsp;&nbsp;"), naInput(clean_string(var), ns) 
       ),
       selectizeInput(
-        inputId = ns(paste(key, clean_string(var), sep = "_")),
+        inputId = ns(clean_string(var)),
         choices = x, selected = x, label = NULL,
         multiple = TRUE, width = width,
         options = list(plugins = list("remove_button"))
@@ -257,9 +241,9 @@ create_input_filter <- function(data, var, ns, key = "filter", width = "100%") {
   }
 }
 
-naInput <- function(key, var, ns) {
+naInput <- function(var, ns) {
   prettyToggle(
-    inputId = ns(paste(key, var, "na_remove", sep = "_")), 
+    inputId = ns(paste(var, "na_remove", sep = "_")),
     value = TRUE,
     label_on = "NA", icon_on = icon("ok", lib = "glyphicon"),
     label_off = "NA", icon_off = icon("remove", lib = "glyphicon"),

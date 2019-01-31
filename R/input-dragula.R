@@ -72,17 +72,17 @@
 #' 
 dragulaInput <- function(inputId, sourceLabel, targetsLabels, 
                          targetsIds = NULL,
-                         choices = NULL, choiceNames = NULL,
-                         choiceValues = NULL, choiceTargets = NULL, status = "primary",
+                         choices = NULL, choiceNames = NULL, choiceValues = NULL, 
+                         choiceTargets = rep(list(character()), length(targetsIds)), 
+                         status = "primary",
                          replace = FALSE, badge = TRUE, width = NULL, height = "200px") {
   
-  choiceTargets <- restoreInput(inputId, choiceTargets)
-  if (!is.null(choiceTargets)) {
-    choices <- NULL
-    choiceNames <- badgeType(choiceTargets$source, rep('continuous', length(choiceTargets$source)))
-    choiceValues <- choiceTargets$source
-    choiceTargets <- choiceTargets$target
+  restored <- restoreInput(inputId, choiceTargets)
+  
+  if (!isTRUE(all.equal(restored, choiceTargets))) {
+    choiceTargets <- restored$target
   }
+  
   args <- normalizeChoicesArgs(choices, choiceNames, choiceValues, choiceTargets)
 
   if (is.null(targetsIds)) {
@@ -172,94 +172,6 @@ make_bg_svg <- function(text) {
 }
 
 
-#' Update Dragula Input
-#'
-#' @param session The \code{session} object passed to function given to \code{shinyServer}.
-#' @param inputId The id of the input object.
-#' @param choices List of values to select from (if elements of the list are
-#'  named then that name rather than the value is displayed to the user). 
-#'  If this argument is provided, then \code{choiceNames} and \code{choiceValues} must 
-#'  not be provided, and vice-versa. The values should be strings; other 
-#'  types (such as logicals and numbers) will be coerced to strings.
-#' @param choiceNames,choiceValues List of names and values, respectively, 
-#' that are displayed to the user in the app and correspond to the each 
-#' choice (for this reason, choiceNames and choiceValues must have the same length). 
-#' If either of these arguments is provided, then the other must be provided and 
-#' choices must not be provided. The advantage of using both of these over a named 
-#' list for choices is that choiceNames allows any type of UI object to be passed 
-#' through (tag objects, icons, HTML code, ...), instead of just simple text.
-#' @param badge Displays choices inside a Bootstrap badge.
-#' @param status If choices are displayed into a Bootstrap badge, you can use Bootstrap
-#'  status to color them, or \code{NULL}.
-#' 
-#'
-#' @export
-#' 
-#' @importFrom htmltools doRenderTags
-#'
-#' @examples
-#' 
-#' if (interactive()) {
-#' 
-#' library("shiny")
-#' library("esquisse")
-#' 
-#' ui <- fluidPage(
-#'   tags$h2("Update dragulaInput"),
-#'   radioButtons(
-#'     inputId = "update", 
-#'     label = "Dataset",
-#'     choices = c("iris", "mtcars")
-#'   ),
-#'   tags$br(),
-#'   dragulaInput(
-#'     inputId = "myDad",
-#'     sourceLabel = "Variables",
-#'     targetsLabels = c("X", "Y", "fill", "color", "size"),
-#'     choices = names(iris), 
-#'     replace = TRUE, width = "400px", status = "success"
-#'   ),
-#'   verbatimTextOutput(outputId = "result")
-#' )
-#' 
-#' server <- function(input, output, session) {
-#'   
-#'   output$result <- renderPrint(str(input$myDad))
-#'   
-#'   observeEvent(input$update, {
-#'     if (input$update == "iris") {
-#'       updateDragulaInput(
-#'         session = session, 
-#'         inputId = "myDad", 
-#'         choices = names(iris),
-#'         status = "success"
-#'       )
-#'     } else {
-#'       updateDragulaInput(
-#'         session = session, 
-#'         inputId = "myDad", 
-#'         choices = names(mtcars)
-#'       )
-#'     }
-#'   }, ignoreInit = TRUE)
-#'   
-#' }
-#' 
-#' shinyApp(ui, server)
-#' 
-#' }
-#' 
-updateDragulaInput <- function(session, inputId, choices = NULL, choiceNames = NULL,
-                               choiceValues = NULL, badge = TRUE, status = "primary") {
-  args <- normalizeChoicesArgs(choices, choiceNames, choiceValues)
-  choices <- htmltools::doRenderTags(makeDragulaChoices(
-    inputId = inputId, args = args, status = status, badge = badge
-  ))
-  message <- list(choices = choices)
-  session$sendInputMessage(inputId, message)
-}
-
-
 makeDragulaChoices <- function(inputId, args, status = NULL, badge = TRUE) {
   lapply(
     X = seq_along(args$choiceNames),
@@ -278,7 +190,7 @@ makeDragulaChoices <- function(inputId, args, status = NULL, badge = TRUE) {
 }
 
 
-normalizeChoicesArgs <- function (choices, choiceNames, choiceValues, choiceTargets = rep(list(character()), length(choiceValues))) {
+normalizeChoicesArgs <- function (choices, choiceNames, choiceValues, choiceTargets) {
   if (is.null(choices)) {
     if (is.null(choiceNames) || is.null(choiceValues)) {
       if (!length(choiceNames) && !length(choiceValues)) {

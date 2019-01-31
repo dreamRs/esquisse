@@ -6,6 +6,7 @@
 \usage{
 dragulaInput(inputId, sourceLabel, targetsLabels, targetsIds = NULL,
   choices = NULL, choiceNames = NULL, choiceValues = NULL,
+  choiceTargets = rep(list(character()), length(targetsIds)),
   status = "primary", replace = FALSE, badge = TRUE, width = NULL,
   height = "200px")
 }

@@ -16,7 +16,32 @@
 #'  renderPlot stopApp plotOutput showNotification isolate
 #' @importFrom ggplot2 ggplot_build ggsave
 #'
+
 esquisserServer <- function(input, output, session, data = NULL, dataModule = c("GlobalEnv", "ImportFile"), sizeDataModule = "m") {
+  
+  observeEvent(data$data, {
+    dataChart$data <- data$data
+    dataChart$name <- data$name
+  }, ignoreInit = FALSE)
+  
+  output$dragula <- renderUI({
+    ns <- session$ns
+    var_choices <- setdiff(names(dataChart$data), attr(dataChart$data, "sf_column"))
+    dragulaInput(
+      inputId = ns("dragvars"),
+      sourceLabel = "Variables",
+      targetsLabels = c("X", "Y", "Fill", "Color", "Size", "Group", "Facet"),
+      targetsIds = c("xvar", "yvar", "fill", "color", "size", "group", "facet"),
+      choiceValues = var_choices,
+      choiceNames = badgeType(
+        col_name = var_choices,
+        col_type = col_type(dataChart$data[, var_choices])
+      ),
+      badge = FALSE,
+      width = "100%",
+      height = "100%",
+      replace = TRUE)
+  })
   
   dataChart <- callModule(
     module = chooseDataServer, 
@@ -33,22 +58,11 @@ esquisserServer <- function(input, output, session, data = NULL, dataModule = c(
     if (inherits(dataChart$data, what = "sf")) {
       geom_possible$x <- c("sf", geom_possible$x)
     }
-    var_choices <- setdiff(names(dataChart$data), attr(dataChart$data, "sf_column"))
-    updateDragulaInput(
-      session = session,
-      inputId = "dragvars", status = NULL,
-      choiceValues = var_choices,
-      choiceNames = badgeType(
-        col_name = var_choices,
-        col_type = col_type(dataChart$data[, var_choices])
-      ),
-      badge = FALSE
-    )
   }, ignoreInit = FALSE) ## FIXME
   
   geom_possible <- reactiveValues(x = "auto")
   geom_controls <- reactiveValues(x = "auto")
-  shiny::observeEvent(list(input$dragvars$target, geomSelected$x), {
+  observeEvent(list(input$dragvars$target, geomSelected$x), {
     types <- possible_geom(data = dataChart$data, x = input$dragvars$target$xvar, y = input$dragvars$target$yvar)
     geom_possible$x <- c("auto", types)
     
@@ -62,16 +76,15 @@ esquisserServer <- function(input, output, session, data = NULL, dataModule = c(
   })
   
   # Module chart controls : title, xalabs, colors, export...
-  paramsChart <- reactiveValues(inputs = NULL)
   paramsChart <- callModule(
     module = chartControlsServer, 
     id = "controls", 
     type = geom_controls, 
     data = reactive(dataChart$data)
   )
-  # observeEvent(paramsChart$index, {
-  #   dataChart$data_filtered <- dataChart$data[paramsChart$index, ]
-  # })
+  observeEvent(paramsChart$index, {
+    dataChart$data_filtered <- dataChart$data[paramsChart$index, ]
+  })
   
   # Module to choose type of charts
   geomSelected <- callModule(
