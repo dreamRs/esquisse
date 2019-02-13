@@ -288,12 +288,6 @@ num_equal <- function(x, y, tol = sqrt(.Machine$double.eps)) {
 generate_filters <- function(x, params, params_na, data) {
   if (x %in% names(data)) {
     values <- params[[x]]
-    if (is.null(values)) {
-      list(
-        code = "",
-        ind = rep_len(TRUE, length(dat))
-      )
-    }
     dat <- data[[x]]
     na <- params_na[[x]]
     if (is.null(na)) {
