@@ -35,6 +35,9 @@ esquisser <- function(data = NULL,
   options("esquisse.coerceVars" = coerceVars)
 
   res_data <- get_data(data, name = deparse(substitute(data)))
+  if (!is.null(res_data$esquisse_data)) {
+    res_data$esquisse_data <- dropListColumns(res_data$esquisse_data)
+  }
   rv <- reactiveValues(
     data = res_data$esquisse_data, 
     name = res_data$esquisse_data_name

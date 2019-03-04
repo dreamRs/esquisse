@@ -124,7 +124,7 @@ esquisserServer <- function(input, output, session, data = NULL, dataModule = c(
     # print(paste("EXECUTED", i))
     
     data <- dataChart$data
-    if (!is.null(paramsChart$index) && is.logical(paramsChart$index)) {
+    if (!is.null(paramsChart$index) && is.logical(paramsChart$index) & length(paramsChart$index) > 0) {
       data <- data[paramsChart$index, , drop = FALSE]
     }
     
@@ -209,7 +209,7 @@ esquisserServer <- function(input, output, session, data = NULL, dataModule = c(
   }, ignoreInit = TRUE)
   observeEvent(list(dataChart$data, paramsChart$index), {
     data <- dataChart$data
-    if (!is.null(paramsChart$index) && is.logical(paramsChart$index)) {
+    if (!is.null(paramsChart$index) && is.logical(paramsChart$index) & length(paramsChart$index) > 0) {
       data <- data[paramsChart$index, , drop = FALSE]
     }
     output_module$data <- data
