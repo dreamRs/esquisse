@@ -124,16 +124,15 @@ filterDataServer <- function(input, output, session, data, vars = NULL, width = 
     return(dat_)
   })
   
-  observeEvent(data_filter(), {
+  output[["filters-mod"]] <- renderUI({
     data <- data_filter()
-    tagFilt <- lapply(
+    lapply(
       X = names(data), FUN = create_input_filter, 
       data = data, ns = ns,
       width = width
     )
-    output[["filters-mod"]] <- renderUI(tagFilt)
   })
-  
+  outputOptions(output, "filters-mod", suspendWhenHidden = FALSE)
   
   observeEvent(reactiveValuesToList(input), {
     params <- reactiveValuesToList(input)

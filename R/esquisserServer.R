@@ -58,7 +58,7 @@ esquisserServer <- function(input, output, session, data = NULL, dataModule = c(
     if (inherits(dataChart$data, what = "sf")) {
       geom_possible$x <- c("sf", geom_possible$x)
     }
-  }, ignoreInit = FALSE) ## FIXME
+  }, ignoreInit = FALSE)
   
   geom_possible <- reactiveValues(x = "auto")
   geom_controls <- reactiveValues(x = "auto")
