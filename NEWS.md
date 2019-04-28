@@ -2,7 +2,8 @@
 
 * Support for group aesthetic.
 * New supported geom: `geom_area`.
-
+* Adds axis transform to plot options.
+* State restorable by Shiny bookmarking.
 
 # esquisse 0.1.7
 

@@ -34,9 +34,9 @@ test_that("create input filter date var", {
 })
 
 test_that("create input NA", {
-  input_na <- esquisse:::naInput(key = "KEY", var = "cyl", ns = shiny::NS("test"))
+  input_na <- esquisse:::naInput(var = "cyl", ns = shiny::NS("test"))
   expect_is(input_na, "shiny.tag")
-  expect_true(grepl(pattern = "test-KEY_cyl_na_remove", input_na))
+  expect_true(grepl(pattern = "test-cyl_na_remove", input_na))
 })
 
 
