@@ -34,6 +34,11 @@ choices must not be provided. The advantage of using both of these over a named
 list for choices is that choiceNames allows any type of UI object to be passed 
 through (tag objects, icons, HTML code, ...), instead of just simple text.}
 
+\item{choiceTargets}{The mapping between targetsIds and choiceValues,
+defaulting to no target variables mapped to any choice. Any user supplied
+argument must be a named list of character vectors, with a name equal to
+each of the targetsIds and any choiceValues for its value.}
+
 \item{status}{If choices are displayed into a Bootstrap label, you can use Bootstrap
 status to color them, or \code{NULL}.}
 
@@ -87,7 +92,4 @@ shinyApp(ui = ui, server = server)
 
 }
 
-}
-\seealso{
-\code{\link{updateDragulaInput}} to update choices server-side.
 }

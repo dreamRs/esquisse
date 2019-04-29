@@ -19,6 +19,10 @@
 #' choices must not be provided. The advantage of using both of these over a named 
 #' list for choices is that choiceNames allows any type of UI object to be passed 
 #' through (tag objects, icons, HTML code, ...), instead of just simple text.
+#' @param choiceTargets The mapping between targetsIds and choiceValues,
+#'   defaulting to no target variables mapped to any choice. Any user supplied
+#'   argument must be a named list of character vectors, with a name equal to
+#'   each of the targetsIds and any choiceValues for its value.
 #' @param badge Displays choices inside a Bootstrap badge. Use \code{FALSE}
 #'  if you want to pass custom appearance with \code{choiceNames}.
 #' @param status If choices are displayed into a Bootstrap label, you can use Bootstrap
@@ -30,8 +34,6 @@
 #' 
 #' @note The output server-side is a list with two slots: \code{source} and \code{targets}.
 #' 
-#' @seealso \code{\link{updateDragulaInput}} to update choices server-side.
-#'
 #' @return a UI definition
 #' @export
 #' 

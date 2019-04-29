@@ -8,7 +8,7 @@
 #' vector for indexing data under slot \code{index}.
 #' @export
 #' @importFrom htmltools tags tagList singleton 
-#' @importFrom shiny NS 
+#' @importFrom shiny NS outputOptions
 #' 
 #' @name filterData-module
 #' 
