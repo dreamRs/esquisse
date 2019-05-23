@@ -147,14 +147,14 @@ coerceServer <- function(input, output, session, data, reactiveValuesSlot = "dat
   
   observe({
     if (is.reactive(data)) {
-      toggleInput(session = session, inputId = ns("valid_coerce"), enable = TRUE)
-      toggleInput(session = session, inputId = ns("var"), enable = TRUE)
+      toggleInput(inputId = ns("valid_coerce"), enable = TRUE)
+      toggleInput(inputId = ns("var"), enable = TRUE)
     } else if (is.reactivevalues(data) && !is.null(data[[reactiveValuesSlot]])) {
-      toggleInput(session = session, inputId = ns("valid_coerce"), enable = TRUE)
-      toggleInput(session = session, inputId = ns("var"), enable = TRUE)
+      toggleInput(inputId = ns("valid_coerce"), enable = TRUE)
+      toggleInput(inputId = ns("var"), enable = TRUE)
     } else {
-      toggleInput(session = session, inputId = ns("valid_coerce"), enable = FALSE)
-      toggleInput(session = session, inputId = ns("var"), enable = FALSE)
+      toggleInput(inputId = ns("valid_coerce"), enable = FALSE)
+      toggleInput(inputId = ns("var"), enable = FALSE)
     }
   })
   

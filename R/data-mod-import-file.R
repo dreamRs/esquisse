@@ -96,7 +96,7 @@ dataImportFileServer <- function(input, output, session, data = NULL, name = NUL
   observeEvent(input$file, {
     imported <- try(rio::import(file = input$file$datapath), silent = TRUE)
     if ("try-error" %in% class(imported) || NROW(imported) < 1) {
-      toggleInput(session = session, inputId = ns("validate"), enable = FALSE)
+      toggleInput(inputId = ns("validate"), enable = FALSE)
       removeUI(selector = jns("result-import"))
       insertUI(
         selector = jns("placeholder-result-import"),
@@ -109,7 +109,7 @@ dataImportFileServer <- function(input, output, session, data = NULL, name = NUL
       coerce_data$data <- NULL
       select_data$timestamp <- Sys.time()
     } else {
-      toggleInput(session = session, inputId = ns("validate"), enable = TRUE)
+      toggleInput(inputId = ns("validate"), enable = TRUE)
       removeUI(selector = jns("result-import"))
       insertUI(
         selector = jns("placeholder-result-import"),
@@ -132,10 +132,10 @@ dataImportFileServer <- function(input, output, session, data = NULL, name = NUL
   
   observeEvent(sv$selected_vars, {
     if (length(sv$selected_vars) > 0) {
-      toggleInput(session = session, inputId = ns("validate"), enable = TRUE)
+      toggleInput(inputId = ns("validate"), enable = TRUE)
       coerce_data$data <- select_data$data[, sv$selected_vars, drop = FALSE]
     } else {
-      toggleInput(session = session, inputId = ns("validate"), enable = FALSE)
+      toggleInput(inputId = ns("validate"), enable = FALSE)
     }
   }, ignoreNULL = FALSE)
   

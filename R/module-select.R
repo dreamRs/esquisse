@@ -60,14 +60,14 @@ selectVarsServer <- function(input, output, session, data = list()) {
   ns <- session$ns
   
   observeEvent(input$launchSelectVars, {
-    toggleInput(session = session, inputId = ns("col_chooser"), enable = FALSE)
+    toggleInput(inputId = ns("col_chooser"), enable = FALSE)
   })
   
   observeEvent(reactiveValuesToList(data), {
     if (!is.null(data$data) && is.data.frame(data$data)) {
-      toggleInput(session = session, inputId = ns("col_chooser"), enable = TRUE)
+      toggleInput(inputId = ns("col_chooser"), enable = TRUE)
     } else {
-      toggleInput(session = session, inputId = ns("col_chooser"), enable = FALSE)
+      toggleInput(inputId = ns("col_chooser"), enable = FALSE)
     }
   }, ignoreNULL = FALSE)
   

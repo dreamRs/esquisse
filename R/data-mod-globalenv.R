@@ -110,7 +110,7 @@ dataGlobalEnvServer <- function(input, output, session, data = NULL, name = NULL
     req(input$data)
     imported <- try(get_df(input$data), silent = TRUE)
     if ("try-error" %in% class(imported) || NROW(imported) < 1) {
-      toggleInput(session = session, inputId = ns("validate"), enable = FALSE)
+      toggleInput(inputId = ns("validate"), enable = FALSE)
       removeUI(selector = jns("result-import"))
       insertUI(
         selector = jns("placeholder-result-import"),
@@ -124,7 +124,7 @@ dataGlobalEnvServer <- function(input, output, session, data = NULL, name = NULL
       tmp_name$name <- NULL
       select_data$timestamp <- Sys.time()
     } else {
-      toggleInput(session = session, inputId = ns("validate"), enable = TRUE)
+      toggleInput(inputId = ns("validate"), enable = TRUE)
       removeUI(selector = jns("result-import"))
       insertUI(
         selector = jns("placeholder-result-import"),
@@ -146,10 +146,10 @@ dataGlobalEnvServer <- function(input, output, session, data = NULL, name = NULL
   
   observeEvent(sv$selected_vars, {
     if (length(sv$selected_vars) > 0) {
-      toggleInput(session = session, inputId = ns("validate"), enable = TRUE)
+      toggleInput(inputId = ns("validate"), enable = TRUE)
       coerce_data$data <- select_data$data[, sv$selected_vars, drop = FALSE]
     } else {
-      toggleInput(session = session, inputId = ns("validate"), enable = FALSE)
+      toggleInput(inputId = ns("validate"), enable = FALSE)
     }
   }, ignoreNULL = FALSE)
   

@@ -7,14 +7,14 @@ useShinyUtils <- function() {
 }
 
 
-#'  Toggle Input Server
+#' Enable or disable a Shiny input
 #'
-#' @param session shiny session.
 #' @param inputId shiny input id.
 #' @param enable enable enable or disable the input.
+#' @param session shiny session.
 #'
 #' @noRd
-toggleInput <- function(session, inputId, enable = TRUE) {
+toggleInput <- function(inputId, enable = TRUE, session = shiny::getDefaultReactiveDomain()) {
   session$sendCustomMessage(
     type = 'toggleInput',
     message = list(id = inputId, enable = enable)
@@ -23,21 +23,14 @@ toggleInput <- function(session, inputId, enable = TRUE) {
 
 
 
-escape_jquery <- function(string) {
-  gsub(x = string, pattern = "(\\W)", replacement = "\\\\\\1")
-}
-
-
-
-
-#'  Toggle Input Server
+#' Display or hide a Shiny input
 #'
-#' @param session shiny session.
 #' @param id shiny input id.
 #' @param display character, 'none' to hide, 'block' or 'inline-block' to show
+#' @param session shiny session.
 #'
 #' @noRd
-toggleDisplay <- function(session, id, display = c("none", "block", "inline-block")) {
+toggleDisplay <- function(id, display = c("none", "block", "inline-block"), session = shiny::getDefaultReactiveDomain()) {
   display <- match.arg(display)
   session$sendCustomMessage(
     type = 'toggleDisplay',
@@ -48,21 +41,19 @@ toggleDisplay <- function(session, id, display = c("none", "block", "inline-bloc
 
 
 
-
-#' Enable / Disable a Button
+#' Enable or disable a button
 #'
-#' @param session shiny session.
 #' @param inputId Input's id to enable / disable.
 #' @param type 'enable' or 'disable'.
+#' @param session shiny session.
 #'
 #' @noRd
-toggleBtn <- function(session, inputId, type = "disable") {
+toggleBtn <- function(inputId, type = "disable", session = shiny::getDefaultReactiveDomain()) {
   session$sendCustomMessage(
     type = "togglewidget",
     message = list(inputId = inputId, type = type)
   )
 }
-
 
 
 
