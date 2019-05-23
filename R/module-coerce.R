@@ -38,7 +38,7 @@
 #'     fluidRow(
 #'       column(
 #'         width = 4,
-#'         coerceUI(id = "exemple", data = foo)
+#'         coerceUI(id = "example")
 #'       ),
 #'       column(
 #'         width = 8,
@@ -50,7 +50,7 @@
 #'   
 #'   server <- function(input, output, session) {
 #'     
-#'     result <- callModule(module = coerceServer, id = "exemple", data = foo)
+#'     result <- callModule(module = coerceServer, id = "example", data = reactive({foo}))
 #'     
 #'     output$print_result <- renderPrint({
 #'       str(result$data)

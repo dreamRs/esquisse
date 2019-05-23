@@ -25,14 +25,17 @@ An add-in to easily create plots with ggplot2
 }
 \examples{
 if (interactive()) {
-# Launch with:
+# Launch with :
 esquisser(iris)
 # If in RStudio it will be launched by default in dialog window
 # If not, it will be launched in browser
 
-# change diplay mode with:
-options("esquisse.display.mode" = "viewer")
+# change display mode with :
+esquisser(iris, viewer = "browser")
+
+# You can this option in .Rprofile :
+options("esquisse.viewer" = "viewer")
 # or
-options("esquisse.display.mode" = "browser")
+options("esquisse.viewer" = "browser")
 }
 }
