@@ -18,6 +18,8 @@
 #'
 esquisserServer <- function(input, output, session, data = NULL, dataModule = c("GlobalEnv", "ImportFile"), sizeDataModule = "m") {
   
+  geomSelected <- reactiveValues(x = "auto")
+  
   observeEvent(data$data, {
     dataChart$data <- data$data
     dataChart$name <- data$name
@@ -52,17 +54,35 @@ esquisserServer <- function(input, output, session, data = NULL, dataModule = c(
 
   geom_possible <- reactiveValues(x = "auto")
   geom_controls <- reactiveValues(x = "auto")
-  shiny::observeEvent(list(input$dragvars$target, geomSelected$x), {
+  shiny::observeEvent(list(input$dragvars$target, input$geom), {
     types <- possible_geom(data = dataChart$data, x = input$dragvars$target$xvar, y = input$dragvars$target$yvar)
     geom_possible$x <- c("auto", types)
 
-    geom_controls$x <- select_geom_controls(geomSelected$x, types)
+    geom_controls$x <- select_geom_controls(input$geom, types)
     
     if (!is.null(input$dragvars$target$fill) | !is.null(input$dragvars$target$color)) {
       geom_controls$palette <- TRUE
     } else {
       geom_controls$palette <- FALSE
     }
+  })
+  
+  observeEvent(input$geom, {
+    geomSelected$x <- input$geom
+  })
+  observeEvent(geom_possible$x, {
+    geoms <- c(
+      "auto", "line", "area", "bar", "histogram", 
+      "point", "boxplot", "violin", "density", 
+      "tile", "sf"
+    )
+    # updateDropInput(session, "geom", selected = setdiff(geom_possible$x, "auto"))
+    updateDropInput(
+      session = session, 
+      inputId = "geom",
+      selected = setdiff(geom_possible$x, "auto")[1],
+      disabled = setdiff(geoms, geom_possible$x)
+    )
   })
 
   # Module chart controls : title, xalabs, colors, export...
@@ -76,12 +96,6 @@ esquisserServer <- function(input, output, session, data = NULL, dataModule = c(
   # observeEvent(paramsChart$index, {
   #   dataChart$data_filtered <- dataChart$data[paramsChart$index, ]
   # })
-
-  # Module to choose type of charts
-  geomSelected <- callModule(
-    module = imageButtonServer, id = "geom", default = "auto",
-    img_ref = geom_icon_href(), enabled = geom_possible, selected = geom_possible
-  )
 
 
   # aesthetics from drag-and-drop
@@ -118,7 +132,7 @@ esquisserServer <- function(input, output, session, data = NULL, dataModule = c(
     req(dataChart$data)
     req(paramsChart$index)
     req(paramsChart$inputs)
-    req(geomSelected$x)
+    req(input$geom)
 
     # i <<- i+1
     # print(paste("EXECUTED", i))
@@ -141,7 +155,7 @@ esquisserServer <- function(input, output, session, data = NULL, dataModule = c(
             group = aes_r$group,
             facet = aes_r$facet,
             params = reactiveValuesToList(paramsChart)$inputs,
-            type = geomSelected$x
+            type = input$geom
           )
           gg <- ggplot_build(gg)
           ggplot_r$p <- gg$plot

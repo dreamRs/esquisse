@@ -130,12 +130,13 @@ esquisserUI <- function(id, header = TRUE, choose_data = TRUE) {
       top_left = htmltools::tagList(
         htmltools::tags$div(
           style = "padding: 10px;",
-          imageButtonUI(
-            id = ns("geom"),
-            imgs = geom_icon_input(), 
-            width = "220px"
+          dropInput(
+            inputId = ns("geom"),
+            choicesNames = geomIcons()$names, 
+            choicesValues = geomIcons()$values,
+            dropWidth = "290px",
+            width = "100%"
           ),
-          # htmltools::tags$br(),
           if (isTRUE(choose_data)) chooseDataUI(id = ns("choose-data"))
         )
       ),

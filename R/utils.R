@@ -246,30 +246,36 @@ col_type <- function(x, no_id = FALSE) {
 
 # utils for geom icons
 
-#' @importFrom stats setNames
-geom_icon_href <- function() {
-  ## --->>> TODO SF <<<--- ##
-  href <- "esquisse/geomIcon/gg-%s.png"
-  geoms <- c("auto", "line", "area", "bar", "histogram", 
-             "point", "boxplot", "violin", "density", "tile", "sf") #
-  lapply(
-    X = setNames(geoms, geoms),
-    FUN = sprintf, fmt = href
+geomIcons <- function() {
+  geoms <- c(
+    "auto", "line", "area", "bar", "histogram", 
+    "point", "boxplot", "violin", "density", 
+    "tile", "sf"
   )
-}
-
-geom_icon_input <- function() {
-  ## --->>> TODO SF <<<--- ##
-  geoms <- c("auto", "line", "area", "bar", "histogram", 
-             "point", "boxplot", "violin", "density", "tile", "sf") # 
   href <- "esquisse/geomIcon/gg-%s.png"
-  lapply(
+  geomsChoices <- lapply(
     X = geoms,
     FUN = function(x) {
       list(inputId = x, img = sprintf(fmt = href, x), label = capitalize(x))
     }
   )
+
+  geomsChoicesNames <- lapply(
+    X = geomsChoices,
+    FUN = function(x) {
+      list(
+        style = "width: 90px;",
+        tags$img(src = x$img, width = 48, height = 48),
+        tags$br(), x$label
+      )
+    }
+  )
+  geomsChoicesValues <- unlist(lapply(geomsChoices, `[[`, "label"), use.names = FALSE)
+  geomsChoicesValues <- tolower(geomsChoicesValues)
+  
+  list(names = geomsChoicesNames, values = geomsChoicesValues)
 }
+
 
 capitalize <- function(x) {
   lo <- substring(text = x, first = 2)

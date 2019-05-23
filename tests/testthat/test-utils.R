@@ -15,20 +15,6 @@ test_that("badgeType works", {
 })
 
 
-test_that("geom_icon_href works", {
-  geom_icons <- geom_icon_href()
-  
-  expect_length(geom_icons, 11)
-  expect_named(geom_icons, c("auto", "line", "area", "bar", "histogram", "point", 
-                             "boxplot", "violin", "density", "tile", "sf"))
-  
-  png_files <- list.files(system.file("assets/geomIcon", package = "esquisse"))
-  geom_icons <- gsub(pattern = ".*/", replacement = "", x = geom_icons)
-  expect_true(all(geom_icons %in% png_files))
-})
-
-
-
 
 
 test_that("get_df works", {
