@@ -4,7 +4,7 @@
 #'
 #' @noRd
 .onLoad <- function(...) {
-  shiny::addResourcePath("esquisse", system.file('www', package = "esquisse"))
+  shiny::addResourcePath("esquisse", system.file('assets', package = "esquisse"))
   shiny::registerInputHandler("esquisse.dragula", function(data, ...) {
     if (is.null(data)) {
       NULL
