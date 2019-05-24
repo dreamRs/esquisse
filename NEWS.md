@@ -1,4 +1,9 @@
-# esquisse 0.1.7.900
+# esquisse 0.1.900
+
+* Now use `rlang` to generate ggplot code.
+
+
+# esquisse 0.1.8
 
 * Support for group aesthetic.
 * New supported geom: `geom_area`.

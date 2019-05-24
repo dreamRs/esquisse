@@ -206,17 +206,20 @@ badgeType <- function(col_name, col_type) {
 
 
 
+
 #' Try to guess type of a vector
 #'
 #' @param x a vector
 #'
 #' @noRd
 col_type <- function(x, no_id = FALSE) {
+  if (is.null(x))
+    return(NULL)
   
   if (is.data.frame(x) && inherits(x, what = "sf")) {
     x <- x[, setdiff(names(x), attr(x, "sf_column")), drop = FALSE]
   } 
-
+  
   if (is.data.frame(x)) {
     return(unlist(lapply(x, col_type), use.names = FALSE))
   } else {
@@ -238,7 +241,7 @@ col_type <- function(x, no_id = FALSE) {
       return("continuous")
     }
   }
-
+  
   NULL
 }
 

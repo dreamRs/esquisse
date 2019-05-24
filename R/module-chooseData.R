@@ -118,7 +118,7 @@ chooseDataUI <- function(id, label = "Data", icon = "database") {
 #'
 #' @rdname chooseData-module
 #'
-#' @importFrom shiny showModal modalDialog observeEvent reactiveValues callModule observe
+#' @importFrom shiny showModal modalDialog observeEvent reactiveValues callModule observe icon
 #' @importFrom htmltools tags HTML
 chooseDataServer <- function(input, output, session, dataModule = c("GlobalEnv", "ImportFile"), 
                              data = NULL, name = NULL, 
@@ -141,20 +141,33 @@ chooseDataServer <- function(input, output, session, dataModule = c("GlobalEnv",
   return_data <- reactiveValues(data = data, name = name)
   
   if (isTRUE(launchOnStart)) {
-    showModal(modalDialog(datModUI(
-      id = ns("chooseData"), 
-      selectVars = selectVars, 
-      coerceVars = coerceVars
-      ), size = size, fade = FALSE)
-    )
+    showModal(modalDialog(tagList(
+      tags$button(
+        icon("close"), 
+        class = "btn btn-link pull-right",
+        `data-dismiss` = "modal"
+      ),
+      datModUI(
+        id = ns("chooseData"), 
+        selectVars = selectVars, 
+        coerceVars = coerceVars
+      )
+    ), size = size, fade = FALSE, footer = NULL))
   }
   
   observeEvent(input$changeData, {
-    showModal(modalDialog(datModUI(
-      id = ns("chooseData"), 
-      selectVars = selectVars, 
-      coerceVars = coerceVars
-    ), size = size, fade = FALSE))
+    showModal(modalDialog(tagList(
+      tags$button(
+        icon("close"), 
+        class = "btn btn-link pull-right",
+        `data-dismiss` = "modal"
+      ),
+      datModUI(
+        id = ns("chooseData"), 
+        selectVars = selectVars, 
+        coerceVars = coerceVars
+      )
+    ), size = size, fade = FALSE, footer = NULL))
   })
   
   return_data <- callModule(

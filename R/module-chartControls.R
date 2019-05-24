@@ -18,6 +18,10 @@ chartControlsUI <- function(id) {
   # ui
   tags$div(
     class = "btn-group-charter btn-group-justified-charter",
+    tags$style(sprintf(
+      "#%s .sw-dropdown-in {margin: 8px 0 8px 10px !important; padding: 0 !important;}",
+      "sw-content-filterdrop"
+    )),
     dropdown(
       controls_labs(ns), inputId = "labsdrop",
       style = "default", label = "Labels & Title", 
@@ -58,65 +62,133 @@ chartControlsUI <- function(id) {
 
 #' Dropup buttons to hide chart's controls
 #'
-#' @param input   standard \code{shiny} input
-#' @param output  standard \code{shiny} output
-#' @param session standard \code{shiny} session
-#' @param type A reactiveValues indicating the type of chart
+#' @param input   standard \code{shiny} input.
+#' @param output  standard \code{shiny} output.
+#' @param session standard \code{shiny} session.
+#' @param type \code{reactiveValues} indicating the type of chart.
+#' @param data \code{reactive} function returning data used in plot.
+#' @param ggplot_rv \code{reactiveValues} withggplot object (for export).
 #'
 #' @return A reactiveValues with all input's values
 #' @noRd
 #'
 #' @importFrom shiny observeEvent reactiveValues reactiveValuesToList
+#'  downloadHandler renderUI reactive
+#' @importFrom rstudioapi insertText getActiveDocumentContext
+#' @importFrom htmltools tags tagList
 #'
-chartControlsServer <- function(input, output, session, type, data = NULL) {
+chartControlsServer <- function(input, output, session, type, data = NULL, ggplot_rv) {
 
   ns <- session$ns
+  
+  
+  # Export ----
+  
+  output$export_png <- downloadHandler(
+    filename = function() {
+      paste0("esquisse_", format(Sys.time(), format = "%Y%m%dT%H%M%S"), ".png")
+    },
+    content = function(file) {
+      pngg <- try(ggsave(filename = file, plot = ggplot_rv$ggobj$plot, width = 12, height = 8, dpi = "retina"))
+      if ("try-error" %in% class(pngg)) {
+        shiny::showNotification(ui = "Export to PNG failed...", type = "error")
+      }
+    }
+  )
+  output$export_ppt <- downloadHandler(
+    filename = function() {
+      paste0("esquisse_", format(Sys.time(), format = "%Y%m%dT%H%M%S"), ".pptx")
+    },
+    content = function(file) {
+      if (requireNamespace(package = "rvg") & requireNamespace(package = "officer")) {
+        gg <- ggplot_rv$ggobj$plot
+        ppt <- officer::read_pptx()
+        ppt <- officer::add_slide(ppt, layout = "Title and Content", master = "Office Theme")
+        ppt <- try(rvg::ph_with_vg(ppt, ggobj = gg, type = "body"), silent = TRUE)
+        if ("try-error" %in% class(ppt)) {
+          shiny::showNotification(ui = "Export to PowerPoint failed...", type = "error")
+        } else {
+          tmp <- tempfile(pattern = "esquisse", fileext = ".pptx")
+          print(ppt, target = tmp)
+          file.copy(from = tmp, to = file)
+        }
+      } else {
+        warn <- "Packages 'officer' and 'rvg' are required to use this functionality."
+        warning(warn, call. = FALSE)
+        shiny::showNotification(ui = warn, type = "warning")
+      }
+    }
+  )
+  
+  
+  
+  # Code ----
+  observeEvent(input$insert_code, {
+    context <- rstudioapi::getActiveDocumentContext()
+    code <- ggplot_rv$code
+    if (input$insert_code == 1) {
+      code <- paste("library(ggplot2)", code, sep = "\n\n")
+    }
+    rstudioapi::insertText(text = code, id = context$id)
+  })
+  
+  output$code <- renderUI({
+    code <- ggplot_rv$code
+    code <- stringi::stri_replace_all(str = code, replacement = "+\n", fixed = "+")
+    htmltools::tagList(
+      rCodeContainer(id = ns("codeggplot"), code)
+    )
+  })
+  
+  
+  
+  # Controls ----
 
   observeEvent(type$palette, {
     if (isTRUE(type$palette)) {
-      toggleDisplay(session = session, id = ns("controls-palette"), display = "block")
-      toggleDisplay(session = session, id = ns("controls-spectrum"), display = "none")
+      toggleDisplay(id = ns("controls-palette"), display = "block")
+      toggleDisplay(id = ns("controls-spectrum"), display = "none")
     } else {
-      toggleDisplay(session = session, id = ns("controls-palette"), display = "none")
-      toggleDisplay(session = session, id = ns("controls-spectrum"), display = "block")
+      toggleDisplay(id = ns("controls-palette"), display = "none")
+      toggleDisplay(id = ns("controls-spectrum"), display = "block")
     }
   })
   
   observeEvent(type$x, {
     if (type$x %in% c("bar", "line", "area")) {
-      toggleDisplay(session = session, id = ns("controls-position"), display = "block")
+      toggleDisplay(id = ns("controls-position"), display = "block")
     } else {
-      toggleDisplay(session = session, id = ns("controls-position"), display = "none")
+      toggleDisplay(id = ns("controls-position"), display = "none")
     }
     if (type$x %in% "bar") {
-      toggleDisplay(session = session, id = ns("controls-flip"), display = "block")
+      toggleDisplay(id = ns("controls-flip"), display = "block")
     } else {
-      toggleDisplay(session = session, id = ns("controls-flip"), display = "none")
+      toggleDisplay(id = ns("controls-flip"), display = "none")
     }
     if (type$x %in% "histogram") {
-      toggleDisplay(session = session, id = ns("controls-histogram"), display = "block")
+      toggleDisplay(id = ns("controls-histogram"), display = "block")
     } else {
-      toggleDisplay(session = session, id = ns("controls-histogram"), display = "none")
+      toggleDisplay(id = ns("controls-histogram"), display = "none")
     }
     if (type$x %in% c("density", "violin")) {
-      toggleDisplay(session = session, id = ns("controls-density"), display = "block")
+      toggleDisplay(id = ns("controls-density"), display = "block")
     } else {
-      toggleDisplay(session = session, id = ns("controls-density"), display = "none")
+      toggleDisplay(id = ns("controls-density"), display = "none")
     }
     if (type$x %in% "point") {
-      toggleDisplay(session = session, id = ns("controls-scatter"), display = "block")
+      toggleDisplay(id = ns("controls-scatter"), display = "block")
     } else {
-      toggleDisplay(session = session, id = ns("controls-scatter"), display = "none")
+      toggleDisplay(id = ns("controls-scatter"), display = "none")
     }
     if (type$x %in% c("point", "line")) {
-      toggleDisplay(session = session, id = ns("controls-size"), display = "block")
+      toggleDisplay(id = ns("controls-size"), display = "block")
     } else {
-      toggleDisplay(session = session, id = ns("controls-size"), display = "none")
+      toggleDisplay(id = ns("controls-size"), display = "none")
     }
     if (type$x %in% "violin") {
-      toggleDisplay(session = session, id = ns("controls-violin"), display = "block")
+      toggleDisplay(id = ns("controls-violin"), display = "block")
     } else {
-      toggleDisplay(session = session, id = ns("controls-violin"), display = "none")
+      toggleDisplay(id = ns("controls-violin"), display = "none")
     }
   })
   
@@ -141,9 +213,37 @@ chartControlsServer <- function(input, output, session, type, data = NULL) {
   }, {
     all_inputs <- reactiveValuesToList(input)
     # remove inputs from filterDataServer module with ID "filter-data"
-    nofilter_inputs <- all_inputs[grep(pattern = "filter-data", x = names(all_inputs), invert = TRUE)]
-    nofilter_inputs <- nofilter_inputs[order(names(nofilter_inputs))]
-    outin$inputs <- nofilter_inputs
+    inputs <- all_inputs[grep(pattern = "filter-data", x = names(all_inputs), invert = TRUE)]
+    inputs <- inputs[grep(pattern = "^labs_", x = names(inputs), invert = TRUE)]
+    inputs <- inputs[grep(pattern = "^export_", x = names(inputs), invert = TRUE)]
+    inputs <- inputs[order(names(inputs))]
+    outin$inputs <- inputs
+  })
+  
+  # labs input
+  observe({
+    outin$labs <- list(
+      x = input$labs_x %empty% NULL,
+      y = input$labs_y %empty% NULL,
+      title = input$labs_title %empty% NULL,
+      subtitle = input$labs_subtitle %empty% NULL,
+      caption = input$labs_caption %empty% NULL
+    )
+  })
+  
+  # theme input
+  observe({
+    outin$theme <- list(
+      theme = input$theme,
+      args = list(
+        legend.position = input$legend_position
+      )
+    )
+  })
+  
+  # coord input
+  observe({
+    outin$coord <- if (input$flip) "flip" else NULL
   })
   
   observeEvent(res_data$data, {
@@ -226,11 +326,11 @@ linear_gradient <- function(cols) {
 controls_labs <- function(ns) {
   tags$div(
     class = "form-group",
-    textInput(inputId = ns("title"), placeholder = "Title", label = NULL),
-    textInput(inputId = ns("subtitle"), placeholder = "Subtitle", label = NULL),
-    textInput(inputId = ns("caption"), placeholder = "Caption", label = NULL),
-    textInput(inputId = ns("x"), placeholder = "X label", label = NULL),
-    textInput(inputId = ns("y"), placeholder = "Y label", label = NULL)
+    textInput(inputId = ns("labs_title"), placeholder = "Title", label = NULL),
+    textInput(inputId = ns("labs_subtitle"), placeholder = "Subtitle", label = NULL),
+    textInput(inputId = ns("labs_caption"), placeholder = "Caption", label = NULL),
+    textInput(inputId = ns("labs_x"), placeholder = "X label", label = NULL),
+    textInput(inputId = ns("labs_y"), placeholder = "Y label", label = NULL)
   )
 }
 
@@ -247,14 +347,28 @@ controls_labs <- function(ns) {
 #' @importFrom shiny icon
 #' @importFrom htmltools tagList tags
 #' @importFrom shinyWidgets colorSelectorInput pickerInput radioGroupButtons spectrumInput
-#'
+#' @importFrom ggplot2 theme_bw theme_classic theme_dark theme_gray theme_grey 
+#'  theme_light theme_linedraw theme_minimal theme_void
+#' @importFrom ggthemes theme_base theme_calc theme_economist theme_economist_white 
+#'  theme_excel theme_few theme_fivethirtyeight theme_foundation theme_gdocs theme_hc 
+#'  theme_igray theme_map theme_pander theme_par theme_solarized theme_solarized_2 
+#'  theme_solid theme_stata theme_tufte theme_wsj
 controls_appearance <- function(ns) {
 
-  if (requireNamespace("ggthemes", quietly = TRUE)) {
-    choices_themes <- ggplot_theme(c("ggplot2", "ggthemes"))
-  } else {
-    choices_themes <- ggplot_theme("ggplot2")
-  }
+  themes <- list(
+    ggplot2 = list(
+      "bw", "classic", "dark", "gray",
+      "grey", "light", "linedraw", "minimal",
+      "void"
+    ),
+    ggthemes = list(
+      "base", "calc", "economist", "economist_white",
+      "excel", "few", "fivethirtyeight", "foundation",
+      "gdocs", "hc", "igray", "map", "pander",
+      "par", "solarized", "solarized_2", "solid",
+      "stata", "tufte", "wsj"
+    )
+  )
 
   cols <- colors_palettes()
 
@@ -284,8 +398,8 @@ controls_appearance <- function(ns) {
     ),
     pickerInput(
       inputId = ns("theme"), label = "Theme:",
-      choices = choices_themes,
-      selected = "ggplot2::theme_minimal",
+      choices = themes,
+      selected = "minimal",
       options = list(size = 10)
     ),
     tags$script(
@@ -400,21 +514,40 @@ controls_params <- function(ns) {
 #' @param ns Namespace from module
 #'
 #' @noRd
-#' @importFrom shiny icon
+#' @importFrom shiny icon downloadButton uiOutput actionLink
 #' @importFrom htmltools tagList tags
-#' @importFrom shinyWidgets actionGroupButtons
 #'
 controls_code <- function(ns) {
   tagList(
-    moduleCodeUI(id = ns("code")),
+    tags$button(
+      class = "btn btn-default btn-xs pull-right btn-copy-code",
+      "Copy to clipboard", `data-clipboard-target` = paste0("#", ns("codeggplot"))
+    ), tags$script("new Clipboard('.btn-copy-code');"),
+    tags$br(),
+    tags$b("Code:"),
+    uiOutput(outputId = ns("code")),
+    tags$textarea(id = ns("holderCode"), style = "display: none;"),
+    actionLink(
+      inputId = ns("insert_code"),
+      label = "Insert code in script",
+      icon = icon("arrow-circle-left")
+    ),
+    tags$br(),
     tags$br(),
     tags$b("Export:"),
-    actionGroupButtons(
-      inputIds = c(ns("export_png"), ns("export_ppt")),
-      labels = list(
-        tags$span(icon("picture-o"), "PNG"),
-        tags$span(icon("file-powerpoint-o"), "PowerPoint")
-      ), status = "primary", fullwidth = TRUE
+    tags$br(),
+    tags$div(
+      class = "btn-group btn-group-justified",
+      downloadButton(
+        outputId = ns("export_png"), 
+        label = ".png",
+        class = "btn-primary btn-xs"
+      ),
+      downloadButton(
+        outputId = ns("export_ppt"), 
+        label = ".pptx",
+        class = "btn-primary btn-xs"
+      )
     )
   )
 }
@@ -489,10 +622,12 @@ colors_palettes <- function() {
     colors_pal
   )
 
-  list(colors_pal = colors_pal,
-       background_pals = background_pals,
-       colortext_pals = colortext_pals,
-       choices_colors = choices_colors)
+  list(
+    colors_pal = colors_pal,
+    background_pals = background_pals,
+    colortext_pals = colortext_pals,
+    choices_colors = choices_colors
+  )
 }
 
 
@@ -500,20 +635,20 @@ colors_palettes <- function() {
 
 
 
-select_geom_controls <- function(x, types) {
-  if ("bar" %in% types & x %in% c("auto", "bar")) {
+select_geom_controls <- function(x, geoms) {
+  if ("bar" %in% geoms & x %in% c("auto", "bar")) {
     "bar"
-  } else if ("histogram" %in% types & x %in% c("auto", "histogram")) {
+  } else if ("histogram" %in% geoms & x %in% c("auto", "histogram")) {
     "histogram"
-  } else if ("density" %in% types & x %in% c("auto", "density")) {
+  } else if ("density" %in% geoms & x %in% c("auto", "density")) {
     "density"
-  } else if ("point" %in% types & x %in% c("auto", "point")) {
+  } else if ("point" %in% geoms & x %in% c("auto", "point")) {
     "point"
-  } else if ("line" %in% types & x %in% c("auto", "line")) {
+  } else if ("line" %in% geoms & x %in% c("auto", "line")) {
     "line"
-  } else if ("area" %in% types & x %in% c("auto", "area")) {
+  } else if ("area" %in% geoms & x %in% c("auto", "area")) {
     "area"
-  } else if ("violin" %in% types & x %in% c("violin")) {
+  } else if ("violin" %in% geoms & x %in% c("violin")) {
     "violin"
   } else {
     "auto"
