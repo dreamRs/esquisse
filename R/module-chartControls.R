@@ -246,6 +246,16 @@ chartControlsServer <- function(input, output, session, type, data = NULL, ggplo
     outin$coord <- if (input$flip) "flip" else NULL
   })
   
+  # smooth input
+  observe({
+    outin$smooth <- list(
+      add = input$smooth_add,
+      args = list(
+        span = input$smooth_span
+      )
+    )
+  })
+  
   observeEvent(res_data$data, {
     outin$data <- res_data$data
     outin$code <- res_data$code
@@ -434,12 +444,6 @@ controls_params <- function(ns) {
   tagList(
     tags$div(
       id = ns("controls-scatter"), style = "display: none; padding-top: 10px;",
-      materialSwitch(
-        inputId = ns("smooth_add"), 
-        label = "Smooth line:",
-        right = TRUE, 
-        status = "primary"
-      ),
       conditionalPanel(
         condition = paste0("input['",  ns("smooth_add"), "']==true"),
         sliderInput(
@@ -448,6 +452,12 @@ controls_params <- function(ns) {
           min = 0.1, max = 1, 
           value = 0.75, step = 0.01
         )
+      ),
+      materialSwitch(
+        inputId = ns("smooth_add"), 
+        label = "Smooth line:",
+        right = TRUE, 
+        status = "primary"
       )
     ),
     tags$div(

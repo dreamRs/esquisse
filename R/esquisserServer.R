@@ -144,11 +144,27 @@ esquisserServer <- function(input, output, session, data = NULL, dataModule = c(
       data = data
     )
     
+    if (identical(input$geom, "auto")) {
+      geom <- "blank"
+    } else {
+      geom <- input$geom
+    }
+    
+    geom_args <- match_geom_args(input$geom, paramsChart$inputs, mapping = mapping)
+    
+    if (isTRUE(paramsChart$smooth$add) & input$geom %in% c("point", "line")) {
+      geom <- c(geom, "smooth")
+      geom_args <- c(
+        setNames(list(geom_args), input$geom),
+        list(smooth = paramsChart$smooth$args)
+      )
+    }
+    
     gg_call <- ggcall(
       data = dataChart$name, 
       mapping = mapping, 
-      geom = if (identical(input$geom, "auto")) "blank" else input$geom,
-      geom_args = match_geom_args(input$geom, paramsChart$inputs, mapping = mapping), 
+      geom = geom,
+      geom_args = geom_args, 
       scales = scales$scales, 
       scales_args = scales$args,
       labs = paramsChart$labs, 
