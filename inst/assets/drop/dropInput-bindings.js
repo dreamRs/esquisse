@@ -24,9 +24,11 @@ $.extend(dropInputBinding, {
   
   setValue: function setValue(el, value) {
     var selected = $(el).find(".drop-input-button[data-value='" + value + "']"); 
-    $(el).find('.drop-input-main').html(selected[0].innerHTML);
-    var datavalue = selected.data("value");
-    $(el).find('.drop-input-main').data("value", datavalue);
+    if (typeof selected[0] !== 'undefined') {
+      $(el).find('.drop-input-main').html(selected[0].innerHTML);
+      var datavalue = selected.data("value");
+      $(el).find('.drop-input-main').data("value", datavalue);
+    }
   },
 
   subscribe: function(el, callback) {
