@@ -162,7 +162,7 @@ filterDF <- function(input, output, session,
   
   data_filtered <- reactive({
     data <- data_table()
-    req(identical(names(data), names(rv_filters$mapping)))
+    req(all(names(rv_filters$mapping) %in% names(data)))
     filter_inputs <- lapply(
       X = rv_filters$mapping, 
       FUN = function(x) {
@@ -210,9 +210,11 @@ filterDF <- function(input, output, session,
 #' @importFrom stats setNames
 create_filters <- function(data, vars = NULL, width = "100%", session = getDefaultReactiveDomain()) {
   ns <- session$ns
+  data <- drop_id(data)
+  data <- drop_na(data)
+  data <- dropListColumns(data)
   if (is.null(vars)) 
     vars <- names(data)
-  sliders <- c("numeric", "integer", "Date", "POSIXct")
   filters_id <- paste0("filter_", sample.int(1e9, length(vars)))
   filters_id <- setNames(as.list(filters_id), vars)
   filters_na_id <- setNames(as.list(paste0("na_", filters_id)), vars)
@@ -222,9 +224,24 @@ create_filters <- function(data, vars = NULL, width = "100%", session = getDefau
       var <- data[[variable]]
       var <- var[!is.na(var)]
       id <- filters_id[[variable]]
-      if (length(var) == 0)
-        return(NULL)
-      if (inherits(x = var, what = sliders)) {
+      if (inherits(x = var, what = c("numeric", "integer"))) {
+        params <- find_range_step(var)
+        tagList(
+          tags$span(
+            tags$label(variable), HTML("&nbsp;&nbsp;"), 
+            na_filter(id = ns(paste0("na_", id)))
+          ),
+          set_slider_attr(sliderInput(
+            inputId = ns(id), 
+            min = params$min, 
+            max = params$max, 
+            width = width,
+            value = params$range, 
+            step = params$step,
+            label = NULL
+          ))
+        )
+      } else if (inherits(x = var, what = c("Date", "POSIXct"))) {
         range_var <- range(var)
         tagList(
           tags$span(
@@ -242,14 +259,7 @@ create_filters <- function(data, vars = NULL, width = "100%", session = getDefau
         )
       } else {
         values <- unique(as.character(var))
-        
         values <- values[trimws(values) != ""]
-        if (length(values) <= 1)
-          return(NULL)
-        if (length(values) >= length(var) * 0.9)
-          return(NULL)
-        if (length(values) >= 50)
-          return(NULL)
         tags$div(
           class = if (length(values) > 15) "selectize-big",
           tags$span(
@@ -295,7 +305,7 @@ set_slider_attr <- function(slider) {
 #' @importFrom shinyWidgets prettySwitch
 na_filter <- function(id) {
   tags$span(
-    style = "position: absolute; right: 0px; margin-right: -10px;",
+    style = "position: absolute; right: 0px; margin-right: -20px;",
     prettySwitch(
       inputId = id,
       label = "NA",
@@ -318,7 +328,7 @@ make_expr_filter <- function(filters, filters_na, data, data_name) {
       data_values <- data[[var]]
       values_expr <- NULL
       if (inherits(x = values, what = c("numeric", "integer"))) {
-        data_values <- range(data_values, na.rm = TRUE)
+        data_values <- find_range_step(data_values)$range
         if (!isTRUE(all.equal(values, data_values))) {
           values_expr <- expr(!!sym(var) >= !!values[1] & !!sym(var) <= !!values[2])
         }
@@ -356,6 +366,70 @@ make_expr_filter <- function(filters, filters_na, data, data_name) {
     expr_dplyr = expr_dplyr,
     expr = expression
   ))
+}
+
+
+drop_id <- function(data) {
+  data[] <- lapply(
+    X = data,
+    FUN = function(x) {
+      if (inherits(x, c("factor", "character"))) {
+        values <- unique(as.character(x))
+        values <- values[trimws(values) != ""]
+        if (length(values) <= 1)
+          return(NULL)
+        if (length(values) >= length(x) * 0.9)
+          return(NULL)
+        if (length(values) >= 50)
+          return(NULL)
+      }
+      x
+    }
+  )
+  data
+}
+
+drop_na <- function(data) {
+  data[] <- lapply(
+    X = data,
+    FUN = function(x) {
+      if (all(is.na(x)))
+        return(NULL)
+      x
+    }
+  )
+  data
+}
+
+
+# borrowed from shiny
+hasDecimals <- function (value) {
+  truncatedValue <- round(value)
+  return(!identical(value, truncatedValue))
+}
+
+find_range_step <- function(x) {
+  max <- max(x, na.rm = TRUE)
+  min <- min(x, na.rm = TRUE)
+  range <- max - min
+  if (range < 2 || hasDecimals(min) || hasDecimals(max)) {
+    pretty_steps <- pretty(c(min, max), n = 100, high.u.bias = 1)
+    n_steps <- length(pretty_steps) - 1
+    list(
+      range = range(pretty_steps),
+      min = min(pretty_steps),
+      max = max(pretty_steps),
+      step = signif(digits = 10, (max(pretty_steps) - min(pretty_steps))/n_steps)
+    )
+  }
+  else {
+    list(
+      range = range(x, na.rm = TRUE),
+      min = min,
+      max = max,
+      step = 1
+    )
+  }
 }
 
 

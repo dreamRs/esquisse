@@ -99,21 +99,19 @@ esquisserServer <- function(input, output, session, data = NULL, dataModule = c(
     module = chartControlsServer, 
     id = "controls", 
     type = geom_controls, 
-    data = reactive(dataChart$data),
+    data_table = reactive(dataChart$data),
+    data_name = reactive({
+      req(dataChart$name)
+      dataChart$name
+    }),
     ggplot_rv = ggplotCall
   )
-  # observeEvent(paramsChart$index, {
-  #   dataChart$data_filtered <- dataChart$data[paramsChart$index, ]
-  # })
 
-  
-  # plot generated
-  ggplot_r <- reactiveValues(p = NULL)
   
   output$plooooooot <- renderPlot({
     req(input$play_plot, cancelOutput = TRUE)
     req(dataChart$data)
-    req(paramsChart$index)
+    req(paramsChart$data)
     req(paramsChart$inputs)
     req(input$geom)
     
@@ -132,10 +130,7 @@ esquisserServer <- function(input, output, session, data = NULL, dataModule = c(
     )
     req(input$geom %in% geoms)
     
-    data <- dataChart$data
-    # if (!is.null(paramsChart$index) && is.logical(paramsChart$index) & length(paramsChart$index) > 0) {
-    #   data <- data[paramsChart$index, , drop = FALSE]
-    # }
+    data <- paramsChart$data
     
     
     scales <- which_pal_scale(

@@ -23,36 +23,51 @@ chartControlsUI <- function(id) {
       "sw-content-filterdrop"
     )),
     dropdown(
-      controls_labs(ns), inputId = "labsdrop",
-      style = "default", label = "Labels & Title", 
-      up = TRUE, icon = icon("font"), 
+      controls_labs(ns),
+      inputId = "labsdrop",
+      style = "default",
+      label = "Labels & Title", 
+      up = TRUE, 
+      icon = icon("font"), 
       status = "default btn-controls"
     ),
     dropdown(
       controls_params(ns), controls_appearance(ns),
-      style = "default", label = "Plot options",
-      up = TRUE, inputId = "paramsdrop",
-      icon = icon("gears"), status = "default btn-controls"
-    ),
-    dropdown(
-      tags$div(
-        style = "max-height: 400px; overflow-y: scroll;", #  padding-left: 10px;
-        filterDataUI(id = ns("filter-data"))
-      ),
-      style = "default", label = "Data", 
-      up = TRUE, icon = icon("filter"),
-      right = TRUE, inputId = "filterdrop",
+      style = "default",
+      label = "Plot options",
+      up = TRUE, 
+      inputId = "paramsdrop",
+      icon = icon("gears"), 
       status = "default btn-controls"
     ),
     dropdown(
-      controls_code(ns), width = "330px",
-      style = "default", label = "Export & code", 
-      up = TRUE, right = TRUE, inputId = "codedrop",
-      icon = icon("code"), status = "default btn-controls"
+      tags$div(
+        style = "max-height: 400px; overflow-y: scroll; overflow-x: hidden;", #  padding-left: 10px;
+        filterDF_UI(id = ns("filter-data"))
+      ),
+      style = "default", 
+      label = "Data", 
+      up = TRUE, 
+      icon = icon("filter"),
+      right = TRUE, 
+      inputId = "filterdrop",
+      status = "default btn-controls"
+    ),
+    dropdown(
+      controls_code(ns), 
+      style = "default", 
+      label = "Export & code", 
+      up = TRUE,
+      right = TRUE, 
+      inputId = "codedrop",
+      icon = icon("code"), 
+      status = "default btn-controls"
     ),
     tags$script("$('.sw-dropdown').addClass('btn-group-charter');"),
     tags$script(HTML("$('.sw-dropdown > .btn').addClass('btn-charter');")),
     tags$script("$('#sw-content-filterdrop').click(function (e) {e.stopPropagation();});"),
+    tags$script("$('#sw-content-filterdrop').css('min-width', '350px');"),
+    tags$script("$('#sw-content-codedrop').css('min-width', '350px');"),
     useShinyUtils()
   )
 }
@@ -64,7 +79,8 @@ chartControlsUI <- function(id) {
 #'
 #' @param input,output,session standards \code{shiny} server arguments.
 #' @param type \code{reactiveValues} indicating the type of chart.
-#' @param data \code{reactive} function returning data used in plot.
+#' @param data_table \code{reactive} function returning data used in plot.
+#' @param data_name \code{reactive} function returning data name.
 #' @param ggplot_rv \code{reactiveValues} withggplot object (for export).
 #'
 #' @return A reactiveValues with all input's values
@@ -75,7 +91,7 @@ chartControlsUI <- function(id) {
 #' @importFrom rstudioapi insertText getActiveDocumentContext
 #' @importFrom htmltools tags tagList
 #'
-chartControlsServer <- function(input, output, session, type, data = NULL, ggplot_rv) {
+chartControlsServer <- function(input, output, session, type, data_table, data_name, ggplot_rv) {
 
   ns <- session$ns
   
@@ -133,6 +149,12 @@ chartControlsServer <- function(input, output, session, type, data = NULL, ggplo
   output$code <- renderUI({
     code <- ggplot_rv$code
     code <- stringi::stri_replace_all(str = code, replacement = "+\n", fixed = "+")
+    if (!is.null(output_filter$code$expr)) {
+      code_dplyr <- deparse(output_filter$code$dplyr, width.cutoff = 80L)
+      code_dplyr <- paste(code_dplyr, collapse = "\n")
+      code_dplyr <- stringi::stri_replace_all(str = code_dplyr, replacement = "%>%\n", fixed = "%>%")
+      code <- paste(code_dplyr, code, sep = "\n\n")
+    }
     htmltools::tagList(
       rCodeContainer(id = ns("codeggplot"), code)
     )
@@ -190,20 +212,14 @@ chartControlsServer <- function(input, output, session, type, data = NULL, ggplo
     }
   })
   
-  res_data <- callModule(
-    module = filterDataServer, 
-    id = "filter-data", data = data, 
-    width = "95%"
+  output_filter <- callModule(
+    module = filterDF, 
+    id = "filter-data", 
+    data_table = data_table, 
+    data_name = data_name
   )
 
   outin <- reactiveValues(inputs = NULL, export_ppt = NULL, export_png = NULL)
-  
-  observeEvent(input$export_ppt, {
-    outin$export_ppt <- input$export_ppt
-  }, ignoreInit = TRUE)
-  observeEvent(input$export_png, {
-    outin$export_png <- input$export_png
-  }, ignoreInit = TRUE)
 
   observeEvent({
     all_inputs <- reactiveValuesToList(input)
@@ -254,10 +270,9 @@ chartControlsServer <- function(input, output, session, type, data = NULL, ggplo
     )
   })
   
-  observeEvent(res_data$data, {
-    outin$data <- res_data$data
-    outin$code <- res_data$code
-    outin$index <- res_data$index
+  observeEvent(output_filter$data_filtered(), {
+    outin$data <- output_filter$data_filtered()
+    outin$code <- output_filter$code$dplyr
   })
 
   return(outin)
@@ -386,16 +401,19 @@ controls_appearance <- function(ns) {
       spectrumInput(
         inputId = ns("fill_color"),
         label = "Choose a color:",
-        choices = c(list(c("#0C4C8A", "#EF562D")), unname(cols$choices_colors))
+        choices = c(list(c("#0C4C8A", "#EF562D")), unname(cols$choices_colors)), 
+        width = "100%"
       )
     ),
     tags$div(
       id = ns("controls-palette"), style = "display: none;",
       tags$style(".bootstrap-select .dropdown-menu li a span.text {width: 100%;}"),
       pickerInput(
-        inputId = ns("palette"), label = "Choose a palette:",
+        inputId = ns("palette"),
+        label = "Choose a palette:",
         choices = cols$colors_pal,
-        selected = "ggplot2", width = "100%",
+        selected = "ggplot2", 
+        width = "100%",
         choicesOpt = list(
           content = sprintf(
             "<div style='width:100%%;border-radius:4px; padding: 2px;background:%s;color:%s'>%s</div>",
@@ -405,22 +423,27 @@ controls_appearance <- function(ns) {
       )
     ),
     pickerInput(
-      inputId = ns("theme"), label = "Theme:",
+      inputId = ns("theme"),
+      label = "Theme:",
       choices = themes,
       selected = "minimal",
-      options = list(size = 10)
+      options = list(size = 10),
+      width = "100%"
     ),
     tags$script(
       paste0("$('#", ns("theme"), "').addClass('dropup');")
     ),
     radioGroupButtons(
-      inputId = ns("legend_position"), label = "Legend position:",
+      inputId = ns("legend_position"), 
+      label = "Legend position:",
       choiceNames = list(
         icon("arrow-left"), icon("arrow-up"),
         icon("arrow-down"), icon("arrow-right"), icon("close")
       ),
       choiceValues = c("left", "top", "bottom", "right", "none"),
-      selected = "right", justified = TRUE, size = "sm"
+      selected = "right",
+      justified = TRUE, 
+      size = "sm"
     )
   )
 }
