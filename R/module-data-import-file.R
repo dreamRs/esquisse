@@ -63,9 +63,7 @@ dataImportFileUI <- function(id, dismissOnValidate = TRUE, selectVars = TRUE, co
 
 
 
-#' @param input standard \code{shiny} input.
-#' @param output standard \code{shiny} output.
-#' @param session standard \code{shiny} session.
+#' @param input,output,session standards \code{shiny} server arguments.
 #' @param data Default \code{data.frame} to use.
 #' @param name Default name to use.
 #' 

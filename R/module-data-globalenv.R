@@ -8,7 +8,7 @@
 #'
 #' @noRd
 #' 
-#' @name data-globalenv
+#' @name module-data-globalenv
 #' 
 #' @importFrom htmltools tagList tags HTML
 #' @importFrom shiny NS actionButton icon
@@ -80,15 +80,13 @@ dataGlobalEnvUI <- function(id, dismissOnValidate = TRUE, selectVars = TRUE, coe
 }
 
 
-#' @param input standard \code{shiny} input.
-#' @param output standard \code{shiny} output.
-#' @param session standard \code{shiny} session.
+#' @param input,output,session standards \code{shiny} server arguments.
 #' @param data Default \code{data.frame} to use.
 #' @param name Default name to use.
 #' 
 #' @noRd
 #' 
-#' @rdname data-globalenv
+#' @rdname module-data-globalenv
 #'
 #' @importFrom shiny reactiveValues observeEvent req removeUI insertUI callModule
 dataGlobalEnvServer <- function(input, output, session, data = NULL, name = NULL) {

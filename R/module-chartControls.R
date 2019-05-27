@@ -62,9 +62,7 @@ chartControlsUI <- function(id) {
 
 #' Dropup buttons to hide chart's controls
 #'
-#' @param input   standard \code{shiny} input.
-#' @param output  standard \code{shiny} output.
-#' @param session standard \code{shiny} session.
+#' @param input,output,session standards \code{shiny} server arguments.
 #' @param type \code{reactiveValues} indicating the type of chart.
 #' @param data \code{reactive} function returning data used in plot.
 #' @param ggplot_rv \code{reactiveValues} withggplot object (for export).

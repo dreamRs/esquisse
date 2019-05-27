@@ -10,7 +10,7 @@
 #' @importFrom htmltools tags tagList singleton 
 #' @importFrom shiny NS 
 #' 
-#' @name filterData-module
+#' @name module-filterData
 #' 
 #' @note Column's names can be modified to be valid R names.
 #'  discrete columns with more than 50 unique values will be discarded. 
@@ -91,16 +91,14 @@ filterDataUI <- function(id) {
 
 
 
-#' @param input standard \code{shiny} input.
-#' @param output standard \code{shiny} output.
-#' @param session standard \code{shiny} session.
+#' @param input,output,session standards \code{shiny} server arguments.
 #' @param data a \code{data.frame} or a \code{\link[shiny]{reactive}} function returning a \code{data.frame}.
 #' @param vars variables for which to create filters, by default all variables in \code{data}.
 #' @param width the width of the input, e.g. \code{400px}, or \code{100\%}.
 #'
 #' @export
 #' 
-#' @rdname filterData-module
+#' @rdname module-filterData
 #'
 #' @importFrom shiny reactiveValues reactive is.reactive observeEvent removeUI insertUI reactiveValuesToList
 filterDataServer <- function(input, output, session, data, vars = NULL, width = "100%") {

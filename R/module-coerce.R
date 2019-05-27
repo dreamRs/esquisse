@@ -3,7 +3,7 @@
 #'
 #' @param id Module's id
 #' 
-#' @name coerce-module
+#' @name module-coerce
 #'
 #' @return a \code{reactiveValues} with two slots: \code{data} original \code{data.frame}
 #'  with modified columns, and \code{names} column's names with call to coerce method.
@@ -119,9 +119,7 @@ coerceUI <- function(id) {
 }
 
 
-#' @param input standard \code{shiny} input.
-#' @param output standard \code{shiny} output.
-#' @param session standard \code{shiny} session.
+#' @param input,output,session standards \code{shiny} server arguments.²
 #' @param data A \code{data.frame} or a \code{reactive}
 #'  function returning a \code{data.frame} or a 
 #'  \code{reactivevalues} with a slot containing a \code{data.frame} 
@@ -131,7 +129,7 @@ coerceUI <- function(id) {
 #'
 #' @export
 #' 
-#' @rdname coerce-module
+#' @rdname module-coerce
 #' 
 #' @importFrom htmltools tags
 #' @importFrom shinyWidgets updatePickerInput

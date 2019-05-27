@@ -12,7 +12,7 @@
 #' and the name of the selected \code{data.frame} under slot \code{name}.
 #' @export
 #' 
-#' @name chooseData-module
+#' @name module-chooseData
 #' 
 #' @importFrom htmltools tagList tags singleton
 #' @importFrom shiny NS actionButton icon 
@@ -102,11 +102,10 @@ chooseDataUI <- function(id, label = "Data", icon = "database") {
   )
 }
 
-#' @param input Standard \code{shiny} input.
-#' @param output Standard \code{shiny} output.
-#' @param session Standard \code{shiny} session.
+#' @param input,output,session standards \code{shiny} server arguments.
 #' @param dataModule Data module to use, choose between \code{"GlobalEnv"}
-#'  or \code{"ImportFile"}.
+#'  (select ad \code{data.frame} from Global environment)
+#'  or \code{"ImportFile"} (import an external file supported by \code{\link[rio]{import}}).
 #' @param data A \code{data.frame} to use by default.
 #' @param name Character, object's name to use for \code{data}.
 #' @param selectVars Display module to select variables, \code{TRUE} by default.
@@ -116,11 +115,12 @@ chooseDataUI <- function(id, label = "Data", icon = "database") {
 #' 
 #' @export
 #'
-#' @rdname chooseData-module
+#' @rdname module-chooseData
 #'
 #' @importFrom shiny showModal modalDialog observeEvent reactiveValues callModule observe icon
 #' @importFrom htmltools tags HTML
-chooseDataServer <- function(input, output, session, dataModule = c("GlobalEnv", "ImportFile"), 
+chooseDataServer <- function(input, output, session, 
+                             dataModule = c("GlobalEnv", "ImportFile"), 
                              data = NULL, name = NULL, 
                              selectVars = TRUE, coerceVars = FALSE, 
                              launchOnStart = TRUE, size = "m") {
