@@ -1,0 +1,2 @@
+
+utils::globalVariables(c("%>%", "filter"))

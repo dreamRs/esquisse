@@ -1,7 +1,7 @@
 
 #' Modules for creating filters from a data.frame
 #'
-#' @param id Module's id
+#' @param id Module id. See \code{\link[shiny]{callModule}}.
 #'
 #' @return a \code{\link[shiny]{reactiveValues}} containing the data filtered under 
 #' slot \code{data}, the R code to reproduce the filtering under slot \code{code} and a logical

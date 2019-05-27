@@ -1,7 +1,7 @@
 
 #' Dropup buttons to hide chart's controls
 #'
-#' @param id Module's id
+#' @param id Module id. See \code{\link[shiny]{callModule}}.
 #'
 #' @return a \code{\link[shiny]{tagList}} containing UI elements
 #' @noRd

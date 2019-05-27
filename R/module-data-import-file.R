@@ -1,7 +1,7 @@
 
 #' Module to import a file
 #'
-#' @param id Module's id.
+#' @param id Module id. See \code{\link[shiny]{callModule}}.
 #' @param dismissOnValidate Dismiss modal when user validate data, \code{TRUE} by default.
 #' @param selectVars Display module to select variables, \code{TRUE} by default.
 #' @param coerceVars Display module to coerce variables between different class, \code{TRUE} by default.

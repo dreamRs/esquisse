@@ -11,7 +11,7 @@ coerceUI(id)
 coerceServer(input, output, session, data, reactiveValuesSlot = "data")
 }
 \arguments{
-\item{id}{Module's id}
+\item{id}{Module id. See \code{\link[shiny]{callModule}}.}
 
 \item{input, output, session}{standards \code{shiny} server arguments.²}
 

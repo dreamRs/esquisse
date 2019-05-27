@@ -1,7 +1,7 @@
 
 #' Coerce data.frame's columns module
 #'
-#' @param id Module's id
+#' @param id Module id. See \code{\link[shiny]{callModule}}.
 #' 
 #' @name module-coerce
 #'

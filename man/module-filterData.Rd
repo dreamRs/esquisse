@@ -12,7 +12,7 @@ filterDataServer(input, output, session, data, vars = NULL,
   width = "100\%")
 }
 \arguments{
-\item{id}{Module's id}
+\item{id}{Module id. See \code{\link[shiny]{callModule}}.}
 
 \item{input, output, session}{standards \code{shiny} server arguments.}
 
