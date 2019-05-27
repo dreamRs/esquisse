@@ -342,7 +342,11 @@ make_expr_filter <- function(filters, filters_na, data, data_name) {
       } else {
         data_values <- unique(as.character(data_values))
         if (!identical(sort(values), sort(data_values))) {
-          values_expr <- expr(!!sym(var) %in% !!values)
+          if (length(values) <= length(data_values)/2) {
+            values_expr <- expr(!!sym(var) %in% !!values)
+          } else {
+            values_expr <- expr(!(!!sym(var) %in% !!setdiff(data_values, values)))
+          }
         }
       }
       if (is.null(values_expr) & !isTRUE(nas)) {
