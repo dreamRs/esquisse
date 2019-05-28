@@ -66,30 +66,3 @@ test_that("col_type works", {
 })
 
 
-test_that("%+|% works", {
-  
-  expect_identical( "a" %+|% "b", "a | b" )
-  expect_identical( "a" %+|% "", "a" )
-  expect_identical( "" %+|% "b", "" )
-  expect_identical( "" %+|% "", "" )
-  
-})
-
-
-test_that("%+|% works", {
-  
-  expect_identical( "a" %+|% "b", "a | b" )
-  expect_identical( "a" %+|% "", "a" )
-  expect_identical( "" %+|% "b", "" )
-  expect_identical( "" %+|% "", "" )
-  
-})
-
-test_that("%+&% works", {
-  
-  expect_identical( "a" %+&% "b", "a & b" )
-  expect_identical( "a" %+&% "", "a" )
-  expect_identical( "" %+&% "b", "b" )
-  expect_identical( "" %+&% "", "" )
-  
-})

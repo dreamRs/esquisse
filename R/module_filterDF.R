@@ -283,7 +283,7 @@ create_filters <- function(data, vars = NULL, width = "100%", session = getDefau
     }
   )
   list(
-    ui = ui,
+    ui = tagList(ui),
     filters_id = filters_id,
     filters_na_id = filters_na_id
   )

@@ -32,4 +32,4 @@ Suggests:
     rvg,
     rio,
     DT,
-    testthat
+    testthat (>= 2.1.0)

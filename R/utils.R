@@ -14,85 +14,18 @@
 
 `%nin%` <- Negate(`%in%`)
 
-`%+&%` <- function(e1, e2) {
-  if (is.null(e2))
-    e2 <- ""
-  if (is.null(e1))
-    e1 <- ""
-  if (e1 != "" & e2 != "") {
-    paste(e1, e2, sep = " & ")
-  } else if (e1 != "" & e2 == "") {
-    e1
-  } else if (e1 == "" & e2 != "") {
-    e2
-  } else {
-    ""
-  }
-}
-
-`%+|%` <- function(e1, e2) {
-  if (is.null(e2))
-    e2 <- ""
-  if (is.null(e1))
-    e1 <- ""
-  if (e1 != "" & e2 != "") {
-    paste(e1, e2, sep = " | ")
-  } else if (e1 != "" & e2 == "") {
-    e1
-  } else if (e1 == "" & e2 != "") {
-    ""
-  } else {
-    ""
-  }
-}
-
-`%+1%` <- function(e1, e2) {
-  if (is.null(e2))
-    e2 <- ""
-  if (is.null(e1))
-    e1 <- ""
-  if (e1 != "" & e2 != "") {
-    paste("(", e1, e2, ")")
-  } else if (e1 != "" & e2 == "") {
-    e1
-  } else if (e1 == "" & e2 != "") {
-    if (grepl(pattern = "&", x = e2)) {
-      gsub(pattern = "(&|\\|)\\s", replacement = "", x = e2)
-    } else {
-      ""
-    }
-  } else {
-    ""
-  }
-}
-
-`%+%` <- function(e1, e2) {
-  if (is.null(e2))
-    e2 <- ""
-  if (is.null(e1))
-    e1 <- ""
-  if (e1 != "" & e2 != "") {
-    paste("(", e1, e2, ")")
-  } else if (e1 != "" & e2 == "") {
-    e1
-  } else if (e1 == "" & e2 != "") {
-    e2
-  } else {
-    ""
-  }
-}
 
 
-# Utility : drop NULL from list
-dropNulls <- function (x) {
+
+
+# utilities borrowed from shiny
+dropNulls <- function(x) {
   x[!vapply(x, is.null, FUN.VALUE = logical(1))]
 }
-
-nullOrEmpty <- function (x) {
+nullOrEmpty <- function(x) {
   is.null(x) || length(x) == 0 || x == ""
 }
-dropNullsOrEmpty <- function (x)
-{
+dropNullsOrEmpty <- function(x) {
   x[!vapply(x, nullOrEmpty, FUN.VALUE = logical(1))]
 }
 
@@ -105,9 +38,6 @@ clean_string <- function(str) {
   return(str)
 }
 
-backticks <- function(x) {
-  paste0("`", x, "`")
-}
 
 
 #' Retrieve a data.frame by name from an environment
@@ -248,7 +178,6 @@ col_type <- function(x, no_id = FALSE) {
 
 
 # utils for geom icons
-
 geomIcons <- function() {
   geoms <- c(
     "auto", "line", "area", "bar", "histogram", 

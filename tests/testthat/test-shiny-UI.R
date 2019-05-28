@@ -23,3 +23,7 @@ test_that("coerceUI works", {
   expect_is(coerce, "shiny.tag")
 })
 
+test_that("filterDF_UI works", {
+  coerce <- filterDF_UI(id = "TEST")
+  expect_is(coerce, "shiny.tag.list")
+})
