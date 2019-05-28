@@ -104,7 +104,10 @@ esquisserServer <- function(input, output, session, data = NULL, dataModule = c(
       req(dataChart$name)
       dataChart$name
     }),
-    ggplot_rv = ggplotCall
+    ggplot_rv = ggplotCall,
+    use_facet = reactive({
+      !is.null(input$dragvars$target$facet)
+    })
   )
 
   
@@ -167,7 +170,8 @@ esquisserServer <- function(input, output, session, data = NULL, dataModule = c(
       theme = paramsChart$theme$theme,
       theme_args = paramsChart$theme$args, 
       coord = paramsChart$coord, 
-      facet = input$dragvars$target$facet
+      facet = input$dragvars$target$facet, 
+      facet_args = paramsChart$facet
     )
 
     ggplotCall$code <- expr_deparse(gg_call, width = 1e4)

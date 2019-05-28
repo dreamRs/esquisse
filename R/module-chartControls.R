@@ -68,6 +68,7 @@ chartControlsUI <- function(id) {
     tags$script("$('#sw-content-filterdrop').click(function (e) {e.stopPropagation();});"),
     tags$script("$('#sw-content-filterdrop').css('min-width', '350px');"),
     tags$script("$('#sw-content-codedrop').css('min-width', '350px');"),
+    tags$script("$('#sw-content-paramsdrop').css('min-width', '330px');"),
     useShinyUtils()
   )
 }
@@ -81,7 +82,9 @@ chartControlsUI <- function(id) {
 #' @param type \code{reactiveValues} indicating the type of chart.
 #' @param data_table \code{reactive} function returning data used in plot.
 #' @param data_name \code{reactive} function returning data name.
-#' @param ggplot_rv \code{reactiveValues} withggplot object (for export).
+#' @param ggplot_rv \code{reactiveValues} with ggplot object (for export).
+#' @param use_facet \code{reactive} function returning
+#'  \code{TRUE} / \code{FALSE} if plot use facets.
 #'
 #' @return A reactiveValues with all input's values
 #' @noRd
@@ -91,7 +94,7 @@ chartControlsUI <- function(id) {
 #' @importFrom rstudioapi insertText getActiveDocumentContext
 #' @importFrom htmltools tags tagList
 #'
-chartControlsServer <- function(input, output, session, type, data_table, data_name, ggplot_rv) {
+chartControlsServer <- function(input, output, session, type, data_table, data_name, ggplot_rv, use_facet = shiny::reactive(FALSE)) {
 
   ns <- session$ns
   
@@ -165,6 +168,14 @@ chartControlsServer <- function(input, output, session, type, data_table, data_n
   
   
   # Controls ----
+  
+  observeEvent(use_facet(), {
+    if (isTRUE(use_facet())) {
+      toggleDisplay(id = ns("controls-facet"), display = "block")
+    } else {
+      toggleDisplay(id = ns("controls-facet"), display = "none")
+    }
+  })
 
   observeEvent(type$palette, {
     if (isTRUE(type$palette)) {
@@ -244,6 +255,13 @@ chartControlsServer <- function(input, output, session, type, data_table, data_n
       title = input$labs_title %empty% NULL,
       subtitle = input$labs_subtitle %empty% NULL,
       caption = input$labs_caption %empty% NULL
+    )
+  })
+  
+  # facet input
+  observe({
+    outin$facet <- list(
+      scales = if (identical(input$facet_scales, "fixed")) NULL else input$facet_scales
     )
   })
   
@@ -493,6 +511,18 @@ controls_params <- function(ns) {
       )
     ),
     tags$div(
+      id = ns("controls-facet"), style = "display: none;",
+      prettyRadioButtons(
+        inputId = ns("facet_scales"),
+        label = "Facet scales:", 
+        inline = TRUE,
+        status = "primary", 
+        choices = c("fixed", "free", "free_x", "free_y"),
+        outline = TRUE, 
+        icon = icon("check")
+      )
+    ),
+    tags$div(
       id = ns("controls-histogram"), style = "display: none;",
       sliderInput(
         inputId = ns("bins"), 
@@ -504,9 +534,13 @@ controls_params <- function(ns) {
     tags$div(
       id = ns("controls-violin"), style = "display: none;",
       prettyRadioButtons(
-        inputId = ns("scale"), label = "Scale:", inline = TRUE,
-        status = "primary", choices = c("area", "count", "width"),
-        outline = TRUE, icon = icon("check")
+        inputId = ns("scale"),
+        label = "Scale:", 
+        inline = TRUE,
+        status = "primary", 
+        choices = c("area", "count", "width"),
+        outline = TRUE, 
+        icon = icon("check")
       )
     ),
     tags$div(

@@ -30,12 +30,20 @@ esquisser(iris)
 # If in RStudio it will be launched by default in dialog window
 # If not, it will be launched in browser
 
-# change display mode with :
+# Launch esquisse in browser :
 esquisser(iris, viewer = "browser")
 
-# You can this option in .Rprofile :
+# You can set this option in .Rprofile :
 options("esquisse.viewer" = "viewer")
 # or
 options("esquisse.viewer" = "browser")
+
+# esquisse use shiny::runApp
+# see ?shiny::runApp to see options 
+# available, example to use custom port:
+
+options("shiny.port" = 8080)
+esquisser(iris, viewer = "browser")
+
 }
 }

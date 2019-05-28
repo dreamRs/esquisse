@@ -13,6 +13,7 @@
 #' @param theme Character. Name of the theme to use (without "theme_").
 #' @param theme_args List. Named list for theme arguments.
 #' @param facet Character vector. Names of variables to use as facet.
+#' @param facet_args List. Named list for facet arguments.
 #'
 #' @return a call
 #' @export
@@ -82,7 +83,8 @@ ggcall <- function(data = NULL,
                    labs = list(), 
                    theme = NULL, 
                    theme_args = list(),
-                   facet = NULL) {
+                   facet = NULL,
+                   facet_args = list()) {
   if (is.null(data))
     return(expr(ggplot()))
   data <- sym(data)
@@ -141,8 +143,14 @@ ggcall <- function(data = NULL,
     ggcall <- expr(!!ggcall + !!theme_args)
   }
   if (!is.null(facet)) {
-    facet <- expr(facet_wrap(vars(!!!syms(facet))))
-    ggcall <- expr(!!ggcall + !!facet)
+    facet_args <- dropNullsOrEmpty(facet_args)
+    if (length(facet_args) > 0) {
+      facet <- expr(facet_wrap(vars(!!!syms(facet)), !!!facet_args))
+      ggcall <- expr(!!ggcall + !!facet)
+    } else {
+      facet <- expr(facet_wrap(vars(!!!syms(facet))))
+      ggcall <- expr(!!ggcall + !!facet)
+    }
   }
   ggcall
 }

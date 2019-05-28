@@ -7,7 +7,7 @@
 ggcall(data = NULL, mapping = NULL, geom = NULL,
   geom_args = list(), scales = NULL, scales_args = list(),
   coord = NULL, labs = list(), theme = NULL, theme_args = list(),
-  facet = NULL)
+  facet = NULL, facet_args = list())
 }
 \arguments{
 \item{data}{Character. Name of the \code{data.frame}.}
@@ -32,6 +32,8 @@ if \code{scales} is length > 1, must be a named list with \code{scales} names.}
 \item{theme_args}{List. Named list for theme arguments.}
 
 \item{facet}{Character vector. Names of variables to use as facet.}
+
+\item{facet_args}{List. Named list for facet arguments.}
 }
 \value{
 a call
