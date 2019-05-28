@@ -91,8 +91,9 @@ chartControlsUI <- function(id) {
 #'
 #' @importFrom shiny observeEvent reactiveValues reactiveValuesToList
 #'  downloadHandler renderUI reactive
-#' @importFrom rstudioapi insertText getActiveDocumentContext
+#' @importFrom rstudioapi insertText getSourceEditorContext
 #' @importFrom htmltools tags tagList
+#' @importFrom stringi stri_replace_all
 #'
 chartControlsServer <- function(input, output, session, 
                                 type, data_table, data_name,
@@ -102,7 +103,6 @@ chartControlsServer <- function(input, output, session,
                                 use_transY = shiny::reactive(FALSE)) {
 
   ns <- session$ns
-  
   
   # Export ----
   
@@ -146,23 +146,32 @@ chartControlsServer <- function(input, output, session,
   
   # Code ----
   observeEvent(input$insert_code, {
-    context <- rstudioapi::getActiveDocumentContext()
+    context <- rstudioapi::getSourceEditorContext()
     code <- ggplot_rv$code
+    code <- stri_replace_all(str = code, replacement = "+\n", fixed = "+")
     if (input$insert_code == 1) {
       code <- paste("library(ggplot2)", code, sep = "\n\n")
     }
-    rstudioapi::insertText(text = code, id = context$id)
-  })
-  
-  output$code <- renderUI({
-    code <- ggplot_rv$code
-    code <- stringi::stri_replace_all(str = code, replacement = "+\n", fixed = "+")
     if (!is.null(output_filter$code$expr)) {
       code_dplyr <- deparse(output_filter$code$dplyr, width.cutoff = 80L)
       code_dplyr <- paste(code_dplyr, collapse = "\n")
       nm_dat <- data_name()
       code_dplyr <- paste(nm_dat, code_dplyr, sep = " <- ")
-      code_dplyr <- stringi::stri_replace_all(str = code_dplyr, replacement = "%>%\n", fixed = "%>%")
+      code_dplyr <- stri_replace_all(str = code_dplyr, replacement = "%>%\n", fixed = "%>%")
+      code <- paste(code_dplyr, code, sep = "\n\n")
+    }
+    rstudioapi::insertText(text = paste0("\n", code), id = context$id)
+  })
+  
+  output$code <- renderUI({
+    code <- ggplot_rv$code
+    code <- stri_replace_all(str = code, replacement = "+\n", fixed = "+")
+    if (!is.null(output_filter$code$expr)) {
+      code_dplyr <- deparse(output_filter$code$dplyr, width.cutoff = 80L)
+      code_dplyr <- paste(code_dplyr, collapse = "\n")
+      nm_dat <- data_name()
+      code_dplyr <- paste(nm_dat, code_dplyr, sep = " <- ")
+      code_dplyr <- stri_replace_all(str = code_dplyr, replacement = "%>%\n", fixed = "%>%")
       code <- paste(code_dplyr, code, sep = "\n\n")
     }
     htmltools::tagList(
