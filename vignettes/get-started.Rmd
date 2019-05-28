@@ -1,0 +1,139 @@
+---
+title: "Get started with esquisse"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{get-started}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>",
+  eval = FALSE
+)
+```
+
+```{r setup}
+library(esquisse)
+```
+
+
+<style>
+img {
+  max-width: 700px;
+}
+</style>
+
+
+
+## Launch the addin
+
+In RStudio, you can use the *Addins* menu : 
+
+![](figures/launch-addin.png)
+
+
+Or in the R console :
+
+```{r}
+esquisser()
+```
+
+
+To use a `data.frame` by default, if using the *Addins* menu highlight with the cursor a `data.frame` in source editor before launching addin.
+Otherwise, pass the `data.frame` as first argument to the function :
+
+```{r}
+esquisser(iris)
+```
+
+
+
+## Select data
+
+If addin is launched without default data, a window will appear to select a `data.frame` from Global environment (if no `data.frame` are present, datasets from {ggplot2} will be used) :
+
+![](figures/select-data.png)
+
+![](figures/select-data-detail.png)
+
+Once you have selected a `data.frame`, click on the bottom button to start the plotting part.
+
+You can change data selected after that step by clicking *Data* button.
+
+
+
+## Create a plot
+
+This is the main interface and the most interesting part of the addin (in example below, we use `diamonds` dataset from {ggplot2}) :
+
+![](figures/main-panel.png)
+
+To create a chart, drag and drop variables into aesthetics boxes :
+
+![](figures/create-chart.png)
+
+
+A **geom** is automatically picked to reprensent the data, according to data type you can select an other geom with button in top right corner : 
+
+![](figures/create-chart-geom.png)
+
+
+
+## Controls
+
+Four menu under plot area are available to set plot parameters, filter data and retrieve code to generate the plot.
+
+### Labels & titles
+
+This menu allow to set plot's title, subtitle, caption and axis labels :
+
+![](figures/controls-labs.png)
+
+
+### Plot options
+
+Here you can modify plot appearance and parameters, options available in the menu depends on type of plot :
+
+![](figures/controls-plot-bar.png)
+
+![](figures/controls-plot-scatter.png)
+
+
+### Filter
+
+Widgets to interactively filter data used in plot : 
+
+![](figures/controls-filter.png)
+
+The code used to filter the data will be available in the following menu.
+
+
+### Export & Code
+
+In this menu, you can retrieve the code used to produce the plot, as well as the code used to filter the data, and export the plot to PNG or PowerPoint.
+
+![](figures/controls-code.png)
+
+You can copy code to clipboard, or insert it in your current script.
+
+
+
+## Addin options
+
+By default, esquisse is launched into a dialog window (if in RStudio), you can choose to use your browser if you prefer, or the Viewer pane.
+
+```{r}
+esquisser(viewer = "browser")
+esquisser(viewer = "pane")
+```
+
+
+You can set display mode with an option (in .Rprofile for example) :
+
+```{r}
+options("esquisse.viewer" = "browser")
+```
+

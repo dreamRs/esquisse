@@ -37,3 +37,4 @@ vignettes/*.pdf
 
 # testdata
 testdata/
+inst/doc
