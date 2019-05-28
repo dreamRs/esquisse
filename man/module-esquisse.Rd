@@ -2,7 +2,7 @@
 % Please edit documentation in R/esquisserServer.R, R/esquisserUI.R
 \name{esquisserServer}
 \alias{esquisserServer}
-\alias{esquisse-module}
+\alias{module-esquisse}
 \alias{esquisserUI}
 \title{Esquisse Shiny module}
 \usage{

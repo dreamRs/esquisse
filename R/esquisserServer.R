@@ -10,7 +10,7 @@
 #'
 #' @export
 #' 
-#' @rdname esquisse-module
+#' @rdname module-esquisse
 #'
 #' @importFrom shiny callModule reactiveValues observeEvent renderPrint
 #'  renderPlot stopApp plotOutput showNotification isolate
@@ -219,14 +219,11 @@ esquisserServer <- function(input, output, session, data = NULL, dataModule = c(
   # Ouput of module (if used in Shiny)
   output_module <- reactiveValues(code = NULL, data = NULL)
   observeEvent(ggplotCall$code, {
-    output_module$code <- ggplotCall$code
+    output_module$code_plot <- ggplotCall$code
   }, ignoreInit = TRUE)
-  observeEvent(list(dataChart$data, paramsChart$index), {
-    data <- dataChart$data
-    if (!is.null(paramsChart$index) && is.logical(paramsChart$index) & length(paramsChart$index) > 0) {
-      data <- data[paramsChart$index, , drop = FALSE]
-    }
-    output_module$data <- data
+  observeEvent(paramsChart$data, {
+    output_module$code_filters <- paramsChart$code
+    output_module$data <- paramsChart$data
   }, ignoreInit = TRUE)
 
   return(output_module)

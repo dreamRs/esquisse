@@ -342,7 +342,7 @@ chartControlsServer <- function(input, output, session,
   
   observeEvent(output_filter$data_filtered(), {
     outin$data <- output_filter$data_filtered()
-    outin$code <- output_filter$code$dplyr
+    outin$code <- output_filter$code
   })
 
   return(outin)

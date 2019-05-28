@@ -12,7 +12,7 @@
 #'
 #' @export
 #' 
-#' @name esquisse-module
+#' @name module-esquisse
 #'
 #' @importFrom htmltools tags tagList singleton
 #' @importFrom shiny plotOutput icon actionButton NS
