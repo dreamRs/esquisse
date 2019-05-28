@@ -113,7 +113,7 @@ ggcall <- function(data = NULL,
     ggcall <- expr(!!ggcall + !!geom)
   }
   if (!is.null(scales)) {
-    if (length(scales) == 1 & !isTRUE(grepl(scales, names(scales_args))))
+    if (length(scales) == 1 && !isTRUE(grepl(scales, names(scales_args))))
       scales_args <- setNames(list(scales_args), scales)
     for (s in scales) {
       s_args <- dropNulls(scales_args[[s]])

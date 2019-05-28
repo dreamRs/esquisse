@@ -107,6 +107,22 @@ esquisserServer <- function(input, output, session, data = NULL, dataModule = c(
     ggplot_rv = ggplotCall,
     use_facet = reactive({
       !is.null(input$dragvars$target$facet)
+    }),
+    use_transX = reactive({
+      if (is.null(input$dragvars$target$xvar))
+        return(FALSE)
+      identical(
+        x = col_type(dataChart$data[[input$dragvars$target$xvar]]),
+        y = "continuous"
+      )
+    }),
+    use_transY = reactive({
+      if (is.null(input$dragvars$target$yvar))
+        return(FALSE)
+      identical(
+        x = col_type(dataChart$data[[input$dragvars$target$yvar]]),
+        y = "continuous"
+      )
     })
   )
 
@@ -136,7 +152,6 @@ esquisserServer <- function(input, output, session, data = NULL, dataModule = c(
     
     data <- paramsChart$data
     
-    
     scales <- which_pal_scale(
       mapping = mapping,
       palette = paramsChart$inputs$palette,
@@ -159,13 +174,26 @@ esquisserServer <- function(input, output, session, data = NULL, dataModule = c(
       )
     }
     
+    scales_args <- scales$args
+    scales <- scales$scales
+
+    if (isTRUE(paramsChart$transX$use)) {
+      scales <- c(scales, "x_continuous")
+      scales_args <- c(scales_args, list(x_continuous = paramsChart$transX$args))
+    }
+    
+    if (isTRUE(paramsChart$transY$use)) {
+      scales <- c(scales, "y_continuous")
+      scales_args <- c(scales_args, list(y_continuous = paramsChart$transY$args))
+    }
+    
     gg_call <- ggcall(
       data = dataChart$name, 
       mapping = mapping, 
       geom = geom,
       geom_args = geom_args, 
-      scales = scales$scales, 
-      scales_args = scales$args,
+      scales = scales, 
+      scales_args = scales_args,
       labs = paramsChart$labs, 
       theme = paramsChart$theme$theme,
       theme_args = paramsChart$theme$args, 

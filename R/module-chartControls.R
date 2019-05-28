@@ -94,7 +94,12 @@ chartControlsUI <- function(id) {
 #' @importFrom rstudioapi insertText getActiveDocumentContext
 #' @importFrom htmltools tags tagList
 #'
-chartControlsServer <- function(input, output, session, type, data_table, data_name, ggplot_rv, use_facet = shiny::reactive(FALSE)) {
+chartControlsServer <- function(input, output, session, 
+                                type, data_table, data_name,
+                                ggplot_rv, 
+                                use_facet = shiny::reactive(FALSE), 
+                                use_transX = shiny::reactive(FALSE), 
+                                use_transY = shiny::reactive(FALSE)) {
 
   ns <- session$ns
   
@@ -174,6 +179,22 @@ chartControlsServer <- function(input, output, session, type, data_table, data_n
       toggleDisplay(id = ns("controls-facet"), display = "block")
     } else {
       toggleDisplay(id = ns("controls-facet"), display = "none")
+    }
+  })
+  
+  observeEvent(use_transX(), {
+    if (isTRUE(use_transX())) {
+      toggleDisplay(id = ns("controls-scale-trans-x"), display = "block")
+    } else {
+      toggleDisplay(id = ns("controls-scale-trans-x"), display = "none")
+    }
+  })
+  
+  observeEvent(use_transY(), {
+    if (isTRUE(use_transY())) {
+      toggleDisplay(id = ns("controls-scale-trans-y"), display = "block")
+    } else {
+      toggleDisplay(id = ns("controls-scale-trans-y"), display = "none")
     }
   })
 
@@ -286,6 +307,26 @@ chartControlsServer <- function(input, output, session, type, data_table, data_n
       add = input$smooth_add,
       args = list(
         span = input$smooth_span
+      )
+    )
+  })
+  
+  # transX input
+  observe({
+    outin$transX <- list(
+      use = use_transX() & !identical(input$transX, "identity"),
+      args = list(
+        trans = input$transX
+      )
+    )
+  })
+  
+  # transY input
+  observe({
+    outin$transY <- list(
+      use = use_transY() & !identical(input$transY, "identity"),
+      args = list(
+        trans = input$transY
       )
     )
   })
@@ -477,11 +518,19 @@ controls_appearance <- function(ns) {
 #' @param ns Namespace from module
 #'
 #' @noRd
-#' @importFrom shiny sliderInput conditionalPanel
+#' @importFrom shiny sliderInput conditionalPanel selectInput
 #' @importFrom htmltools tagList tags
 #' @importFrom shinyWidgets materialSwitch prettyRadioButtons
 #'
 controls_params <- function(ns) {
+  
+  scales_trans <- c(
+    "asn", "atanh", "boxcox", "exp", "identity",
+    "log", "log10", "log1p", "log2", "logit", 
+    "probability", "probit", "reciprocal",
+    "reverse", "sqrt"
+  )
+  
   tagList(
     tags$div(
       id = ns("controls-scatter"), style = "display: none; padding-top: 10px;",
@@ -541,6 +590,24 @@ controls_params <- function(ns) {
         choices = c("area", "count", "width"),
         outline = TRUE, 
         icon = icon("check")
+      )
+    ),
+    tags$div(
+      id = ns("controls-scale-trans-x"), style = "display: none;",
+      selectInput(
+        inputId = ns("transX"), 
+        label = "X-Axis transform:",
+        selected = "identity", 
+        choices = scales_trans
+      )
+    ),
+    tags$div(
+      id = ns("controls-scale-trans-y"), style = "display: none;",
+      selectInput(
+        inputId = ns("transY"), 
+        label = "Y-Axis transform:",
+        selected = "identity", 
+        choices = scales_trans
       )
     ),
     tags$div(
