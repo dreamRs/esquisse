@@ -270,7 +270,7 @@ chartControlsServer <- function(input, output, session, type, data_table, data_n
     outin$theme <- list(
       theme = input$theme,
       args = list(
-        legend.position = input$legend_position
+        legend.position = if (identical(input$legend_position, "right")) NULL else input$legend_position
       )
     )
   })
