@@ -226,7 +226,8 @@ create_filters <- function(data, vars = NULL, width = "100%", session = getDefau
       id <- filters_id[[variable]]
       if (inherits(x = var, what = c("numeric", "integer"))) {
         params <- find_range_step(var)
-        tagList(
+        tags$div(
+          style = "position: relative;",
           tags$span(
             tags$label(variable), HTML("&nbsp;&nbsp;"), 
             na_filter(id = ns(paste0("na_", id)))
@@ -243,7 +244,8 @@ create_filters <- function(data, vars = NULL, width = "100%", session = getDefau
         )
       } else if (inherits(x = var, what = c("Date", "POSIXct"))) {
         range_var <- range(var)
-        tagList(
+        tags$div(
+          style = "position: relative;",
           tags$span(
             tags$label(variable), HTML("&nbsp;&nbsp;"), 
             na_filter(id = ns(paste0("na_", id)))
@@ -261,6 +263,7 @@ create_filters <- function(data, vars = NULL, width = "100%", session = getDefau
         values <- unique(as.character(var))
         values <- values[trimws(values) != ""]
         tags$div(
+          style = "position: relative;",
           class = if (length(values) > 15) "selectize-big",
           tags$span(
             tags$label(variable), HTML("&nbsp;&nbsp;"), 

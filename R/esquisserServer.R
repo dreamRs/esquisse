@@ -121,7 +121,8 @@ esquisserServer <- function(input, output, session, data = NULL, dataModule = c(
     
     mapping <- build_aes(
       data = dataChart$data,
-      .list = aes_input
+      .list = aes_input, 
+      geom = input$geom
     )
     
     geoms <- potential_geoms(

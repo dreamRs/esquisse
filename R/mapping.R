@@ -47,7 +47,7 @@ build_aes <- function(data, ..., .list = NULL, geom = NULL) {
   }
   if (!is.null(args$x) & is.null(args$y) & geom %in% c("boxplot", "violin")) {
     args$y <- args$x
-    args$x <- ""
+    args$x <- I("")
   }
   if (is.null(args$x) & !is.null(args$y) & geom %nin% c("boxplot", "violin")) {
     tmp <- args$y

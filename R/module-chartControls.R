@@ -152,6 +152,8 @@ chartControlsServer <- function(input, output, session, type, data_table, data_n
     if (!is.null(output_filter$code$expr)) {
       code_dplyr <- deparse(output_filter$code$dplyr, width.cutoff = 80L)
       code_dplyr <- paste(code_dplyr, collapse = "\n")
+      nm_dat <- data_name()
+      code_dplyr <- paste(nm_dat, code_dplyr, sep = " <- ")
       code_dplyr <- stringi::stri_replace_all(str = code_dplyr, replacement = "%>%\n", fixed = "%>%")
       code <- paste(code_dplyr, code, sep = "\n\n")
     }

@@ -18,7 +18,7 @@
 #' @export
 #' 
 #' @importFrom stats setNames
-#' @importFrom rlang sym syms expr as_name
+#' @importFrom rlang sym syms expr as_name is_call
 #' @importFrom ggplot2 ggplot aes theme facet_wrap vars coord_flip labs
 #'
 #' @examples
@@ -89,8 +89,19 @@ ggcall <- function(data = NULL,
   if (rlang::is_call(mapping)) 
     mapping <- eval(mapping)
   mapping <- dropNulls(mapping)
-  mapping <- lapply(mapping, as_name)
-  aes <- expr(aes(!!!syms(mapping)))
+  syms2 <- function(x) {
+    lapply(
+      X = x,
+      FUN = function(y) {
+        if (inherits(y, "AsIs")) {
+          as.character(y)
+        } else {
+          sym(as_name(y))
+        }
+      }
+    )
+  }
+  aes <- expr(aes(!!!syms2(mapping)))
   ggcall <- expr(ggplot(!!data) + !!aes)
   if (length(geom) == 1)
     geom_args <- setNames(list(geom_args), geom)
