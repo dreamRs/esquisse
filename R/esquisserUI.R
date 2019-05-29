@@ -6,7 +6,12 @@
 #' @param header Logical. Display or not \code{esquisse} header.
 #' @param choose_data Logical. Display or not the button to choose data.
 #' 
-#' @return A \code{reactiveValues} with two slots: \code{"code"}: code to generate the plot, \code{"data"} the \code{data.frame} used.
+#' @return A \code{reactiveValues} with 3 slots :
+#'  \itemize{
+#'   \item \strong{code_plot} : code to generate plot.
+#'   \item \strong{code_filters} : a list of length two with code to reproduce filters.
+#'   \item \strong{data} : \code{data.frame} used in plot (with filters applied).
+#'  }
 #' 
 #' @note For the module to display correctly, it is necessary to place it in a container with a fixed height.
 #'
@@ -31,6 +36,10 @@
 #' 
 #' ui <- fluidPage(
 #'   tags$h1("Use esquisse as a Shiny module"),
+#'   
+#'   # Force scroll bar to appear (otherwise hidden by esquisse)
+#'   tags$style("html, body {overflow: visible !important;"),
+#'   
 #'   radioButtons(
 #'     inputId = "data", 
 #'     label = "Data to use:", 

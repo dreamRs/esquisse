@@ -11,7 +11,13 @@
 #'
 #' @param id Module id. See \code{\link[shiny]{callModule}}.
 #'
-#' @return A list with two components
+#' @return A \code{list} with 2 elements :
+#'  \itemize{
+#'   \item \strong{data_filtered} : \code{\link[shiny]{reactive}} function returning data filtered.
+#'   \item \strong{code} : \code{\link[shiny]{reactiveValues}} with 2 slots :
+#'    \code{expr} (raw expression to filter data) and \code{dplyr} (code with dplyr pipeline).
+#'  }
+#'  
 #' @export
 #' 
 #' @name module-filterDF

@@ -1,7 +1,5 @@
 
-#' @param input   standard \code{shiny} input
-#' @param output  standard \code{shiny} output
-#' @param session standard \code{shiny} session
+#' @param input,output,session standards \code{shiny} server arguments.
 #' @param data    a \code{reactiveValues} with at least a slot \code{data} containing a \code{data.frame}
 #'  to use in the module. And a slot \code{name} corresponding to the name of the \code{data.frame}.
 #' @param dataModule Data module to use, choose between \code{"GlobalEnv"}
@@ -13,7 +11,7 @@
 #' @rdname module-esquisse
 #'
 #' @importFrom shiny callModule reactiveValues observeEvent renderPrint
-#'  renderPlot stopApp plotOutput showNotification isolate
+#'  renderPlot stopApp plotOutput showNotification isolate reactiveValuesToList
 #' @importFrom ggplot2 ggplot_build ggsave
 #' @importFrom rlang expr_deparse
 #'
@@ -217,12 +215,12 @@ esquisserServer <- function(input, output, session, data = NULL, dataModule = c(
   observeEvent(input$close, shiny::stopApp())
 
   # Ouput of module (if used in Shiny)
-  output_module <- reactiveValues(code = NULL, data = NULL)
+  output_module <- reactiveValues(code_plot = NULL, code_filters = NULL, data = NULL)
   observeEvent(ggplotCall$code, {
     output_module$code_plot <- ggplotCall$code
   }, ignoreInit = TRUE)
   observeEvent(paramsChart$data, {
-    output_module$code_filters <- paramsChart$code
+    output_module$code_filters <- reactiveValuesToList(paramsChart$code)
     output_module$data <- paramsChart$data
   }, ignoreInit = TRUE)
 

@@ -12,11 +12,7 @@ esquisserServer(input, output, session, data = NULL,
 esquisserUI(id, header = TRUE, choose_data = TRUE)
 }
 \arguments{
-\item{input}{standard \code{shiny} input}
-
-\item{output}{standard \code{shiny} output}
-
-\item{session}{standard \code{shiny} session}
+\item{input, output, session}{standards \code{shiny} server arguments.}
 
 \item{data}{a \code{reactiveValues} with at least a slot \code{data} containing a \code{data.frame}
 to use in the module. And a slot \code{name} corresponding to the name of the \code{data.frame}.}
@@ -33,7 +29,12 @@ or \code{"ImportFile"}.}
 \item{choose_data}{Logical. Display or not the button to choose data.}
 }
 \value{
-A \code{reactiveValues} with two slots: \code{"code"}: code to generate the plot, \code{"data"} the \code{data.frame} used.
+A \code{reactiveValues} with 3 slots :
+ \itemize{
+  \item \strong{code_plot} : code to generate plot.
+  \item \strong{code_filters} : a list of length two with code to reproduce filters.
+  \item \strong{data} : \code{data.frame} used in plot (with filters applied).
+ }
 }
 \description{
 Launch \code{esquisse} in a classic Shiny app.
@@ -53,6 +54,10 @@ library(esquisse)
 
 ui <- fluidPage(
   tags$h1("Use esquisse as a Shiny module"),
+  
+  # Force scroll bar to appear (otherwise hidden by esquisse)
+  tags$style("html, body {overflow: visible !important;"),
+  
   radioButtons(
     inputId = "data", 
     label = "Data to use:", 
