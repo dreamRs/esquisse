@@ -40,7 +40,7 @@
 #' 
 #' }
 esquisser <- function(data = NULL, 
-                      coerceVars = getOption(x = "esquisse.coerceVars", default = FALSE),
+                      coerceVars = getOption(x = "esquisse.coerceVars", default = TRUE),
                       viewer = getOption(x = "esquisse.viewer", default = "dialog")) {
   
   options("esquisse.coerceVars" = coerceVars)
@@ -60,7 +60,7 @@ esquisser <- function(data = NULL,
     inviewer <- paneViewer(minHeight = "maximize")
   } else {
     inviewer <- dialogViewer(
-      "Dessine-moi un mouton...",
+      "C'est le temps que tu as perdu pour ta rose qui rend ta rose importante.",
       width = 1000, height = 750
     )
   }

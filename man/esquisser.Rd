@@ -5,7 +5,7 @@
 \title{An add-in to easily create plots with ggplot2}
 \usage{
 esquisser(data = NULL, coerceVars = getOption(x =
-  "esquisse.coerceVars", default = FALSE), viewer = getOption(x =
+  "esquisse.coerceVars", default = TRUE), viewer = getOption(x =
   "esquisse.viewer", default = "dialog"))
 }
 \arguments{
