@@ -1,0 +1,32 @@
+destination: docs
+
+template:
+  params:
+    bootswatch: flatly
+    
+navbar:
+  type: default
+  left:
+  - icon: fa-home fa-lg
+    href: index.html
+  - text: Get started
+    href: articles/get-started.html
+  - text: Reference
+    href: reference/index.html
+  - text: Articles
+    menu:
+    - text: "Shiny usage"
+      href: articles/shiny-usage.html
+  - text: News
+    href: news/index.html
+  right:
+  - icon: fa-github fa-lg
+    href: https://github.com/dreamRs/esquisse
+
+authors:
+  Victor Perrier:
+    href: https://twitter.com/_pvictorr
+    html: <img src="https://pbs.twimg.com/profile_images/844237339404722177/E1U61aM8_normal.jpg"/> Victor Perrier
+  Fanny Meyer:
+    href: https://twitter.com/_mfaan
+    html: <img src="https://pbs.twimg.com/profile_images/912313931326218240/o1-wvA18_normal.jpg" /> Fanny Meyer

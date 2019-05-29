@@ -10,6 +10,7 @@
 
 This addin allows you to interactively explore your data by visualizing it with the [ggplot2](https://github.com/tidyverse/ggplot2) package. It allows you to draw bar plots, curves, scatter plots, histograms, boxplot and [sf](https://github.com/r-spatial/sf) objects, then export the graph or retrieve the code to reproduce the graph.
 
+See online documentation : https://dreamrs.github.io/esquisse/index.html
 
 If you find bugs, please open an [issue](https://github.com/dreamRs/esquisse/issues)
 

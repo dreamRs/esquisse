@@ -4,5 +4,7 @@
 ^\.Rproj\.user$
 ^\.travis\.yml$
 ^codecov\.yml$
-testdata/
 img/
+^_pkgdown\.yml$
+^docs$
+^pkgdown$

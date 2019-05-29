@@ -1,6 +1,9 @@
 # esquisse 0.1.900
 
 * Now use `rlang` to generate ggplot code.
+* Code generated when filtering data is available above ggplot code, it use `dplyr` syntax. [#19](https://github.com/dreamRs/esquisse/issues/19), [#46](https://github.com/dreamRs/esquisse/issues/46)
+* Ability to set `scales` argument in `facet_wrap` (fixed, free, free_x, free_y). [#47](https://github.com/dreamRs/esquisse/issues/47)
+* Support for scales continuous transformation (log1p, log, sqrt, reverse, ...). [#24](https://github.com/dreamRs/esquisse/issues/24)
 
 
 # esquisse 0.1.8
