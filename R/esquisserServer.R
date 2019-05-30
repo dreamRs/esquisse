@@ -15,7 +15,14 @@
 #' @importFrom ggplot2 ggplot_build ggsave
 #' @importFrom rlang expr_deparse
 #'
-esquisserServer <- function(input, output, session, data = NULL, dataModule = c("GlobalEnv", "ImportFile"), sizeDataModule = "m") {
+library(DBI)
+conn <- dbConnect(
+  drv = RMySQL::MySQL(),
+  dbname = "shinydemo",
+  host = "shiny-demo.csa7qlmguqrf.us-east-1.rds.amazonaws.com",
+  username = "guest",
+  password = "guest")
+esquisserServer <- function(input, output, session, data = NULL, dataModule = conn, sizeDataModule = "m") {
   
   geomSelected <- reactiveValues(x = "auto")
   ggplotCall <- reactiveValues(code = "")
