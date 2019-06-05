@@ -174,12 +174,12 @@ match_geom_args <- function(geom, args, add_aes = TRUE, mapping = list(), envir 
   pkg_envir <- getNamespace(envir)
   if (!grepl(pattern = "^geom_", x = geom))
     geom <- paste0("geom_", geom)
-  geom_args <- try(formals(fun = geom, envir = pkg_envir), silent = TRUE)
+  geom_args <- try(formals(fun = get(geom, envir = pkg_envir)), silent = TRUE)
   if (inherits(geom_args, "try-error"))
     stop(paste(geom, "not found in", envir), call. = FALSE)
   if (!is.null(geom_args$stat)) {
     stat_args <- try(
-      formals(fun = paste0("stat_", geom_args$stat), envir = pkg_envir),
+      formals(fun = get(paste0("stat_", geom_args$stat), envir = pkg_envir)),
       silent = TRUE
     )
     if (!inherits(stat_args, "try-error")) {
