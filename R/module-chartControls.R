@@ -350,63 +350,6 @@ chartControlsServer <- function(input, output, session,
 
 
 
-
-
-
-
-
-
-# Utility color func ------------------------------------------------------
-
-
-
-
-#' Convert a color in character into hex format
-#'
-#' @param col name of a color, e.g. 'steelblue'
-#'
-#' @return a hex code
-#' @noRd
-#'
-#' @importFrom grDevices rgb col2rgb
-#'
-col2Hex <- function(col) {
-  mat <- grDevices::col2rgb(col, alpha = TRUE)
-  grDevices::rgb(mat[1, ]/255, mat[2, ]/255, mat[3,]/255)
-}
-
-
-get_brewer_name <- function(name) {
-  pals <- RColorBrewer::brewer.pal.info[rownames(RColorBrewer::brewer.pal.info) %in% name, ]
-  res <- lapply(
-    X = seq_len(nrow(pals)),
-    FUN = function(i) {
-      brewer.pal(n = pals$maxcolors[i], name = rownames(pals)[i])
-    }
-  )
-  unlist(res)
-}
-
-
-linear_gradient <- function(cols) {
-  x <- round(seq(from = 0, to = 100, length.out = length(cols)+1))
-  ind <- c(1, rep(seq_along(x)[-c(1, length(x))], each = 2), length(x))
-  m <- matrix(data = paste0(x[ind], "%"), ncol = 2, byrow = TRUE)
-  res <- lapply(
-    X = seq_len(nrow(m)),
-    FUN = function(i) {
-      paste(paste(cols[i], m[i, 1]), paste(cols[i], m[i, 2]), sep = ", ")
-    }
-  )
-  res <- unlist(res)
-  res <- paste(res, collapse = ", ")
-  paste0("linear-gradient(to right, ", res, ");")
-}
-
-
-
-
-
 #' Controls for labs
 #'
 #' Set title, subtitle, caption, xlab, ylab
@@ -707,50 +650,55 @@ controls_code <- function(ns) {
 #' @noRd
 #'
 #' @importFrom RColorBrewer brewer.pal brewer.pal.info
-#' @importFrom scales hue_pal
-#' @importFrom viridisLite viridis magma inferno plasma cividis
+#' @importFrom scales hue_pal viridis_pal
 colors_palettes <- function() {
   ### colors
-  # For colorSelector
+  # For spectrum pre-defined colors
   choices_colors <- list(
-    "viridis" = col2Hex(viridis(10)),
-    "magma" = col2Hex(magma(10)),
-    "inferno" = col2Hex(inferno(10)),
-    "plasma" = col2Hex(plasma(10)),
-    "cividis" = col2Hex(cividis(10))
+    "viridis" = col2Hex(viridis_pal(option = "viridis")(10)),
+    "magma" = col2Hex(viridis_pal(option = "magma")(10)),
+    "inferno" = col2Hex(viridis_pal(option = "inferno")(10)),
+    "plasma" = col2Hex(viridis_pal(option = "plasma")(10)),
+    "cividis" = col2Hex(viridis_pal(option = "cividis")(10))
     ,
-    "Blues" = brewer.pal(n = 9, name = "Blues"),
-    "Greens" = brewer.pal(n = 9, name = "Greens"),
-    "Reds" = brewer.pal(n = 9, name = "Reds"),
-    "Oranges" = brewer.pal(n = 9, name = "Oranges"),
-    "Purples" = brewer.pal(n = 9, name = "Purples"),
-    "Greys" = brewer.pal(n = 9, name = "Greys"),
-    "Dark2" = brewer.pal(n = 8, name = "Dark2"),
-    "Set1" = brewer.pal(n = 8, name = "Set1"),
-    "Paired" = brewer.pal(n = 10, name = "Paired")
+    "Blues" = get_brewer_pal(name = "Blues"),
+    "Greens" = get_brewer_pal(name = "Greens"),
+    "Reds" = get_brewer_pal(name = "Reds"),
+    "Oranges" = get_brewer_pal(name = "Oranges"),
+    "Purples" = get_brewer_pal(name = "Purples"),
+    "Greys" = get_brewer_pal(name = "Greys"),
+    "Dark2" = get_brewer_pal(name = "Dark2"),
+    "Set1" = get_brewer_pal(name = "Set1"),
+    "Paired" = get_brewer_pal(name = "Paired")
   )
 
   # For palette picker
-
-  colors_pal <- lapply(
-    X = split(
-      x = RColorBrewer::brewer.pal.info,
-      f = factor(RColorBrewer::brewer.pal.info$category, labels = c("Diverging", "Qualitative", "Sequential"))
+  colors_pal <- list(
+    Diverging = list(
+      "BrBG", "PiYG", "PRGn", "PuOr", "RdBu", 
+      "RdGy", "RdYlBu", "RdYlGn", "Spectral"
+    ), 
+    Qualitative = list(
+      "Accent", "Dark2", "Paired", "Pastel1", "Pastel2", "Set1", 
+      "Set2", "Set3"
     ),
-    FUN = function(x) {
-      as.list(rownames(x))
-    }
+    Sequential = list(
+      "Blues", "BuGn", "BuPu", 
+      "GnBu", "Greens", "Greys", "Oranges", "OrRd", "PuBu", "PuBuGn", 
+      "PuRd", "Purples", "RdPu", "Reds", "YlGn", "YlGnBu", "YlOrBr", 
+      "YlOrRd"
+    )
   )
-  background_pals <- sapply(unlist(colors_pal, use.names = FALSE), get_brewer_name)
+  background_pals <- sapply(unlist(colors_pal, use.names = FALSE), get_brewer_pal)
   # add ggplot2 hue & viridis
   background_pals <- c(
     list("ggplot2" = scales::hue_pal()(9)),
     list(
-      "viridis" = col2Hex(viridis(10)),
-      "magma" = col2Hex(magma(10)),
-      "inferno" = col2Hex(inferno(10)),
-      "plasma" = col2Hex(plasma(10)),
-      "cividis" = col2Hex(cividis(10))
+      "viridis" = col2Hex(viridis_pal(option = "viridis")(10)),
+      "magma" = col2Hex(viridis_pal(option = "magma")(10)),
+      "inferno" = col2Hex(viridis_pal(option = "inferno")(10)),
+      "plasma" = col2Hex(viridis_pal(option = "plasma")(10)),
+      "cividis" = col2Hex(viridis_pal(option = "cividis")(10))
     ),
     background_pals
   )

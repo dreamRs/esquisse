@@ -150,15 +150,31 @@ dragulaInput <- function(inputId, sourceLabel, targetsLabels,
 
 #' @importFrom jsonlite base64_enc
 #' @importFrom stringi stri_replace_all_fixed
+#' @importFrom htmltools doRenderTags tag
 make_bg_svg <- function(text) {
+  svg <- tag("svg", list(
+    xmlns = "http://www.w3.org/2000/svg",
+    version = "1.1",
+    tag("text", list(
+      x = "100%",
+      y = "20",
+      opacity = "0.15",
+      fill = "E6E6E6",
+      "font-weight" = "bold",
+      "font-family" = "Helvetica, Arial, sans-serif",
+      "font-size" = "24",
+      "text-anchor" = "end",
+      text
+    ))
+  ))
+  svg <- doRenderTags(svg)
+  svg <- base64_enc(svg)
+  svg <- stri_replace_all_fixed(svg, pattern = "\n", replacement = "")
   svg <- sprintf(
-    "<svg xmlns='http://www.w3.org/2000/svg' version='1.1'><text x='100%%' y='20' opacity='0.15' fill='E6E6E6' font-weight='bold' font-family='Helvetica, Arial, sans-serif' font-size='24' text-anchor='end'>%s</text></svg>",
-    text
+    "background-image:url(\"data:image/svg+xml;base64,%s\");", 
+    svg
   )
-  stri_replace_all_fixed(sprintf(
-    "background-color:white; background-image:url(\"data:image/svg+xml;base64,%s\"); background-repeat:no-repeat; background-position:right bottom;", 
-    base64_enc(svg)
-  ), pattern = "\n", replacement = "")
+  paste0(svg, "background-color:white; background-repeat:no-repeat; background-position:right bottom;")
 }
 
 

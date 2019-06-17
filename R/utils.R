@@ -197,7 +197,7 @@ geomIcons <- function() {
     FUN = function(x) {
       list(
         style = "width: 90px;",
-        tags$img(src = x$img, width = 48, height = 48),
+        tags$img(src = x$img, width = 56, height = 56),
         tags$br(), x$label
       )
     }
@@ -223,4 +223,58 @@ dropListColumns <- function(x) {
   type_col <- vapply(X = x, FUN = typeof, FUN.VALUE = character(1), USE.NAMES = FALSE)
   x[, type_col != "list", drop = FALSE]
 }
+
+
+
+
+
+
+
+# colors ------------------------------------------------------------------
+
+#' Convert a color in character into hex format
+#'
+#' @param col name of a color, e.g. 'steelblue'
+#'
+#' @return a hex code
+#' @noRd
+#'
+#' @importFrom grDevices rgb col2rgb
+#'
+col2Hex <- function(col) {
+  mat <- grDevices::col2rgb(col, alpha = TRUE)
+  grDevices::rgb(mat[1, ]/255, mat[2, ]/255, mat[3,]/255)
+}
+
+
+get_brewer_pal <- function(name) {
+  bpi <- RColorBrewer::brewer.pal.info
+  maxn <- bpi[rownames(bpi) %in% name, ]
+  maxn <- maxn$maxcolors
+  brewer.pal(n = maxn, name = name)
+}
+
+
+linear_gradient <- function(cols) {
+  x <- round(seq(from = 0, to = 100, length.out = length(cols)+1))
+  ind <- c(1, rep(seq_along(x)[-c(1, length(x))], each = 2), length(x))
+  m <- matrix(data = paste0(x[ind], "%"), ncol = 2, byrow = TRUE)
+  res <- lapply(
+    X = seq_len(nrow(m)),
+    FUN = function(i) {
+      paste(paste(cols[i], m[i, 1]), paste(cols[i], m[i, 2]), sep = ", ")
+    }
+  )
+  res <- unlist(res)
+  res <- paste(res, collapse = ", ")
+  paste0("linear-gradient(to right, ", res, ");")
+}
+
+
+
+
+
+
+
+
 
