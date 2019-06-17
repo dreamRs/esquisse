@@ -7,6 +7,7 @@
 #' @param id Module's id.
 #' @param label Button's label.
 #' @param icon Button's icon.
+#' @param ... Arguments passed to \code{\link{actionButton}}
 #'
 #' @return a \code{\link[shiny]{reactiveValues}} containing the data selected under slot \code{data}
 #' and the name of the selected \code{data.frame} under slot \code{name}.
@@ -82,7 +83,7 @@
 #' 
 #' }
 #' 
-chooseDataUI <- function(id, label = "Data", icon = "database") {
+chooseDataUI <- function(id, label = "Data", icon = "database", ...) {
   
   ns <- NS(id)
   
@@ -97,7 +98,7 @@ chooseDataUI <- function(id, label = "Data", icon = "database") {
     useShinyUtils(),
     actionButton(
       inputId = ns("changeData"), label = label,
-      icon = icon, width = "100%"
+      icon = icon, width = "100%", ...
     )
   )
 }

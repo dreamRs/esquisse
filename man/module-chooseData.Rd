@@ -6,7 +6,7 @@
 \alias{chooseDataServer}
 \title{Module for choosing data.frame}
 \usage{
-chooseDataUI(id, label = "Data", icon = "database")
+chooseDataUI(id, label = "Data", icon = "database", ...)
 
 chooseDataServer(input, output, session, dataModule = c("GlobalEnv",
   "ImportFile"), data = NULL, name = NULL, selectVars = TRUE,
@@ -18,6 +18,8 @@ chooseDataServer(input, output, session, dataModule = c("GlobalEnv",
 \item{label}{Button's label.}
 
 \item{icon}{Button's icon.}
+
+\item{...}{Arguments passed to \code{\link{actionButton}}}
 
 \item{input, output, session}{standards \code{shiny} server arguments.}
 

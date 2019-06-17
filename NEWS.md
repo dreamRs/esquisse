@@ -1,4 +1,4 @@
-# esquisse 0.1.900
+# esquisse 0.2.0
 
 * Now use `rlang` to generate ggplot code.
 * Code generated when filtering data is available above ggplot code, it use `dplyr` syntax. [#19](https://github.com/dreamRs/esquisse/issues/19), [#46](https://github.com/dreamRs/esquisse/issues/46)

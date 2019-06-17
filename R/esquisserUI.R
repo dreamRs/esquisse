@@ -120,6 +120,10 @@ esquisserUI <- function(id, header = TRUE, choose_data = TRUE) {
     tags$div(
       class = "pull-right",
       miniTitleBarButton(inputId = ns("close"), label = "Close")
+    ),
+    tags$div(
+      class = "pull-left",
+      if (isTRUE(choose_data) & isTRUE(header)) chooseDataUI(id = ns("choose-data"), class = "btn-sm")
     )
   )
     
@@ -138,7 +142,7 @@ esquisserUI <- function(id, header = TRUE, choose_data = TRUE) {
     layoutAddin(
       top_left = htmltools::tagList(
         htmltools::tags$div(
-          style = "padding: 10px;",
+          style = if (isTRUE(choose_data) & !isTRUE(header)) "padding: 10px;" else "padding: 8px; height: 106%;",
           dropInput(
             inputId = ns("geom"),
             choicesNames = geomIcons()$names, 
@@ -146,7 +150,7 @@ esquisserUI <- function(id, header = TRUE, choose_data = TRUE) {
             dropWidth = "290px",
             width = "100%"
           ),
-          if (isTRUE(choose_data)) chooseDataUI(id = ns("choose-data"))
+          if (isTRUE(choose_data) & !isTRUE(header)) chooseDataUI(id = ns("choose-data"))
         )
       ),
       top_right = dragulaInput(
