@@ -3,7 +3,7 @@
 #'
 #' @param data Data to use in the plot.
 #' @param ... Named list of aesthetics.
-#' @param .list Alternative to \code{...} to use a pre-existent named list.
+#' @param .list Alternative to \code{...} to use a preexisting named list.
 #' @param geom Geom to use, according to the geom aesthetics may vary.
 #'
 #' @return An expression

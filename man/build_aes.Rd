@@ -11,7 +11,7 @@ build_aes(data, ..., .list = NULL, geom = NULL)
 
 \item{...}{Named list of aesthetics.}
 
-\item{.list}{Alternative to \code{...} to use a pre-existent named list.}
+\item{.list}{Alternative to \code{...} to use a preexisting named list.}
 
 \item{geom}{Geom to use, according to the geom aesthetics may vary.}
 }

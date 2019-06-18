@@ -1,9 +1,9 @@
 
-#' Potential geoms according to the data
+#' Potential geometries according to the data
 #'
 #' @param data A \code{data.frame}
 #' @param mapping List of aesthetic mappings to use with data.
-#' @param auto Return only one geom.
+#' @param auto Return only one geometry.
 #'
 #' @return A \code{character} vector
 #' @export
@@ -125,9 +125,9 @@ potential_geoms_ref <- function() {
 
 
 
-#' Match list of arguments to geom's arguments
+#' Match list of arguments to geometrie's arguments
 #'
-#' @param geom Character. name of the geom.
+#' @param geom Character. name of the geometrie.
 #' @param args Named list, parameters to match to geom's arguments.
 #' @param add_aes Add aesthetics parameters (like size, fill, ...).
 #' @param mapping Mapping used in plot, to avoid setting fixed aesthetics parameters.

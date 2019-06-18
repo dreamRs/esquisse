@@ -11,7 +11,7 @@ dropInput(inputId, choicesNames, choicesValues, selected = NULL,
 \arguments{
 \item{inputId}{The \code{input} slot that will be used to access the value.}
 
-\item{choicesNames}{A \code{tagList} og HTML tags to show in the dropdown menu.}
+\item{choicesNames}{A \code{tagList} of HTML tags to show in the dropdown menu.}
 
 \item{choicesValues}{Vector corresponding to \code{choicesNames}
 for retrieving values server-side.}
@@ -25,7 +25,7 @@ default to the first item of \code{choicesValues}.}
 
 \item{dropMaxHeight}{Maximal height for the menu.}
 
-\item{dropPreScrollable}{Force scrollbar to appear in the menu.}
+\item{dropPreScrollable}{Force scroll bar to appear in the menu.}
 
 \item{btnClass}{Class for buttons in dropdown menu, default is \code{"btn-link"},
 you can use for example \code{"btn-default"} to display regular buttons.}

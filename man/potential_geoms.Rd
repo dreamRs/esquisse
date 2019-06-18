@@ -2,7 +2,7 @@
 % Please edit documentation in R/geoms.R
 \name{potential_geoms}
 \alias{potential_geoms}
-\title{Potential geoms according to the data}
+\title{Potential geometries according to the data}
 \usage{
 potential_geoms(data, mapping, auto = FALSE)
 }
@@ -11,13 +11,13 @@ potential_geoms(data, mapping, auto = FALSE)
 
 \item{mapping}{List of aesthetic mappings to use with data.}
 
-\item{auto}{Return only one geom.}
+\item{auto}{Return only one geometry.}
 }
 \value{
 A \code{character} vector
 }
 \description{
-Potential geoms according to the data
+Potential geometries according to the data
 }
 \examples{
 

@@ -29,7 +29,7 @@ img {
 
 ## Use esquisse as a Shiny module
 
-{esquisse} is built with Shiny modules (see this [article](https://shiny.rstudio.com/articles/modules.html) for refefrence), so you can use {esquisse} directly into a Shiny application :
+{esquisse} is built with Shiny modules (see this [article](https://shiny.rstudio.com/articles/modules.html) for reference), so you can use {esquisse} directly into a Shiny application :
 
 ```{r}
 ui <- fluidPage(
@@ -114,7 +114,7 @@ run_module("chooseData")
 
 ![](figures/module-chooseData.png)
 
-With an external file, import will be performed by package [rio](https://github.com/leeper/rio) :
+With an external file, import will be performed by package [{rio}](https://github.com/leeper/rio) :
 
 ```{r}
 run_module("chooseData2")

@@ -4,7 +4,7 @@
 #' @description A dropdown menu for selecting a value.
 #'
 #' @param inputId The \code{input} slot that will be used to access the value.
-#' @param choicesNames A \code{tagList} og HTML tags to show in the dropdown menu.
+#' @param choicesNames A \code{tagList} of HTML tags to show in the dropdown menu.
 #' @param choicesValues Vector corresponding to \code{choicesNames}
 #'  for retrieving values server-side.
 #' @param selected The initial selected value, must be an element of \code{choicesValues},
@@ -12,7 +12,7 @@
 #' @param dropUp Open the menu above the button rather than below.
 #' @param dropWidth Width of the dropdown menu.
 #' @param dropMaxHeight Maximal height for the menu.
-#' @param dropPreScrollable Force scrollbar to appear in the menu.
+#' @param dropPreScrollable Force scroll bar to appear in the menu.
 #' @param btnClass Class for buttons in dropdown menu, default is \code{"btn-link"},
 #'  you can use for example \code{"btn-default"} to display regular buttons.
 #' @param width The width of the input.

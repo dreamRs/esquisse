@@ -76,7 +76,7 @@ To create a chart, drag and drop variables into aesthetics boxes :
 ![](figures/create-chart.png)
 
 
-A **geom** is automatically picked to reprensent the data, according to data type you can select an other geom with button in top right corner : 
+A **geom** is automatically picked to represent the data, according to data type you can select an other geom with button in top right corner : 
 
 ![](figures/create-chart-geom.png)
 
