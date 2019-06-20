@@ -142,7 +142,7 @@ esquisserUI <- function(id, header = TRUE, choose_data = TRUE) {
     layoutAddin(
       top_left = htmltools::tagList(
         htmltools::tags$div(
-          style = if (isTRUE(choose_data) & !isTRUE(header)) "padding: 10px;" else "padding: 8px; height: 106%;",
+          style = if (isTRUE(choose_data) & !isTRUE(header)) "padding: 10px;" else "padding: 8px; height: 108%;",
           dropInput(
             inputId = ns("geom"),
             choicesNames = geomIcons()$names, 
