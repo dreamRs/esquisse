@@ -86,7 +86,7 @@ potential_geoms <- function(data, mapping, auto = FALSE) {
 
 #' @importFrom ggplot2 geom_histogram geom_density geom_bar geom_sf 
 #' geom_boxplot geom_bar geom_point geom_line geom_tile geom_violin
-#' geom_area geom_smooth
+#' geom_area geom_smooth geom_col
 potential_geoms_ref <- function() {
   x <- matrix(
     data = c(
@@ -96,6 +96,7 @@ potential_geoms_ref <- function() {
       "continuous",  "empty",       "density",   "0", 
       "discrete",    "empty",       "bar",       "1", 
       "time",        "empty",       "histogram", "1",
+      "time",        "empty",       "bar",       "0",
       "continuous",  "discrete",    "boxplot",   "0", 
       "continuous",  "discrete",    "violin",    "0", 
       "continuous",  "discrete",    "bar",       "1",
@@ -108,6 +109,7 @@ potential_geoms_ref <- function() {
       "discrete",    "discrete",    "tile",      "1",
       "time",        "continuous",  "line",      "1", 
       "time",        "continuous",  "area",      "0", 
+      "time",        "continuous",  "bar",       "0", 
       "empty",       "continuous",  "line",      "1",
       "empty",       "continuous",  "area",      "0",
       "continuous",  "continuous",  "tile",      "0",
