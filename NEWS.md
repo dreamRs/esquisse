@@ -1,3 +1,8 @@
+# esquisse 0.2.1
+
+* Fix bug when adding smooth line.
+
+
 # esquisse 0.2.0
 
 * Now use `rlang` to generate ggplot code.
