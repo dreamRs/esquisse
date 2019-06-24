@@ -10,6 +10,7 @@
 #'  Code to reproduce the filter is returned as an expression with filtered data.
 #'
 #' @param id Module id. See \code{\link[shiny]{callModule}}.
+#' @param show_nrow Show number of filtered rows and total.
 #'
 #' @return A \code{list} with 2 elements :
 #'  \itemize{
@@ -23,7 +24,7 @@
 #' @name module-filterDF
 #' 
 #' @importFrom htmltools tagList singleton tags
-#' @importFrom shiny NS
+#' @importFrom shiny NS uiOutput
 #'
 #' @examples
 #' if (interactive()) {
@@ -111,7 +112,7 @@
 #' shinyApp(ui, server)
 #' 
 #' }
-filterDF_UI <- function(id) {
+filterDF_UI <- function(id, show_nrow = TRUE) {
   ns <- NS(id)
   tagList(
     singleton(
@@ -119,6 +120,7 @@ filterDF_UI <- function(id) {
         ".selectize-big .selectize-input {height: 72px; overflow-y: scroll;}"
       )
     ),
+    if (isTRUE(show_nrow)) uiOutput(outputId = ns("nrow")),
     tags$div(id = ns("placeholder-filters"))
   )
 }
@@ -136,7 +138,8 @@ filterDF_UI <- function(id) {
 #' @export
 #'
 #' @importFrom rlang eval_tidy
-#' @importFrom shiny observeEvent reactiveValues removeUI insertUI reactive req isolate reactive
+#' @importFrom shiny observeEvent reactiveValues removeUI
+#'  insertUI reactive req isolate reactive renderUI tags
 filterDF <- function(input, output, session, 
                      data_table = reactive(), 
                      data_vars = shiny::reactive(NULL),
@@ -144,6 +147,10 @@ filterDF <- function(input, output, session,
   
   ns <- session$ns
   jns <- function(x) paste0("#", ns(x))
+  
+  output$nrow <- renderUI({
+    tags$p("Number of rows: ", tags$b(nrow(data_filtered()) , "/", nrow(data_table())))
+  })
   
   rv_filters <- reactiveValues(mapping = NULL, mapping_na = NULL)
   rv_code <- reactiveValues(expr = NULL, dplyr = NULL)

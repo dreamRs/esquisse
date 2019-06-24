@@ -6,13 +6,15 @@
 \alias{filterDF}
 \title{Shiny module to interactively filter a \code{data.frame}}
 \usage{
-filterDF_UI(id)
+filterDF_UI(id, show_nrow = TRUE)
 
 filterDF(input, output, session, data_table = reactive(),
   data_vars = shiny::reactive(NULL), data_name = reactive("data"))
 }
 \arguments{
 \item{id}{Module id. See \code{\link[shiny]{callModule}}.}
+
+\item{show_nrow}{Show number of filtered rows and total.}
 
 \item{input, output, session}{standards \code{shiny} server arguments.}
 
