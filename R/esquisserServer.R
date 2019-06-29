@@ -1,6 +1,6 @@
 
-#' @param input,output,session standards \code{shiny} server arguments.
-#' @param data    a \code{reactiveValues} with at least a slot \code{data} containing a \code{data.frame}
+#' @param input,output,session Standards \code{shiny} server arguments.
+#' @param data A \code{reactiveValues} with at least a slot \code{data} containing a \code{data.frame}
 #'  to use in the module. And a slot \code{name} corresponding to the name of the \code{data.frame}.
 #' @param dataModule Data module to use, choose between \code{"GlobalEnv"}
 #'  or \code{"ImportFile"}.
@@ -17,7 +17,6 @@
 #'
 esquisserServer <- function(input, output, session, data = NULL, dataModule = c("GlobalEnv", "ImportFile"), sizeDataModule = "m") {
   
-  geomSelected <- reactiveValues(x = "auto")
   ggplotCall <- reactiveValues(code = "")
   
   observeEvent(data$data, {
@@ -54,7 +53,7 @@ esquisserServer <- function(input, output, session, data = NULL, dataModule = c(
 
   geom_possible <- reactiveValues(x = "auto")
   geom_controls <- reactiveValues(x = "auto")
-  shiny::observeEvent(list(input$dragvars$target, input$geom), {
+  observeEvent(list(input$dragvars$target, input$geom), {
     geoms <- potential_geoms(
       data = dataChart$data,
       mapping = build_aes(
@@ -74,9 +73,6 @@ esquisserServer <- function(input, output, session, data = NULL, dataModule = c(
     }
   })
   
-  observeEvent(input$geom, {
-    geomSelected$x <- input$geom
-  })
   observeEvent(geom_possible$x, {
     geoms <- c(
       "auto", "line", "area", "bar", "histogram",

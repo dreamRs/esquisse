@@ -342,6 +342,8 @@ make_expr_filter <- function(filters, filters_na, data, data_name) {
       values <- filters[[var]]
       nas <- filters_na[[var]]
       data_values <- data[[var]]
+      if (!identical(class(values), class(data_values)))
+        return(NULL)
       values_expr <- NULL
       if (inherits(x = values, what = c("numeric", "integer"))) {
         data_values <- find_range_step(data_values)$range

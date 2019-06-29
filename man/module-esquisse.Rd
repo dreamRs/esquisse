@@ -12,9 +12,9 @@ esquisserServer(input, output, session, data = NULL,
 esquisserUI(id, header = TRUE, choose_data = TRUE)
 }
 \arguments{
-\item{input, output, session}{standards \code{shiny} server arguments.}
+\item{input, output, session}{Standards \code{shiny} server arguments.}
 
-\item{data}{a \code{reactiveValues} with at least a slot \code{data} containing a \code{data.frame}
+\item{data}{A \code{reactiveValues} with at least a slot \code{data} containing a \code{data.frame}
 to use in the module. And a slot \code{name} corresponding to the name of the \code{data.frame}.}
 
 \item{dataModule}{Data module to use, choose between \code{"GlobalEnv"}
