@@ -342,7 +342,7 @@ make_expr_filter <- function(filters, filters_na, data, data_name) {
       values <- filters[[var]]
       nas <- filters_na[[var]]
       data_values <- data[[var]]
-      if (!identical(class(values), class(data_values)))
+      if (!match_class(values, data_values))
         return(NULL)
       values_expr <- NULL
       if (inherits(x = values, what = c("numeric", "integer"))) {
@@ -453,5 +453,22 @@ find_range_step <- function(x) {
     )
   }
 }
+
+match_class <- function(x, y) {
+  char <- c("character", "factor")
+  num <- c("numeric", "integer")
+  date <- c("Date", "POSIXt")
+  if (inherits(x, num) & inherits(y, num))
+    return(TRUE)
+  if (inherits(x, char) & inherits(y, char))
+    return(TRUE)
+  if (inherits(x, date) & inherits(y, date))
+    return(TRUE)
+  return(FALSE)
+}
+
+
+
+
 
 
