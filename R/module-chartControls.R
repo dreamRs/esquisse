@@ -656,6 +656,7 @@ controls_code <- function(ns) {
 #'
 #' @importFrom RColorBrewer brewer.pal brewer.pal.info
 #' @importFrom scales hue_pal viridis_pal
+#' @importFrom hrbrthemes ipsum_pal ft_pal
 colors_palettes <- function() {
   ### colors
   # For spectrum pre-defined colors
@@ -665,6 +666,9 @@ colors_palettes <- function() {
     "inferno" = col2Hex(viridis_pal(option = "inferno")(10)),
     "plasma" = col2Hex(viridis_pal(option = "plasma")(10)),
     "cividis" = col2Hex(viridis_pal(option = "cividis")(10))
+    ,
+    "ipsum" = ipsum_pal()(9),
+    "ft" = ft_pal()(9)
     ,
     "Blues" = get_brewer_pal(name = "Blues"),
     "Greens" = get_brewer_pal(name = "Greens"),
@@ -705,16 +709,21 @@ colors_palettes <- function() {
       "plasma" = col2Hex(viridis_pal(option = "plasma")(10)),
       "cividis" = col2Hex(viridis_pal(option = "cividis")(10))
     ),
+    list(
+      "ipsum" = ipsum_pal()(9),
+      "ft" = ft_pal()(9)
+    ),
     background_pals
   )
   background_pals <- unlist(lapply(X = background_pals, FUN = linear_gradient))
   colortext_pals <- rep(c("white", "black", "black"), times = sapply(colors_pal, length))
-  colortext_pals <- c("white", rep("white", 5), colortext_pals) # ggplot2 + viridis
+  colortext_pals <- c("white", rep("white", 5), rep("white", 2), colortext_pals) # ggplot2 + viridis + hrbrthemes
 
   # add ggplot2 hue & viridis
   colors_pal <- c(
     list("Default" = list("ggplot2")),
     list("Viridis" = list("viridis", "magma", "inferno", "plasma", "cividis")),
+    list("hrbrthemes" = list("ipsum", "ft")),
     colors_pal
   )
 

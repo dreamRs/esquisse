@@ -15,6 +15,7 @@
 #' @importFrom ggplot2 scale_fill_hue scale_color_hue scale_fill_gradient scale_color_gradient
 #'  scale_fill_brewer scale_color_brewer scale_fill_distiller scale_color_distiller
 #'  scale_fill_viridis_c scale_color_viridis_c scale_fill_viridis_d scale_color_viridis_d
+#' @importFrom hrbrthemes scale_color_ft scale_fill_ft scale_color_ipsum scale_fill_ipsum
 #'
 #' @examples
 #' 
@@ -72,6 +73,10 @@ which_pal_scale <- function(mapping, palette = "ggplot2", data = NULL,
       s_p <- "hue"
     } else if (pal %in% c("viridis", "plasma", "magma", "cividis", "inferno")) {
       s_p <- "viridis_d"
+    } else if (identical(pal, "ipsum")) {
+      s_p <- "ipsum"
+    } else if (identical(pal, "ft")) {
+      s_p <- "ft"
     } else {
       s_p <- "brewer"
     }
@@ -82,6 +87,10 @@ which_pal_scale <- function(mapping, palette = "ggplot2", data = NULL,
       s_p <- "gradient"
     } else if (pal %in% c("viridis", "plasma", "magma", "cividis", "inferno")) {
       s_p <- "viridis_c"
+    } else if (identical(pal, "ipsum")) {
+      s_p <- "ipsum"
+    } else if (identical(pal, "ft")) {
+      s_p <- "ft"
     } else {
       s_p <- "distiller"
     }
@@ -98,6 +107,9 @@ which_pal_scale <- function(mapping, palette = "ggplot2", data = NULL,
         object = list(palette), 
         nm = ifelse(grepl("viridis", fill_scale), "option", "palette")
       )
+      if (palette %in% c("ipsum", "ft")) {
+        args[[fill_scale]] <- NULL
+      }
     }
   } else {
     fill_scale <- NULL
@@ -113,6 +125,9 @@ which_pal_scale <- function(mapping, palette = "ggplot2", data = NULL,
         object = list(palette), 
         nm = ifelse(grepl("viridis", color_scale), "option", "palette")
       )
+      if (palette %in% c("ipsum", "ft")) {
+        args[[color_scale]] <- NULL
+      }
     }
   } else {
     color_scale <- NULL
