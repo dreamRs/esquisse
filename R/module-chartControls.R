@@ -389,13 +389,18 @@ controls_labs <- function(ns) {
 #'  theme_excel theme_few theme_fivethirtyeight theme_foundation theme_gdocs theme_hc 
 #'  theme_igray theme_map theme_pander theme_par theme_solarized theme_solarized_2 
 #'  theme_solid theme_stata theme_tufte theme_wsj
+#' @importFrom hrbrthemes theme_ft_rc theme_ipsum theme_ipsum_ps theme_ipsum_rc
+#'  theme_ipsum_tw theme_modern_rc
 controls_appearance <- function(ns) {
 
   themes <- list(
     ggplot2 = list(
       "bw", "classic", "dark", "gray",
-      "grey", "light", "linedraw", "minimal",
+      "light", "linedraw", "minimal",
       "void"
+    ),
+    hrbrthemes = c(
+      "ft_rc", "ipsum", "ipsum_ps", "ipsum_rc", "ipsum_tw", "modern_rc"
     ),
     ggthemes = list(
       "base", "calc", "economist", "economist_white",

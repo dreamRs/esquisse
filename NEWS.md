@@ -1,6 +1,7 @@
 # esquisse 0.2.1
 
-* Fix bug when adding smooth line.
+* Fix bug when adding smooth line (missing import for `geom_smooth`).
+* Support for themes from [{hrbrthemes}](https://github.com/hrbrmstr/hrbrthemes).
 
 
 # esquisse 0.2.0
