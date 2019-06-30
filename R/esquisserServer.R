@@ -99,6 +99,10 @@ esquisserServer <- function(input, output, session, data = NULL, dataModule = c(
       dataChart$name
     }),
     ggplot_rv = ggplotCall,
+    aesthetics = reactive({
+      vars <- dropNullsOrEmpty(input$dragvars$target)
+      names(vars)
+    }),
     use_facet = reactive({
       !is.null(input$dragvars$target$facet)
     }),

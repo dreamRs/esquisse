@@ -83,8 +83,13 @@ chartControlsUI <- function(id) {
 #' @param data_table \code{reactive} function returning data used in plot.
 #' @param data_name \code{reactive} function returning data name.
 #' @param ggplot_rv \code{reactiveValues} with ggplot object (for export).
+#' @param aesthetics \code{reactive} function returning aesthetic names used.
 #' @param use_facet \code{reactive} function returning
 #'  \code{TRUE} / \code{FALSE} if plot use facets.
+#' @param use_transX \code{reactive} function returning \code{TRUE} / \code{FALSE}
+#'  to use transformation on x-axis.
+#' @param use_transY \code{reactive} function returning \code{TRUE} / \code{FALSE}
+#'  to use transformation on y-axis.
 #'
 #' @return A reactiveValues with all input's values
 #' @noRd
@@ -98,6 +103,7 @@ chartControlsUI <- function(id) {
 chartControlsServer <- function(input, output, session, 
                                 type, data_table, data_name,
                                 ggplot_rv, 
+                                aesthetics = reactive(NULL),
                                 use_facet = shiny::reactive(FALSE), 
                                 use_transX = shiny::reactive(FALSE), 
                                 use_transY = shiny::reactive(FALSE)) {
@@ -182,6 +188,25 @@ chartControlsServer <- function(input, output, session,
   
   
   # Controls ----
+  
+  observeEvent(aesthetics(), {
+    aesthetics <- aesthetics()
+    if ("fill" %in% aesthetics) {
+      toggleDisplay(id = ns("controls-labs-fill"), display = "block")
+    } else {
+      toggleDisplay(id = ns("controls-labs-fill"), display = "none")
+    }
+    if ("color" %in% aesthetics) {
+      toggleDisplay(id = ns("controls-labs-color"), display = "block")
+    } else {
+      toggleDisplay(id = ns("controls-labs-color"), display = "none")
+    }
+    if ("size" %in% aesthetics) {
+      toggleDisplay(id = ns("controls-labs-size"), display = "block")
+    } else {
+      toggleDisplay(id = ns("controls-labs-size"), display = "none")
+    }
+  })
   
   observeEvent(use_facet(), {
     if (isTRUE(use_facet())) {
@@ -279,12 +304,19 @@ chartControlsServer <- function(input, output, session,
   
   # labs input
   observe({
+    asth <- aesthetics()
+    labs_fill <- ifelse("fill" %in% asth, input$labs_fill, "")
+    labs_color <- ifelse("color" %in% asth, input$labs_color, "")
+    labs_size <- ifelse("size" %in% asth, input$labs_size, "")
     outin$labs <- list(
       x = input$labs_x %empty% NULL,
       y = input$labs_y %empty% NULL,
       title = input$labs_title %empty% NULL,
       subtitle = input$labs_subtitle %empty% NULL,
-      caption = input$labs_caption %empty% NULL
+      caption = input$labs_caption %empty% NULL,
+      fill = labs_fill %empty% NULL,
+      color = labs_color %empty% NULL,
+      size = labs_size %empty% NULL
     )
   })
   
@@ -366,7 +398,19 @@ controls_labs <- function(ns) {
     textInput(inputId = ns("labs_subtitle"), placeholder = "Subtitle", label = NULL),
     textInput(inputId = ns("labs_caption"), placeholder = "Caption", label = NULL),
     textInput(inputId = ns("labs_x"), placeholder = "X label", label = NULL),
-    textInput(inputId = ns("labs_y"), placeholder = "Y label", label = NULL)
+    textInput(inputId = ns("labs_y"), placeholder = "Y label", label = NULL),
+    tags$div(
+      id = ns("controls-labs-fill"), style = "display: none;",
+      textInput(inputId = ns("labs_fill"), placeholder = "Fill label", label = NULL)
+    ),
+    tags$div(
+      id = ns("controls-labs-color"), style = "display: none;",
+      textInput(inputId = ns("labs_color"), placeholder = "Color label", label = NULL)
+    ),
+    tags$div(
+      id = ns("controls-labs-size"), style = "display: none;",
+      textInput(inputId = ns("labs_size"), placeholder = "Size label", label = NULL)
+    )
   )
 }
 
