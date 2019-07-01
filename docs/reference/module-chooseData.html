@@ -64,7 +64,7 @@ user environment and select variable to use." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">esquisse</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.9.900</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.2.1</span>
       </span>
     </div>
 
@@ -130,7 +130,7 @@ user environment and select variable to use.</p>
     
     </div>
 
-    <pre class="usage"><span class='fu'>chooseDataUI</span>(<span class='no'>id</span>, <span class='kw'>label</span> <span class='kw'>=</span> <span class='st'>"Data"</span>, <span class='kw'>icon</span> <span class='kw'>=</span> <span class='st'>"database"</span>)
+    <pre class="usage"><span class='fu'>chooseDataUI</span>(<span class='no'>id</span>, <span class='kw'>label</span> <span class='kw'>=</span> <span class='st'>"Data"</span>, <span class='kw'>icon</span> <span class='kw'>=</span> <span class='st'>"database"</span>, <span class='no'>...</span>)
 
 <span class='fu'>chooseDataServer</span>(<span class='no'>input</span>, <span class='no'>output</span>, <span class='no'>session</span>, <span class='kw'>dataModule</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='st'>"GlobalEnv"</span>,
   <span class='st'>"ImportFile"</span>), <span class='kw'>data</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>name</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>selectVars</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
@@ -150,6 +150,10 @@ user environment and select variable to use.</p>
     <tr>
       <th>icon</th>
       <td><p>Button's icon.</p></td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td><p>Arguments passed to <code>actionButton</code></p></td>
     </tr>
     <tr>
       <th>input, output, session</th>

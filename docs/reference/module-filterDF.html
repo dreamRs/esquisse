@@ -64,7 +64,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">esquisse</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.9.900</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.2.1</span>
       </span>
     </div>
 
@@ -130,7 +130,7 @@
     
     </div>
 
-    <pre class="usage"><span class='fu'>filterDF_UI</span>(<span class='no'>id</span>)
+    <pre class="usage"><span class='fu'>filterDF_UI</span>(<span class='no'>id</span>, <span class='kw'>show_nrow</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
 
 <span class='fu'>filterDF</span>(<span class='no'>input</span>, <span class='no'>output</span>, <span class='no'>session</span>, <span class='kw'>data_table</span> <span class='kw'>=</span> <span class='fu'>reactive</span>(),
   <span class='kw'>data_vars</span> <span class='kw'>=</span> <span class='kw pkg'>shiny</span><span class='kw ns'>::</span><span class='fu'><a href='https://www.rdocumentation.org/packages/shiny/topics/reactive'>reactive</a></span>(<span class='kw'>NULL</span>), <span class='kw'>data_name</span> <span class='kw'>=</span> <span class='fu'>reactive</span>(<span class='st'>"data"</span>))</pre>
@@ -141,6 +141,10 @@
     <tr>
       <th>id</th>
       <td><p>Module id. See <code><a href='https://www.rdocumentation.org/packages/shiny/topics/callModule'>callModule</a></code>.</p></td>
+    </tr>
+    <tr>
+      <th>show_nrow</th>
+      <td><p>Show number of filtered rows and total.</p></td>
     </tr>
     <tr>
       <th>input, output, session</th>

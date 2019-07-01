@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Potential geoms according to the data — potential_geoms • esquisse</title>
+<title>Potential geometries according to the data — potential_geoms • esquisse</title>
 
 <!-- jquery -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
@@ -30,9 +30,9 @@
 
 
 
-<meta property="og:title" content="Potential geoms according to the data — potential_geoms" />
+<meta property="og:title" content="Potential geometries according to the data — potential_geoms" />
 
-<meta property="og:description" content="Potential geoms according to the data" />
+<meta property="og:description" content="Potential geometries according to the data" />
 <meta name="twitter:card" content="summary" />
 
 
@@ -63,7 +63,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">esquisse</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.9.900</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.2.1</span>
       </span>
     </div>
 
@@ -117,14 +117,14 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Potential geoms according to the data</h1>
+    <h1>Potential geometries according to the data</h1>
     <small class="dont-index">Source: <a href='https://github.com/dreamRs/esquisse/blob/master/R/geoms.R'><code>R/geoms.R</code></a></small>
     <div class="hidden name"><code>potential_geoms.Rd</code></div>
     </div>
 
     <div class="ref-description">
     
-    <p>Potential geoms according to the data</p>
+    <p>Potential geometries according to the data</p>
     
     </div>
 
@@ -143,7 +143,7 @@
     </tr>
     <tr>
       <th>auto</th>
-      <td><p>Return only one geom.</p></td>
+      <td><p>Return only one geometry.</p></td>
     </tr>
     </table>
     
@@ -159,23 +159,23 @@
 <span class='co'># One continuous variable</span>
 <span class='fu'>potential_geoms</span>(
   <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>iris</span>,
-  <span class='kw'>mapping</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/ggplot2/topics/aes'>aes</a></span>(<span class='kw'>x</span> <span class='kw'>=</span> <span class='no'>Sepal.Length</span>)
+  <span class='kw'>mapping</span> <span class='kw'>=</span> <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span>(<span class='kw'>x</span> <span class='kw'>=</span> <span class='no'>Sepal.Length</span>)
 )</div><div class='output co'>#&gt; [1] "histogram" "boxplot"   "violin"    "density"  </div><div class='input'>
 <span class='co'># Automatic pick a geom</span>
 <span class='fu'>potential_geoms</span>(
   <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>iris</span>,
-  <span class='kw'>mapping</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/ggplot2/topics/aes'>aes</a></span>(<span class='kw'>x</span> <span class='kw'>=</span> <span class='no'>Sepal.Length</span>),
+  <span class='kw'>mapping</span> <span class='kw'>=</span> <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span>(<span class='kw'>x</span> <span class='kw'>=</span> <span class='no'>Sepal.Length</span>),
   <span class='kw'>auto</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>
 )</div><div class='output co'>#&gt; [1] "histogram"</div><div class='input'>
 <span class='co'># One discrete variable</span>
 <span class='fu'>potential_geoms</span>(
   <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>iris</span>,
-  <span class='kw'>mapping</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/ggplot2/topics/aes'>aes</a></span>(<span class='kw'>x</span> <span class='kw'>=</span> <span class='no'>Species</span>)
+  <span class='kw'>mapping</span> <span class='kw'>=</span> <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span>(<span class='kw'>x</span> <span class='kw'>=</span> <span class='no'>Species</span>)
 )</div><div class='output co'>#&gt; [1] "bar"</div><div class='input'>
 <span class='co'># Two continuous variables</span>
 <span class='fu'>potential_geoms</span>(
   <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>iris</span>,
-  <span class='kw'>mapping</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/ggplot2/topics/aes'>aes</a></span>(<span class='kw'>x</span> <span class='kw'>=</span> <span class='no'>Sepal.Length</span>, <span class='kw'>y</span> <span class='kw'>=</span> <span class='no'>Sepal.Width</span>)
+  <span class='kw'>mapping</span> <span class='kw'>=</span> <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span>(<span class='kw'>x</span> <span class='kw'>=</span> <span class='no'>Sepal.Length</span>, <span class='kw'>y</span> <span class='kw'>=</span> <span class='no'>Sepal.Width</span>)
 )</div><div class='output co'>#&gt; [1] "point" "line"  "area"  "tile" </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">

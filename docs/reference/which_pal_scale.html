@@ -63,7 +63,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">esquisse</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.9.900</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.2.1</span>
       </span>
     </div>
 
@@ -170,7 +170,7 @@ in <code>color</code> : <code>"discrete"</code> or <code>"continuous"</code>.</p
 
 <span class='co'># Automatic guess according to data</span>
 <span class='fu'>which_pal_scale</span>(
-  <span class='kw'>mapping</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/ggplot2/topics/aes'>aes</a></span>(<span class='kw'>fill</span> <span class='kw'>=</span> <span class='no'>Sepal.Length</span>),
+  <span class='kw'>mapping</span> <span class='kw'>=</span> <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span>(<span class='kw'>fill</span> <span class='kw'>=</span> <span class='no'>Sepal.Length</span>),
   <span class='kw'>palette</span> <span class='kw'>=</span> <span class='st'>"ggplot2"</span>,
   <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>iris</span>
 )</div><div class='output co'>#&gt; $scales
@@ -179,7 +179,7 @@ in <code>color</code> : <code>"discrete"</code> or <code>"continuous"</code>.</p
 #&gt; $args
 #&gt; list()
 #&gt; </div><div class='input'><span class='fu'>which_pal_scale</span>(
-  <span class='kw'>mapping</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/ggplot2/topics/aes'>aes</a></span>(<span class='kw'>fill</span> <span class='kw'>=</span> <span class='no'>Species</span>),
+  <span class='kw'>mapping</span> <span class='kw'>=</span> <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span>(<span class='kw'>fill</span> <span class='kw'>=</span> <span class='no'>Species</span>),
   <span class='kw'>palette</span> <span class='kw'>=</span> <span class='st'>"ggplot2"</span>,
   <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>iris</span>
 )</div><div class='output co'>#&gt; $scales
@@ -191,7 +191,7 @@ in <code>color</code> : <code>"discrete"</code> or <code>"continuous"</code>.</p
 
 <span class='co'># Explicitly specify type</span>
 <span class='fu'>which_pal_scale</span>(
-  <span class='kw'>mapping</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/ggplot2/topics/aes'>aes</a></span>(<span class='kw'>color</span> <span class='kw'>=</span> <span class='no'>variable</span>),
+  <span class='kw'>mapping</span> <span class='kw'>=</span> <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span>(<span class='kw'>color</span> <span class='kw'>=</span> <span class='no'>variable</span>),
   <span class='kw'>palette</span> <span class='kw'>=</span> <span class='st'>"Blues"</span>,
   <span class='kw'>color_type</span> <span class='kw'>=</span> <span class='st'>"discrete"</span>
 )</div><div class='output co'>#&gt; $scales
@@ -207,7 +207,7 @@ in <code>color</code> : <code>"discrete"</code> or <code>"continuous"</code>.</p
 
 <span class='co'># Both scales</span>
 <span class='fu'>which_pal_scale</span>(
-  <span class='kw'>mapping</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/ggplot2/topics/aes'>aes</a></span>(<span class='kw'>color</span> <span class='kw'>=</span> <span class='no'>var1</span>, <span class='kw'>fill</span> <span class='kw'>=</span> <span class='no'>var2</span>),
+  <span class='kw'>mapping</span> <span class='kw'>=</span> <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span>(<span class='kw'>color</span> <span class='kw'>=</span> <span class='no'>var1</span>, <span class='kw'>fill</span> <span class='kw'>=</span> <span class='no'>var2</span>),
   <span class='kw'>palette</span> <span class='kw'>=</span> <span class='st'>"Blues"</span>,
   <span class='kw'>color_type</span> <span class='kw'>=</span> <span class='st'>"discrete"</span>,
   <span class='kw'>fill_type</span> <span class='kw'>=</span> <span class='st'>"continuous"</span>
