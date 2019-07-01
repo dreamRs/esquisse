@@ -7,8 +7,7 @@
 
 0 errors | 0 warnings | 0 note
 
-* New features & internal changes.
-* No reverse dependencies.
+* Bug fixes and a new dependency for adding features
   
 Thank you !
 Victor

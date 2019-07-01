@@ -2,13 +2,13 @@
 % Please edit documentation in R/geoms.R
 \name{match_geom_args}
 \alias{match_geom_args}
-\title{Match list of arguments to geometrie's arguments}
+\title{Match list of arguments to arguments of geometry}
 \usage{
 match_geom_args(geom, args, add_aes = TRUE, mapping = list(),
   envir = "ggplot2")
 }
 \arguments{
-\item{geom}{Character. name of the geometrie.}
+\item{geom}{Character. name of the geometry.}
 
 \item{args}{Named list, parameters to match to geom's arguments.}
 
@@ -22,7 +22,7 @@ match_geom_args(geom, args, add_aes = TRUE, mapping = list(),
 a \code{list}
 }
 \description{
-Match list of arguments to geometrie's arguments
+Match list of arguments to arguments of geometry
 }
 \examples{
 # List of parameters
