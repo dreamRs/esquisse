@@ -4,13 +4,16 @@
 \alias{esquisserServer}
 \alias{module-esquisse}
 \alias{esquisserUI}
+\alias{esquisseContainer}
 \title{Esquisse Shiny module}
 \usage{
 esquisserServer(input, output, session, data = NULL,
   dataModule = c("GlobalEnv", "ImportFile"), sizeDataModule = "m")
 
-esquisserUI(id, header = TRUE, choose_data = TRUE,
-  insert_code = FALSE)
+esquisserUI(id, header = TRUE, container = esquisseContainer(),
+  choose_data = TRUE, insert_code = FALSE)
+
+esquisseContainer(width = "100\%", height = "700px", fixed = FALSE)
 }
 \arguments{
 \item{input, output, session}{Standards \code{shiny} server arguments.}
@@ -27,10 +30,18 @@ or \code{"ImportFile"}.}
 
 \item{header}{Logical. Display or not \code{esquisse} header.}
 
+\item{container}{Container in which display the addin, 
+default is to use \code{esquisseContainer}, see examples.}
+
 \item{choose_data}{Logical. Display or not the button to choose data.}
 
 \item{insert_code}{Logical, Display or not a button to isert the ggplot
 code in the current user script (work only in RStudio).}
+
+\item{width, height}{The width and height of the container, e.g. \code{'400px'},
+or \code{'100\%'}; see \code{\link[htmltools]{validateCssUnit}}.}
+
+\item{fixed}{Use a fixed container, e.g. to use use esquisse full page.}
 }
 \value{
 A \code{reactiveValues} with 3 slots :
@@ -47,7 +58,6 @@ Launch \code{esquisse} in a classic Shiny app.
 For the module to display correctly, it is necessary to place it in a container with a fixed height.
 }
 \examples{
-
 if (interactive()) {
 
 
@@ -59,22 +69,17 @@ library(esquisse)
 ui <- fluidPage(
   tags$h1("Use esquisse as a Shiny module"),
   
-  # Force scroll bar to appear (otherwise hidden by esquisse)
-  tags$style("html, body {overflow: visible !important;"),
-  
   radioButtons(
     inputId = "data", 
     label = "Data to use:", 
     choices = c("iris", "mtcars"),
     inline = TRUE
   ),
-  tags$div(
-    style = "height: 700px;", # needs to be in fixed height container
-    esquisserUI(
-      id = "esquisse", 
-      header = FALSE, # dont display gadget title
-      choose_data = FALSE # dont display button to change data
-    )
+  esquisserUI(
+    id = "esquisse", 
+    header = FALSE, # dont display gadget title
+    choose_data = FALSE, # dont display button to change data,
+    container = esquisseContainer(height = "700px")
   )
 )
 
@@ -115,9 +120,9 @@ my_data <- data.frame(
 
 
 ui <- fluidPage(
-  tags$div( # needs to be in fixed height container
-    style = "position: fixed; top: 0; bottom: 0; right: 0; left: 0;", 
-    esquisserUI(id = "esquisse")
+  esquisserUI(
+    id = "esquisse", 
+    container = esquisseContainer(fixed = TRUE)
   )
 )
 

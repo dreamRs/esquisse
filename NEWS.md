@@ -1,3 +1,8 @@
+# esquisse 0.2.2
+
+* Added `esquisseContainer` to better integrate esquisse module in a shiny application.
+
+
 # esquisse 0.2.1
 
 * Fix bug when adding smooth line (missing import for `geom_smooth`).
