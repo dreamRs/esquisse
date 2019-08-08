@@ -2,6 +2,8 @@
 #' Dropup buttons to hide chart's controls
 #'
 #' @param id Module id. See \code{\link[shiny]{callModule}}.
+#' @param insert_code Logical, Display or not a button to isert the ggplot
+#'  code in the current user script (work only in RStudio).
 #'
 #' @return a \code{\link[shiny]{tagList}} containing UI elements
 #' @noRd
@@ -10,7 +12,7 @@
 #' @importFrom htmltools tags tagList
 #' @importFrom shiny icon
 #'
-chartControlsUI <- function(id) {
+chartControlsUI <- function(id, insert_code = FALSE) {
 
   # Namespace
   ns <- NS(id)
@@ -54,7 +56,7 @@ chartControlsUI <- function(id) {
       status = "default btn-controls"
     ),
     dropdown(
-      controls_code(ns), 
+      controls_code(ns, insert_code = insert_code), 
       style = "default", 
       label = "Export & code", 
       up = TRUE,
@@ -652,7 +654,7 @@ controls_params <- function(ns) {
 #' @importFrom shiny icon downloadButton uiOutput actionLink
 #' @importFrom htmltools tagList tags
 #'
-controls_code <- function(ns) {
+controls_code <- function(ns, insert_code = FALSE) {
   tagList(
     tags$button(
       class = "btn btn-default btn-xs pull-right btn-copy-code",
@@ -662,12 +664,13 @@ controls_code <- function(ns) {
     tags$b("Code:"),
     uiOutput(outputId = ns("code")),
     tags$textarea(id = ns("holderCode"), style = "display: none;"),
-    actionLink(
-      inputId = ns("insert_code"),
-      label = "Insert code in script",
-      icon = icon("arrow-circle-left")
-    ),
-    tags$br(),
+    if (insert_code) {
+      actionLink(
+        inputId = ns("insert_code"),
+        label = "Insert code in script",
+        icon = icon("arrow-circle-left")
+      )
+    },
     tags$br(),
     tags$b("Export:"),
     tags$br(),

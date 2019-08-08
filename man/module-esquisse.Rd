@@ -9,7 +9,8 @@
 esquisserServer(input, output, session, data = NULL,
   dataModule = c("GlobalEnv", "ImportFile"), sizeDataModule = "m")
 
-esquisserUI(id, header = TRUE, choose_data = TRUE)
+esquisserUI(id, header = TRUE, choose_data = TRUE,
+  insert_code = FALSE)
 }
 \arguments{
 \item{input, output, session}{Standards \code{shiny} server arguments.}
@@ -27,6 +28,9 @@ or \code{"ImportFile"}.}
 \item{header}{Logical. Display or not \code{esquisse} header.}
 
 \item{choose_data}{Logical. Display or not the button to choose data.}
+
+\item{insert_code}{Logical, Display or not a button to isert the ggplot
+code in the current user script (work only in RStudio).}
 }
 \value{
 A \code{reactiveValues} with 3 slots :

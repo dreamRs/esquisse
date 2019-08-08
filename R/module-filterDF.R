@@ -1,9 +1,4 @@
 
-
-# Module ------------------------------------------------------------------
-
-
-
 #' @title Shiny module to interactively filter a \code{data.frame}
 #' 
 #' @description Module generate inputs to filter \code{data.frame} according column's type.

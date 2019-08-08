@@ -66,7 +66,7 @@ esquisser <- function(data = NULL,
   }
 
   runGadget(
-    app = esquisserUI(id = "esquisse"), 
+    app = esquisserUI(id = "esquisse", insert_code = TRUE), 
     server = function(input, output, session) {
       callModule(
         module = esquisserServer, 

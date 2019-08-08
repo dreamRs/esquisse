@@ -5,6 +5,8 @@
 #' @param id Module's id.
 #' @param header Logical. Display or not \code{esquisse} header.
 #' @param choose_data Logical. Display or not the button to choose data.
+#' @param insert_code Logical, Display or not a button to isert the ggplot
+#'  code in the current user script (work only in RStudio).
 #' 
 #' @return A \code{reactiveValues} with 3 slots :
 #'  \itemize{
@@ -109,7 +111,7 @@
 #' 
 #' }
 #' 
-esquisserUI <- function(id, header = TRUE, choose_data = TRUE) {
+esquisserUI <- function(id, header = TRUE, choose_data = TRUE, insert_code = FALSE) {
   
   ns <- NS(id)
   
@@ -185,7 +187,7 @@ esquisserUI <- function(id, header = TRUE, choose_data = TRUE) {
       )
     ),
 
-    chartControlsUI(id = ns("controls"))
+    chartControlsUI(id = ns("controls"), insert_code = insert_code)
   )
 
 }
