@@ -30,7 +30,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">esquisse</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.2.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.2.1.900</span>
       </span>
     </div>
 
@@ -118,39 +118,66 @@ img {
 <a class="sourceLine" id="cb2-12" title="12">      )</a>
 <a class="sourceLine" id="cb2-13" title="13">    ),</a>
 <a class="sourceLine" id="cb2-14" title="14">    <span class="kw">mainPanel</span>(</a>
-<a class="sourceLine" id="cb2-15" title="15">      tags<span class="op">$</span><span class="kw">div</span>(</a>
-<a class="sourceLine" id="cb2-16" title="16">        <span class="dt">style =</span> <span class="st">"height: 700px;"</span>, <span class="co"># needs to be in fixed height container</span></a>
-<a class="sourceLine" id="cb2-17" title="17">        <span class="kw"><a href="../reference/module-esquisse.html">esquisserUI</a></span>(</a>
-<a class="sourceLine" id="cb2-18" title="18">          <span class="dt">id =</span> <span class="st">"esquisse"</span>, </a>
-<a class="sourceLine" id="cb2-19" title="19">          <span class="dt">header =</span> <span class="ot">FALSE</span>, <span class="co"># dont display gadget title</span></a>
-<a class="sourceLine" id="cb2-20" title="20">          <span class="dt">choose_data =</span> <span class="ot">FALSE</span> <span class="co"># dont display button to change data</span></a>
-<a class="sourceLine" id="cb2-21" title="21">        )</a>
-<a class="sourceLine" id="cb2-22" title="22">      )</a>
-<a class="sourceLine" id="cb2-23" title="23">    )</a>
-<a class="sourceLine" id="cb2-24" title="24">  )</a>
-<a class="sourceLine" id="cb2-25" title="25">)</a>
-<a class="sourceLine" id="cb2-26" title="26"></a>
-<a class="sourceLine" id="cb2-27" title="27">server &lt;-<span class="st"> </span><span class="cf">function</span>(input, output, session) {</a>
-<a class="sourceLine" id="cb2-28" title="28">  </a>
-<a class="sourceLine" id="cb2-29" title="29">  data_r &lt;-<span class="st"> </span><span class="kw">reactiveValues</span>(<span class="dt">data =</span> iris, <span class="dt">name =</span> <span class="st">"iris"</span>)</a>
-<a class="sourceLine" id="cb2-30" title="30">  </a>
-<a class="sourceLine" id="cb2-31" title="31">  <span class="kw">observeEvent</span>(input<span class="op">$</span>data, {</a>
-<a class="sourceLine" id="cb2-32" title="32">    <span class="cf">if</span> (input<span class="op">$</span>data <span class="op">==</span><span class="st"> "iris"</span>) {</a>
-<a class="sourceLine" id="cb2-33" title="33">      data_r<span class="op">$</span>data &lt;-<span class="st"> </span>iris</a>
-<a class="sourceLine" id="cb2-34" title="34">      data_r<span class="op">$</span>name &lt;-<span class="st"> "iris"</span></a>
-<a class="sourceLine" id="cb2-35" title="35">    } <span class="cf">else</span> {</a>
-<a class="sourceLine" id="cb2-36" title="36">      data_r<span class="op">$</span>data &lt;-<span class="st"> </span>mtcars</a>
-<a class="sourceLine" id="cb2-37" title="37">      data_r<span class="op">$</span>name &lt;-<span class="st"> "mtcars"</span></a>
-<a class="sourceLine" id="cb2-38" title="38">    }</a>
-<a class="sourceLine" id="cb2-39" title="39">  })</a>
-<a class="sourceLine" id="cb2-40" title="40">  </a>
-<a class="sourceLine" id="cb2-41" title="41">  <span class="kw">callModule</span>(<span class="dt">module =</span> esquisserServer, <span class="dt">id =</span> <span class="st">"esquisse"</span>, <span class="dt">data =</span> data_r)</a>
-<a class="sourceLine" id="cb2-42" title="42">  </a>
-<a class="sourceLine" id="cb2-43" title="43">}</a>
-<a class="sourceLine" id="cb2-44" title="44"></a>
-<a class="sourceLine" id="cb2-45" title="45"><span class="kw">shinyApp</span>(ui, server)</a></code></pre></div>
+<a class="sourceLine" id="cb2-15" title="15">      <span class="kw">tabsetPanel</span>(</a>
+<a class="sourceLine" id="cb2-16" title="16">        <span class="kw">tabPanel</span>(</a>
+<a class="sourceLine" id="cb2-17" title="17">          <span class="dt">title =</span> <span class="st">"esquisse"</span>,</a>
+<a class="sourceLine" id="cb2-18" title="18">          <span class="kw"><a href="../reference/module-esquisse.html">esquisserUI</a></span>(</a>
+<a class="sourceLine" id="cb2-19" title="19">            <span class="dt">id =</span> <span class="st">"esquisse"</span>, </a>
+<a class="sourceLine" id="cb2-20" title="20">            <span class="dt">header =</span> <span class="ot">FALSE</span>, <span class="co"># dont display gadget title</span></a>
+<a class="sourceLine" id="cb2-21" title="21">            <span class="dt">choose_data =</span> <span class="ot">FALSE</span> <span class="co"># dont display button to change data</span></a>
+<a class="sourceLine" id="cb2-22" title="22">          )</a>
+<a class="sourceLine" id="cb2-23" title="23">        ),</a>
+<a class="sourceLine" id="cb2-24" title="24">        <span class="kw">tabPanel</span>(</a>
+<a class="sourceLine" id="cb2-25" title="25">          <span class="dt">title =</span> <span class="st">"output"</span>,</a>
+<a class="sourceLine" id="cb2-26" title="26">          <span class="kw">verbatimTextOutput</span>(<span class="st">"module_out"</span>)</a>
+<a class="sourceLine" id="cb2-27" title="27">        )</a>
+<a class="sourceLine" id="cb2-28" title="28">      )</a>
+<a class="sourceLine" id="cb2-29" title="29">    )</a>
+<a class="sourceLine" id="cb2-30" title="30">  )</a>
+<a class="sourceLine" id="cb2-31" title="31">)</a>
+<a class="sourceLine" id="cb2-32" title="32"></a>
+<a class="sourceLine" id="cb2-33" title="33"></a>
+<a class="sourceLine" id="cb2-34" title="34">server &lt;-<span class="st"> </span><span class="cf">function</span>(input, output, session) {</a>
+<a class="sourceLine" id="cb2-35" title="35">  </a>
+<a class="sourceLine" id="cb2-36" title="36">  data_r &lt;-<span class="st"> </span><span class="kw">reactiveValues</span>(<span class="dt">data =</span> iris, <span class="dt">name =</span> <span class="st">"iris"</span>)</a>
+<a class="sourceLine" id="cb2-37" title="37">  </a>
+<a class="sourceLine" id="cb2-38" title="38">  <span class="kw">observeEvent</span>(input<span class="op">$</span>data, {</a>
+<a class="sourceLine" id="cb2-39" title="39">    <span class="cf">if</span> (input<span class="op">$</span>data <span class="op">==</span><span class="st"> "iris"</span>) {</a>
+<a class="sourceLine" id="cb2-40" title="40">      data_r<span class="op">$</span>data &lt;-<span class="st"> </span>iris</a>
+<a class="sourceLine" id="cb2-41" title="41">      data_r<span class="op">$</span>name &lt;-<span class="st"> "iris"</span></a>
+<a class="sourceLine" id="cb2-42" title="42">    } <span class="cf">else</span> {</a>
+<a class="sourceLine" id="cb2-43" title="43">      data_r<span class="op">$</span>data &lt;-<span class="st"> </span>mtcars</a>
+<a class="sourceLine" id="cb2-44" title="44">      data_r<span class="op">$</span>name &lt;-<span class="st"> "mtcars"</span></a>
+<a class="sourceLine" id="cb2-45" title="45">    }</a>
+<a class="sourceLine" id="cb2-46" title="46">  })</a>
+<a class="sourceLine" id="cb2-47" title="47">  </a>
+<a class="sourceLine" id="cb2-48" title="48">  result &lt;-<span class="st"> </span><span class="kw">callModule</span>(</a>
+<a class="sourceLine" id="cb2-49" title="49">    <span class="dt">module =</span> esquisserServer,</a>
+<a class="sourceLine" id="cb2-50" title="50">    <span class="dt">id =</span> <span class="st">"esquisse"</span>,</a>
+<a class="sourceLine" id="cb2-51" title="51">    <span class="dt">data =</span> data_r</a>
+<a class="sourceLine" id="cb2-52" title="52">  )</a>
+<a class="sourceLine" id="cb2-53" title="53">  </a>
+<a class="sourceLine" id="cb2-54" title="54">  output<span class="op">$</span>module_out &lt;-<span class="st"> </span><span class="kw">renderPrint</span>({</a>
+<a class="sourceLine" id="cb2-55" title="55">    <span class="kw"><a href="https://www.rdocumentation.org/packages/utils/topics/str">str</a></span>(<span class="kw">reactiveValuesToList</span>(result))</a>
+<a class="sourceLine" id="cb2-56" title="56">  })</a>
+<a class="sourceLine" id="cb2-57" title="57">  </a>
+<a class="sourceLine" id="cb2-58" title="58">}</a>
+<a class="sourceLine" id="cb2-59" title="59"></a>
+<a class="sourceLine" id="cb2-60" title="60"><span class="kw">shinyApp</span>(ui, server)</a></code></pre></div>
 <p>Result looks like :</p>
 <p><img src="figures/shiny-esquisse.png"></p>
+<p>The output of the module is a <code>reactiveValues</code> with 3 slots :</p>
+<pre><code>List of 3
+ $ code_plot   : chr "ggplot(iris) + aes(x = Sepal.Length) + geom_histogram(bins = 30L, fill = \"#0c4c8a\") + theme_minimal()"
+ $ code_filters:List of 2
+  ..$ dplyr: language iris %&gt;% filter(Petal.Length &gt;= 1.45 &amp; Petal.Length &lt;= 6.9)
+  ..$ expr : language Petal.Length &gt;= 1.45 &amp; Petal.Length &lt;= 6.9
+ $ data        :'data.frame':   126 obs. of  5 variables:
+  ..$ Sepal.Length: num [1:126] 4.6 5.4 5 4.9 5.4 4.8 5.7 5.7 5.1 5.4 ...
+  ..$ Sepal.Width : num [1:126] 3.1 3.9 3.4 3.1 3.7 3.4 4.4 3.8 3.8 3.4 ...
+  ..$ Petal.Length: num [1:126] 1.5 1.7 1.5 1.5 1.5 1.6 1.5 1.7 1.5 1.7 ...
+  ..$ Petal.Width : num [1:126] 0.2 0.4 0.2 0.1 0.2 0.2 0.4 0.3 0.3 0.2 ...
+  ..$ Species     : Factor w/ 3 levels "setosa","versicolor",..: 1 1 1 1 1 1 1 1 1 1 ...</code></pre>
 </div>
 <div id="other-exported-modules" class="section level2">
 <h2 class="hasAnchor">
@@ -160,30 +187,30 @@ img {
 <h3 class="hasAnchor">
 <a href="#filter-data" class="anchor"></a>Filter data</h3>
 <p>Module to interactively filter a <code>data.frame</code> and retrieve the code :</p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" title="1">?<span class="st">`</span><span class="dt">module-filterDF</span><span class="st">`</span></a>
-<a class="sourceLine" id="cb3-2" title="2"></a>
-<a class="sourceLine" id="cb3-3" title="3"><span class="kw"><a href="../reference/run_module.html">run_module</a></span>(<span class="st">"filterDF"</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb4-1" title="1">?<span class="st">`</span><span class="dt">module-filterDF</span><span class="st">`</span></a>
+<a class="sourceLine" id="cb4-2" title="2"></a>
+<a class="sourceLine" id="cb4-3" title="3"><span class="kw"><a href="../reference/run_module.html">run_module</a></span>(<span class="st">"filterDF"</span>)</a></code></pre></div>
 <p><img src="figures/module-filterDF.png"></p>
 </div>
 <div id="choose-data" class="section level3">
 <h3 class="hasAnchor">
 <a href="#choose-data" class="anchor"></a>Choose data</h3>
 <p>Module to interactively choose a <code>data.frame</code> in Global environment or to import an external file :</p>
-<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb4-1" title="1">?<span class="st">`</span><span class="dt">module-chooseData</span><span class="st">`</span></a>
-<a class="sourceLine" id="cb4-2" title="2"></a>
-<a class="sourceLine" id="cb4-3" title="3"><span class="kw"><a href="../reference/run_module.html">run_module</a></span>(<span class="st">"chooseData"</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb5-1" title="1">?<span class="st">`</span><span class="dt">module-chooseData</span><span class="st">`</span></a>
+<a class="sourceLine" id="cb5-2" title="2"></a>
+<a class="sourceLine" id="cb5-3" title="3"><span class="kw"><a href="../reference/run_module.html">run_module</a></span>(<span class="st">"chooseData"</span>)</a></code></pre></div>
 <p><img src="figures/module-chooseData.png"></p>
 <p>With an external file, import will be performed by package <a href="https://github.com/leeper/rio">{rio}</a> :</p>
-<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb5-1" title="1"><span class="kw"><a href="../reference/run_module.html">run_module</a></span>(<span class="st">"chooseData2"</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb6-1" title="1"><span class="kw"><a href="../reference/run_module.html">run_module</a></span>(<span class="st">"chooseData2"</span>)</a></code></pre></div>
 <p><img src="figures/module-chooseData2.png"></p>
 </div>
 <div id="coerce-variable" class="section level3">
 <h3 class="hasAnchor">
 <a href="#coerce-variable" class="anchor"></a>Coerce variable</h3>
 <p>Coerce a variable from a class to another :</p>
-<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb6-1" title="1">?<span class="st">`</span><span class="dt">module-coerce</span><span class="st">`</span></a>
-<a class="sourceLine" id="cb6-2" title="2"></a>
-<a class="sourceLine" id="cb6-3" title="3"><span class="kw"><a href="../reference/run_module.html">run_module</a></span>(<span class="st">"coerce"</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb7-1" title="1">?<span class="st">`</span><span class="dt">module-coerce</span><span class="st">`</span></a>
+<a class="sourceLine" id="cb7-2" title="2"></a>
+<a class="sourceLine" id="cb7-3" title="3"><span class="kw"><a href="../reference/run_module.html">run_module</a></span>(<span class="st">"coerce"</span>)</a></code></pre></div>
 <p><img src="figures/module-coerce.png"></p>
 </div>
 </div>
@@ -194,58 +221,58 @@ img {
 <div id="dragulainput" class="section level3">
 <h3 class="hasAnchor">
 <a href="#dragulainput" class="anchor"></a>dragulaInput</h3>
-<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb7-1" title="1">ui &lt;-<span class="st"> </span><span class="kw">fluidPage</span>(</a>
-<a class="sourceLine" id="cb7-2" title="2">  tags<span class="op">$</span><span class="kw">h2</span>(<span class="st">"Demo dragulaInput"</span>),</a>
-<a class="sourceLine" id="cb7-3" title="3">  tags<span class="op">$</span><span class="kw">br</span>(),</a>
-<a class="sourceLine" id="cb7-4" title="4">  <span class="kw"><a href="../reference/dragulaInput.html">dragulaInput</a></span>(</a>
-<a class="sourceLine" id="cb7-5" title="5">    <span class="dt">inputId =</span> <span class="st">"dad"</span>,</a>
-<a class="sourceLine" id="cb7-6" title="6">    <span class="dt">sourceLabel =</span> <span class="st">"Source"</span>,</a>
-<a class="sourceLine" id="cb7-7" title="7">    <span class="dt">targetsLabels =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="st">"Target 1"</span>, <span class="st">"Target 2"</span>),</a>
-<a class="sourceLine" id="cb7-8" title="8">    <span class="dt">choices =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/names">names</a></span>(iris),</a>
-<a class="sourceLine" id="cb7-9" title="9">    <span class="dt">width =</span> <span class="st">"400px"</span></a>
-<a class="sourceLine" id="cb7-10" title="10">  ),</a>
-<a class="sourceLine" id="cb7-11" title="11">  <span class="kw">verbatimTextOutput</span>(<span class="dt">outputId =</span> <span class="st">"result"</span>)</a>
-<a class="sourceLine" id="cb7-12" title="12">)</a>
-<a class="sourceLine" id="cb7-13" title="13"></a>
-<a class="sourceLine" id="cb7-14" title="14"></a>
-<a class="sourceLine" id="cb7-15" title="15">server &lt;-<span class="st"> </span><span class="cf">function</span>(input, output, session) {</a>
-<a class="sourceLine" id="cb7-16" title="16">  </a>
-<a class="sourceLine" id="cb7-17" title="17">  output<span class="op">$</span>result &lt;-<span class="st"> </span><span class="kw">renderPrint</span>(<span class="kw"><a href="https://www.rdocumentation.org/packages/utils/topics/str">str</a></span>(input<span class="op">$</span>dad))</a>
-<a class="sourceLine" id="cb7-18" title="18"></a>
-<a class="sourceLine" id="cb7-19" title="19">}</a>
-<a class="sourceLine" id="cb7-20" title="20"></a>
-<a class="sourceLine" id="cb7-21" title="21"><span class="kw">shinyApp</span>(<span class="dt">ui =</span> ui, <span class="dt">server =</span> server)</a></code></pre></div>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb8-1" title="1">ui &lt;-<span class="st"> </span><span class="kw">fluidPage</span>(</a>
+<a class="sourceLine" id="cb8-2" title="2">  tags<span class="op">$</span><span class="kw">h2</span>(<span class="st">"Demo dragulaInput"</span>),</a>
+<a class="sourceLine" id="cb8-3" title="3">  tags<span class="op">$</span><span class="kw">br</span>(),</a>
+<a class="sourceLine" id="cb8-4" title="4">  <span class="kw"><a href="../reference/dragulaInput.html">dragulaInput</a></span>(</a>
+<a class="sourceLine" id="cb8-5" title="5">    <span class="dt">inputId =</span> <span class="st">"dad"</span>,</a>
+<a class="sourceLine" id="cb8-6" title="6">    <span class="dt">sourceLabel =</span> <span class="st">"Source"</span>,</a>
+<a class="sourceLine" id="cb8-7" title="7">    <span class="dt">targetsLabels =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="st">"Target 1"</span>, <span class="st">"Target 2"</span>),</a>
+<a class="sourceLine" id="cb8-8" title="8">    <span class="dt">choices =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/names">names</a></span>(iris),</a>
+<a class="sourceLine" id="cb8-9" title="9">    <span class="dt">width =</span> <span class="st">"400px"</span></a>
+<a class="sourceLine" id="cb8-10" title="10">  ),</a>
+<a class="sourceLine" id="cb8-11" title="11">  <span class="kw">verbatimTextOutput</span>(<span class="dt">outputId =</span> <span class="st">"result"</span>)</a>
+<a class="sourceLine" id="cb8-12" title="12">)</a>
+<a class="sourceLine" id="cb8-13" title="13"></a>
+<a class="sourceLine" id="cb8-14" title="14"></a>
+<a class="sourceLine" id="cb8-15" title="15">server &lt;-<span class="st"> </span><span class="cf">function</span>(input, output, session) {</a>
+<a class="sourceLine" id="cb8-16" title="16">  </a>
+<a class="sourceLine" id="cb8-17" title="17">  output<span class="op">$</span>result &lt;-<span class="st"> </span><span class="kw">renderPrint</span>(<span class="kw"><a href="https://www.rdocumentation.org/packages/utils/topics/str">str</a></span>(input<span class="op">$</span>dad))</a>
+<a class="sourceLine" id="cb8-18" title="18"></a>
+<a class="sourceLine" id="cb8-19" title="19">}</a>
+<a class="sourceLine" id="cb8-20" title="20"></a>
+<a class="sourceLine" id="cb8-21" title="21"><span class="kw">shinyApp</span>(<span class="dt">ui =</span> ui, <span class="dt">server =</span> server)</a></code></pre></div>
 <p><img src="figures/input-dragula.png"></p>
 </div>
 <div id="dropinput" class="section level3">
 <h3 class="hasAnchor">
 <a href="#dropinput" class="anchor"></a>dropInput</h3>
-<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb8-1" title="1">ui &lt;-<span class="st"> </span><span class="kw">fluidPage</span>(</a>
-<a class="sourceLine" id="cb8-2" title="2">    tags<span class="op">$</span><span class="kw">h2</span>(<span class="st">"Drop Input"</span>),</a>
-<a class="sourceLine" id="cb8-3" title="3">    <span class="kw"><a href="../reference/dropInput.html">dropInput</a></span>(</a>
-<a class="sourceLine" id="cb8-4" title="4">      <span class="dt">inputId =</span> <span class="st">"mydrop"</span>,</a>
-<a class="sourceLine" id="cb8-5" title="5">      <span class="dt">choicesNames =</span> <span class="kw">tagList</span>(</a>
-<a class="sourceLine" id="cb8-6" title="6">        <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/list">list</a></span>(<span class="kw">icon</span>(<span class="st">"home"</span>), <span class="dt">style =</span> <span class="st">"width: 100px;"</span>), </a>
-<a class="sourceLine" id="cb8-7" title="7">        <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/list">list</a></span>(<span class="kw">icon</span>(<span class="st">"flash"</span>), <span class="dt">style =</span> <span class="st">"width: 100px;"</span>),</a>
-<a class="sourceLine" id="cb8-8" title="8">        <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/list">list</a></span>(<span class="kw">icon</span>(<span class="st">"cogs"</span>), <span class="dt">style =</span> <span class="st">"width: 100px;"</span>),</a>
-<a class="sourceLine" id="cb8-9" title="9">        <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/list">list</a></span>(<span class="kw">icon</span>(<span class="st">"fire"</span>), <span class="dt">style =</span> <span class="st">"width: 100px;"</span>), </a>
-<a class="sourceLine" id="cb8-10" title="10">        <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/list">list</a></span>(<span class="kw">icon</span>(<span class="st">"users"</span>), <span class="dt">style =</span> <span class="st">"width: 100px;"</span>), </a>
-<a class="sourceLine" id="cb8-11" title="11">        <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/list">list</a></span>(<span class="kw">icon</span>(<span class="st">"info"</span>), <span class="dt">style =</span> <span class="st">"width: 100px;"</span>)</a>
-<a class="sourceLine" id="cb8-12" title="12">      ), </a>
-<a class="sourceLine" id="cb8-13" title="13">      <span class="dt">choicesValues =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="st">"home"</span>, <span class="st">"flash"</span>, <span class="st">"cogs"</span>,</a>
-<a class="sourceLine" id="cb8-14" title="14">                        <span class="st">"fire"</span>, <span class="st">"users"</span>, <span class="st">"info"</span>),</a>
-<a class="sourceLine" id="cb8-15" title="15">      <span class="dt">dropWidth =</span> <span class="st">"220px"</span></a>
-<a class="sourceLine" id="cb8-16" title="16">    ),</a>
-<a class="sourceLine" id="cb8-17" title="17">    <span class="kw">verbatimTextOutput</span>(<span class="dt">outputId =</span> <span class="st">"res"</span>)</a>
-<a class="sourceLine" id="cb8-18" title="18">  )</a>
-<a class="sourceLine" id="cb8-19" title="19">  </a>
-<a class="sourceLine" id="cb8-20" title="20">  server &lt;-<span class="st"> </span><span class="cf">function</span>(input, output, session) {</a>
-<a class="sourceLine" id="cb8-21" title="21">    output<span class="op">$</span>res &lt;-<span class="st"> </span><span class="kw">renderPrint</span>({</a>
-<a class="sourceLine" id="cb8-22" title="22">      input<span class="op">$</span>mydrop</a>
-<a class="sourceLine" id="cb8-23" title="23">    })</a>
-<a class="sourceLine" id="cb8-24" title="24">  }</a>
-<a class="sourceLine" id="cb8-25" title="25">  </a>
-<a class="sourceLine" id="cb8-26" title="26">  <span class="kw">shinyApp</span>(ui, server)</a></code></pre></div>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb9-1" title="1">ui &lt;-<span class="st"> </span><span class="kw">fluidPage</span>(</a>
+<a class="sourceLine" id="cb9-2" title="2">    tags<span class="op">$</span><span class="kw">h2</span>(<span class="st">"Drop Input"</span>),</a>
+<a class="sourceLine" id="cb9-3" title="3">    <span class="kw"><a href="../reference/dropInput.html">dropInput</a></span>(</a>
+<a class="sourceLine" id="cb9-4" title="4">      <span class="dt">inputId =</span> <span class="st">"mydrop"</span>,</a>
+<a class="sourceLine" id="cb9-5" title="5">      <span class="dt">choicesNames =</span> <span class="kw">tagList</span>(</a>
+<a class="sourceLine" id="cb9-6" title="6">        <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/list">list</a></span>(<span class="kw">icon</span>(<span class="st">"home"</span>), <span class="dt">style =</span> <span class="st">"width: 100px;"</span>), </a>
+<a class="sourceLine" id="cb9-7" title="7">        <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/list">list</a></span>(<span class="kw">icon</span>(<span class="st">"flash"</span>), <span class="dt">style =</span> <span class="st">"width: 100px;"</span>),</a>
+<a class="sourceLine" id="cb9-8" title="8">        <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/list">list</a></span>(<span class="kw">icon</span>(<span class="st">"cogs"</span>), <span class="dt">style =</span> <span class="st">"width: 100px;"</span>),</a>
+<a class="sourceLine" id="cb9-9" title="9">        <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/list">list</a></span>(<span class="kw">icon</span>(<span class="st">"fire"</span>), <span class="dt">style =</span> <span class="st">"width: 100px;"</span>), </a>
+<a class="sourceLine" id="cb9-10" title="10">        <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/list">list</a></span>(<span class="kw">icon</span>(<span class="st">"users"</span>), <span class="dt">style =</span> <span class="st">"width: 100px;"</span>), </a>
+<a class="sourceLine" id="cb9-11" title="11">        <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/list">list</a></span>(<span class="kw">icon</span>(<span class="st">"info"</span>), <span class="dt">style =</span> <span class="st">"width: 100px;"</span>)</a>
+<a class="sourceLine" id="cb9-12" title="12">      ), </a>
+<a class="sourceLine" id="cb9-13" title="13">      <span class="dt">choicesValues =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="st">"home"</span>, <span class="st">"flash"</span>, <span class="st">"cogs"</span>,</a>
+<a class="sourceLine" id="cb9-14" title="14">                        <span class="st">"fire"</span>, <span class="st">"users"</span>, <span class="st">"info"</span>),</a>
+<a class="sourceLine" id="cb9-15" title="15">      <span class="dt">dropWidth =</span> <span class="st">"220px"</span></a>
+<a class="sourceLine" id="cb9-16" title="16">    ),</a>
+<a class="sourceLine" id="cb9-17" title="17">    <span class="kw">verbatimTextOutput</span>(<span class="dt">outputId =</span> <span class="st">"res"</span>)</a>
+<a class="sourceLine" id="cb9-18" title="18">  )</a>
+<a class="sourceLine" id="cb9-19" title="19">  </a>
+<a class="sourceLine" id="cb9-20" title="20">  server &lt;-<span class="st"> </span><span class="cf">function</span>(input, output, session) {</a>
+<a class="sourceLine" id="cb9-21" title="21">    output<span class="op">$</span>res &lt;-<span class="st"> </span><span class="kw">renderPrint</span>({</a>
+<a class="sourceLine" id="cb9-22" title="22">      input<span class="op">$</span>mydrop</a>
+<a class="sourceLine" id="cb9-23" title="23">    })</a>
+<a class="sourceLine" id="cb9-24" title="24">  }</a>
+<a class="sourceLine" id="cb9-25" title="25">  </a>
+<a class="sourceLine" id="cb9-26" title="26">  <span class="kw">shinyApp</span>(ui, server)</a></code></pre></div>
 <p><img src="figures/input-drop.png"></p>
 </div>
 </div>

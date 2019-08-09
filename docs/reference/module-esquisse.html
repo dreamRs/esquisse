@@ -63,7 +63,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">esquisse</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.2.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.2.1.900</span>
       </span>
     </div>
 
@@ -131,7 +131,10 @@
     <pre class="usage"><span class='fu'>esquisserServer</span>(<span class='no'>input</span>, <span class='no'>output</span>, <span class='no'>session</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
   <span class='kw'>dataModule</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='st'>"GlobalEnv"</span>, <span class='st'>"ImportFile"</span>), <span class='kw'>sizeDataModule</span> <span class='kw'>=</span> <span class='st'>"m"</span>)
 
-<span class='fu'>esquisserUI</span>(<span class='no'>id</span>, <span class='kw'>header</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>choose_data</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</pre>
+<span class='fu'>esquisserUI</span>(<span class='no'>id</span>, <span class='kw'>header</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>container</span> <span class='kw'>=</span> <span class='fu'>esquisseContainer</span>(),
+  <span class='kw'>choose_data</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>insert_code</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)
+
+<span class='fu'>esquisseContainer</span>(<span class='kw'>width</span> <span class='kw'>=</span> <span class='st'>"100%"</span>, <span class='kw'>height</span> <span class='kw'>=</span> <span class='st'>"700px"</span>, <span class='kw'>fixed</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -163,8 +166,32 @@ or <code>"ImportFile"</code>.</p></td>
       <td><p>Logical. Display or not <code>esquisse</code> header.</p></td>
     </tr>
     <tr>
+      <th>container</th>
+      <td><p>Container in which display the addin, 
+default is to use <code>esquisseContainer</code>, see examples.
+Use <code>NULL</code> for no container (behavior in versions &lt;= 0.2.1).
+Must be a <code>function</code>.</p></td>
+    </tr>
+    <tr>
       <th>choose_data</th>
       <td><p>Logical. Display or not the button to choose data.</p></td>
+    </tr>
+    <tr>
+      <th>insert_code</th>
+      <td><p>Logical, Display or not a button to insert the ggplot
+code in the current user script (work only in RStudio).</p></td>
+    </tr>
+    <tr>
+      <th>width, height</th>
+      <td><p>The width and height of the container, e.g. <code>'400px'</code>,
+or <code>'100%'</code>; see <code><a href='https://www.rdocumentation.org/packages/htmltools/topics/validateCssUnit'>validateCssUnit</a></code>.</p></td>
+    </tr>
+    <tr>
+      <th>fixed</th>
+      <td><p>Use a fixed container, e.g. to use use esquisse full page.
+If <code>TRUE</code>, width and height are ignored. Default to <code>FALSE</code>.
+It's possible to use a vector of CSS unit of length 4 to specify the margins 
+(top, right, bottom, left).</p></td>
     </tr>
     </table>
     
@@ -179,13 +206,13 @@ or <code>"ImportFile"</code>.</p></td>
     
     <h2 class="hasAnchor" id="note"><a class="anchor" href="#note"></a>Note</h2>
 
-    <p>For the module to display correctly, it is necessary to place it in a container with a fixed height.</p>
+    <p>For the module to display correctly, it is necessary to place
+ it in a container with a fixed height. Since version &gt;= 0.2.2, the 
+ container is added by default.</p>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'>
-<span class='kw'>if</span> (<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/interactive'>interactive</a></span>()) {
-
+    <pre class="examples"><div class='input'><span class='kw'>if</span> (<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/interactive'>interactive</a></span>()) {
 
 <span class='co'>### Part of a Shiny app ###</span>
 
@@ -195,22 +222,17 @@ or <code>"ImportFile"</code>.</p></td>
 <span class='no'>ui</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/shiny/topics/fluidPage'>fluidPage</a></span>(
   <span class='no'>tags</span>$<span class='fu'><a href='https://www.rdocumentation.org/packages/shiny/topics/builder'>h1</a></span>(<span class='st'>"Use esquisse as a Shiny module"</span>),
 
-  <span class='co'># Force scroll bar to appear (otherwise hidden by esquisse)</span>
-  <span class='no'>tags</span>$<span class='fu'>style</span>(<span class='st'>"html, body {overflow: visible !important;"</span>),
-
   <span class='fu'><a href='https://www.rdocumentation.org/packages/shiny/topics/radioButtons'>radioButtons</a></span>(
     <span class='kw'>inputId</span> <span class='kw'>=</span> <span class='st'>"data"</span>,
     <span class='kw'>label</span> <span class='kw'>=</span> <span class='st'>"Data to use:"</span>,
     <span class='kw'>choices</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='st'>"iris"</span>, <span class='st'>"mtcars"</span>),
     <span class='kw'>inline</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>
   ),
-  <span class='no'>tags</span>$<span class='fu'><a href='https://www.rdocumentation.org/packages/shiny/topics/builder'>div</a></span>(
-    <span class='kw'>style</span> <span class='kw'>=</span> <span class='st'>"height: 700px;"</span>, <span class='co'># needs to be in fixed height container</span>
-    <span class='fu'>esquisserUI</span>(
-      <span class='kw'>id</span> <span class='kw'>=</span> <span class='st'>"esquisse"</span>,
-      <span class='kw'>header</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='co'># dont display gadget title</span>
-      <span class='kw'>choose_data</span> <span class='kw'>=</span> <span class='fl'>FALSE</span> <span class='co'># dont display button to change data</span>
-    )
+  <span class='fu'>esquisserUI</span>(
+    <span class='kw'>id</span> <span class='kw'>=</span> <span class='st'>"esquisse"</span>,
+    <span class='kw'>header</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='co'># dont display gadget title</span>
+    <span class='kw'>choose_data</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='co'># dont display button to change data,</span>
+    <span class='kw'>container</span> <span class='kw'>=</span> <span class='fu'>esquisseContainer</span>(<span class='kw'>height</span> <span class='kw'>=</span> <span class='st'>"700px"</span>)
   )
 )
 
@@ -249,11 +271,37 @@ or <code>"ImportFile"</code>.</p></td>
 )
 
 
-
 <span class='no'>ui</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/shiny/topics/fluidPage'>fluidPage</a></span>(
-  <span class='no'>tags</span>$<span class='fu'><a href='https://www.rdocumentation.org/packages/shiny/topics/builder'>div</a></span>( <span class='co'># needs to be in fixed height container</span>
-    <span class='kw'>style</span> <span class='kw'>=</span> <span class='st'>"position: fixed; top: 0; bottom: 0; right: 0; left: 0;"</span>,
-    <span class='fu'>esquisserUI</span>(<span class='kw'>id</span> <span class='kw'>=</span> <span class='st'>"esquisse"</span>)
+  <span class='fu'>esquisserUI</span>(
+    <span class='kw'>id</span> <span class='kw'>=</span> <span class='st'>"esquisse"</span>,
+    <span class='kw'>container</span> <span class='kw'>=</span> <span class='fu'>esquisseContainer</span>(<span class='kw'>fixed</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
+  )
+)
+
+<span class='no'>server</span> <span class='kw'>&lt;-</span> <span class='kw'>function</span>(<span class='no'>input</span>, <span class='no'>output</span>, <span class='no'>session</span>) {
+
+  <span class='fu'><a href='https://www.rdocumentation.org/packages/shiny/topics/callModule'>callModule</a></span>(<span class='kw'>module</span> <span class='kw'>=</span> <span class='no'>esquisserServer</span>, <span class='kw'>id</span> <span class='kw'>=</span> <span class='st'>"esquisse"</span>)
+
+}
+
+<span class='fu'><a href='https://www.rdocumentation.org/packages/shiny/topics/shinyApp'>shinyApp</a></span>(<span class='no'>ui</span>, <span class='no'>server</span>)
+
+
+
+<span class='co'>## You can also use a vector of margins for the fixed argument,</span>
+<span class='co'># useful if you have a navbar for example</span>
+
+<span class='no'>ui</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/shiny/topics/navbarPage'>navbarPage</a></span>(
+  <span class='kw'>title</span> <span class='kw'>=</span> <span class='st'>"My navbar app"</span>,
+  <span class='fu'><a href='https://www.rdocumentation.org/packages/shiny/topics/tabPanel'>tabPanel</a></span>(
+    <span class='kw'>title</span> <span class='kw'>=</span> <span class='st'>"esquisse"</span>,
+    <span class='fu'>esquisserUI</span>(
+      <span class='kw'>id</span> <span class='kw'>=</span> <span class='st'>"esquisse"</span>,
+      <span class='kw'>header</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
+      <span class='kw'>container</span> <span class='kw'>=</span> <span class='fu'>esquisseContainer</span>(
+        <span class='kw'>fixed</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='fl'>50</span>, <span class='fl'>0</span>, <span class='fl'>0</span>, <span class='fl'>0</span>)
+      )
+    )
   )
 )
 
