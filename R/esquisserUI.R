@@ -7,8 +7,10 @@
 #' @param header Logical. Display or not \code{esquisse} header.
 #' @param container Container in which display the addin, 
 #'  default is to use \code{esquisseContainer}, see examples.
+#'  Use \code{NULL} for no container (behavior in versions <= 0.2.1).
+#'  Must be a \code{function}.
 #' @param choose_data Logical. Display or not the button to choose data.
-#' @param insert_code Logical, Display or not a button to isert the ggplot
+#' @param insert_code Logical, Display or not a button to insert the ggplot
 #'  code in the current user script (work only in RStudio).
 #' 
 #' @return A \code{reactiveValues} with 3 slots :
@@ -18,7 +20,9 @@
 #'   \item \strong{data} : \code{data.frame} used in plot (with filters applied).
 #'  }
 #' 
-#' @note For the module to display correctly, it is necessary to place it in a container with a fixed height.
+#' @note For the module to display correctly, it is necessary to place
+#'  it in a container with a fixed height. Since version >= 0.2.2, the 
+#'  container is added by default.
 #'
 #' @export
 #' 
@@ -31,7 +35,6 @@
 #'
 #' @examples 
 #' if (interactive()) {
-#' 
 #' 
 #' ### Part of a Shiny app ###
 #' 
@@ -90,11 +93,37 @@
 #' )
 #' 
 #' 
-#' 
 #' ui <- fluidPage(
 #'   esquisserUI(
 #'     id = "esquisse", 
 #'     container = esquisseContainer(fixed = TRUE)
+#'   )
+#' )
+#' 
+#' server <- function(input, output, session) {
+#'   
+#'   callModule(module = esquisserServer, id = "esquisse")
+#'   
+#' }
+#' 
+#' shinyApp(ui, server)
+#' 
+#' 
+#' 
+#' ## You can also use a vector of margins for the fixed argument,
+#' # useful if you have a navbar for example
+#' 
+#' ui <- navbarPage(
+#'   title = "My navbar app",
+#'   tabPanel(
+#'     title = "esquisse",
+#'     esquisserUI(
+#'       id = "esquisse", 
+#'       header = FALSE,
+#'       container = esquisseContainer(
+#'         fixed = c(50, 0, 0, 0)
+#'       )
+#'     )
 #'   )
 #' )
 #' 
@@ -114,7 +143,6 @@ esquisserUI <- function(id, header = TRUE,
                         insert_code = FALSE) {
   
   ns <- NS(id)
-  
   
   box_title <- tags$div(
     class="gadget-title dreamrs-title-box",
@@ -199,6 +227,9 @@ esquisserUI <- function(id, header = TRUE,
 #' @param width,height The width and height of the container, e.g. \code{'400px'},
 #'  or \code{'100\%'}; see \code{\link[htmltools]{validateCssUnit}}.
 #' @param fixed Use a fixed container, e.g. to use use esquisse full page.
+#'  If \code{TRUE}, width and height are ignored. Default to \code{FALSE}.
+#'  It's possible to use a vector of CSS unit of length 4 to specify the margins 
+#'  (top, right, bottom, left).
 #' 
 #' @rdname module-esquisse
 #' @export
@@ -216,13 +247,20 @@ esquisseContainer <- function(width = "100%", height = "700px", fixed = FALSE) {
           style = "position: fixed; top: 0; bottom: 0; right: 0; left: 0;",
           ...
         )
-      } else if (is.numeric(fixed) & length(fixed) == 4) {
+      } else if (length(fixed) == 4) {
         tag <- tags$div(
-          style = sprintf(
-            "position: fixed; top: %s; right: %s; bottom: %s; left: %s;",
-            fixed[1], fixed[2], fixed[3], fixed[4],
+          style = do.call(
+            sprintf,
+            c(list(
+              fmt = "position: fixed; top: %s; right: %s; bottom: %s; left: %s;"
+            ), lapply(fixed, validateCssUnit))
           ),
           ...
+        )
+      } else {
+        stop(
+          "fixed must be ever a logical TRUE/FALSE or a vector of length 4 of valid CSS unit.", 
+          call. = FALSE
         )
       }
     }

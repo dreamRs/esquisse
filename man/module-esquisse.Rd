@@ -31,17 +31,22 @@ or \code{"ImportFile"}.}
 \item{header}{Logical. Display or not \code{esquisse} header.}
 
 \item{container}{Container in which display the addin, 
-default is to use \code{esquisseContainer}, see examples.}
+default is to use \code{esquisseContainer}, see examples.
+Use \code{NULL} for no container (behavior in versions <= 0.2.1).
+Must be a \code{function}.}
 
 \item{choose_data}{Logical. Display or not the button to choose data.}
 
-\item{insert_code}{Logical, Display or not a button to isert the ggplot
+\item{insert_code}{Logical, Display or not a button to insert the ggplot
 code in the current user script (work only in RStudio).}
 
 \item{width, height}{The width and height of the container, e.g. \code{'400px'},
 or \code{'100\%'}; see \code{\link[htmltools]{validateCssUnit}}.}
 
-\item{fixed}{Use a fixed container, e.g. to use use esquisse full page.}
+\item{fixed}{Use a fixed container, e.g. to use use esquisse full page.
+If \code{TRUE}, width and height are ignored. Default to \code{FALSE}.
+It's possible to use a vector of CSS unit of length 4 to specify the margins 
+(top, right, bottom, left).}
 }
 \value{
 A \code{reactiveValues} with 3 slots :
@@ -55,11 +60,12 @@ A \code{reactiveValues} with 3 slots :
 Launch \code{esquisse} in a classic Shiny app.
 }
 \note{
-For the module to display correctly, it is necessary to place it in a container with a fixed height.
+For the module to display correctly, it is necessary to place
+ it in a container with a fixed height. Since version >= 0.2.2, the 
+ container is added by default.
 }
 \examples{
 if (interactive()) {
-
 
 ### Part of a Shiny app ###
 
@@ -118,11 +124,37 @@ my_data <- data.frame(
 )
 
 
-
 ui <- fluidPage(
   esquisserUI(
     id = "esquisse", 
     container = esquisseContainer(fixed = TRUE)
+  )
+)
+
+server <- function(input, output, session) {
+  
+  callModule(module = esquisserServer, id = "esquisse")
+  
+}
+
+shinyApp(ui, server)
+
+
+
+## You can also use a vector of margins for the fixed argument,
+# useful if you have a navbar for example
+
+ui <- navbarPage(
+  title = "My navbar app",
+  tabPanel(
+    title = "esquisse",
+    esquisserUI(
+      id = "esquisse", 
+      header = FALSE,
+      container = esquisseContainer(
+        fixed = c(50, 0, 0, 0)
+      )
+    )
   )
 )
 

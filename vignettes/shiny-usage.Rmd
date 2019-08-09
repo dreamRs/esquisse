@@ -46,17 +46,24 @@ ui <- fluidPage(
       )
     ),
     mainPanel(
-      tags$div(
-        style = "height: 700px;", # needs to be in fixed height container
-        esquisserUI(
-          id = "esquisse", 
-          header = FALSE, # dont display gadget title
-          choose_data = FALSE # dont display button to change data
+      tabsetPanel(
+        tabPanel(
+          title = "esquisse",
+          esquisserUI(
+            id = "esquisse", 
+            header = FALSE, # dont display gadget title
+            choose_data = FALSE # dont display button to change data
+          )
+        ),
+        tabPanel(
+          title = "output",
+          verbatimTextOutput("module_out")
         )
       )
     )
   )
 )
+
 
 server <- function(input, output, session) {
   
@@ -72,7 +79,15 @@ server <- function(input, output, session) {
     }
   })
   
-  callModule(module = esquisserServer, id = "esquisse", data = data_r)
+  result <- callModule(
+    module = esquisserServer,
+    id = "esquisse",
+    data = data_r
+  )
+  
+  output$module_out <- renderPrint({
+    str(reactiveValuesToList(result))
+  })
   
 }
 
@@ -82,6 +97,23 @@ shinyApp(ui, server)
 Result looks like : 
 
 ![](figures/shiny-esquisse.png)
+
+
+The output of the module is a `reactiveValues` with 3 slots : 
+
+```
+List of 3
+ $ code_plot   : chr "ggplot(iris) + aes(x = Sepal.Length) + geom_histogram(bins = 30L, fill = \"#0c4c8a\") + theme_minimal()"
+ $ code_filters:List of 2
+  ..$ dplyr: language iris %>% filter(Petal.Length >= 1.45 & Petal.Length <= 6.9)
+  ..$ expr : language Petal.Length >= 1.45 & Petal.Length <= 6.9
+ $ data        :'data.frame':	126 obs. of  5 variables:
+  ..$ Sepal.Length: num [1:126] 4.6 5.4 5 4.9 5.4 4.8 5.7 5.7 5.1 5.4 ...
+  ..$ Sepal.Width : num [1:126] 3.1 3.9 3.4 3.1 3.7 3.4 4.4 3.8 3.8 3.4 ...
+  ..$ Petal.Length: num [1:126] 1.5 1.7 1.5 1.5 1.5 1.6 1.5 1.7 1.5 1.7 ...
+  ..$ Petal.Width : num [1:126] 0.2 0.4 0.2 0.1 0.2 0.2 0.4 0.3 0.3 0.2 ...
+  ..$ Species     : Factor w/ 3 levels "setosa","versicolor",..: 1 1 1 1 1 1 1 1 1 1 ...
+```
 
 
 ## Other exported modules
