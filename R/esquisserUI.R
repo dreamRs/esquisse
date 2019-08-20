@@ -234,6 +234,9 @@ esquisserUI <- function(id, header = TRUE,
 #' @rdname module-esquisse
 #' @export
 esquisseContainer <- function(width = "100%", height = "700px", fixed = FALSE) {
+  force(width)
+  force(height)
+  force(fixed)
   function(...) {
     if (identical(fixed, FALSE)) {
       tag <- tags$div(
