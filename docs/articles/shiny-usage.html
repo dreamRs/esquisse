@@ -247,33 +247,99 @@ img {
 <div id="dropinput" class="section level3">
 <h3 class="hasAnchor">
 <a href="#dropinput" class="anchor"></a>dropInput</h3>
+<p>The widget used to select a geom in <code>esquisser</code> addin. You can use images or icons for example:</p>
 <div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb9-1" title="1">ui &lt;-<span class="st"> </span><span class="kw">fluidPage</span>(</a>
-<a class="sourceLine" id="cb9-2" title="2">    tags<span class="op">$</span><span class="kw">h2</span>(<span class="st">"Drop Input"</span>),</a>
-<a class="sourceLine" id="cb9-3" title="3">    <span class="kw"><a href="../reference/dropInput.html">dropInput</a></span>(</a>
-<a class="sourceLine" id="cb9-4" title="4">      <span class="dt">inputId =</span> <span class="st">"mydrop"</span>,</a>
-<a class="sourceLine" id="cb9-5" title="5">      <span class="dt">choicesNames =</span> <span class="kw">tagList</span>(</a>
-<a class="sourceLine" id="cb9-6" title="6">        <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/list">list</a></span>(<span class="kw">icon</span>(<span class="st">"home"</span>), <span class="dt">style =</span> <span class="st">"width: 100px;"</span>), </a>
-<a class="sourceLine" id="cb9-7" title="7">        <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/list">list</a></span>(<span class="kw">icon</span>(<span class="st">"flash"</span>), <span class="dt">style =</span> <span class="st">"width: 100px;"</span>),</a>
-<a class="sourceLine" id="cb9-8" title="8">        <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/list">list</a></span>(<span class="kw">icon</span>(<span class="st">"cogs"</span>), <span class="dt">style =</span> <span class="st">"width: 100px;"</span>),</a>
-<a class="sourceLine" id="cb9-9" title="9">        <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/list">list</a></span>(<span class="kw">icon</span>(<span class="st">"fire"</span>), <span class="dt">style =</span> <span class="st">"width: 100px;"</span>), </a>
-<a class="sourceLine" id="cb9-10" title="10">        <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/list">list</a></span>(<span class="kw">icon</span>(<span class="st">"users"</span>), <span class="dt">style =</span> <span class="st">"width: 100px;"</span>), </a>
-<a class="sourceLine" id="cb9-11" title="11">        <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/list">list</a></span>(<span class="kw">icon</span>(<span class="st">"info"</span>), <span class="dt">style =</span> <span class="st">"width: 100px;"</span>)</a>
-<a class="sourceLine" id="cb9-12" title="12">      ), </a>
-<a class="sourceLine" id="cb9-13" title="13">      <span class="dt">choicesValues =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="st">"home"</span>, <span class="st">"flash"</span>, <span class="st">"cogs"</span>,</a>
-<a class="sourceLine" id="cb9-14" title="14">                        <span class="st">"fire"</span>, <span class="st">"users"</span>, <span class="st">"info"</span>),</a>
-<a class="sourceLine" id="cb9-15" title="15">      <span class="dt">dropWidth =</span> <span class="st">"220px"</span></a>
-<a class="sourceLine" id="cb9-16" title="16">    ),</a>
-<a class="sourceLine" id="cb9-17" title="17">    <span class="kw">verbatimTextOutput</span>(<span class="dt">outputId =</span> <span class="st">"res"</span>)</a>
-<a class="sourceLine" id="cb9-18" title="18">  )</a>
-<a class="sourceLine" id="cb9-19" title="19">  </a>
-<a class="sourceLine" id="cb9-20" title="20">  server &lt;-<span class="st"> </span><span class="cf">function</span>(input, output, session) {</a>
-<a class="sourceLine" id="cb9-21" title="21">    output<span class="op">$</span>res &lt;-<span class="st"> </span><span class="kw">renderPrint</span>({</a>
-<a class="sourceLine" id="cb9-22" title="22">      input<span class="op">$</span>mydrop</a>
-<a class="sourceLine" id="cb9-23" title="23">    })</a>
-<a class="sourceLine" id="cb9-24" title="24">  }</a>
-<a class="sourceLine" id="cb9-25" title="25">  </a>
-<a class="sourceLine" id="cb9-26" title="26">  <span class="kw">shinyApp</span>(ui, server)</a></code></pre></div>
+<a class="sourceLine" id="cb9-2" title="2">  tags<span class="op">$</span><span class="kw">h2</span>(<span class="st">"Drop Input"</span>),</a>
+<a class="sourceLine" id="cb9-3" title="3">  <span class="kw"><a href="../reference/dropInput.html">dropInput</a></span>(</a>
+<a class="sourceLine" id="cb9-4" title="4">    <span class="dt">inputId =</span> <span class="st">"mydrop"</span>,</a>
+<a class="sourceLine" id="cb9-5" title="5">    <span class="dt">choicesNames =</span> <span class="kw">tagList</span>(</a>
+<a class="sourceLine" id="cb9-6" title="6">      <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/list">list</a></span>(<span class="kw">icon</span>(<span class="st">"home"</span>), <span class="dt">style =</span> <span class="st">"width: 100px;"</span>), </a>
+<a class="sourceLine" id="cb9-7" title="7">      <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/list">list</a></span>(<span class="kw">icon</span>(<span class="st">"flash"</span>), <span class="dt">style =</span> <span class="st">"width: 100px;"</span>),</a>
+<a class="sourceLine" id="cb9-8" title="8">      <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/list">list</a></span>(<span class="kw">icon</span>(<span class="st">"cogs"</span>), <span class="dt">style =</span> <span class="st">"width: 100px;"</span>),</a>
+<a class="sourceLine" id="cb9-9" title="9">      <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/list">list</a></span>(<span class="kw">icon</span>(<span class="st">"fire"</span>), <span class="dt">style =</span> <span class="st">"width: 100px;"</span>), </a>
+<a class="sourceLine" id="cb9-10" title="10">      <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/list">list</a></span>(<span class="kw">icon</span>(<span class="st">"users"</span>), <span class="dt">style =</span> <span class="st">"width: 100px;"</span>), </a>
+<a class="sourceLine" id="cb9-11" title="11">      <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/list">list</a></span>(<span class="kw">icon</span>(<span class="st">"info"</span>), <span class="dt">style =</span> <span class="st">"width: 100px;"</span>)</a>
+<a class="sourceLine" id="cb9-12" title="12">    ), </a>
+<a class="sourceLine" id="cb9-13" title="13">    <span class="dt">choicesValues =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="st">"home"</span>, <span class="st">"flash"</span>, <span class="st">"cogs"</span>,</a>
+<a class="sourceLine" id="cb9-14" title="14">                      <span class="st">"fire"</span>, <span class="st">"users"</span>, <span class="st">"info"</span>),</a>
+<a class="sourceLine" id="cb9-15" title="15">    <span class="dt">dropWidth =</span> <span class="st">"220px"</span></a>
+<a class="sourceLine" id="cb9-16" title="16">  ),</a>
+<a class="sourceLine" id="cb9-17" title="17">  <span class="kw">verbatimTextOutput</span>(<span class="dt">outputId =</span> <span class="st">"res"</span>)</a>
+<a class="sourceLine" id="cb9-18" title="18">)</a>
+<a class="sourceLine" id="cb9-19" title="19"></a>
+<a class="sourceLine" id="cb9-20" title="20">server &lt;-<span class="st"> </span><span class="cf">function</span>(input, output, session) {</a>
+<a class="sourceLine" id="cb9-21" title="21">  output<span class="op">$</span>res &lt;-<span class="st"> </span><span class="kw">renderPrint</span>({</a>
+<a class="sourceLine" id="cb9-22" title="22">    input<span class="op">$</span>mydrop</a>
+<a class="sourceLine" id="cb9-23" title="23">  })</a>
+<a class="sourceLine" id="cb9-24" title="24">}</a>
+<a class="sourceLine" id="cb9-25" title="25"></a>
+<a class="sourceLine" id="cb9-26" title="26"><span class="kw">shinyApp</span>(ui, server)</a></code></pre></div>
 <p><img src="figures/input-drop.png"></p>
+</div>
+<div id="colorpicker" class="section level3">
+<h3 class="hasAnchor">
+<a href="#colorpicker" class="anchor"></a>colorPicker</h3>
+<p>A select menu to choose one or several colors:</p>
+<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb10-1" title="1">ui &lt;-<span class="st"> </span><span class="kw">fluidPage</span>(</a>
+<a class="sourceLine" id="cb10-2" title="2">  tags<span class="op">$</span><span class="kw">h2</span>(<span class="st">"Color Picker"</span>),</a>
+<a class="sourceLine" id="cb10-3" title="3">  <span class="kw"><a href="../reference/input-colors.html">colorPicker</a></span>(</a>
+<a class="sourceLine" id="cb10-4" title="4">    <span class="dt">inputId =</span> <span class="st">"col"</span>,</a>
+<a class="sourceLine" id="cb10-5" title="5">    <span class="dt">label =</span> <span class="st">"Choose a color:"</span>,</a>
+<a class="sourceLine" id="cb10-6" title="6">    <span class="dt">choices =</span> scales<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/scales/topics/brewer_pal">brewer_pal</a></span>(<span class="dt">palette =</span> <span class="st">"Dark2"</span>)(<span class="dv">8</span>),</a>
+<a class="sourceLine" id="cb10-7" title="7">    <span class="dt">textColor =</span> <span class="st">"white"</span></a>
+<a class="sourceLine" id="cb10-8" title="8">  ),</a>
+<a class="sourceLine" id="cb10-9" title="9">  <span class="kw">verbatimTextOutput</span>(<span class="dt">outputId =</span> <span class="st">"res"</span>)</a>
+<a class="sourceLine" id="cb10-10" title="10">)</a>
+<a class="sourceLine" id="cb10-11" title="11"></a>
+<a class="sourceLine" id="cb10-12" title="12">server &lt;-<span class="st"> </span><span class="cf">function</span>(input, output, session) {</a>
+<a class="sourceLine" id="cb10-13" title="13">  output<span class="op">$</span>res &lt;-<span class="st"> </span><span class="kw">renderPrint</span>({</a>
+<a class="sourceLine" id="cb10-14" title="14">    input<span class="op">$</span>col</a>
+<a class="sourceLine" id="cb10-15" title="15">  })</a>
+<a class="sourceLine" id="cb10-16" title="16">}</a>
+<a class="sourceLine" id="cb10-17" title="17"></a>
+<a class="sourceLine" id="cb10-18" title="18"><span class="kw">shinyApp</span>(ui, server)</a></code></pre></div>
+<p><img src="figures/input-color.png"></p>
+</div>
+<div id="palettepicker" class="section level3">
+<h3 class="hasAnchor">
+<a href="#palettepicker" class="anchor"></a>palettePicker</h3>
+<p>A select menu to choose a color palette:</p>
+<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb11-1" title="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(scales)</a>
+<a class="sourceLine" id="cb11-2" title="2">ui &lt;-<span class="st"> </span><span class="kw">fluidPage</span>(</a>
+<a class="sourceLine" id="cb11-3" title="3">  tags<span class="op">$</span><span class="kw">h2</span>(<span class="st">"Palette Picker"</span>),</a>
+<a class="sourceLine" id="cb11-4" title="4">  <span class="kw"><a href="../reference/input-colors.html">palettePicker</a></span>(</a>
+<a class="sourceLine" id="cb11-5" title="5">    <span class="dt">inputId =</span> <span class="st">"pal"</span>, </a>
+<a class="sourceLine" id="cb11-6" title="6">    <span class="dt">label =</span> <span class="st">"Choose a palette"</span>, </a>
+<a class="sourceLine" id="cb11-7" title="7">    <span class="dt">choices =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/list">list</a></span>(</a>
+<a class="sourceLine" id="cb11-8" title="8">      <span class="st">"Viridis"</span> =<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/list">list</a></span>(</a>
+<a class="sourceLine" id="cb11-9" title="9">        <span class="st">"viridis"</span> =<span class="st"> </span><span class="kw">viridis_pal</span>(<span class="dt">option =</span> <span class="st">"viridis"</span>)(<span class="dv">10</span>),</a>
+<a class="sourceLine" id="cb11-10" title="10">        <span class="st">"magma"</span> =<span class="st"> </span><span class="kw">viridis_pal</span>(<span class="dt">option =</span> <span class="st">"magma"</span>)(<span class="dv">10</span>),</a>
+<a class="sourceLine" id="cb11-11" title="11">        <span class="st">"inferno"</span> =<span class="st"> </span><span class="kw">viridis_pal</span>(<span class="dt">option =</span> <span class="st">"inferno"</span>)(<span class="dv">10</span>),</a>
+<a class="sourceLine" id="cb11-12" title="12">        <span class="st">"plasma"</span> =<span class="st"> </span><span class="kw">viridis_pal</span>(<span class="dt">option =</span> <span class="st">"plasma"</span>)(<span class="dv">10</span>),</a>
+<a class="sourceLine" id="cb11-13" title="13">        <span class="st">"cividis"</span> =<span class="st"> </span><span class="kw">viridis_pal</span>(<span class="dt">option =</span> <span class="st">"cividis"</span>)(<span class="dv">10</span>)</a>
+<a class="sourceLine" id="cb11-14" title="14">      ),</a>
+<a class="sourceLine" id="cb11-15" title="15">      <span class="st">"Brewer"</span> =<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/list">list</a></span>(</a>
+<a class="sourceLine" id="cb11-16" title="16">        <span class="st">"Blues"</span> =<span class="st"> </span><span class="kw">brewer_pal</span>(<span class="dt">palette =</span> <span class="st">"Blues"</span>)(<span class="dv">8</span>),</a>
+<a class="sourceLine" id="cb11-17" title="17">        <span class="st">"Reds"</span> =<span class="st"> </span><span class="kw">brewer_pal</span>(<span class="dt">palette =</span> <span class="st">"Reds"</span>)(<span class="dv">8</span>),</a>
+<a class="sourceLine" id="cb11-18" title="18">        <span class="st">"Paired"</span> =<span class="st"> </span><span class="kw">brewer_pal</span>(<span class="dt">palette =</span> <span class="st">"Paired"</span>)(<span class="dv">8</span>),</a>
+<a class="sourceLine" id="cb11-19" title="19">        <span class="st">"Set1"</span> =<span class="st"> </span><span class="kw">brewer_pal</span>(<span class="dt">palette =</span> <span class="st">"Set1"</span>)(<span class="dv">8</span>)</a>
+<a class="sourceLine" id="cb11-20" title="20">      )</a>
+<a class="sourceLine" id="cb11-21" title="21">    ), </a>
+<a class="sourceLine" id="cb11-22" title="22">    <span class="dt">textColor =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(</a>
+<a class="sourceLine" id="cb11-23" title="23">      <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/rep">rep</a></span>(<span class="st">"white"</span>, <span class="dv">5</span>), <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/rep">rep</a></span>(<span class="st">"black"</span>, <span class="dv">4</span>) </a>
+<a class="sourceLine" id="cb11-24" title="24">    )</a>
+<a class="sourceLine" id="cb11-25" title="25">  ),</a>
+<a class="sourceLine" id="cb11-26" title="26">  <span class="kw">verbatimTextOutput</span>(<span class="dt">outputId =</span> <span class="st">"res"</span>)</a>
+<a class="sourceLine" id="cb11-27" title="27">)</a>
+<a class="sourceLine" id="cb11-28" title="28"></a>
+<a class="sourceLine" id="cb11-29" title="29">server &lt;-<span class="st"> </span><span class="cf">function</span>(input, output, session) {</a>
+<a class="sourceLine" id="cb11-30" title="30">  output<span class="op">$</span>res &lt;-<span class="st"> </span><span class="kw">renderPrint</span>({</a>
+<a class="sourceLine" id="cb11-31" title="31">    input<span class="op">$</span>pal</a>
+<a class="sourceLine" id="cb11-32" title="32">  })</a>
+<a class="sourceLine" id="cb11-33" title="33">}</a>
+<a class="sourceLine" id="cb11-34" title="34"></a>
+<a class="sourceLine" id="cb11-35" title="35"><span class="kw">shinyApp</span>(ui, server)</a></code></pre></div>
+<p><img src="figures/input-palette.png"></p>
 </div>
 </div>
   </div>
