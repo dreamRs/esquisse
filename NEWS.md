@@ -1,6 +1,7 @@
 # esquisse 0.2.2
 
 * Added `esquisseContainer` to better integrate esquisse module in a shiny application.
+* New functions `colorPicker` and `palettePicker` to select a color or a palette (this is the select control used in the main addin).
 
 
 ## Breaking changes
