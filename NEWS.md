@@ -6,7 +6,7 @@
 
 ## Breaking changes
 
-    * When using esquisse module into a shiny, it's not necessary anymore to put `esquisseUI` into a container, one is now added via argument `esquisseUI(container = ...)` :
+* When using esquisse module into a shiny, it's not necessary anymore to put `esquisseUI` into a container, one is now added via argument `esquisseUI(container = ...)` :
 
     ```R
     # old
