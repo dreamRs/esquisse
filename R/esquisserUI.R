@@ -12,6 +12,7 @@
 #' @param choose_data Logical. Display or not the button to choose data.
 #' @param insert_code Logical, Display or not a button to insert the ggplot
 #'  code in the current user script (work only in RStudio).
+#' @param disable_filters Logical. Disable the menu allowing to filter data used.
 #' 
 #' @return A \code{reactiveValues} with 3 slots :
 #'  \itemize{
@@ -140,7 +141,8 @@
 esquisserUI <- function(id, header = TRUE,
                         container = esquisseContainer(),
                         choose_data = TRUE, 
-                        insert_code = FALSE) {
+                        insert_code = FALSE,
+                        disable_filters = FALSE) {
   
   ns <- NS(id)
   
@@ -215,7 +217,11 @@ esquisserUI <- function(id, header = TRUE,
       )
     ),
 
-    chartControlsUI(id = ns("controls"), insert_code = insert_code)
+    chartControlsUI(
+      id = ns("controls"), 
+      insert_code = insert_code,
+      disable_filters = disable_filters
+    )
   )
 
   if (is.function(container)) {

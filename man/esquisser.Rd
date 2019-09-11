@@ -4,15 +4,18 @@
 \alias{esquisser}
 \title{An add-in to easily create plots with ggplot2}
 \usage{
-esquisser(data = NULL, coerceVars = getOption(x =
-  "esquisse.coerceVars", default = TRUE), viewer = getOption(x =
+esquisser(data = NULL, coerce_vars = getOption(x =
+  "esquisse.coerceVars", default = TRUE), disable_filters = getOption(x =
+  "esquisse.disable_filters", default = FALSE), viewer = getOption(x =
   "esquisse.viewer", default = "dialog"))
 }
 \arguments{
 \item{data}{a data.frame, you can pass a data.frame explicitly to the function, 
 otherwise you'll have to choose one in global environment.}
 
-\item{coerceVars}{If \code{TRUE} allow to coerce variables to different type when selecting data.}
+\item{coerce_vars}{If \code{TRUE} allow to coerce variables to different type when selecting data.}
+
+\item{disable_filters}{Logical. Disable the menu allowing to filter data used.}
 
 \item{viewer}{Where to display the gadget: \code{"dialog"},
 \code{"pane"} or \code{"browser"} (see \code{\link[shiny]{viewer}}).}

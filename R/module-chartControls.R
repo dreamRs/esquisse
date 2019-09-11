@@ -10,9 +10,9 @@
 #'
 #' @importFrom shinyWidgets dropdown
 #' @importFrom htmltools tags tagList
-#' @importFrom shiny icon
+#' @importFrom shiny icon checkboxInput
 #'
-chartControlsUI <- function(id, insert_code = FALSE) {
+chartControlsUI <- function(id, insert_code = FALSE, disable_filters = FALSE) {
 
   # Namespace
   ns <- NS(id)
@@ -42,19 +42,21 @@ chartControlsUI <- function(id, insert_code = FALSE) {
       icon = icon("gears"), 
       status = "default btn-controls"
     ),
-    dropdown(
-      tags$div(
-        style = "max-height: 400px; overflow-y: scroll; overflow-x: hidden;", #  padding-left: 10px;
-        filterDF_UI(id = ns("filter-data"))
-      ),
-      style = "default", 
-      label = "Data", 
-      up = TRUE, 
-      icon = icon("filter"),
-      right = TRUE, 
-      inputId = "filterdrop",
-      status = "default btn-controls"
-    ),
+    if (!isTRUE(disable_filters)) {
+      dropdown(
+        tags$div(
+          style = "max-height: 400px; overflow-y: scroll; overflow-x: hidden;", #  padding-left: 10px;
+          filterDF_UI(id = ns("filter-data"))
+        ),
+        style = "default", 
+        label = "Data", 
+        up = TRUE, 
+        icon = icon("filter"),
+        right = TRUE, 
+        inputId = "filterdrop",
+        status = "default btn-controls"
+      )
+    },
     dropdown(
       controls_code(ns, insert_code = insert_code), 
       style = "default", 
@@ -289,7 +291,16 @@ chartControlsServer <- function(input, output, session,
     data_name = data_name
   )
 
-  outin <- reactiveValues(inputs = NULL, export_ppt = NULL, export_png = NULL)
+  outin <- reactiveValues(
+    inputs = NULL, 
+    export_ppt = NULL, 
+    export_png = NULL
+  )
+  
+  observeEvent(data_table(), {
+    outin$data <- data_table()
+    outin$code <- reactiveValues(expr = NULL, dplyr = NULL)
+  })
 
   observeEvent({
     all_inputs <- reactiveValuesToList(input)

@@ -7,7 +7,8 @@
 #'
 #' @param data a data.frame, you can pass a data.frame explicitly to the function, 
 #' otherwise you'll have to choose one in global environment.
-#' @param coerceVars If \code{TRUE} allow to coerce variables to different type when selecting data.
+#' @param coerce_vars If \code{TRUE} allow to coerce variables to different type when selecting data.
+#' @param disable_filters Logical. Disable the menu allowing to filter data used.
 #' @param viewer Where to display the gadget: \code{"dialog"},
 #'  \code{"pane"} or \code{"browser"} (see \code{\link[shiny]{viewer}}).
 #'
@@ -40,10 +41,11 @@
 #' 
 #' }
 esquisser <- function(data = NULL, 
-                      coerceVars = getOption(x = "esquisse.coerceVars", default = TRUE),
+                      coerce_vars = getOption(x = "esquisse.coerceVars", default = TRUE),
+                      disable_filters = getOption(x = "esquisse.disable_filters", default = FALSE),
                       viewer = getOption(x = "esquisse.viewer", default = "dialog")) {
   
-  options("esquisse.coerceVars" = coerceVars)
+  options("esquisse.coerceVars" = coerce_vars)
 
   res_data <- get_data(data, name = deparse(substitute(data)))
   if (!is.null(res_data$esquisse_data)) {

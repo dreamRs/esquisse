@@ -1,7 +1,12 @@
+# esquisse 0.2.3
+
+* New argument `disable_filters` in `esquisserUI()` to disable the ability to filter data.
+
+
 # esquisse 0.2.2
 
-* Added `esquisseContainer` to better integrate esquisse module in a shiny application.
-* New functions `colorPicker` and `palettePicker` to select a color or a palette (this is the select control used in the main addin).
+* Added `esquisseContainer()` to better integrate esquisse module in a shiny application.
+* New functions `colorPicker()` and `palettePicker()` to select a color or a palette (this is the select control used in the main addin).
 
 
 ## Breaking changes
