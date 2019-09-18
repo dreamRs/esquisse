@@ -1,6 +1,7 @@
 # esquisse 0.2.3
 
 * New argument `disable_filters` in `esquisserUI()` to disable the ability to filter data.
+* Enable bookmarking for module `filterDF`.
 
 
 # esquisse 0.2.2

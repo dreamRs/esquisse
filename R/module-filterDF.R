@@ -127,6 +127,7 @@ filterDF_UI <- function(id, show_nrow = TRUE) {
 #'  \code{character} vector of variable to use for filters.
 #' @param data_name \code{\link[shiny]{reactive}} function returning a
 #'  \code{character} string representing \code{data_table} name.
+#' @param label_nrow Text to display before the number of rows of filtered data / source data.
 #' 
 #' 
 #' @rdname module-filterDF
@@ -138,13 +139,16 @@ filterDF_UI <- function(id, show_nrow = TRUE) {
 filterDF <- function(input, output, session, 
                      data_table = reactive(), 
                      data_vars = shiny::reactive(NULL),
-                     data_name = reactive("data")) {
+                     data_name = reactive("data"),
+                     label_nrow = "Number of rows:") {
   
   ns <- session$ns
   jns <- function(x) paste0("#", ns(x))
   
   output$nrow <- renderUI({
-    tags$p("Number of rows: ", tags$b(nrow(data_filtered()) , "/", nrow(data_table())))
+    if (!is.null(label_nrow)) {
+      tags$p(label_nrow, tags$b(nrow(data_filtered()) , "/", nrow(data_table())))
+    }
   })
   
   rv_filters <- reactiveValues(mapping = NULL, mapping_na = NULL)
@@ -223,7 +227,8 @@ create_filters <- function(data, vars = NULL, width = "100%", session = getDefau
   data <- dropListColumns(data)
   if (is.null(vars)) 
     vars <- names(data)
-  filters_id <- paste0("filter_", sample.int(1e9, length(vars)))
+  # filters_id <- paste0("filter_", sample.int(1e9, length(vars)))
+  filters_id <- paste0("filter_", clean_string(vars))
   filters_id <- setNames(as.list(filters_id), vars)
   filters_na_id <- setNames(as.list(paste0("na_", filters_id)), vars)
   ui <- lapply(
