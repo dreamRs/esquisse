@@ -2,6 +2,8 @@
 
 * New argument `disable_filters` in `esquisserUI()` to disable the ability to filter data.
 * Enable bookmarking for module `filterDF`.
+* `filterDF()` module handle missing values correctly.
+
 
 
 # esquisse 0.2.2
