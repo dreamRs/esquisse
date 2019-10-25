@@ -21,92 +21,7 @@
 #' @importFrom htmltools tagList singleton tags
 #' @importFrom shiny NS uiOutput
 #'
-#' @examples
-#' if (interactive()) {
-#' 
-#' library(shiny)
-#' library(shinyWidgets)
-#' library(ggplot2)
-#' library(esquisse)
-#' 
-#' 
-#' ui <- fluidPage(
-#'   tags$h2("Filter data.frame"),
-#'   
-#'   radioButtons(
-#'     inputId = "dataset", 
-#'     label = "Data:",
-#'     choices = c(
-#'       "iris", "mtcars", "economics", 
-#'       "midwest", "mpg", "msleep", "diamonds",
-#'       "faithfuld", "txhousing"
-#'     ),
-#'     inline = TRUE
-#'   ),
-#'   
-#'   fluidRow(
-#'     column(
-#'       width = 3,
-#'       filterDF_UI("filtering")
-#'     ),
-#'     column(
-#'       width = 9,
-#'       progressBar(
-#'         id = "pbar", value = 100, 
-#'         total = 100, display_pct = TRUE
-#'       ),
-#'       DT::dataTableOutput(outputId = "table"),
-#'       tags$p("Code dplyr:"),
-#'       verbatimTextOutput(outputId = "code_dplyr"),
-#'       tags$p("Expression:"),
-#'       verbatimTextOutput(outputId = "code"),
-#'       tags$p("Filtered data:"),
-#'       verbatimTextOutput(outputId = "res_str")
-#'     )
-#'   )
-#' )
-#' 
-#' server <- function(input, output, session) {
-#'   
-#'   data <- reactive({
-#'     get(input$dataset)
-#'   })
-#'   
-#'   res_filter <- callModule(
-#'     module = filterDF, 
-#'     id = "filtering", 
-#'     data_table = data,
-#'     data_name = reactive(input$dataset)
-#'   )
-#'   
-#'   observeEvent(res_filter$data_filtered(), {
-#'     updateProgressBar(
-#'       session = session, id = "pbar", 
-#'       value = nrow(res_filter$data_filtered()), total = nrow(data())
-#'     )
-#'   })
-#'   
-#'   output$table <- DT::renderDT({
-#'     res_filter$data_filtered()
-#'   }, options = list(pageLength = 5))
-#'   
-#'   
-#'   output$code_dplyr <- renderPrint({
-#'     res_filter$code$dplyr
-#'   })
-#'   output$code <- renderPrint({
-#'     res_filter$code$expr
-#'   })
-#'   
-#'   output$res_str <- renderPrint({
-#'     str(res_filter$data_filtered())
-#'   })
-#'   
-#' }
-#' 
-#' shinyApp(ui, server)
-#' 
-#' }
+#' @example examples/filterDF.R
 filterDF_UI <- function(id, show_nrow = TRUE) {
   ns <- NS(id)
   tagList(
@@ -348,22 +263,38 @@ make_expr_filter <- function(filters, filters_na, data, data_name) {
       if (inherits(x = values, what = c("numeric", "integer"))) {
         data_values <- find_range_step(data_values)$range
         if (!isTRUE(all.equal(values, data_values))) {
-          values_expr <- expr(!!sym(var) >= !!values[1] & !!sym(var) <= !!values[2])
+          if (isTRUE(nas)) {
+            values_expr <- expr(!!sym(var) >= !!values[1] & !!sym(var) <= !!values[2] | is.na(!!sym(var)))
+          } else {
+            values_expr <- expr(!!sym(var) >= !!values[1] & !!sym(var) <= !!values[2] & !is.na(!!sym(var)))
+          }
         }
       } else if (inherits(x = values, what = c("Date", "POSIXct"))) {
         values <- format(values)
         data_values <- range(data_values, na.rm = TRUE)
         data_values <- format(data_values)
         if (!identical(values, data_values)) {
-          values_expr <- expr(!!sym(var) >= !!values[1] & !!sym(var) <= !!values[2])
+          if (isTRUE(nas)) {
+            values_expr <- expr(!!sym(var) >= !!values[1] & !!sym(var) <= !!values[2] | is.na(!!sym(var)))
+          } else {
+            values_expr <- expr(!!sym(var) >= !!values[1] & !!sym(var) <= !!values[2] & !is.na(!!sym(var)))
+          }
         }
       } else {
         data_values <- unique(as.character(data_values))
         if (!identical(sort(values), sort(data_values))) {
           if (length(values) <= length(data_values)/2) {
-            values_expr <- expr(!!sym(var) %in% !!values)
+            if (isTRUE(nas)) {
+              values_expr <- expr(!!sym(var) %in% !!values | is.na(!!sym(var)))
+            } else {
+              values_expr <- expr(!!sym(var) %in% !!values)
+            }
           } else {
-            values_expr <- expr(!(!!sym(var) %in% !!setdiff(data_values, values)))
+            if (isTRUE(nas)) {
+              values_expr <- expr(!(!!sym(var) %in% !!setdiff(data_values, values)) | is.na(!!sym(var)))
+            } else {
+              values_expr <- expr(!(!!sym(var) %in% !!setdiff(data_values, values)))
+            }
           }
         }
       }

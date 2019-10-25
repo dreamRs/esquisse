@@ -8,3 +8,4 @@ img/
 ^_pkgdown\.yml$
 ^docs$
 ^pkgdown$
+^examples$
