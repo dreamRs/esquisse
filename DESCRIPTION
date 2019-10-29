@@ -23,7 +23,6 @@ Imports: miniUI,
     ggplot2 (>= 3.0.0),
     ggthemes,
     hrbrthemes,
-    RColorBrewer,
     scales,
     stringi,
     rlang (>= 0.3.1)

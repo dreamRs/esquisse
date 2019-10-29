@@ -249,14 +249,6 @@ col2Hex <- function(col) {
 }
 
 
-get_brewer_pal <- function(name) {
-  bpi <- RColorBrewer::brewer.pal.info
-  maxn <- bpi[rownames(bpi) %in% name, ]
-  maxn <- maxn$maxcolors
-  brewer.pal(n = maxn, name = name)
-}
-
-
 linear_gradient <- function(cols) {
   x <- round(seq(from = 0, to = 100, length.out = length(cols)+1))
   ind <- c(1, rep(seq_along(x)[-c(1, length(x))], each = 2), length(x))

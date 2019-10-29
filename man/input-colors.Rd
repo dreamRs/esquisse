@@ -4,7 +4,7 @@
 \alias{input-colors}
 \alias{colorPicker}
 \alias{palettePicker}
-\title{Picker input to select color(s)}
+\title{Picker input to select color(s) or palette}
 \usage{
 colorPicker(inputId, label, choices, selected = NULL,
   textColor = "#000", plainColor = FALSE, multiple = FALSE,
@@ -42,7 +42,8 @@ A select control that can be added to a UI definition.
 Select menu to view and choose a color or a palette of colors.
 }
 \examples{
-# colorPicker -----------
+
+# colorPicker -------------------------------------------------------------
 
 if (interactive()) {
   
@@ -52,7 +53,7 @@ if (interactive()) {
   
   
   ui <- fluidPage(
-    tags$h2("pickerColor examples"),
+    tags$h2("colorPicker examples"),
     fluidRow(
       column(
         width = 3,
@@ -94,7 +95,8 @@ if (interactive()) {
           label = "Plain color",
           choices = brewer_pal(palette = "Paired")(8), 
           plainColor = TRUE, 
-          multiple = TRUE
+          multiple = TRUE, 
+          pickerOpts = list(`selected-text-format`= "count > 3")
         ),
         verbatimTextOutput("res4")
       )
@@ -113,7 +115,8 @@ if (interactive()) {
   shinyApp(ui, server)
   
 }
-# palettePicker -----------
+
+# palettePicker -----------------------------------------------------------
 
 if (interactive()) {
   
