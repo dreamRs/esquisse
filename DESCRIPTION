@@ -25,7 +25,8 @@ Imports: miniUI,
     hrbrthemes,
     scales,
     stringi,
-    rlang (>= 0.3.1)
+    rlang (>= 0.3.1),
+    grDevices
 Suggests: 
     officer,
     rvg,

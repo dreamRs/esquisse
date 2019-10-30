@@ -452,7 +452,7 @@ controls_appearance <- function(ns) {
       spectrumInput(
         inputId = ns("fill_color"),
         label = "Choose a color:",
-        choices = c(list(c("#0C4C8A", "#EF562D")), unname(cols)), 
+        choices = unname(cols), 
         width = "100%"
       )
     ),
@@ -671,38 +671,22 @@ controls_code <- function(ns, insert_code = FALSE) {
 
 
 
-#' @importFrom ggplot2 theme_bw theme_classic theme_dark theme_gray theme_grey 
-#'  theme_light theme_linedraw theme_minimal theme_void
-#' @importFrom ggthemes theme_base theme_calc theme_economist theme_economist_white 
-#'  theme_excel theme_few theme_fivethirtyeight theme_foundation theme_gdocs theme_hc 
-#'  theme_igray theme_map theme_pander theme_par theme_solarized theme_solarized_2 
-#'  theme_solid theme_stata theme_tufte theme_wsj
-#' @importFrom hrbrthemes theme_ft_rc theme_ipsum theme_ipsum_ps theme_ipsum_rc
-#'  theme_ipsum_tw theme_modern_rc
+# Get list of themes
 get_themes <- function() {
-  list(
-    ggplot2 = list(
-      "bw", "classic", "dark", "gray",
-      "light", "linedraw", "minimal",
-      "void"
-    ),
-    hrbrthemes = c(
-      "ft_rc", "ipsum", "ipsum_ps", "ipsum_rc", "ipsum_tw", "modern_rc"
-    ),
-    ggthemes = list(
-      "base", "calc", "economist", "economist_white",
-      "excel", "few", "fivethirtyeight", "foundation",
-      "gdocs", "hc", "igray", "map", "pander",
-      "par", "solarized", "solarized_2", "solid",
-      "stata", "tufte", "wsj"
-    )
-  )
+  themes <- getOption("esquisse.themes")
+  if (is.function(themes))
+    themes <- themes()
+  if (!is.list(themes)) {
+    stop("Option 'esquisse.themes' must be a list", call. = FALSE)
+  }
+  themes
 }
 
-
-
+# Get list of palettes
 get_palettes <- function() {
   pals <- getOption("esquisse.palettes")
+  if (is.function(pals))
+    pals <- pals()
   if (!is.list(pals)) {
     stop("Option 'esquisse.palettes' must be a list with at least one slot : 'choices'", call. = FALSE)
   }
@@ -711,37 +695,15 @@ get_palettes <- function() {
   pals
 }
 
-
-
-#' Colors for spectrumInput
-#'
-#' @noRd
-#'
-#' @importFrom scales hue_pal viridis_pal
-#' @importFrom hrbrthemes ipsum_pal ft_pal
+# Get list of colors (spectrum)
 get_colors <- function() {
-  ### colors
-  # For spectrum pre-defined colors
-  list(
-    "viridis" = col2Hex(viridis_pal(option = "viridis")(10)),
-    "magma" = col2Hex(viridis_pal(option = "magma")(10)),
-    "inferno" = col2Hex(viridis_pal(option = "inferno")(10)),
-    "plasma" = col2Hex(viridis_pal(option = "plasma")(10)),
-    "cividis" = col2Hex(viridis_pal(option = "cividis")(10))
-    ,
-    "ipsum" = ipsum_pal()(9),
-    "ft" = ft_pal()(9)
-    ,
-    "Blues" = brewer_pal(palette = "Blues")(9),
-    "Greens" = brewer_pal(palette = "Greens")(9),
-    "Reds" = brewer_pal(palette = "Reds")(9),
-    "Oranges" = brewer_pal(palette = "Oranges")(9),
-    "Purples" = brewer_pal(palette = "Purples")(9),
-    "Greys" = brewer_pal(palette = "Greys")(9),
-    "Dark2" = brewer_pal(palette = "Dark2")(8),
-    "Set1" = brewer_pal(palette = "Set1")(8),
-    "Paired" = brewer_pal(palette = "Paired")(12)
-  )
+  cols <- getOption("esquisse.colors")
+  if (is.function(cols))
+    cols <- cols()
+  if (!is.list(cols)) {
+    stop("Option 'esquisse.colors' must be a list", call. = FALSE)
+  }
+  cols
 }
 
 

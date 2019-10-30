@@ -18,4 +18,12 @@
   if (is.null(esquisse.palettes)) {
     options("esquisse.palettes" = default_pals)
   }
+  esquisse.themes <- getOption("esquisse.themes")
+  if (is.null(esquisse.themes)) {
+    options("esquisse.themes" = default_themes)
+  }
+  esquisse.colors <- getOption("esquisse.colors")
+  if (is.null(esquisse.colors)) {
+    options("esquisse.colors" = default_cols)
+  }
 }
