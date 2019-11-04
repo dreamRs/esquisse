@@ -10,7 +10,7 @@ filterDF_UI(id, show_nrow = TRUE)
 
 filterDF(input, output, session, data_table = reactive(),
   data_vars = shiny::reactive(NULL), data_name = reactive("data"),
-  label_nrow = "Number of rows:")
+  label_nrow = "Number of rows:", drop_ids = TRUE, picker = FALSE)
 }
 \arguments{
 \item{id}{Module id. See \code{\link[shiny]{callModule}}.}
@@ -29,6 +29,11 @@ filterDF(input, output, session, data_table = reactive(),
 \code{character} string representing \code{data_table} name.}
 
 \item{label_nrow}{Text to display before the number of rows of filtered data / source data.}
+
+\item{drop_ids}{Drop columns containing more than 90\% of unique values, or than 50 distinct values.}
+
+\item{picker}{Use  \code{\link[shinyWidgets:pickerInput]{shinyWidgets::pickerInput}}
+instead of  \code{\link[shiny:selectInput]{shiny::selectizeInput}} (default).}
 }
 \value{
 A \code{list} with 2 elements :

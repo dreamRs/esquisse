@@ -3,6 +3,7 @@
 * New argument `disable_filters` in `esquisserUI()` to disable the ability to filter data.
 * Enable bookmarking for module `filterDF`.
 * `filterDF()` module handle missing values correctly.
+* `filterDF()` has two new arguments : `drop_ids` : logical, drop or not column with only unique values, `picker` allow to use `shinyWidgets::pickerInput`.
 
 
 

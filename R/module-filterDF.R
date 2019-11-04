@@ -43,6 +43,9 @@ filterDF_UI <- function(id, show_nrow = TRUE) {
 #' @param data_name \code{\link[shiny]{reactive}} function returning a
 #'  \code{character} string representing \code{data_table} name.
 #' @param label_nrow Text to display before the number of rows of filtered data / source data.
+#' @param drop_ids Drop columns containing more than 90\% of unique values, or than 50 distinct values.
+#' @param picker Use  \code{\link[shinyWidgets:pickerInput]{shinyWidgets::pickerInput}}
+#'  instead of  \code{\link[shiny:selectInput]{shiny::selectizeInput}} (default).
 #' 
 #' 
 #' @rdname module-filterDF
@@ -55,7 +58,9 @@ filterDF <- function(input, output, session,
                      data_table = reactive(), 
                      data_vars = shiny::reactive(NULL),
                      data_name = reactive("data"),
-                     label_nrow = "Number of rows:") {
+                     label_nrow = "Number of rows:",
+                     drop_ids = TRUE,
+                     picker = FALSE) {
   
   ns <- session$ns
   jns <- function(x) paste0("#", ns(x))
@@ -74,7 +79,10 @@ filterDF <- function(input, output, session,
     vars <- data_vars()
     # req(nrow(data) > 0)
     removeUI(selector = jns("filters_inputs"), immediate = TRUE)
-    filters <- create_filters(data = data, vars = vars)
+    filters <- create_filters(
+      data = data, vars = vars, 
+      drop_ids = drop_ids, picker = picker
+    )
     insertUI(
       selector = jns("placeholder-filters"), 
       ui = tags$div(
@@ -135,10 +143,16 @@ filterDF <- function(input, output, session,
 #' @importFrom htmltools HTML tagList tags
 #' @importFrom shiny selectizeInput sliderInput
 #' @importFrom stats setNames
-create_filters <- function(data, vars = NULL, width = "100%", session = getDefaultReactiveDomain()) {
+#' @importFrom shinyWidgets pickerInput pickerOptions
+create_filters <- function(data, vars = NULL,
+                           drop_ids = TRUE,
+                           picker = FALSE,
+                           width = "100%", session = getDefaultReactiveDomain()) {
   ns <- session$ns
-  data <- drop_id(data)
   data <- drop_na(data)
+  if (isTRUE(drop_ids)) {
+    data <- drop_id(data)
+  }
   data <- dropListColumns(data)
   if (is.null(vars)) 
     vars <- names(data)
@@ -193,20 +207,40 @@ create_filters <- function(data, vars = NULL, width = "100%", session = getDefau
       } else {
         values <- unique(as.character(var))
         values <- values[trimws(values) != ""]
-        tags$div(
-          style = "position: relative;",
-          class = if (length(values) > 15) "selectize-big",
-          tag_label,
-          selectizeInput(
-            inputId = ns(id),
-            choices = values, 
-            selected = values, 
-            label = NULL,
-            multiple = TRUE, 
-            width = width,
-            options = list(plugins = list("remove_button"))
+        if (isTRUE(picker)) {
+          tags$div(
+            style = "position: relative;",
+            tag_label,
+            pickerInput(
+              inputId = ns(id),
+              choices = values, 
+              selected = values, 
+              label = NULL,
+              multiple = TRUE, 
+              width = width, 
+              options = pickerOptions(
+                actionsBox = TRUE, 
+                selectedTextFormat = "count", 
+                liveSearch = TRUE
+              )
+            )
           )
-        )
+        } else {
+          tags$div(
+            style = "position: relative;",
+            class = if (length(values) > 15) "selectize-big",
+            tag_label,
+            selectizeInput(
+              inputId = ns(id),
+              choices = values, 
+              selected = values, 
+              label = NULL,
+              multiple = TRUE, 
+              width = width,
+              options = list(plugins = list("remove_button"))
+            )
+          )
+        }
       }
     }
   )
