@@ -13,6 +13,7 @@
 #' @importFrom shiny callModule reactiveValues observeEvent renderPrint
 #'  renderPlot stopApp plotOutput showNotification isolate reactiveValuesToList
 #' @importFrom ggplot2 ggplot_build ggsave
+#' @import ggplot2
 #' @importFrom rlang expr_deparse
 #'
 esquisserServer <- function(input, output, session, data = NULL, dataModule = c("GlobalEnv", "ImportFile"), sizeDataModule = "m") {
