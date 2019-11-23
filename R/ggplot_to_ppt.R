@@ -67,7 +67,8 @@ ggplot_to_ppt <- function(gg = NULL) {
       ppt <- officer::add_slide(ppt, layout = "Title and Content", master = "Office Theme")
       testgg <- try(invisible(ggplot2::ggplot_build(get(ggg, envir = globalenv()))), silent = TRUE)
       if (!"try-error" %in% class(testgg)) {
-        ppt <- rvg::ph_with_vg(ppt, print(get(ggg, envir = globalenv())), type = "body")
+        ppt <- officer::ph_with(ppt, rvg::dml(code = print(get(ggg, envir = globalenv()))), 
+                                location = officer::ph_location_type(type = "body"))
       } else {
         warning(paste0("Skipping '", ggg, "' because : ", attr(testgg, "condition")$message))
       }
@@ -137,7 +138,8 @@ ggplot_to_ppt <- function(gg = NULL) {
             # ppt <- rvg::ph_with_vg(ppt, print(get(ggg, envir = globalenv())), type = "body")
             testgg <- try(invisible(ggplot2::ggplot_build(get(ggg, envir = globalenv()))), silent = TRUE)
             if (!"try-error" %in% class(testgg)) {
-              ppt <- rvg::ph_with_vg(ppt, print(get(ggg, envir = globalenv())), type = "body")
+              ppt <- officer::ph_with(ppt, rvg::dml(code = print(get(ggg, envir = globalenv()))), 
+                                      location = officer::ph_location_type(type = "body"))
             } else {
               warning(paste0("Skipping '", ggg, "' because of : ", attr(testgg, "condition")$message))
             }

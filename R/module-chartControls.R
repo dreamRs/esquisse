@@ -136,7 +136,7 @@ chartControlsServer <- function(input, output, session,
         gg <- ggplot_rv$ggobj$plot
         ppt <- officer::read_pptx()
         ppt <- officer::add_slide(ppt, layout = "Title and Content", master = "Office Theme")
-        ppt <- try(rvg::ph_with_vg(ppt, ggobj = gg, type = "body"), silent = TRUE)
+        ppt <- try(officer::ph_with(ppt, rvg::dml(ggobj = gg), location = officer::ph_location_type(type = "body")), silent = TRUE)
         if ("try-error" %in% class(ppt)) {
           shiny::showNotification(ui = "Export to PowerPoint failed...", type = "error")
         } else {
