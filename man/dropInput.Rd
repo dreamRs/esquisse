@@ -4,9 +4,18 @@
 \alias{dropInput}
 \title{Dropdown Input}
 \usage{
-dropInput(inputId, choicesNames, choicesValues, selected = NULL,
-  dropUp = FALSE, dropWidth = NULL, dropMaxHeight = NULL,
-  dropPreScrollable = FALSE, btnClass = "btn-link", width = NULL)
+dropInput(
+  inputId,
+  choicesNames,
+  choicesValues,
+  selected = NULL,
+  dropUp = FALSE,
+  dropWidth = NULL,
+  dropMaxHeight = NULL,
+  dropPreScrollable = FALSE,
+  btnClass = "btn-link",
+  width = NULL
+)
 }
 \arguments{
 \item{inputId}{The \code{input} slot that will be used to access the value.}

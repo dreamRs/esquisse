@@ -8,9 +8,18 @@
 \usage{
 chooseDataUI(id, label = "Data", icon = "database", ...)
 
-chooseDataServer(input, output, session, dataModule = c("GlobalEnv",
-  "ImportFile"), data = NULL, name = NULL, selectVars = TRUE,
-  coerceVars = FALSE, launchOnStart = TRUE, size = "m")
+chooseDataServer(
+  input,
+  output,
+  session,
+  dataModule = c("GlobalEnv", "ImportFile"),
+  data = NULL,
+  name = NULL,
+  selectVars = TRUE,
+  coerceVars = FALSE,
+  launchOnStart = TRUE,
+  size = "m"
+)
 }
 \arguments{
 \item{id}{Module's id.}

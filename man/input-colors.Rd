@@ -6,13 +6,28 @@
 \alias{palettePicker}
 \title{Picker input to select color(s) or palette}
 \usage{
-colorPicker(inputId, label, choices, selected = NULL,
-  textColor = "#000", plainColor = FALSE, multiple = FALSE,
-  pickerOpts = list(), width = NULL)
+colorPicker(
+  inputId,
+  label,
+  choices,
+  selected = NULL,
+  textColor = "#000",
+  plainColor = FALSE,
+  multiple = FALSE,
+  pickerOpts = list(),
+  width = NULL
+)
 
-palettePicker(inputId, label, choices, selected = NULL,
-  textColor = "#000", plainColor = FALSE, pickerOpts = list(),
-  width = NULL)
+palettePicker(
+  inputId,
+  label,
+  choices,
+  selected = NULL,
+  textColor = "#000",
+  plainColor = FALSE,
+  pickerOpts = list(),
+  width = NULL
+)
 }
 \arguments{
 \item{inputId}{The \code{input} slot that will be used to access the value.}

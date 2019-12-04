@@ -7,11 +7,23 @@
 \alias{esquisseContainer}
 \title{Esquisse Shiny module}
 \usage{
-esquisserServer(input, output, session, data = NULL,
-  dataModule = c("GlobalEnv", "ImportFile"), sizeDataModule = "m")
+esquisserServer(
+  input,
+  output,
+  session,
+  data = NULL,
+  dataModule = c("GlobalEnv", "ImportFile"),
+  sizeDataModule = "m"
+)
 
-esquisserUI(id, header = TRUE, container = esquisseContainer(),
-  choose_data = TRUE, insert_code = FALSE, disable_filters = FALSE)
+esquisserUI(
+  id,
+  header = TRUE,
+  container = esquisseContainer(),
+  choose_data = TRUE,
+  insert_code = FALSE,
+  disable_filters = FALSE
+)
 
 esquisseContainer(width = "100\%", height = "700px", fixed = FALSE)
 }

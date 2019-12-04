@@ -4,10 +4,20 @@
 \alias{dragulaInput}
 \title{Drag And Drop Input Widget}
 \usage{
-dragulaInput(inputId, sourceLabel, targetsLabels, targetsIds = NULL,
-  choices = NULL, choiceNames = NULL, choiceValues = NULL,
-  status = "primary", replace = FALSE, badge = TRUE, width = NULL,
-  height = "200px")
+dragulaInput(
+  inputId,
+  sourceLabel,
+  targetsLabels,
+  targetsIds = NULL,
+  choices = NULL,
+  choiceNames = NULL,
+  choiceValues = NULL,
+  status = "primary",
+  replace = FALSE,
+  badge = TRUE,
+  width = NULL,
+  height = "200px"
+)
 }
 \arguments{
 \item{inputId}{The \code{input} slot that will be used to access the value.}

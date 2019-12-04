@@ -4,8 +4,13 @@
 \alias{match_geom_args}
 \title{Match list of arguments to arguments of geometry}
 \usage{
-match_geom_args(geom, args, add_aes = TRUE, mapping = list(),
-  envir = "ggplot2")
+match_geom_args(
+  geom,
+  args,
+  add_aes = TRUE,
+  mapping = list(),
+  envir = "ggplot2"
+)
 }
 \arguments{
 \item{geom}{Character. name of the geometry.}

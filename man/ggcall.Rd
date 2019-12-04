@@ -4,10 +4,20 @@
 \alias{ggcall}
 \title{Generate code to create a `ggplot`}
 \usage{
-ggcall(data = NULL, mapping = NULL, geom = NULL,
-  geom_args = list(), scales = NULL, scales_args = list(),
-  coord = NULL, labs = list(), theme = NULL, theme_args = list(),
-  facet = NULL, facet_args = list())
+ggcall(
+  data = NULL,
+  mapping = NULL,
+  geom = NULL,
+  geom_args = list(),
+  scales = NULL,
+  scales_args = list(),
+  coord = NULL,
+  labs = list(),
+  theme = NULL,
+  theme_args = list(),
+  facet = NULL,
+  facet_args = list()
+)
 }
 \arguments{
 \item{data}{Character. Name of the \code{data.frame}.}

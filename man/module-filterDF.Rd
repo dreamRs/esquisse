@@ -8,9 +8,17 @@
 \usage{
 filterDF_UI(id, show_nrow = TRUE)
 
-filterDF(input, output, session, data_table = reactive(),
-  data_vars = shiny::reactive(NULL), data_name = reactive("data"),
-  label_nrow = "Number of rows:", drop_ids = TRUE, picker = FALSE)
+filterDF(
+  input,
+  output,
+  session,
+  data_table = reactive(),
+  data_vars = shiny::reactive(NULL),
+  data_name = reactive("data"),
+  label_nrow = "Number of rows:",
+  drop_ids = TRUE,
+  picker = FALSE
+)
 }
 \arguments{
 \item{id}{Module id. See \code{\link[shiny]{callModule}}.}

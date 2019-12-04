@@ -4,8 +4,7 @@
 \alias{safe_ggplot}
 \title{Safely render a \code{ggplot} in Shiny application}
 \usage{
-safe_ggplot(expr, data = NULL,
-  session = shiny::getDefaultReactiveDomain())
+safe_ggplot(expr, data = NULL, session = shiny::getDefaultReactiveDomain())
 }
 \arguments{
 \item{expr}{Code to produce a \code{ggplot} object.}

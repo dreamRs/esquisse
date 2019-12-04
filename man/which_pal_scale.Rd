@@ -4,9 +4,13 @@
 \alias{which_pal_scale}
 \title{Automatically select appropriate color scale}
 \usage{
-which_pal_scale(mapping, palette = "ggplot2", data = NULL,
-  fill_type = c("continuous", "discrete"), color_type = c("continuous",
-  "discrete"))
+which_pal_scale(
+  mapping,
+  palette = "ggplot2",
+  data = NULL,
+  fill_type = c("continuous", "discrete"),
+  color_type = c("continuous", "discrete")
+)
 }
 \arguments{
 \item{mapping}{Aesthetics used in \code{ggplot}.}
