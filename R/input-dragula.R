@@ -91,7 +91,7 @@ dragulaInput <- function(inputId, sourceLabel, targetsLabels,
   } else {
     stopifnot(is.logical(replace))
   }
-  replace_targets <- paste0("dragvars-target-", replace_targets)
+  replace_targets <- paste0(inputId, "-target-", replace_targets)
   
   target_list <- lapply(
     X = seq_along(targetsLabels),
