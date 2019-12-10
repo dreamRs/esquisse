@@ -11,6 +11,7 @@
 
 * Added `esquisseContainer()` to better integrate esquisse module in a shiny application.
 * New functions `colorPicker()` and `palettePicker()` to select a color or a palette (this is the select control used in the main addin).
+* New argument `insert_code` in `esquisserUI()` to hide "Insert into script button".
 
 
 ## Breaking changes
