@@ -71,7 +71,7 @@ chartControlsUI <- function(id, insert_code = FALSE, disable_filters = FALSE) {
     tags$script(HTML("$('.sw-dropdown > .btn').addClass('btn-charter');")),
     tags$script("$('#sw-content-filterdrop').click(function (e) {e.stopPropagation();});"),
     tags$script("$('#sw-content-filterdrop').css('min-width', '350px');"),
-    tags$script("$('#sw-content-codedrop').css('min-width', '350px');"),
+    tags$script("$('#sw-content-codedrop').css('min-width', '370px');"),
     tags$script("$('#sw-content-paramsdrop').css('min-width', '330px');"),
     useShinyUtils()
   )
@@ -159,18 +159,22 @@ chartControlsServer <- function(input, output, session,
     context <- rstudioapi::getSourceEditorContext()
     code <- ggplot_rv$code
     code <- stri_replace_all(str = code, replacement = "+\n", fixed = "+")
-    if (input$insert_code == 1) {
-      code <- paste("library(ggplot2)", code, sep = "\n\n")
-    }
     if (!is.null(output_filter$code$expr)) {
       code_dplyr <- deparse(output_filter$code$dplyr, width.cutoff = 80L)
       code_dplyr <- paste(code_dplyr, collapse = "\n")
       nm_dat <- data_name()
-      code_dplyr <- paste(nm_dat, code_dplyr, sep = " <- ")
       code_dplyr <- stri_replace_all(str = code_dplyr, replacement = "%>%\n", fixed = "%>%")
-      code <- paste(code_dplyr, code, sep = "\n\n")
+      code <- stri_replace_all(str = code, replacement = " ggplot()", fixed = sprintf("ggplot(%s)", nm_dat))
+      code <- paste(code_dplyr, code, sep = " %>%\n")
+      if (input$insert_code == 1) {
+        code <- paste("library(dplyr)\nlibrary(ggplot2)", code, sep = "\n\n")
+      }
+    } else {
+      if (input$insert_code == 1) {
+        code <- paste("library(ggplot2)", code, sep = "\n\n")
+      }
     }
-    rstudioapi::insertText(text = paste0("\n", code), id = context$id)
+    rstudioapi::insertText(text = paste0("\n", code, "\n"), id = context$id)
   })
   
   output$code <- renderUI({
@@ -180,9 +184,9 @@ chartControlsServer <- function(input, output, session,
       code_dplyr <- deparse(output_filter$code$dplyr, width.cutoff = 80L)
       code_dplyr <- paste(code_dplyr, collapse = "\n")
       nm_dat <- data_name()
-      code_dplyr <- paste(nm_dat, code_dplyr, sep = " <- ")
       code_dplyr <- stri_replace_all(str = code_dplyr, replacement = "%>%\n", fixed = "%>%")
-      code <- paste(code_dplyr, code, sep = "\n\n")
+      code <- stri_replace_all(str = code, replacement = " ggplot()", fixed = sprintf("ggplot(%s)", nm_dat))
+      code <- paste(code_dplyr, code, sep = " %>%\n")
     }
     htmltools::tagList(
       rCodeContainer(id = ns("codeggplot"), code)
