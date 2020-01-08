@@ -34,7 +34,8 @@ chartControlsUI <- function(id, insert_code = FALSE, disable_filters = FALSE) {
       status = "default btn-controls"
     ),
     dropdown(
-      controls_params(ns), controls_appearance(ns),
+      controls_params(ns), 
+      controls_appearance(ns),
       style = "default",
       label = "Plot options",
       up = TRUE, 
@@ -44,10 +45,7 @@ chartControlsUI <- function(id, insert_code = FALSE, disable_filters = FALSE) {
     ),
     if (!isTRUE(disable_filters)) {
       dropdown(
-        tags$div(
-          style = "max-height: 400px; overflow-y: scroll; overflow-x: hidden;", #  padding-left: 10px;
-          filterDF_UI(id = ns("filter-data"))
-        ),
+        filterDF_UI(id = ns("filter-data")),
         style = "default", 
         label = "Data", 
         up = TRUE, 
@@ -70,9 +68,6 @@ chartControlsUI <- function(id, insert_code = FALSE, disable_filters = FALSE) {
     tags$script("$('.sw-dropdown').addClass('btn-group-charter');"),
     tags$script(HTML("$('.sw-dropdown > .btn').addClass('btn-charter');")),
     tags$script("$('#sw-content-filterdrop').click(function (e) {e.stopPropagation();});"),
-    tags$script("$('#sw-content-filterdrop').css('min-width', '350px');"),
-    tags$script("$('#sw-content-codedrop').css('min-width', '370px');"),
-    tags$script("$('#sw-content-paramsdrop').css('min-width', '330px');"),
     useShinyUtils()
   )
 }
