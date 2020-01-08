@@ -66,6 +66,7 @@
 
 #sw-content-codedrop {
   min-width: 370px;
+  z-index: 1000;
 }
 
 
