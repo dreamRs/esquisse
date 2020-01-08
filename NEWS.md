@@ -4,6 +4,7 @@
 * Enable bookmarking for module `filterDF`.
 * `filterDF()` module handle missing values correctly.
 * `filterDF()` has two new arguments : `drop_ids` : logical, drop or not column with only unique values, `picker` allow to use `shinyWidgets::pickerInput`.
+* Code generated : no more affectation in {dplyr} code, a pipe is used to send code to {ggplot2} (mentionned in [#79](https://github.com/dreamRs/esquisse/issues/79))
 
 
 
