@@ -74,7 +74,7 @@ filterDF <- function(input, output, session,
   rv_filters <- reactiveValues(mapping = NULL, mapping_na = NULL)
   rv_code <- reactiveValues(expr = NULL, dplyr = NULL)
   
-  observeEvent(data_table(), {
+  observe({
     data <- data_table()
     vars <- data_vars()
     # req(nrow(data) > 0)
@@ -154,8 +154,11 @@ create_filters <- function(data, vars = NULL,
     data <- drop_id(data)
   }
   data <- dropListColumns(data)
-  if (is.null(vars)) 
+  if (is.null(vars)) {
     vars <- names(data)
+  } else {
+    vars <- intersect(names(data), vars)
+  }
   # filters_id <- paste0("filter_", sample.int(1e9, length(vars)))
   filters_id <- paste0("filter_", clean_string(vars))
   filters_id <- setNames(as.list(filters_id), vars)
