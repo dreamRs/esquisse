@@ -1,3 +1,18 @@
+.container-drag-source {
+  position: relative;
+  height: 50%; 
+  width: 99.5%; 
+  padding: 5px 0 5px 0;
+  margin: 5px 0 5px 0;
+  border-style: dashed;
+  border-color: steelblue;
+  border-radius: 5px;
+  border-width: 1px;
+  overflow: auto;
+  overflow-x: hidden;
+  font-size: 12px;
+}
+
 .box-dad {
   position: relative;
   padding: 5px;
@@ -11,6 +26,7 @@
   overflow-x: hidden;
   font-size: 12px;
 }
+
 
 .label-background {
   position: absolute;

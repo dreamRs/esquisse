@@ -6,21 +6,23 @@ $.extend(dragulaBinding, {
   initialize: function initialize(el) {
     var opts = {};
     var $el = $(el);
+    
+    var config = $(el).find('script[data-for="' + el.id + '"]');
+    config = JSON.parse(config.html());
 
     opts.removeOnSpill = false;
 
-    var replaceold = $(el).data("replace");
-    var replaceIds = $(el).data("replace-ids");
-    //console.log(replaceIds);
+    var replaceold = config.replace;
+    var replaceIds = config.replaceIds;
 
     var containersId = [];
 
-    var targetsContainer = $(el).data("targets");
+    var targetsContainer = config.targets;
     targetsContainer.forEach(function(element) {
       containersId.push(document.querySelector("#" + element));
     });
 
-    var sourceContainer = $(el).data("source");
+    var sourceContainer = config.source;
     sourceContainer.forEach(function(element) {
       containersId.push(document.querySelector("#" + element));
     });
@@ -59,17 +61,19 @@ $.extend(dragulaBinding, {
     }
   },
   getValue: function getValue(el) {
+    var config = $(el).find('script[data-for="' + el.id + '"]');
+    config = JSON.parse(config.html());
     var values = {};
     values.source = [];
     values.target = {};
-    var source = $(el).data("source");
+    var source = config.source;
     $("#" + source)
       .find("span.label-dragula")
       .each(function() {
         values.source.push($(this).data("value"));
       });
 
-    var targets = $(el).data("targets");
+    var targets = config.targets;
     var targetsname = [];
     targets.forEach(function(element) {
       targetsname.push(element.replace(/.*target-/, ""));
@@ -110,14 +114,16 @@ $.extend(dragulaBinding, {
   },
   receiveMessage: function receiveMessage(el, data) {
     var $el = $(el);
+    var config = $(el).find('script[data-for="' + el.id + '"]');
+    config = JSON.parse(config.html());
     if (data.hasOwnProperty("choices")) {
-      var targetsContainer = $(el).data("targets");
+      var targetsContainer = config.targets;
       targetsContainer.forEach(function(element) {
         $("#" + element)
           .children(".label-dragula")
           .remove();
       });
-      var sourceContainer = $(el).data("source");
+      var sourceContainer = config.source;
       sourceContainer.forEach(function(element) {
         $("#" + element)
           .children(".label-dragula")
