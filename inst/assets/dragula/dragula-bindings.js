@@ -1,62 +1,60 @@
-
 var dragulaBinding = new Shiny.InputBinding();
-  $.extend(dragulaBinding, {
+$.extend(dragulaBinding, {
   find: function find(scope) {
-    return $(scope).find('.shiny-input-dragula');
+    return $(scope).find(".shiny-input-dragula");
   },
   initialize: function initialize(el) {
     var opts = {};
     var $el = $(el);
-    
+
     opts.removeOnSpill = false;
-    
+
     var replaceold = $(el).data("replace");
     var replaceIds = $(el).data("replace-ids");
     //console.log(replaceIds);
-    
+
     var containersId = [];
-    
+
     var targetsContainer = $(el).data("targets");
     targetsContainer.forEach(function(element) {
-      containersId.push(document.querySelector('#' + element));
+      containersId.push(document.querySelector("#" + element));
     });
-    
+
     var sourceContainer = $(el).data("source");
     sourceContainer.forEach(function(element) {
-      containersId.push(document.querySelector('#' + element));
+      containersId.push(document.querySelector("#" + element));
     });
-    
+
     if (replaceold) {
-      opts.copy = function (el, source) {
+      opts.copy = function(el, source) {
         return source === document.getElementById(sourceContainer);
       };
-      opts.isContainer = function (el) {
-        return el.classList.contains('target');
+      opts.isContainer = function(el) {
+        return el.classList.contains("target");
       };
     }
-    
-    var drake = dragula(containersId, opts).on('dragend', function(el) {
-      $el.trigger('change');
-    });
-    
-    if (replaceold) {
-      drake.on('drop', function(el, target) {
 
-        if ( target !== document.getElementById(sourceContainer)) { 
+    var drake = dragula(containersId, opts).on("dragend", function(el) {
+      $el.trigger("change");
+    });
+
+    if (replaceold) {
+      drake.on("drop", function(el, target) {
+        if (target !== document.getElementById(sourceContainer)) {
           if (target !== null) {
-            if (replaceIds.indexOf(target.id) == -1) {
-              $(target).children('.label-dragula').remove();
+            if (replaceIds.indexOf(target.id) >= 0) {
+              $(target)
+                .children(".label-dragula")
+                .remove();
             }
             target.appendChild(el);
           }
         } else {
-          //console.log($(el).attr("id"));
-          //$(el).remove();
-          $(target).find('#' + $(el).attr("id")).remove();
-          //$('#' + $(el).attr("id")).remove();
-          //target.appendChild(el);
+          $(target)
+            .find("#" + $(el).attr("id"))
+            .remove();
         }
-        $el.trigger('change');
+        $el.trigger("change");
       });
     }
   },
@@ -65,24 +63,28 @@ var dragulaBinding = new Shiny.InputBinding();
     values.source = [];
     values.target = {};
     var source = $(el).data("source");
-    $('#' + source).find('span.label-dragula').each(function(){ 
-      values.source.push( $(this).data('value') );
-    });
-    
+    $("#" + source)
+      .find("span.label-dragula")
+      .each(function() {
+        values.source.push($(this).data("value"));
+      });
+
     var targets = $(el).data("targets");
     var targetsname = [];
     targets.forEach(function(element) {
-      targetsname.push(element.replace(/.*target-/, ''));
+      targetsname.push(element.replace(/.*target-/, ""));
     });
-    
-    for (i = 0; i < targetsname.length; i++) { 
+
+    for (i = 0; i < targetsname.length; i++) {
       values.target[targetsname[i]] = [];
-      $('#' + targets[i]).find('span.label-dragula').each(function(){ 
-        values.target[targetsname[i]].push( $(this).data('value') );
-        if (values.target[targetsname[i]].length === 0) {
-          values.target[targetsname[i]] = null;
-        }
-      });
+      $("#" + targets[i])
+        .find("span.label-dragula")
+        .each(function() {
+          values.target[targetsname[i]].push($(this).data("value"));
+          if (values.target[targetsname[i]].length === 0) {
+            values.target[targetsname[i]] = null;
+          }
+        });
     }
 
     if (values.source.length === 0) {
@@ -99,31 +101,35 @@ var dragulaBinding = new Shiny.InputBinding();
     // Not implemented
   },
   subscribe: function subscribe(el, callback) {
-    $(el).on('change.dragulaBinding', function (event) {
+    $(el).on("change.dragulaBinding", function(event) {
       callback();
     });
   },
   unsubscribe: function unsubscribe(el) {
-    $(el).off('.dragulaBinding');
+    $(el).off(".dragulaBinding");
   },
   receiveMessage: function receiveMessage(el, data) {
     var $el = $(el);
-    if (data.hasOwnProperty('choices')) {
+    if (data.hasOwnProperty("choices")) {
       var targetsContainer = $(el).data("targets");
       targetsContainer.forEach(function(element) {
-        $('#' + element).children('.label-dragula').remove();
+        $("#" + element)
+          .children(".label-dragula")
+          .remove();
       });
       var sourceContainer = $(el).data("source");
       sourceContainer.forEach(function(element) {
-        $('#' + element).children('.label-dragula').remove();
-        $('#' + element).html(data.choices);
+        $("#" + element)
+          .children(".label-dragula")
+          .remove();
+        $("#" + element).html(data.choices);
       });
-      $(el).trigger('change');
+      $(el).trigger("change");
     }
   },
   getRatePolicy: function getRatePolicy() {
     return {
-      policy: 'debounce',
+      policy: "debounce",
       delay: 250
     };
   },
