@@ -4,13 +4,16 @@ $.extend(dragulaBinding, {
     return $(scope).find(".shiny-input-dragula");
   },
   initialize: function initialize(el) {
-    var opts = {};
     var $el = $(el);
     
     var config = $(el).find('script[data-for="' + el.id + '"]');
     config = JSON.parse(config.html());
+    
+    var opts = config.options;
 
-    opts.removeOnSpill = false;
+    if (!opts.hasOwnProperty("removeOnSpill")) {
+      opts.removeOnSpill = false;
+    }
 
     var replaceold = config.replace;
     var replaceIds = config.replaceIds;

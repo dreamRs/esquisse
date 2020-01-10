@@ -15,6 +15,8 @@ dragulaInput(
   status = "primary",
   replace = FALSE,
   badge = TRUE,
+  dragulaOpts = list(),
+  boxStyle = NULL,
   width = NULL,
   height = "200px"
 )
@@ -51,6 +53,10 @@ containing a choice, does the later be replaced by the new one ?}
 
 \item{badge}{Displays choices inside a Bootstrap badge. Use \code{FALSE}
 if you want to pass custom appearance with \code{choiceNames}.}
+
+\item{dragulaOpts}{Options passed to dragula JS library.}
+
+\item{boxStyle}{CSS style string to customize source and target container.}
 
 \item{width}{Width of the input.}
 

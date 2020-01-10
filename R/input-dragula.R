@@ -25,6 +25,8 @@
 #'  status to color them, or \code{NULL}.
 #' @param replace When a choice is dragged in a target container already
 #'  containing a choice, does the later be replaced by the new one ?
+#' @param dragulaOpts Options passed to dragula JS library.
+#' @param boxStyle CSS style string to customize source and target container.
 #' @param width Width of the input.
 #' @param height Height of each boxes, the total input height is this parameter X 2.
 #' 
@@ -74,7 +76,10 @@ dragulaInput <- function(inputId, sourceLabel, targetsLabels,
                          targetsIds = NULL,
                          choices = NULL, choiceNames = NULL,
                          choiceValues = NULL, status = "primary", 
-                         replace = FALSE, badge = TRUE, width = NULL, height = "200px") {
+                         replace = FALSE, badge = TRUE,
+                         dragulaOpts = list(),
+                         boxStyle = NULL,
+                         width = NULL, height = "200px") {
   
   args <- normalizeChoicesArgs(choices, choiceNames, choiceValues)
   
@@ -98,6 +103,7 @@ dragulaInput <- function(inputId, sourceLabel, targetsLabels,
     FUN = function(i) {
       tags$div(
         style = "height: 95%; margin: 0;",
+        style = boxStyle,
         class = "box-dad xyvar",
         id = paste(inputId, "target", targetsIds[i], sep = "-"),
         style = make_bg_svg(targetsLabels[i])
@@ -122,6 +128,7 @@ dragulaInput <- function(inputId, sourceLabel, targetsLabels,
       id = inputId, 
       tags$div(
         class = "container-drag-source",
+        style = boxStyle,
         style = make_bg_svg(sourceLabel),
         tags$div(
           id = paste(inputId, "source", sep = "-"), 
@@ -137,7 +144,8 @@ dragulaInput <- function(inputId, sourceLabel, targetsLabels,
           source = list1(paste(inputId, "source", sep = "-")),
           targets = list1(paste(inputId, "target", targetsIds, sep = "-")),
           replace = replace,
-          replaceIds = list1(replaceTargets)
+          replaceIds = list1(replaceTargets),
+          options = dragulaOpts
         ), auto_unbox = TRUE, json_verbatim = TRUE)
       )
     )
