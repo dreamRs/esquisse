@@ -259,7 +259,7 @@ updateDragulaInput <- function(session, inputId, choices = NULL, choiceNames = N
                                choiceValues = NULL, badge = TRUE, status = "primary") {
   args <- normalizeChoicesArgs(choices, choiceNames, choiceValues)
   choices <- htmltools::doRenderTags(makeDragulaChoices(
-    inputId = inputId, args = args, status = status, badge = badge
+    inputId = session$ns(inputId), args = args, status = status, badge = badge
   ))
   message <- list(choices = choices)
   session$sendInputMessage(inputId, message)
