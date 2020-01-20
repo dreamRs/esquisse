@@ -89,7 +89,8 @@ dataGlobalEnvUI <- function(id, dismissOnValidate = TRUE, selectVars = TRUE, coe
 #' @rdname module-data-globalenv
 #'
 #' @importFrom shiny reactiveValues observeEvent req removeUI insertUI callModule
-dataGlobalEnvServer <- function(input, output, session, data = NULL, name = NULL) {
+dataGlobalEnvServer <- function(input, output, session, data = NULL, name = NULL, 
+                                selectedTypes = c("continuous", "discrete", "time")) {
   
   ns <- session$ns
   jns <- function(x) paste0("#", ns(x))
@@ -140,7 +141,12 @@ dataGlobalEnvServer <- function(input, output, session, data = NULL, name = NULL
     }
   }, ignoreInit = TRUE)
   
-  sv <- callModule(module = selectVarsServer, id = "selected", data = select_data)
+  sv <- callModule(
+    module = selectVarsServer, 
+    id = "selected", 
+    data = select_data, 
+    selectedTypes = selectedTypes
+  )
   
   observeEvent(sv$selected_vars, {
     if (length(sv$selected_vars) > 0) {

@@ -55,7 +55,8 @@ selectVarsUI <- function(id) {
 #' @importFrom htmltools doRenderTags
 #' @importFrom shiny reactiveValuesToList observeEvent reactiveValues
 #' @importFrom shinyWidgets updatePickerInput
-selectVarsServer <- function(input, output, session, data = list()) {
+selectVarsServer <- function(input, output, session, data = list(), 
+                             selectedTypes = c("continuous", "discrete", "time")) {
   
   ns <- session$ns
   
@@ -78,12 +79,8 @@ selectVarsServer <- function(input, output, session, data = list()) {
         session = session,
         inputId = "col_chooser",
         choices =  names(res_col_type),
-        selected = names(res_col_type)[unname(res_col_type) != "id"],
+        selected = names(res_col_type)[unname(res_col_type) %in% selectedTypes],
         choicesOpt = list(
-          # content = unlist(lapply(
-          #   X = badgeType(col_name = names(res_col_type), col_type = unname(res_col_type)),
-          #   FUN = doRenderTags
-          # ))
           content = paste0(
             unlist(lapply(
               X = badgeType(col_name = names(res_col_type), col_type = unname(res_col_type)),

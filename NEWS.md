@@ -1,3 +1,9 @@
+# esquisse 0.2.4
+
+* Fixed a bug in `dragulaInput` preventing to change variable in main addin.
+* `chooseDataServer()` has a ne argument `selectedTypes` to set types of variables selected by default. [#95](https://github.com/dreamRs/esquisse/issues/95)
+
+
 # esquisse 0.2.3
 
 * New argument `disable_filters` in `esquisserUI()` to disable the ability to filter data.

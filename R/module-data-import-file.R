@@ -73,7 +73,8 @@ dataImportFileUI <- function(id, dismissOnValidate = TRUE, selectVars = TRUE, co
 #'
 # @importFrom rio import
 #' @importFrom shiny reactiveValues observeEvent removeUI insertUI callModule
-dataImportFileServer <- function(input, output, session, data = NULL, name = NULL) {
+dataImportFileServer <- function(input, output, session, data = NULL, name = NULL, 
+                                 selectedTypes = c("continuous", "discrete", "time")) {
   
   if (!requireNamespace(package = "rio", quietly = TRUE))
     message("Package 'rio' is required to run this function")
@@ -126,7 +127,12 @@ dataImportFileServer <- function(input, output, session, data = NULL, name = NUL
   }, ignoreInit = TRUE)
   
   
-  sv <- callModule(module = selectVarsServer, id = "selected", data = select_data)
+  sv <- callModule(
+    module = selectVarsServer, 
+    id = "selected", 
+    data = select_data, 
+    selectedTypes = selectedTypes
+  )
   
   observeEvent(sv$selected_vars, {
     if (length(sv$selected_vars) > 0) {

@@ -18,71 +18,7 @@
 #' @importFrom htmltools tagList tags singleton
 #' @importFrom shiny NS actionButton icon 
 #'
-#' @examples
-#' 
-#' if (interactive()) {
-#' 
-#' 
-#' library(shiny)
-#' library(esquisse)
-#' 
-#' ui <- fluidPage(
-#'   tags$h2("Choose data module"),
-#'   fluidRow(
-#'     column(
-#'       width = 4,
-#'       tags$h4("Default"),
-#'       chooseDataUI(id = "choose1"),
-#'       verbatimTextOutput(outputId = "res1")
-#'     ),
-#'     column(
-#'       width = 4,
-#'       tags$h4("No var selection"),
-#'       chooseDataUI(id = "choose2"),
-#'       verbatimTextOutput(outputId = "res2")
-#'     ),
-#'     column(
-#'       width = 4,
-#'       tags$h4("Default data on start"),
-#'       chooseDataUI(id = "choose3"),
-#'       verbatimTextOutput(outputId = "res3")
-#'     )
-#'   )
-#' )
-#' 
-#' server <- function(input, output, session) {
-#'   
-#'   res_dat1 <- callModule(
-#'     chooseDataServer, id = "choose1",
-#'     launchOnStart = FALSE
-#'   )
-#'   output$res1 <- renderPrint({
-#'     str(reactiveValuesToList(res_dat1))
-#'   })
-#'   
-#'   res_dat2 <- callModule(
-#'     chooseDataServer, id = "choose2", selectVars = FALSE,
-#'     launchOnStart = FALSE
-#'   )
-#'   output$res2 <- renderPrint({
-#'     str(reactiveValuesToList(res_dat2))
-#'   })
-#'   
-#'   res_dat3 <- callModule(
-#'     chooseDataServer, id = "choose3", data = iris,
-#'     launchOnStart = FALSE
-#'   )
-#'   output$res3 <- renderPrint({
-#'     str(reactiveValuesToList(res_dat3))
-#'   })
-#'   
-#' }
-#' 
-#' shinyApp(ui, server)
-#' 
-#' 
-#' }
-#' 
+#' @example examples/chooseData.R
 chooseDataUI <- function(id, label = "Data", icon = "database", ...) {
   
   ns <- NS(id)
@@ -110,9 +46,13 @@ chooseDataUI <- function(id, label = "Data", icon = "database", ...) {
 #' @param data A \code{data.frame} to use by default.
 #' @param name Character, object's name to use for \code{data}.
 #' @param selectVars Display module to select variables, \code{TRUE} by default.
+#' @param selectedTypes Type of variables selected by default in select variables module.
+#'  Possible types are \code{"discrete"}, \code{"time"}, \code{"continuous"} and \code{"id"}, 
+#'  by default \code{"id"} is discarded.
 #' @param coerceVars Display module to coerce variables between different class, \code{TRUE} by default.
 #' @param launchOnStart Opens modal window when the application starts.
 #' @param size Size for the modal window.
+#' 
 #' 
 #' @export
 #'
@@ -123,7 +63,9 @@ chooseDataUI <- function(id, label = "Data", icon = "database", ...) {
 chooseDataServer <- function(input, output, session, 
                              dataModule = c("GlobalEnv", "ImportFile"), 
                              data = NULL, name = NULL, 
-                             selectVars = TRUE, coerceVars = FALSE, 
+                             selectVars = TRUE, 
+                             selectedTypes = c("continuous", "discrete", "time"), 
+                             coerceVars = FALSE, 
                              launchOnStart = TRUE, size = "m") {
   
   dataModule <- match.arg(dataModule)
@@ -175,7 +117,8 @@ chooseDataServer <- function(input, output, session,
     module = datModServer, 
     id = "chooseData", 
     data = data, 
-    name = name
+    name = name,
+    selectedTypes = selectedTypes
   )
   
   return(return_data)
