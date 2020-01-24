@@ -461,7 +461,8 @@ controls_appearance <- function(ns) {
         inputId = ns("palette"), 
         label = "Choose a palette:", 
         choices = pals$choices,
-        textColor = pals$textColor
+        textColor = pals$textColor,
+        pickerOpts = list(container = "body")
       )
     ),
     pickerInput(
@@ -469,7 +470,7 @@ controls_appearance <- function(ns) {
       label = "Theme:",
       choices = themes,
       selected = "minimal",
-      options = list(size = 10),
+      options = list(size = 10, container = "body"),
       width = "100%"
     ),
     tags$script(
