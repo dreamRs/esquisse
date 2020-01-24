@@ -1,10 +1,10 @@
 Package: esquisse
 Type: Package
 Title: Explore and Visualize Your Data Interactively
-Version: 0.2.3.910
-Authors@R: c(person("Fanny", "Meyer", email = "fanny.meyer@dreamrs.fr", role = c("aut")),
+Version: 0.2.3.990
+Authors@R: c(person("Fanny", "Meyer", role = c("aut")),
   person("Victor", "Perrier", email = "victor.perrier@dreamrs.fr", role = c("aut", "cre")),
-  person("Ian", "Carroll", comment = "Facets support", role = "ctb"))
+  person("Ian", "Carroll", comment = "Faceting support", role = "ctb"))
 Description: A 'shiny' gadget to create 'ggplot2' charts interactively with drag-and-drop to map your variables.
     You can quickly visualize your data accordingly to their type, export to 'PNG' or 'PowerPoint',
     and retrieve the code to reproduce the chart.
@@ -21,8 +21,6 @@ Imports: miniUI,
     jsonlite,
     shinyWidgets (>= 0.4.1),
     ggplot2 (>= 3.0.0),
-    ggthemes,
-    hrbrthemes,
     scales,
     stringi,
     rlang (>= 0.3.1),
@@ -33,5 +31,7 @@ Suggests:
     rio,
     DT,
     testthat (>= 2.1.0),
-    knitr
+    knitr,
+    ggthemes,
+    hrbrthemes
 VignetteBuilder: knitr

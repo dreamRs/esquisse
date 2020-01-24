@@ -22,6 +22,10 @@
   if (is.null(esquisse.themes)) {
     options("esquisse.themes" = default_themes)
   }
+  esquisse.default.theme <- getOption("esquisse.default.theme")
+  if (is.null(esquisse.default.theme)) {
+    options("esquisse.default.theme" = "theme_minimal")
+  }
   esquisse.colors <- getOption("esquisse.colors")
   if (is.null(esquisse.colors)) {
     options("esquisse.colors" = default_cols)

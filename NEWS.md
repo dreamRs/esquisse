@@ -2,6 +2,7 @@
 
 * Fixed a bug in `dragulaInput` preventing to change variable in main addin.
 * `chooseDataServer()` has a new argument `selectedTypes` to set types of variables selected by default. [#95](https://github.com/dreamRs/esquisse/issues/95)
+* Packages [{ggthemes}](https://github.com/jrnold/ggthemes) and [{hrbrthemes}](https://github.com/hrbrmstr/hrbrthemes) are now in Suggests.
 
 
 # esquisse 0.2.3

@@ -32,7 +32,6 @@ a \code{list}
 Automatically select appropriate color scale
 }
 \examples{
-
 library(ggplot2)
 
 # Automatic guess according to data

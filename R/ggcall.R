@@ -19,7 +19,7 @@
 #' @export
 #' 
 #' @importFrom stats setNames
-#' @importFrom rlang sym syms expr as_name is_call
+#' @importFrom rlang sym syms expr as_name is_call call2
 #' @importFrom ggplot2 ggplot aes theme facet_wrap vars coord_flip labs
 #'
 #' @examples
@@ -117,8 +117,16 @@ ggcall <- function(data = NULL,
       scales_args <- setNames(list(scales_args), scales)
     for (s in scales) {
       s_args <- dropNulls(scales_args[[s]])
-      scales <- expr((!!sym(paste0("scale_", s)))(!!!s_args))
-      ggcall <- expr(!!ggcall + !!scales)
+      # scales <- expr((!!sym(paste0("scale_", s)))(!!!s_args))
+      if (grepl("::", x = s)) {
+        scl <- strsplit(x = s, split = "::")[[1]]
+        scl <- call2(scl[2], !!!s_args, .ns = scl[1])
+      } else {
+        if (!grepl("^scale_", s))
+          s <- paste0("scale_", s)
+        scl <- call2(s, !!!s_args)
+      }
+      ggcall <- expr(!!ggcall + !!scl)
     }
   }
   labs <- dropNullsOrEmpty(labs)
@@ -131,7 +139,16 @@ ggcall <- function(data = NULL,
     ggcall <- expr(!!ggcall + !!coord)
   }
   if (!is.null(theme)) {
-    theme <- expr((!!sym(paste0("theme_", theme)))())
+    if (grepl("::", x = theme)) {
+      theme <- strsplit(x = theme, split = "::")[[1]]
+      theme <- call2(theme[2], .ns = theme[1])
+    } else {
+      if (!grepl("^theme_", theme))
+        theme <- paste0("theme_", theme)
+      theme <- call2(theme)
+    }
+    theme <- expr(!!theme)
+    # theme <- expr((!!sym(paste0("theme_", theme)))())
     ggcall <- expr(!!ggcall + !!theme)
   }
   if (!any(c("fill", "color", "size") %in% names(mapping))) {

@@ -15,10 +15,8 @@
 #' @importFrom ggplot2 scale_fill_hue scale_color_hue scale_fill_gradient scale_color_gradient
 #'  scale_fill_brewer scale_color_brewer scale_fill_distiller scale_color_distiller
 #'  scale_fill_viridis_c scale_color_viridis_c scale_fill_viridis_d scale_color_viridis_d
-#' @importFrom hrbrthemes scale_color_ft scale_fill_ft scale_color_ipsum scale_fill_ipsum
 #'
 #' @examples
-#' 
 #' library(ggplot2)
 #' 
 #' # Automatic guess according to data
@@ -52,6 +50,8 @@
 which_pal_scale <- function(mapping, palette = "ggplot2", data = NULL,
                             fill_type = c("continuous", "discrete"), 
                             color_type = c("continuous", "discrete")) {
+  palettes <- unlist(lapply(default_pals()$choices, names), recursive = TRUE, use.names = FALSE)
+  palette <- match.arg(arg = palette, choices = palettes)
   args <- list()
   fill_type <- match.arg(fill_type)
   color_type <- match.arg(color_type)
@@ -80,7 +80,11 @@ which_pal_scale <- function(mapping, palette = "ggplot2", data = NULL,
     } else {
       s_p <- "brewer"
     }
-    paste(aesthetic, s_p, sep = "_")
+    scl <- paste("scale", aesthetic, s_p, sep = "_")
+    if (palette %in% c("ipsum", "ft")) {
+      scl <- paste0("hrbrthemes::", scl)
+    }
+    return(scl)
   }
   scale_pal_c <- function(pal, aesthetic) {
     if (pal == "ggplot2") {
@@ -94,7 +98,11 @@ which_pal_scale <- function(mapping, palette = "ggplot2", data = NULL,
     } else {
       s_p <- "distiller"
     }
-    paste(aesthetic, s_p, sep = "_")
+    scl <- paste("scale", aesthetic, s_p, sep = "_")
+    if (palette %in% c("ipsum", "ft")) {
+      scl <- paste0("hrbrthemes::", scl)
+    }
+    return(scl)
   }
   if (!is.null(mapping$fill)) {
     fill_scale <- switch(
