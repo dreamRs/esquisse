@@ -446,6 +446,11 @@ controls_appearance <- function(ns) {
   pals <- get_palettes()
 
   tagList(
+    
+    tags$style(
+      ".bootstrap-select .dropdown-menu li a span.text { display: block !important; }"
+    ),
+    
     tags$div(
       id = ns("controls-spectrum"), style = "display: block;",
       spectrumInput(
