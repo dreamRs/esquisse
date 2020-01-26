@@ -58,7 +58,7 @@ default_pals <- function() {
     )
   )
   
-  if (requireNamespace("hrbrthemes")) {
+  if (requireNamespace("hrbrthemes", quietly = TRUE)) {
     pals$choices$hrbrthemes = list(
       "ipsum" = hrbrthemes::ipsum_pal()(9),
       "ft" = hrbrthemes::ft_pal()(9)
@@ -83,7 +83,7 @@ default_themes <- function() {
   themes <- list(
     ggplot2 = ggplot2
   )
-  if (requireNamespace("ggthemes")) {
+  if (requireNamespace("ggthemes", quietly = TRUE)) {
     ggthemes <- c(
       "base", "calc", "economist", "economist_white",
       "excel", "few", "fivethirtyeight", "foundation",
@@ -98,7 +98,7 @@ default_themes <- function() {
     }
   }
   
-  if (requireNamespace("hrbrthemes")) {
+  if (requireNamespace("hrbrthemes", quietly = TRUE)) {
     hrbrthemes <- c(
       "ft_rc", "ipsum", "ipsum_ps", "ipsum_rc", "ipsum_tw", "modern_rc"
     )
@@ -141,7 +141,7 @@ default_cols <- function() {
     # "Paired" = brewer_pal(palette = "Paired")(12)
   )
   
-  if (requireNamespace("hrbrthemes")) {
+  if (requireNamespace("hrbrthemes", quietly = TRUE)) {
     cols$ipsum <- hrbrthemes::ipsum_pal()(9)
     cols$ipsum <- hrbrthemes::ft_pal()(9)
   }

@@ -2,7 +2,7 @@
 % Please edit documentation in R/ggcall.R
 \name{ggcall}
 \alias{ggcall}
-\title{Generate code to create a `ggplot`}
+\title{Generate code to create a \code{ggplot2}}
 \usage{
 ggcall(
   data = NULL,
@@ -24,32 +24,32 @@ ggcall(
 
 \item{mapping}{List. Named list of aesthetics.}
 
-\item{geom}{Character. Name of the geom to use (without "geom_").}
+\item{geom}{Character. Name of the geom to use (with or without "geom_").}
 
 \item{geom_args}{List. Arguments to use in the geom.}
 
-\item{scales}{Character vector. Scale(s) to use (without "scale_").}
+\item{scales}{Character vector. Scale(s) to use (with or without "scale_").}
 
 \item{scales_args}{List. Arguments to use in scale(s),
 if \code{scales} is length > 1, must be a named list with \code{scales} names.}
 
-\item{coord}{Character. Coordinates to use (without "coord_").}
+\item{coord}{Character. Coordinates to use (with or without "coord_").}
 
 \item{labs}{List. Named list of labels to use for title, subtitle, x & y axis, legends.}
 
-\item{theme}{Character. Name of the theme to use (without "theme_").}
+\item{theme}{Character. Name of the theme to use (with or without "theme_").}
 
-\item{theme_args}{List. Named list for theme arguments.}
+\item{theme_args}{Named list. Arguments for \code{\link[ggplot2:theme]{theme}}.}
 
-\item{facet}{Character vector. Names of variables to use as facet.}
+\item{facet}{Character vector. Names of variables to use in \code{\link[ggplot2]{facet_wrap}}.}
 
-\item{facet_args}{List. Named list for facet arguments.}
+\item{facet_args}{Named list. Arguments for \code{\link[ggplot2:facet_wrap]{facet_wrap}}.}
 }
 \value{
-a call
+a \code{call} that can be evaluated with \code{eval}.
 }
 \description{
-Generate code to create a `ggplot`
+Generate code to create a \code{ggplot2}
 }
 \examples{
 # Default:
@@ -65,29 +65,46 @@ eval(ggcall("mtcars", list(x = "mpg", y = "wt")))
 
 # With a geom:
 ggcall(
-  data = "mtcars", 
-  mapping = list(x = "mpg", y = "wt"), 
+  data = "mtcars",
+  mapping = list(x = "mpg", y = "wt"),
   geom = "point"
 )
 
 # With options
 ggcall(
-  data = "mtcars", 
-  mapping = list(x = "hp", y = "cyl", fill = "color"), 
+  data = "mtcars",
+  mapping = list(x = "hp", y = "cyl", fill = "color"),
   geom = "bar",
-  coord = "flip", 
-  labs = list(title = "My title"), 
-  theme = "minimal", 
+  coord = "flip",
+  labs = list(title = "My title"),
+  theme = "minimal",
   facet = c("gear", "carb"),
   theme_args = list(legend.position = "bottom")
 )
+
+# Theme
+ggcall(
+  "mtcars", list(x = "mpg", y = "wt"),
+  theme = "theme_minimal",
+  theme_args = list(
+    panel.ontop = TRUE,
+    legend.title = rlang::expr(element_text(face = "bold"))
+  )
+)
+
+# Theme from other package than ggplot2
+ggcall(
+  "mtcars", list(x = "mpg", y = "wt"),
+  theme = "ggthemes::theme_economist"
+)
+
 
 # One scale
 ggcall(
   data = "mtcars",
   mapping = list(x = "mpg", y = "wt", color = "qsec"),
   geom = "point",
-  scales = "color_distiller", 
+  scales = "color_distiller",
   scales_args = list(palette = "Blues")
 )
 
@@ -96,7 +113,7 @@ ggcall(
   data = "mtcars",
   mapping = list(x = "mpg", y = "wt", color = "qsec", size = "qsec"),
   geom = "point",
-  scales = c("color_distiller", "size_continuous"), 
+  scales = c("color_distiller", "size_continuous"),
   scales_args = list(
     color_distiller = list(palette = "Greens"),
     size_continuous = list(range = c(1, 20))
