@@ -338,6 +338,7 @@ chartControlsServer <- function(input, output, session,
   observe({
     outin$facet <- list(
       scales = if (identical(input$facet_scales, "fixed")) NULL else input$facet_scales
+      nrow = if (input$facet_nrow == 0) NULL else input$facet_nrow
     )
   })
   
@@ -565,8 +566,8 @@ controls_params <- function(ns) {
       sliderInput(
         inputId = ns("facet_nrow"),
         label = "Facet nrow:",
-        min = 1, max = 10,
-        value = 1, step = 1
+        min = 0, max = 10,
+        value = 0, step = 1
       )
     ),
     tags$div(
