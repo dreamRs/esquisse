@@ -563,7 +563,7 @@ controls_params <- function(ns) {
     tags$div(
       id = ns("controls-facet-nrow"), style = "display: none;",
       sliderInput(
-        inputID = ns("facet_nrow"),
+        inputId = ns("facet_nrow"),
         label = "Facet nrow:",
         min = 1, max = 10,
         value = 1
