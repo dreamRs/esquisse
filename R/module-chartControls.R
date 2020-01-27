@@ -214,8 +214,10 @@ chartControlsServer <- function(input, output, session,
   observeEvent(use_facet(), {
     if (isTRUE(use_facet())) {
       toggleDisplay(id = ns("controls-facet"), display = "block")
+      toggleDisplay(id = ns("controls-facet-nrow"), display = "block")
     } else {
       toggleDisplay(id = ns("controls-facet"), display = "none")
+      toggleDisplay(id = ns("controls-facet-nrow"), display = "none")
     }
   })
   
