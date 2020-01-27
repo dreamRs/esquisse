@@ -566,7 +566,7 @@ controls_params <- function(ns) {
         inputId = ns("facet_nrow"),
         label = "Facet nrow:",
         min = 1, max = 10,
-        value = 1
+        value = NULL
       )
     ),
     tags$div(
