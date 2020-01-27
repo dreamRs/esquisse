@@ -214,10 +214,8 @@ chartControlsServer <- function(input, output, session,
   observeEvent(use_facet(), {
     if (isTRUE(use_facet())) {
       toggleDisplay(id = ns("controls-facet"), display = "block")
-      toggleDisplay(id = ns("controls-facet-nrow"), display = "block")
     } else {
       toggleDisplay(id = ns("controls-facet"), display = "none")
-      toggleDisplay(id = ns("controls-facet-nrow"), display = "none")
     }
   })
   
@@ -337,7 +335,8 @@ chartControlsServer <- function(input, output, session,
   # facet input
   observe({
     outin$facet <- list(
-      scales = if (identical(input$facet_scales, "fixed")) NULL else input$facet_scales
+      scales = if (identical(input$facet_scales, "fixed")) NULL else input$facet_scales,
+      ncol = if (input$facet_ncol == 0) NULL else input$facet_ncol,
       nrow = if (input$facet_nrow == 0) NULL else input$facet_nrow
     )
   })
@@ -559,10 +558,13 @@ controls_params <- function(ns) {
         choices = c("fixed", "free", "free_x", "free_y"),
         outline = TRUE, 
         icon = icon("check")
-      )
-    ),
-    tags$div(
-      id = ns("controls-facet-nrow"), style = "display: none;",
+      ),
+      sliderInput(
+        inputId = ns("facet_ncol"),
+        label = "Facet ncol:",
+        min = 0, max = 10,
+        value = 0, step = 1
+      ),
       sliderInput(
         inputId = ns("facet_nrow"),
         label = "Facet nrow:",
