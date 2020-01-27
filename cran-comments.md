@@ -7,7 +7,7 @@
 
 0 errors | 0 warnings | 0 note
 
-* This is a new release
+* New release to fix some bugs and reduce dependencies.
   
 Thank you !
 Victor
