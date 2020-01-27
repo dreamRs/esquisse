@@ -556,7 +556,10 @@ controls_params <- function(ns) {
         choices = c("fixed", "free", "free_x", "free_y"),
         outline = TRUE, 
         icon = icon("check")
-      ),
+      )
+    ),
+    tags$div(
+      id = ns("controls-facet-nrow"), stylej = "display: none;",
       sliderInput(
         inputID = ns("facet_nrow"),
         label = "Facet nrow:",
