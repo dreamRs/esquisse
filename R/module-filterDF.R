@@ -209,7 +209,7 @@ create_filters <- function(data, vars = NULL,
         )
       } else {
         values <- unique(as.character(var))
-        values <- values[trimws(values) != ""]
+        values <- tryCatch(values[trimws(values) != ""], error = function(e) values)
         if (isTRUE(picker)) {
           tags$div(
             style = "position: relative;",
@@ -401,7 +401,7 @@ drop_id <- function(data) {
     FUN = function(x) {
       if (inherits(x, c("factor", "character"))) {
         values <- unique(as.character(x))
-        values <- values[trimws(values) != ""]
+        values <- tryCatch(values[trimws(values) != ""], error = function(e) values)
         if (length(values) <= 1)
           return(NULL)
         if (length(values) >= length(x) * 0.9)
