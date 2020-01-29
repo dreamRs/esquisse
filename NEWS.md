@@ -1,3 +1,7 @@
+# esquisse 0.3.1
+
+
+
 # esquisse 0.3.0
 
 * Fixed a bug in `dragulaInput` preventing to change variable in main addin.
