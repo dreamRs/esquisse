@@ -29,7 +29,7 @@ chartControlsUI <- function(id, insert_code = FALSE, disable_filters = FALSE) {
       inputId = "labsdrop",
       style = "default",
       label = "Labels & Title", 
-      up = TRUE, 
+      #up = TRUE, 
       icon = icon("font"), 
       status = "default btn-controls"
     ),
@@ -38,7 +38,7 @@ chartControlsUI <- function(id, insert_code = FALSE, disable_filters = FALSE) {
       controls_appearance(ns),
       style = "default",
       label = "Plot options",
-      up = TRUE, 
+      #up = TRUE, 
       inputId = "paramsdrop",
       icon = icon("gears"), 
       status = "default btn-controls"
@@ -48,7 +48,7 @@ chartControlsUI <- function(id, insert_code = FALSE, disable_filters = FALSE) {
         filterDF_UI(id = ns("filter-data")),
         style = "default", 
         label = "Data", 
-        up = TRUE, 
+        #up = TRUE, 
         icon = icon("filter"),
         right = TRUE, 
         inputId = "filterdrop",
@@ -59,7 +59,7 @@ chartControlsUI <- function(id, insert_code = FALSE, disable_filters = FALSE) {
       controls_code(ns, insert_code = insert_code), 
       style = "default", 
       label = "Export & code", 
-      up = TRUE,
+      #up = TRUE,
       right = TRUE, 
       inputId = "codedrop",
       icon = icon("code"), 
@@ -332,6 +332,18 @@ chartControlsServer <- function(input, output, session,
     )
   })
   
+  #limits input
+  observe({
+    outin$limits <- list(
+      xlimit_use = use_transX(),
+      xstart = if (identical(input$xstart,NA)) NA_real_ else input$xstart,
+      xend = if (identical(input$xend,NA)) NA_real_ else input$xend,
+      ylimit_use = use_transY(),
+      ystart = if (identical(input$ystart,NA)) NA_real_ else input$ystart,
+      yend = if (identical(input$yend,NA)) NA_real_ else input$yend
+    )
+  })
+  
   # facet input
   observe({
     outin$facet <- list(
@@ -507,7 +519,7 @@ controls_appearance <- function(ns) {
 #' @param ns Namespace from module
 #'
 #' @noRd
-#' @importFrom shiny sliderInput conditionalPanel selectInput
+#' @importFrom shiny sliderInput conditionalPanel selectInput numericInput
 #' @importFrom htmltools tagList tags
 #' @importFrom shinyWidgets materialSwitch prettyRadioButtons
 #'
@@ -595,6 +607,8 @@ controls_params <- function(ns) {
     ),
     tags$div(
       id = ns("controls-scale-trans-x"), style = "display: none;",
+      numericInput(ns("xstart"), label = "x axis start", NA),
+      numericInput(ns("xend"), label = "x axis end", NA),
       selectInput(
         inputId = ns("transX"), 
         label = "X-Axis transform:",
@@ -604,6 +618,8 @@ controls_params <- function(ns) {
     ),
     tags$div(
       id = ns("controls-scale-trans-y"), style = "display: none;",
+      numericInput(ns("ystart"), label = "y axis start", NA),
+      numericInput(ns("yend"), label = "y axis end", NA),
       selectInput(
         inputId = ns("transY"), 
         label = "Y-Axis transform:",

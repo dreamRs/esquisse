@@ -11,9 +11,9 @@
 layoutAddin <- function(top_left, top_right, main) {
   shiny::fillPage(
     shiny::fillCol(
-      flex = c(1, 9),
+      flex = c(NA,1),
       shiny::fillRow(
-        flex = c(1, 6), width = "100%", style = "margin: auto;",
+        flex = c(1, 6), width = "100%", height = "100px", style = "margin: auto;",
         top_left,
         top_right
       ),

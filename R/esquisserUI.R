@@ -67,6 +67,12 @@ esquisserUI <- function(id, header = TRUE,
     )),
 
     if (isTRUE(header)) box_title,
+    
+    chartControlsUI(
+      id = ns("controls"), 
+      insert_code = insert_code,
+      disable_filters = disable_filters
+    ),
     # page
     layoutAddin(
       top_left = htmltools::tagList(
@@ -85,13 +91,13 @@ esquisserUI <- function(id, header = TRUE,
       top_right = dragulaInput(
         inputId = ns("dragvars"), 
         sourceLabel = "Variables", 
-        targetsLabels = c("X", "Y", "Fill", "Color", "Size", "Group", "Facet"), 
-        targetsIds = c("xvar", "yvar", "fill", "color", "size", "group", "facet"),
+        targetsLabels = c("X", "Y", "Fill", "Color", "Size", "Group", "Facet", "FacetRow", "FacetCol"), 
+        targetsIds = c("xvar", "yvar", "fill", "color", "size", "group", "facet", "facet_row", "facet_col"),
         choices = "",
         badge = FALSE, 
         width = "100%", 
         height = "100%",
-        replace = TRUE
+        replace = FALSE
       ),
       main = htmltools::tags$div(
         style = "margin-top: 10px; padding-bottom: 25px; height: 100%;",
@@ -99,7 +105,7 @@ esquisserUI <- function(id, header = TRUE,
           style = "position: absolute; right: 0; top: 10px; font-weight: bold; z-index: 1000;",
           prettyToggle(
             inputId = ns("play_plot"), 
-            value = TRUE,
+            value = FALSE,
             label_on = "Play",
             label_off = "Pause",
             outline = TRUE,
@@ -112,12 +118,6 @@ esquisserUI <- function(id, header = TRUE,
         ),
         shiny::plotOutput(outputId = ns("plooooooot"), width = "100%", height = "100%")
       )
-    ),
-
-    chartControlsUI(
-      id = ns("controls"), 
-      insert_code = insert_code,
-      disable_filters = disable_filters
     )
   )
 

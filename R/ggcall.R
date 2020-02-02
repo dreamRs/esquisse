@@ -34,7 +34,10 @@ ggcall <- function(data = NULL,
                    theme = NULL, 
                    theme_args = list(),
                    facet = NULL,
-                   facet_args = list()) {
+                   facet_row = NULL,
+                   facet_col = NULL,
+                   facet_args = list(),
+                   limits = list()) {
   if (is.null(data))
     return(expr(ggplot()))
   data <- sym(data)
@@ -119,6 +122,27 @@ ggcall <- function(data = NULL,
       facet <- expr(facet_wrap(vars(!!!syms(facet))))
       ggcall <- expr(!!ggcall + !!facet)
     }
+  } else if (!is.null(facet_row) | !is.null(facet_col)) {
+    facet_args$ncol <- NULL
+    facet_args$nrow <- NULL
+    facet_args <- dropNullsOrEmpty(facet_args)
+    if (length(facet_args) > 0) {
+      facet <- expr(facet_grid(vars(!!!syms(facet_row)), vars(!!!syms(facet_col)), !!!facet_args))
+      ggcall <- expr(!!ggcall + !!facet)
+    } else {
+      facet <- expr(facet_grid(vars(!!!syms(facet_row)), vars(!!!syms(facet_col))))
+      ggcall <- expr(!!ggcall + !!facet)
+    }
+  }
+  if (limits$xlimit_use) {
+    xlimits <- list(limits$xstart, limits$xend)
+    xlimits <- expr(xlim(!!!xlimits))
+    ggcall <- expr(!!ggcall + !!xlimits)
+  }
+  if (limits$ylimit_use) {
+    ylimits <- list(limits$ystart, limits$yend)
+    ylimits <- expr(ylim(!!!ylimits))
+    ggcall <- expr(!!ggcall + !!ylimits)
   }
   ggcall
 }
