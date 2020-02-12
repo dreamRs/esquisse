@@ -351,7 +351,7 @@ chartControlsServer <- function(input, output, session,
   
   # coord input
   observe({
-    outin$coord <- if (input$flip) "flip" else NULL
+    outin$coord <- if (isTRUE(input$flip)) "flip" else NULL
   })
   
   # smooth input
@@ -717,6 +717,8 @@ get_colors <- function() {
 
 
 select_geom_controls <- function(x, geoms) {
+  if (length(x) < 1)
+    return("auto")
   if ("bar" %in% geoms & x %in% c("auto", "bar")) {
     "bar"
   } else if ("histogram" %in% geoms & x %in% c("auto", "histogram")) {

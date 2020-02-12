@@ -5,7 +5,7 @@
 }
 
 `%empty%` <- function(a, b) {
-  if (a != "") a else b
+  if (!is.null(a) && isTRUE(a != "")) a else b
 }
 
 `%|e|%` <- function(a, b) {
