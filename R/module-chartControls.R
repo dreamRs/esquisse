@@ -385,8 +385,10 @@ chartControlsServer <- function(input, output, session,
   })
   
   observeEvent(output_filter$data_filtered(), {
-    outin$data <- output_filter$data_filtered()
-    outin$code <- output_filter$code
+    if(nrow(output_filter$data_filtered()) > 0){
+      outin$data <- output_filter$data_filtered()
+      outin$code <- output_filter$code
+    }
   })
 
   return(outin)
