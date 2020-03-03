@@ -9,8 +9,8 @@
 #' @noRd
 #'
 #' @importFrom shinyWidgets dropdown
-#' @importFrom htmltools tags tagList
-#' @importFrom shiny icon checkboxInput
+#' @importFrom htmltools tags tagList HTML
+#' @importFrom shiny icon
 #'
 chartControlsUI <- function(id, insert_code = FALSE, disable_filters = FALSE) {
 
@@ -438,7 +438,7 @@ controls_labs <- function(ns) {
 #' @noRd
 #' @importFrom shiny icon
 #' @importFrom htmltools tagList tags
-#' @importFrom shinyWidgets colorSelectorInput pickerInput radioGroupButtons spectrumInput
+#' @importFrom shinyWidgets pickerInput radioGroupButtons spectrumInput
 controls_appearance <- function(ns) {
 
   themes <- get_themes()

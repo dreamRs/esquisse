@@ -10,7 +10,7 @@
 #' 
 #' @rdname module-esquisse
 #'
-#' @importFrom shiny callModule reactiveValues observeEvent renderPrint
+#' @importFrom shiny callModule reactiveValues observeEvent
 #'  renderPlot stopApp plotOutput showNotification isolate reactiveValuesToList
 #' @importFrom ggplot2 ggplot_build ggsave
 #' @import ggplot2
