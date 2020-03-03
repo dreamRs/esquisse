@@ -102,7 +102,7 @@ chartControlsUI <- function(id, insert_code = FALSE, disable_filters = FALSE) {
 #' @noRd
 #'
 #' @importFrom shiny observeEvent reactiveValues reactiveValuesToList
-#'  downloadHandler renderUI reactive
+#'  downloadHandler renderUI reactive updateTextInput
 #' @importFrom rstudioapi insertText getSourceEditorContext
 #' @importFrom htmltools tags tagList
 #' @importFrom stringi stri_replace_all
@@ -116,6 +116,21 @@ chartControlsServer <- function(input, output, session,
                                 use_transY = shiny::reactive(FALSE)) {
 
   ns <- session$ns
+  
+  
+  # Reset labs ----
+  
+  observeEvent(data_table(), {
+    updateTextInput(session = session, inputId = "labs_title", value = character(0))
+    updateTextInput(session = session, inputId = "labs_subtitle", value = character(0))
+    updateTextInput(session = session, inputId = "labs_caption", value = character(0))
+    updateTextInput(session = session, inputId = "labs_x", value = character(0))
+    updateTextInput(session = session, inputId = "labs_y", value = character(0))
+    updateTextInput(session = session, inputId = "labs_fill", value = character(0))
+    updateTextInput(session = session, inputId = "labs_color", value = character(0))
+    updateTextInput(session = session, inputId = "labs_size", value = character(0))
+  })
+  
   
   # Export ----
   
