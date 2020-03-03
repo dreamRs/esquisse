@@ -374,22 +374,22 @@ chartControlsServer <- function(input, output, session,
 controls_labs <- function(ns) {
   tags$div(
     class = "form-group",
-    textInput(inputId = ns("labs_title"), placeholder = "Title", label = NULL),
-    textInput(inputId = ns("labs_subtitle"), placeholder = "Subtitle", label = NULL),
-    textInput(inputId = ns("labs_caption"), placeholder = "Caption", label = NULL),
-    textInput(inputId = ns("labs_x"), placeholder = "X label", label = NULL),
-    textInput(inputId = ns("labs_y"), placeholder = "Y label", label = NULL),
+    textInput(inputId = ns("labs_title"), placeholder = "Title", label = "Title:"),
+    textInput(inputId = ns("labs_subtitle"), placeholder = "Subtitle", label = "Subtitle:"),
+    textInput(inputId = ns("labs_caption"), placeholder = "Caption", label = "Caption:"),
+    textInput(inputId = ns("labs_x"), placeholder = "X label", label = "X label:"),
+    textInput(inputId = ns("labs_y"), placeholder = "Y label", label = "Y label:"),
     tags$div(
       id = ns("controls-labs-fill"), style = "display: none;",
-      textInput(inputId = ns("labs_fill"), placeholder = "Fill label", label = NULL)
+      textInput(inputId = ns("labs_fill"), placeholder = "Fill label", label = "Fill label:")
     ),
     tags$div(
       id = ns("controls-labs-color"), style = "display: none;",
-      textInput(inputId = ns("labs_color"), placeholder = "Color label", label = NULL)
+      textInput(inputId = ns("labs_color"), placeholder = "Color label", label = "Color label:")
     ),
     tags$div(
       id = ns("controls-labs-size"), style = "display: none;",
-      textInput(inputId = ns("labs_size"), placeholder = "Size label", label = NULL)
+      textInput(inputId = ns("labs_size"), placeholder = "Size label", label = "Size label:")
     )
   )
 }
@@ -495,7 +495,8 @@ controls_params <- function(ns) {
           inputId = ns("smooth_span"), 
           label = "Span:", 
           min = 0.1, max = 1, 
-          value = 0.75, step = 0.01
+          value = 0.75, step = 0.01, 
+          width = "100%"
         )
       ),
       materialSwitch(
@@ -511,7 +512,8 @@ controls_params <- function(ns) {
         inputId = ns("size"), 
         label = "Size:",
         min = 0.5, max = 3,
-        value = 1
+        value = 1, 
+        width = "100%"
       )
     ),
     tags$div(
@@ -532,7 +534,8 @@ controls_params <- function(ns) {
         inputId = ns("bins"), 
         label = "Numbers of bins:", 
         min = 10, max = 100,
-        value = 30
+        value = 30, 
+        width = "100%"
       )
     ),
     tags$div(
@@ -553,7 +556,8 @@ controls_params <- function(ns) {
         inputId = ns("transX"), 
         label = "X-Axis transform:",
         selected = "identity", 
-        choices = scales_trans
+        choices = scales_trans, 
+        width = "100%"
       )
     ),
     tags$div(
@@ -562,7 +566,8 @@ controls_params <- function(ns) {
         inputId = ns("transY"), 
         label = "Y-Axis transform:",
         selected = "identity", 
-        choices = scales_trans
+        choices = scales_trans, 
+        width = "100%"
       )
     ),
     tags$div(
@@ -571,7 +576,8 @@ controls_params <- function(ns) {
         inputId = ns("adjust"), 
         label = "Bandwidth adjustment:", 
         min = 0.2, max = 6, 
-        value = 1, step = 0.1
+        value = 1, step = 0.1, 
+        width = "100%"
       )
     ),
     tags$div(
