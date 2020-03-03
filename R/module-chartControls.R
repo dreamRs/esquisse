@@ -217,93 +217,36 @@ chartControlsServer <- function(input, output, session,
   
   observeEvent(aesthetics(), {
     aesthetics <- aesthetics()
-    if ("fill" %in% aesthetics) {
-      toggleDisplay(id = ns("controls-labs-fill"), display = "block")
-    } else {
-      toggleDisplay(id = ns("controls-labs-fill"), display = "none")
-    }
-    if ("color" %in% aesthetics) {
-      toggleDisplay(id = ns("controls-labs-color"), display = "block")
-    } else {
-      toggleDisplay(id = ns("controls-labs-color"), display = "none")
-    }
-    if ("size" %in% aesthetics) {
-      toggleDisplay(id = ns("controls-labs-size"), display = "block")
-    } else {
-      toggleDisplay(id = ns("controls-labs-size"), display = "none")
-    }
+    toggleDisplay(id = ns("controls-labs-fill"), display = "fill" %in% aesthetics)
+    toggleDisplay(id = ns("controls-labs-color"), display = "color" %in% aesthetics)
+    toggleDisplay(id = ns("controls-labs-size"), display = "size" %in% aesthetics)
   })
   
   observeEvent(use_facet(), {
-    if (isTRUE(use_facet())) {
-      toggleDisplay(id = ns("controls-facet"), display = "block")
-    } else {
-      toggleDisplay(id = ns("controls-facet"), display = "none")
-    }
+    toggleDisplay(id = ns("controls-facet"), display = isTRUE(use_facet()))
   })
   
   observeEvent(use_transX(), {
-    if (isTRUE(use_transX())) {
-      toggleDisplay(id = ns("controls-scale-trans-x"), display = "block")
-    } else {
-      toggleDisplay(id = ns("controls-scale-trans-x"), display = "none")
-    }
+    toggleDisplay(id = ns("controls-scale-trans-x"), display = isTRUE(use_transX()))
   })
   
   observeEvent(use_transY(), {
-    if (isTRUE(use_transY())) {
-      toggleDisplay(id = ns("controls-scale-trans-y"), display = "block")
-    } else {
-      toggleDisplay(id = ns("controls-scale-trans-y"), display = "none")
-    }
+    toggleDisplay(id = ns("controls-scale-trans-y"), display = isTRUE(use_transY()))
   })
 
   observeEvent(type$palette, {
-    if (isTRUE(type$palette)) {
-      toggleDisplay(id = ns("controls-palette"), display = "block")
-      toggleDisplay(id = ns("controls-spectrum"), display = "none")
-    } else {
-      toggleDisplay(id = ns("controls-palette"), display = "none")
-      toggleDisplay(id = ns("controls-spectrum"), display = "block")
-    }
+    toggleDisplay(id = ns("controls-palette"), display = isTRUE(type$palette))
+    toggleDisplay(id = ns("controls-spectrum"), display = !isTRUE(type$palette))
   })
   
   observeEvent(type$x, {
-    if (type$x %in% c("bar", "line", "area")) {
-      toggleDisplay(id = ns("controls-position"), display = "block")
-    } else {
-      toggleDisplay(id = ns("controls-position"), display = "none")
-    }
-    if (type$x %in% "bar") {
-      toggleDisplay(id = ns("controls-flip"), display = "block")
-    } else {
-      toggleDisplay(id = ns("controls-flip"), display = "none")
-    }
-    if (type$x %in% "histogram") {
-      toggleDisplay(id = ns("controls-histogram"), display = "block")
-    } else {
-      toggleDisplay(id = ns("controls-histogram"), display = "none")
-    }
-    if (type$x %in% c("density", "violin")) {
-      toggleDisplay(id = ns("controls-density"), display = "block")
-    } else {
-      toggleDisplay(id = ns("controls-density"), display = "none")
-    }
-    if (type$x %in% "point") {
-      toggleDisplay(id = ns("controls-scatter"), display = "block")
-    } else {
-      toggleDisplay(id = ns("controls-scatter"), display = "none")
-    }
-    if (type$x %in% c("point", "line")) {
-      toggleDisplay(id = ns("controls-size"), display = "block")
-    } else {
-      toggleDisplay(id = ns("controls-size"), display = "none")
-    }
-    if (type$x %in% "violin") {
-      toggleDisplay(id = ns("controls-violin"), display = "block")
-    } else {
-      toggleDisplay(id = ns("controls-violin"), display = "none")
-    }
+    toggleDisplay(id = ns("controls-position"), display = type$x %in% c("bar", "line", "area"))
+    toggleDisplay(id = ns("controls-flip"), display = type$x %in% "bar")
+    toggleDisplay(id = ns("controls-histogram"), display = type$x %in% "histogram")
+    toggleDisplay(id = ns("controls-density"), display = type$x %in% c("density", "violin"))
+    toggleDisplay(id = ns("controls-scatter"), display = type$x %in% "point")
+    toggleDisplay(id = ns("controls-size"), display = type$x %in% c("point", "line"))
+    toggleDisplay(id = ns("controls-violin"), display = type$x %in% "violin")
   })
   
   output_filter <- callModule(

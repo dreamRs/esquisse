@@ -14,7 +14,8 @@ useShinyUtils <- function() {
 #' @param session shiny session.
 #'
 #' @noRd
-toggleInput <- function(inputId, enable = TRUE, session = shiny::getDefaultReactiveDomain()) {
+toggleInput <- function(inputId, enable = TRUE,
+                        session = shiny::getDefaultReactiveDomain()) {
   session$sendCustomMessage(
     type = 'toggleInput',
     message = list(id = inputId, enable = enable)
@@ -30,8 +31,11 @@ toggleInput <- function(inputId, enable = TRUE, session = shiny::getDefaultReact
 #' @param session shiny session.
 #'
 #' @noRd
-toggleDisplay <- function(id, display = c("none", "block", "inline-block"), session = shiny::getDefaultReactiveDomain()) {
-  display <- match.arg(display)
+toggleDisplay <- function(id, display = c("none", "block", "inline-block"), 
+                          session = shiny::getDefaultReactiveDomain()) {
+  if (is.logical(display)) {
+    display <- ifelse(display, "block", "none")
+  }
   session$sendCustomMessage(
     type = 'toggleDisplay',
     message = list(id = id, display = display)
@@ -48,7 +52,8 @@ toggleDisplay <- function(id, display = c("none", "block", "inline-block"), sess
 #' @param session shiny session.
 #'
 #' @noRd
-toggleBtn <- function(inputId, type = "disable", session = shiny::getDefaultReactiveDomain()) {
+toggleBtn <- function(inputId, type = "disable",
+                      session = shiny::getDefaultReactiveDomain()) {
   session$sendCustomMessage(
     type = "togglewidget",
     message = list(inputId = inputId, type = type)
