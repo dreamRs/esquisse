@@ -10,7 +10,7 @@
 #'
 #' @importFrom shinyWidgets dropdown
 #' @importFrom htmltools tags tagList HTML
-#' @importFrom shiny icon
+#' @importFrom shiny icon checkboxInput
 #'
 chartControlsUI <- function(id, insert_code = FALSE, disable_filters = FALSE) {
 
@@ -65,9 +65,17 @@ chartControlsUI <- function(id, insert_code = FALSE, disable_filters = FALSE) {
       icon = icon("code"), 
       status = "default btn-controls"
     ),
-    tags$script("$('.sw-dropdown').addClass('btn-group-charter');"),
-    tags$script(HTML("$('.sw-dropdown > .btn').addClass('btn-charter');")),
-    tags$script("$('#sw-content-filterdrop').click(function (e) {e.stopPropagation();});"),
+    # tags$script("$('.sw-dropdown').addClass('btn-group-charter');"),
+    # tags$script(HTML("$('.sw-dropdown > .btn').addClass('btn-charter');")),
+    # tags$script("$('#sw-content-filterdrop').click(function (e) {e.stopPropagation();});"),
+    tags$div(
+      style = "display: none;",
+      checkboxInput(
+        inputId = ns("disable_filters"), 
+        label = NULL, 
+        value = isTRUE(disable_filters)
+      )
+    ),
     useShinyUtils()
   )
 }
@@ -154,7 +162,7 @@ chartControlsServer <- function(input, output, session,
     context <- rstudioapi::getSourceEditorContext()
     code <- ggplot_rv$code
     code <- stri_replace_all(str = code, replacement = "+\n", fixed = "+")
-    if (!is.null(output_filter$code$expr)) {
+    if (!is.null(output_filter$code$expr) & !isTRUE(input$disable_filters)) {
       code_dplyr <- deparse(output_filter$code$dplyr, width.cutoff = 80L)
       code_dplyr <- paste(code_dplyr, collapse = "\n")
       nm_dat <- data_name()
@@ -175,7 +183,7 @@ chartControlsServer <- function(input, output, session,
   output$code <- renderUI({
     code <- ggplot_rv$code
     code <- stri_replace_all(str = code, replacement = "+\n", fixed = "+")
-    if (!is.null(output_filter$code$expr)) {
+    if (!is.null(output_filter$code$expr) & !isTRUE(input$disable_filters)) {
       code_dplyr <- deparse(output_filter$code$dplyr, width.cutoff = 80L)
       code_dplyr <- paste(code_dplyr, collapse = "\n")
       nm_dat <- data_name()
@@ -385,7 +393,7 @@ chartControlsServer <- function(input, output, session,
   })
   
   observeEvent(output_filter$data_filtered(), {
-    if(nrow(output_filter$data_filtered()) > 0){
+    if(!isTRUE(input$disable_filters)){
       outin$data <- output_filter$data_filtered()
       outin$code <- output_filter$code
     }

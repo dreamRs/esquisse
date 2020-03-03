@@ -1,7 +1,7 @@
 Package: esquisse
 Type: Package
 Title: Explore and Visualize Your Data Interactively
-Version: 0.3.0.910
+Version: 0.3.0.920
 Authors@R: c(person("Fanny", "Meyer", role = c("aut")),
   person("Victor", "Perrier", email = "victor.perrier@dreamrs.fr", role = c("aut", "cre")),
   person("Ian", "Carroll", comment = "Faceting support", role = "ctb"))
@@ -16,7 +16,7 @@ LazyData: true
 RoxygenNote: 7.0.2
 Imports: miniUI,
     rstudioapi,
-    shiny (>= 1.0.0),
+    shiny (>= 1.1.0),
     htmltools,
     jsonlite,
     shinyWidgets (>= 0.4.1),
