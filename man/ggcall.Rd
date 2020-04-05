@@ -16,7 +16,10 @@ ggcall(
   theme = NULL,
   theme_args = list(),
   facet = NULL,
-  facet_args = list()
+  facet_row = NULL,
+  facet_col = NULL,
+  facet_args = list(),
+  limits = list()
 )
 }
 \arguments{
@@ -43,7 +46,13 @@ if \code{scales} is length > 1, must be a named list with \code{scales} names.}
 
 \item{facet}{Character vector. Names of variables to use in \code{\link[ggplot2]{facet_wrap}}.}
 
+\item{facet_row}{Character vector. Names of row variables to use in \code{\link[ggplot2]{facet_grid}}.}
+
+\item{facet_col}{Character vector. Names of col variables to use in \code{\link[ggplot2]{facet_grid}}.}
+
 \item{facet_args}{Named list. Arguments for \code{\link[ggplot2:facet_wrap]{facet_wrap}}.}
+
+\item{limits}{Named list. Named list of arguments to use for xlimit and ylimit.}
 }
 \value{
 a \code{call} that can be evaluated with \code{eval}.
