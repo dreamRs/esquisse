@@ -4,7 +4,8 @@ Title: Explore and Visualize Your Data Interactively
 Version: 0.3.0.920
 Authors@R: c(person("Fanny", "Meyer", role = c("aut")),
   person("Victor", "Perrier", email = "victor.perrier@dreamrs.fr", role = c("aut", "cre")),
-  person("Ian", "Carroll", comment = "Faceting support", role = "ctb"))
+  person("Ian", "Carroll", comment = "Faceting support", role = "ctb"),
+  person("Xiangnan", "Dang", comment = "Facets rows and cols, X/Y limits", role = "ctb"))
 Description: A 'shiny' gadget to create 'ggplot2' charts interactively with drag-and-drop to map your variables.
     You can quickly visualize your data accordingly to their type, export to 'PNG' or 'PowerPoint',
     and retrieve the code to reproduce the chart.
@@ -13,7 +14,7 @@ BugReports: https://github.com/dreamRs/esquisse/issues
 License: GPL-3 | file LICENSE
 Encoding: UTF-8
 LazyData: true
-RoxygenNote: 7.0.2
+RoxygenNote: 7.1.0
 Imports: miniUI,
     rstudioapi,
     shiny (>= 1.1.0),

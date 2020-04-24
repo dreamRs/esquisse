@@ -80,6 +80,8 @@ build_aes <- function(data, ..., .list = NULL, geom = NULL) {
 
 make_aes <- function(.list) {
   .list$facet <- NULL
+  .list$facet_row <- NULL
+  .list$facet_col <- NULL
   if (!is.null(.list$xvar)) {
     .list$x <- .list$xvar
     .list$xvar <- NULL

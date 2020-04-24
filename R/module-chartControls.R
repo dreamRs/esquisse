@@ -298,10 +298,23 @@ chartControlsServer <- function(input, output, session,
     )
   })
   
+  #limits input
+  observe({
+    outin$limits <- list(
+      x = use_transX() & !anyNA(input$xlim),
+      xlim = input$xlim,
+      y = use_transY() & !anyNA(input$ylim),
+      ylim = input$ylim
+    )
+  })
+  
+  
   # facet input
   observe({
     outin$facet <- list(
-      scales = if (identical(input$facet_scales, "fixed")) NULL else input$facet_scales
+      scales = if (identical(input$facet_scales, "fixed")) NULL else input$facet_scales,
+      ncol = if (input$facet_ncol == 0) NULL else input$facet_ncol,
+      nrow = if (input$facet_nrow == 0) NULL else input$facet_nrow
     )
   })
   
@@ -473,9 +486,9 @@ controls_appearance <- function(ns) {
 #' @param ns Namespace from module
 #'
 #' @noRd
-#' @importFrom shiny sliderInput conditionalPanel selectInput
+#' @importFrom shiny sliderInput conditionalPanel selectInput numericInput
 #' @importFrom htmltools tagList tags
-#' @importFrom shinyWidgets materialSwitch prettyRadioButtons
+#' @importFrom shinyWidgets materialSwitch prettyRadioButtons numericRangeInput
 #'
 controls_params <- function(ns) {
   
@@ -526,6 +539,18 @@ controls_params <- function(ns) {
         choices = c("fixed", "free", "free_x", "free_y"),
         outline = TRUE, 
         icon = icon("check")
+      ),
+      sliderInput(
+        inputId = ns("facet_ncol"),
+        label = "Facet ncol:",
+        min = 0, max = 10,
+        value = 0, step = 1
+      ),
+      sliderInput(
+        inputId = ns("facet_nrow"),
+        label = "Facet nrow:",
+        min = 0, max = 10,
+        value = 0, step = 1
       )
     ),
     tags$div(
@@ -552,6 +577,11 @@ controls_params <- function(ns) {
     ),
     tags$div(
       id = ns("controls-scale-trans-x"), style = "display: none;",
+      numericRangeInput(
+        inputId = ns("xlim"), 
+        label = "X-Axis limits (empty for none):",
+        value = c(NA, NA)
+      ),
       selectInput(
         inputId = ns("transX"), 
         label = "X-Axis transform:",
@@ -562,6 +592,11 @@ controls_params <- function(ns) {
     ),
     tags$div(
       id = ns("controls-scale-trans-y"), style = "display: none;",
+      numericRangeInput(
+        inputId = ns("ylim"), 
+        label = "Y-Axis limits (empty for none):",
+        value = c(NA, NA)
+      ),
       selectInput(
         inputId = ns("transY"), 
         label = "Y-Axis transform:",

@@ -13,13 +13,17 @@
 #' @param theme Character. Name of the theme to use (with or without "theme_").
 #' @param theme_args Named list. Arguments for \code{\link[ggplot2:theme]{theme}}.
 #' @param facet Character vector. Names of variables to use in \code{\link[ggplot2]{facet_wrap}}.
+#' @param facet_row Character vector. Names of row variables to use in \code{\link[ggplot2]{facet_grid}}.
+#' @param facet_col Character vector. Names of col variables to use in \code{\link[ggplot2]{facet_grid}}.
 #' @param facet_args Named list. Arguments for \code{\link[ggplot2:facet_wrap]{facet_wrap}}.
+#' @param xlim A vector of length 2 representing limits on x-axis.
+#' @param ylim A vector of length 2 representing limits on y-axis.
 #'
 #' @return a \code{call} that can be evaluated with \code{eval}.
 #' @export
 #' 
 #' @importFrom stats setNames
-#' @importFrom rlang sym syms expr as_name is_call call2
+#' @importFrom rlang sym syms expr as_name is_call call2 has_length
 #' @importFrom ggplot2 ggplot aes theme facet_wrap vars coord_flip labs
 #'
 #' @example examples/ex-ggcall.R
@@ -34,7 +38,11 @@ ggcall <- function(data = NULL,
                    theme = NULL, 
                    theme_args = list(),
                    facet = NULL,
-                   facet_args = list()) {
+                   facet_row = NULL,
+                   facet_col = NULL,
+                   facet_args = list(),
+                   xlim = NULL,
+                   ylim = NULL) {
   if (is.null(data))
     return(expr(ggplot()))
   data <- sym(data)
@@ -119,7 +127,28 @@ ggcall <- function(data = NULL,
       facet <- expr(facet_wrap(vars(!!!syms(facet))))
       ggcall <- expr(!!ggcall + !!facet)
     }
+  } else if (!is.null(facet_row) | !is.null(facet_col)) {
+    facet_args$ncol <- NULL
+    facet_args$nrow <- NULL
+    facet_args <- dropNullsOrEmpty(facet_args)
+    if (length(facet_args) > 0) {
+      facet <- expr(facet_grid(vars(!!!syms(facet_row)), vars(!!!syms(facet_col)), !!!facet_args))
+      ggcall <- expr(!!ggcall + !!facet)
+    } else {
+      facet <- expr(facet_grid(vars(!!!syms(facet_row)), vars(!!!syms(facet_col))))
+      ggcall <- expr(!!ggcall + !!facet)
+    }
   }
+  
+  if (has_length(xlim, 2)) {
+    xlim <- expr(xlim(!!!as.list(xlim)))
+    ggcall <- expr(!!ggcall + !!xlim)
+  }
+  if (has_length(ylim, 2)) {
+    ylim <- expr(ylim(!!!as.list(ylim)))
+    ggcall <- expr(!!ggcall + !!ylim)
+  }
+  
   ggcall
 }
 
