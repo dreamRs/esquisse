@@ -19,7 +19,8 @@ ggcall(
   facet_row = NULL,
   facet_col = NULL,
   facet_args = list(),
-  limits = list()
+  xlim = NULL,
+  ylim = NULL
 )
 }
 \arguments{
@@ -52,7 +53,9 @@ if \code{scales} is length > 1, must be a named list with \code{scales} names.}
 
 \item{facet_args}{Named list. Arguments for \code{\link[ggplot2:facet_wrap]{facet_wrap}}.}
 
-\item{limits}{Named list. Named list of arguments to use for xlimit and ylimit.}
+\item{xlim}{A vector of length 2 representing limits on x-axis.}
+
+\item{ylim}{A vector of length 2 representing limits on y-axis.}
 }
 \value{
 a \code{call} that can be evaluated with \code{eval}.

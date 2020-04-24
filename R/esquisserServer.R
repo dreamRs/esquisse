@@ -186,6 +186,17 @@ esquisserServer <- function(input, output, session, data = NULL, dataModule = c(
       scales_args <- c(scales_args, list(y_continuous = paramsChart$transY$args))
     }
     
+    if (isTRUE(paramsChart$limits$x)) {
+      xlim <- paramsChart$limits$xlim
+    } else {
+      xlim <- NULL
+    }
+    if (isTRUE(paramsChart$limits$y)) {
+      ylim <- paramsChart$limits$ylim
+    } else {
+      ylim <- NULL
+    }
+    
     gg_call <- ggcall(
       data = dataChart$name, 
       mapping = mapping, 
@@ -201,7 +212,8 @@ esquisserServer <- function(input, output, session, data = NULL, dataModule = c(
       facet_row = input$dragvars$target$facet_row,
       facet_col = input$dragvars$target$facet_col,
       facet_args = paramsChart$facet,
-      limits = paramsChart$limits
+      xlim = xlim,
+      ylim = ylim
     )
 
     ggplotCall$code <- expr_deparse(gg_call, width = 1e4)

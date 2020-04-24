@@ -16,13 +16,14 @@
 #' @param facet_row Character vector. Names of row variables to use in \code{\link[ggplot2]{facet_grid}}.
 #' @param facet_col Character vector. Names of col variables to use in \code{\link[ggplot2]{facet_grid}}.
 #' @param facet_args Named list. Arguments for \code{\link[ggplot2:facet_wrap]{facet_wrap}}.
-#' @param limits Named list. Named list of arguments to use for xlimit and ylimit.
+#' @param xlim A vector of length 2 representing limits on x-axis.
+#' @param ylim A vector of length 2 representing limits on y-axis.
 #'
 #' @return a \code{call} that can be evaluated with \code{eval}.
 #' @export
 #' 
 #' @importFrom stats setNames
-#' @importFrom rlang sym syms expr as_name is_call call2
+#' @importFrom rlang sym syms expr as_name is_call call2 has_length
 #' @importFrom ggplot2 ggplot aes theme facet_wrap vars coord_flip labs
 #'
 #' @example examples/ex-ggcall.R
@@ -40,7 +41,8 @@ ggcall <- function(data = NULL,
                    facet_row = NULL,
                    facet_col = NULL,
                    facet_args = list(),
-                   limits = list()) {
+                   xlim = NULL,
+                   ylim = NULL) {
   if (is.null(data))
     return(expr(ggplot()))
   data <- sym(data)
@@ -138,19 +140,15 @@ ggcall <- function(data = NULL,
     }
   }
   
-  limits <- dropNullsOrEmpty(limits)
-  if (length(limits) > 0) {
-    if (limits$xlimit_use) {
-      xlimits <- list(limits$xstart, limits$xend)
-      xlimits <- expr(xlim(!!!xlimits))
-      ggcall <- expr(!!ggcall + !!xlimits)
-    }
-    if (limits$ylimit_use) {
-      ylimits <- list(limits$ystart, limits$yend)
-      ylimits <- expr(ylim(!!!ylimits))
-      ggcall <- expr(!!ggcall + !!ylimits)
-    }
+  if (has_length(xlim, 2)) {
+    xlim <- expr(xlim(!!!as.list(xlim)))
+    ggcall <- expr(!!ggcall + !!xlim)
   }
+  if (has_length(ylim, 2)) {
+    ylim <- expr(ylim(!!!as.list(ylim)))
+    ggcall <- expr(!!ggcall + !!ylim)
+  }
+  
   ggcall
 }
 
