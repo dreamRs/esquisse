@@ -35,32 +35,37 @@ esquisserServer <- function(input, output, session, data = NULL, dataModule = c(
     dataModule = dataModule, size = sizeDataModule
   )
   observeEvent(dataChart$data, {
-    # special case: geom_sf
-    if (inherits(dataChart$data, what = "sf")) {
-      geom_possible$x <- c("sf", geom_possible$x)
+    if (is.null(dataChart$data)) {
+      updateDragulaInput(
+        session = session,
+        inputId = "dragvars", 
+        status = NULL, 
+        choices = character(0),
+        badge = FALSE
+      )
+    } else {
+      # special case: geom_sf
+      if (inherits(dataChart$data, what = "sf")) {
+        geom_possible$x <- c("sf", geom_possible$x)
+      }
+      var_choices <- setdiff(names(dataChart$data), attr(dataChart$data, "sf_column"))
+      updateDragulaInput(
+        session = session,
+        inputId = "dragvars", 
+        status = NULL,
+        choiceValues = var_choices,
+        choiceNames = badgeType(
+          col_name = var_choices,
+          col_type = col_type(dataChart$data[, var_choices])
+        ),
+        badge = FALSE
+      )
     }
-    var_choices <- setdiff(names(dataChart$data), attr(dataChart$data, "sf_column"))
-    updateDragulaInput(
-      session = session,
-      inputId = "dragvars", status = NULL,
-      choiceValues = var_choices,
-      choiceNames = badgeType(
-        col_name = var_choices,
-        col_type = col_type(dataChart$data[, var_choices])
-      ),
-      badge = FALSE
-    )
-  })
+  }, ignoreNULL = FALSE, ignoreInit = TRUE)
 
   geom_possible <- reactiveValues(x = "auto")
   geom_controls <- reactiveValues(x = "auto")
   observeEvent(list(input$dragvars$target, input$geom), {
-    if (is.null(dataChart$data)) {
-      shiny::showNotification(ui = "No Dataset selected",
-                              type = "warning", session = session)
-      req(F)
-    }
-
     geoms <- potential_geoms(
       data = dataChart$data,
       mapping = build_aes(
@@ -78,7 +83,7 @@ esquisserServer <- function(input, output, session, data = NULL, dataModule = c(
     } else {
       geom_controls$palette <- FALSE
     }
-  })
+  }, ignoreInit = TRUE)
 
   observeEvent(geom_possible$x, {
     geoms <- c(
