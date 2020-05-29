@@ -63,12 +63,18 @@ esquisser <- function(data = NULL,
   } else {
     inviewer <- dialogViewer(
       "C'est le temps que tu as perdu pour ta rose qui rend ta rose importante.",
-      width = 1000, height = 750
+      width = 1100, 
+      height = 750
     )
   }
 
   runGadget(
-    app = esquisserUI(id = "esquisse", container = NULL, insert_code = TRUE, disable_filters = disable_filters), 
+    app = esquisserUI(
+      id = "esquisse",
+      container = NULL, 
+      insert_code = TRUE,
+      disable_filters = disable_filters
+    ), 
     server = function(input, output, session) {
       callModule(
         module = esquisserServer, 

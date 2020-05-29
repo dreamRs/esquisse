@@ -19,7 +19,10 @@
 #' @importFrom shiny NS actionButton icon 
 #'
 #' @example examples/chooseData.R
-chooseDataUI <- function(id, label = "Data", icon = "database", ...) {
+chooseDataUI <- function(id,
+                         label = "Data",
+                         icon = "database",
+                         ...) {
   
   ns <- NS(id)
   
@@ -60,13 +63,17 @@ chooseDataUI <- function(id, label = "Data", icon = "database", ...) {
 #'
 #' @importFrom shiny showModal modalDialog observeEvent reactiveValues callModule observe icon
 #' @importFrom htmltools tags HTML
-chooseDataServer <- function(input, output, session, 
+chooseDataServer <- function(input,
+                             output,
+                             session, 
                              dataModule = c("GlobalEnv", "ImportFile"), 
-                             data = NULL, name = NULL, 
+                             data = NULL,
+                             name = NULL, 
                              selectVars = TRUE, 
                              selectedTypes = c("continuous", "discrete", "time"), 
                              coerceVars = FALSE, 
-                             launchOnStart = TRUE, size = "m") {
+                             launchOnStart = TRUE,
+                             size = "m") {
   
   dataModule <- match.arg(dataModule)
   datModUI <- switch(
