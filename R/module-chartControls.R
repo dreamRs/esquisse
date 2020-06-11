@@ -12,7 +12,9 @@
 #' @importFrom htmltools tags tagList HTML
 #' @importFrom shiny icon checkboxInput
 #'
-chartControlsUI <- function(id, insert_code = FALSE, disable_filters = FALSE) {
+chartControlsUI <- function(id, 
+                            insert_code = FALSE, 
+                            disable_filters = FALSE) {
 
   # Namespace
   ns <- NS(id)
@@ -107,8 +109,12 @@ chartControlsUI <- function(id, insert_code = FALSE, disable_filters = FALSE) {
 #' @importFrom htmltools tags tagList
 #' @importFrom stringi stri_replace_all
 #'
-chartControlsServer <- function(input, output, session, 
-                                type, data_table, data_name,
+chartControlsServer <- function(input, 
+                                output, 
+                                session, 
+                                type, 
+                                data_table, 
+                                data_name,
                                 ggplot_rv, 
                                 aesthetics = reactive(NULL),
                                 use_facet = shiny::reactive(FALSE), 

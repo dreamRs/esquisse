@@ -44,7 +44,7 @@ esquisser <- function(data = NULL,
                       coerce_vars = getOption(x = "esquisse.coerceVars", default = TRUE),
                       disable_filters = getOption(x = "esquisse.disable_filters", default = FALSE),
                       viewer = getOption(x = "esquisse.viewer", default = "dialog")) {
-  
+  viewer <- match.arg(viewer, choices = c("dialog", "pane", "browser"))
   options("esquisse.coerceVars" = coerce_vars)
 
   res_data <- get_data(data, name = deparse(substitute(data)))
