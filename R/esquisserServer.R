@@ -66,7 +66,7 @@ esquisserServer <- function(input,
         badge = FALSE
       )
     }
-  }, ignoreNULL = FALSE, ignoreInit = TRUE)
+  }, ignoreNULL = FALSE)
 
   geom_possible <- reactiveValues(x = "auto")
   geom_controls <- reactiveValues(x = "auto")

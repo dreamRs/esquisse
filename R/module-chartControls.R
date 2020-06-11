@@ -104,7 +104,7 @@ chartControlsUI <- function(id,
 #' @noRd
 #'
 #' @importFrom shiny observeEvent reactiveValues reactiveValuesToList
-#'  downloadHandler renderUI reactive updateTextInput
+#'  downloadHandler renderUI reactive updateTextInput showNotification
 #' @importFrom rstudioapi insertText getSourceEditorContext
 #' @importFrom htmltools tags tagList
 #' @importFrom stringi stri_replace_all
@@ -117,9 +117,9 @@ chartControlsServer <- function(input,
                                 data_name,
                                 ggplot_rv, 
                                 aesthetics = reactive(NULL),
-                                use_facet = shiny::reactive(FALSE), 
-                                use_transX = shiny::reactive(FALSE), 
-                                use_transY = shiny::reactive(FALSE)) {
+                                use_facet = reactive(FALSE), 
+                                use_transX = reactive(FALSE), 
+                                use_transY = reactive(FALSE)) {
 
   ns <- session$ns
   
