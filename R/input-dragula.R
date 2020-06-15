@@ -167,8 +167,9 @@ make_bg_svg <- function(text) {
       fill = "E6E6E6",
       "font-weight" = "bold",
       "font-family" = "Helvetica, Arial, sans-serif",
-      "font-size" = "24",
+      "font-size" = "20",
       "text-anchor" = "end",
+      transform = "translate(-2,0)",
       text
     ))
   ))
