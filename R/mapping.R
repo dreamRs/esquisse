@@ -33,6 +33,8 @@
 #'   build_aes(df, x = "LET", y = "VAL", geom = "bar") + 
 #'   geom_bar()
 build_aes <- function(data, ..., .list = NULL, geom = NULL) {
+  if (is.null(data))
+    return(aes())
   args <- c(list(...), .list)
   args <- dropNulls(args)
   
