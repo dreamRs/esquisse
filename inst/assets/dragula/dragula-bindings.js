@@ -49,7 +49,7 @@ $.extend(dragulaBinding, {
           if (target !== null) {
             if (replaceIds.indexOf(target.id) >= 0) {
               $(target)
-                .children(".label-dragula")
+                .children(".dragula-block")
                 .remove();
             }
             target.appendChild(el);
