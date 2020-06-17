@@ -10,6 +10,9 @@ updateDragulaInput(
   choices = NULL,
   choiceNames = NULL,
   choiceValues = NULL,
+  selected = NULL,
+  selectedNames = NULL,
+  selectedValues = NULL,
   badge = TRUE,
   status = "primary"
 )
@@ -32,6 +35,10 @@ If either of these arguments is provided, then the other must be provided and
 choices must not be provided. The advantage of using both of these over a named 
 list for choices is that choiceNames allows any type of UI object to be passed 
 through (tag objects, icons, HTML code, ...), instead of just simple text.}
+
+\item{selected}{A \code{list} with \code{targetIds} as names to select values.}
+
+\item{selectedNames, selectedValues}{Update selected items with custom names and values.}
 
 \item{badge}{Displays choices inside a Bootstrap badge.}
 

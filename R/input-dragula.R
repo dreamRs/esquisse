@@ -19,6 +19,7 @@
 #' choices must not be provided. The advantage of using both of these over a named 
 #' list for choices is that choiceNames allows any type of UI object to be passed 
 #' through (tag objects, icons, HTML code, ...), instead of just simple text.
+#' @param selected Default selected values. Must be a \code{list} with \code{targetsIds} as names.
 #' @param badge Displays choices inside a Bootstrap badge. Use \code{FALSE}
 #'  if you want to pass custom appearance with \code{choiceNames}.
 #' @param status If choices are displayed into a Bootstrap label, you can use Bootstrap
@@ -72,16 +73,26 @@
 #' 
 #' }
 #' 
-dragulaInput <- function(inputId, sourceLabel, targetsLabels, 
+dragulaInput <- function(inputId,
+                         sourceLabel,
+                         targetsLabels, 
                          targetsIds = NULL,
-                         choices = NULL, choiceNames = NULL,
-                         choiceValues = NULL, status = "primary", 
-                         replace = FALSE, badge = TRUE,
+                         choices = NULL,
+                         choiceNames = NULL,
+                         choiceValues = NULL,
+                         selected = NULL,
+                         status = "primary", 
+                         replace = FALSE, 
+                         badge = TRUE,
                          dragulaOpts = list(),
                          boxStyle = NULL,
-                         width = NULL, height = "200px") {
+                         width = NULL, 
+                         height = "200px") {
   
   args <- normalizeChoicesArgs(choices, choiceNames, choiceValues)
+  
+  if (!is.null(selected) && !is.list(selected))
+    stop("If provided 'selected' must be a list.", call. = FALSE)
   
   if (is.null(targetsIds)) {
     targetsIds <- gsub(pattern = "[^[:alnum:]]", replacement = "", x = targetsLabels)
@@ -101,13 +112,27 @@ dragulaInput <- function(inputId, sourceLabel, targetsLabels,
   target_list <- lapply(
     X = seq_along(targetsLabels),
     FUN = function(i) {
-      tags$div(
-        style = "height: 95%; margin: 0;",
-        style = boxStyle,
-        class = "box-dad xyvar",
-        id = paste(inputId, "target", targetsIds[i], sep = "-"),
-        style = make_bg_svg(targetsLabels[i])
-      )
+      if (is.null(selected)) {
+        tags$div(
+          style = "height: 95%; margin: 0;",
+          style = boxStyle,
+          class = "box-dad xyvar",
+          id = paste(inputId, "target", targetsIds[i], sep = "-"),
+          style = make_bg_svg(targetsLabels[i])
+        )
+      } else {
+        
+        choicesTarget <- get_choices(args, selected[[targetsIds[i]]])
+        
+        tags$div(
+          style = "height: 95%; margin: 0;",
+          style = boxStyle,
+          class = "box-dad xyvar",
+          id = paste(inputId, "target", targetsIds[i], sep = "-"),
+          style = make_bg_svg(targetsLabels[i]),
+          makeDragulaChoices(inputId = inputId, args = choicesTarget, status = status, badge = badge)
+        )
+      }
     }
   )
   target_list$style <- "height: 50%; font-size: 0;"
@@ -123,8 +148,8 @@ dragulaInput <- function(inputId, sourceLabel, targetsLabels,
     html_dependency_dragula(),
     tags$div(
       class="form-group shiny-input-container shiny-input-dragula shiny-input-container-inline",
-      style = if(!is.null(width)) paste("width:", validateCssUnit(width), ";"),
-      style = if(!is.null(height)) paste("height:", validateCssUnit(height), ";"),
+      style = if (!is.null(width)) paste("width:", validateCssUnit(width), ";"),
+      style = if (!is.null(height)) paste("height:", validateCssUnit(height), ";"),
       id = inputId, 
       tags$div(
         class = "container-drag-source",
@@ -200,6 +225,8 @@ make_bg_svg <- function(text) {
 #' choices must not be provided. The advantage of using both of these over a named 
 #' list for choices is that choiceNames allows any type of UI object to be passed 
 #' through (tag objects, icons, HTML code, ...), instead of just simple text.
+#' @param selected A \code{list} with \code{targetIds} as names to select values.
+#' @param selectedNames,selectedValues Update selected items with custom names and values.
 #' @param badge Displays choices inside a Bootstrap badge.
 #' @param status If choices are displayed into a Bootstrap badge, you can use Bootstrap
 #'  status to color them, or \code{NULL}.
@@ -261,13 +288,60 @@ make_bg_svg <- function(text) {
 #' 
 #' }
 #' 
-updateDragulaInput <- function(session, inputId, choices = NULL, choiceNames = NULL,
-                               choiceValues = NULL, badge = TRUE, status = "primary") {
-  args <- normalizeChoicesArgs(choices, choiceNames, choiceValues)
-  choices <- htmltools::doRenderTags(makeDragulaChoices(
-    inputId = session$ns(inputId), args = args, status = status, badge = badge
-  ))
-  message <- list(choices = choices)
+updateDragulaInput <- function(session, 
+                               inputId,
+                               choices = NULL,
+                               choiceNames = NULL,
+                               choiceValues = NULL,
+                               selected = NULL,
+                               selectedNames = NULL,
+                               selectedValues = NULL,
+                               badge = TRUE,
+                               status = "primary") {
+  if (!is.null(choices) | !is.null(choiceNames)) {
+    args <- normalizeChoicesArgs(choices, choiceNames, choiceValues)
+    choices <- doRenderTags(makeDragulaChoices(
+      inputId = session$ns(inputId),
+      args = args, 
+      status = status, 
+      badge = badge
+    ))
+  }
+  if (!is.null(selected) && length(selected) > 0) {
+    nms <- names(selected)
+    selected <- lapply(
+      X = selected,
+      FUN = function(x) {
+        choicesTarget <- normalizeChoicesArgs(x, NULL, NULL)
+        doRenderTags(makeDragulaChoices(
+          inputId = session$ns(inputId),
+          args = choicesTarget, 
+          status = status, 
+          badge = badge
+        ))
+      }
+    )
+    names(selected) <- paste(session$ns(inputId), "target", nms, sep = "-")
+  }
+  if (!is.null(selectedNames) & !is.null(selectedValues)) {
+    if (length(selectedNames) != length(selectedValues))
+      stop("'selectedValues' & 'selectedNames' must be of same length", call. = FALSE)
+    nms <- names(selectedNames)
+    selected <- lapply(
+      X = seq_along(selectedNames),
+      FUN = function(i) {
+        choicesTarget <- normalizeChoicesArgs(NULL, selectedNames[[i]], selectedValues[[i]])
+        doRenderTags(makeDragulaChoices(
+          inputId = session$ns(inputId),
+          args = choicesTarget, 
+          status = status, 
+          badge = badge
+        ))
+      }
+    )
+    names(selected) <- paste(session$ns(inputId), "target", nms, sep = "-")
+  }
+  message <- dropNulls(list(choices = choices, selected = selected))
   session$sendInputMessage(inputId, message)
 }
 
@@ -277,19 +351,33 @@ makeDragulaChoices <- function(inputId, args, status = NULL, badge = TRUE) {
   lapply(
     X = seq_along(args$choiceNames),
     FUN = function(i) {
-      tags$span(
-        class = "label-dragula",
-        class = if (badge) "label", 
-        class = if (badge & !is.null(status)) paste0("label-", status), 
-        # id = paste(inputId, "target-label", sep = "-"),
-        id = paste(inputId, "target-label", clean_string(args$choiceValues[[i]]), sep = "-"),
-        `data-value` = args$choiceValues[[i]],
-        args$choiceNames[[i]]
+      tags$div(
+        class = "dragula-block",
+        tags$span(
+          class = "label-dragula",
+          class = if (badge) "label badge-dragula", 
+          class = if (badge & !is.null(status)) paste0("label-", status), 
+          # id = paste(inputId, "target-label", sep = "-"),
+          id = paste(inputId, "target-label", clean_string(args$choiceValues[[i]]), sep = "-"),
+          `data-value` = args$choiceValues[[i]],
+          args$choiceNames[[i]]
+        )
       )
     }
   )
 }
 
+get_choices <- function(x, values) {
+  if (is.null(values)) 
+    return(NULL)
+  ind <- vapply(x$choiceValues, function(x) {
+    x %in% values
+  }, FUN.VALUE = logical(1))
+  list(
+    choiceNames = x$choiceNames[ind],
+    choiceValues = x$choiceValues[ind]
+  )
+}
 
 
 

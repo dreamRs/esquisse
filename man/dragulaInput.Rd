@@ -12,6 +12,7 @@ dragulaInput(
   choices = NULL,
   choiceNames = NULL,
   choiceValues = NULL,
+  selected = NULL,
   status = "primary",
   replace = FALSE,
   badge = TRUE,
@@ -44,6 +45,8 @@ If either of these arguments is provided, then the other must be provided and
 choices must not be provided. The advantage of using both of these over a named 
 list for choices is that choiceNames allows any type of UI object to be passed 
 through (tag objects, icons, HTML code, ...), instead of just simple text.}
+
+\item{selected}{Default selected values. Must be a \code{list} with \code{targetsIds} as names.}
 
 \item{status}{If choices are displayed into a Bootstrap label, you can use Bootstrap
 status to color them, or \code{NULL}.}

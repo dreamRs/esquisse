@@ -90,4 +90,14 @@
   cursor: move; 
 }
 
+.badge-dragula {
+  border-radius: 5px !important;
+  font-size: 100% !important;
+  margin: 1px;
+}
+
+.dragula-block {
+  display: inline-block; 
+  margin-bottom: 5px;
+}
 
