@@ -56,7 +56,8 @@ $.extend(dragulaBinding, {
           }
         } else {
           $(target)
-            .find("#" + $(el).attr("id"))
+            .find("#" + $(el).children().attr("id"))
+            .parent()
             .remove();
         }
         $el.trigger("change");
