@@ -50,12 +50,13 @@
 safe_ggplot <- function(expr, data = NULL, session = shiny::getDefaultReactiveDomain()) {
   show_condition_message <- function(e, type, session) {
     if (!is.null(session)) {
-      shiny::showNotification(
+      showNotification(
         ui = paste(
           tools::toTitleCase(type),
           conditionMessage(e),
           sep = " : "
         ),
+        id = paste("esquisse", sample.int(1e6, 1), sep = "-"),
         type = type, 
         session = session
       )

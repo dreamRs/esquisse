@@ -276,11 +276,21 @@ coerceServer <- function(input, output, session, data, reactiveValuesSlot = "dat
           do.call(what = paste0("as.", input$coerce_to), args = args)
         },
         error = function(e) {
-          shiny::showNotification(ui = conditionMessage(e), type = "error", session = session)
+          shiny::showNotification(
+            ui = conditionMessage(e), 
+            type = "error",
+            session = session, 
+            id = paste("esquisse", sample.int(1e6, 1), sep = "-")
+          )
         }
       ), 
       warning = function(w) {
-        shiny::showNotification(ui = conditionMessage(w), type = "warning", session = session)
+        shiny::showNotification(
+          ui = conditionMessage(w), 
+          type = "warning",
+          session = session,
+          id = paste("esquisse", sample.int(1e6, 1), sep = "-")
+        )
       }
     )
     return_data$data[[input$var]] <- var

@@ -147,7 +147,7 @@ chartControlsServer <- function(input,
     content = function(file) {
       pngg <- try(ggsave(filename = file, plot = ggplot_rv$ggobj$plot, width = 12, height = 8, dpi = "retina"))
       if ("try-error" %in% class(pngg)) {
-        shiny::showNotification(ui = "Export to PNG failed...", type = "error")
+        shiny::showNotification(ui = "Export to PNG failed...", type = "error", id = paste("esquisse", sample.int(1e6, 1), sep = "-"))
       }
     }
   )
@@ -162,7 +162,7 @@ chartControlsServer <- function(input,
         ppt <- officer::add_slide(ppt, layout = "Title and Content", master = "Office Theme")
         ppt <- try(officer::ph_with(ppt, rvg::dml(ggobj = gg), location = officer::ph_location_type(type = "body")), silent = TRUE)
         if ("try-error" %in% class(ppt)) {
-          shiny::showNotification(ui = "Export to PowerPoint failed...", type = "error")
+          shiny::showNotification(ui = "Export to PowerPoint failed...", type = "error", id = paste("esquisse", sample.int(1e6, 1), sep = "-"))
         } else {
           tmp <- tempfile(pattern = "esquisse", fileext = ".pptx")
           print(ppt, target = tmp)
@@ -171,7 +171,7 @@ chartControlsServer <- function(input,
       } else {
         warn <- "Packages 'officer' and 'rvg' are required to use this functionality."
         warning(warn, call. = FALSE)
-        shiny::showNotification(ui = warn, type = "warning")
+        shiny::showNotification(ui = warn, type = "warning", paste("esquisse", sample.int(1e6, 1), sep = "-"))
       }
     }
   )
