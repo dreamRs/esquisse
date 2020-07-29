@@ -6,7 +6,7 @@
 \alias{chooseDataServer}
 \title{Module for choosing data.frame}
 \usage{
-chooseDataUI(id, label = "Data", icon = "database", ...)
+chooseDataUI(id, label = "Data", icon = "database", width = "100\%", ...)
 
 chooseDataServer(
   input,
@@ -25,11 +25,13 @@ chooseDataServer(
 \arguments{
 \item{id}{Module's id.}
 
-\item{label}{Button's label.}
+\item{label}{Label for button, passed to \code{\link[shiny:actionButton]{actionButton}}.}
 
-\item{icon}{Button's icon.}
+\item{icon}{Icon to appears on the button, passed to \code{\link[shiny:actionButton]{actionButton}}.}
 
-\item{...}{Arguments passed to \code{\link{actionButton}}}
+\item{width}{Width of button, passed to \code{\link[shiny:actionButton]{actionButton}}.}
+
+\item{...}{Other arguments passed to \code{\link[shiny:actionButton]{actionButton}}}
 
 \item{input, output, session}{standards \code{shiny} server arguments.}
 
