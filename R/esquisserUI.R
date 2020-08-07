@@ -30,7 +30,7 @@
 #' @name module-esquisse
 #'
 #' @importFrom htmltools tags tagList singleton
-#' @importFrom shiny plotOutput icon actionButton NS
+#' @importFrom shiny plotOutput icon actionButton NS fluidRow column fillCol
 #' @importFrom miniUI miniTitleBarButton miniPage
 #' @importFrom shinyWidgets prettyToggle
 #'
@@ -67,14 +67,21 @@ esquisserUI <- function(id, header = TRUE,
     )),
 
     if (isTRUE(header)) box_title,
-    # page
-    layoutAddin(
-      top_left = htmltools::tagList(
-        htmltools::tags$div(
-          style = if (isTRUE(choose_data) & !isTRUE(header)) "padding: 10px;" else "padding: 8px; height: 108%;",
+    
+    
+    fluidRow(
+      class = "row-no-gutters",
+      column(
+        width = 1,
+        tags$div(
+          style = if (isTRUE(choose_data) & !isTRUE(header)) {
+            "padding: 10px;"
+          } else {
+            "padding: 3px 3px 0 3px; height: 144px;"
+          },
           dropInput(
             inputId = ns("geom"),
-            choicesNames = geomIcons()$names, 
+            choicesNames = geomIcons()$names,
             choicesValues = geomIcons()$values,
             dropWidth = "290px",
             width = "100%"
@@ -82,35 +89,42 @@ esquisserUI <- function(id, header = TRUE,
           if (isTRUE(choose_data) & !isTRUE(header)) chooseDataUI(id = ns("choose-data"))
         )
       ),
-      top_right = dragulaInput(
-        inputId = ns("dragvars"), 
-        sourceLabel = "Variables", 
-        targetsLabels = c("X", "Y", "Fill", "Color", "Size", "Group", "Facet", "FacetRow", "FacetCol"), 
-        targetsIds = c("xvar", "yvar", "fill", "color", "size", "group", "facet", "facet_row", "facet_col"),
-        choices = "",
-        badge = FALSE, 
-        width = "100%", 
-        height = "100%",
-        replace = TRUE
-      ),
-      main = htmltools::tags$div(
-        style = "margin-top: 10px; padding-bottom: 25px; height: 100%;",
+      column(
+        width = 11,
+        dragulaInput(
+          inputId = ns("dragvars"),
+          sourceLabel = "Variables",
+          targetsLabels = c("X", "Y", "Fill", "Color", "Size", "Group", "Facet", "FacetRow", "FacetCol"),
+          targetsIds = c("xvar", "yvar", "fill", "color", "size", "group", "facet", "facet_row", "facet_col"),
+          choices = "",
+          badge = FALSE,
+          width = "100%",
+          height = "70px",
+          replace = TRUE
+        )
+      )
+    ),
+    
+    fillCol(
+      style = "overflow-y: auto;",
+      tags$div(
+        style = "height: 100%; min-height: 400px;",
         tags$div(
-          style = "position: absolute; right: 0; top: 10px; font-weight: bold; z-index: 1000;",
+          style = "position: absolute; right: 0; top: 5px; font-weight: bold; z-index: 1000;",
           prettyToggle(
-            inputId = ns("play_plot"), 
+            inputId = ns("play_plot"),
             value = TRUE,
             label_on = "Play",
             label_off = "Pause",
             outline = TRUE,
             plain = TRUE,
-            bigger = TRUE, 
+            bigger = TRUE,
             inline = TRUE,
             icon_on = icon("play-circle-o", class = "fa-2x"),
             icon_off = icon("pause-circle-o", class = "fa-2x")
           )
         ),
-        shiny::plotOutput(outputId = ns("plooooooot"), width = "100%", height = "100%")
+        plotOutput(outputId = ns("plooooooot"), width = "100%", height = "100%")
       )
     ),
 

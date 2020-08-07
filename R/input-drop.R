@@ -112,7 +112,6 @@ dropInput <- function(inputId, choicesNames, choicesValues, selected = NULL,
     tags$div(
       id = inputId, class = "drop-input",
       class = ifelse(dropUp, "dropup", "dropdown"),
-      style = "margin-bottom: 1vh;",
       btn, dropTag
     )
   )

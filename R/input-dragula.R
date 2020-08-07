@@ -3,6 +3,7 @@
 #' Drag And Drop Input Widget
 #'
 #' @param inputId The \code{input} slot that will be used to access the value.
+#' @param label Display label for the control, or \code{NULL} for no label.
 #' @param sourceLabel Label display in the source box
 #' @param targetsLabels Labels for each target element.
 #' @param targetsIds Ids for retrieving values server-side, if \code{NULL}, the default,
@@ -22,6 +23,8 @@
 #' @param selected Default selected values. Must be a \code{list} with \code{targetsIds} as names.
 #' @param badge Displays choices inside a Bootstrap badge. Use \code{FALSE}
 #'  if you want to pass custom appearance with \code{choiceNames}.
+#' @param ncolSource Number of columns occupied by the source, default is \code{"auto"}, meaning full row.
+#' @param ncolGrid Number of columns used to place source and targets boxes, see examples.
 #' @param status If choices are displayed into a Bootstrap label, you can use Bootstrap
 #'  status to color them, or \code{NULL}.
 #' @param replace When a choice is dragged in a target container already
@@ -42,38 +45,9 @@
 #' @importFrom jsonlite toJSON
 #' @importFrom shiny fillRow splitLayout
 #'
-#' @examples
-#' 
-#' if (interactive()) {
-#' 
-#' library("shiny")
-#' library("esquisse")
-#' 
-#' ui <- fluidPage(
-#'   tags$h2("Demo dragulaInput"),
-#'   tags$br(),
-#'   dragulaInput(
-#'     inputId = "dad",
-#'     sourceLabel = "Source",
-#'     targetsLabels = c("Target 1", "Target 2"),
-#'     choices = names(iris),
-#'     width = "400px"
-#'   ),
-#'   verbatimTextOutput(outputId = "result")
-#' )
-#' 
-#' 
-#' server <- function(input, output, session) {
-#'   
-#'   output$result <- renderPrint(str(input$dad))
-#' 
-#' }
-#' 
-#' shinyApp(ui = ui, server = server)
-#' 
-#' }
-#' 
+#' @example examples/dragulaInput.R
 dragulaInput <- function(inputId,
+                         label = NULL,
                          sourceLabel,
                          targetsLabels, 
                          targetsIds = NULL,
@@ -84,10 +58,12 @@ dragulaInput <- function(inputId,
                          status = "primary", 
                          replace = FALSE, 
                          badge = TRUE,
+                         ncolSource = "auto",
+                         ncolGrid = NULL,
                          dragulaOpts = list(),
                          boxStyle = NULL,
                          width = NULL, 
-                         height = "200px") {
+                         height = "100px") {
   
   args <- normalizeChoicesArgs(choices, choiceNames, choiceValues)
   
@@ -114,18 +90,18 @@ dragulaInput <- function(inputId,
     FUN = function(i) {
       if (is.null(selected)) {
         tags$div(
-          style = "height: 95%; margin: 0;",
+          style = "margin: 0;",
+          style = if (!is.null(height)) paste("height:", validateCssUnit(height), ";"),
           style = boxStyle,
           class = "box-dad xyvar",
           id = paste(inputId, "target", targetsIds[i], sep = "-"),
           style = make_bg_svg(targetsLabels[i])
         )
       } else {
-        
         choicesTarget <- get_choices(args, selected[[targetsIds[i]]])
-        
         tags$div(
-          style = "height: 95%; margin: 0;",
+          style = "margin: 0;",
+          style = if (!is.null(height)) paste("height:", validateCssUnit(height), ";"),
           style = boxStyle,
           class = "box-dad xyvar",
           id = paste(inputId, "target", targetsIds[i], sep = "-"),
@@ -135,33 +111,46 @@ dragulaInput <- function(inputId,
       }
     }
   )
-  target_list$style <- "height: 50%; font-size: 0;"
-  target_list$cellArgs <- list(style = "height:90%; padding: 0; margin-right: 0.5%;")
-  target_list$width <- width
+  # target_list$style <- "height: 50%; font-size: 0;"
+  # target_list$cellArgs <- list(style = "height:90%; padding: 0; margin-right: 0.5%;")
+  # target_list$width <- width
+  # 
+  # tgw <- 100 / length(targetsIds)
+  # tgw <- tgw - 0.5 # / (length(targetsIds)-1)
+  # tgw <- paste0(tgw, "%")
+  # target_list$cellWidths <- tgw
   
-  tgw <- 100 / length(targetsIds)
-  tgw <- tgw - 0.5 # / (length(targetsIds)-1)
-  tgw <- paste0(tgw, "%")
-  target_list$cellWidths <- tgw
+  if (is.null(ncolGrid))
+    ncolGrid <- length(targetsIds)
+  
+  if (identical(ncolSource, "auto"))
+    ncolSource <- ncolGrid
   
   tagList(
     html_dependency_dragula(),
+    tags$label(label, `for` = inputId, class = "control-label", class = if (is.null(label)) "shiny-label-null"),
     tags$div(
       class="form-group shiny-input-container shiny-input-dragula shiny-input-container-inline",
       style = if (!is.null(width)) paste("width:", validateCssUnit(width), ";"),
-      style = if (!is.null(height)) paste("height:", validateCssUnit(height), ";"),
+      # style = if (!is.null(height)) paste("height:", validateCssUnit(height), ";"),
       id = inputId, 
       tags$div(
-        class = "container-drag-source",
-        style = boxStyle,
-        style = make_bg_svg(sourceLabel),
+        style = "display: grid; grid-column-gap: 5px; grid-row-gap: 5px;",
+        style = sprintf("grid-template-columns: repeat(%s, 1fr);", ncolGrid),
         tags$div(
-          id = paste(inputId, "source", sep = "-"), 
-          style = "margin: 5px; width: 100%; min-height: 15px; margin-right: 0;",
-          makeDragulaChoices(inputId = inputId, args = args, status = status, badge = badge)
-        )
+          class = "container-drag-source",
+          style = if (!is.null(ncolSource)) paste0("grid-area: 1 / 1 / auto / span ", ncolSource, ";"),
+          style = boxStyle,
+          style = make_bg_svg(sourceLabel),
+          style = if (!is.null(height)) paste("height:", validateCssUnit(height), ";"),
+          tags$div(
+            id = paste(inputId, "source", sep = "-"), 
+            style = "min-height: 15px;",
+            makeDragulaChoices(inputId = inputId, args = args, status = status, badge = badge)
+          )
+        ),
+        target_list
       ),
-      do.call(splitLayout, target_list),
       tags$script(
         type = "application/json",
         `data-for` = inputId,

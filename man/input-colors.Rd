@@ -40,7 +40,7 @@ If elements of the list are named then that name rather than the value is displa
 \item{selected}{The initially selected value (or multiple values if \code{multiple = TRUE}).
 If not specified then defaults to the first value for single-select lists and no values for multiple select lists.}
 
-\item{textColor}{Color of the text displayed above colors, can be a vector of the same length ass choices.}
+\item{textColor}{Color of the text displayed above colors, can be a vector of the same length as choices.}
 
 \item{plainColor}{Color the full space of the choice menu.}
 

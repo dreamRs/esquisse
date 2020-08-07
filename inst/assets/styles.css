@@ -1,7 +1,16 @@
-
+/*!
+ * Copyright (c) 2018 ~ present dreamRs.
+ * 
+ * Additional styles for esquisse addin
+ * 
+ * @version 0.3.1
+ */
+ 
+ 
 .dreamrs-title-box {
   background-color: #112446;
   height: 45px;
+  margin-bottom: 5px;
 }
 
 .dreamrs-title {

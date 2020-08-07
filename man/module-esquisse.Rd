@@ -167,7 +167,7 @@ if (interactive()) {
         id = "esquisse", 
         header = FALSE,
         container = esquisseContainer(
-          fixed = c(50, 0, 0, 0)
+          fixed = c(55, 0, 0, 0)
         )
       )
     )

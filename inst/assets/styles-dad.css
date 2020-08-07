@@ -1,9 +1,14 @@
+/*!
+ * Copyright (c) 2018 ~ present dreamRs.
+ * 
+ * Styles for dragulaInput
+ * 
+ * @version 0.3.1
+ */
+ 
 .container-drag-source {
   position: relative;
-  height: 50%; 
-  width: 99.5%; 
   padding: 5px 0 5px 0;
-  margin: 5px 0 5px 0;
   border-style: dashed;
   border-color: #112446;
   border-radius: 5px;
