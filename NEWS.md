@@ -4,6 +4,8 @@
 * facet_row and facet_col features to allow facet_grid call from ggplot2 by [@xiangnandang](https://github.com/xiangnandang)
 * x and y limits of the plots by [@xiangnandang](https://github.com/xiangnandang)
 * Check if data is null when changing datasets by [@trafficonese](https://github.com/trafficonese).
+* New function `updateDragulaInput()` to update `dragulaInput()` server side.
+* `dragulaInput()` has two new arguments: `ncolSource` and `ncolGrid` to create a grid layout with source and targets boxes.
 
 
 

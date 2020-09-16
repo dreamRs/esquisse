@@ -9,3 +9,4 @@ img/
 ^docs$
 ^pkgdown$
 ^examples$
+^\.github$
