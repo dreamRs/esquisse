@@ -10,3 +10,4 @@ img/
 ^pkgdown$
 ^examples$
 ^\.github$
+revdep/
