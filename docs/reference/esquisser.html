@@ -8,21 +8,29 @@
 
 <title>An add-in to easily create plots with ggplot2 — esquisser • esquisse</title>
 
-<!-- jquery -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
-<!-- Bootstrap -->
-<link href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/3.3.7/flatly/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous" />
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha256-U5ZEeKfGNOja007MMD3YBI0A3OSZOQbeG6z2f2Y0hu8=" crossorigin="anonymous"></script>
+<!-- jquery -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
+<!-- Bootstrap -->
+<link href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/3.4.0/flatly/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous" />
+
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/js/bootstrap.min.js" integrity="sha256-nuL8/2cJ5NDSSwnKD8VqreErSWHtnEP9E7AySL+1ev4=" crossorigin="anonymous"></script>
+
+<!-- bootstrap-toc -->
+<link rel="stylesheet" href="../bootstrap-toc.css">
+<script src="../bootstrap-toc.js"></script>
 
 <!-- Font Awesome icons -->
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha256-eZrrJcwDc/3uDhsdt61sL2oOBY362qM3lon1gyExkL0=" crossorigin="anonymous" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/v4-shims.min.css" integrity="sha256-wZjR52fzng1pJHwx4aV2AO3yyTOXrcDW7jBpJtTwVxw=" crossorigin="anonymous" />
 
 <!-- clipboard.js -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.4/clipboard.min.js" integrity="sha256-FiZwavyI2V6+EXO1U+xzLG3IKldpiTFf3153ea9zikQ=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script>
 
-<!-- sticky kit -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/sticky-kit/1.1.3/sticky-kit.min.js" integrity="sha256-c4Rlo1ZozqTPE2RLuvbusY3+SU1pQaJC0TjuhygMipw=" crossorigin="anonymous"></script>
+<!-- headroom.js -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script>
 
 <!-- pkgdown -->
 <link href="../pkgdown.css" rel="stylesheet">
@@ -30,10 +38,10 @@
 
 
 
-<meta property="og:title" content="An add-in to easily create plots with ggplot2 — esquisser" />
 
+<meta property="og:title" content="An add-in to easily create plots with ggplot2 — esquisser" />
 <meta property="og:description" content="An add-in to easily create plots with ggplot2" />
-<meta name="twitter:card" content="summary" />
+
 
 
 
@@ -47,9 +55,10 @@
 <![endif]-->
 
 
+
   </head>
 
-  <body>
+  <body data-spy="scroll" data-target="#toc">
     <div class="container template-reference-topic">
       <header>
       <div class="navbar navbar-default navbar-fixed-top" role="navigation">
@@ -63,7 +72,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">esquisse</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.2.2</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.3.1</span>
       </span>
     </div>
 
@@ -97,7 +106,6 @@
   <a href="../news/index.html">News</a>
 </li>
       </ul>
-      
       <ul class="nav navbar-nav navbar-right">
         <li>
   <a href="https://github.com/dreamRs/esquisse">
@@ -112,6 +120,7 @@
 </div><!--/.navbar -->
 
       
+
       </header>
 
 <div class="row">
@@ -123,15 +132,16 @@
     </div>
 
     <div class="ref-description">
-    
     <p>An add-in to easily create plots with ggplot2</p>
-    
     </div>
 
-    <pre class="usage"><span class='fu'>esquisser</span>(<span class='kw'>data</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>coerceVars</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/options'>getOption</a></span>(<span class='kw'>x</span> <span class='kw'>=</span>
-  <span class='st'>"esquisse.coerceVars"</span>, <span class='kw'>default</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>), <span class='kw'>viewer</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/options'>getOption</a></span>(<span class='kw'>x</span> <span class='kw'>=</span>
-  <span class='st'>"esquisse.viewer"</span>, <span class='kw'>default</span> <span class='kw'>=</span> <span class='st'>"dialog"</span>))</pre>
-    
+    <pre class="usage"><span class='fu'>esquisser</span>(
+  data = <span class='kw'>NULL</span>,
+  coerce_vars = <span class='fu'><a href='https://rdrr.io/r/base/options.html'>getOption</a></span>(x = <span class='st'>"esquisse.coerceVars"</span>, default = <span class='fl'>TRUE</span>),
+  disable_filters = <span class='fu'><a href='https://rdrr.io/r/base/options.html'>getOption</a></span>(x = <span class='st'>"esquisse.disable_filters"</span>, default = <span class='fl'>FALSE</span>),
+  viewer = <span class='fu'><a href='https://rdrr.io/r/base/options.html'>getOption</a></span>(x = <span class='st'>"esquisse.viewer"</span>, default = <span class='st'>"dialog"</span>)
+)</pre>
+
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
@@ -141,57 +151,56 @@
 otherwise you'll have to choose one in global environment.</p></td>
     </tr>
     <tr>
-      <th>coerceVars</th>
+      <th>coerce_vars</th>
       <td><p>If <code>TRUE</code> allow to coerce variables to different type when selecting data.</p></td>
+    </tr>
+    <tr>
+      <th>disable_filters</th>
+      <td><p>Logical. Disable the menu allowing to filter data used.</p></td>
     </tr>
     <tr>
       <th>viewer</th>
       <td><p>Where to display the gadget: <code>"dialog"</code>,
-<code>"pane"</code> or <code>"browser"</code> (see <code><a href='https://www.rdocumentation.org/packages/shiny/topics/viewer'>viewer</a></code>).</p></td>
+<code>"pane"</code> or <code>"browser"</code> (see <code><a href='https://shiny.rstudio.com/reference/shiny/latest/viewer.html'>viewer</a></code>).</p></td>
     </tr>
     </table>
-    
+
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
     <p>code to reproduce chart.</p>
-    
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='kw'>if</span> (<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/interactive'>interactive</a></span>()) {
+    <pre class="examples"><div class='input'><span class='co'>if</span> (<span class='fu'><a href='https://rdrr.io/r/base/interactive.html'>interactive</a></span>()) {
 <span class='co'># Launch with :</span>
-<span class='fu'>esquisser</span>(<span class='no'>iris</span>)
+<span class='fu'>esquisser</span>(<span class='kw'>iris</span>)
 <span class='co'># If in RStudio it will be launched by default in dialog window</span>
 <span class='co'># If not, it will be launched in browser</span>
 
 <span class='co'># Launch esquisse in browser :</span>
-<span class='fu'>esquisser</span>(<span class='no'>iris</span>, <span class='kw'>viewer</span> <span class='kw'>=</span> <span class='st'>"browser"</span>)
+<span class='fu'>esquisser</span>(<span class='kw'>iris</span>, viewer = <span class='st'>"browser"</span>)
 
 <span class='co'># You can set this option in .Rprofile :</span>
-<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/options'>options</a></span>(<span class='st'>"esquisse.viewer"</span> <span class='kw'>=</span> <span class='st'>"viewer"</span>)
+<span class='fu'><a href='https://rdrr.io/r/base/options.html'>options</a></span>(<span class='st'>"esquisse.viewer"</span> = <span class='st'>"viewer"</span>)
 <span class='co'># or</span>
-<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/options'>options</a></span>(<span class='st'>"esquisse.viewer"</span> <span class='kw'>=</span> <span class='st'>"browser"</span>)
+<span class='fu'><a href='https://rdrr.io/r/base/options.html'>options</a></span>(<span class='st'>"esquisse.viewer"</span> = <span class='st'>"browser"</span>)
 
 <span class='co'># esquisse use shiny::runApp</span>
 <span class='co'># see ?shiny::runApp to see options </span>
 <span class='co'># available, example to use custom port:</span>
 
-<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/options'>options</a></span>(<span class='st'>"shiny.port"</span> <span class='kw'>=</span> <span class='fl'>8080</span>)
-<span class='fu'>esquisser</span>(<span class='no'>iris</span>, <span class='kw'>viewer</span> <span class='kw'>=</span> <span class='st'>"browser"</span>)
+<span class='fu'><a href='https://rdrr.io/r/base/options.html'>options</a></span>(<span class='st'>"shiny.port"</span> = <span class='fl'>8080</span>)
+<span class='fu'>esquisser</span>(<span class='kw'>iris</span>, viewer = <span class='st'>"browser"</span>)
 
-}</div></pre>
+}
+</div></pre>
   </div>
-  <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
-    <h2>Contents</h2>
-    <ul class="nav nav-pills nav-stacked">
-      <li><a href="#arguments">Arguments</a></li>
-      
-      <li><a href="#value">Value</a></li>
-      
-      <li><a href="#examples">Examples</a></li>
-    </ul>
-
+  <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
+    <nav id="toc" data-toggle="toc" class="sticky-top">
+      <h2 data-toc-skip>Contents</h2>
+    </nav>
   </div>
 </div>
+
 
       <footer>
       <div class="copyright">
@@ -199,13 +208,16 @@ otherwise you'll have to choose one in global environment.</p></td>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.3.0.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.0.</p>
 </div>
+
       </footer>
    </div>
 
   
 
+
   </body>
 </html>
+
 

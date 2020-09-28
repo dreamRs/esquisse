@@ -6,23 +6,31 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Picker input to select color(s) — input-colors • esquisse</title>
+<title>Picker input to select color(s) or palette — input-colors • esquisse</title>
+
 
 <!-- jquery -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
 <!-- Bootstrap -->
-<link href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/3.3.7/flatly/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous" />
+<link href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/3.4.0/flatly/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous" />
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha256-U5ZEeKfGNOja007MMD3YBI0A3OSZOQbeG6z2f2Y0hu8=" crossorigin="anonymous"></script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/js/bootstrap.min.js" integrity="sha256-nuL8/2cJ5NDSSwnKD8VqreErSWHtnEP9E7AySL+1ev4=" crossorigin="anonymous"></script>
+
+<!-- bootstrap-toc -->
+<link rel="stylesheet" href="../bootstrap-toc.css">
+<script src="../bootstrap-toc.js"></script>
 
 <!-- Font Awesome icons -->
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha256-eZrrJcwDc/3uDhsdt61sL2oOBY362qM3lon1gyExkL0=" crossorigin="anonymous" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/v4-shims.min.css" integrity="sha256-wZjR52fzng1pJHwx4aV2AO3yyTOXrcDW7jBpJtTwVxw=" crossorigin="anonymous" />
 
 <!-- clipboard.js -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.4/clipboard.min.js" integrity="sha256-FiZwavyI2V6+EXO1U+xzLG3IKldpiTFf3153ea9zikQ=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script>
 
-<!-- sticky kit -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/sticky-kit/1.1.3/sticky-kit.min.js" integrity="sha256-c4Rlo1ZozqTPE2RLuvbusY3+SU1pQaJC0TjuhygMipw=" crossorigin="anonymous"></script>
+<!-- headroom.js -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script>
 
 <!-- pkgdown -->
 <link href="../pkgdown.css" rel="stylesheet">
@@ -30,10 +38,10 @@
 
 
 
-<meta property="og:title" content="Picker input to select color(s) — input-colors" />
 
+<meta property="og:title" content="Picker input to select color(s) or palette — input-colors" />
 <meta property="og:description" content="Select menu to view and choose a color or a palette of colors." />
-<meta name="twitter:card" content="summary" />
+
 
 
 
@@ -47,9 +55,10 @@
 <![endif]-->
 
 
+
   </head>
 
-  <body>
+  <body data-spy="scroll" data-target="#toc">
     <div class="container template-reference-topic">
       <header>
       <div class="navbar navbar-default navbar-fixed-top" role="navigation">
@@ -63,7 +72,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">esquisse</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.2.2</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.3.1</span>
       </span>
     </div>
 
@@ -97,7 +106,6 @@
   <a href="../news/index.html">News</a>
 </li>
       </ul>
-      
       <ul class="nav navbar-nav navbar-right">
         <li>
   <a href="https://github.com/dreamRs/esquisse">
@@ -112,30 +120,44 @@
 </div><!--/.navbar -->
 
       
+
       </header>
 
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Picker input to select color(s)</h1>
+    <h1>Picker input to select color(s) or palette</h1>
     <small class="dont-index">Source: <a href='https://github.com/dreamRs/esquisse/blob/master/R/input-colors.R'><code>R/input-colors.R</code></a></small>
     <div class="hidden name"><code>input-colors.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    
     <p>Select menu to view and choose a color or a palette of colors.</p>
-    
     </div>
 
-    <pre class="usage"><span class='fu'>colorPicker</span>(<span class='no'>inputId</span>, <span class='no'>label</span>, <span class='no'>choices</span>, <span class='kw'>selected</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>textColor</span> <span class='kw'>=</span> <span class='st'>"#000"</span>, <span class='kw'>plainColor</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>multiple</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='kw'>pickerOpts</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/list'>list</a></span>(), <span class='kw'>width</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)
+    <pre class="usage"><span class='fu'>colorPicker</span>(
+  <span class='kw'>inputId</span>,
+  <span class='kw'>label</span>,
+  <span class='kw'>choices</span>,
+  selected = <span class='kw'>NULL</span>,
+  textColor = <span class='st'>"#000"</span>,
+  plainColor = <span class='fl'>FALSE</span>,
+  multiple = <span class='fl'>FALSE</span>,
+  pickerOpts = <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(),
+  width = <span class='kw'>NULL</span>
+)
 
-<span class='fu'>palettePicker</span>(<span class='no'>inputId</span>, <span class='no'>label</span>, <span class='no'>choices</span>, <span class='kw'>selected</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>textColor</span> <span class='kw'>=</span> <span class='st'>"#000"</span>, <span class='kw'>plainColor</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>pickerOpts</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/list'>list</a></span>(),
-  <span class='kw'>width</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)</pre>
-    
+<span class='fu'>palettePicker</span>(
+  <span class='kw'>inputId</span>,
+  <span class='kw'>label</span>,
+  <span class='kw'>choices</span>,
+  selected = <span class='kw'>NULL</span>,
+  textColor = <span class='st'>"#000"</span>,
+  plainColor = <span class='fl'>FALSE</span>,
+  pickerOpts = <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(),
+  width = <span class='kw'>NULL</span>
+)</pre>
+
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
@@ -159,7 +181,7 @@ If not specified then defaults to the first value for single-select lists and no
     </tr>
     <tr>
       <th>textColor</th>
-      <td><p>Color of the text displayed above colors, can be a vector of the same length ass choices.</p></td>
+      <td><p>Color of the text displayed above colors, can be a vector of the same length as choices.</p></td>
     </tr>
     <tr>
       <th>plainColor</th>
@@ -171,189 +193,187 @@ If not specified then defaults to the first value for single-select lists and no
     </tr>
     <tr>
       <th>pickerOpts</th>
-      <td><p>Options for <code><a href='https://www.rdocumentation.org/packages/shinyWidgets/topics/pickerInput'>pickerInput</a></code>.</p></td>
+      <td><p>Options for <code><a href='https://rdrr.io/pkg/shinyWidgets/man/pickerInput.html'>pickerInput</a></code>.</p></td>
     </tr>
     <tr>
       <th>width</th>
       <td><p>The width of the input : <code>'auto'</code>, <code>'fit'</code>, <code>'100px'</code>, <code>'75%'</code>.</p></td>
     </tr>
     </table>
-    
+
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
     <p>A select control that can be added to a UI definition.</p>
-    
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='co'># colorPicker -----------</span>
+    <pre class="examples"><div class='input'>
+<span class='co'># colorPicker -------------------------------------------------------------</span>
 
-<span class='kw'>if</span> (<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/interactive'>interactive</a></span>()) {
-
-  <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/library'>library</a></span>(<span class='no'>shiny</span>)
-  <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/library'>library</a></span>(<span class='no'>esquisse</span>)
-  <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/library'>library</a></span>(<span class='no'>scales</span>)
-
-
-  <span class='no'>ui</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/shiny/topics/fluidPage'>fluidPage</a></span>(
-    <span class='no'>tags</span>$<span class='fu'><a href='https://www.rdocumentation.org/packages/shiny/topics/builder'>h2</a></span>(<span class='st'>"pickerColor examples"</span>),
-    <span class='fu'><a href='https://www.rdocumentation.org/packages/shiny/topics/fluidPage'>fluidRow</a></span>(
-      <span class='fu'><a href='https://www.rdocumentation.org/packages/shiny/topics/column'>column</a></span>(
-        <span class='kw'>width</span> <span class='kw'>=</span> <span class='fl'>3</span>,
+<span class='co'>if</span> (<span class='fu'><a href='https://rdrr.io/r/base/interactive.html'>interactive</a></span>()) {
+  
+  <span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='kw'><a href='http://shiny.rstudio.com'>shiny</a></span>)
+  <span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='kw'><a href='https://github.com/dreamRs/esquisse'>esquisse</a></span>)
+  <span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='kw'><a href='https://scales.r-lib.org'>scales</a></span>)
+  
+  
+  <span class='kw'>ui</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://shiny.rstudio.com/reference/shiny/latest/fluidPage.html'>fluidPage</a></span>(
+    <span class='kw'>tags</span><span class='op'>$</span><span class='fu'><a href='https://rdrr.io/pkg/htmltools/man/builder.html'>h2</a></span>(<span class='st'>"colorPicker examples"</span>),
+    <span class='fu'><a href='https://shiny.rstudio.com/reference/shiny/latest/fluidPage.html'>fluidRow</a></span>(
+      <span class='fu'><a href='https://shiny.rstudio.com/reference/shiny/latest/column.html'>column</a></span>(
+        width = <span class='fl'>3</span>,
         <span class='fu'>colorPicker</span>(
-          <span class='kw'>inputId</span> <span class='kw'>=</span> <span class='st'>"col1"</span>,
-          <span class='kw'>label</span> <span class='kw'>=</span> <span class='st'>"With a vector of colors"</span>,
-          <span class='kw'>choices</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/scales/topics/brewer_pal'>brewer_pal</a></span>(<span class='kw'>palette</span> <span class='kw'>=</span> <span class='st'>"Dark2"</span>)(<span class='fl'>8</span>)
+          inputId = <span class='st'>"col1"</span>,
+          label = <span class='st'>"With a vector of colors"</span>,
+          choices = <span class='fu'><a href='https://scales.r-lib.org//reference/brewer_pal.html'>brewer_pal</a></span>(palette = <span class='st'>"Dark2"</span>)(<span class='fl'>8</span>)
         ),
-        <span class='fu'><a href='https://www.rdocumentation.org/packages/shiny/topics/verbatimTextOutput'>verbatimTextOutput</a></span>(<span class='st'>"res1"</span>)
+        <span class='fu'><a href='https://shiny.rstudio.com/reference/shiny/latest/textOutput.html'>verbatimTextOutput</a></span>(<span class='st'>"res1"</span>)
       ),
-      <span class='fu'><a href='https://www.rdocumentation.org/packages/shiny/topics/column'>column</a></span>(
-        <span class='kw'>width</span> <span class='kw'>=</span> <span class='fl'>3</span>,
+      <span class='fu'><a href='https://shiny.rstudio.com/reference/shiny/latest/column.html'>column</a></span>(
+        width = <span class='fl'>3</span>,
         <span class='fu'>colorPicker</span>(
-          <span class='kw'>inputId</span> <span class='kw'>=</span> <span class='st'>"col2"</span>,
-          <span class='kw'>label</span> <span class='kw'>=</span> <span class='st'>"Change text color"</span>,
-          <span class='kw'>choices</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/scales/topics/brewer_pal'>brewer_pal</a></span>(<span class='kw'>palette</span> <span class='kw'>=</span> <span class='st'>"Blues"</span>)(<span class='fl'>8</span>),
-          <span class='kw'>textColor</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='st'>"black"</span>, <span class='st'>"black"</span>, <span class='st'>"black"</span>, <span class='st'>"white"</span>,
+          inputId = <span class='st'>"col2"</span>,
+          label = <span class='st'>"Change text color"</span>,
+          choices = <span class='fu'><a href='https://scales.r-lib.org//reference/brewer_pal.html'>brewer_pal</a></span>(palette = <span class='st'>"Blues"</span>)(<span class='fl'>8</span>), 
+          textColor = <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"black"</span>, <span class='st'>"black"</span>, <span class='st'>"black"</span>, <span class='st'>"white"</span>,
                         <span class='st'>"white"</span>, <span class='st'>"white"</span>, <span class='st'>"white"</span>, <span class='st'>"white"</span>)
         ),
-        <span class='fu'><a href='https://www.rdocumentation.org/packages/shiny/topics/verbatimTextOutput'>verbatimTextOutput</a></span>(<span class='st'>"res2"</span>)
+        <span class='fu'><a href='https://shiny.rstudio.com/reference/shiny/latest/textOutput.html'>verbatimTextOutput</a></span>(<span class='st'>"res2"</span>)
       ),
-      <span class='fu'><a href='https://www.rdocumentation.org/packages/shiny/topics/column'>column</a></span>(
-        <span class='kw'>width</span> <span class='kw'>=</span> <span class='fl'>3</span>,
+      <span class='fu'><a href='https://shiny.rstudio.com/reference/shiny/latest/column.html'>column</a></span>(
+        width = <span class='fl'>3</span>,
         <span class='fu'>colorPicker</span>(
-          <span class='kw'>inputId</span> <span class='kw'>=</span> <span class='st'>"col3"</span>,
-          <span class='kw'>label</span> <span class='kw'>=</span> <span class='st'>"With a list of vector of colors"</span>,
-          <span class='kw'>choices</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/list'>list</a></span>(
-            <span class='st'>"Blues"</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/scales/topics/brewer_pal'>brewer_pal</a></span>(<span class='kw'>palette</span> <span class='kw'>=</span> <span class='st'>"Blues"</span>)(<span class='fl'>8</span>),
-            <span class='st'>"Reds"</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/scales/topics/brewer_pal'>brewer_pal</a></span>(<span class='kw'>palette</span> <span class='kw'>=</span> <span class='st'>"Reds"</span>)(<span class='fl'>8</span>),
-            <span class='st'>"Greens"</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/scales/topics/brewer_pal'>brewer_pal</a></span>(<span class='kw'>palette</span> <span class='kw'>=</span> <span class='st'>"Greens"</span>)(<span class='fl'>8</span>)
+          inputId = <span class='st'>"col3"</span>,
+          label = <span class='st'>"With a list of vector of colors"</span>,
+          choices = <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(
+            <span class='st'>"Blues"</span> = <span class='fu'><a href='https://scales.r-lib.org//reference/brewer_pal.html'>brewer_pal</a></span>(palette = <span class='st'>"Blues"</span>)(<span class='fl'>8</span>),
+            <span class='st'>"Reds"</span> = <span class='fu'><a href='https://scales.r-lib.org//reference/brewer_pal.html'>brewer_pal</a></span>(palette = <span class='st'>"Reds"</span>)(<span class='fl'>8</span>),
+            <span class='st'>"Greens"</span> = <span class='fu'><a href='https://scales.r-lib.org//reference/brewer_pal.html'>brewer_pal</a></span>(palette = <span class='st'>"Greens"</span>)(<span class='fl'>8</span>)
           )
         ),
-        <span class='fu'><a href='https://www.rdocumentation.org/packages/shiny/topics/verbatimTextOutput'>verbatimTextOutput</a></span>(<span class='st'>"res3"</span>)
+        <span class='fu'><a href='https://shiny.rstudio.com/reference/shiny/latest/textOutput.html'>verbatimTextOutput</a></span>(<span class='st'>"res3"</span>)
       ),
-      <span class='fu'><a href='https://www.rdocumentation.org/packages/shiny/topics/column'>column</a></span>(
-        <span class='kw'>width</span> <span class='kw'>=</span> <span class='fl'>3</span>,
+      <span class='fu'><a href='https://shiny.rstudio.com/reference/shiny/latest/column.html'>column</a></span>(
+        width = <span class='fl'>3</span>,
         <span class='fu'>colorPicker</span>(
-          <span class='kw'>inputId</span> <span class='kw'>=</span> <span class='st'>"col4"</span>,
-          <span class='kw'>label</span> <span class='kw'>=</span> <span class='st'>"Plain color"</span>,
-          <span class='kw'>choices</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/scales/topics/brewer_pal'>brewer_pal</a></span>(<span class='kw'>palette</span> <span class='kw'>=</span> <span class='st'>"Paired"</span>)(<span class='fl'>8</span>),
-          <span class='kw'>plainColor</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
-          <span class='kw'>multiple</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>
+          inputId = <span class='st'>"col4"</span>,
+          label = <span class='st'>"Plain color"</span>,
+          choices = <span class='fu'><a href='https://scales.r-lib.org//reference/brewer_pal.html'>brewer_pal</a></span>(palette = <span class='st'>"Paired"</span>)(<span class='fl'>8</span>), 
+          plainColor = <span class='fl'>TRUE</span>, 
+          multiple = <span class='fl'>TRUE</span>, 
+          pickerOpts = <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(`selected-text-format`= <span class='st'>"count &gt; 3"</span>)
         ),
-        <span class='fu'><a href='https://www.rdocumentation.org/packages/shiny/topics/verbatimTextOutput'>verbatimTextOutput</a></span>(<span class='st'>"res4"</span>)
+        <span class='fu'><a href='https://shiny.rstudio.com/reference/shiny/latest/textOutput.html'>verbatimTextOutput</a></span>(<span class='st'>"res4"</span>)
       )
     )
   )
-
-  <span class='no'>server</span> <span class='kw'>&lt;-</span> <span class='kw'>function</span>(<span class='no'>input</span>, <span class='no'>output</span>, <span class='no'>session</span>) {
-
-    <span class='no'>output</span>$<span class='no'>res1</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/shiny/topics/renderPrint'>renderPrint</a></span>(<span class='no'>input</span>$<span class='no'>col1</span>)
-    <span class='no'>output</span>$<span class='no'>res2</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/shiny/topics/renderPrint'>renderPrint</a></span>(<span class='no'>input</span>$<span class='no'>col2</span>)
-    <span class='no'>output</span>$<span class='no'>res3</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/shiny/topics/renderPrint'>renderPrint</a></span>(<span class='no'>input</span>$<span class='no'>col3</span>)
-    <span class='no'>output</span>$<span class='no'>res4</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/shiny/topics/renderPrint'>renderPrint</a></span>(<span class='no'>input</span>$<span class='no'>col4</span>)
-
+  
+  <span class='kw'>server</span> <span class='op'>&lt;-</span> <span class='fu'>function</span>(<span class='kw'>input</span>, <span class='kw'>output</span>, <span class='kw'>session</span>) {
+    
+    <span class='kw'>output</span><span class='op'>$</span><span class='kw'>res1</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://shiny.rstudio.com/reference/shiny/latest/renderPrint.html'>renderPrint</a></span>(<span class='kw'>input</span><span class='op'>$</span><span class='kw'>col1</span>)
+    <span class='kw'>output</span><span class='op'>$</span><span class='kw'>res2</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://shiny.rstudio.com/reference/shiny/latest/renderPrint.html'>renderPrint</a></span>(<span class='kw'>input</span><span class='op'>$</span><span class='kw'>col2</span>)
+    <span class='kw'>output</span><span class='op'>$</span><span class='kw'>res3</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://shiny.rstudio.com/reference/shiny/latest/renderPrint.html'>renderPrint</a></span>(<span class='kw'>input</span><span class='op'>$</span><span class='kw'>col3</span>)
+    <span class='kw'>output</span><span class='op'>$</span><span class='kw'>res4</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://shiny.rstudio.com/reference/shiny/latest/renderPrint.html'>renderPrint</a></span>(<span class='kw'>input</span><span class='op'>$</span><span class='kw'>col4</span>)
+    
   }
-
-  <span class='fu'><a href='https://www.rdocumentation.org/packages/shiny/topics/shinyApp'>shinyApp</a></span>(<span class='no'>ui</span>, <span class='no'>server</span>)
-
+  
+  <span class='fu'><a href='https://shiny.rstudio.com/reference/shiny/latest/shinyApp.html'>shinyApp</a></span>(<span class='kw'>ui</span>, <span class='kw'>server</span>)
+  
 }
-<span class='co'># palettePicker -----------</span>
 
-<span class='kw'>if</span> (<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/interactive'>interactive</a></span>()) {
+<span class='co'># palettePicker -----------------------------------------------------------</span>
 
-  <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/library'>library</a></span>(<span class='no'>shiny</span>)
-  <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/library'>library</a></span>(<span class='no'>esquisse</span>)
-  <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/library'>library</a></span>(<span class='no'>scales</span>)
-
-  <span class='no'>ui</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/shiny/topics/fluidPage'>fluidPage</a></span>(
-    <span class='no'>tags</span>$<span class='fu'><a href='https://www.rdocumentation.org/packages/shiny/topics/builder'>h2</a></span>(<span class='st'>"pickerColor examples"</span>),
-
-    <span class='fu'><a href='https://www.rdocumentation.org/packages/shiny/topics/fluidPage'>fluidRow</a></span>(
-      <span class='fu'><a href='https://www.rdocumentation.org/packages/shiny/topics/column'>column</a></span>(
-        <span class='kw'>width</span> <span class='kw'>=</span> <span class='fl'>4</span>,
+<span class='co'>if</span> (<span class='fu'><a href='https://rdrr.io/r/base/interactive.html'>interactive</a></span>()) {
+  
+  <span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='kw'><a href='http://shiny.rstudio.com'>shiny</a></span>)
+  <span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='kw'><a href='https://github.com/dreamRs/esquisse'>esquisse</a></span>)
+  <span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='kw'><a href='https://scales.r-lib.org'>scales</a></span>)
+  
+  <span class='kw'>ui</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://shiny.rstudio.com/reference/shiny/latest/fluidPage.html'>fluidPage</a></span>(
+    <span class='kw'>tags</span><span class='op'>$</span><span class='fu'><a href='https://rdrr.io/pkg/htmltools/man/builder.html'>h2</a></span>(<span class='st'>"pickerColor examples"</span>),
+    
+    <span class='fu'><a href='https://shiny.rstudio.com/reference/shiny/latest/fluidPage.html'>fluidRow</a></span>(
+      <span class='fu'><a href='https://shiny.rstudio.com/reference/shiny/latest/column.html'>column</a></span>(
+        width = <span class='fl'>4</span>,
         <span class='fu'>palettePicker</span>(
-          <span class='kw'>inputId</span> <span class='kw'>=</span> <span class='st'>"pal1"</span>,
-          <span class='kw'>label</span> <span class='kw'>=</span> <span class='st'>"Select a palette"</span>,
-          <span class='kw'>choices</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/list'>list</a></span>(
-            <span class='st'>"Blues"</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/scales/topics/brewer_pal'>brewer_pal</a></span>(<span class='kw'>palette</span> <span class='kw'>=</span> <span class='st'>"Blues"</span>)(<span class='fl'>8</span>),
-            <span class='st'>"Reds"</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/scales/topics/brewer_pal'>brewer_pal</a></span>(<span class='kw'>palette</span> <span class='kw'>=</span> <span class='st'>"Reds"</span>)(<span class='fl'>8</span>)
+          inputId = <span class='st'>"pal1"</span>, 
+          label = <span class='st'>"Select a palette"</span>, 
+          choices = <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(
+            <span class='st'>"Blues"</span> = <span class='fu'><a href='https://scales.r-lib.org//reference/brewer_pal.html'>brewer_pal</a></span>(palette = <span class='st'>"Blues"</span>)(<span class='fl'>8</span>),
+            <span class='st'>"Reds"</span> = <span class='fu'><a href='https://scales.r-lib.org//reference/brewer_pal.html'>brewer_pal</a></span>(palette = <span class='st'>"Reds"</span>)(<span class='fl'>8</span>)
           )
         ),
-        <span class='fu'><a href='https://www.rdocumentation.org/packages/shiny/topics/verbatimTextOutput'>verbatimTextOutput</a></span>(<span class='st'>"res1"</span>)
+        <span class='fu'><a href='https://shiny.rstudio.com/reference/shiny/latest/textOutput.html'>verbatimTextOutput</a></span>(<span class='st'>"res1"</span>)
       ),
-      <span class='fu'><a href='https://www.rdocumentation.org/packages/shiny/topics/column'>column</a></span>(
-        <span class='kw'>width</span> <span class='kw'>=</span> <span class='fl'>4</span>,
+      <span class='fu'><a href='https://shiny.rstudio.com/reference/shiny/latest/column.html'>column</a></span>(
+        width = <span class='fl'>4</span>,
         <span class='fu'>palettePicker</span>(
-          <span class='kw'>inputId</span> <span class='kw'>=</span> <span class='st'>"pal2"</span>,
-          <span class='kw'>label</span> <span class='kw'>=</span> <span class='st'>"With a list of palette"</span>,
-          <span class='kw'>choices</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/list'>list</a></span>(
-            <span class='st'>"Viridis"</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/list'>list</a></span>(
-              <span class='st'>"viridis"</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/scales/topics/viridis_pal'>viridis_pal</a></span>(<span class='kw'>option</span> <span class='kw'>=</span> <span class='st'>"viridis"</span>)(<span class='fl'>10</span>),
-              <span class='st'>"magma"</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/scales/topics/viridis_pal'>viridis_pal</a></span>(<span class='kw'>option</span> <span class='kw'>=</span> <span class='st'>"magma"</span>)(<span class='fl'>10</span>),
-              <span class='st'>"inferno"</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/scales/topics/viridis_pal'>viridis_pal</a></span>(<span class='kw'>option</span> <span class='kw'>=</span> <span class='st'>"inferno"</span>)(<span class='fl'>10</span>),
-              <span class='st'>"plasma"</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/scales/topics/viridis_pal'>viridis_pal</a></span>(<span class='kw'>option</span> <span class='kw'>=</span> <span class='st'>"plasma"</span>)(<span class='fl'>10</span>),
-              <span class='st'>"cividis"</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/scales/topics/viridis_pal'>viridis_pal</a></span>(<span class='kw'>option</span> <span class='kw'>=</span> <span class='st'>"cividis"</span>)(<span class='fl'>10</span>)
+          inputId = <span class='st'>"pal2"</span>, 
+          label = <span class='st'>"With a list of palette"</span>, 
+          choices = <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(
+            <span class='st'>"Viridis"</span> = <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(
+              <span class='st'>"viridis"</span> = <span class='fu'><a href='https://scales.r-lib.org//reference/viridis_pal.html'>viridis_pal</a></span>(option = <span class='st'>"viridis"</span>)(<span class='fl'>10</span>),
+              <span class='st'>"magma"</span> = <span class='fu'><a href='https://scales.r-lib.org//reference/viridis_pal.html'>viridis_pal</a></span>(option = <span class='st'>"magma"</span>)(<span class='fl'>10</span>),
+              <span class='st'>"inferno"</span> = <span class='fu'><a href='https://scales.r-lib.org//reference/viridis_pal.html'>viridis_pal</a></span>(option = <span class='st'>"inferno"</span>)(<span class='fl'>10</span>),
+              <span class='st'>"plasma"</span> = <span class='fu'><a href='https://scales.r-lib.org//reference/viridis_pal.html'>viridis_pal</a></span>(option = <span class='st'>"plasma"</span>)(<span class='fl'>10</span>),
+              <span class='st'>"cividis"</span> = <span class='fu'><a href='https://scales.r-lib.org//reference/viridis_pal.html'>viridis_pal</a></span>(option = <span class='st'>"cividis"</span>)(<span class='fl'>10</span>)
             ),
-            <span class='st'>"Brewer"</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/list'>list</a></span>(
-              <span class='st'>"Blues"</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/scales/topics/brewer_pal'>brewer_pal</a></span>(<span class='kw'>palette</span> <span class='kw'>=</span> <span class='st'>"Blues"</span>)(<span class='fl'>8</span>),
-              <span class='st'>"Reds"</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/scales/topics/brewer_pal'>brewer_pal</a></span>(<span class='kw'>palette</span> <span class='kw'>=</span> <span class='st'>"Reds"</span>)(<span class='fl'>8</span>),
-              <span class='st'>"Paired"</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/scales/topics/brewer_pal'>brewer_pal</a></span>(<span class='kw'>palette</span> <span class='kw'>=</span> <span class='st'>"Paired"</span>)(<span class='fl'>8</span>),
-              <span class='st'>"Set1"</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/scales/topics/brewer_pal'>brewer_pal</a></span>(<span class='kw'>palette</span> <span class='kw'>=</span> <span class='st'>"Set1"</span>)(<span class='fl'>8</span>)
+            <span class='st'>"Brewer"</span> = <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(
+              <span class='st'>"Blues"</span> = <span class='fu'><a href='https://scales.r-lib.org//reference/brewer_pal.html'>brewer_pal</a></span>(palette = <span class='st'>"Blues"</span>)(<span class='fl'>8</span>),
+              <span class='st'>"Reds"</span> = <span class='fu'><a href='https://scales.r-lib.org//reference/brewer_pal.html'>brewer_pal</a></span>(palette = <span class='st'>"Reds"</span>)(<span class='fl'>8</span>),
+              <span class='st'>"Paired"</span> = <span class='fu'><a href='https://scales.r-lib.org//reference/brewer_pal.html'>brewer_pal</a></span>(palette = <span class='st'>"Paired"</span>)(<span class='fl'>8</span>),
+              <span class='st'>"Set1"</span> = <span class='fu'><a href='https://scales.r-lib.org//reference/brewer_pal.html'>brewer_pal</a></span>(palette = <span class='st'>"Set1"</span>)(<span class='fl'>8</span>)
             )
-          ),
-          <span class='kw'>textColor</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(
-            <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/rep'>rep</a></span>(<span class='st'>"white"</span>, <span class='fl'>5</span>), <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/rep'>rep</a></span>(<span class='st'>"black"</span>, <span class='fl'>4</span>)
+          ), 
+          textColor = <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(
+            <span class='fu'><a href='https://rdrr.io/r/base/rep.html'>rep</a></span>(<span class='st'>"white"</span>, <span class='fl'>5</span>), <span class='fu'><a href='https://rdrr.io/r/base/rep.html'>rep</a></span>(<span class='st'>"black"</span>, <span class='fl'>4</span>) 
           )
         ),
-        <span class='fu'><a href='https://www.rdocumentation.org/packages/shiny/topics/verbatimTextOutput'>verbatimTextOutput</a></span>(<span class='st'>"res2"</span>)
+        <span class='fu'><a href='https://shiny.rstudio.com/reference/shiny/latest/textOutput.html'>verbatimTextOutput</a></span>(<span class='st'>"res2"</span>)
       ),
-      <span class='fu'><a href='https://www.rdocumentation.org/packages/shiny/topics/column'>column</a></span>(
-        <span class='kw'>width</span> <span class='kw'>=</span> <span class='fl'>4</span>,
+      <span class='fu'><a href='https://shiny.rstudio.com/reference/shiny/latest/column.html'>column</a></span>(
+        width = <span class='fl'>4</span>,
         <span class='fu'>palettePicker</span>(
-          <span class='kw'>inputId</span> <span class='kw'>=</span> <span class='st'>"pal3"</span>,
-          <span class='kw'>label</span> <span class='kw'>=</span> <span class='st'>"With plain colors"</span>,
-          <span class='kw'>choices</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/list'>list</a></span>(
-            <span class='st'>"BrBG"</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/scales/topics/brewer_pal'>brewer_pal</a></span>(<span class='kw'>palette</span> <span class='kw'>=</span> <span class='st'>"BrBG"</span>)(<span class='fl'>8</span>),
-            <span class='st'>"PiYG"</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/scales/topics/brewer_pal'>brewer_pal</a></span>(<span class='kw'>palette</span> <span class='kw'>=</span> <span class='st'>"PiYG"</span>)(<span class='fl'>8</span>),
-            <span class='st'>"PRGn"</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/scales/topics/brewer_pal'>brewer_pal</a></span>(<span class='kw'>palette</span> <span class='kw'>=</span> <span class='st'>"PRGn"</span>)(<span class='fl'>8</span>),
-            <span class='st'>"PuOr"</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/scales/topics/brewer_pal'>brewer_pal</a></span>(<span class='kw'>palette</span> <span class='kw'>=</span> <span class='st'>"PuOr"</span>)(<span class='fl'>8</span>),
-            <span class='st'>"RdBu"</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/scales/topics/brewer_pal'>brewer_pal</a></span>(<span class='kw'>palette</span> <span class='kw'>=</span> <span class='st'>"RdBu"</span>)(<span class='fl'>8</span>),
-            <span class='st'>"RdGy"</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/scales/topics/brewer_pal'>brewer_pal</a></span>(<span class='kw'>palette</span> <span class='kw'>=</span> <span class='st'>"RdGy"</span>)(<span class='fl'>8</span>),
-            <span class='st'>"RdYlBu"</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/scales/topics/brewer_pal'>brewer_pal</a></span>(<span class='kw'>palette</span> <span class='kw'>=</span> <span class='st'>"RdYlBu"</span>)(<span class='fl'>8</span>),
-            <span class='st'>"RdYlGn"</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/scales/topics/brewer_pal'>brewer_pal</a></span>(<span class='kw'>palette</span> <span class='kw'>=</span> <span class='st'>"RdYlGn"</span>)(<span class='fl'>8</span>),
-            <span class='st'>"Spectral"</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/scales/topics/brewer_pal'>brewer_pal</a></span>(<span class='kw'>palette</span> <span class='kw'>=</span> <span class='st'>"Spectral"</span>)(<span class='fl'>8</span>)
-          ),
-          <span class='kw'>plainColor</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
-          <span class='kw'>textColor</span> <span class='kw'>=</span> <span class='st'>"white"</span>
+          inputId = <span class='st'>"pal3"</span>, 
+          label = <span class='st'>"With plain colors"</span>, 
+          choices = <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(
+            <span class='st'>"BrBG"</span> = <span class='fu'><a href='https://scales.r-lib.org//reference/brewer_pal.html'>brewer_pal</a></span>(palette = <span class='st'>"BrBG"</span>)(<span class='fl'>8</span>), 
+            <span class='st'>"PiYG"</span> = <span class='fu'><a href='https://scales.r-lib.org//reference/brewer_pal.html'>brewer_pal</a></span>(palette = <span class='st'>"PiYG"</span>)(<span class='fl'>8</span>), 
+            <span class='st'>"PRGn"</span> = <span class='fu'><a href='https://scales.r-lib.org//reference/brewer_pal.html'>brewer_pal</a></span>(palette = <span class='st'>"PRGn"</span>)(<span class='fl'>8</span>), 
+            <span class='st'>"PuOr"</span> = <span class='fu'><a href='https://scales.r-lib.org//reference/brewer_pal.html'>brewer_pal</a></span>(palette = <span class='st'>"PuOr"</span>)(<span class='fl'>8</span>), 
+            <span class='st'>"RdBu"</span> = <span class='fu'><a href='https://scales.r-lib.org//reference/brewer_pal.html'>brewer_pal</a></span>(palette = <span class='st'>"RdBu"</span>)(<span class='fl'>8</span>), 
+            <span class='st'>"RdGy"</span> = <span class='fu'><a href='https://scales.r-lib.org//reference/brewer_pal.html'>brewer_pal</a></span>(palette = <span class='st'>"RdGy"</span>)(<span class='fl'>8</span>), 
+            <span class='st'>"RdYlBu"</span> = <span class='fu'><a href='https://scales.r-lib.org//reference/brewer_pal.html'>brewer_pal</a></span>(palette = <span class='st'>"RdYlBu"</span>)(<span class='fl'>8</span>), 
+            <span class='st'>"RdYlGn"</span> = <span class='fu'><a href='https://scales.r-lib.org//reference/brewer_pal.html'>brewer_pal</a></span>(palette = <span class='st'>"RdYlGn"</span>)(<span class='fl'>8</span>), 
+            <span class='st'>"Spectral"</span> = <span class='fu'><a href='https://scales.r-lib.org//reference/brewer_pal.html'>brewer_pal</a></span>(palette = <span class='st'>"Spectral"</span>)(<span class='fl'>8</span>)
+          ), 
+          plainColor = <span class='fl'>TRUE</span>, 
+          textColor = <span class='st'>"white"</span>
         ),
-        <span class='fu'><a href='https://www.rdocumentation.org/packages/shiny/topics/verbatimTextOutput'>verbatimTextOutput</a></span>(<span class='st'>"res3"</span>)
+        <span class='fu'><a href='https://shiny.rstudio.com/reference/shiny/latest/textOutput.html'>verbatimTextOutput</a></span>(<span class='st'>"res3"</span>)
       )
     )
   )
-
-  <span class='no'>server</span> <span class='kw'>&lt;-</span> <span class='kw'>function</span>(<span class='no'>input</span>, <span class='no'>output</span>, <span class='no'>session</span>) {
-
-    <span class='no'>output</span>$<span class='no'>res1</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/shiny/topics/renderPrint'>renderPrint</a></span>(<span class='no'>input</span>$<span class='no'>pal1</span>)
-    <span class='no'>output</span>$<span class='no'>res2</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/shiny/topics/renderPrint'>renderPrint</a></span>(<span class='no'>input</span>$<span class='no'>pal2</span>)
-    <span class='no'>output</span>$<span class='no'>res3</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/shiny/topics/renderPrint'>renderPrint</a></span>(<span class='no'>input</span>$<span class='no'>pal3</span>)
-
+  
+  <span class='kw'>server</span> <span class='op'>&lt;-</span> <span class='fu'>function</span>(<span class='kw'>input</span>, <span class='kw'>output</span>, <span class='kw'>session</span>) {
+    
+    <span class='kw'>output</span><span class='op'>$</span><span class='kw'>res1</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://shiny.rstudio.com/reference/shiny/latest/renderPrint.html'>renderPrint</a></span>(<span class='kw'>input</span><span class='op'>$</span><span class='kw'>pal1</span>)
+    <span class='kw'>output</span><span class='op'>$</span><span class='kw'>res2</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://shiny.rstudio.com/reference/shiny/latest/renderPrint.html'>renderPrint</a></span>(<span class='kw'>input</span><span class='op'>$</span><span class='kw'>pal2</span>)
+    <span class='kw'>output</span><span class='op'>$</span><span class='kw'>res3</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://shiny.rstudio.com/reference/shiny/latest/renderPrint.html'>renderPrint</a></span>(<span class='kw'>input</span><span class='op'>$</span><span class='kw'>pal3</span>)
+    
   }
-
-  <span class='fu'><a href='https://www.rdocumentation.org/packages/shiny/topics/shinyApp'>shinyApp</a></span>(<span class='no'>ui</span>, <span class='no'>server</span>)
-
-}</div></pre>
+  
+  <span class='fu'><a href='https://shiny.rstudio.com/reference/shiny/latest/shinyApp.html'>shinyApp</a></span>(<span class='kw'>ui</span>, <span class='kw'>server</span>)
+  
+}
+</div></pre>
   </div>
-  <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
-    <h2>Contents</h2>
-    <ul class="nav nav-pills nav-stacked">
-      <li><a href="#arguments">Arguments</a></li>
-      
-      <li><a href="#value">Value</a></li>
-      
-      <li><a href="#examples">Examples</a></li>
-    </ul>
-
+  <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
+    <nav id="toc" data-toggle="toc" class="sticky-top">
+      <h2 data-toc-skip>Contents</h2>
+    </nav>
   </div>
 </div>
+
 
       <footer>
       <div class="copyright">
@@ -361,13 +381,16 @@ If not specified then defaults to the first value for single-select lists and no
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.3.0.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.0.</p>
 </div>
+
       </footer>
    </div>
 
   
 
+
   </body>
 </html>
+
 

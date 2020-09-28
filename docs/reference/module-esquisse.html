@@ -8,21 +8,29 @@
 
 <title>Esquisse Shiny module — esquisserServer • esquisse</title>
 
-<!-- jquery -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
-<!-- Bootstrap -->
-<link href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/3.3.7/flatly/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous" />
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha256-U5ZEeKfGNOja007MMD3YBI0A3OSZOQbeG6z2f2Y0hu8=" crossorigin="anonymous"></script>
+<!-- jquery -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
+<!-- Bootstrap -->
+<link href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/3.4.0/flatly/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous" />
+
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/js/bootstrap.min.js" integrity="sha256-nuL8/2cJ5NDSSwnKD8VqreErSWHtnEP9E7AySL+1ev4=" crossorigin="anonymous"></script>
+
+<!-- bootstrap-toc -->
+<link rel="stylesheet" href="../bootstrap-toc.css">
+<script src="../bootstrap-toc.js"></script>
 
 <!-- Font Awesome icons -->
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha256-eZrrJcwDc/3uDhsdt61sL2oOBY362qM3lon1gyExkL0=" crossorigin="anonymous" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/v4-shims.min.css" integrity="sha256-wZjR52fzng1pJHwx4aV2AO3yyTOXrcDW7jBpJtTwVxw=" crossorigin="anonymous" />
 
 <!-- clipboard.js -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.4/clipboard.min.js" integrity="sha256-FiZwavyI2V6+EXO1U+xzLG3IKldpiTFf3153ea9zikQ=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script>
 
-<!-- sticky kit -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/sticky-kit/1.1.3/sticky-kit.min.js" integrity="sha256-c4Rlo1ZozqTPE2RLuvbusY3+SU1pQaJC0TjuhygMipw=" crossorigin="anonymous"></script>
+<!-- headroom.js -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script>
 
 <!-- pkgdown -->
 <link href="../pkgdown.css" rel="stylesheet">
@@ -30,10 +38,10 @@
 
 
 
-<meta property="og:title" content="Esquisse Shiny module — esquisserServer" />
 
+<meta property="og:title" content="Esquisse Shiny module — esquisserServer" />
 <meta property="og:description" content="Launch esquisse in a classic Shiny app." />
-<meta name="twitter:card" content="summary" />
+
 
 
 
@@ -47,9 +55,10 @@
 <![endif]-->
 
 
+
   </head>
 
-  <body>
+  <body data-spy="scroll" data-target="#toc">
     <div class="container template-reference-topic">
       <header>
       <div class="navbar navbar-default navbar-fixed-top" role="navigation">
@@ -63,7 +72,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">esquisse</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.2.2</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.3.1</span>
       </span>
     </div>
 
@@ -97,7 +106,6 @@
   <a href="../news/index.html">News</a>
 </li>
       </ul>
-      
       <ul class="nav navbar-nav navbar-right">
         <li>
   <a href="https://github.com/dreamRs/esquisse">
@@ -112,6 +120,7 @@
 </div><!--/.navbar -->
 
       
+
       </header>
 
 <div class="row">
@@ -123,19 +132,29 @@
     </div>
 
     <div class="ref-description">
-    
     <p>Launch <code>esquisse</code> in a classic Shiny app.</p>
-    
     </div>
 
-    <pre class="usage"><span class='fu'>esquisserServer</span>(<span class='no'>input</span>, <span class='no'>output</span>, <span class='no'>session</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>dataModule</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='st'>"GlobalEnv"</span>, <span class='st'>"ImportFile"</span>), <span class='kw'>sizeDataModule</span> <span class='kw'>=</span> <span class='st'>"m"</span>)
+    <pre class="usage"><span class='fu'>esquisserServer</span>(
+  <span class='kw'>input</span>,
+  <span class='kw'>output</span>,
+  <span class='kw'>session</span>,
+  data = <span class='kw'>NULL</span>,
+  dataModule = <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"GlobalEnv"</span>, <span class='st'>"ImportFile"</span>),
+  sizeDataModule = <span class='st'>"m"</span>
+)
 
-<span class='fu'>esquisserUI</span>(<span class='no'>id</span>, <span class='kw'>header</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>container</span> <span class='kw'>=</span> <span class='fu'>esquisseContainer</span>(),
-  <span class='kw'>choose_data</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>insert_code</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)
+<span class='fu'>esquisserUI</span>(
+  <span class='kw'>id</span>,
+  header = <span class='fl'>TRUE</span>,
+  container = <span class='fu'>esquisseContainer</span>(),
+  choose_data = <span class='fl'>TRUE</span>,
+  insert_code = <span class='fl'>FALSE</span>,
+  disable_filters = <span class='fl'>FALSE</span>
+)
 
-<span class='fu'>esquisseContainer</span>(<span class='kw'>width</span> <span class='kw'>=</span> <span class='st'>"100%"</span>, <span class='kw'>height</span> <span class='kw'>=</span> <span class='st'>"700px"</span>, <span class='kw'>fixed</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</pre>
-    
+<span class='fu'>esquisseContainer</span>(width = <span class='st'>"100%"</span>, height = <span class='st'>"700px"</span>, fixed = <span class='fl'>FALSE</span>)</pre>
+
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
@@ -182,9 +201,13 @@ Must be a <code>function</code>.</p></td>
 code in the current user script (work only in RStudio).</p></td>
     </tr>
     <tr>
+      <th>disable_filters</th>
+      <td><p>Logical. Disable the menu allowing to filter data used.</p></td>
+    </tr>
+    <tr>
       <th>width, height</th>
       <td><p>The width and height of the container, e.g. <code>'400px'</code>,
-or <code>'100%'</code>; see <code><a href='https://www.rdocumentation.org/packages/htmltools/topics/validateCssUnit'>validateCssUnit</a></code>.</p></td>
+or <code>'100%'</code>; see <code><a href='https://rdrr.io/pkg/htmltools/man/validateCssUnit.html'>validateCssUnit</a></code>.</p></td>
     </tr>
     <tr>
       <th>fixed</th>
@@ -194,7 +217,7 @@ It's possible to use a vector of CSS unit of length 4 to specify the margins
 (top, right, bottom, left).</p></td>
     </tr>
     </table>
-    
+
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
     <p>A <code>reactiveValues</code> with 3 slots :</p><ul>
@@ -203,132 +226,125 @@ It's possible to use a vector of CSS unit of length 4 to specify the margins
 <li><p><strong>data</strong> : <code>data.frame</code> used in plot (with filters applied).</p></li>
 </ul>
 
-    
     <h2 class="hasAnchor" id="note"><a class="anchor" href="#note"></a>Note</h2>
 
     <p>For the module to display correctly, it is necessary to place
  it in a container with a fixed height. Since version &gt;= 0.2.2, the 
  container is added by default.</p>
-    
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='kw'>if</span> (<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/interactive'>interactive</a></span>()) {
-
-<span class='co'>### Part of a Shiny app ###</span>
-
-<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/library'>library</a></span>(<span class='no'>shiny</span>)
-<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/library'>library</a></span>(<span class='no'>esquisse</span>)
-
-<span class='no'>ui</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/shiny/topics/fluidPage'>fluidPage</a></span>(
-  <span class='no'>tags</span>$<span class='fu'><a href='https://www.rdocumentation.org/packages/shiny/topics/builder'>h1</a></span>(<span class='st'>"Use esquisse as a Shiny module"</span>),
-
-  <span class='fu'><a href='https://www.rdocumentation.org/packages/shiny/topics/radioButtons'>radioButtons</a></span>(
-    <span class='kw'>inputId</span> <span class='kw'>=</span> <span class='st'>"data"</span>,
-    <span class='kw'>label</span> <span class='kw'>=</span> <span class='st'>"Data to use:"</span>,
-    <span class='kw'>choices</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='st'>"iris"</span>, <span class='st'>"mtcars"</span>),
-    <span class='kw'>inline</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>
-  ),
-  <span class='fu'>esquisserUI</span>(
-    <span class='kw'>id</span> <span class='kw'>=</span> <span class='st'>"esquisse"</span>,
-    <span class='kw'>header</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='co'># dont display gadget title</span>
-    <span class='kw'>choose_data</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='co'># dont display button to change data,</span>
-    <span class='kw'>container</span> <span class='kw'>=</span> <span class='fu'>esquisseContainer</span>(<span class='kw'>height</span> <span class='kw'>=</span> <span class='st'>"700px"</span>)
-  )
-)
-
-<span class='no'>server</span> <span class='kw'>&lt;-</span> <span class='kw'>function</span>(<span class='no'>input</span>, <span class='no'>output</span>, <span class='no'>session</span>) {
-
-  <span class='no'>data_r</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/shiny/topics/reactiveValues'>reactiveValues</a></span>(<span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>iris</span>, <span class='kw'>name</span> <span class='kw'>=</span> <span class='st'>"iris"</span>)
-
-  <span class='fu'><a href='https://www.rdocumentation.org/packages/shiny/topics/observeEvent'>observeEvent</a></span>(<span class='no'>input</span>$<span class='no'>data</span>, {
-    <span class='kw'>if</span> (<span class='no'>input</span>$<span class='no'>data</span> <span class='kw'>==</span> <span class='st'>"iris"</span>) {
-      <span class='no'>data_r</span>$<span class='no'>data</span> <span class='kw'>&lt;-</span> <span class='no'>iris</span>
-      <span class='no'>data_r</span>$<span class='no'>name</span> <span class='kw'>&lt;-</span> <span class='st'>"iris"</span>
-    } <span class='kw'>else</span> {
-      <span class='no'>data_r</span>$<span class='no'>data</span> <span class='kw'>&lt;-</span> <span class='no'>mtcars</span>
-      <span class='no'>data_r</span>$<span class='no'>name</span> <span class='kw'>&lt;-</span> <span class='st'>"mtcars"</span>
-    }
-  })
-
-  <span class='fu'><a href='https://www.rdocumentation.org/packages/shiny/topics/callModule'>callModule</a></span>(<span class='kw'>module</span> <span class='kw'>=</span> <span class='no'>esquisserServer</span>, <span class='kw'>id</span> <span class='kw'>=</span> <span class='st'>"esquisse"</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>data_r</span>)
-
-}
-
-<span class='fu'><a href='https://www.rdocumentation.org/packages/shiny/topics/shinyApp'>shinyApp</a></span>(<span class='no'>ui</span>, <span class='no'>server</span>)
-
-
-
-<span class='co'>### Whole Shiny app ###</span>
-
-<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/library'>library</a></span>(<span class='no'>shiny</span>)
-<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/library'>library</a></span>(<span class='no'>esquisse</span>)
-
-
-<span class='co'># Load some datasets in app environment</span>
-<span class='no'>my_data</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/data.frame'>data.frame</a></span>(
-  <span class='kw'>var1</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/stats/topics/Normal'>rnorm</a></span>(<span class='fl'>100</span>),
-  <span class='kw'>var2</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/sample'>sample</a></span>(<span class='no'>letters</span>[<span class='fl'>1</span>:<span class='fl'>5</span>], <span class='fl'>100</span>, <span class='fl'>TRUE</span>)
-)
-
-
-<span class='no'>ui</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/shiny/topics/fluidPage'>fluidPage</a></span>(
-  <span class='fu'>esquisserUI</span>(
-    <span class='kw'>id</span> <span class='kw'>=</span> <span class='st'>"esquisse"</span>,
-    <span class='kw'>container</span> <span class='kw'>=</span> <span class='fu'>esquisseContainer</span>(<span class='kw'>fixed</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
-  )
-)
-
-<span class='no'>server</span> <span class='kw'>&lt;-</span> <span class='kw'>function</span>(<span class='no'>input</span>, <span class='no'>output</span>, <span class='no'>session</span>) {
-
-  <span class='fu'><a href='https://www.rdocumentation.org/packages/shiny/topics/callModule'>callModule</a></span>(<span class='kw'>module</span> <span class='kw'>=</span> <span class='no'>esquisserServer</span>, <span class='kw'>id</span> <span class='kw'>=</span> <span class='st'>"esquisse"</span>)
-
-}
-
-<span class='fu'><a href='https://www.rdocumentation.org/packages/shiny/topics/shinyApp'>shinyApp</a></span>(<span class='no'>ui</span>, <span class='no'>server</span>)
-
-
-
-<span class='co'>## You can also use a vector of margins for the fixed argument,</span>
-<span class='co'># useful if you have a navbar for example</span>
-
-<span class='no'>ui</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/shiny/topics/navbarPage'>navbarPage</a></span>(
-  <span class='kw'>title</span> <span class='kw'>=</span> <span class='st'>"My navbar app"</span>,
-  <span class='fu'><a href='https://www.rdocumentation.org/packages/shiny/topics/tabPanel'>tabPanel</a></span>(
-    <span class='kw'>title</span> <span class='kw'>=</span> <span class='st'>"esquisse"</span>,
+    <pre class="examples"><div class='input'>
+<span class='co'>if</span> (<span class='fu'><a href='https://rdrr.io/r/base/interactive.html'>interactive</a></span>()) {
+  
+  <span class='co'>### Part of a Shiny app ###</span>
+  
+  <span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='kw'><a href='http://shiny.rstudio.com'>shiny</a></span>)
+  <span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='kw'><a href='https://github.com/dreamRs/esquisse'>esquisse</a></span>)
+  
+  <span class='kw'>ui</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://shiny.rstudio.com/reference/shiny/latest/fluidPage.html'>fluidPage</a></span>(
+    <span class='kw'>tags</span><span class='op'>$</span><span class='fu'><a href='https://rdrr.io/pkg/htmltools/man/builder.html'>h1</a></span>(<span class='st'>"Use esquisse as a Shiny module"</span>),
+    
+    <span class='fu'><a href='https://shiny.rstudio.com/reference/shiny/latest/radioButtons.html'>radioButtons</a></span>(
+      inputId = <span class='st'>"data"</span>, 
+      label = <span class='st'>"Data to use:"</span>, 
+      choices = <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"iris"</span>, <span class='st'>"mtcars"</span>),
+      inline = <span class='fl'>TRUE</span>
+    ),
     <span class='fu'>esquisserUI</span>(
-      <span class='kw'>id</span> <span class='kw'>=</span> <span class='st'>"esquisse"</span>,
-      <span class='kw'>header</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-      <span class='kw'>container</span> <span class='kw'>=</span> <span class='fu'>esquisseContainer</span>(
-        <span class='kw'>fixed</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='fl'>50</span>, <span class='fl'>0</span>, <span class='fl'>0</span>, <span class='fl'>0</span>)
+      id = <span class='st'>"esquisse"</span>, 
+      header = <span class='fl'>FALSE</span>, <span class='co'># dont display gadget title</span>
+      choose_data = <span class='fl'>FALSE</span>, <span class='co'># dont display button to change data,</span>
+      container = <span class='fu'>esquisseContainer</span>(height = <span class='st'>"700px"</span>)
+    )
+  )
+  
+  <span class='kw'>server</span> <span class='op'>&lt;-</span> <span class='fu'>function</span>(<span class='kw'>input</span>, <span class='kw'>output</span>, <span class='kw'>session</span>) {
+    
+    <span class='kw'>data_r</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://shiny.rstudio.com/reference/shiny/latest/reactiveValues.html'>reactiveValues</a></span>(data = <span class='kw'>iris</span>, name = <span class='st'>"iris"</span>)
+    
+    <span class='fu'><a href='https://shiny.rstudio.com/reference/shiny/latest/observeEvent.html'>observeEvent</a></span>(<span class='kw'>input</span><span class='op'>$</span><span class='kw'>data</span>, {
+      <span class='co'>if</span> (<span class='kw'>input</span><span class='op'>$</span><span class='kw'>data</span> <span class='op'>==</span> <span class='st'>"iris"</span>) {
+        <span class='kw'>data_r</span><span class='op'>$</span><span class='kw'>data</span> <span class='op'>&lt;-</span> <span class='kw'>iris</span>
+        <span class='kw'>data_r</span><span class='op'>$</span><span class='kw'>name</span> <span class='op'>&lt;-</span> <span class='st'>"iris"</span>
+      } <span class='co'>else</span> {
+        <span class='kw'>data_r</span><span class='op'>$</span><span class='kw'>data</span> <span class='op'>&lt;-</span> <span class='kw'>mtcars</span>
+        <span class='kw'>data_r</span><span class='op'>$</span><span class='kw'>name</span> <span class='op'>&lt;-</span> <span class='st'>"mtcars"</span>
+      }
+    })
+    
+    <span class='fu'><a href='https://shiny.rstudio.com/reference/shiny/latest/callModule.html'>callModule</a></span>(module = <span class='kw'>esquisserServer</span>, id = <span class='st'>"esquisse"</span>, data = <span class='kw'>data_r</span>)
+    
+  }
+  
+  <span class='fu'><a href='https://shiny.rstudio.com/reference/shiny/latest/shinyApp.html'>shinyApp</a></span>(<span class='kw'>ui</span>, <span class='kw'>server</span>)
+  
+  
+  
+  <span class='co'>### Whole Shiny app ###</span>
+  
+  <span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='kw'><a href='http://shiny.rstudio.com'>shiny</a></span>)
+  <span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='kw'><a href='https://github.com/dreamRs/esquisse'>esquisse</a></span>)
+  
+  
+  <span class='co'># Load some datasets in app environment</span>
+  <span class='kw'>my_data</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a></span>(
+    var1 = <span class='fu'><a href='https://rdrr.io/r/stats/Normal.html'>rnorm</a></span>(<span class='fl'>100</span>),
+    var2 = <span class='fu'><a href='https://rdrr.io/r/base/sample.html'>sample</a></span>(<span class='kw'>letters</span>[<span class='fl'>1</span><span class='op'>:</span><span class='fl'>5</span>], <span class='fl'>100</span>, <span class='fl'>TRUE</span>)
+  )
+  
+  
+  <span class='kw'>ui</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://shiny.rstudio.com/reference/shiny/latest/fluidPage.html'>fluidPage</a></span>(
+    <span class='fu'>esquisserUI</span>(
+      id = <span class='st'>"esquisse"</span>, 
+      container = <span class='fu'>esquisseContainer</span>(fixed = <span class='fl'>TRUE</span>)
+    )
+  )
+  
+  <span class='kw'>server</span> <span class='op'>&lt;-</span> <span class='fu'>function</span>(<span class='kw'>input</span>, <span class='kw'>output</span>, <span class='kw'>session</span>) {
+    
+    <span class='fu'><a href='https://shiny.rstudio.com/reference/shiny/latest/callModule.html'>callModule</a></span>(module = <span class='kw'>esquisserServer</span>, id = <span class='st'>"esquisse"</span>)
+    
+  }
+  
+  <span class='fu'><a href='https://shiny.rstudio.com/reference/shiny/latest/shinyApp.html'>shinyApp</a></span>(<span class='kw'>ui</span>, <span class='kw'>server</span>)
+  
+  
+  
+  <span class='co'>## You can also use a vector of margins for the fixed argument,</span>
+  <span class='co'># useful if you have a navbar for example</span>
+  
+  <span class='kw'>ui</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://shiny.rstudio.com/reference/shiny/latest/navbarPage.html'>navbarPage</a></span>(
+    title = <span class='st'>"My navbar app"</span>,
+    <span class='fu'><a href='https://shiny.rstudio.com/reference/shiny/latest/tabPanel.html'>tabPanel</a></span>(
+      title = <span class='st'>"esquisse"</span>,
+      <span class='fu'>esquisserUI</span>(
+        id = <span class='st'>"esquisse"</span>, 
+        header = <span class='fl'>FALSE</span>,
+        container = <span class='fu'>esquisseContainer</span>(
+          fixed = <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>55</span>, <span class='fl'>0</span>, <span class='fl'>0</span>, <span class='fl'>0</span>)
+        )
       )
     )
   )
-)
-
-<span class='no'>server</span> <span class='kw'>&lt;-</span> <span class='kw'>function</span>(<span class='no'>input</span>, <span class='no'>output</span>, <span class='no'>session</span>) {
-
-  <span class='fu'><a href='https://www.rdocumentation.org/packages/shiny/topics/callModule'>callModule</a></span>(<span class='kw'>module</span> <span class='kw'>=</span> <span class='no'>esquisserServer</span>, <span class='kw'>id</span> <span class='kw'>=</span> <span class='st'>"esquisse"</span>)
-
+  
+  <span class='kw'>server</span> <span class='op'>&lt;-</span> <span class='fu'>function</span>(<span class='kw'>input</span>, <span class='kw'>output</span>, <span class='kw'>session</span>) {
+    
+    <span class='fu'><a href='https://shiny.rstudio.com/reference/shiny/latest/callModule.html'>callModule</a></span>(module = <span class='kw'>esquisserServer</span>, id = <span class='st'>"esquisse"</span>)
+    
+  }
+  
+  <span class='fu'><a href='https://shiny.rstudio.com/reference/shiny/latest/shinyApp.html'>shinyApp</a></span>(<span class='kw'>ui</span>, <span class='kw'>server</span>)
+  
 }
-
-<span class='fu'><a href='https://www.rdocumentation.org/packages/shiny/topics/shinyApp'>shinyApp</a></span>(<span class='no'>ui</span>, <span class='no'>server</span>)
-
-}</div></pre>
+</div></pre>
   </div>
-  <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
-    <h2>Contents</h2>
-    <ul class="nav nav-pills nav-stacked">
-      <li><a href="#arguments">Arguments</a></li>
-      
-      <li><a href="#value">Value</a></li>
-
-      <li><a href="#note">Note</a></li>
-      
-      <li><a href="#examples">Examples</a></li>
-    </ul>
-
+  <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
+    <nav id="toc" data-toggle="toc" class="sticky-top">
+      <h2 data-toc-skip>Contents</h2>
+    </nav>
   </div>
 </div>
+
 
       <footer>
       <div class="copyright">
@@ -336,13 +352,16 @@ It's possible to use a vector of CSS unit of length 4 to specify the margins
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.3.0.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.0.</p>
 </div>
+
       </footer>
    </div>
 
   
 
+
   </body>
 </html>
+
 

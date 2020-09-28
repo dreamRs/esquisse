@@ -8,21 +8,29 @@
 
 <title>Changelog • esquisse</title>
 
-<!-- jquery -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
-<!-- Bootstrap -->
-<link href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/3.3.7/flatly/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous" />
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha256-U5ZEeKfGNOja007MMD3YBI0A3OSZOQbeG6z2f2Y0hu8=" crossorigin="anonymous"></script>
+<!-- jquery -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
+<!-- Bootstrap -->
+<link href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/3.4.0/flatly/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous" />
+
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/js/bootstrap.min.js" integrity="sha256-nuL8/2cJ5NDSSwnKD8VqreErSWHtnEP9E7AySL+1ev4=" crossorigin="anonymous"></script>
+
+<!-- bootstrap-toc -->
+<link rel="stylesheet" href="../bootstrap-toc.css">
+<script src="../bootstrap-toc.js"></script>
 
 <!-- Font Awesome icons -->
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha256-eZrrJcwDc/3uDhsdt61sL2oOBY362qM3lon1gyExkL0=" crossorigin="anonymous" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/v4-shims.min.css" integrity="sha256-wZjR52fzng1pJHwx4aV2AO3yyTOXrcDW7jBpJtTwVxw=" crossorigin="anonymous" />
 
 <!-- clipboard.js -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.4/clipboard.min.js" integrity="sha256-FiZwavyI2V6+EXO1U+xzLG3IKldpiTFf3153ea9zikQ=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script>
 
-<!-- sticky kit -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/sticky-kit/1.1.3/sticky-kit.min.js" integrity="sha256-c4Rlo1ZozqTPE2RLuvbusY3+SU1pQaJC0TjuhygMipw=" crossorigin="anonymous"></script>
+<!-- headroom.js -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script>
 
 <!-- pkgdown -->
 <link href="../pkgdown.css" rel="stylesheet">
@@ -30,7 +38,9 @@
 
 
 
+
 <meta property="og:title" content="Changelog" />
+
 
 
 
@@ -44,9 +54,10 @@
 <![endif]-->
 
 
+
   </head>
 
-  <body>
+  <body data-spy="scroll" data-target="#toc">
     <div class="container template-news">
       <header>
       <div class="navbar navbar-default navbar-fixed-top" role="navigation">
@@ -60,7 +71,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">esquisse</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.2.2</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.3.1</span>
       </span>
     </div>
 
@@ -94,7 +105,6 @@
   <a href="../news/index.html">News</a>
 </li>
       </ul>
-      
       <ul class="nav navbar-nav navbar-right">
         <li>
   <a href="https://github.com/dreamRs/esquisse">
@@ -109,22 +119,67 @@
 </div><!--/.navbar -->
 
       
+
       </header>
 
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-      <h1>Changelog <small></small></h1>
+      <h1 data-toc-skip>Changelog <small></small></h1>
       <small>Source: <a href='https://github.com/dreamRs/esquisse/blob/master/NEWS.md'><code>NEWS.md</code></a></small>
     </div>
 
+    <div id="esquisse-031" class="section level1">
+<h1 class="page-header" data-toc-text="0.3.1">
+<a href="#esquisse-031" class="anchor"></a>esquisse 0.3.1<small> 2020-09-27 </small>
+</h1>
+<ul>
+<li>facet wrap displays by <a href="https://github.com/xiangnandang">@xiangnandang</a>
+</li>
+<li>facet_row and facet_col features to allow facet_grid call from ggplot2 by <a href="https://github.com/xiangnandang">@xiangnandang</a>
+</li>
+<li>x and y limits of the plots by <a href="https://github.com/xiangnandang">@xiangnandang</a>
+</li>
+<li>Check if data is null when changing datasets by <a href="https://github.com/trafficonese">@trafficonese</a>.</li>
+<li>New function <code><a href="../reference/updateDragulaInput.html">updateDragulaInput()</a></code> to update <code><a href="../reference/dragulaInput.html">dragulaInput()</a></code> server side.</li>
+<li>
+<code><a href="../reference/dragulaInput.html">dragulaInput()</a></code> has two new arguments: <code>ncolSource</code> and <code>ncolGrid</code> to create a grid layout with source and targets boxes.</li>
+</ul>
+</div>
+    <div id="esquisse-030" class="section level1">
+<h1 class="page-header" data-toc-text="0.3.0">
+<a href="#esquisse-030" class="anchor"></a>esquisse 0.3.0<small> 2020-01-27 </small>
+</h1>
+<ul>
+<li>Fixed a bug in <code>dragulaInput</code> preventing to change variable in main addin.</li>
+<li>
+<code><a href="../reference/module-chooseData.html">chooseDataServer()</a></code> has a new argument <code>selectedTypes</code> to set types of variables selected by default. <a href="https://github.com/dreamRs/esquisse/issues/95"><a href='https://github.com/dreamRs/esquisse/issues/95'>#95</a></a>
+</li>
+<li>Packages <a href="https://github.com/jrnold/ggthemes">{ggthemes}</a> and <a href="https://github.com/hrbrmstr/hrbrthemes">{hrbrthemes}</a> are now in Suggests.</li>
+</ul>
+</div>
+    <div id="esquisse-023" class="section level1">
+<h1 class="page-header" data-toc-text="0.2.3">
+<a href="#esquisse-023" class="anchor"></a>esquisse 0.2.3<small> 2020-01-09 </small>
+</h1>
+<ul>
+<li>New argument <code>disable_filters</code> in <code><a href="../reference/esquisserServer.html">esquisserUI()</a></code> to disable the ability to filter data.</li>
+<li>Enable bookmarking for module <code>filterDF</code>.</li>
+<li>
+<code><a href="../reference/module-filterDF.html">filterDF()</a></code> module handle missing values correctly.</li>
+<li>
+<code><a href="../reference/module-filterDF.html">filterDF()</a></code> has two new arguments : <code>drop_ids</code> : logical, drop or not column with only unique values, <code>picker</code> allow to use <code><a href="https://rdrr.io/pkg/shinyWidgets/man/pickerInput.html">shinyWidgets::pickerInput</a></code>.</li>
+<li>Code generated : no more affectation in {dplyr} code, a pipe is used to send code to {ggplot2} (mentioned in <a href="https://github.com/dreamRs/esquisse/issues/79"><a href='https://github.com/dreamRs/esquisse/issues/79'>#79</a></a>)</li>
+</ul>
+</div>
     <div id="esquisse-022" class="section level1">
-<h1 class="page-header">
+<h1 class="page-header" data-toc-text="0.2.2">
 <a href="#esquisse-022" class="anchor"></a>esquisse 0.2.2<small> 2019-08-22 </small>
 </h1>
 <ul>
-<li>Added <code>esquisseContainer</code> to better integrate esquisse module in a shiny application.</li>
-<li>New functions <code>colorPicker</code> and <code>palettePicker</code> to select a color or a palette (this is the select control used in the main addin).</li>
+<li>Added <code><a href="../reference/esquisserServer.html">esquisseContainer()</a></code> to better integrate esquisse module in a shiny application.</li>
+<li>New functions <code><a href="../reference/input-colors.html">colorPicker()</a></code> and <code><a href="../reference/input-colors.html">palettePicker()</a></code> to select a color or a palette (this is the select control used in the main addin).</li>
+<li>New argument <code>insert_code</code> in <code><a href="../reference/esquisserServer.html">esquisserUI()</a></code> to hide “Insert into script button”.</li>
 </ul>
 <div id="breaking-changes" class="section level2">
 <h2 class="hasAnchor">
@@ -132,25 +187,27 @@
 <ul>
 <li>
 <p>When using esquisse module into a shiny, it’s not necessary anymore to put <code>esquisseUI</code> into a container, one is now added via argument <code>esquisseUI(container = ...)</code> :</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" title="1"><span class="co"># old</span></a>
-<a class="sourceLine" id="cb1-2" title="2">tags<span class="op">$</span><span class="kw">div</span>(</a>
-<a class="sourceLine" id="cb1-3" title="3">  <span class="dt">style =</span> <span class="st">"height: 700px;"</span>,</a>
-<a class="sourceLine" id="cb1-4" title="4">  <span class="kw"><a href="../reference/module-esquisse.html">esquisserUI</a></span>(</a>
-<a class="sourceLine" id="cb1-5" title="5">    <span class="dt">id =</span> <span class="st">"esquisse"</span></a>
-<a class="sourceLine" id="cb1-6" title="6">  )</a>
-<a class="sourceLine" id="cb1-7" title="7">)</a>
-<a class="sourceLine" id="cb1-8" title="8"></a>
-<a class="sourceLine" id="cb1-9" title="9"><span class="co"># new </span></a>
-<a class="sourceLine" id="cb1-10" title="10"><span class="kw"><a href="../reference/module-esquisse.html">esquisserUI</a></span>(</a>
-<a class="sourceLine" id="cb1-11" title="11">  <span class="dt">id =</span> <span class="st">"esquisse"</span>, </a>
-<a class="sourceLine" id="cb1-12" title="12">  <span class="dt">container =</span> <span class="kw"><a href="../reference/module-esquisse.html">esquisseContainer</a></span>(<span class="dt">height =</span> <span class="st">"700px"</span>)</a>
-<a class="sourceLine" id="cb1-13" title="13">)</a></code></pre></div>
+<div class="sourceCode" id="cb1"><pre class="downlit">
+<span class="co"># old</span>
+<span class="kw">tags</span><span class="op">$</span><span class="fu"><a href="https://rdrr.io/pkg/htmltools/man/builder.html">div</a></span>(
+  style = <span class="st">"height: 700px;"</span>,
+  <span class="fu"><a href="../reference/esquisserServer.html">esquisserUI</a></span>(
+    id = <span class="st">"esquisse"</span>
+  )
+)
+
+<span class="co"># new </span>
+<span class="fu"><a href="../reference/esquisserServer.html">esquisserUI</a></span>(
+  id = <span class="st">"esquisse"</span>, 
+  container = <span class="fu"><a href="../reference/esquisserServer.html">esquisseContainer</a></span>(height = <span class="st">"700px"</span>)
+)
+</pre></div>
 </li>
 </ul>
 </div>
 </div>
     <div id="esquisse-021" class="section level1">
-<h1 class="page-header">
+<h1 class="page-header" data-toc-text="0.2.1">
 <a href="#esquisse-021" class="anchor"></a>esquisse 0.2.1<small> 2019-07-01 </small>
 </h1>
 <ul>
@@ -160,7 +217,7 @@
 </ul>
 </div>
     <div id="esquisse-020" class="section level1">
-<h1 class="page-header">
+<h1 class="page-header" data-toc-text="0.2.0">
 <a href="#esquisse-020" class="anchor"></a>esquisse 0.2.0<small> 2019-06-20 </small>
 </h1>
 <ul>
@@ -174,7 +231,7 @@
 </ul>
 </div>
     <div id="esquisse-018" class="section level1">
-<h1 class="page-header">
+<h1 class="page-header" data-toc-text="0.1.8">
 <a href="#esquisse-018" class="anchor"></a>esquisse 0.1.8<small> Unreleased </small>
 </h1>
 <ul>
@@ -183,7 +240,7 @@
 </ul>
 </div>
     <div id="esquisse-017" class="section level1">
-<h1 class="page-header">
+<h1 class="page-header" data-toc-text="0.1.7">
 <a href="#esquisse-017" class="anchor"></a>esquisse 0.1.7<small> 2018-11-14 </small>
 </h1>
 <ul>
@@ -192,7 +249,7 @@
 </ul>
 </div>
     <div id="esquisse-016" class="section level1">
-<h1 class="page-header">
+<h1 class="page-header" data-toc-text="0.1.6">
 <a href="#esquisse-016" class="anchor"></a>esquisse 0.1.6<small> 2018-10-26 </small>
 </h1>
 <ul>
@@ -205,7 +262,7 @@
 </ul>
 </div>
     <div id="esquisse-015" class="section level1">
-<h1 class="page-header">
+<h1 class="page-header" data-toc-text="0.1.5">
 <a href="#esquisse-015" class="anchor"></a>esquisse 0.1.5<small> 2018-09-28 </small>
 </h1>
 <ul>
@@ -215,7 +272,7 @@
 </ul>
 </div>
     <div id="esquisse-010" class="section level1">
-<h1 class="page-header">
+<h1 class="page-header" data-toc-text="0.1.0">
 <a href="#esquisse-010" class="anchor"></a>esquisse 0.1.0<small> Unreleased </small>
 </h1>
 <ul>
@@ -224,23 +281,14 @@
 </div>
   </div>
 
-  <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
-    <div id="tocnav">
-      <h2>Contents</h2>
-      <ul class="nav nav-pills nav-stacked">
-        <li><a href="#esquisse-022">0.2.2</a></li>
-        <li><a href="#esquisse-021">0.2.1</a></li>
-        <li><a href="#esquisse-020">0.2.0</a></li>
-        <li><a href="#esquisse-018">0.1.8</a></li>
-        <li><a href="#esquisse-017">0.1.7</a></li>
-        <li><a href="#esquisse-016">0.1.6</a></li>
-        <li><a href="#esquisse-015">0.1.5</a></li>
-        <li><a href="#esquisse-010">0.1.0</a></li>
-      </ul>
-    </div>
+  <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
+    <nav id="toc" data-toggle="toc" class="sticky-top">
+      <h2 data-toc-skip>Contents</h2>
+    </nav>
   </div>
 
 </div>
+
 
       <footer>
       <div class="copyright">
@@ -248,13 +296,16 @@
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.3.0.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.0.</p>
 </div>
+
       </footer>
    </div>
 
   
 
+
   </body>
 </html>
+
 
