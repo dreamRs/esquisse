@@ -126,6 +126,12 @@ dragulaInput <- function(inputId,
   if (identical(ncolSource, "auto"))
     ncolSource <- ncolGrid
   
+  if (!isTRUE(replace) & !is.null(selected)) {
+    ind <- unlist(args$choiceValues, use.names = FALSE) %in% unlist(selected, use.names = FALSE)
+    args$choiceValues <- args$choiceValues[!ind]
+    args$choiceNames <- args$choiceNames[!ind]
+  }
+  
   tagList(
     html_dependency_dragula(),
     tags$label(label, `for` = inputId, class = "control-label", class = if (is.null(label)) "shiny-label-null"),
