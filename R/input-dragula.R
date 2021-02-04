@@ -389,11 +389,11 @@ get_choices <- function(x, values) {
 html_dependency_dragula <- function() {
   htmlDependency(
     name = "esquisse-dragula",
-    version = "0.1.0",
-    src = c(file = "assets", href = "esquisse"),
+    version = packageVersion("esquisse"),
+    src = c(file = "assets/dragula", href = "esquisse/dragula"),
     package = "esquisse",
-    script = c("dragula/dragula.min.js", "dragula/dragula-bindings.js"),
-    stylesheet = c("dragula/dragula.min.css", "styles-dad.css"),
+    script = c("dragula.min.js", "dragula-bindings.js"),
+    stylesheet = c("dragula.min.css", "styles-dad.css"),
     all_files = FALSE
   )
 }

@@ -1,11 +1,11 @@
 /*!
  * Copyright (c) 2018 ~ present dreamRs.
- * 
+ *
  * Styles for dragulaInput
- * 
+ *
  * @version 0.3.1
  */
- 
+
 .container-drag-source {
   position: relative;
   padding: 5px 0 5px 0;
@@ -68,7 +68,7 @@
   color: #FFFFFF;
 }
 
-.label-continue {
+.label-continuous {
   background-color: #0C4C8A;
   color: #FFFFFF;
 }
@@ -80,9 +80,9 @@
 
 
 .badge-dad {
-  border-radius: 10px;
+  border-radius: 7px !important;
   cursor: move;
-  font-size: 100%;
+  font-size: 100% !important;
   overflow: hidden;
   margin: 3px;
 }
@@ -92,7 +92,7 @@
 }
 
 .label-dragula {
-  cursor: move; 
+  cursor: move;
 }
 
 .badge-dragula {
@@ -102,7 +102,7 @@
 }
 
 .dragula-block {
-  display: inline-block; 
+  display: inline-block;
   margin-bottom: 5px;
 }
 

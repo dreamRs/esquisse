@@ -5,7 +5,7 @@
 
 #' An add-in to easily create plots with ggplot2
 #'
-#' @param data a data.frame, you can pass a data.frame explicitly to the function, 
+#' @param data a data.frame, you can pass a data.frame explicitly to the function,
 #' otherwise you'll have to choose one in global environment.
 #' @param coerce_vars If \code{TRUE} allow to coerce variables to different type when selecting data.
 #' @param disable_filters Logical. Disable the menu allowing to filter data used.
@@ -23,24 +23,24 @@
 #' esquisser(iris)
 #' # If in RStudio it will be launched by default in dialog window
 #' # If not, it will be launched in browser
-#' 
+#'
 #' # Launch esquisse in browser :
 #' esquisser(iris, viewer = "browser")
-#' 
+#'
 #' # You can set this option in .Rprofile :
 #' options("esquisse.viewer" = "viewer")
 #' # or
 #' options("esquisse.viewer" = "browser")
-#' 
+#'
 #' # esquisse use shiny::runApp
-#' # see ?shiny::runApp to see options 
+#' # see ?shiny::runApp to see options
 #' # available, example to use custom port:
-#' 
+#'
 #' options("shiny.port" = 8080)
 #' esquisser(iris, viewer = "browser")
-#' 
+#'
 #' }
-esquisser <- function(data = NULL, 
+esquisser <- function(data = NULL,
                       coerce_vars = getOption(x = "esquisse.coerceVars", default = TRUE),
                       disable_filters = getOption(x = "esquisse.disable_filters", default = FALSE),
                       viewer = getOption(x = "esquisse.viewer", default = "dialog")) {
@@ -52,7 +52,7 @@ esquisser <- function(data = NULL,
     res_data$esquisse_data <- dropListColumns(res_data$esquisse_data)
   }
   rv <- reactiveValues(
-    data = res_data$esquisse_data, 
+    data = res_data$esquisse_data,
     name = res_data$esquisse_data_name
   )
 
@@ -62,8 +62,8 @@ esquisser <- function(data = NULL,
     inviewer <- paneViewer(minHeight = "maximize")
   } else {
     inviewer <- dialogViewer(
-      "C'est le temps que tu as perdu pour ta rose qui rend ta rose importante.",
-      width = 1100, 
+      "Les grandes personnes ne comprennent jamais rien toutes seules, et c'est fatigant, pour les enfants, de toujours et toujours leur donner des explications.",
+      width = 1100,
       height = 750
     )
   }
@@ -71,17 +71,17 @@ esquisser <- function(data = NULL,
   runGadget(
     app = esquisserUI(
       id = "esquisse",
-      container = NULL, 
+      container = NULL,
       insert_code = TRUE,
       disable_filters = disable_filters
-    ), 
+    ),
     server = function(input, output, session) {
       callModule(
-        module = esquisserServer, 
-        id = "esquisse", 
+        module = esquisserServer,
+        id = "esquisse",
         data = rv
       )
-    }, 
+    },
     viewer = inviewer
   )
 }

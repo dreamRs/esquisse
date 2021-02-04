@@ -21,7 +21,7 @@
 #'
 #' ggplot_to_ppt()
 #'
-#' 
+#'
 #'
 #' # Or with an object's name
 #' library(ggplot2)
@@ -29,11 +29,11 @@
 #'   geom_point(aes(Sepal.Length, Sepal.Width))
 #'
 #' ggplot_to_ppt("p")
-#' 
+#'
 #' }
 #'
 ggplot_to_ppt <- function(gg = NULL) {
-  
+
   if (!requireNamespace(package = "rvg"))
     message("Package 'rvg' is required to run this function")
   if (!requireNamespace(package = "officer"))
@@ -67,7 +67,7 @@ ggplot_to_ppt <- function(gg = NULL) {
       ppt <- officer::add_slide(ppt, layout = "Title and Content", master = "Office Theme")
       testgg <- try(invisible(ggplot2::ggplot_build(get(ggg, envir = globalenv()))), silent = TRUE)
       if (!"try-error" %in% class(testgg)) {
-        ppt <- officer::ph_with(ppt, rvg::dml(code = print(get(ggg, envir = globalenv()))), 
+        ppt <- officer::ph_with(ppt, rvg::dml(code = print(get(ggg, envir = globalenv()))),
                                 location = officer::ph_location_type(type = "body"))
       } else {
         warning(paste0("Skipping '", ggg, "' because : ", attr(testgg, "condition")$message))
@@ -80,12 +80,12 @@ ggplot_to_ppt <- function(gg = NULL) {
   } else {
 
     ui <- miniPage(
-      useShinyUtils(),
+      html_dependency_esquisse(),
       miniContentPanel(
         prettyCheckboxGroup(
-          inputId = "select_gg", 
-          label = tags$span("ggplot(s) to export ", actionLink(inputId = "all", label = "(select all)")), 
-          choices = ggplots, status = "primary", 
+          inputId = "select_gg",
+          label = tags$span("ggplot(s) to export ", actionLink(inputId = "all", label = "(select all)")),
+          choices = ggplots, status = "primary",
           icon = icon("check")
         ),
         tags$div(
@@ -103,7 +103,7 @@ ggplot_to_ppt <- function(gg = NULL) {
     )
 
     server <- function(input, output, session) {
-      
+
       observeEvent(input$all, {
         updatePrettyCheckboxGroup(
           session = session, inputId = "select_gg", selected = ggplots
@@ -138,7 +138,7 @@ ggplot_to_ppt <- function(gg = NULL) {
             # ppt <- rvg::ph_with_vg(ppt, print(get(ggg, envir = globalenv())), type = "body")
             testgg <- try(invisible(ggplot2::ggplot_build(get(ggg, envir = globalenv()))), silent = TRUE)
             if (!"try-error" %in% class(testgg)) {
-              ppt <- officer::ph_with(ppt, rvg::dml(code = print(get(ggg, envir = globalenv()))), 
+              ppt <- officer::ph_with(ppt, rvg::dml(code = print(get(ggg, envir = globalenv()))),
                                       location = officer::ph_location_type(type = "body"))
             } else {
               warning(paste0("Skipping '", ggg, "' because of : ", attr(testgg, "condition")$message))

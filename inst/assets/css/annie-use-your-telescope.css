@@ -1,0 +1,12 @@
+@font-face {
+  font-family: 'Annie Use Your Telescope';
+  font-style: normal;
+  font-weight: 400;
+  src: url('../fonts/annie-use-your-telescope-v11-latin-regular.eot'); /* IE9 Compat Modes */
+  src: local(''), local(''),
+       url('../fonts/annie-use-your-telescope-v11-latin-regular.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */
+       url('../fonts/annie-use-your-telescope-v11-latin-regular.woff2') format('woff2'), /* Super Modern Browsers */
+       url('../fonts/annie-use-your-telescope-v11-latin-regular.woff') format('woff'), /* Modern Browsers */
+       url('../fonts/annie-use-your-telescope-v11-latin-regular.ttf') format('truetype'), /* Safari, Android, iOS */
+       url('../fonts/annie-use-your-telescope-v11-latin-regular.svg#\1') format('svg'); /* Legacy iOS */
+}

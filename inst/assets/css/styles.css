@@ -1,26 +1,48 @@
 /*!
  * Copyright (c) 2018 ~ present dreamRs.
- * 
+ *
  * Additional styles for esquisse addin
- * 
+ *
  * @version 0.3.1
  */
- 
- 
-.dreamrs-title-box {
+
+
+
+/* Title */
+.esquisse-title-container {
+  -webkit-flex: none;
+  -ms-flex: none;
+  flex: none;
+  position: relative;
   background-color: #112446;
   height: 45px;
   margin-bottom: 5px;
+  padding: 0;
 }
-
-.dreamrs-title {
+.esquisse-title {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  line-height: 44px;
+  margin: 0;
+  z-index: 0;
   color: white;
   text-align: center;
   font-size: 30px;
-  font-weight: bold;
+  font-family: 'Annie Use Your Telescope', handwriting;
 }
 
-
+.esquisse-title-container button.btn {
+  position: relative;
+  height: 31px;
+  z-index: 10;
+  color: #FFF;
+  background: transparent;
+  border: none;
+  margin: 7px 5px 0px 5px;
+}
 
 
 .btn-group-justified-charter {
@@ -61,7 +83,7 @@
 
 #sw-content-paramsdrop {
   min-width: 270px;
-  overflow-y: auto; 
+  overflow-y: auto;
   max-height: 90vh;
 }
 

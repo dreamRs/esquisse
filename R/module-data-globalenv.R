@@ -7,22 +7,22 @@
 #' @param coerceVars Display module to coerce variables between different class, \code{TRUE} by default.
 #'
 #' @noRd
-#' 
+#'
 #' @name module-data-globalenv
-#' 
+#'
 #' @importFrom htmltools tagList tags HTML
 #' @importFrom shiny NS actionButton icon
 #' @importFrom shinyWidgets pickerInput
 #'
 dataGlobalEnvUI <- function(id, dismissOnValidate = TRUE, selectVars = TRUE, coerceVars = TRUE) {
   ns <- NS(id)
-  
+
   # List of data.frame
   dfs <- search_obj(what = "data.frame")
   if (is.null(dfs)) {
     dfs <- data(package = "ggplot2", envir = environment())$results[, "Item"]
   }
-  
+
   info_dfs <- lapply(
     X = dfs,
     FUN = function(x) {
@@ -31,9 +31,9 @@ dataGlobalEnvUI <- function(id, dismissOnValidate = TRUE, selectVars = TRUE, coe
     }
   )
   info_dfs <- unlist(info_dfs)
-  
+
   tagList(
-    useShinyUtils(),
+    html_dependency_esquisse(),
     tags$script(
       sprintf("Shiny.onInputChange('%s', %f);", ns("dataGlobalEnv"), as.numeric(Sys.time()))
     ),
@@ -45,7 +45,7 @@ dataGlobalEnvUI <- function(id, dismissOnValidate = TRUE, selectVars = TRUE, coe
       options = list(title = "List of data.frame..."),
       choicesOpt = list(subtext = info_dfs)
     ),
-    
+
     tags$div(
       id = ns("placeholder-result-import"),
       tags$div(
@@ -53,7 +53,7 @@ dataGlobalEnvUI <- function(id, dismissOnValidate = TRUE, selectVars = TRUE, coe
         tags$b("No data selected"), "Use a data.frame from user environment"
       )
     ),
-    
+
     tags$div(
       style = if (!isTRUE(selectVars)) "display: none;",
       tags$br(),
@@ -66,14 +66,14 @@ dataGlobalEnvUI <- function(id, dismissOnValidate = TRUE, selectVars = TRUE, coe
       tags$br(),
       coerceUI(id = ns("coerce"))
     ),
-    
-    tags$br(), tags$br(), 
+
+    tags$br(), tags$br(),
     actionButton(
       inputId = ns("validate"),
       label = "Validate imported data",
       icon = icon("arrow-circle-right"),
       width = "100%", disabled = "disabled",
-      class = "btn-primary", 
+      class = "btn-primary",
       `data-dismiss` = if (isTRUE(dismissOnValidate)) "modal" else NULL
     )
   )
@@ -83,28 +83,28 @@ dataGlobalEnvUI <- function(id, dismissOnValidate = TRUE, selectVars = TRUE, coe
 #' @param input,output,session standards \code{shiny} server arguments.
 #' @param data Default \code{data.frame} to use.
 #' @param name Default name to use.
-#' 
+#'
 #' @noRd
-#' 
+#'
 #' @rdname module-data-globalenv
 #'
 #' @importFrom shiny reactiveValues observeEvent req removeUI insertUI callModule
-dataGlobalEnvServer <- function(input, output, session, data = NULL, name = NULL, 
+dataGlobalEnvServer <- function(input, output, session, data = NULL, name = NULL,
                                 selectedTypes = c("continuous", "discrete", "time")) {
-  
+
   ns <- session$ns
   jns <- function(x) paste0("#", ns(x))
-  
+
   imported_data <- reactiveValues(data = data, name = name)
   tmp_name <- reactiveValues(name = name)
   select_data <- reactiveValues(data = NULL, name = NULL, timestamp = Sys.time())
   coerce_data <- reactiveValues(data = NULL, name = NULL, timestamp = Sys.time())
-  
+
   observeEvent(input$dataGlobalEnv, {
     imported_data$data <- NULL
     imported_data$name <- NULL
   })
-  
+
   observeEvent(input$data, {
     req(input$data)
     imported <- try(get_df(input$data), silent = TRUE)
@@ -129,8 +129,8 @@ dataGlobalEnvServer <- function(input, output, session, data = NULL, name = NULL
         selector = jns("placeholder-result-import"),
         ui = tags$div(
           id = ns("result-import"), class = "alert alert-success",
-          tags$b("Success"), 
-          sprintf("%s obs. of %s variables imported", 
+          tags$b("Success"),
+          sprintf("%s obs. of %s variables imported",
                   nrow(imported), ncol(imported))
         )
       )
@@ -140,14 +140,14 @@ dataGlobalEnvServer <- function(input, output, session, data = NULL, name = NULL
       select_data$timestamp <- Sys.time()
     }
   }, ignoreInit = TRUE)
-  
+
   sv <- callModule(
-    module = selectVarsServer, 
-    id = "selected", 
-    data = select_data, 
+    module = selectVarsServer,
+    id = "selected",
+    data = select_data,
     selectedTypes = selectedTypes
   )
-  
+
   observeEvent(sv$selected_vars, {
     if (length(sv$selected_vars) > 0) {
       toggleInput(inputId = ns("validate"), enable = TRUE)
@@ -156,9 +156,9 @@ dataGlobalEnvServer <- function(input, output, session, data = NULL, name = NULL
       toggleInput(inputId = ns("validate"), enable = FALSE)
     }
   }, ignoreNULL = FALSE)
-  
+
   coerced_data <- callModule(module = coerceServer, id = "coerce", data = coerce_data)
-  
+
   observeEvent(input$validate, {
     if (!is.null(coerced_data$data)) {
       dat <- coerced_data$data
@@ -168,7 +168,7 @@ dataGlobalEnvServer <- function(input, output, session, data = NULL, name = NULL
     imported_data$data <- dat
     imported_data$name <- tmp_name$name
   })
-  
+
   return(imported_data)
 }
 

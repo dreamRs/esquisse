@@ -1,10 +1,20 @@
 
 # Utils Shiny ----
 
-#' @importFrom htmltools singleton tags
-useShinyUtils <- function() {
-  singleton(tags$head(tags$script(src = "esquisse/shiny-utils.js")))
+#' @importFrom htmltools htmlDependency
+#' @importFrom utils packageVersion
+html_dependency_esquisse <- function() {
+  htmlDependency(
+    name = "esquisse",
+    version = packageVersion("esquisse"),
+    src = c(file = "assets", href = "esquisse"),
+    package = "esquisse",
+    script = c("js/shiny-utils.js"),
+    stylesheet = c("css/styles.css", "css/annie-use-your-telescope.css"),
+    all_files = TRUE
+  )
 }
+
 
 
 #' Enable or disable a Shiny input
@@ -14,10 +24,11 @@ useShinyUtils <- function() {
 #' @param session shiny session.
 #'
 #' @noRd
-toggleInput <- function(inputId, enable = TRUE,
+toggleInput <- function(inputId,
+                        enable = TRUE,
                         session = shiny::getDefaultReactiveDomain()) {
   session$sendCustomMessage(
-    type = 'toggleInput',
+    type = "toggleInput",
     message = list(id = inputId, enable = enable)
   )
 }
@@ -31,13 +42,14 @@ toggleInput <- function(inputId, enable = TRUE,
 #' @param session shiny session.
 #'
 #' @noRd
-toggleDisplay <- function(id, display = c("none", "block", "inline-block"), 
+toggleDisplay <- function(id,
+                          display = c("none", "block", "inline-block"),
                           session = shiny::getDefaultReactiveDomain()) {
   if (is.logical(display)) {
     display <- ifelse(display, "block", "none")
   }
   session$sendCustomMessage(
-    type = 'toggleDisplay',
+    type = "toggleDisplay",
     message = list(id = id, display = display)
   )
 }

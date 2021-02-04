@@ -44,15 +44,14 @@ esquisserUI <- function(id, header = TRUE,
   ns <- NS(id)
 
   box_title <- tags$div(
-    class="gadget-title dreamrs-title-box",
-    tags$h1(shiny::icon("wrench"), "ggplot2 builder", class = "dreamrs-title"),
+    class = "esquisse-title-container",
+    tags$h1("Esquisse", class = "esquisse-title"),
     tags$div(
       class = "pull-right",
       actionButton(
         inputId = ns("settings"),
         label = NULL,
         icon = icon("gear", class = "fa-lg"),
-        style = "color: #FFF; background: transparent; border: none; margin: 7px 5px 0px 5px;",
         class = "btn-sm",
         title = "Display settings"
       ),
@@ -60,7 +59,6 @@ esquisserUI <- function(id, header = TRUE,
         inputId = ns("close"),
         label = NULL,
         icon = icon("times", class = "fa-lg"),
-        style = "color: #FFF; background: transparent; border: none; margin: 7px 5px 0px 5px;",
         class = "btn-sm",
         title = "Close Window"
       )
@@ -75,9 +73,8 @@ esquisserUI <- function(id, header = TRUE,
 
   addin <- miniPage(
 
-    # style sheet
+    html_dependency_esquisse(),
     singleton(x = tagList(
-      tags$link(rel="stylesheet", type="text/css", href="esquisse/styles.css"),
       tags$script(src = "esquisse/clipboard/clipboard.min.js")
     )),
 

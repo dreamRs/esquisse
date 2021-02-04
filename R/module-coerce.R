@@ -2,23 +2,23 @@
 #' Coerce data.frame's columns module
 #'
 #' @param id Module id. See \code{\link[shiny]{callModule}}.
-#' 
+#'
 #' @name module-coerce
 #'
 #' @return a \code{reactiveValues} with two slots: \code{data} original \code{data.frame}
 #'  with modified columns, and \code{names} column's names with call to coerce method.
 #' @export
-#' 
+#'
 #' @importFrom htmltools tags
 #' @importFrom shiny NS fluidRow column selectizeInput uiOutput actionButton icon
 #' @importFrom shinyWidgets pickerInput
 #'
 #' @examples
-#' 
+#'
 #' if (interactive()) {
 #'   library(esquisse)
 #'   library(shiny)
-#'   
+#'
 #'   foo <- data.frame(
 #'     num_as_char = as.character(1:10),
 #'     char = sample(letters[1:3], 10, TRUE),
@@ -29,10 +29,10 @@
 #'     date_as_num = as.numeric(
 #'       Sys.Date() + sample(seq(-10, 10), 10, TRUE)
 #'     ),
-#'     datetime = Sys.time() + sample(seq(-10, 10) * 1e4, 10, TRUE), 
+#'     datetime = Sys.time() + sample(seq(-10, 10) * 1e4, 10, TRUE),
 #'     stringsAsFactors = FALSE
 #'   )
-#'   
+#'
 #'   ui <- fluidPage(
 #'     tags$h2("Coerce module"),
 #'     fluidRow(
@@ -47,11 +47,11 @@
 #'       )
 #'     )
 #'   )
-#'   
+#'
 #'   server <- function(input, output, session) {
-#'     
+#'
 #'     result <- callModule(module = coerceServer, id = "example", data = reactive({foo}))
-#'     
+#'
 #'     output$print_result <- renderPrint({
 #'       str(result$data)
 #'     })
@@ -59,17 +59,17 @@
 #'       result$names
 #'     })
 #'   }
-#'   
+#'
 #'   shinyApp(ui, server)
 #' }
-#' 
+#'
 coerceUI <- function(id) {
   ns <- NS(id)
   fluidRow(
     tags$style(
       ".col-coerce {padding-right: 5px; padding-left: 5px;}"
     ),
-    useShinyUtils(),
+    html_dependency_esquisse(),
     column(
       width = 5, class = "col-coerce",
       pickerInput(
@@ -110,7 +110,7 @@ coerceUI <- function(id) {
         inputId = ns("valid_coerce"),
         label = "Coerce",
         icon = icon("play"),
-        width = "100%", 
+        width = "100%",
         class = "btn-primary",
         disabled = "disabled"
       )
@@ -121,28 +121,28 @@ coerceUI <- function(id) {
 
 #' @param input,output,session standards \code{shiny} server arguments.²
 #' @param data A \code{data.frame} or a \code{reactive}
-#'  function returning a \code{data.frame} or a 
-#'  \code{reactivevalues} with a slot containing a \code{data.frame} 
+#'  function returning a \code{data.frame} or a
+#'  \code{reactivevalues} with a slot containing a \code{data.frame}
 #'  (use \code{reactiveValuesSlot} to identify that slot)
-#' @param reactiveValuesSlot If \code{data} is a \code{reactivevalues}, 
+#' @param reactiveValuesSlot If \code{data} is a \code{reactivevalues},
 #'  specify the name of the slot containing data.
 #'
 #' @export
-#' 
+#'
 #' @rdname module-coerce
-#' 
+#'
 #' @importFrom htmltools tags
 #' @importFrom shinyWidgets updatePickerInput
 #' @importFrom shiny reactiveValues renderUI observe removeUI insertUI
 #'  textInput observeEvent showNotification updateActionButton icon
 #'  is.reactivevalues is.reactive observe req
 coerceServer <- function(input, output, session, data, reactiveValuesSlot = "data") {
-  
+
   ns <- session$ns
   jns <- function(id) paste0("#", ns(id))
-  
+
   return_data <- reactiveValues(data = NULL, names = NULL)
-  
+
   observe({
     if (is.reactive(data)) {
       toggleInput(inputId = ns("valid_coerce"), enable = TRUE)
@@ -155,7 +155,7 @@ coerceServer <- function(input, output, session, data, reactiveValuesSlot = "dat
       toggleInput(inputId = ns("var"), enable = FALSE)
     }
   })
-  
+
   observe({
     req(data)
     if (is.reactive(data)) {
@@ -165,7 +165,7 @@ coerceServer <- function(input, output, session, data, reactiveValuesSlot = "dat
       # data$timestamp
       data <- data[[reactiveValuesSlot]]
     }
-    
+
     updatePickerInput(
       session = session,
       inputId = "var",
@@ -179,7 +179,7 @@ coerceServer <- function(input, output, session, data, reactiveValuesSlot = "dat
     return_data$data <- data
     return_data$names <- names(data)
   })
-  
+
   output$coerce_to_label <- renderUI({
     req(return_data$data); req(input$var)
     if (input$var %in% names(return_data$data)) {
@@ -189,7 +189,7 @@ coerceServer <- function(input, output, session, data, reactiveValuesSlot = "dat
       )
     }
   })
-  
+
   observe({
     req(return_data$data); req(input$var)
     if (input$var %in% names(return_data$data)) {
@@ -247,7 +247,7 @@ coerceServer <- function(input, output, session, data, reactiveValuesSlot = "dat
       }
     }
   })
-  
+
   observeEvent(input$valid_coerce, {
     var <- return_data$data[[input$var]]
     classvar <- class(var)[1]
@@ -277,16 +277,16 @@ coerceServer <- function(input, output, session, data, reactiveValuesSlot = "dat
         },
         error = function(e) {
           shiny::showNotification(
-            ui = conditionMessage(e), 
+            ui = conditionMessage(e),
             type = "error",
-            session = session, 
+            session = session,
             id = paste("esquisse", sample.int(1e6, 1), sep = "-")
           )
         }
-      ), 
+      ),
       warning = function(w) {
         shiny::showNotification(
-          ui = conditionMessage(w), 
+          ui = conditionMessage(w),
           type = "warning",
           session = session,
           id = paste("esquisse", sample.int(1e6, 1), sep = "-")
@@ -295,12 +295,12 @@ coerceServer <- function(input, output, session, data, reactiveValuesSlot = "dat
     )
     return_data$data[[input$var]] <- var
     return_data$names <- replace(
-      x = return_data$names, 
+      x = return_data$names,
       list = which(return_data$names == input$var),
       values = sprintf("as.%s(%s%s)", input$coerce_to, input$var, argsup)
     )
     updateActionButton(
-      session = session, 
+      session = session,
       inputId = "valid_coerce",
       label = "Coerced !",
       icon = icon("check")
@@ -310,10 +310,10 @@ coerceServer <- function(input, output, session, data, reactiveValuesSlot = "dat
       message = list(id = ns("valid_coerce"), class = "success")
     )
   }, ignoreInit = TRUE)
-  
+
   observeEvent(list(input$var, input$coerce_to), {
     updateActionButton(
-      session = session, 
+      session = session,
       inputId = "valid_coerce",
       label = "Coerce",
       icon = icon("play")
@@ -323,7 +323,7 @@ coerceServer <- function(input, output, session, data, reactiveValuesSlot = "dat
       message = list(id = ns("valid_coerce"), class = "primary")
     )
   }, ignoreInit = TRUE)
-  
+
   return(return_data)
 }
 

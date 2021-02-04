@@ -84,7 +84,7 @@ get_df <- function(df, env = globalenv()) {
 #'
 #' # NULL if no data.frame
 #' search_obj("data.frame")
-#' 
+#'
 #' library(ggplot2)
 #' data("mpg")
 #' search_obj("data.frame")
@@ -134,7 +134,7 @@ badgeType <- function(col_name, col_type) {
       } else if (col_type_i == "time") {
         tags$span(class='label label-datetime badge-dad', col_name_i)
       } else if (col_type_i == "continuous") {
-        tags$span(class='label label-continue badge-dad', col_name_i)
+        tags$span(class='label label-continuous badge-dad', col_name_i)
       } else if (col_type_i == "id") {
         tags$span(class='label label-default badge-dad', col_name_i)
       }
@@ -155,11 +155,11 @@ badgeType <- function(col_name, col_type) {
 col_type <- function(x, no_id = FALSE) {
   if (is.null(x))
     return(NULL)
-  
+
   if (is.data.frame(x) && inherits(x, what = "sf")) {
     x <- x[, setdiff(names(x), attr(x, "sf_column")), drop = FALSE]
-  } 
-  
+  }
+
   if (is.data.frame(x)) {
     return(unlist(lapply(x, col_type), use.names = FALSE))
   } else {
@@ -172,16 +172,16 @@ col_type <- function(x, no_id = FALSE) {
         return("id")
       }
     }
-    
+
     if (inherits(x, c("Date", "POSIXct", "POSIXlt"))) {
       return("time")
     }
-    
+
     if (inherits(x, c("numeric", "integer", "double"))) {
       return("continuous")
     }
   }
-  
+
   NULL
 }
 
@@ -190,8 +190,8 @@ col_type <- function(x, no_id = FALSE) {
 # utils for geom icons
 geomIcons <- function() {
   geoms <- c(
-    "auto", "line", "area", "bar", "histogram", 
-    "point", "boxplot", "violin", "density", 
+    "auto", "line", "area", "bar", "histogram",
+    "point", "boxplot", "violin", "density",
     "tile", "sf"
   )
   href <- "esquisse/geomIcon/gg-%s.png"
@@ -214,7 +214,7 @@ geomIcons <- function() {
   )
   geomsChoicesValues <- unlist(lapply(geomsChoices, `[[`, "label"), use.names = FALSE)
   geomsChoicesValues <- tolower(geomsChoicesValues)
-  
+
   list(names = geomsChoicesNames, values = geomsChoicesValues)
 }
 
@@ -349,10 +349,10 @@ choicesWithNames <- function(choices) {
 
 
 anyNamed <- function(x) {
-  if (length(x) == 0) 
+  if (length(x) == 0)
     return(FALSE)
   nms <- names(x)
-  if (is.null(nms)) 
+  if (is.null(nms))
     return(FALSE)
   any(nzchar(nms))
 }

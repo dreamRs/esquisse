@@ -12,8 +12,8 @@
 #' @importFrom htmltools tags tagList HTML
 #' @importFrom shiny icon checkboxInput
 #'
-chartControlsUI <- function(id, 
-                            insert_code = FALSE, 
+chartControlsUI <- function(id,
+                            insert_code = FALSE,
                             disable_filters = FALSE) {
 
   # Namespace
@@ -30,41 +30,41 @@ chartControlsUI <- function(id,
       controls_labs(ns),
       inputId = "labsdrop",
       style = "default",
-      label = "Labels & Title", 
-      up = TRUE, 
-      icon = icon("font"), 
+      label = "Labels & Title",
+      up = TRUE,
+      icon = icon("font"),
       status = "default btn-controls"
     ),
     dropdown(
-      controls_params(ns), 
+      controls_params(ns),
       controls_appearance(ns),
       style = "default",
       label = "Plot options",
-      up = TRUE, 
+      up = TRUE,
       inputId = "paramsdrop",
-      icon = icon("gears"), 
+      icon = icon("gears"),
       status = "default btn-controls"
     ),
     if (!isTRUE(disable_filters)) {
       dropdown(
         filterDF_UI(id = ns("filter-data")),
-        style = "default", 
-        label = "Data", 
-        up = TRUE, 
+        style = "default",
+        label = "Data",
+        up = TRUE,
         icon = icon("filter"),
-        right = TRUE, 
+        right = TRUE,
         inputId = "filterdrop",
         status = "default btn-controls"
       )
     },
     dropdown(
-      controls_code(ns, insert_code = insert_code), 
-      style = "default", 
-      label = "Export & code", 
+      controls_code(ns, insert_code = insert_code),
+      style = "default",
+      label = "Export & code",
       up = TRUE,
-      right = TRUE, 
+      right = TRUE,
       inputId = "codedrop",
-      icon = icon("code"), 
+      icon = icon("code"),
       status = "default btn-controls"
     ),
     # tags$script("$('.sw-dropdown').addClass('btn-group-charter');"),
@@ -73,12 +73,12 @@ chartControlsUI <- function(id,
     tags$div(
       style = "display: none;",
       checkboxInput(
-        inputId = ns("disable_filters"), 
-        label = NULL, 
+        inputId = ns("disable_filters"),
+        label = NULL,
         value = isTRUE(disable_filters)
       )
     ),
-    useShinyUtils()
+    html_dependency_esquisse()
   )
 }
 
@@ -109,23 +109,23 @@ chartControlsUI <- function(id,
 #' @importFrom htmltools tags tagList
 #' @importFrom stringi stri_replace_all
 #'
-chartControlsServer <- function(input, 
-                                output, 
-                                session, 
-                                type, 
-                                data_table, 
+chartControlsServer <- function(input,
+                                output,
+                                session,
+                                type,
+                                data_table,
                                 data_name,
-                                ggplot_rv, 
+                                ggplot_rv,
                                 aesthetics = reactive(NULL),
-                                use_facet = reactive(FALSE), 
-                                use_transX = reactive(FALSE), 
+                                use_facet = reactive(FALSE),
+                                use_transX = reactive(FALSE),
                                 use_transY = reactive(FALSE)) {
 
   ns <- session$ns
-  
-  
+
+
   # Reset labs ----
-  
+
   observeEvent(data_table(), {
     updateTextInput(session = session, inputId = "labs_title", value = character(0))
     updateTextInput(session = session, inputId = "labs_subtitle", value = character(0))
@@ -136,10 +136,10 @@ chartControlsServer <- function(input,
     updateTextInput(session = session, inputId = "labs_color", value = character(0))
     updateTextInput(session = session, inputId = "labs_size", value = character(0))
   })
-  
-  
+
+
   # Export ----
-  
+
   output$export_png <- downloadHandler(
     filename = function() {
       paste0("esquisse_", format(Sys.time(), format = "%Y%m%dT%H%M%S"), ".png")
@@ -175,9 +175,9 @@ chartControlsServer <- function(input,
       }
     }
   )
-  
-  
-  
+
+
+
   # Code ----
   observeEvent(input$insert_code, {
     context <- rstudioapi::getSourceEditorContext()
@@ -200,7 +200,7 @@ chartControlsServer <- function(input,
     }
     rstudioapi::insertText(text = paste0("\n", code, "\n"), id = context$id)
   })
-  
+
   output$code <- renderUI({
     code <- ggplot_rv$code
     code <- stri_replace_all(str = code, replacement = "+\n", fixed = "+")
@@ -216,26 +216,26 @@ chartControlsServer <- function(input,
       rCodeContainer(id = ns("codeggplot"), code)
     )
   })
-  
-  
-  
+
+
+
   # Controls ----
-  
+
   observeEvent(aesthetics(), {
     aesthetics <- aesthetics()
     toggleDisplay(id = ns("controls-labs-fill"), display = "fill" %in% aesthetics)
     toggleDisplay(id = ns("controls-labs-color"), display = "color" %in% aesthetics)
     toggleDisplay(id = ns("controls-labs-size"), display = "size" %in% aesthetics)
   })
-  
+
   observeEvent(use_facet(), {
     toggleDisplay(id = ns("controls-facet"), display = isTRUE(use_facet()))
   })
-  
+
   observeEvent(use_transX(), {
     toggleDisplay(id = ns("controls-scale-trans-x"), display = isTRUE(use_transX()))
   })
-  
+
   observeEvent(use_transY(), {
     toggleDisplay(id = ns("controls-scale-trans-y"), display = isTRUE(use_transY()))
   })
@@ -244,7 +244,7 @@ chartControlsServer <- function(input,
     toggleDisplay(id = ns("controls-palette"), display = isTRUE(type$palette))
     toggleDisplay(id = ns("controls-spectrum"), display = !isTRUE(type$palette))
   })
-  
+
   observeEvent(type$x, {
     toggleDisplay(id = ns("controls-position"), display = type$x %in% c("bar", "line", "area"))
     toggleDisplay(id = ns("controls-flip"), display = type$x %in% "bar")
@@ -254,20 +254,20 @@ chartControlsServer <- function(input,
     toggleDisplay(id = ns("controls-size"), display = type$x %in% c("point", "line"))
     toggleDisplay(id = ns("controls-violin"), display = type$x %in% "violin")
   })
-  
+
   output_filter <- callModule(
-    module = filterDF, 
-    id = "filter-data", 
-    data_table = data_table, 
+    module = filterDF,
+    id = "filter-data",
+    data_table = data_table,
     data_name = data_name
   )
 
   outin <- reactiveValues(
-    inputs = NULL, 
-    export_ppt = NULL, 
+    inputs = NULL,
+    export_ppt = NULL,
     export_png = NULL
   )
-  
+
   observeEvent(data_table(), {
     outin$data <- data_table()
     outin$code <- reactiveValues(expr = NULL, dplyr = NULL)
@@ -285,7 +285,7 @@ chartControlsServer <- function(input,
     inputs <- inputs[order(names(inputs))]
     outin$inputs <- inputs
   })
-  
+
   # labs input
   observe({
     asth <- aesthetics()
@@ -303,7 +303,7 @@ chartControlsServer <- function(input,
       size = labs_size %empty% NULL
     )
   })
-  
+
   #limits input
   observe({
     outin$limits <- list(
@@ -313,8 +313,8 @@ chartControlsServer <- function(input,
       ylim = input$ylim
     )
   })
-  
-  
+
+
   # facet input
   observe({
     outin$facet <- list(
@@ -323,7 +323,7 @@ chartControlsServer <- function(input,
       nrow = if (input$facet_nrow == 0) NULL else input$facet_nrow
     )
   })
-  
+
   # theme input
   observe({
     outin$theme <- list(
@@ -333,12 +333,12 @@ chartControlsServer <- function(input,
       )
     )
   })
-  
+
   # coord input
   observe({
     outin$coord <- if (isTRUE(input$flip)) "flip" else NULL
   })
-  
+
   # smooth input
   observe({
     outin$smooth <- list(
@@ -348,7 +348,7 @@ chartControlsServer <- function(input,
       )
     )
   })
-  
+
   # transX input
   observe({
     outin$transX <- list(
@@ -358,7 +358,7 @@ chartControlsServer <- function(input,
       )
     )
   })
-  
+
   # transY input
   observe({
     outin$transY <- list(
@@ -368,7 +368,7 @@ chartControlsServer <- function(input,
       )
     )
   })
-  
+
   observeEvent(output_filter$data_filtered(), {
     if(!isTRUE(input$disable_filters)){
       outin$data <- output_filter$data_filtered()
@@ -433,25 +433,25 @@ controls_appearance <- function(ns) {
   pals <- get_palettes()
 
   tagList(
-    
+
     tags$style(
       ".bootstrap-select .dropdown-menu li a span.text { display: block !important; }"
     ),
-    
+
     tags$div(
       id = ns("controls-spectrum"), style = "display: block;",
       spectrumInput(
         inputId = ns("fill_color"),
         label = "Choose a color:",
-        choices = unname(cols), 
+        choices = unname(cols),
         width = "100%"
       )
     ),
     tags$div(
       id = ns("controls-palette"), style = "display: none;",
       palettePicker(
-        inputId = ns("palette"), 
-        label = "Choose a palette:", 
+        inputId = ns("palette"),
+        label = "Choose a palette:",
         choices = pals$choices,
         textColor = pals$textColor,
         pickerOpts = list(container = "body")
@@ -469,7 +469,7 @@ controls_appearance <- function(ns) {
       paste0("$('#", ns("theme"), "').addClass('dropup');")
     ),
     radioGroupButtons(
-      inputId = ns("legend_position"), 
+      inputId = ns("legend_position"),
       label = "Legend position:",
       choiceNames = list(
         icon("arrow-left"), icon("arrow-up"),
@@ -477,7 +477,7 @@ controls_appearance <- function(ns) {
       ),
       choiceValues = c("left", "top", "bottom", "right", "none"),
       selected = "right",
-      justified = TRUE, 
+      justified = TRUE,
       size = "sm"
     )
   )
@@ -497,41 +497,41 @@ controls_appearance <- function(ns) {
 #' @importFrom shinyWidgets materialSwitch prettyRadioButtons numericRangeInput
 #'
 controls_params <- function(ns) {
-  
+
   scales_trans <- c(
     "asn", "atanh", "boxcox", "exp", "identity",
-    "log", "log10", "log1p", "log2", "logit", 
+    "log", "log10", "log1p", "log2", "logit",
     "probability", "probit", "reciprocal",
     "reverse", "sqrt"
   )
-  
+
   tagList(
     tags$div(
       id = ns("controls-scatter"), style = "display: none; padding-top: 10px;",
       conditionalPanel(
         condition = paste0("input['",  ns("smooth_add"), "']==true"),
         sliderInput(
-          inputId = ns("smooth_span"), 
-          label = "Span:", 
-          min = 0.1, max = 1, 
-          value = 0.75, step = 0.01, 
+          inputId = ns("smooth_span"),
+          label = "Span:",
+          min = 0.1, max = 1,
+          value = 0.75, step = 0.01,
           width = "100%"
         )
       ),
       materialSwitch(
-        inputId = ns("smooth_add"), 
+        inputId = ns("smooth_add"),
         label = "Smooth line:",
-        right = TRUE, 
+        right = TRUE,
         status = "primary"
       )
     ),
     tags$div(
       id = ns("controls-size"), style = "display: none;",
       sliderInput(
-        inputId = ns("size"), 
+        inputId = ns("size"),
         label = "Size:",
         min = 0.5, max = 3,
-        value = 1, 
+        value = 1,
         width = "100%"
       )
     ),
@@ -539,11 +539,11 @@ controls_params <- function(ns) {
       id = ns("controls-facet"), style = "display: none;",
       prettyRadioButtons(
         inputId = ns("facet_scales"),
-        label = "Facet scales:", 
+        label = "Facet scales:",
         inline = TRUE,
-        status = "primary", 
+        status = "primary",
         choices = c("fixed", "free", "free_x", "free_y"),
-        outline = TRUE, 
+        outline = TRUE,
         icon = icon("check")
       ),
       sliderInput(
@@ -562,10 +562,10 @@ controls_params <- function(ns) {
     tags$div(
       id = ns("controls-histogram"), style = "display: none;",
       sliderInput(
-        inputId = ns("bins"), 
-        label = "Numbers of bins:", 
+        inputId = ns("bins"),
+        label = "Numbers of bins:",
         min = 10, max = 100,
-        value = 30, 
+        value = 30,
         width = "100%"
       )
     ),
@@ -573,51 +573,51 @@ controls_params <- function(ns) {
       id = ns("controls-violin"), style = "display: none;",
       prettyRadioButtons(
         inputId = ns("scale"),
-        label = "Scale:", 
+        label = "Scale:",
         inline = TRUE,
-        status = "primary", 
+        status = "primary",
         choices = c("area", "count", "width"),
-        outline = TRUE, 
+        outline = TRUE,
         icon = icon("check")
       )
     ),
     tags$div(
       id = ns("controls-scale-trans-x"), style = "display: none;",
       numericRangeInput(
-        inputId = ns("xlim"), 
+        inputId = ns("xlim"),
         label = "X-Axis limits (empty for none):",
         value = c(NA, NA)
       ),
       selectInput(
-        inputId = ns("transX"), 
+        inputId = ns("transX"),
         label = "X-Axis transform:",
-        selected = "identity", 
-        choices = scales_trans, 
+        selected = "identity",
+        choices = scales_trans,
         width = "100%"
       )
     ),
     tags$div(
       id = ns("controls-scale-trans-y"), style = "display: none;",
       numericRangeInput(
-        inputId = ns("ylim"), 
+        inputId = ns("ylim"),
         label = "Y-Axis limits (empty for none):",
         value = c(NA, NA)
       ),
       selectInput(
-        inputId = ns("transY"), 
+        inputId = ns("transY"),
         label = "Y-Axis transform:",
-        selected = "identity", 
-        choices = scales_trans, 
+        selected = "identity",
+        choices = scales_trans,
         width = "100%"
       )
     ),
     tags$div(
       id = ns("controls-density"), style = "display: none;",
       sliderInput(
-        inputId = ns("adjust"), 
-        label = "Bandwidth adjustment:", 
-        min = 0.2, max = 6, 
-        value = 1, step = 0.1, 
+        inputId = ns("adjust"),
+        label = "Bandwidth adjustment:",
+        min = 0.2, max = 6,
+        value = 1, step = 0.1,
         width = "100%"
       )
     ),
@@ -633,9 +633,9 @@ controls_params <- function(ns) {
     tags$div(
       id = ns("controls-flip"), style = "display: none;",
       materialSwitch(
-        inputId = ns("flip"), 
-        label = "Flip coordinates:", 
-        value = FALSE, 
+        inputId = ns("flip"),
+        label = "Flip coordinates:",
+        value = FALSE,
         status = "primary"
       )
     )
@@ -676,12 +676,12 @@ controls_code <- function(ns, insert_code = FALSE) {
     tags$div(
       class = "btn-group btn-group-justified",
       downloadButton(
-        outputId = ns("export_png"), 
+        outputId = ns("export_png"),
         label = ".png",
         class = "btn-primary btn-xs"
       ),
       downloadButton(
-        outputId = ns("export_ppt"), 
+        outputId = ns("export_ppt"),
         label = ".pptx",
         class = "btn-primary btn-xs"
       )
@@ -751,6 +751,6 @@ select_geom_controls <- function(x, geoms) {
   } else {
     "auto"
   }
-} 
+}
 
 
