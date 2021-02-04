@@ -9,16 +9,16 @@
 #' @param targetsIds Ids for retrieving values server-side, if \code{NULL}, the default,
 #'  \code{targetsLabels} are used after removing all not-alphanumeric characters.
 #' @param choices List of values to select from (if elements of the list are
-#'  named then that name rather than the value is displayed to the user). 
-#'  If this argument is provided, then \code{choiceNames} and \code{choiceValues} must 
-#'  not be provided, and vice-versa. The values should be strings; other 
+#'  named then that name rather than the value is displayed to the user).
+#'  If this argument is provided, then \code{choiceNames} and \code{choiceValues} must
+#'  not be provided, and vice-versa. The values should be strings; other
 #'  types (such as logicals and numbers) will be coerced to strings.
-#' @param choiceNames,choiceValues List of names and values, respectively, 
-#' that are displayed to the user in the app and correspond to the each 
-#' choice (for this reason, choiceNames and choiceValues must have the same length). 
-#' If either of these arguments is provided, then the other must be provided and 
-#' choices must not be provided. The advantage of using both of these over a named 
-#' list for choices is that choiceNames allows any type of UI object to be passed 
+#' @param choiceNames,choiceValues List of names and values, respectively,
+#' that are displayed to the user in the app and correspond to the each
+#' choice (for this reason, choiceNames and choiceValues must have the same length).
+#' If either of these arguments is provided, then the other must be provided and
+#' choices must not be provided. The advantage of using both of these over a named
+#' list for choices is that choiceNames allows any type of UI object to be passed
 #' through (tag objects, icons, HTML code, ...), instead of just simple text.
 #' @param selected Default selected values. Must be a \code{list} with \code{targetsIds} as names.
 #' @param badge Displays choices inside a Bootstrap badge. Use \code{FALSE}
@@ -33,14 +33,14 @@
 #' @param boxStyle CSS style string to customize source and target container.
 #' @param width Width of the input.
 #' @param height Height of each boxes, the total input height is this parameter X 2.
-#' 
+#'
 #' @note The output server-side is a list with two slots: \code{source} and \code{targets}.
-#' 
+#'
 #' @seealso \code{\link{updateDragulaInput}} to update choices server-side.
 #'
 #' @return a UI definition
 #' @export
-#' 
+#'
 #' @importFrom htmltools validateCssUnit singleton tags
 #' @importFrom jsonlite toJSON
 #' @importFrom shiny fillRow splitLayout
@@ -49,97 +49,56 @@
 dragulaInput <- function(inputId,
                          label = NULL,
                          sourceLabel,
-                         targetsLabels, 
+                         targetsLabels,
                          targetsIds = NULL,
                          choices = NULL,
                          choiceNames = NULL,
                          choiceValues = NULL,
                          selected = NULL,
-                         status = "primary", 
-                         replace = FALSE, 
+                         status = "primary",
+                         replace = FALSE,
                          badge = TRUE,
                          ncolSource = "auto",
                          ncolGrid = NULL,
                          dragulaOpts = list(),
                          boxStyle = NULL,
-                         width = NULL, 
+                         width = NULL,
                          height = "100px") {
-  
+
   args <- normalizeChoicesArgs(choices, choiceNames, choiceValues)
-  
+
   if (!is.null(selected) && !is.list(selected))
     stop("If provided 'selected' must be a list.", call. = FALSE)
-  
-  if (is.null(targetsIds)) {
-    targetsIds <- gsub(pattern = "[^[:alnum:]]", replacement = "", x = targetsLabels)
-  } else {
-    stopifnot(length(targetsLabels) == length(targetsIds))
-  }
-  
-  replaceTargets <- targetsIds
-  if (is.numeric(replace)) {
-    replaceTargets <- targetsIds[replace]
-    replace <- TRUE
-  } else {
-    stopifnot(is.logical(replace))
-  }
-  replaceTargets <- paste0(inputId, "-target-", replaceTargets)
-  
-  target_list <- lapply(
-    X = seq_along(targetsLabels),
-    FUN = function(i) {
-      if (is.null(selected)) {
-        tags$div(
-          style = "margin: 0;",
-          style = if (!is.null(height)) paste("height:", validateCssUnit(height), ";"),
-          style = boxStyle,
-          class = "box-dad xyvar",
-          id = paste(inputId, "target", targetsIds[i], sep = "-"),
-          style = make_bg_svg(targetsLabels[i])
-        )
-      } else {
-        choicesTarget <- get_choices(args, selected[[targetsIds[i]]])
-        tags$div(
-          style = "margin: 0;",
-          style = if (!is.null(height)) paste("height:", validateCssUnit(height), ";"),
-          style = boxStyle,
-          class = "box-dad xyvar",
-          id = paste(inputId, "target", targetsIds[i], sep = "-"),
-          style = make_bg_svg(targetsLabels[i]),
-          makeDragulaChoices(inputId = inputId, args = choicesTarget, status = status, badge = badge)
-        )
-      }
-    }
-  )
-  # target_list$style <- "height: 50%; font-size: 0;"
-  # target_list$cellArgs <- list(style = "height:90%; padding: 0; margin-right: 0.5%;")
-  # target_list$width <- width
-  # 
-  # tgw <- 100 / length(targetsIds)
-  # tgw <- tgw - 0.5 # / (length(targetsIds)-1)
-  # tgw <- paste0(tgw, "%")
-  # target_list$cellWidths <- tgw
-  
+
+  targets <- generate_targets(inputId, targetsLabels, targetsIds, selected, replace, boxStyle, height)
+  targetsIds <- targets$ids
+  replaceTargets <- targets$replace
+
   if (is.null(ncolGrid))
     ncolGrid <- length(targetsIds)
-  
+
   if (identical(ncolSource, "auto"))
     ncolSource <- ncolGrid
-  
+
   if (!isTRUE(replace) & !is.null(selected)) {
     ind <- unlist(args$choiceValues, use.names = FALSE) %in% unlist(selected, use.names = FALSE)
     args$choiceValues <- args$choiceValues[!ind]
     args$choiceNames <- args$choiceNames[!ind]
   }
-  
+
   tagList(
     html_dependency_dragula(),
-    tags$label(label, `for` = inputId, class = "control-label", class = if (is.null(label)) "shiny-label-null"),
+    tags$label(
+      label,
+      `for` = inputId,
+      class = "control-label",
+      class = if (is.null(label)) "shiny-label-null"
+    ),
     tags$div(
       class="form-group shiny-input-container shiny-input-dragula shiny-input-container-inline",
       style = if (!is.null(width)) paste("width:", validateCssUnit(width), ";"),
       # style = if (!is.null(height)) paste("height:", validateCssUnit(height), ";"),
-      id = inputId, 
+      id = inputId,
       tags$div(
         style = "display: grid; grid-column-gap: 5px; grid-row-gap: 5px;",
         style = sprintf("grid-template-columns: repeat(%s, 1fr);", ncolGrid),
@@ -150,12 +109,12 @@ dragulaInput <- function(inputId,
           style = make_bg_svg(sourceLabel),
           style = if (!is.null(height)) paste("height:", validateCssUnit(height), ";"),
           tags$div(
-            id = paste(inputId, "source", sep = "-"), 
+            id = paste(inputId, "source", sep = "-"),
             style = "min-height: 15px;",
             makeDragulaChoices(inputId = inputId, args = args, status = status, badge = badge)
           )
         ),
-        target_list
+        targets$targets
       ),
       tags$script(
         type = "application/json",
@@ -169,6 +128,56 @@ dragulaInput <- function(inputId,
         ), auto_unbox = TRUE, json_verbatim = TRUE)
       )
     )
+  )
+}
+
+
+generate_targets <- function(inputId, targetsLabels, targetsIds, selected, replace, boxStyle, height) {
+  if (is.null(targetsIds)) {
+    targetsIds <- gsub(pattern = "[^[:alnum:]]", replacement = "", x = targetsLabels)
+  } else {
+    stopifnot(length(targetsLabels) == length(targetsIds))
+  }
+
+  replaceTargets <- targetsIds
+  if (is.numeric(replace)) {
+    replaceTargets <- targetsIds[replace]
+    replace <- TRUE
+  } else {
+    stopifnot(is.logical(replace))
+  }
+  replaceTargets <- paste0(inputId, "-target-", replaceTargets)
+
+  targets <- lapply(
+    X = seq_along(targetsLabels),
+    FUN = function(i) {
+      if (is.null(selected)) {
+        tags$div(
+          style = "margin: 0;",
+          style = if (!is.null(height)) paste("height:", validateCssUnit(height), ";"),
+          style = boxStyle,
+          class = "box-dad xyvar dragula-target",
+          id = paste(inputId, "target", targetsIds[i], sep = "-"),
+          style = make_bg_svg(targetsLabels[i])
+        )
+      } else {
+        choicesTarget <- get_choices(args, selected[[targetsIds[i]]])
+        tags$div(
+          style = "margin: 0;",
+          style = if (!is.null(height)) paste("height:", validateCssUnit(height), ";"),
+          style = boxStyle,
+          class = "box-dad xyvar dragula-target",
+          id = paste(inputId, "target", targetsIds[i], sep = "-"),
+          style = make_bg_svg(targetsLabels[i]),
+          makeDragulaChoices(inputId = inputId, args = choicesTarget, status = status, badge = badge)
+        )
+      }
+    }
+  )
+  list(
+    ids = targetsIds,
+    replace = replaceTargets,
+    targets = targets
   )
 }
 
@@ -197,7 +206,7 @@ make_bg_svg <- function(text) {
   svg <- base64_enc(svg)
   svg <- stri_replace_all_fixed(svg, pattern = "\n", replacement = "")
   svg <- sprintf(
-    "background-image:url(\"data:image/svg+xml;base64,%s\");", 
+    "background-image:url(\"data:image/svg+xml;base64,%s\");",
     svg
   )
   paste0(svg, "background-color:white; background-repeat:no-repeat; background-position:right bottom;")
@@ -209,39 +218,39 @@ make_bg_svg <- function(text) {
 #' @param session The \code{session} object passed to function given to \code{shinyServer}.
 #' @param inputId The id of the input object.
 #' @param choices List of values to select from (if elements of the list are
-#'  named then that name rather than the value is displayed to the user). 
-#'  If this argument is provided, then \code{choiceNames} and \code{choiceValues} must 
-#'  not be provided, and vice-versa. The values should be strings; other 
+#'  named then that name rather than the value is displayed to the user).
+#'  If this argument is provided, then \code{choiceNames} and \code{choiceValues} must
+#'  not be provided, and vice-versa. The values should be strings; other
 #'  types (such as logicals and numbers) will be coerced to strings.
-#' @param choiceNames,choiceValues List of names and values, respectively, 
-#' that are displayed to the user in the app and correspond to the each 
-#' choice (for this reason, choiceNames and choiceValues must have the same length). 
-#' If either of these arguments is provided, then the other must be provided and 
-#' choices must not be provided. The advantage of using both of these over a named 
-#' list for choices is that choiceNames allows any type of UI object to be passed 
+#' @param choiceNames,choiceValues List of names and values, respectively,
+#' that are displayed to the user in the app and correspond to the each
+#' choice (for this reason, choiceNames and choiceValues must have the same length).
+#' If either of these arguments is provided, then the other must be provided and
+#' choices must not be provided. The advantage of using both of these over a named
+#' list for choices is that choiceNames allows any type of UI object to be passed
 #' through (tag objects, icons, HTML code, ...), instead of just simple text.
 #' @param selected A \code{list} with \code{targetIds} as names to select values.
 #' @param selectedNames,selectedValues Update selected items with custom names and values.
 #' @param badge Displays choices inside a Bootstrap badge.
 #' @param status If choices are displayed into a Bootstrap badge, you can use Bootstrap
 #'  status to color them, or \code{NULL}.
-#' 
+#'
 #'
 #' @export
-#' 
+#'
 #' @importFrom htmltools doRenderTags
 #'
 #' @examples
-#' 
+#'
 #' if (interactive()) {
-#' 
+#'
 #' library("shiny")
 #' library("esquisse")
-#' 
+#'
 #' ui <- fluidPage(
 #'   tags$h2("Update dragulaInput"),
 #'   radioButtons(
-#'     inputId = "update", 
+#'     inputId = "update",
 #'     label = "Dataset",
 #'     choices = c("iris", "mtcars")
 #'   ),
@@ -250,40 +259,40 @@ make_bg_svg <- function(text) {
 #'     inputId = "myDad",
 #'     sourceLabel = "Variables",
 #'     targetsLabels = c("X", "Y", "fill", "color", "size"),
-#'     choices = names(iris), 
+#'     choices = names(iris),
 #'     replace = TRUE, width = "400px", status = "success"
 #'   ),
 #'   verbatimTextOutput(outputId = "result")
 #' )
-#' 
+#'
 #' server <- function(input, output, session) {
-#'   
+#'
 #'   output$result <- renderPrint(str(input$myDad))
-#'   
+#'
 #'   observeEvent(input$update, {
 #'     if (input$update == "iris") {
 #'       updateDragulaInput(
-#'         session = session, 
-#'         inputId = "myDad", 
+#'         session = session,
+#'         inputId = "myDad",
 #'         choices = names(iris),
 #'         status = "success"
 #'       )
 #'     } else {
 #'       updateDragulaInput(
-#'         session = session, 
-#'         inputId = "myDad", 
+#'         session = session,
+#'         inputId = "myDad",
 #'         choices = names(mtcars)
 #'       )
 #'     }
 #'   }, ignoreInit = TRUE)
-#'   
+#'
 #' }
-#' 
+#'
 #' shinyApp(ui, server)
-#' 
+#'
 #' }
-#' 
-updateDragulaInput <- function(session, 
+#'
+updateDragulaInput <- function(session,
                                inputId,
                                choices = NULL,
                                choiceNames = NULL,
@@ -297,8 +306,8 @@ updateDragulaInput <- function(session,
     args <- normalizeChoicesArgs(choices, choiceNames, choiceValues)
     choices <- doRenderTags(makeDragulaChoices(
       inputId = session$ns(inputId),
-      args = args, 
-      status = status, 
+      args = args,
+      status = status,
       badge = badge
     ))
   }
@@ -310,8 +319,8 @@ updateDragulaInput <- function(session,
         choicesTarget <- normalizeChoicesArgs(x, NULL, NULL)
         doRenderTags(makeDragulaChoices(
           inputId = session$ns(inputId),
-          args = choicesTarget, 
-          status = status, 
+          args = choicesTarget,
+          status = status,
           badge = badge
         ))
       }
@@ -328,8 +337,8 @@ updateDragulaInput <- function(session,
         choicesTarget <- normalizeChoicesArgs(NULL, selectedNames[[i]], selectedValues[[i]])
         doRenderTags(makeDragulaChoices(
           inputId = session$ns(inputId),
-          args = choicesTarget, 
-          status = status, 
+          args = choicesTarget,
+          status = status,
           badge = badge
         ))
       }
@@ -350,8 +359,8 @@ makeDragulaChoices <- function(inputId, args, status = NULL, badge = TRUE) {
         class = "dragula-block",
         tags$span(
           class = "label-dragula",
-          class = if (badge) "label badge-dragula", 
-          class = if (badge & !is.null(status)) paste0("label-", status), 
+          class = if (badge) "label badge-dragula",
+          class = if (badge & !is.null(status)) paste0("label-", status),
           # id = paste(inputId, "target-label", sep = "-"),
           id = paste(inputId, "target-label", clean_string(args$choiceValues[[i]]), sep = "-"),
           `data-value` = args$choiceValues[[i]],
@@ -363,7 +372,7 @@ makeDragulaChoices <- function(inputId, args, status = NULL, badge = TRUE) {
 }
 
 get_choices <- function(x, values) {
-  if (is.null(values)) 
+  if (is.null(values))
     return(NULL)
   ind <- vapply(x$choiceValues, function(x) {
     x %in% values
@@ -379,12 +388,12 @@ get_choices <- function(x, values) {
 #' @importFrom htmltools htmlDependency
 html_dependency_dragula <- function() {
   htmlDependency(
-    name = "esquisse-dragula", 
-    version = "0.1.0", 
+    name = "esquisse-dragula",
+    version = "0.1.0",
     src = c(file = "assets", href = "esquisse"),
     package = "esquisse",
     script = c("dragula/dragula.min.js", "dragula/dragula-bindings.js"),
-    stylesheet = c("dragula/dragula.min.css", "styles-dad.css"), 
+    stylesheet = c("dragula/dragula.min.css", "styles-dad.css"),
     all_files = FALSE
   )
 }

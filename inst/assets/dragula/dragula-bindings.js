@@ -1,3 +1,8 @@
+/*jshint
+  jquery:true
+*/
+/*global Shiny,dragula */
+
 var dragulaBinding = new Shiny.InputBinding();
 $.extend(dragulaBinding, {
   find: function find(scope) {
@@ -56,7 +61,12 @@ $.extend(dragulaBinding, {
           }
         } else {
           $(target)
-            .find("#" + $(el).children().attr("id"))
+            .find(
+              "#" +
+                $(el)
+                  .children()
+                  .attr("id")
+            )
             .parent()
             .remove();
         }
@@ -83,7 +93,7 @@ $.extend(dragulaBinding, {
       targetsname.push(element.replace(/.*target-/, ""));
     });
 
-    for (i = 0; i < targetsname.length; i++) {
+    for (var i = 0; i < targetsname.length; i++) {
       values.target[targetsname[i]] = [];
       $("#" + targets[i])
         .find("span.label-dragula")
@@ -117,38 +127,31 @@ $.extend(dragulaBinding, {
     $(el).off(".dragulaBinding");
   },
   receiveMessage: function receiveMessage(el, data) {
-    var $el = $(el);
     var config = $(el).find('script[data-for="' + el.id + '"]');
     config = JSON.parse(config.html());
     var targetsContainer = config.targets;
     var sourceContainer = config.source;
     if (data.hasOwnProperty("choices")) {
-      
       targetsContainer.forEach(function(element) {
         $("#" + element)
           .children(".dragula-block")
           .remove();
       });
-      
+
       sourceContainer.forEach(function(element) {
         $("#" + element)
           .children(".dragula-block")
           .remove();
         $("#" + element).html(data.choices);
       });
-      
     }
     if (data.hasOwnProperty("selected")) {
-      
       targetsContainer.forEach(function(element) {
-        console.log(element);
-        console.log(data.selected);
         $("#" + element)
           .children(".dragula-block")
           .remove();
         $("#" + element).html(data.selected[element]);
       });
-      
     }
     $(el).trigger("change");
   },
