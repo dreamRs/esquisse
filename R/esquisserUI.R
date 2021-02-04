@@ -1,11 +1,11 @@
 
 #' @title Esquisse Shiny module
-#' 
+#'
 #' @description Launch \code{esquisse} in a classic Shiny app.
 #'
 #' @param id Module's id.
 #' @param header Logical. Display or not \code{esquisse} header.
-#' @param container Container in which display the addin, 
+#' @param container Container in which display the addin,
 #'  default is to use \code{esquisseContainer}, see examples.
 #'  Use \code{NULL} for no container (behavior in versions <= 0.2.1).
 #'  Must be a \code{function}.
@@ -13,20 +13,20 @@
 #' @param insert_code Logical, Display or not a button to insert the ggplot
 #'  code in the current user script (work only in RStudio).
 #' @param disable_filters Logical. Disable the menu allowing to filter data used.
-#' 
+#'
 #' @return A \code{reactiveValues} with 3 slots :
 #'  \itemize{
 #'   \item \strong{code_plot} : code to generate plot.
 #'   \item \strong{code_filters} : a list of length two with code to reproduce filters.
 #'   \item \strong{data} : \code{data.frame} used in plot (with filters applied).
 #'  }
-#' 
+#'
 #' @note For the module to display correctly, it is necessary to place
-#'  it in a container with a fixed height. Since version >= 0.2.2, the 
+#'  it in a container with a fixed height. Since version >= 0.2.2, the
 #'  container is added by default.
 #'
 #' @export
-#' 
+#'
 #' @name module-esquisse
 #'
 #' @importFrom htmltools tags tagList singleton
@@ -37,18 +37,33 @@
 #' @example examples/esquisse-module.R
 esquisserUI <- function(id, header = TRUE,
                         container = esquisseContainer(),
-                        choose_data = TRUE, 
+                        choose_data = TRUE,
                         insert_code = FALSE,
                         disable_filters = FALSE) {
-  
+
   ns <- NS(id)
-  
+
   box_title <- tags$div(
     class="gadget-title dreamrs-title-box",
     tags$h1(shiny::icon("wrench"), "ggplot2 builder", class = "dreamrs-title"),
     tags$div(
       class = "pull-right",
-      miniTitleBarButton(inputId = ns("close"), label = "Close")
+      actionButton(
+        inputId = ns("settings"),
+        label = NULL,
+        icon = icon("gear", class = "fa-lg"),
+        style = "color: #FFF; background: transparent; border: none; margin: 7px 5px 0px 5px;",
+        class = "btn-sm",
+        title = "Display settings"
+      ),
+      actionButton(
+        inputId = ns("close"),
+        label = NULL,
+        icon = icon("times", class = "fa-lg"),
+        style = "color: #FFF; background: transparent; border: none; margin: 7px 5px 0px 5px;",
+        class = "btn-sm",
+        title = "Close Window"
+      )
     ),
     if (isTRUE(choose_data) & isTRUE(header)) {
       tags$div(
@@ -57,7 +72,7 @@ esquisserUI <- function(id, header = TRUE,
       )
     }
   )
-    
+
   addin <- miniPage(
 
     # style sheet
@@ -67,8 +82,7 @@ esquisserUI <- function(id, header = TRUE,
     )),
 
     if (isTRUE(header)) box_title,
-    
-    
+
     fluidRow(
       class = "row-no-gutters",
       column(
@@ -91,20 +105,10 @@ esquisserUI <- function(id, header = TRUE,
       ),
       column(
         width = 11,
-        dragulaInput(
-          inputId = ns("dragvars"),
-          sourceLabel = "Variables",
-          targetsLabels = c("X", "Y", "Fill", "Color", "Size", "Group", "Facet", "FacetRow", "FacetCol"),
-          targetsIds = c("xvar", "yvar", "fill", "color", "size", "group", "facet", "facet_row", "facet_col"),
-          choices = "",
-          badge = FALSE,
-          width = "100%",
-          height = "70px",
-          replace = TRUE
-        )
+        uiOutput(outputId = ns("ui_aesthetics"))
       )
     ),
-    
+
     fillCol(
       style = "overflow-y: auto;",
       tags$div(
@@ -129,7 +133,7 @@ esquisserUI <- function(id, header = TRUE,
     ),
 
     chartControlsUI(
-      id = ns("controls"), 
+      id = ns("controls"),
       insert_code = insert_code,
       disable_filters = disable_filters
     )
@@ -145,9 +149,9 @@ esquisserUI <- function(id, header = TRUE,
 #'  or \code{'100\%'}; see \code{\link[htmltools]{validateCssUnit}}.
 #' @param fixed Use a fixed container, e.g. to use use esquisse full page.
 #'  If \code{TRUE}, width and height are ignored. Default to \code{FALSE}.
-#'  It's possible to use a vector of CSS unit of length 4 to specify the margins 
+#'  It's possible to use a vector of CSS unit of length 4 to specify the margins
 #'  (top, right, bottom, left).
-#' 
+#'
 #' @rdname module-esquisse
 #' @export
 esquisseContainer <- function(width = "100%", height = "700px", fixed = FALSE) {
@@ -179,7 +183,7 @@ esquisseContainer <- function(width = "100%", height = "700px", fixed = FALSE) {
         )
       } else {
         stop(
-          "fixed must be ever a logical TRUE/FALSE or a vector of length 4 of valid CSS unit.", 
+          "fixed must be ever a logical TRUE/FALSE or a vector of length 4 of valid CSS unit.",
           call. = FALSE
         )
       }

@@ -23,7 +23,68 @@ esquisserServer <- function(input,
                             dataModule = c("GlobalEnv", "ImportFile"),
                             sizeDataModule = "m") {
 
+  ns <- session$ns
   ggplotCall <- reactiveValues(code = "")
+
+  observeEvent(input$settings, {
+    showModal(modalDialog(
+      title = tagList(
+        "Esquisse settings",
+        tags$button(
+          icon("close"),
+          class = "btn btn-link pull-right",
+          `data-dismiss` = "modal"
+        )
+      ),
+      checkboxGroupInput(
+        inputId = ns("aesthetics"),
+        label = "Aesthetics to be used:",
+        choices = c("fill", "color", "size", "group", "facet", "facet_row", "facet_col"),
+        selected = input$aesthetics %||% c("fill", "color", "size", "group", "facet")
+      ),
+      easyClose = TRUE,
+      footer = NULL
+    ))
+  })
+
+  output$ui_aesthetics <- renderUI({
+    if (is.null(input$aesthetics)) {
+      aesthetics <- c("fill", "color", "size", "group", "facet")
+    } else {
+      aesthetics <- input$aesthetics
+    }
+    data <- isolate(dataChart$data)
+    if (!is.null(data)) {
+      var_choices <- setdiff(names(dataChart$data), attr(dataChart$data, "sf_column"))
+      dragulaInput(
+        inputId = ns("dragvars"),
+        sourceLabel = "Variables",
+        targetsLabels = c("X", "Y", aesthetics),
+        targetsIds = c("xvar", "yvar", aesthetics),
+        choiceValues = var_choices,
+        choiceNames = badgeType(
+          col_name = var_choices,
+          col_type = col_type(dataChart$data[, var_choices])
+        ),
+        badge = FALSE,
+        width = "100%",
+        height = "70px",
+        replace = TRUE
+      )
+    } else {
+      dragulaInput(
+        inputId = ns("dragvars"),
+        sourceLabel = "Variables",
+        targetsLabels = c("X", "Y", aesthetics),
+        targetsIds = c("xvar", "yvar", aesthetics),
+        choices = "",
+        badge = FALSE,
+        width = "100%",
+        height = "70px",
+        replace = TRUE
+      )
+    }
+  })
 
   observeEvent(data$data, {
     dataChart$data <- data$data
@@ -43,8 +104,8 @@ esquisserServer <- function(input,
     if (is.null(dataChart$data)) {
       updateDragulaInput(
         session = session,
-        inputId = "dragvars", 
-        status = NULL, 
+        inputId = "dragvars",
+        status = NULL,
         choices = character(0),
         badge = FALSE
       )
@@ -56,7 +117,7 @@ esquisserServer <- function(input,
       var_choices <- setdiff(names(dataChart$data), attr(dataChart$data, "sf_column"))
       updateDragulaInput(
         session = session,
-        inputId = "dragvars", 
+        inputId = "dragvars",
         status = NULL,
         choiceValues = var_choices,
         choiceNames = badgeType(
