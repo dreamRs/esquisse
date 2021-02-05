@@ -247,7 +247,6 @@ chartControlsServer <- function(input,
 
   observeEvent(type$x, {
     toggleDisplay(id = ns("controls-position"), display = type$x %in% c("bar", "line", "area"))
-    toggleDisplay(id = ns("controls-flip"), display = type$x %in% "bar")
     toggleDisplay(id = ns("controls-histogram"), display = type$x %in% "histogram")
     toggleDisplay(id = ns("controls-density"), display = type$x %in% c("density", "violin"))
     toggleDisplay(id = ns("controls-scatter"), display = type$x %in% "point")
@@ -494,7 +493,7 @@ controls_appearance <- function(ns) {
 #' @noRd
 #' @importFrom shiny sliderInput conditionalPanel selectInput numericInput
 #' @importFrom htmltools tagList tags
-#' @importFrom shinyWidgets materialSwitch prettyRadioButtons numericRangeInput
+#' @importFrom shinyWidgets prettyRadioButtons numericRangeInput prettyToggle
 #'
 controls_params <- function(ns) {
 
@@ -507,29 +506,39 @@ controls_params <- function(ns) {
 
   tagList(
     tags$div(
-      id = ns("controls-scatter"), style = "display: none; padding-top: 10px;",
+      id = ns("controls-scatter"),
+      style = "display: none; padding-top: 10px;",
+      tags$label(
+        class = "control-label",
+        `for` = ns("smooth_add"),
+        "Add a smooth line:"
+      ),
+      prettyToggle(
+        inputId = ns("smooth_add"),
+        label_on = "Yes",
+        icon_on = icon("check"),
+        status_on = "success",
+        status_off = "danger",
+        label_off = "No",
+        icon_off = icon("remove"),
+        inline = TRUE
+      ),
       conditionalPanel(
         condition = paste0("input['",  ns("smooth_add"), "']==true"),
         sliderInput(
           inputId = ns("smooth_span"),
-          label = "Span:",
+          label = "Smooth line span:",
           min = 0.1, max = 1,
           value = 0.75, step = 0.01,
           width = "100%"
         )
       ),
-      materialSwitch(
-        inputId = ns("smooth_add"),
-        label = "Smooth line:",
-        right = TRUE,
-        status = "primary"
-      )
     ),
     tags$div(
       id = ns("controls-size"), style = "display: none;",
       sliderInput(
         inputId = ns("size"),
-        label = "Size:",
+        label = "Size for points/lines:",
         min = 0.5, max = 3,
         value = 1,
         width = "100%"
@@ -612,32 +621,45 @@ controls_params <- function(ns) {
       )
     ),
     tags$div(
-      id = ns("controls-density"), style = "display: none;",
+      id = ns("controls-density"),
+      style = "display: none;",
       sliderInput(
         inputId = ns("adjust"),
         label = "Bandwidth adjustment:",
-        min = 0.2, max = 6,
-        value = 1, step = 0.1,
+        min = 0.2,
+        max = 6,
+        value = 1,
+        step = 0.1,
         width = "100%"
       )
     ),
     tags$div(
-      id = ns("controls-position"), style = "display: none;",
+      id = ns("controls-position"),
+      style = "display: none;",
       prettyRadioButtons(
-        inputId = ns("position"), label = "Position:",
-        choices = c("stack", "dodge", "fill"), inline = TRUE,
-        selected = "stack", status = "primary",
-        outline = TRUE, icon = icon("check")
+        inputId = ns("position"),
+        label = "Position:",
+        choices = c("stack", "dodge", "fill"),
+        inline = TRUE,
+        selected = "stack",
+        status = "primary",
+        outline = TRUE
       )
     ),
-    tags$div(
-      id = ns("controls-flip"), style = "display: none;",
-      materialSwitch(
-        inputId = ns("flip"),
-        label = "Flip coordinates:",
-        value = FALSE,
-        status = "primary"
-      )
+    tags$label(
+      class = "control-label",
+      `for` = ns("flip"),
+      "Flip coordinate:"
+    ),
+    prettyToggle(
+      inputId = ns("flip"),
+      label_on = "Yes",
+      icon_on = icon("check"),
+      status_on = "success",
+      status_off = "danger",
+      label_off = "No",
+      icon_off = icon("remove"),
+      inline = TRUE
     )
   )
 }
