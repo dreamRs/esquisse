@@ -70,7 +70,7 @@ dragulaInput <- function(inputId,
   if (!is.null(selected) && !is.list(selected))
     stop("If provided 'selected' must be a list.", call. = FALSE)
 
-  targets <- generate_targets(inputId, targetsLabels, targetsIds, selected, replace, boxStyle, height)
+  targets <- generate_targets(inputId, args, targetsLabels, targetsIds, selected, replace, boxStyle, badge, status, height)
   targetsIds <- targets$ids
   replaceTargets <- targets$replace
 
@@ -132,7 +132,7 @@ dragulaInput <- function(inputId,
 }
 
 
-generate_targets <- function(inputId, targetsLabels, targetsIds, selected, replace, boxStyle, height) {
+generate_targets <- function(inputId, args, targetsLabels, targetsIds, selected, replace, boxStyle, badge, status, height) {
   if (is.null(targetsIds)) {
     targetsIds <- gsub(pattern = "[^[:alnum:]]", replacement = "", x = targetsLabels)
   } else {
