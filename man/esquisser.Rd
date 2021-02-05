@@ -12,7 +12,7 @@ esquisser(
 )
 }
 \arguments{
-\item{data}{a data.frame, you can pass a data.frame explicitly to the function, 
+\item{data}{a data.frame, you can pass a data.frame explicitly to the function,
 otherwise you'll have to choose one in global environment.}
 
 \item{coerce_vars}{If \code{TRUE} allow to coerce variables to different type when selecting data.}
@@ -44,7 +44,7 @@ options("esquisse.viewer" = "viewer")
 options("esquisse.viewer" = "browser")
 
 # esquisse use shiny::runApp
-# see ?shiny::runApp to see options 
+# see ?shiny::runApp to see options
 # available, example to use custom port:
 
 options("shiny.port" = 8080)

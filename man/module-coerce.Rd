@@ -16,11 +16,11 @@ coerceServer(input, output, session, data, reactiveValuesSlot = "data")
 \item{input, output, session}{standards \code{shiny} server arguments.²}
 
 \item{data}{A \code{data.frame} or a \code{reactive}
-function returning a \code{data.frame} or a 
-\code{reactivevalues} with a slot containing a \code{data.frame} 
+function returning a \code{data.frame} or a
+\code{reactivevalues} with a slot containing a \code{data.frame}
 (use \code{reactiveValuesSlot} to identify that slot)}
 
-\item{reactiveValuesSlot}{If \code{data} is a \code{reactivevalues}, 
+\item{reactiveValuesSlot}{If \code{data} is a \code{reactivevalues},
 specify the name of the slot containing data.}
 }
 \value{
@@ -35,7 +35,7 @@ Coerce data.frame's columns module
 if (interactive()) {
   library(esquisse)
   library(shiny)
-  
+
   foo <- data.frame(
     num_as_char = as.character(1:10),
     char = sample(letters[1:3], 10, TRUE),
@@ -46,10 +46,10 @@ if (interactive()) {
     date_as_num = as.numeric(
       Sys.Date() + sample(seq(-10, 10), 10, TRUE)
     ),
-    datetime = Sys.time() + sample(seq(-10, 10) * 1e4, 10, TRUE), 
+    datetime = Sys.time() + sample(seq(-10, 10) * 1e4, 10, TRUE),
     stringsAsFactors = FALSE
   )
-  
+
   ui <- fluidPage(
     tags$h2("Coerce module"),
     fluidRow(
@@ -64,11 +64,11 @@ if (interactive()) {
       )
     )
   )
-  
+
   server <- function(input, output, session) {
-    
+
     result <- callModule(module = coerceServer, id = "example", data = reactive({foo}))
-    
+
     output$print_result <- renderPrint({
       str(result$data)
     })
@@ -76,7 +76,7 @@ if (interactive()) {
       result$names
     })
   }
-  
+
   shinyApp(ui, server)
 }
 

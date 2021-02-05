@@ -46,7 +46,7 @@ or \code{"ImportFile"} (import an external file supported by \code{\link[rio]{im
 \item{selectVars}{Display module to select variables, \code{TRUE} by default.}
 
 \item{selectedTypes}{Type of variables selected by default in select variables module.
-Possible types are \code{"discrete"}, \code{"time"}, \code{"continuous"} and \code{"id"}, 
+Possible types are \code{"discrete"}, \code{"time"}, \code{"continuous"} and \code{"id"},
 by default \code{"id"} is discarded.}
 
 \item{coerceVars}{Display module to coerce variables between different class, \code{TRUE} by default.}

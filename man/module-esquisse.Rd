@@ -42,7 +42,7 @@ or \code{"ImportFile"}.}
 
 \item{header}{Logical. Display or not \code{esquisse} header.}
 
-\item{container}{Container in which display the addin, 
+\item{container}{Container in which display the addin,
 default is to use \code{esquisseContainer}, see examples.
 Use \code{NULL} for no container (behavior in versions <= 0.2.1).
 Must be a \code{function}.}
@@ -59,7 +59,7 @@ or \code{'100\%'}; see \code{\link[htmltools]{validateCssUnit}}.}
 
 \item{fixed}{Use a fixed container, e.g. to use use esquisse full page.
 If \code{TRUE}, width and height are ignored. Default to \code{FALSE}.
-It's possible to use a vector of CSS unit of length 4 to specify the margins 
+It's possible to use a vector of CSS unit of length 4 to specify the margins
 (top, right, bottom, left).}
 }
 \value{
@@ -75,7 +75,7 @@ Launch \code{esquisse} in a classic Shiny app.
 }
 \note{
 For the module to display correctly, it is necessary to place
- it in a container with a fixed height. Since version >= 0.2.2, the 
+ it in a container with a fixed height. Since version >= 0.2.2, the
  container is added by default.
 }
 \examples{
