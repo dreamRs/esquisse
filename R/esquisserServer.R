@@ -12,10 +12,11 @@
 #'
 #' @importFrom shiny callModule reactiveValues observeEvent
 #'  renderPlot stopApp plotOutput showNotification isolate reactiveValuesToList
-#' @importFrom shinyWidgets prettyCheckboxGroup
+#' @importFrom shinyWidgets prettyCheckboxGroup alert
 #' @importFrom ggplot2 ggplot_build ggsave
 #' @import ggplot2
 #' @importFrom rlang expr_deparse
+#' @importFrom datamods import_modal import_server
 #'
 esquisserServer <- function(input,
                             output,
@@ -26,7 +27,9 @@ esquisserServer <- function(input,
 
   ns <- session$ns
   ggplotCall <- reactiveValues(code = "")
+  dataChart <- reactiveValues(data = NULL, name = NULL)
 
+  # Settings modal (aesthetics choices)
   observeEvent(input$settings, {
     showModal(modalDialog(
       title = tagList(
@@ -69,6 +72,7 @@ esquisserServer <- function(input,
     ))
   })
 
+  # Generate drag-and-drop input
   output$ui_aesthetics <- renderUI({
     if (is.null(input$aesthetics)) {
       aesthetics <- c("fill", "color", "size", "group", "facet")
@@ -77,7 +81,7 @@ esquisserServer <- function(input,
     }
     data <- isolate(dataChart$data)
     if (!is.null(data)) {
-      var_choices <- setdiff(names(dataChart$data), attr(dataChart$data, "sf_column"))
+      var_choices <- setdiff(names(data), attr(data, "sf_column"))
       dragulaInput(
         inputId = ns("dragvars"),
         sourceLabel = "Variables",
@@ -86,7 +90,7 @@ esquisserServer <- function(input,
         choiceValues = var_choices,
         choiceNames = badgeType(
           col_name = var_choices,
-          col_type = col_type(dataChart$data[, var_choices])
+          col_type = col_type(data[, var_choices])
         ),
         selected = dropNulls(isolate(input$dragvars$target)),
         badge = FALSE,
@@ -114,17 +118,36 @@ esquisserServer <- function(input,
     dataChart$name <- data$name
   }, ignoreInit = FALSE)
 
-  dataChart <- callModule(
-    module = chooseDataServer,
-    id = "choose-data",
-    data = isolate(data$data),
-    name = isolate(data$name),
-    launchOnStart = is.null(isolate(data$data)),
-    coerceVars = getOption(x = "esquisse.coerceVars", default = FALSE),
-    dataModule = dataModule, size = sizeDataModule
-  )
+  # Launch import modal if no data at start
+  if (is.null(isolate(data$data))) {
+    datamods::import_modal(
+      id = ns("import-data"),
+      from = c("env", "file", "copypaste"),
+      title = "Import data"
+    )
+  }
+
+  # Launch import modal if button clicked
+  observeEvent(input$launch_import_data, {
+    datamods::import_modal(
+      id = ns("import-data"),
+      from = c("env", "file", "copypaste"),
+      title = "Import data"
+    )
+  })
+
+  # DAta imported and update rv used
+  data_imported_r <- datamods::import_server("import-data", return_class = "tbl_df")
+  observeEvent(data_imported_r$data(), {
+    data <- data_imported_r$data()
+    dataChart$data <- data
+    dataChart$name <- data_imported_r$name()
+  })
+
+  # Update drag-and-drop input when data changes
   observeEvent(dataChart$data, {
-    if (is.null(dataChart$data)) {
+    data <- dataChart$data
+    if (is.null(data)) {
       updateDragulaInput(
         session = session,
         inputId = "dragvars",
@@ -134,10 +157,10 @@ esquisserServer <- function(input,
       )
     } else {
       # special case: geom_sf
-      if (inherits(dataChart$data, what = "sf")) {
+      if (inherits(data, what = "sf")) {
         geom_possible$x <- c("sf", geom_possible$x)
       }
-      var_choices <- setdiff(names(dataChart$data), attr(dataChart$data, "sf_column"))
+      var_choices <- setdiff(names(data), attr(data, "sf_column"))
       updateDragulaInput(
         session = session,
         inputId = "dragvars",
@@ -145,7 +168,7 @@ esquisserServer <- function(input,
         choiceValues = var_choices,
         choiceNames = badgeType(
           col_name = var_choices,
-          col_type = col_type(dataChart$data[, var_choices])
+          col_type = col_type(data[, var_choices])
         ),
         badge = FALSE
       )

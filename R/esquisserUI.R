@@ -66,7 +66,13 @@ esquisserUI <- function(id, header = TRUE,
     if (isTRUE(choose_data) & isTRUE(header)) {
       tags$div(
         class = "pull-left",
-        chooseDataUI(id = ns("choose-data"), class = "btn-sm")
+        actionButton(
+          inputId = ns("launch_import_data"),
+          label = NULL,
+          icon = icon("database", class = "fa-lg"),
+          class = "btn-sm",
+          title = "Import data"
+        )
       )
     }
   )

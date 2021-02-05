@@ -36,3 +36,4 @@ Suggests:
     ggthemes,
     hrbrthemes
 VignetteBuilder: knitr
+Remotes: dreamRs/datamods
