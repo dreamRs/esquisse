@@ -30,8 +30,7 @@
 #' @name module-esquisse
 #'
 #' @importFrom htmltools tags tagList singleton
-#' @importFrom shiny plotOutput icon actionButton NS fluidRow column fillCol
-#' @importFrom miniUI miniTitleBarButton miniPage
+#' @importFrom shiny fillPage plotOutput icon actionButton NS fluidRow column fillCol
 #' @importFrom shinyWidgets prettyToggle
 #'
 #' @example examples/esquisse-module.R
@@ -77,8 +76,8 @@ esquisserUI <- function(id, header = TRUE,
     }
   )
 
-  addin <- miniPage(
-
+  addin <- fillPage(tags$div(
+    class = "esquisse-container",
     html_dependency_esquisse(),
     singleton(x = tagList(
       tags$script(src = "esquisse/clipboard/clipboard.min.js")
@@ -140,7 +139,7 @@ esquisserUI <- function(id, header = TRUE,
       insert_code = insert_code,
       disable_filters = disable_filters
     )
-  )
+  ))
 
   if (is.function(container)) {
     addin <- container(addin)
