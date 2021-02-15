@@ -59,7 +59,7 @@
 /* Geom & aes block */
 .esquisse-geom-aes {
   display: grid; 
-  grid-template-columns: 80px 1fr; 
+  grid-template-columns: 90px 1fr; 
   grid-template-rows: 1fr;
   grid-column-gap: 0px;
   grid-row-gap: 0px;

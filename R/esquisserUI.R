@@ -82,6 +82,7 @@ esquisserUI <- function(id, header = TRUE,
     singleton(x = tagList(
       tags$script(src = "esquisse/clipboard/clipboard.min.js")
     )),
+    shinyWidgets::chooseSliderSkin("Modern", "#112446"),
 
     if (isTRUE(header)) box_title,
 
