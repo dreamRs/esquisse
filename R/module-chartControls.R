@@ -42,7 +42,7 @@ controls_ui <- function(id,
       )),
       dropdown_(
         controls_labs(ns),
-        inputId = "labsdrop",
+        inputId = "controls-labs",
         style = "default",
         label = "Labels & Title",
         up = TRUE,
@@ -54,16 +54,16 @@ controls_ui <- function(id,
         style = "default",
         label = "Plot options",
         up = TRUE,
-        inputId = "paramsdrop",
+        inputId = "controls-parameters",
         icon = icon("gears"),
         status = "default btn-esquisse-controls"
       ),
       dropdown_(
         controls_appearance(ns),
         style = "default",
-        label = "Colors",
+        label = "Appearance",
         up = TRUE,
-        inputId = "colorsdrop",
+        inputId = "controls-appearance",
         icon = icon("palette"),
         status = "default btn-esquisse-controls"
       ),
@@ -75,7 +75,7 @@ controls_ui <- function(id,
           up = TRUE,
           icon = icon("filter"),
           right = TRUE,
-          inputId = "filterdrop",
+          inputId = "controls-filters",
           status = "default btn-esquisse-controls"
         )
       },
@@ -85,7 +85,7 @@ controls_ui <- function(id,
         label = "Export & code",
         up = TRUE,
         right = TRUE,
-        inputId = "codedrop",
+        inputId = "controls-code",
         icon = icon("code"),
         status = "default btn-esquisse-controls"
       )
@@ -595,10 +595,35 @@ controls_appearance <- function(ns) {
 
     tags$div(
       id = ns("controls-spectrum"), style = "display: block;",
+      # colorPickr(
+      #   inputId = ns("fill_color"),
+      #   label = "Color:",
+      #   theme = "monolith",
+      #   update = "changestop",
+      #   inline = TRUE,
+      #   swatches = unlist(cols, use.names = FALSE),
+      #   preview = FALSE,
+      #   interaction = list(
+      #     hex = FALSE,
+      #     rgba = FALSE,
+      #     input = TRUE,
+      #     save = FALSE,
+      #     clear = FALSE
+      #   ),
+      #   width = "100%"
+      # )
       spectrumInput(
         inputId = ns("fill_color"),
-        label = "Choose a color:",
-        choices = unname(cols),
+        label = "Color:",
+        choices = unname(cols), 
+        flat = TRUE,
+        update_on = "dragstop",
+        options = list(
+          `toggle-palette-only` = FALSE,
+          `show-palette-only` = FALSE,
+          `show-buttons` = FALSE,
+          `hide-after-palette-select` = TRUE
+        ),
         width = "100%"
       )
     ),
@@ -898,9 +923,9 @@ get_colors <- function() {
   cols <- getOption("esquisse.colors")
   if (is.function(cols))
     cols <- cols()
-  if (!is.list(cols)) {
-    stop("Option 'esquisse.colors' must be a list", call. = FALSE)
-  }
+  # if (!is.character(cols)) {
+  #   stop("Option 'esquisse.colors' must be a character vector", call. = FALSE)
+  # }
   cols
 }
 

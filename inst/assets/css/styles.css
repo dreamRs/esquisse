@@ -104,17 +104,21 @@
 
 /* dropdowns width */
 
-#sw-content-labsdrop {
+#sw-content-controls-labs {
   min-width: 150px;
 }
 
-#sw-content-paramsdrop {
+#sw-content-controls-parameters {
   min-width: 270px;
   overflow-y: auto;
   max-height: 90vh;
 }
 
-#sw-content-filterdrop {
+#sw-content-controls-appearance {
+  min-width: 430px;
+}
+
+#sw-content-controls-filters {
   min-width: 350px;
   max-height: 90vh;
   padding-right: 5px;
@@ -122,11 +126,38 @@
   overflow-x: hidden;
 }
 
-#sw-content-codedrop {
+#sw-content-controls-code {
   min-width: 370px;
   z-index: 1000;
 }
 
+
+/* color pickr */
+.pcr-app[data-theme=monolith] {
+  padding: 0 !important;
+}
+.sw-spectrum {
+  border: none !important;
+}
+.sp-palette-container {
+  border-right: none !important;
+}
+.sp-thumb-inner {
+  border-radius: 3px !important;
+  border: none;
+}
+.sp-palette .sp-thumb-el {
+  width: 18px !important;
+  height: 18px !important;
+}
+.sp-dragger {
+  height: 8px !important;
+  width: 8px !important;
+  background: transparent !important;
+}
+.sp-clear, .sp-color, .sp-hue {
+  border: none !important;
+}
 
 /* box drag and drop */
 .container-drag-source, .box-dad {
