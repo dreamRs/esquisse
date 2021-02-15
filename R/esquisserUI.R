@@ -85,30 +85,24 @@ esquisserUI <- function(id, header = TRUE,
 
     if (isTRUE(header)) box_title,
 
-    fluidRow(
-      class = "row-no-gutters",
-      column(
-        width = 1,
-        tags$div(
-          style = if (isTRUE(choose_data) & !isTRUE(header)) {
-            "padding: 10px;"
-          } else {
-            "padding: 3px 3px 0 3px; height: 144px;"
-          },
-          dropInput(
-            inputId = ns("geom"),
-            choicesNames = geomIcons()$names,
-            choicesValues = geomIcons()$values,
-            dropWidth = "290px",
-            width = "100%"
-          ),
-          if (isTRUE(choose_data) & !isTRUE(header)) chooseDataUI(id = ns("choose-data"))
-        )
+    tags$div(
+      class = "esquisse-geom-aes",
+      tags$div(
+        style = if (isTRUE(choose_data) & !isTRUE(header)) {
+          "padding: 10px;"
+        } else {
+          "padding: 3px 3px 0 3px; height: 144px;"
+        },
+        dropInput(
+          inputId = ns("geom"),
+          choicesNames = geomIcons()$names,
+          choicesValues = geomIcons()$values,
+          dropWidth = "290px",
+          width = "100%"
+        ),
+        if (isTRUE(choose_data) & !isTRUE(header)) chooseDataUI(id = ns("choose-data"))
       ),
-      column(
-        width = 11,
-        uiOutput(outputId = ns("ui_aesthetics"))
-      )
+      uiOutput(outputId = ns("ui_aesthetics"))
     ),
 
     fillCol(
