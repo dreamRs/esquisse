@@ -84,6 +84,22 @@
   border-radius: 0 !important;
 }
 
+.sw-dropdown-content {
+  border-radius: 4px !important;
+}
+.sw-dropdown-in {
+  padding: 2px !important;
+}
+
+
+.esquisse-labs-options {
+  display: grid; 
+  grid-template-columns: 1fr 40px; 
+  grid-template-rows: 1fr;
+  grid-column-gap: 0px;
+  grid-row-gap: 0px;
+  width: 100%;
+}
 
 
 /* dropdowns width */

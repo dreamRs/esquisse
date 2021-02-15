@@ -1,67 +1,94 @@
 
+#' @importFrom shinyWidgets dropdown
+#' @importFrom htmltools tagAppendAttributes
+dropdown_ <- function(...) {
+  tagAppendAttributes(
+    dropdown(...),
+    class = "btn-group-esquisse"
+  )
+}
+
+
 #' Dropup buttons to hide chart's controls
 #'
-#' @param id Module id. See \code{\link[shiny]{callModule}}.
+#' @param id Module's ID. See \code{\link[shiny]{callModule}}.
 #' @param insert_code Logical, Display or not a button to isert the ggplot
 #'  code in the current user script (work only in RStudio).
 #'
 #' @return a \code{\link[shiny]{tagList}} containing UI elements
 #' @noRd
 #'
-#' @importFrom shinyWidgets dropdown
 #' @importFrom htmltools tags tagList HTML
 #' @importFrom shiny icon checkboxInput
 #'
 controls_ui <- function(id,
+                        controls = c("labs", "parameters", "colors", "filters", "code"),
                         insert_code = FALSE,
                         disable_filters = FALSE) {
+  if (!is.null(controls)) {
+    controls <- match.arg(
+      controls,
+      choices = c("labs", "parameters", "colors", "filters", "code"), 
+      several.ok = TRUE
+    )
+  }
   ns <- NS(id)
-  tags$div(
-    class = "btn-group-esquisse btn-group-justified-esquisse",
-    tags$style(sprintf(
-      "#%s .sw-dropdown-in {margin: 8px 0 8px 10px !important; padding: 0 !important;}",
-      "sw-content-filterdrop"
-    )),
-    dropdown(
-      controls_labs(ns),
-      inputId = "labsdrop",
-      style = "default",
-      label = "Labels & Title",
-      up = TRUE,
-      icon = icon("font"),
-      status = "default btn-esquisse-controls"
-    ),
-    dropdown(
-      controls_params(ns),
-      controls_appearance(ns),
-      style = "default",
-      label = "Plot options",
-      up = TRUE,
-      inputId = "paramsdrop",
-      icon = icon("gears"),
-      status = "default btn-esquisse-controls"
-    ),
-    if (!isTRUE(disable_filters)) {
-      dropdown(
-        filterDF_UI(id = ns("filter-data")),
+  tagList(
+    tags$div(
+      class = "btn-group-esquisse btn-group-justified-esquisse",
+      tags$style(sprintf(
+        "#%s .sw-dropdown-in {margin: 8px 0 8px 10px !important; padding: 0 !important;}",
+        "sw-content-filterdrop"
+      )),
+      dropdown_(
+        controls_labs(ns),
+        inputId = "labsdrop",
         style = "default",
-        label = "Data",
+        label = "Labels & Title",
         up = TRUE,
-        icon = icon("filter"),
+        icon = icon("font"),
+        status = "default btn-esquisse-controls"
+      ),
+      dropdown_(
+        controls_params(ns),
+        style = "default",
+        label = "Plot options",
+        up = TRUE,
+        inputId = "paramsdrop",
+        icon = icon("gears"),
+        status = "default btn-esquisse-controls"
+      ),
+      dropdown_(
+        controls_appearance(ns),
+        style = "default",
+        label = "Colors",
+        up = TRUE,
+        inputId = "colorsdrop",
+        icon = icon("palette"),
+        status = "default btn-esquisse-controls"
+      ),
+      if (!isTRUE(disable_filters)) {
+        dropdown_(
+          filterDF_UI(id = ns("filter-data")),
+          style = "default",
+          label = "Data",
+          up = TRUE,
+          icon = icon("filter"),
+          right = TRUE,
+          inputId = "filterdrop",
+          status = "default btn-esquisse-controls"
+        )
+      },
+      dropdown_(
+        controls_code(ns, insert_code = insert_code),
+        style = "default",
+        label = "Export & code",
+        up = TRUE,
         right = TRUE,
-        inputId = "filterdrop",
+        inputId = "codedrop",
+        icon = icon("code"),
         status = "default btn-esquisse-controls"
       )
-    },
-    dropdown(
-      controls_code(ns, insert_code = insert_code),
-      style = "default",
-      label = "Export & code",
-      up = TRUE,
-      right = TRUE,
-      inputId = "codedrop",
-      icon = icon("code"),
-      status = "default btn-esquisse-controls"
     ),
     tags$div(
       style = "display: none;",
@@ -253,15 +280,15 @@ controls_server <- function(id,
         data_name = data_name
       )
       
-      outin <- reactiveValues(
+      outputs <- reactiveValues(
         inputs = NULL,
         export_ppt = NULL,
         export_png = NULL
       )
       
       observeEvent(data_table(), {
-        outin$data <- data_table()
-        outin$code <- reactiveValues(expr = NULL, dplyr = NULL)
+        outputs$data <- data_table()
+        outputs$code <- reactiveValues(expr = NULL, dplyr = NULL)
       })
       
       observeEvent({
@@ -274,7 +301,7 @@ controls_server <- function(id,
         inputs <- inputs[grep(pattern = "^labs_", x = names(inputs), invert = TRUE)]
         inputs <- inputs[grep(pattern = "^export_", x = names(inputs), invert = TRUE)]
         inputs <- inputs[order(names(inputs))]
-        outin$inputs <- inputs
+        outputs$inputs <- inputs
       })
       
       # labs input
@@ -283,7 +310,7 @@ controls_server <- function(id,
         labs_fill <- ifelse("fill" %in% asth, input$labs_fill, "")
         labs_color <- ifelse("color" %in% asth, input$labs_color, "")
         labs_size <- ifelse("size" %in% asth, input$labs_size, "")
-        outin$labs <- list(
+        outputs$labs <- list(
           x = input$labs_x %empty% NULL,
           y = input$labs_y %empty% NULL,
           title = input$labs_title %empty% NULL,
@@ -297,7 +324,7 @@ controls_server <- function(id,
       
       #limits input
       observe({
-        outin$limits <- list(
+        outputs$limits <- list(
           x = use_transX() & !anyNA(input$xlim),
           xlim = input$xlim,
           y = use_transY() & !anyNA(input$ylim),
@@ -308,7 +335,7 @@ controls_server <- function(id,
       
       # facet input
       observe({
-        outin$facet <- list(
+        outputs$facet <- list(
           scales = if (identical(input$facet_scales, "fixed")) NULL else input$facet_scales,
           ncol = if (input$facet_ncol == 0) NULL else input$facet_ncol,
           nrow = if (input$facet_nrow == 0) NULL else input$facet_nrow
@@ -317,22 +344,33 @@ controls_server <- function(id,
       
       # theme input
       observe({
-        outin$theme <- list(
+        inputs <- reactiveValuesToList(input)
+        title <- get_labs_options(inputs, "title")
+        subtitle <- get_labs_options(inputs, "subtitle")
+        x <- get_labs_options(inputs, "x")
+        y <- get_labs_options(inputs, "y")
+        outputs$theme <- list(
           theme = input$theme,
-          args = list(
-            legend.position = if (identical(input$legend_position, "right")) NULL else input$legend_position
+          args = dropNulls(
+            list(
+              legend.position = if (identical(input$legend_position, "right")) NULL else input$legend_position,
+              plot.title = title,
+              plot.subtitle = subtitle,
+              axis.title.y = y,
+              axis.title.x = x
+            )
           )
         )
       })
       
       # coord input
       observe({
-        outin$coord <- if (isTRUE(input$flip)) "flip" else NULL
+        outputs$coord <- if (isTRUE(input$flip)) "flip" else NULL
       })
       
       # smooth input
       observe({
-        outin$smooth <- list(
+        outputs$smooth <- list(
           add = input$smooth_add,
           args = list(
             span = input$smooth_span
@@ -342,7 +380,7 @@ controls_server <- function(id,
       
       # transX input
       observe({
-        outin$transX <- list(
+        outputs$transX <- list(
           use = use_transX() & !identical(input$transX, "identity"),
           args = list(
             trans = input$transX
@@ -352,7 +390,7 @@ controls_server <- function(id,
       
       # transY input
       observe({
-        outin$transY <- list(
+        outputs$transY <- list(
           use = use_transY() & !identical(input$transY, "identity"),
           args = list(
             trans = input$transY
@@ -362,12 +400,12 @@ controls_server <- function(id,
       
       observeEvent(output_filter$data_filtered(), {
         if(!isTRUE(input$disable_filters)){
-          outin$data <- output_filter$data_filtered()
-          outin$code <- output_filter$code
+          outputs$data <- output_filter$data_filtered()
+          outputs$code <- output_filter$code
         }
       })
       
-      return(outin)
+      return(outputs)
     }
   )
 }
@@ -386,11 +424,31 @@ controls_server <- function(id,
 controls_labs <- function(ns) {
   tags$div(
     class = "form-group",
-    textInput(inputId = ns("labs_title"), placeholder = "Title", label = "Title:"),
-    textInput(inputId = ns("labs_subtitle"), placeholder = "Subtitle", label = "Subtitle:"),
+    labs_options_input(
+      inputId = ns("labs_title"), 
+      placeholder = "Title", 
+      label = "Title:",
+      defaults = get_labs_defaults("title")
+    ),
+    labs_options_input(
+      inputId = ns("labs_subtitle"), 
+      placeholder = "Subtitle",
+      label = "Subtitle:",
+      defaults = get_labs_defaults("subtitle")
+    ),
     textInput(inputId = ns("labs_caption"), placeholder = "Caption", label = "Caption:"),
-    textInput(inputId = ns("labs_x"), placeholder = "X label", label = "X label:"),
-    textInput(inputId = ns("labs_y"), placeholder = "Y label", label = "Y label:"),
+    labs_options_input(
+      inputId = ns("labs_x"), 
+      placeholder = "X label", 
+      label = "X label:",
+      defaults = get_labs_defaults("x")
+    ),
+    labs_options_input(
+      inputId = ns("labs_y"),
+      placeholder = "Y label", 
+      label = "Y label:",
+      defaults = get_labs_defaults("y")
+    ),
     tags$div(
       id = ns("controls-labs-fill"), 
       style = "display: none;",
@@ -409,6 +467,107 @@ controls_labs <- function(ns) {
   )
 }
 
+#' @importFrom htmltools tags
+#' @importFrom shinyWidgets dropMenu prettyCheckbox prettyRadioButtons
+#' @importFrom shiny actionButton icon numericInput
+labs_options_input <- function(inputId, label, placeholder, defaults = list()) {
+  tags$div(
+    class = "esquisse-labs-options",
+    tags$div(
+      class = "form-group shiny-input-container",
+      style = "width: 100%;",
+      tags$label(
+        class = "control-label",
+        id = paste0(inputId, "-label"), 
+        `for` = inputId,
+        label
+      ),
+      tags$input(
+        id = inputId,
+        type = "text", 
+        class = "form-control",
+        value = "",
+        placeholder = placeholder,
+        style = "border-radius: 4px 0 0 4px;"
+      )
+    ),
+    dropMenu(
+      actionButton(
+        inputId = paste0(inputId, "_options"), 
+        label = NULL, 
+        icon = icon("plus"),
+        style = "margin-top: 25px; border-radius: 0 4px 4px 0; width: 100%;"
+      ),
+      prettyCheckbox(
+        inputId = paste0(inputId, "_bold"),
+        label = "Bold?",
+        value = isTRUE("bold" %in% defaults$face),
+        status = "primary"
+      ),
+      numericInput(
+        inputId = paste0(inputId, "_size"),
+        label = "Font size:",
+        value = defaults$size
+      ),
+      prettyRadioButtons(
+        inputId = paste0(inputId, "_align"),
+        label = "Align:",
+        choices = c("left", "center", "right"),
+        inline = TRUE,
+        status = "primary",
+        selected = switch(
+          as.character(defaults$hjust),
+          "0" = "left",
+          "0.5" = "center",
+          "1" = "right"
+        )
+      ),
+      placement = "right"
+    )
+  )
+}
+
+get_labs_defaults <- function(name = c("title", "subtitle", "x", "y")) {
+  name <- match.arg(name)
+  defaults_labs <- list(
+    title = list(size = 13L, face = "plain", hjust = 0),
+    subtitle = list(size = 11L, face = "plain", hjust = 0),
+    x = list(size = 11L, face = "plain", hjust = 0.5),
+    y = list(size = 11L, face = "plain", hjust = 0.5)
+  )
+  defaults_labs[[name]]
+}
+
+get_labs_options <- function(inputs, name = c("title", "subtitle", "x", "y")) {
+  name <- match.arg(name)
+  defaults <- get_labs_defaults(name)
+  inputs <- inputs[paste0("labs_", name, c("_size", "_bold", "_align"))]
+  names(inputs) <- c("size", "bold", "align")
+  if (isTRUE(inputs$bold)) {
+    inputs$face <- "bold"
+  } else {
+    inputs$face <- "plain"
+  }
+  inputs$bold <- NULL
+  inputs$hjust <- switch(
+    inputs$align,
+    "left" = 0,
+    "center" = 0.5,
+    "right" = 1
+  )
+  inputs$align <- NULL
+  for (nm in names(defaults)) {
+    if (identical(inputs[[nm]], defaults[[nm]])) {
+      inputs[[nm]] <- NULL
+    }
+  }
+  inputs <- dropNulls(inputs)
+  if (length(inputs) > 0) {
+    call2("element_text", !!!inputs)
+  } else {
+    NULL
+  }
+}
 
 
 
