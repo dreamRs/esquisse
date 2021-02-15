@@ -213,8 +213,7 @@ esquisserServer <- function(input,
 
   # Module chart controls : title, xlabs, colors, export...
   paramsChart <- reactiveValues(inputs = NULL)
-  paramsChart <- callModule(
-    module = chartControlsServer,
+  paramsChart <- controls_server(
     id = "controls",
     type = geom_controls,
     data_table = reactive(dataChart$data),

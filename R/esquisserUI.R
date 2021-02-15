@@ -134,7 +134,7 @@ esquisserUI <- function(id, header = TRUE,
       )
     ),
 
-    chartControlsUI(
+    controls_ui(
       id = ns("controls"),
       insert_code = insert_code,
       disable_filters = disable_filters

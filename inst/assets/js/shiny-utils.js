@@ -43,8 +43,8 @@ $(function() {
     }
   });
 
-  $(".sw-dropdown").addClass("btn-group-charter");
-  $(".sw-dropdown > .btn").addClass("btn-charter");
+  $(".sw-dropdown").addClass("btn-group-esquisse");
+  //$(".sw-dropdown > .btn").addClass("btn-charter");
   $("#sw-content-filterdrop").click(function(e) {
     e.stopPropagation();
   });

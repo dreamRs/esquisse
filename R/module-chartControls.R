@@ -12,16 +12,12 @@
 #' @importFrom htmltools tags tagList HTML
 #' @importFrom shiny icon checkboxInput
 #'
-chartControlsUI <- function(id,
-                            insert_code = FALSE,
-                            disable_filters = FALSE) {
-
-  # Namespace
+controls_ui <- function(id,
+                        insert_code = FALSE,
+                        disable_filters = FALSE) {
   ns <- NS(id)
-
-  # ui
   tags$div(
-    class = "btn-group-charter btn-group-justified-charter",
+    class = "btn-group-esquisse btn-group-justified-esquisse",
     tags$style(sprintf(
       "#%s .sw-dropdown-in {margin: 8px 0 8px 10px !important; padding: 0 !important;}",
       "sw-content-filterdrop"
@@ -33,7 +29,7 @@ chartControlsUI <- function(id,
       label = "Labels & Title",
       up = TRUE,
       icon = icon("font"),
-      status = "default btn-controls"
+      status = "default btn-esquisse-controls"
     ),
     dropdown(
       controls_params(ns),
@@ -43,7 +39,7 @@ chartControlsUI <- function(id,
       up = TRUE,
       inputId = "paramsdrop",
       icon = icon("gears"),
-      status = "default btn-controls"
+      status = "default btn-esquisse-controls"
     ),
     if (!isTRUE(disable_filters)) {
       dropdown(
@@ -54,7 +50,7 @@ chartControlsUI <- function(id,
         icon = icon("filter"),
         right = TRUE,
         inputId = "filterdrop",
-        status = "default btn-controls"
+        status = "default btn-esquisse-controls"
       )
     },
     dropdown(
@@ -65,11 +61,8 @@ chartControlsUI <- function(id,
       right = TRUE,
       inputId = "codedrop",
       icon = icon("code"),
-      status = "default btn-controls"
+      status = "default btn-esquisse-controls"
     ),
-    # tags$script("$('.sw-dropdown').addClass('btn-group-charter');"),
-    # tags$script(HTML("$('.sw-dropdown > .btn').addClass('btn-charter');")),
-    # tags$script("$('#sw-content-filterdrop').click(function (e) {e.stopPropagation();});"),
     tags$div(
       style = "display: none;",
       checkboxInput(
@@ -87,7 +80,7 @@ chartControlsUI <- function(id,
 
 #' Dropup buttons to hide chart's controls
 #'
-#' @param input,output,session standards \code{shiny} server arguments.
+#' @param id Module's ID.
 #' @param type \code{reactiveValues} indicating the type of chart.
 #' @param data_table \code{reactive} function returning data used in plot.
 #' @param data_name \code{reactive} function returning data name.
@@ -104,278 +97,279 @@ chartControlsUI <- function(id,
 #' @noRd
 #'
 #' @importFrom shiny observeEvent reactiveValues reactiveValuesToList
-#'  downloadHandler renderUI reactive updateTextInput showNotification
+#'  downloadHandler renderUI reactive updateTextInput showNotification callModule
 #' @importFrom rstudioapi insertText getSourceEditorContext
 #' @importFrom htmltools tags tagList
 #' @importFrom stringi stri_replace_all
 #'
-chartControlsServer <- function(input,
-                                output,
-                                session,
-                                type,
-                                data_table,
-                                data_name,
-                                ggplot_rv,
-                                aesthetics = reactive(NULL),
-                                use_facet = reactive(FALSE),
-                                use_transX = reactive(FALSE),
-                                use_transY = reactive(FALSE)) {
+controls_server <- function(id,
+                            type,
+                            data_table,
+                            data_name,
+                            ggplot_rv,
+                            aesthetics = reactive(NULL),
+                            use_facet = reactive(FALSE),
+                            use_transX = reactive(FALSE),
+                            use_transY = reactive(FALSE)) {
 
-  ns <- session$ns
-
-
-  # Reset labs ----
-
-  observeEvent(data_table(), {
-    updateTextInput(session = session, inputId = "labs_title", value = character(0))
-    updateTextInput(session = session, inputId = "labs_subtitle", value = character(0))
-    updateTextInput(session = session, inputId = "labs_caption", value = character(0))
-    updateTextInput(session = session, inputId = "labs_x", value = character(0))
-    updateTextInput(session = session, inputId = "labs_y", value = character(0))
-    updateTextInput(session = session, inputId = "labs_fill", value = character(0))
-    updateTextInput(session = session, inputId = "labs_color", value = character(0))
-    updateTextInput(session = session, inputId = "labs_size", value = character(0))
-  })
-
-
-  # Export ----
-
-  output$export_png <- downloadHandler(
-    filename = function() {
-      paste0("esquisse_", format(Sys.time(), format = "%Y%m%dT%H%M%S"), ".png")
-    },
-    content = function(file) {
-      pngg <- try(ggsave(filename = file, plot = ggplot_rv$ggobj$plot, width = 12, height = 8, dpi = "retina"))
-      if ("try-error" %in% class(pngg)) {
-        shiny::showNotification(ui = "Export to PNG failed...", type = "error", id = paste("esquisse", sample.int(1e6, 1), sep = "-"))
-      }
-    }
-  )
-  output$export_ppt <- downloadHandler(
-    filename = function() {
-      paste0("esquisse_", format(Sys.time(), format = "%Y%m%dT%H%M%S"), ".pptx")
-    },
-    content = function(file) {
-      if (requireNamespace(package = "rvg") & requireNamespace(package = "officer")) {
-        gg <- ggplot_rv$ggobj$plot
-        ppt <- officer::read_pptx()
-        ppt <- officer::add_slide(ppt, layout = "Title and Content", master = "Office Theme")
-        ppt <- try(officer::ph_with(ppt, rvg::dml(ggobj = gg), location = officer::ph_location_type(type = "body")), silent = TRUE)
-        if ("try-error" %in% class(ppt)) {
-          shiny::showNotification(ui = "Export to PowerPoint failed...", type = "error", id = paste("esquisse", sample.int(1e6, 1), sep = "-"))
-        } else {
-          tmp <- tempfile(pattern = "esquisse", fileext = ".pptx")
-          print(ppt, target = tmp)
-          file.copy(from = tmp, to = file)
+  callModule(
+    id = id, 
+    module = function(input, output, session) {
+      ns <- session$ns
+      
+      # Reset labs ----
+      observeEvent(data_table(), {
+        updateTextInput(session = session, inputId = "labs_title", value = character(0))
+        updateTextInput(session = session, inputId = "labs_subtitle", value = character(0))
+        updateTextInput(session = session, inputId = "labs_caption", value = character(0))
+        updateTextInput(session = session, inputId = "labs_x", value = character(0))
+        updateTextInput(session = session, inputId = "labs_y", value = character(0))
+        updateTextInput(session = session, inputId = "labs_fill", value = character(0))
+        updateTextInput(session = session, inputId = "labs_color", value = character(0))
+        updateTextInput(session = session, inputId = "labs_size", value = character(0))
+      })
+      
+      
+      # Export ----
+      
+      output$export_png <- downloadHandler(
+        filename = function() {
+          paste0("esquisse_", format(Sys.time(), format = "%Y%m%dT%H%M%S"), ".png")
+        },
+        content = function(file) {
+          pngg <- try(ggsave(filename = file, plot = ggplot_rv$ggobj$plot, width = 12, height = 8, dpi = "retina"))
+          if ("try-error" %in% class(pngg)) {
+            shiny::showNotification(ui = "Export to PNG failed...", type = "error", id = paste("esquisse", sample.int(1e6, 1), sep = "-"))
+          }
         }
-      } else {
-        warn <- "Packages 'officer' and 'rvg' are required to use this functionality."
-        warning(warn, call. = FALSE)
-        shiny::showNotification(ui = warn, type = "warning", paste("esquisse", sample.int(1e6, 1), sep = "-"))
-      }
+      )
+      output$export_ppt <- downloadHandler(
+        filename = function() {
+          paste0("esquisse_", format(Sys.time(), format = "%Y%m%dT%H%M%S"), ".pptx")
+        },
+        content = function(file) {
+          if (requireNamespace(package = "rvg") & requireNamespace(package = "officer")) {
+            gg <- ggplot_rv$ggobj$plot
+            ppt <- officer::read_pptx()
+            ppt <- officer::add_slide(ppt, layout = "Title and Content", master = "Office Theme")
+            ppt <- try(officer::ph_with(ppt, rvg::dml(ggobj = gg), location = officer::ph_location_type(type = "body")), silent = TRUE)
+            if ("try-error" %in% class(ppt)) {
+              shiny::showNotification(ui = "Export to PowerPoint failed...", type = "error", id = paste("esquisse", sample.int(1e6, 1), sep = "-"))
+            } else {
+              tmp <- tempfile(pattern = "esquisse", fileext = ".pptx")
+              print(ppt, target = tmp)
+              file.copy(from = tmp, to = file)
+            }
+          } else {
+            warn <- "Packages 'officer' and 'rvg' are required to use this functionality."
+            warning(warn, call. = FALSE)
+            shiny::showNotification(ui = warn, type = "warning", paste("esquisse", sample.int(1e6, 1), sep = "-"))
+          }
+        }
+      )
+      
+      
+      
+      # Code ----
+      observeEvent(input$insert_code, {
+        context <- rstudioapi::getSourceEditorContext()
+        code <- ggplot_rv$code
+        code <- stri_replace_all(str = code, replacement = "+\n", fixed = "+")
+        if (!is.null(output_filter$code$expr) & !isTRUE(input$disable_filters)) {
+          code_dplyr <- deparse(output_filter$code$dplyr, width.cutoff = 80L)
+          code_dplyr <- paste(code_dplyr, collapse = "\n")
+          nm_dat <- data_name()
+          code_dplyr <- stri_replace_all(str = code_dplyr, replacement = "%>%\n", fixed = "%>%")
+          code <- stri_replace_all(str = code, replacement = " ggplot()", fixed = sprintf("ggplot(%s)", nm_dat))
+          code <- paste(code_dplyr, code, sep = " %>%\n")
+          if (input$insert_code == 1) {
+            code <- paste("library(dplyr)\nlibrary(ggplot2)", code, sep = "\n\n")
+          }
+        } else {
+          if (input$insert_code == 1) {
+            code <- paste("library(ggplot2)", code, sep = "\n\n")
+          }
+        }
+        rstudioapi::insertText(text = paste0("\n", code, "\n"), id = context$id)
+      })
+      
+      output$code <- renderUI({
+        code <- ggplot_rv$code
+        code <- stri_replace_all(str = code, replacement = "+\n", fixed = "+")
+        if (!is.null(output_filter$code$expr) & !isTRUE(input$disable_filters)) {
+          code_dplyr <- deparse(output_filter$code$dplyr, width.cutoff = 80L)
+          code_dplyr <- paste(code_dplyr, collapse = "\n")
+          nm_dat <- data_name()
+          code_dplyr <- stri_replace_all(str = code_dplyr, replacement = "%>%\n", fixed = "%>%")
+          code <- stri_replace_all(str = code, replacement = " ggplot()", fixed = sprintf("ggplot(%s)", nm_dat))
+          code <- paste(code_dplyr, code, sep = " %>%\n")
+        }
+        htmltools::tagList(
+          rCodeContainer(id = ns("codeggplot"), code)
+        )
+      })
+      
+      
+      
+      # Controls ----
+      
+      observeEvent(aesthetics(), {
+        aesthetics <- aesthetics()
+        toggleDisplay(id = ns("controls-labs-fill"), display = "fill" %in% aesthetics)
+        toggleDisplay(id = ns("controls-labs-color"), display = "color" %in% aesthetics)
+        toggleDisplay(id = ns("controls-labs-size"), display = "size" %in% aesthetics)
+      })
+      
+      observeEvent(use_facet(), {
+        toggleDisplay(id = ns("controls-facet"), display = isTRUE(use_facet()))
+      })
+      
+      observeEvent(use_transX(), {
+        toggleDisplay(id = ns("controls-scale-trans-x"), display = isTRUE(use_transX()))
+      })
+      
+      observeEvent(use_transY(), {
+        toggleDisplay(id = ns("controls-scale-trans-y"), display = isTRUE(use_transY()))
+      })
+      
+      observeEvent(type$palette, {
+        toggleDisplay(id = ns("controls-palette"), display = isTRUE(type$palette))
+        toggleDisplay(id = ns("controls-spectrum"), display = !isTRUE(type$palette))
+      })
+      
+      observeEvent(type$x, {
+        toggleDisplay(id = ns("controls-position"), display = type$x %in% c("bar", "line", "area"))
+        toggleDisplay(id = ns("controls-histogram"), display = type$x %in% "histogram")
+        toggleDisplay(id = ns("controls-density"), display = type$x %in% c("density", "violin"))
+        toggleDisplay(id = ns("controls-scatter"), display = type$x %in% "point")
+        toggleDisplay(id = ns("controls-size"), display = type$x %in% c("point", "line"))
+        toggleDisplay(id = ns("controls-violin"), display = type$x %in% "violin")
+      })
+      
+      output_filter <- callModule(
+        module = filterDF,
+        id = "filter-data",
+        data_table = data_table,
+        data_name = data_name
+      )
+      
+      outin <- reactiveValues(
+        inputs = NULL,
+        export_ppt = NULL,
+        export_png = NULL
+      )
+      
+      observeEvent(data_table(), {
+        outin$data <- data_table()
+        outin$code <- reactiveValues(expr = NULL, dplyr = NULL)
+      })
+      
+      observeEvent({
+        all_inputs <- reactiveValuesToList(input)
+        all_inputs[grep(pattern = "filter-data", x = names(all_inputs), invert = TRUE)]
+      }, {
+        all_inputs <- reactiveValuesToList(input)
+        # remove inputs from filterDataServer module with ID "filter-data"
+        inputs <- all_inputs[grep(pattern = "filter-data", x = names(all_inputs), invert = TRUE)]
+        inputs <- inputs[grep(pattern = "^labs_", x = names(inputs), invert = TRUE)]
+        inputs <- inputs[grep(pattern = "^export_", x = names(inputs), invert = TRUE)]
+        inputs <- inputs[order(names(inputs))]
+        outin$inputs <- inputs
+      })
+      
+      # labs input
+      observe({
+        asth <- aesthetics()
+        labs_fill <- ifelse("fill" %in% asth, input$labs_fill, "")
+        labs_color <- ifelse("color" %in% asth, input$labs_color, "")
+        labs_size <- ifelse("size" %in% asth, input$labs_size, "")
+        outin$labs <- list(
+          x = input$labs_x %empty% NULL,
+          y = input$labs_y %empty% NULL,
+          title = input$labs_title %empty% NULL,
+          subtitle = input$labs_subtitle %empty% NULL,
+          caption = input$labs_caption %empty% NULL,
+          fill = labs_fill %empty% NULL,
+          color = labs_color %empty% NULL,
+          size = labs_size %empty% NULL
+        )
+      })
+      
+      #limits input
+      observe({
+        outin$limits <- list(
+          x = use_transX() & !anyNA(input$xlim),
+          xlim = input$xlim,
+          y = use_transY() & !anyNA(input$ylim),
+          ylim = input$ylim
+        )
+      })
+      
+      
+      # facet input
+      observe({
+        outin$facet <- list(
+          scales = if (identical(input$facet_scales, "fixed")) NULL else input$facet_scales,
+          ncol = if (input$facet_ncol == 0) NULL else input$facet_ncol,
+          nrow = if (input$facet_nrow == 0) NULL else input$facet_nrow
+        )
+      })
+      
+      # theme input
+      observe({
+        outin$theme <- list(
+          theme = input$theme,
+          args = list(
+            legend.position = if (identical(input$legend_position, "right")) NULL else input$legend_position
+          )
+        )
+      })
+      
+      # coord input
+      observe({
+        outin$coord <- if (isTRUE(input$flip)) "flip" else NULL
+      })
+      
+      # smooth input
+      observe({
+        outin$smooth <- list(
+          add = input$smooth_add,
+          args = list(
+            span = input$smooth_span
+          )
+        )
+      })
+      
+      # transX input
+      observe({
+        outin$transX <- list(
+          use = use_transX() & !identical(input$transX, "identity"),
+          args = list(
+            trans = input$transX
+          )
+        )
+      })
+      
+      # transY input
+      observe({
+        outin$transY <- list(
+          use = use_transY() & !identical(input$transY, "identity"),
+          args = list(
+            trans = input$transY
+          )
+        )
+      })
+      
+      observeEvent(output_filter$data_filtered(), {
+        if(!isTRUE(input$disable_filters)){
+          outin$data <- output_filter$data_filtered()
+          outin$code <- output_filter$code
+        }
+      })
+      
+      return(outin)
     }
   )
-
-
-
-  # Code ----
-  observeEvent(input$insert_code, {
-    context <- rstudioapi::getSourceEditorContext()
-    code <- ggplot_rv$code
-    code <- stri_replace_all(str = code, replacement = "+\n", fixed = "+")
-    if (!is.null(output_filter$code$expr) & !isTRUE(input$disable_filters)) {
-      code_dplyr <- deparse(output_filter$code$dplyr, width.cutoff = 80L)
-      code_dplyr <- paste(code_dplyr, collapse = "\n")
-      nm_dat <- data_name()
-      code_dplyr <- stri_replace_all(str = code_dplyr, replacement = "%>%\n", fixed = "%>%")
-      code <- stri_replace_all(str = code, replacement = " ggplot()", fixed = sprintf("ggplot(%s)", nm_dat))
-      code <- paste(code_dplyr, code, sep = " %>%\n")
-      if (input$insert_code == 1) {
-        code <- paste("library(dplyr)\nlibrary(ggplot2)", code, sep = "\n\n")
-      }
-    } else {
-      if (input$insert_code == 1) {
-        code <- paste("library(ggplot2)", code, sep = "\n\n")
-      }
-    }
-    rstudioapi::insertText(text = paste0("\n", code, "\n"), id = context$id)
-  })
-
-  output$code <- renderUI({
-    code <- ggplot_rv$code
-    code <- stri_replace_all(str = code, replacement = "+\n", fixed = "+")
-    if (!is.null(output_filter$code$expr) & !isTRUE(input$disable_filters)) {
-      code_dplyr <- deparse(output_filter$code$dplyr, width.cutoff = 80L)
-      code_dplyr <- paste(code_dplyr, collapse = "\n")
-      nm_dat <- data_name()
-      code_dplyr <- stri_replace_all(str = code_dplyr, replacement = "%>%\n", fixed = "%>%")
-      code <- stri_replace_all(str = code, replacement = " ggplot()", fixed = sprintf("ggplot(%s)", nm_dat))
-      code <- paste(code_dplyr, code, sep = " %>%\n")
-    }
-    htmltools::tagList(
-      rCodeContainer(id = ns("codeggplot"), code)
-    )
-  })
-
-
-
-  # Controls ----
-
-  observeEvent(aesthetics(), {
-    aesthetics <- aesthetics()
-    toggleDisplay(id = ns("controls-labs-fill"), display = "fill" %in% aesthetics)
-    toggleDisplay(id = ns("controls-labs-color"), display = "color" %in% aesthetics)
-    toggleDisplay(id = ns("controls-labs-size"), display = "size" %in% aesthetics)
-  })
-
-  observeEvent(use_facet(), {
-    toggleDisplay(id = ns("controls-facet"), display = isTRUE(use_facet()))
-  })
-
-  observeEvent(use_transX(), {
-    toggleDisplay(id = ns("controls-scale-trans-x"), display = isTRUE(use_transX()))
-  })
-
-  observeEvent(use_transY(), {
-    toggleDisplay(id = ns("controls-scale-trans-y"), display = isTRUE(use_transY()))
-  })
-
-  observeEvent(type$palette, {
-    toggleDisplay(id = ns("controls-palette"), display = isTRUE(type$palette))
-    toggleDisplay(id = ns("controls-spectrum"), display = !isTRUE(type$palette))
-  })
-
-  observeEvent(type$x, {
-    toggleDisplay(id = ns("controls-position"), display = type$x %in% c("bar", "line", "area"))
-    toggleDisplay(id = ns("controls-histogram"), display = type$x %in% "histogram")
-    toggleDisplay(id = ns("controls-density"), display = type$x %in% c("density", "violin"))
-    toggleDisplay(id = ns("controls-scatter"), display = type$x %in% "point")
-    toggleDisplay(id = ns("controls-size"), display = type$x %in% c("point", "line"))
-    toggleDisplay(id = ns("controls-violin"), display = type$x %in% "violin")
-  })
-
-  output_filter <- callModule(
-    module = filterDF,
-    id = "filter-data",
-    data_table = data_table,
-    data_name = data_name
-  )
-
-  outin <- reactiveValues(
-    inputs = NULL,
-    export_ppt = NULL,
-    export_png = NULL
-  )
-
-  observeEvent(data_table(), {
-    outin$data <- data_table()
-    outin$code <- reactiveValues(expr = NULL, dplyr = NULL)
-  })
-
-  observeEvent({
-    all_inputs <- reactiveValuesToList(input)
-    all_inputs[grep(pattern = "filter-data", x = names(all_inputs), invert = TRUE)]
-  }, {
-    all_inputs <- reactiveValuesToList(input)
-    # remove inputs from filterDataServer module with ID "filter-data"
-    inputs <- all_inputs[grep(pattern = "filter-data", x = names(all_inputs), invert = TRUE)]
-    inputs <- inputs[grep(pattern = "^labs_", x = names(inputs), invert = TRUE)]
-    inputs <- inputs[grep(pattern = "^export_", x = names(inputs), invert = TRUE)]
-    inputs <- inputs[order(names(inputs))]
-    outin$inputs <- inputs
-  })
-
-  # labs input
-  observe({
-    asth <- aesthetics()
-    labs_fill <- ifelse("fill" %in% asth, input$labs_fill, "")
-    labs_color <- ifelse("color" %in% asth, input$labs_color, "")
-    labs_size <- ifelse("size" %in% asth, input$labs_size, "")
-    outin$labs <- list(
-      x = input$labs_x %empty% NULL,
-      y = input$labs_y %empty% NULL,
-      title = input$labs_title %empty% NULL,
-      subtitle = input$labs_subtitle %empty% NULL,
-      caption = input$labs_caption %empty% NULL,
-      fill = labs_fill %empty% NULL,
-      color = labs_color %empty% NULL,
-      size = labs_size %empty% NULL
-    )
-  })
-
-  #limits input
-  observe({
-    outin$limits <- list(
-      x = use_transX() & !anyNA(input$xlim),
-      xlim = input$xlim,
-      y = use_transY() & !anyNA(input$ylim),
-      ylim = input$ylim
-    )
-  })
-
-
-  # facet input
-  observe({
-    outin$facet <- list(
-      scales = if (identical(input$facet_scales, "fixed")) NULL else input$facet_scales,
-      ncol = if (input$facet_ncol == 0) NULL else input$facet_ncol,
-      nrow = if (input$facet_nrow == 0) NULL else input$facet_nrow
-    )
-  })
-
-  # theme input
-  observe({
-    outin$theme <- list(
-      theme = input$theme,
-      args = list(
-        legend.position = if (identical(input$legend_position, "right")) NULL else input$legend_position
-      )
-    )
-  })
-
-  # coord input
-  observe({
-    outin$coord <- if (isTRUE(input$flip)) "flip" else NULL
-  })
-
-  # smooth input
-  observe({
-    outin$smooth <- list(
-      add = input$smooth_add,
-      args = list(
-        span = input$smooth_span
-      )
-    )
-  })
-
-  # transX input
-  observe({
-    outin$transX <- list(
-      use = use_transX() & !identical(input$transX, "identity"),
-      args = list(
-        trans = input$transX
-      )
-    )
-  })
-
-  # transY input
-  observe({
-    outin$transY <- list(
-      use = use_transY() & !identical(input$transY, "identity"),
-      args = list(
-        trans = input$transY
-      )
-    )
-  })
-
-  observeEvent(output_filter$data_filtered(), {
-    if(!isTRUE(input$disable_filters)){
-      outin$data <- output_filter$data_filtered()
-      outin$code <- output_filter$code
-    }
-  })
-
-  return(outin)
 }
 
 
@@ -398,15 +392,18 @@ controls_labs <- function(ns) {
     textInput(inputId = ns("labs_x"), placeholder = "X label", label = "X label:"),
     textInput(inputId = ns("labs_y"), placeholder = "Y label", label = "Y label:"),
     tags$div(
-      id = ns("controls-labs-fill"), style = "display: none;",
+      id = ns("controls-labs-fill"), 
+      style = "display: none;",
       textInput(inputId = ns("labs_fill"), placeholder = "Fill label", label = "Fill label:")
     ),
     tags$div(
-      id = ns("controls-labs-color"), style = "display: none;",
+      id = ns("controls-labs-color"), 
+      style = "display: none;",
       textInput(inputId = ns("labs_color"), placeholder = "Color label", label = "Color label:")
     ),
     tags$div(
-      id = ns("controls-labs-size"), style = "display: none;",
+      id = ns("controls-labs-size"), 
+      style = "display: none;",
       textInput(inputId = ns("labs_size"), placeholder = "Size label", label = "Size label:")
     )
   )
