@@ -115,7 +115,7 @@
 }
 
 #sw-content-controls-appearance {
-  min-width: 430px;
+  min-width: 350px; /*430px*/
 }
 
 #sw-content-controls-filters {

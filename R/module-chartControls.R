@@ -595,37 +595,37 @@ controls_appearance <- function(ns) {
 
     tags$div(
       id = ns("controls-spectrum"), style = "display: block;",
-      # colorPickr(
-      #   inputId = ns("fill_color"),
-      #   label = "Color:",
-      #   theme = "monolith",
-      #   update = "changestop",
-      #   inline = TRUE,
-      #   swatches = unlist(cols, use.names = FALSE),
-      #   preview = FALSE,
-      #   interaction = list(
-      #     hex = FALSE,
-      #     rgba = FALSE,
-      #     input = TRUE,
-      #     save = FALSE,
-      #     clear = FALSE
-      #   ),
-      #   width = "100%"
-      # )
-      spectrumInput(
+      shinyWidgets::colorPickr(
         inputId = ns("fill_color"),
         label = "Color:",
-        choices = unname(cols), 
-        flat = TRUE,
-        update_on = "dragstop",
-        options = list(
-          `toggle-palette-only` = FALSE,
-          `show-palette-only` = FALSE,
-          `show-buttons` = FALSE,
-          `hide-after-palette-select` = TRUE
+        theme = "monolith",
+        update = "changestop",
+        inline = TRUE,
+        swatches = c("#112446", "#0C4C8A", "#EF562D", "forestgreen", "steelblue", "firebrick", "darkorange", "hotpink", "papayawhip"),
+        preview = FALSE,
+        interaction = list(
+          hex = FALSE,
+          rgba = FALSE,
+          input = TRUE,
+          save = FALSE,
+          clear = FALSE
         ),
         width = "100%"
       )
+      # spectrumInput(
+      #   inputId = ns("fill_color"),
+      #   label = "Color:",
+      #   choices = unname(cols), 
+      #   flat = TRUE,
+      #   update_on = "dragstop",
+      #   options = list(
+      #     `toggle-palette-only` = FALSE,
+      #     `show-palette-only` = FALSE,
+      #     `show-buttons` = FALSE,
+      #     `hide-after-palette-select` = TRUE
+      #   ),
+      #   width = "100%"
+      # )
     ),
     tags$div(
       id = ns("controls-palette"), style = "display: none;",
@@ -720,8 +720,9 @@ controls_params <- function(ns) {
       sliderInput(
         inputId = ns("size"),
         label = "Size for points/lines:",
-        min = 0.5, max = 3,
-        value = 1,
+        min = 0.5, 
+        max = 5,
+        value = 1.2,
         width = "100%"
       )
     ),

@@ -21,7 +21,7 @@ Imports: datamods,
     shiny (>= 1.1.0),
     htmltools,
     jsonlite,
-    shinyWidgets (>= 0.4.5),
+    shinyWidgets (>= 0.5.7.9100),
     ggplot2 (>= 3.0.0),
     scales,
     stringi,
@@ -37,4 +37,4 @@ Suggests:
     ggthemes,
     hrbrthemes
 VignetteBuilder: knitr
-Remotes: dreamRs/datamods
+Remotes: dreamRs/datamods, dreamRs/shinyWidgets
