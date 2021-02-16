@@ -15,15 +15,13 @@ which_pal_scale(
 \arguments{
 \item{mapping}{Aesthetics used in \code{ggplot}.}
 
-\item{palette}{Color palette}
+\item{palette}{Color palette.}
 
 \item{data}{An optional \code{data.frame} to choose the right type for variables.}
 
-\item{fill_type}{Scale to use according to the variable used
-in \code{fill} : \code{"discrete"} or \code{"continuous"}.}
-
-\item{color_type}{Scale to use according to the variable used
-in \code{color} : \code{"discrete"} or \code{"continuous"}.}
+\item{fill_type, color_type}{Scale to use according to the variable used
+in \code{fill}/\code{color} aesthetic : \code{"discrete"} or \code{"continuous"}.
+Ignored if \code{data} is provided: it will be guessed from data.}
 }
 \value{
 a \code{list}

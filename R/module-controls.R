@@ -8,6 +8,20 @@ dropdown_ <- function(...) {
   )
 }
 
+# htmltools::tagAppendAttributes(
+#   shinyWidgets::dropMenu(
+#     actionButton(
+#       inputId = "controls-appearance",
+#       label = "Appearance",
+#       icon = icon("palette"),
+#       class = "btn-esquisse-controls"
+#     ),
+#     controls_appearance(ns),
+#     placement = "top"
+#   ),
+#   class = "btn-group-esquisse"
+# )
+
 
 #' Dropup buttons to hide chart's controls
 #'
@@ -22,16 +36,27 @@ dropdown_ <- function(...) {
 #' @importFrom shiny icon checkboxInput
 #'
 controls_ui <- function(id,
-                        controls = c("labs", "parameters", "colors", "filters", "code"),
+                        controls = c("labs", "parameters", "appearance", "filters", "code"),
                         insert_code = FALSE,
                         disable_filters = FALSE) {
   if (!is.null(controls)) {
     controls <- match.arg(
       controls,
-      choices = c("labs", "parameters", "colors", "filters", "code"), 
+      choices = c("labs", "parameters", "appearance", "filters", "code"), 
       several.ok = TRUE
     )
+  } else {
+    return(tags$div(
+      style = "display: none;",
+      checkboxInput(
+        inputId = ns("disable_filters"),
+        label = NULL,
+        value = TRUE
+      )
+    ))
   }
+  if (isTRUE(disable_filters))
+    controls <- setdiff(controls, "filters")
   ns <- NS(id)
   tagList(
     tags$div(
@@ -40,34 +65,40 @@ controls_ui <- function(id,
         "#%s .sw-dropdown-in {margin: 8px 0 8px 10px !important; padding: 0 !important;}",
         "sw-content-filterdrop"
       )),
-      dropdown_(
-        controls_labs(ns),
-        inputId = "controls-labs",
-        style = "default",
-        label = "Labels & Title",
-        up = TRUE,
-        icon = icon("font"),
-        status = "default btn-esquisse-controls"
-      ),
-      dropdown_(
-        controls_params(ns),
-        style = "default",
-        label = "Plot options",
-        up = TRUE,
-        inputId = "controls-parameters",
-        icon = icon("gears"),
-        status = "default btn-esquisse-controls"
-      ),
-      dropdown_(
-        controls_appearance(ns),
-        style = "default",
-        label = "Appearance",
-        up = TRUE,
-        inputId = "controls-appearance",
-        icon = icon("palette"),
-        status = "default btn-esquisse-controls"
-      ),
-      if (!isTRUE(disable_filters)) {
+      if (isTRUE("labs" %in% controls)) {
+        dropdown_(
+          controls_labs(ns),
+          inputId = "controls-labs",
+          style = "default",
+          label = "Labels & Title",
+          up = TRUE,
+          icon = icon("font"),
+          status = "default btn-esquisse-controls"
+        )
+      },
+      if (isTRUE("parameters" %in% controls)) {
+        dropdown_(
+          controls_params(ns),
+          style = "default",
+          label = "Plot options",
+          up = TRUE,
+          inputId = "controls-parameters",
+          icon = icon("gears"),
+          status = "default btn-esquisse-controls"
+        )
+      },
+      if (isTRUE("appearance" %in% controls)) {
+        dropdown_(
+          controls_appearance(ns),
+          style = "default",
+          label = "Appearance",
+          up = TRUE,
+          inputId = "controls-appearance",
+          icon = icon("palette"),
+          status = "default btn-esquisse-controls"
+        )
+      },
+      if (isTRUE("filters" %in% controls)) {
         dropdown_(
           filterDF_UI(id = ns("filter-data")),
           style = "default",
@@ -79,16 +110,18 @@ controls_ui <- function(id,
           status = "default btn-esquisse-controls"
         )
       },
-      dropdown_(
-        controls_code(ns, insert_code = insert_code),
-        style = "default",
-        label = "Export & code",
-        up = TRUE,
-        right = TRUE,
-        inputId = "controls-code",
-        icon = icon("code"),
-        status = "default btn-esquisse-controls"
-      )
+      if (isTRUE("code" %in% controls)) {
+        dropdown_(
+          controls_code(ns, insert_code = insert_code),
+          style = "default",
+          label = "Export & code",
+          up = TRUE,
+          right = TRUE,
+          inputId = "controls-code",
+          icon = icon("code"),
+          status = "default btn-esquisse-controls"
+        )
+      }
     ),
     tags$div(
       style = "display: none;",
@@ -127,7 +160,6 @@ controls_ui <- function(id,
 #'  downloadHandler renderUI reactive updateTextInput showNotification callModule
 #' @importFrom rstudioapi insertText getSourceEditorContext
 #' @importFrom htmltools tags tagList
-#' @importFrom stringi stri_replace_all
 #'
 controls_server <- function(id,
                             type,
@@ -201,13 +233,11 @@ controls_server <- function(id,
       observeEvent(input$insert_code, {
         context <- rstudioapi::getSourceEditorContext()
         code <- ggplot_rv$code
-        code <- stri_replace_all(str = code, replacement = "+\n", fixed = "+")
         if (!is.null(output_filter$code$expr) & !isTRUE(input$disable_filters)) {
-          code_dplyr <- deparse(output_filter$code$dplyr, width.cutoff = 80L)
+          code_dplyr <- deparse2(output_filter$code$dplyr)
           code_dplyr <- paste(code_dplyr, collapse = "\n")
           nm_dat <- data_name()
-          code_dplyr <- stri_replace_all(str = code_dplyr, replacement = "%>%\n", fixed = "%>%")
-          code <- stri_replace_all(str = code, replacement = " ggplot()", fixed = sprintf("ggplot(%s)", nm_dat))
+          code <- gsub(x = code, replacement = " ggplot()", pattern = sprintf("ggplot(%s)", nm_dat), fixed = TRUE)
           code <- paste(code_dplyr, code, sep = " %>%\n")
           if (input$insert_code == 1) {
             code <- paste("library(dplyr)\nlibrary(ggplot2)", code, sep = "\n\n")
@@ -222,13 +252,10 @@ controls_server <- function(id,
       
       output$code <- renderUI({
         code <- ggplot_rv$code
-        code <- stri_replace_all(str = code, replacement = "+\n", fixed = "+")
         if (!is.null(output_filter$code$expr) & !isTRUE(input$disable_filters)) {
-          code_dplyr <- deparse(output_filter$code$dplyr, width.cutoff = 80L)
-          code_dplyr <- paste(code_dplyr, collapse = "\n")
+          code_dplyr <- deparse2(output_filter$code$dplyr)
           nm_dat <- data_name()
-          code_dplyr <- stri_replace_all(str = code_dplyr, replacement = "%>%\n", fixed = "%>%")
-          code <- stri_replace_all(str = code, replacement = " ggplot()", fixed = sprintf("ggplot(%s)", nm_dat))
+          code <- gsub(x = code, replacement = " ggplot()", pattern = sprintf("ggplot(%s)", nm_dat), fixed = TRUE)
           code <- paste(code_dplyr, code, sep = " %>%\n")
         }
         htmltools::tagList(
@@ -241,7 +268,7 @@ controls_server <- function(id,
       # Controls ----
       
       observeEvent(aesthetics(), {
-        aesthetics <- aesthetics()
+        aesthetics <- names(aesthetics())
         toggleDisplay(id = ns("controls-labs-fill"), display = "fill" %in% aesthetics)
         toggleDisplay(id = ns("controls-labs-color"), display = "color" %in% aesthetics)
         toggleDisplay(id = ns("controls-labs-size"), display = "size" %in% aesthetics)
@@ -306,7 +333,7 @@ controls_server <- function(id,
       
       # labs input
       observe({
-        asth <- aesthetics()
+        asth <- names(aesthetics())
         labs_fill <- ifelse("fill" %in% asth, input$labs_fill, "")
         labs_color <- ifelse("color" %in% asth, input$labs_color, "")
         labs_size <- ifelse("size" %in% asth, input$labs_size, "")
@@ -322,7 +349,23 @@ controls_server <- function(id,
         )
       })
       
-      #limits input
+      # Colors input
+      colors_r <- palette_server("colors", reactive({
+        data_ <- data_table()
+        aesthetics_ <- aesthetics()
+        if ("fill" %in% names(aesthetics_)) {
+          return(data_[[aesthetics_$fill]])
+        }
+        if ("color" %in% names(aesthetics_)) {
+          return(data_[[aesthetics_$color]])
+        }
+        return(character(0))
+      }))
+      observe({
+        outputs$colors <- colors_r()
+      })
+      
+      # limits input
       observe({
         outputs$limits <- list(
           x = use_transX() & !anyNA(input$xlim),
@@ -629,13 +672,14 @@ controls_appearance <- function(ns) {
     ),
     tags$div(
       id = ns("controls-palette"), style = "display: none;",
-      palettePicker(
-        inputId = ns("palette"),
-        label = "Choose a palette:",
-        choices = pals$choices,
-        textColor = pals$textColor,
-        pickerOpts = list(container = "body")
-      )
+      # palettePicker(
+      #   inputId = ns("palette"),
+      #   label = "Choose a palette:",
+      #   choices = pals$choices,
+      #   textColor = pals$textColor,
+      #   pickerOpts = list(container = "body")
+      # )
+      palette_ui(ns("colors"))
     ),
     pickerInput(
       inputId = ns("theme"),

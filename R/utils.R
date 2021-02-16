@@ -359,5 +359,23 @@ anyNamed <- function(x) {
 
 
 
+makeId <- function(x) {
+  x <- as.character(x)
+  x <- lapply(X = x, FUN = function(y) {
+    paste(as.character(charToRaw(y)), collapse = "")
+  })
+  x <- unlist(x, use.names = FALSE)
+  make.unique(x, sep = "_")
+}
 
-
+deparse2 <- function(x) {
+  x <- deparse(x)
+  # x <- trimws(x)
+  x <- paste(x, collapse = "\n")
+  x <- gsub(x = x, pattern = "+", replacement = "+\n", fixed = TRUE)
+  x <- gsub(x = x, pattern = "%>%", replacement = "%>%\n", fixed = TRUE)
+  x <- gsub(x = x, pattern = "[ ]+", replacement = " ")
+  x <- gsub(x = x, pattern = "\n \n", replacement = "\n")
+  x <- gsub(x = x, pattern = "[\n]+", replacement = "\n")
+  return(x)
+}

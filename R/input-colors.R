@@ -171,3 +171,179 @@ palettePicker <- function(inputId,
 
 
 
+
+
+
+
+
+palette_ui <- function(id) {
+  ns <- NS(id)
+  pals <- esquisse:::get_palettes()
+  tagList(
+    tags$style(
+      ".bootstrap-select .dropdown-menu li a span.text { display: block !important; }"
+    ),
+    radioButtons(
+      inputId = ns("type"),
+      label = NULL,
+      choiceValues = c("palette", "manual"),
+      choiceNames = tagList(
+        tags$div(
+          tags$b("Use a palette:"),
+          palettePicker(
+            inputId = ns("palette"),
+            label = NULL,
+            choices = pals$choices,
+            textColor = pals$textColor,
+            pickerOpts = list(container = "body")
+          )
+        ),
+        tags$div(
+          tags$b("Use specific colors:"),
+          uiOutput(outputId = ns("manual"))
+        )
+      )
+    )
+  )
+}
+
+palette_server <- function(id, variable) {
+  
+  palettes <- get_palettes()
+  palettes <- palettes$choices
+  palettes <- unlist(palettes, recursive = FALSE, use.names = TRUE)
+  names(palettes) <- gsub("^.+\\.", "", names(palettes))
+  
+  callModule(
+    id = id,
+    module = function(input, output, session) {
+      ns <- session$ns
+      colors_manual <- reactiveValues(x = NULL)
+      output$manual <- renderUI({
+        variable_ <- variable()
+        req(variable_)
+        type <- col_type(variable_)
+        if (identical(type, "discrete")) {
+          values <- sort(unique(variable_))
+          colors <- colorRampPalette(palettes[[input$palette]])(length(values))
+          colors_id <- paste0("colors_", makeId(values))
+          colors_manual$x <- setNames(as.list(colors_id), values)
+          colors_manual$type <- "discrete"
+          lapply(
+            X = seq_along(values),
+            FUN = function(i) {
+              tagList(
+                tags$span(
+                  htmltools::tagAppendAttributes(
+                    colorPickr(
+                      inputId = ns(colors_id[i]),
+                      selected = colors[i],
+                      label = NULL,
+                      theme = "nano",
+                      useAsButton = TRUE,
+                      update = "save",
+                      interaction = list(
+                        hex = FALSE,
+                        rgba = FALSE,
+                        input = TRUE,
+                        save = TRUE,
+                        clear = TRUE
+                      )
+                    ),
+                    style = "display: inline; vertical-align: middle;"
+                  ),
+                  values[i]
+                ),
+                tags$br()
+              )
+            }
+          )
+        } else if (identical(type, "continuous")) {
+          colors <- palettes[[input$palette]]
+          colors_manual$x <- list(low = "low", high = "high")
+          colors_manual$type <- "continuous"
+          tagList(
+            tags$span(
+              htmltools::tagAppendAttributes(
+                colorPickr(
+                  inputId = ns("low"),
+                  selected = colors[1],
+                  label = NULL,
+                  theme = "nano",
+                  useAsButton = TRUE,
+                  update = "save",
+                  interaction = list(
+                    hex = FALSE,
+                    rgba = FALSE,
+                    input = TRUE,
+                    save = TRUE,
+                    clear = TRUE
+                  )
+                ),
+                style = "display: inline; vertical-align: middle;"
+              ),
+              "Low value"
+            ),
+            tags$br(),
+            tags$span(
+              htmltools::tagAppendAttributes(
+                colorPickr(
+                  inputId = ns("high"),
+                  selected = colors[length(colors)],
+                  label = NULL,
+                  theme = "nano",
+                  useAsButton = TRUE,
+                  update = "save",
+                  interaction = list(
+                    hex = FALSE,
+                    rgba = FALSE,
+                    input = TRUE,
+                    save = TRUE,
+                    clear = TRUE
+                  )
+                ),
+                style = "display: inline; vertical-align: middle;"
+              ),
+              "High value"
+            )
+          )
+        } else {
+          tags$i(
+            style = "color: #FAFAFA;",
+            "No manual colors possible"
+          )
+        }
+      })
+      
+      return(reactive({
+        if (identical(input$type, "palette")) {
+          list(
+            scale = "palette",
+            colors = input$palette
+          )
+        } else {
+          ids <- colors_manual$x
+          list(
+            scale = "manual",
+            type = colors_manual$type,
+            colors = lapply(
+              X = ids,
+              FUN = function(x) {
+                input[[x]]
+              }
+            )
+          )
+        }
+      }))
+    }
+  )
+}
+
+
+
+
+
+
+
+
+

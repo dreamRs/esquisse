@@ -14,7 +14,6 @@
 #'  renderPlot stopApp plotOutput showNotification isolate reactiveValuesToList
 #' @importFrom ggplot2 ggplot_build ggsave
 #' @import ggplot2
-#' @importFrom rlang expr_deparse
 #' @importFrom datamods import_modal import_server
 #'
 esquisserServer <- function(input,
@@ -184,8 +183,7 @@ esquisserServer <- function(input,
     }),
     ggplot_rv = ggplotCall,
     aesthetics = reactive({
-      vars <- dropNullsOrEmpty(input$dragvars$target)
-      names(vars)
+      dropNullsOrEmpty(input$dragvars$target)
     }),
     use_facet = reactive({
       !is.null(input$dragvars$target$facet) | !is.null(input$dragvars$target$facet_row) | !is.null(input$dragvars$target$facet_col)
@@ -234,9 +232,23 @@ esquisserServer <- function(input,
 
     data <- paramsChart$data
 
+    # if (identical(paramsChart$colors$scale, "palette")) {
+    #   scales <- which_pal_scale(
+    #     mapping = mapping,
+    #     palette = paramsChart$colors$colors,
+    #     data = data
+    #   )
+    # } else {
+    #   if (identical(paramsChart$colors$type, "discrete")) {
+    #     scales <- list(
+    #       scales = "fill_manual",
+    #       args = list(values = unlist(paramsChart$colors$colors))
+    #     )
+    #   }
+    # }
     scales <- which_pal_scale(
       mapping = mapping,
-      palette = paramsChart$inputs$palette,
+      palette = paramsChart$colors$colors,
       data = data
     )
 
@@ -299,7 +311,7 @@ esquisserServer <- function(input,
       ylim = ylim
     )
 
-    ggplotCall$code <- expr_deparse(gg_call, width = 1e4)
+    ggplotCall$code <- deparse2(gg_call)
     ggplotCall$call <- gg_call
 
     ggplotCall$ggobj <- safe_ggplot(
