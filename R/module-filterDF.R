@@ -159,8 +159,7 @@ create_filters <- function(data, vars = NULL,
   } else {
     vars <- intersect(names(data), vars)
   }
-  # filters_id <- paste0("filter_", sample.int(1e9, length(vars)))
-  filters_id <- paste0("filter_", clean_string(vars))
+  filters_id <- paste0("filter_", makeId(vars))
   filters_id <- setNames(as.list(filters_id), vars)
   filters_na_id <- setNames(as.list(paste0("na_", filters_id)), vars)
   ui <- lapply(

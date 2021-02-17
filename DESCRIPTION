@@ -24,7 +24,6 @@ Imports: datamods,
     shinyWidgets (>= 0.5.7.9100),
     ggplot2 (>= 3.0.0),
     scales,
-    stringi,
     rlang (>= 0.3.1),
     grDevices
 Suggests: 

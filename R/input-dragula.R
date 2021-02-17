@@ -134,9 +134,10 @@ dragulaInput <- function(inputId,
 
 generate_targets <- function(inputId, args, targetsLabels, targetsIds, selected, replace, boxStyle, badge, status, height) {
   if (is.null(targetsIds)) {
-    targetsIds <- gsub(pattern = "[^[:alnum:]]", replacement = "", x = targetsLabels)
+    targetsIds <- makeId(targetsLabels)
   } else {
     stopifnot(length(targetsLabels) == length(targetsIds))
+    targetsIds <- makeId(targetsIds)
   }
 
   replaceTargets <- targetsIds
@@ -183,7 +184,6 @@ generate_targets <- function(inputId, args, targetsLabels, targetsIds, selected,
 
 
 #' @importFrom jsonlite base64_enc
-#' @importFrom stringi stri_replace_all_fixed
 #' @importFrom htmltools doRenderTags tag
 make_bg_svg <- function(text) {
   svg <- tag("svg", list(
@@ -204,7 +204,7 @@ make_bg_svg <- function(text) {
   ))
   svg <- doRenderTags(svg)
   svg <- base64_enc(svg)
-  svg <- stri_replace_all_fixed(svg, pattern = "\n", replacement = "")
+  svg <- gsub(x = svg, pattern = "\n", replacement = "")
   svg <- sprintf(
     "background-image:url(\"data:image/svg+xml;base64,%s\");",
     svg
@@ -361,8 +361,7 @@ makeDragulaChoices <- function(inputId, args, status = NULL, badge = TRUE) {
           class = "label-dragula",
           class = if (badge) "label badge-dragula",
           class = if (badge & !is.null(status)) paste0("label-", status),
-          # id = paste(inputId, "target-label", sep = "-"),
-          id = paste(inputId, "target-label", clean_string(args$choiceValues[[i]]), sep = "-"),
+          id = paste(inputId, "target-label", makeId(args$choiceValues[[i]]), sep = "-"),
           `data-value` = args$choiceValues[[i]],
           args$choiceNames[[i]]
         )

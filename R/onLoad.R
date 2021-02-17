@@ -11,6 +11,7 @@
     } else {
       data$source <- unlist(data$source)
       data$target <- lapply(data$target, unlist, recursive = FALSE)
+      names(data$target) <- idToChar(names(data$target))
       data
     }
   }, force = TRUE)

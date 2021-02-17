@@ -171,14 +171,11 @@ palettePicker <- function(inputId,
 
 
 
-
-
-
-
-
+#' @importFrom htmltools tagList tags
+#' @importFrom shiny NS uiOutput radioButtons
 palette_ui <- function(id) {
   ns <- NS(id)
-  pals <- esquisse:::get_palettes()
+  pals <- get_palettes()
   tagList(
     tags$style(
       ".bootstrap-select .dropdown-menu li a span.text { display: block !important; }"
@@ -207,6 +204,10 @@ palette_ui <- function(id) {
   )
 }
 
+#' @importFrom shinyWidgets colorPickr
+#' @importFrom htmltools tagList tags tagAppendAttributes
+#' @importFrom shiny callModule reactiveValues renderUI reactive
+#' @importFrom grDevices colorRampPalette
 palette_server <- function(id, variable) {
   
   palettes <- get_palettes()
@@ -234,7 +235,7 @@ palette_server <- function(id, variable) {
             FUN = function(i) {
               tagList(
                 tags$span(
-                  htmltools::tagAppendAttributes(
+                  tagAppendAttributes(
                     colorPickr(
                       inputId = ns(colors_id[i]),
                       selected = colors[i],
@@ -264,7 +265,7 @@ palette_server <- function(id, variable) {
           colors_manual$type <- "continuous"
           tagList(
             tags$span(
-              htmltools::tagAppendAttributes(
+              tagAppendAttributes(
                 colorPickr(
                   inputId = ns("low"),
                   selected = colors[1],
@@ -286,7 +287,7 @@ palette_server <- function(id, variable) {
             ),
             tags$br(),
             tags$span(
-              htmltools::tagAppendAttributes(
+              tagAppendAttributes(
                 colorPickr(
                   inputId = ns("high"),
                   selected = colors[length(colors)],

@@ -38,15 +38,7 @@ dropNullsOrEmpty <- function(x) {
 }
 
 
-# quickly clean a string
-#' @importFrom stringi stri_trans_general stri_trans_tolower stri_replace_all_regex
-clean_string <- function(str) {
-  str <- stri_trans_general(str = str, id = "Latin-ASCII")
-  str <- stri_trans_tolower(str)
-  str <- make.unique(str)
-  str <- stri_replace_all_regex(str = str, pattern = "[^a-zA-Z0-9_]+", replacement = "_")
-  return(str)
-}
+
 
 
 
@@ -366,6 +358,16 @@ makeId <- function(x) {
   })
   x <- unlist(x, use.names = FALSE)
   make.unique(x, sep = "_")
+}
+
+idToChar <- function(x) {
+  if (length(x) > 1) {
+    x <- unlist(lapply(x, idToChar))
+    return(x)
+  }
+  x <- strsplit(x, "")[[1]]
+  x <- paste0(x[c(TRUE, FALSE)], x[c(FALSE, TRUE)])
+  rawToChar(as.raw(as.hexmode(x)))
 }
 
 deparse2 <- function(x) {
