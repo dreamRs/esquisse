@@ -34,6 +34,7 @@ dropdown_ <- function(...) {
 #'
 #' @importFrom htmltools tags tagList HTML
 #' @importFrom shiny icon checkboxInput
+#' @importFrom datamods filter_data_ui
 #'
 controls_ui <- function(id,
                         controls = c("labs", "parameters", "appearance", "filters", "code"),
@@ -100,7 +101,7 @@ controls_ui <- function(id,
       },
       if (isTRUE("filters" %in% controls)) {
         dropdown_(
-          filterDF_UI(id = ns("filter-data")),
+          filter_data_ui(id = ns("filter-data")),
           style = "default",
           label = "Data",
           up = TRUE,
@@ -160,6 +161,7 @@ controls_ui <- function(id,
 #'  downloadHandler renderUI reactive updateTextInput showNotification callModule
 #' @importFrom rstudioapi insertText getSourceEditorContext
 #' @importFrom htmltools tags tagList
+#' @importFrom datamods filter_data_server
 #'
 controls_server <- function(id,
                             type,
@@ -233,8 +235,9 @@ controls_server <- function(id,
       observeEvent(input$insert_code, {
         context <- rstudioapi::getSourceEditorContext()
         code <- ggplot_rv$code
-        if (!is.null(output_filter$code$expr) & !isTRUE(input$disable_filters)) {
-          code_dplyr <- deparse2(output_filter$code$dplyr)
+        expr <- output_filter$expr()
+        if (!is.null(expr) & !isTRUE(input$disable_filters)) {
+          code_dplyr <- deparse2(output_filter$code())
           code_dplyr <- paste(code_dplyr, collapse = "\n")
           nm_dat <- data_name()
           code <- gsub(x = code, replacement = " ggplot()", pattern = sprintf("ggplot(%s)", nm_dat), fixed = TRUE)
@@ -252,8 +255,9 @@ controls_server <- function(id,
       
       output$code <- renderUI({
         code <- ggplot_rv$code
-        if (!is.null(output_filter$code$expr) & !isTRUE(input$disable_filters)) {
-          code_dplyr <- deparse2(output_filter$code$dplyr)
+        expr <- output_filter$expr()
+        if (!is.null(expr) & !isTRUE(input$disable_filters)) {
+          code_dplyr <- deparse2(output_filter$code())
           nm_dat <- data_name()
           code <- gsub(x = code, replacement = " ggplot()", pattern = sprintf("ggplot(%s)", nm_dat), fixed = TRUE)
           code <- paste(code_dplyr, code, sep = " %>%\n")
@@ -300,11 +304,10 @@ controls_server <- function(id,
         toggleDisplay(id = ns("controls-violin"), display = type$x %in% "violin")
       })
       
-      output_filter <- callModule(
-        module = filterDF,
+      output_filter <- filter_data_server(
         id = "filter-data",
-        data_table = data_table,
-        data_name = data_name
+        data = data_table,
+        name = data_name
       )
       
       outputs <- reactiveValues(
@@ -441,10 +444,10 @@ controls_server <- function(id,
         )
       })
       
-      observeEvent(output_filter$data_filtered(), {
+      observeEvent(output_filter$filtered(), {
         if(!isTRUE(input$disable_filters)){
-          outputs$data <- output_filter$data_filtered()
-          outputs$code <- output_filter$code
+          outputs$data <- output_filter$filtered()
+          outputs$code <- output_filter$code()
         }
       })
       

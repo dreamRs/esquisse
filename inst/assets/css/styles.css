@@ -132,13 +132,14 @@
 #sw-content-controls-filters {
   min-width: 350px;
   max-height: 90vh;
+  min-height: 30vh;
   padding-right: 5px;
   overflow-y: auto;
   overflow-x: hidden;
 }
 
 #sw-content-controls-code {
-  min-width: 370px;
+  min-width: 400px;
   z-index: 1000;
 }
 

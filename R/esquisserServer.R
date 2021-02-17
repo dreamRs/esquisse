@@ -331,7 +331,7 @@ esquisserServer <- function(input,
     output_module$code_plot <- ggplotCall$code
   }, ignoreInit = TRUE)
   observeEvent(paramsChart$data, {
-    output_module$code_filters <- reactiveValuesToList(paramsChart$code)
+    output_module$code_filters <- paramsChart$code
     output_module$data <- paramsChart$data
   }, ignoreInit = TRUE)
 

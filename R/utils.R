@@ -371,7 +371,7 @@ idToChar <- function(x) {
 }
 
 deparse2 <- function(x) {
-  x <- deparse(x)
+  x <- deparse(x, width.cutoff = 100L)
   # x <- trimws(x)
   x <- paste(x, collapse = "\n")
   x <- gsub(x = x, pattern = "+", replacement = "+\n", fixed = TRUE)
