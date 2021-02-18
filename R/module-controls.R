@@ -647,7 +647,7 @@ controls_appearance <- function(ns) {
         theme = "monolith",
         update = "changestop",
         inline = TRUE,
-        swatches = c("#112446", "#0C4C8A", "#EF562D", "forestgreen", "steelblue", "firebrick", "darkorange", "hotpink", "papayawhip"),
+        swatches = head(unlist(cols, use.names = FALSE), 9),
         preview = FALSE,
         interaction = list(
           hex = FALSE,

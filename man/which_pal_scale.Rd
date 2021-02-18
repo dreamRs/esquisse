@@ -9,7 +9,8 @@ which_pal_scale(
   palette = "ggplot2",
   data = NULL,
   fill_type = c("continuous", "discrete"),
-  color_type = c("continuous", "discrete")
+  color_type = c("continuous", "discrete"),
+  reverse = FALSE
 )
 }
 \arguments{
@@ -22,6 +23,8 @@ which_pal_scale(
 \item{fill_type, color_type}{Scale to use according to the variable used
 in \code{fill}/\code{color} aesthetic : \code{"discrete"} or \code{"continuous"}.
 Ignored if \code{data} is provided: it will be guessed from data.}
+
+\item{reverse}{Reverse colors order or not.}
 }
 \value{
 a \code{list}

@@ -232,24 +232,11 @@ esquisserServer <- function(input,
 
     data <- paramsChart$data
 
-    # if (identical(paramsChart$colors$scale, "palette")) {
-    #   scales <- which_pal_scale(
-    #     mapping = mapping,
-    #     palette = paramsChart$colors$colors,
-    #     data = data
-    #   )
-    # } else {
-    #   if (identical(paramsChart$colors$type, "discrete")) {
-    #     scales <- list(
-    #       scales = "fill_manual",
-    #       args = list(values = unlist(paramsChart$colors$colors))
-    #     )
-    #   }
-    # }
     scales <- which_pal_scale(
       mapping = mapping,
       palette = paramsChart$colors$colors,
-      data = data
+      data = data,
+      reverse = paramsChart$colors$reverse
     )
 
     if (identical(input$geom, "auto")) {

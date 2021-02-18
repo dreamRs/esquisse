@@ -7,6 +7,7 @@
 #' @param fill_type,color_type Scale to use according to the variable used
 #'  in \code{fill}/\code{color} aesthetic : \code{"discrete"} or \code{"continuous"}.
 #'  Ignored if \code{data} is provided: it will be guessed from data.
+#' @param reverse Reverse colors order or not.
 #'
 #' @return a \code{list}
 #' @export
@@ -51,7 +52,8 @@ which_pal_scale <- function(mapping,
                             palette = "ggplot2", 
                             data = NULL,
                             fill_type = c("continuous", "discrete"), 
-                            color_type = c("continuous", "discrete")) {
+                            color_type = c("continuous", "discrete"),
+                            reverse = FALSE) {
   args <- list()
   fill_type <- match.arg(fill_type)
   color_type <- match.arg(color_type)
@@ -83,14 +85,14 @@ which_pal_scale <- function(mapping,
     } else {
       fill_scale <- NULL
     }
-    if (!is.null(mapping$color)) {
+    if (!is.null(mapping$colour)) {
       color_scale <- switch(
         color_type,
         "discrete" = "scale_color_manual",
         "continuous" = "scale_color_gradient"
       )
       args[[color_scale]] <- switch(
-        fill_type,
+        color_type,
         "discrete" = list(values = palette),
         "continuous" = palette
       )
@@ -155,6 +157,12 @@ which_pal_scale <- function(mapping,
         args[[fill_scale]] <- NULL
       }
     }
+    if (!endsWith(fill_scale, "gradient") & isTRUE(reverse)) {
+      args[[fill_scale]] <- c(args[[fill_scale]], list(direction = -1))
+    }
+    if (!endsWith(fill_scale, "gradient") & !isTRUE(reverse)) {
+      args[[fill_scale]] <- c(args[[fill_scale]], list(direction = 1))
+    }
   } else {
     fill_scale <- NULL
   }
@@ -172,6 +180,12 @@ which_pal_scale <- function(mapping,
       if (palette %in% c("ipsum", "ft")) {
         args[[color_scale]] <- NULL
       }
+    }
+    if (!endsWith(color_scale, "gradient") & isTRUE(reverse)) {
+      args[[color_scale]] <- c(args[[color_scale]], list(direction = -1))
+    }
+    if (!endsWith(color_scale, "gradient") & !isTRUE(reverse)) {
+      args[[color_scale]] <- c(args[[color_scale]], list(direction = 1))
     }
   } else {
     color_scale <- NULL

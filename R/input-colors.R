@@ -172,7 +172,7 @@ palettePicker <- function(inputId,
 
 
 #' @importFrom htmltools tagList tags
-#' @importFrom shiny NS uiOutput radioButtons
+#' @importFrom shiny NS uiOutput radioButtons checkboxInput
 palette_ui <- function(id) {
   ns <- NS(id)
   pals <- get_palettes()
@@ -193,6 +193,11 @@ palette_ui <- function(id) {
             choices = pals$choices,
             textColor = pals$textColor,
             pickerOpts = list(container = "body")
+          ),
+          checkboxInput(
+            inputId = ns("reverse"),
+            value = FALSE,
+            label = "Reverse colors?"
           )
         ),
         tags$div(
@@ -320,6 +325,7 @@ palette_server <- function(id, variable) {
         if (identical(input$type, "palette")) {
           list(
             scale = "palette",
+            reverse = input$reverse,
             colors = input$palette
           )
         } else {

@@ -57,16 +57,6 @@ default_pals <- function() {
       rep(c("white", "black"), times = c(23, 18))
     )
   )
-  
-  if (requireNamespace("hrbrthemes", quietly = TRUE)) {
-    pals$choices$hrbrthemes = list(
-      "ipsum" = hrbrthemes::ipsum_pal()(9),
-      "ft" = hrbrthemes::ft_pal()(9)
-    )
-    pals$textColor<- c(
-      rep(c("white", "black"), times = c(25, 18))
-    )
-  }
   return(pals)
 }
 
@@ -125,26 +115,12 @@ default_cols <- function() {
   cols <- list(
     "custom" = c("#0C4C8A", "#EF562D", "forestgreen", "steelblue", "firebrick", "darkorange", "hotpink"),
     "viridis" = col2Hex(viridis_pal(option = "viridis")(8)),
-    # "magma" = col2Hex(viridis_pal(option = "magma")(10)),
-    # "inferno" = col2Hex(viridis_pal(option = "inferno")(10)),
     "plasma" = col2Hex(viridis_pal(option = "plasma")(8))#,
-    # "cividis" = col2Hex(viridis_pal(option = "cividis")(10))
     ,
     "Blues" = brewer_pal(palette = "Blues")(9)[-1],
     "Greens" = brewer_pal(palette = "Greens")(9)[-1],
     "Reds" = brewer_pal(palette = "Reds")(9)[-1],
-    # "Oranges" = brewer_pal(palette = "Oranges")(9),
-    # "Purples" = brewer_pal(palette = "Purples")(9),
-    "Greys" = brewer_pal(palette = "Greys")(9)[-1]#,
-    # "Dark2" = brewer_pal(palette = "Dark2")(8),
-    # "Set1" = brewer_pal(palette = "Set1")(8),
-    # "Paired" = brewer_pal(palette = "Paired")(12)
+    "Greys" = brewer_pal(palette = "Greys")(9)[-1]
   )
-  
-  if (requireNamespace("hrbrthemes", quietly = TRUE)) {
-    cols$ipsum <- hrbrthemes::ipsum_pal()(8)
-    cols$ipsum <- hrbrthemes::ft_pal()(8)
-  }
-  
   return(cols)
 }
