@@ -624,6 +624,8 @@ get_labs_options <- function(inputs, name = c("title", "subtitle", "x", "y")) {
 #' @param ns Namespace from module
 #'
 #' @noRd
+#' 
+#' @importFrom utils head
 #' @importFrom shiny icon
 #' @importFrom htmltools tagList tags
 #' @importFrom shinyWidgets pickerInput radioGroupButtons spectrumInput
@@ -634,11 +636,6 @@ controls_appearance <- function(ns) {
   pals <- get_palettes()
 
   tagList(
-
-    tags$style(
-      ".bootstrap-select .dropdown-menu li a span.text { display: block !important; }"
-    ),
-
     tags$div(
       id = ns("controls-spectrum"), style = "display: block;",
       shinyWidgets::colorPickr(

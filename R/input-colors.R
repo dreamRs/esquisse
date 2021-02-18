@@ -20,7 +20,7 @@
 #' 
 #' @name input-colors
 #' 
-#' @importFrom htmltools tagAppendAttributes singleton tags
+#' @importFrom htmltools tagAppendAttributes tags
 #' @importFrom shinyWidgets pickerInput
 #'
 #' @example examples/colorPicker.R
@@ -33,6 +33,51 @@ colorPicker <- function(inputId,
                         multiple = FALSE, 
                         pickerOpts = list(),
                         width = NULL) {
+  opts <- colorPickerOptions(choices, textColor, plainColor, multiple)
+  colPicTag <- pickerInput(
+    inputId = inputId,
+    label = label,
+    choices = opts$choices,
+    selected = selected, 
+    multiple = multiple,
+    choicesOpt = opts$choicesOpt,
+    options = pickerOpts,
+    width = width
+  )
+  colPicTag <- tagAppendAttributes(
+    tag = colPicTag, 
+    class = ifelse(isTRUE(plainColor), "color-picker-plain", "color-picker")
+  )
+  tagList(
+    html_dependency_esquisse(),
+    colPicTag
+  )
+}
+
+#' @param session Shiny session.
+#' 
+#' @rdname input-colors
+#' @export
+#' 
+#' @importFrom shinyWidgets updatePickerInput
+#' @importFrom shiny getDefaultReactiveDomain
+updateColorPicker <- function(session = getDefaultReactiveDomain(),
+                              inputId, 
+                              choices,
+                              textColor = "#000", 
+                              plainColor = FALSE,
+                              multiple = FALSE) {
+  opts <- colorPickerOptions(choices, textColor, plainColor, multiple)
+  updatePickerInput(
+    session = session,
+    inputId = inputId,
+    choices = opts$choices,
+    choicesOpt = opts$choicesOpt
+  )
+}
+
+
+colorPickerOptions <- function(choices, textColor, plainColor, multiple) {
   choices <- choicesWithNames(choices)
   cols <- unlist(x = choices, recursive = TRUE, use.names = FALSE)
   colsNames <- unlist(lapply(
@@ -58,12 +103,8 @@ colorPicker <- function(inputId,
   } else {
     content_str <- "<div style='width:100%%;border-radius:4px; padding: 2px;background:%s;color:%s'>%s</div>"
   }
-  colPicTag <- pickerInput(
-    inputId = inputId,
-    label = label,
+  list(
     choices = choices,
-    selected = selected, 
-    multiple = multiple,
     choicesOpt = dropNulls(list(
       style = style,
       content = sprintf(
@@ -72,23 +113,9 @@ colorPicker <- function(inputId,
         rep_len(textColor, length.out = length(cols)), 
         colsNames
       )
-    )),
-    options = pickerOpts,
-    width = width
-  )
-  colPicTag <- tagAppendAttributes(
-    tag = colPicTag, 
-    class = ifelse(isTRUE(plainColor), "color-picker-plain", "color-picker")
-  )
-  tagList(
-    singleton(tags$head(tags$style(
-      ".color-picker .bootstrap-select .dropdown-menu li a span.text {width: 100%;}"
-    ))),
-    colPicTag
+    ))
   )
 }
-
-
 
 
 #' @rdname input-colors
@@ -103,7 +130,48 @@ palettePicker <- function(inputId,
                           plainColor = FALSE, 
                           pickerOpts = list(), 
                           width = NULL) {
-  
+  opts <- palettePickerOptions(choices, textColor, plainColor)
+  palPicTag <- pickerInput(
+    inputId = inputId,
+    label = label,
+    choices = opts$choices,
+    selected = selected, 
+    choicesOpt = opts$choicesOpt,
+    options = pickerOpts,
+    width = width
+  )
+  palPicTag <- tagAppendAttributes(
+    tag = palPicTag, 
+    class = ifelse(isTRUE(plainColor), "color-picker-plain", "color-picker")
+  )
+  tagList(
+    html_dependency_esquisse(),
+    palPicTag
+  )
+}
+
+#' @param session Shiny session.
+#' 
+#' @rdname input-colors
+#' @export
+#' 
+#' @importFrom shinyWidgets updatePickerInput
+#' @importFrom shiny getDefaultReactiveDomain
+updatePalettePicker <- function(session = getDefaultReactiveDomain(),
+                                inputId, 
+                                choices,
+                                textColor = "#000", 
+                                plainColor = FALSE) {
+  opts <- palettePickerOptions(choices, textColor, plainColor)
+  updatePickerInput(
+    session = session,
+    inputId = inputId,
+    choices = opts$choices,
+    choicesOpt = opts$choicesOpt
+  )
+}
+
+palettePickerOptions <- function(choices, textColor, plainColor) {
   choicesNames <- lapply(
     X = seq_along(choices), 
     FUN = function(x) {
@@ -139,11 +207,9 @@ palettePicker <- function(inputId,
     style <- NULL
   }
   content_str <- "<div style='width:100%%;border-radius:4px; padding: 2px;background:%s;color:%s'>%s</div>"
-  palPicTag <- pickerInput(
-    inputId = inputId,
-    label = label,
+  
+  list(
     choices = choicesNames,
-    selected = selected, 
     choicesOpt = dropNulls(list(
       style = style,
       content = sprintf(
@@ -152,22 +218,10 @@ palettePicker <- function(inputId,
         rep_len(textColor, length.out = length(choicesColors)), 
         unlist(choicesNames, recursive = TRUE, use.names = FALSE)
       )
-    )),
-    options = pickerOpts,
-    width = width
-  )
-  palPicTag <- tagAppendAttributes(
-    tag = palPicTag, 
-    class = ifelse(isTRUE(plainColor), "color-picker-plain", "color-picker")
-  )
-  tagList(
-    singleton(tags$head(tags$style(
-      ".color-picker .bootstrap-select .dropdown-menu li a span.text {width: 100%;}",
-      ".color-picker-plain .bootstrap-select .dropdown-menu li a span.text div {background:rgba(0,0,0,0) !important;}"
-    ))),
-    palPicTag
+    ))
   )
 }
+
 
 
 
@@ -245,7 +299,7 @@ palette_server <- function(id, variable) {
                       inputId = ns(colors_id[i]),
                       selected = colors[i],
                       label = NULL,
-                      theme = "nano",
+                      theme = "classic",
                       useAsButton = TRUE,
                       update = "save",
                       interaction = list(
@@ -253,7 +307,7 @@ palette_server <- function(id, variable) {
                         rgba = FALSE,
                         input = TRUE,
                         save = TRUE,
-                        clear = TRUE
+                        clear = FALSE
                       )
                     ),
                     style = "display: inline; vertical-align: middle;"
@@ -283,14 +337,14 @@ palette_server <- function(id, variable) {
                     rgba = FALSE,
                     input = TRUE,
                     save = TRUE,
-                    clear = TRUE
+                    clear = FALSE
                   )
                 ),
                 style = "display: inline; vertical-align: middle;"
               ),
               "Low value"
             ),
-            tags$br(),
+            tags$div(style = "height: 5px;"),
             tags$span(
               tagAppendAttributes(
                 colorPickr(
@@ -305,7 +359,7 @@ palette_server <- function(id, variable) {
                     rgba = FALSE,
                     input = TRUE,
                     save = TRUE,
-                    clear = TRUE
+                    clear = FALSE
                   )
                 ),
                 style = "display: inline; vertical-align: middle;"

@@ -218,3 +218,16 @@ div[id^="shiny-notification-esquisse"] > .shiny-notification-close {
 .drop-input, .drop-input-main {
   height: 100%;
 }
+
+
+/* Color & Palette Picker */
+.color-picker .bootstrap-select .dropdown-menu li a span.text {
+  width: 100%;
+  display: block;
+}
+
+.color-picker-plain .bootstrap-select .dropdown-menu li a span.text div {
+  background: rgba(0,0,0,0) !important;
+}
+
+
