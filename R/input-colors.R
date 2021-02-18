@@ -267,6 +267,7 @@ palette_ui <- function(id) {
 #' @importFrom htmltools tagList tags tagAppendAttributes
 #' @importFrom shiny callModule reactiveValues renderUI reactive
 #' @importFrom grDevices colorRampPalette
+#' @importFrom scales seq_gradient_pal
 palette_server <- function(id, variable) {
   
   palettes <- get_palettes()
@@ -320,6 +321,9 @@ palette_server <- function(id, variable) {
           )
         } else if (identical(type, "continuous")) {
           colors <- palettes[[input$palette]]
+          if (identical(input$palette, "ggplot2")) {
+            colors <- c("#132B43", "#56B1F7")
+          }
           colors_manual$x <- list(low = "low", high = "high")
           colors_manual$type <- "continuous"
           tagList(
@@ -374,6 +378,27 @@ palette_server <- function(id, variable) {
           )
         }
       })
+      
+      observeEvent(colors_manual$type, {
+        pals <- get_palettes()
+        if (identical(colors_manual$type, "discrete")) {
+          updatePalettePicker(
+            inputId = "palette",
+            choices = pals$choices,
+            textColor = pals$textColor
+          )
+        } else if (identical(colors_manual$type, "continuous")) {
+          if (!is.null(pals$choices$Default$ggplot2)) {
+            x <- seq(0, 1, length.out = 10)
+            pals$choices$Default$ggplot2 <- seq_gradient_pal("#132B43", "#56B1F7", "Lab")(x)
+          }
+          updatePalettePicker(
+            inputId = "palette",
+            choices = pals$choices,
+            textColor = pals$textColor
+          )
+        }
+      }, ignoreInit = TRUE)
       
       return(reactive({
         if (identical(input$type, "palette")) {
