@@ -30,13 +30,14 @@ modal_settings <- function(aesthetics = NULL, session = shiny::getDefaultReactiv
         tagList(tags$b("fill:"), "fill color for shapes"),
         tagList(tags$b("color:"), "color points and lines"),
         tagList(tags$b("size:"), "size of the points"),
+        tagList(tags$b("shape:"), "shape of the points"),
         tagList(tags$b("weight:"), "frequency weights"),
         tagList(tags$b("group:"), "identifies series of points with a grouping variable"),
         tagList(tags$b("facet:"), "create small multiples"),
         tagList(tags$b("facet row:"), "create small multiples by rows"),
         tagList(tags$b("facet col:"), "create small multiples by columns")
       ),
-      choiceValues = c("fill", "color", "size", "weight", "group", "facet", "facet_row", "facet_col"),
+      choiceValues = c("fill", "color", "size", "shape", "weight", "group", "facet", "facet_row", "facet_col"),
       selected = aesthetics %||% c("fill", "color", "size", "facet"),
       status = "primary"
     ),
