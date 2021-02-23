@@ -10,7 +10,6 @@
 #'
 #' @importFrom utils browseURL
 #' @importFrom shiny actionButton icon observeEvent dialogViewer runGadget stopApp actionLink
-#' @importFrom miniUI miniPage miniContentPanel miniButtonBlock
 #' @importFrom shinyWidgets updateProgressBar progressBar prettyCheckboxGroup updatePrettyCheckboxGroup
 #' @importFrom ggplot2 ggplot_build
 #'
@@ -79,28 +78,30 @@ ggplot_to_ppt <- function(gg = NULL) {
 
   } else {
 
-    ui <- miniPage(
+    ui <- fillPage(tags$div(
+      class = "esquisse-container",
+      style = "padding: 10px;",
       html_dependency_esquisse(),
-      miniContentPanel(
-        prettyCheckboxGroup(
-          inputId = "select_gg",
-          label = tags$span("ggplot(s) to export ", actionLink(inputId = "all", label = "(select all)")),
-          choices = ggplots, status = "primary",
-          icon = icon("check")
-        ),
-        tags$div(
-          id = "ppt-pb", style = "display: none;",
-          progressBar(id = "progress-ppt", value = 0, display_pct = TRUE)
-        )
+      prettyCheckboxGroup(
+        inputId = "select_gg",
+        label = tags$span("ggplot(s) to export ", actionLink(inputId = "all", label = "(select all)")),
+        choices = ggplots, status = "primary",
+        icon = icon("check")
       ),
-      miniButtonBlock(
+      tags$div(
+        id = "ppt-pb", 
+        style = "display: none;",
+        progressBar(id = "progress-ppt", value = 0, display_pct = TRUE)
+      ),
+      tags$div(
+        style = "position: fixed; bottom: 10px; right: 10px; left: 10px;",
         actionButton(
           inputId = "export", label = "Export",
           icon = icon("file-powerpoint-o"),
           class = "btn-block btn-primary"
         )
       )
-    )
+    ))
 
     server <- function(input, output, session) {
 
