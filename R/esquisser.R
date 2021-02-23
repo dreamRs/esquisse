@@ -3,12 +3,13 @@
 # S-A
 
 
-#' An add-in to easily create plots with ggplot2
+#' @title An add-in to easily create plots with ggplot2
+#' 
+#' @description Select data to be used and map variables to aesthetics to produce a chart.
 #'
-#' @param data a data.frame, you can pass a data.frame explicitly to the function,
+#' @param data a \code{data.frame}, you can pass a \code{data.frame} explicitly to the function,
 #' otherwise you'll have to choose one in global environment.
-#' @param coerce_vars If \code{TRUE} allow to coerce variables to different type when selecting data.
-#' @param disable_filters Logical. Disable the menu allowing to filter data used.
+#' @param controls Controls menu to be displayed. Use \code{NULL} to hide all menus.
 #' @param viewer Where to display the gadget: \code{"dialog"},
 #'  \code{"pane"} or \code{"browser"} (see \code{\link[shiny]{viewer}}).
 #'
@@ -41,11 +42,9 @@
 #'
 #' }
 esquisser <- function(data = NULL,
-                      coerce_vars = getOption(x = "esquisse.coerceVars", default = TRUE),
-                      disable_filters = getOption(x = "esquisse.disable_filters", default = FALSE),
+                      controls = c("labs", "parameters", "appearance", "filters", "code"),
                       viewer = getOption(x = "esquisse.viewer", default = "dialog")) {
   viewer <- match.arg(viewer, choices = c("dialog", "pane", "browser"))
-  options("esquisse.coerceVars" = coerce_vars)
 
   res_data <- get_data(data, name = deparse(substitute(data)))
   if (!is.null(res_data$esquisse_data)) {
@@ -62,25 +61,24 @@ esquisser <- function(data = NULL,
     inviewer <- paneViewer(minHeight = "maximize")
   } else {
     inviewer <- dialogViewer(
-      "Les grandes personnes ne comprennent jamais rien toutes seules, et c'est fatigant, pour les enfants, de toujours et toujours leur donner des explications.",
+      paste(
+        "Les grandes personnes ne comprennent jamais rien toutes seules, et c'est fatigant,",
+        "pour les enfants, de toujours et toujours leur donner des explications."
+      ),
       width = 1100,
       height = 750
     )
   }
 
   runGadget(
-    app = esquisserUI(
+    app = esquisse_ui(
       id = "esquisse",
       container = NULL,
       insert_code = TRUE,
-      disable_filters = disable_filters
+      controls = controls
     ),
     server = function(input, output, session) {
-      callModule(
-        module = esquisserServer,
-        id = "esquisse",
-        data = rv
-      )
+      esquisse_server("esquisse", rv)
     },
     viewer = inviewer
   )

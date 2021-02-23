@@ -54,6 +54,8 @@ which_pal_scale <- function(mapping,
                             fill_type = c("continuous", "discrete"), 
                             color_type = c("continuous", "discrete"),
                             reverse = FALSE) {
+  if (length(palette) < 1)
+    return(list())
   args <- list()
   fill_type <- match.arg(fill_type)
   color_type <- match.arg(color_type)

@@ -23,9 +23,10 @@ dropdown_ <- function(...) {
 # )
 
 
-#' Dropup buttons to hide chart's controls
+#' Controls menu
 #'
 #' @param id Module's ID. See \code{\link[shiny]{callModule}}.
+#' @param controls Controls menu to be displayed. Use \code{NULL} to hide all menus.
 #' @param insert_code Logical, Display or not a button to isert the ggplot
 #'  code in the current user script (work only in RStudio).
 #'
@@ -38,8 +39,8 @@ dropdown_ <- function(...) {
 #'
 controls_ui <- function(id,
                         controls = c("labs", "parameters", "appearance", "filters", "code"),
-                        insert_code = FALSE,
-                        disable_filters = FALSE) {
+                        insert_code = FALSE) {
+  ns <- NS(id)
   if (!is.null(controls)) {
     controls <- match.arg(
       controls,
@@ -56,9 +57,10 @@ controls_ui <- function(id,
       )
     ))
   }
+  disable_filters <- !"filters" %in% controls
   if (isTRUE(disable_filters))
     controls <- setdiff(controls, "filters")
-  ns <- NS(id)
+  
   tagList(
     tags$div(
       class = "btn-group-esquisse btn-group-justified-esquisse",
@@ -306,7 +308,11 @@ controls_server <- function(id,
       
       output_filter <- filter_data_server(
         id = "filter-data",
-        data = data_table,
+        data = reactive({
+          req(data_table())
+          req(names(data_table()))
+          data_table()
+        }),
         name = data_name
       )
       
@@ -383,8 +389,16 @@ controls_server <- function(id,
       observe({
         outputs$facet <- list(
           scales = if (identical(input$facet_scales, "fixed")) NULL else input$facet_scales,
-          ncol = if (input$facet_ncol == 0) NULL else input$facet_ncol,
-          nrow = if (input$facet_nrow == 0) NULL else input$facet_nrow
+          ncol = if (is.null(input$facet_ncol) || input$facet_ncol == 0) {
+            NULL
+          } else {
+            input$facet_ncol
+          },
+          nrow = if (is.null(input$facet_ncol) || input$facet_nrow == 0) {
+            NULL
+          } else {
+            input$facet_nrow
+          }
         )
       })
       
@@ -595,12 +609,16 @@ get_labs_options <- function(inputs, name = c("title", "subtitle", "x", "y")) {
     inputs$face <- "plain"
   }
   inputs$bold <- NULL
-  inputs$hjust <- switch(
-    inputs$align,
-    "left" = 0,
-    "center" = 0.5,
-    "right" = 1
-  )
+  if (length(inputs$align) < 1) {
+    inputs$hjust <- defaults$hjust
+  } else {
+    inputs$hjust <- switch(
+      inputs$align,
+      "left" = 0,
+      "center" = 0.5,
+      "right" = 1
+    )
+  }
   inputs$align <- NULL
   for (nm in names(defaults)) {
     if (identical(inputs[[nm]], defaults[[nm]])) {

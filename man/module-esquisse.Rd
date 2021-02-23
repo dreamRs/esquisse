@@ -4,7 +4,6 @@
 \alias{esquisserServer}
 \alias{module-esquisse}
 \alias{esquisserUI}
-\alias{esquisseContainer}
 \title{Esquisse Shiny module}
 \usage{
 esquisserServer(
@@ -24,8 +23,6 @@ esquisserUI(
   insert_code = FALSE,
   disable_filters = FALSE
 )
-
-esquisseContainer(width = "100\%", height = "700px", fixed = FALSE)
 }
 \arguments{
 \item{input, output, session}{Standards \code{shiny} server arguments.}
@@ -53,14 +50,6 @@ Must be a \code{function}.}
 code in the current user script (work only in RStudio).}
 
 \item{disable_filters}{Logical. Disable the menu allowing to filter data used.}
-
-\item{width, height}{The width and height of the container, e.g. \code{'400px'},
-or \code{'100\%'}; see \code{\link[htmltools]{validateCssUnit}}.}
-
-\item{fixed}{Use a fixed container, e.g. to use use esquisse full page.
-If \code{TRUE}, width and height are ignored. Default to \code{FALSE}.
-It's possible to use a vector of CSS unit of length 4 to specify the margins
-(top, right, bottom, left).}
 }
 \value{
 A \code{reactiveValues} with 3 slots :
