@@ -256,6 +256,16 @@ esquisse_server <- function(id,
             list(smooth = paramsChart$smooth$args)
           )
         }
+        if (!is.null(aes_input$ymin) & !is.null(aes_input$ymax) & input$geom %in% c("line")) {
+          geom <- c("ribbon", geom)
+          mapping_ribbon <- aes_input[c("ymin", "ymax")]
+          geom_args <- c(
+            list(ribbon = list(mapping = expr(aes(!!!syms2(mapping_ribbon))), fill = "grey70")),
+            setNames(list(geom_args), input$geom)
+          )
+          mapping$ymin <- NULL
+          mapping$ymax <- NULL
+        }
         
         scales_args <- scales$args
         scales <- scales$scales
