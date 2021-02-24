@@ -78,6 +78,10 @@
   color: #FFFFFF;
 }
 
+.label-other {
+  background-color: #2E2E2E;
+  color: #FFFFFF;
+}
 
 .badge-dad {
   border-radius: 7px !important;

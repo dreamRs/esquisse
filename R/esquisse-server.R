@@ -3,6 +3,7 @@
 #'  to use in the module. And a slot \code{name} corresponding to the name of the \code{data.frame}.
 #' @param default_aes Default aesthetics to be used, can a \code{character}
 #'  vector or \code{reactive} function returning one.
+#' @param import_from From where to import data, argument passed to \code{\link[datamods:import-modal]{datamods::import_ui}}.
 #'
 #' @export
 #'
@@ -16,7 +17,8 @@
 #' @importFrom datamods import_modal import_server
 esquisse_server <- function(id, 
                             data_rv = NULL,
-                            default_aes = c("fill", "color", "size", "group", "facet")) {
+                            default_aes = c("fill", "color", "size", "group", "facet"),
+                            import_from = c("env", "file", "copypaste", "googlesheets")) {
   
   moduleServer(
     id = id,
@@ -43,7 +45,7 @@ esquisse_server <- function(id,
         }
         data <- isolate(data_chart$data)
         if (!is.null(data)) {
-          var_choices <- setdiff(names(data), attr(data, "sf_column"))
+          var_choices <- get_col_names(data)
           dragulaInput(
             inputId = ns("dragvars"),
             sourceLabel = "Variables",
@@ -84,8 +86,8 @@ esquisse_server <- function(id,
       if (is.null(isolate(data_rv$data))) {
         datamods::import_modal(
           id = ns("import-data"),
-          from = c("env", "file", "copypaste"),
-          title = "Import data"
+          from = import_from,
+          title = "Import data to create a graph"
         )
       }
       
@@ -93,8 +95,8 @@ esquisse_server <- function(id,
       observeEvent(input$launch_import_data, {
         datamods::import_modal(
           id = ns("import-data"),
-          from = c("env", "file", "copypaste"),
-          title = "Import data"
+          from = import_from,
+          title = "Import data to create a graph"
         )
       })
       
@@ -122,7 +124,7 @@ esquisse_server <- function(id,
           if (inherits(data, what = "sf")) {
             geom_possible$x <- c("sf", geom_possible$x)
           }
-          var_choices <- setdiff(names(data), attr(data, "sf_column"))
+          var_choices <- get_col_names(data)
           updateDragulaInput(
             session = session,
             inputId = "dragvars",

@@ -18,7 +18,8 @@ esquisse_ui(
 esquisse_server(
   id,
   data_rv = NULL,
-  default_aes = c("fill", "color", "size", "group", "facet")
+  default_aes = c("fill", "color", "size", "group", "facet"),
+  import_from = c("env", "file", "copypaste", "googlesheets")
 )
 
 esquisseContainer(width = "100\%", height = "700px", fixed = FALSE)
@@ -43,6 +44,8 @@ to use in the module. And a slot \code{name} corresponding to the name of the \c
 
 \item{default_aes}{Default aesthetics to be used, can a \code{character}
 vector or \code{reactive} function returning one.}
+
+\item{import_from}{From where to import data, argument passed to \code{\link[datamods:import-modal]{datamods::import_ui}}.}
 
 \item{width, height}{The width and height of the container, e.g. \code{'400px'},
 or \code{'100\%'}; see \code{\link[htmltools]{validateCssUnit}}.}

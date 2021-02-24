@@ -122,13 +122,15 @@ badgeType <- function(col_name, col_type) {
       col_name_i <- col_name[i]
       col_type_i <- col_type[i]
       if (col_type_i == "discrete") {
-        tags$span(class='label label-discrete badge-dad', col_name_i)
+        tags$span(class = "label label-discrete badge-dad", col_name_i)
       } else if (col_type_i == "time") {
-        tags$span(class='label label-datetime badge-dad', col_name_i)
+        tags$span(class = "label label-datetime badge-dad", col_name_i)
       } else if (col_type_i == "continuous") {
-        tags$span(class='label label-continuous badge-dad', col_name_i)
+        tags$span(class="label label-continuous badge-dad", col_name_i)
       } else if (col_type_i == "id") {
-        tags$span(class='label label-default badge-dad', col_name_i)
+        tags$span(class = "label label-default badge-dad", col_name_i)
+      } else {
+        tags$span(class = "label label-other badge-dad", col_name_i)
       }
     }
   )
@@ -164,17 +166,20 @@ col_type <- function(x, no_id = FALSE) {
         return("id")
       }
     }
-
     if (inherits(x, c("Date", "POSIXct", "POSIXlt"))) {
       return("time")
     }
-
     if (inherits(x, c("numeric", "integer", "double"))) {
       return("continuous")
     }
+    return("unknown")
   }
-
   NULL
+}
+
+get_col_names <- function(data) {
+  x <- setdiff(names(data), attr(data, "sf_column"))
+  x[!vapply(data, is.list, FUN.VALUE = logical(1))]
 }
 
 
