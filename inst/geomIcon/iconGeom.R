@@ -24,7 +24,7 @@ library( lubridate )
 # Fun ---------------------------------------------------------------------
 
 coord_circle <- function(centre = c(0, 0), r = 1, n = 1000) {
-  data_frame(
+  tibble(
     x = seq(from = 0 - r, to = 0 + r, length.out = n %/% 2),
     y = sqrt(r^2 - x^2)
   ) %>% bind_rows(., -.) %>%
@@ -46,9 +46,6 @@ coord_circle(centre = c(0, 0), r = 1)
 
 # Geom bar ----------------------------------------------------------------
 
-
-
-
 png(filename = "inst/geomIcon/www/gg-bar.png", bg = "transparent")
 ggplot(data = coord_circle(centre = c(0, 0), r = 1)) + geom_polygon(aes(x = x, y = y), fill = "#EF562D") + coord_fixed() + theme_void()
 p <- ggplot(mpg) + geom_bar(mapping = aes(x = class), fill = "white") + theme_void()
@@ -69,16 +66,23 @@ dev.off()
 
 # Geom line ---------------------------------------------------------------
 
-
 png(filename = "inst/geomIcon/www/gg-line.png", bg = "transparent")
 ggplot(data = coord_circle(centre = c(0, 0), r = 1)) + geom_polygon(aes(x = x, y = y), fill = "#5586A4") + coord_fixed() + theme_void()
-economics2 <- economics %>% mutate(quarter = lubridate::quarter(date), year = lubridate::year(date)) %>% group_by(year) %>% summarise(date = min(date), psavert = mean(psavert))
-p <- ggplot(data = economics2) + geom_line(mapping = aes(x = date, y = psavert), color = "white", size = 1.4) + theme_void()
+p <- ggplot(data = tail(economics, 25)) + geom_line(mapping = aes(x = date, y = psavert), color = "white", size = 2) + theme_void()
 print(p, vp = viewport(width = unit(0.6, "npc"), height = unit(0.6, "npc")))
 dev.off()
 
 
 
+
+
+# Geom line ---------------------------------------------------------------
+
+png(filename = "inst/geomIcon/www/gg-step.png", bg = "transparent")
+ggplot(data = coord_circle(centre = c(0, 0), r = 1)) + geom_polygon(aes(x = x, y = y), fill = "#85b6d5") + coord_fixed() + theme_void()
+p <- ggplot(data = tail(economics, 25)) + geom_step(mapping = aes(x = date, y = psavert), color = "white", size = 2) + theme_void()
+print(p, vp = viewport(width = unit(0.6, "npc"), height = unit(0.6, "npc")))
+dev.off()
 
 
 
@@ -101,7 +105,6 @@ dev.off()
 
 # Geom histogram ----------------------------------------------------------
 
-
 png(filename = "inst/geomIcon/www/gg-histo.png", bg = "transparent")
 ggplot(data = coord_circle(centre = c(0, 0), r = 1)) + geom_polygon(aes(x = x, y = y), fill = "#0C4C8A") + coord_fixed() + theme_void()
 # p <- ggplot(data = diamonds) + geom_histogram(mapping = aes(x = carat), fill = "white") + theme_void()
@@ -119,25 +122,18 @@ ggplot(data = iris) + geom_histogram(mapping = aes(x = Sepal.Length), bins = 20)
 
 # Geom point --------------------------------------------------------------
 
-
-
 png(filename = "inst/geomIcon/www/gg-point.png", bg = "transparent")
 ggplot(data = coord_circle(centre = c(0, 0), r = 1)) + geom_polygon(aes(x = x, y = y), fill = "#02C39A") + coord_fixed() + theme_void()
-p <- ggplot(data = filter(iris, Species == "virginica", Sepal.Width < 3.5, Sepal.Width > 2.5)) + geom_point(mapping = aes(x = Sepal.Length, y = Sepal.Width), size = 7, color = "white") + theme_void()
+# p <- ggplot(data = mtcars) + geom_point(mapping = aes(wt, mpg), size = 10, color = "white") + theme_void()
+p <- qplot(x = 1:10, y = 1:10, size = I(10), color = I("white")) + theme_void()
 print(p, vp = viewport(width = unit(0.6, "npc"), height = unit(0.6, "npc")))
 dev.off()
-
-
-ggplot(data = filter(iris, Species == "virginica", Sepal.Width < 3.5, Sepal.Width > 2.5)) + geom_point(mapping = aes(x = Sepal.Length, y = Sepal.Width))
-
-
 
 
 
 
 
 # Geom boxplot ------------------------------------------------------------
-
 
 png(filename = "inst/geomIcon/www/gg-boxplot.png", bg = "transparent")
 ggplot(data = coord_circle(centre = c(0, 0), r = 1)) + geom_polygon(aes(x = x, y = y), fill = "#97D5E0") + coord_fixed() + theme_void()
@@ -149,7 +145,6 @@ dev.off()
 
 
 # Geom violin -------------------------------------------------------------
-
 
 png(filename = "inst/geomIcon/www/gg-violin.png", bg = "transparent")
 ggplot(data = coord_circle(centre = c(0, 0), r = 1)) + geom_polygon(aes(x = x, y = y), fill = "#A9BCF5") + coord_fixed() + theme_void()
@@ -163,8 +158,6 @@ dev.off()
 
 
 # Geom auto ---------------------------------------------------------------
-
-
 
 png(filename = "inst/geomIcon/www/gg-auto.png", bg = "transparent")
 ggplot(data = coord_circle(centre = c(0, 0), r = 1)) + geom_polygon(aes(x = x, y = y), fill = "#F6D258") + coord_fixed() + theme_void()

@@ -310,12 +310,12 @@ controls_server <- function(id,
         toggleDisplay(id = ns("controls-histogram"), display = type$x %in% "histogram")
         toggleDisplay(id = ns("controls-density"), display = type$x %in% c("density", "violin"))
         toggleDisplay(id = ns("controls-scatter"), display = type$x %in% "point")
-        toggleDisplay(id = ns("controls-size"), display = type$x %in% c("point", "line"))
+        toggleDisplay(id = ns("controls-size"), display = type$x %in% c("point", "line", "step"))
         toggleDisplay(id = ns("controls-violin"), display = type$x %in% "violin")
         
         if (type$x %in% c("point")) {
           updateSliderInput(session = session, inputId = "size", value = 1.5)
-        } else if (type$x %in% c("line")) {
+        } else if (type$x %in% c("line", "step")) {
           updateSliderInput(session = session, inputId = "size", value = 0.5)
         }
       })
@@ -1049,7 +1049,7 @@ select_geom_controls <- function(x, geoms) {
     "density"
   } else if ("point" %in% geoms & x %in% c("auto", "point")) {
     "point"
-  } else if ("line" %in% geoms & x %in% c("auto", "line")) {
+  } else if ("line" %in% geoms & x %in% c("auto", "line", "step")) {
     "line"
   } else if ("area" %in% geoms & x %in% c("auto", "area")) {
     "area"

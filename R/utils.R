@@ -182,7 +182,7 @@ col_type <- function(x, no_id = FALSE) {
 # utils for geom icons
 geomIcons <- function() {
   geoms <- c(
-    "auto", "line", "area", "bar", "histogram",
+    "auto", "line", "step", "area", "bar", "histogram",
     "point", "boxplot", "violin", "density",
     "tile", "sf"
   )
@@ -204,10 +204,8 @@ geomIcons <- function() {
       )
     }
   )
-  geomsChoicesValues <- unlist(lapply(geomsChoices, `[[`, "label"), use.names = FALSE)
-  geomsChoicesValues <- tolower(geomsChoicesValues)
 
-  list(names = geomsChoicesNames, values = geomsChoicesValues)
+  list(names = geomsChoicesNames, values = geoms)
 }
 
 
