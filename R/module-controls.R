@@ -278,6 +278,7 @@ controls_server <- function(id,
         toggleDisplay(id = ns("controls-labs-fill"), display = "fill" %in% aesthetics)
         toggleDisplay(id = ns("controls-labs-color"), display = "color" %in% aesthetics)
         toggleDisplay(id = ns("controls-labs-size"), display = "size" %in% aesthetics)
+        toggleDisplay(id = ns("controls-ribbon-color"), display = "ymin" %in% aesthetics)
       })
       
       observeEvent(use_facet(), {
@@ -646,7 +647,7 @@ get_labs_options <- function(inputs, name = c("title", "subtitle", "x", "y")) {
 #' @importFrom utils head
 #' @importFrom shiny icon
 #' @importFrom htmltools tagList tags
-#' @importFrom shinyWidgets pickerInput radioGroupButtons spectrumInput
+#' @importFrom shinyWidgets pickerInput radioGroupButtons colorPickr
 controls_appearance <- function(ns) {
 
   themes <- get_themes()
@@ -673,31 +674,28 @@ controls_appearance <- function(ns) {
         ),
         width = "100%"
       )
-      # spectrumInput(
-      #   inputId = ns("fill_color"),
-      #   label = "Color:",
-      #   choices = unname(cols), 
-      #   flat = TRUE,
-      #   update_on = "dragstop",
-      #   options = list(
-      #     `toggle-palette-only` = FALSE,
-      #     `show-palette-only` = FALSE,
-      #     `show-buttons` = FALSE,
-      #     `hide-after-palette-select` = TRUE
-      #   ),
-      #   width = "100%"
-      # )
     ),
     tags$div(
       id = ns("controls-palette"), style = "display: none;",
-      # palettePicker(
-      #   inputId = ns("palette"),
-      #   label = "Choose a palette:",
-      #   choices = pals$choices,
-      #   textColor = pals$textColor,
-      #   pickerOpts = list(container = "body")
-      # )
       palette_ui(ns("colors"))
+    ),
+    tags$div(
+      id = ns("controls-ribbon-color"), style = "display: none;",
+      colorPickr(
+        inputId = ns("color_ribbon"),
+        selected = "#A4A4A4",
+        label = "Ribbon color:",
+        theme = "nano",
+        useAsButton = TRUE,
+        update = "save",
+        interaction = list(
+          hex = FALSE,
+          rgba = FALSE,
+          input = TRUE,
+          save = TRUE,
+          clear = FALSE
+        )
+      )
     ),
     pickerInput(
       inputId = ns("theme"),

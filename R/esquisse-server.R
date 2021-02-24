@@ -260,7 +260,10 @@ esquisse_server <- function(id,
           geom <- c("ribbon", geom)
           mapping_ribbon <- aes_input[c("ymin", "ymax")]
           geom_args <- c(
-            list(ribbon = list(mapping = expr(aes(!!!syms2(mapping_ribbon))), fill = "grey70")),
+            list(ribbon = list(
+              mapping = expr(aes(!!!syms2(mapping_ribbon))), 
+              fill = paramsChart$inputs$color_ribbon
+            )),
             setNames(list(geom_args), input$geom)
           )
           mapping$ymin <- NULL
