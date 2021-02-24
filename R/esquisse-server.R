@@ -174,8 +174,8 @@ esquisse_server <- function(id,
       })
       
       # Module chart controls : title, xlabs, colors, export...
-      paramsChart <- reactiveValues(inputs = NULL)
-      paramsChart <- controls_server(
+      # paramsChart <- reactiveValues(inputs = NULL)
+      controls_rv <- controls_server(
         id = "controls",
         type = geom_controls,
         data_table = reactive(data_chart$data),
@@ -212,8 +212,8 @@ esquisse_server <- function(id,
       output$plooooooot <- renderPlot({
         req(input$play_plot, cancelOutput = TRUE)
         req(data_chart$data)
-        req(paramsChart$data)
-        req(paramsChart$inputs)
+        req(controls_rv$data)
+        req(controls_rv$inputs)
         req(input$geom)
         
         aes_input <- make_aes(input$dragvars$target)
@@ -232,13 +232,13 @@ esquisse_server <- function(id,
         )
         req(input$geom %in% geoms)
         
-        data <- paramsChart$data
+        data <- controls_rv$data
         
         scales <- which_pal_scale(
           mapping = mapping,
-          palette = paramsChart$colors$colors,
+          palette = controls_rv$colors$colors,
           data = data,
-          reverse = paramsChart$colors$reverse
+          reverse = controls_rv$colors$reverse
         )
         
         if (identical(input$geom, "auto")) {
@@ -247,13 +247,13 @@ esquisse_server <- function(id,
           geom <- input$geom
         }
         
-        geom_args <- match_geom_args(input$geom, paramsChart$inputs, mapping = mapping)
+        geom_args <- match_geom_args(input$geom, controls_rv$inputs, mapping = mapping)
         
-        if (isTRUE(paramsChart$smooth$add) & input$geom %in% c("point", "line")) {
+        if (isTRUE(controls_rv$smooth$add) & input$geom %in% c("point", "line")) {
           geom <- c(geom, "smooth")
           geom_args <- c(
             setNames(list(geom_args), input$geom),
-            list(smooth = paramsChart$smooth$args)
+            list(smooth = controls_rv$smooth$args)
           )
         }
         if (!is.null(aes_input$ymin) & !is.null(aes_input$ymax) & input$geom %in% c("line")) {
@@ -262,7 +262,7 @@ esquisse_server <- function(id,
           geom_args <- c(
             list(ribbon = list(
               mapping = expr(aes(!!!syms2(mapping_ribbon))), 
-              fill = paramsChart$inputs$color_ribbon
+              fill = controls_rv$inputs$color_ribbon
             )),
             setNames(list(geom_args), input$geom)
           )
@@ -273,23 +273,23 @@ esquisse_server <- function(id,
         scales_args <- scales$args
         scales <- scales$scales
         
-        if (isTRUE(paramsChart$transX$use)) {
+        if (isTRUE(controls_rv$transX$use)) {
           scales <- c(scales, "x_continuous")
-          scales_args <- c(scales_args, list(x_continuous = paramsChart$transX$args))
+          scales_args <- c(scales_args, list(x_continuous = controls_rv$transX$args))
         }
         
-        if (isTRUE(paramsChart$transY$use)) {
+        if (isTRUE(controls_rv$transY$use)) {
           scales <- c(scales, "y_continuous")
-          scales_args <- c(scales_args, list(y_continuous = paramsChart$transY$args))
+          scales_args <- c(scales_args, list(y_continuous = controls_rv$transY$args))
         }
         
-        if (isTRUE(paramsChart$limits$x)) {
-          xlim <- paramsChart$limits$xlim
+        if (isTRUE(controls_rv$limits$x)) {
+          xlim <- controls_rv$limits$xlim
         } else {
           xlim <- NULL
         }
-        if (isTRUE(paramsChart$limits$y)) {
-          ylim <- paramsChart$limits$ylim
+        if (isTRUE(controls_rv$limits$y)) {
+          ylim <- controls_rv$limits$ylim
         } else {
           ylim <- NULL
         }
@@ -301,14 +301,14 @@ esquisse_server <- function(id,
           geom_args = geom_args,
           scales = scales,
           scales_args = scales_args,
-          labs = paramsChart$labs,
-          theme = paramsChart$theme$theme,
-          theme_args = paramsChart$theme$args,
-          coord = paramsChart$coord,
+          labs = controls_rv$labs,
+          theme = controls_rv$theme$theme,
+          theme_args = controls_rv$theme$args,
+          coord = controls_rv$coord,
           facet = input$dragvars$target$facet,
           facet_row = input$dragvars$target$facet_row,
           facet_col = input$dragvars$target$facet_col,
-          facet_args = paramsChart$facet,
+          facet_args = controls_rv$facet,
           xlim = xlim,
           ylim = ylim
         )
@@ -332,9 +332,9 @@ esquisse_server <- function(id,
       observeEvent(ggplotCall$code, {
         output_module$code_plot <- ggplotCall$code
       }, ignoreInit = TRUE)
-      observeEvent(paramsChart$data, {
-        output_module$code_filters <- paramsChart$code
-        output_module$data <- paramsChart$data
+      observeEvent(controls_rv$data, {
+        output_module$code_filters <- controls_rv$code
+        output_module$data <- controls_rv$data
       }, ignoreInit = TRUE)
       
       return(output_module)

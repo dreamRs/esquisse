@@ -300,6 +300,11 @@ controls_server <- function(id,
         toggleDisplay(id = ns("controls-fill-color"), display = !isTRUE(type$palette))
       })
       
+      observe({
+        aesthetics <- names(aesthetics())
+        toggleDisplay(id = ns("controls-shape"), display = type$x %in% "point" & !"shape" %in% aesthetics)
+      })
+      
       observeEvent(type$x, {
         toggleDisplay(id = ns("controls-position"), display = type$x %in% c("bar", "line", "area"))
         toggleDisplay(id = ns("controls-histogram"), display = type$x %in% "histogram")
@@ -668,6 +673,15 @@ controls_appearance <- function(ns) {
   themes <- get_themes()
   cols <- get_colors()
   pals <- get_palettes()
+  
+  shape_names <- c(
+    "circle", paste("circle", c("open", "filled", "cross", "plus", "small")), "bullet",
+    "square", paste("square", c("open", "filled", "cross", "plus", "triangle")),
+    "diamond", paste("diamond", c("open", "filled", "plus")),
+    "triangle", paste("triangle", c("open", "filled", "square")),
+    paste("triangle down", c("open", "filled")),
+    "plus", "cross", "asterisk"
+  )
 
   tagList(
     tags$div(
@@ -710,6 +724,17 @@ controls_appearance <- function(ns) {
           save = TRUE,
           clear = FALSE
         )
+      )
+    ),
+    tags$div(
+      id = ns("controls-shape"), style = "display: none;",
+      pickerInput(
+        inputId = ns("shape"),
+        label = "Point symbol:",
+        choices = shape_names,
+        selected = "circle",
+        options = list(size = 10, container = "body"),
+        width = "100%"
       )
     ),
     pickerInput(
