@@ -160,7 +160,7 @@ controls_ui <- function(id,
 #' @noRd
 #'
 #' @importFrom shiny observeEvent reactiveValues reactiveValuesToList
-#'  downloadHandler renderUI reactive updateTextInput showNotification callModule
+#'  downloadHandler renderUI reactive updateTextInput showNotification callModule updateSliderInput
 #' @importFrom rstudioapi insertText getSourceEditorContext
 #' @importFrom htmltools tags tagList
 #' @importFrom datamods filter_data_server
@@ -190,6 +190,7 @@ controls_server <- function(id,
         updateTextInput(session = session, inputId = "labs_fill", value = character(0))
         updateTextInput(session = session, inputId = "labs_color", value = character(0))
         updateTextInput(session = session, inputId = "labs_size", value = character(0))
+        updateTextInput(session = session, inputId = "labs_shape", value = character(0))
       })
       
       
@@ -278,6 +279,7 @@ controls_server <- function(id,
         toggleDisplay(id = ns("controls-labs-fill"), display = "fill" %in% aesthetics)
         toggleDisplay(id = ns("controls-labs-color"), display = "color" %in% aesthetics)
         toggleDisplay(id = ns("controls-labs-size"), display = "size" %in% aesthetics)
+        toggleDisplay(id = ns("controls-labs-shape"), display = "shape" %in% aesthetics)
         toggleDisplay(id = ns("controls-ribbon-color"), display = "ymin" %in% aesthetics)
       })
       
@@ -295,7 +297,7 @@ controls_server <- function(id,
       
       observeEvent(type$palette, {
         toggleDisplay(id = ns("controls-palette"), display = isTRUE(type$palette))
-        toggleDisplay(id = ns("controls-spectrum"), display = !isTRUE(type$palette))
+        toggleDisplay(id = ns("controls-fill-color"), display = !isTRUE(type$palette))
       })
       
       observeEvent(type$x, {
@@ -305,6 +307,12 @@ controls_server <- function(id,
         toggleDisplay(id = ns("controls-scatter"), display = type$x %in% "point")
         toggleDisplay(id = ns("controls-size"), display = type$x %in% c("point", "line"))
         toggleDisplay(id = ns("controls-violin"), display = type$x %in% "violin")
+        
+        if (type$x %in% c("point")) {
+          updateSliderInput(session = session, inputId = "size", value = 1.5)
+        } else if (type$x %in% c("line")) {
+          updateSliderInput(session = session, inputId = "size", value = 0.5)
+        }
       })
       
       output_filter <- filter_data_server(
@@ -347,6 +355,7 @@ controls_server <- function(id,
         labs_fill <- ifelse("fill" %in% asth, input$labs_fill, "")
         labs_color <- ifelse("color" %in% asth, input$labs_color, "")
         labs_size <- ifelse("size" %in% asth, input$labs_size, "")
+        labs_shape <- ifelse("shape" %in% asth, input$labs_shape, "")
         outputs$labs <- list(
           x = input$labs_x %empty% NULL,
           y = input$labs_y %empty% NULL,
@@ -355,7 +364,8 @@ controls_server <- function(id,
           caption = input$labs_caption %empty% NULL,
           fill = labs_fill %empty% NULL,
           color = labs_color %empty% NULL,
-          size = labs_size %empty% NULL
+          size = labs_size %empty% NULL,
+          shape = labs_shape %empty% NULL
         )
       })
       
@@ -524,6 +534,11 @@ controls_labs <- function(ns) {
       id = ns("controls-labs-size"), 
       style = "display: none;",
       textInput(inputId = ns("labs_size"), placeholder = "Size label", label = "Size label:")
+    ),
+    tags$div(
+      id = ns("controls-labs-shape"), 
+      style = "display: none;",
+      textInput(inputId = ns("labs_shape"), placeholder = "Shape label", label = "Shape label:")
     )
   )
 }
@@ -656,7 +671,7 @@ controls_appearance <- function(ns) {
 
   tagList(
     tags$div(
-      id = ns("controls-spectrum"), style = "display: block;",
+      id = ns("controls-fill-color"), style = "display: block;",
       shinyWidgets::colorPickr(
         inputId = ns("fill_color"),
         label = "Color:",
@@ -765,12 +780,15 @@ controls_params <- function(ns) {
         inline = TRUE
       ),
       conditionalPanel(
-        condition = paste0("input['",  ns("smooth_add"), "']==true"),
+        condition = paste0("input.smooth_add==true"),
+        ns = ns,
         sliderInput(
           inputId = ns("smooth_span"),
           label = "Smooth line span:",
-          min = 0.1, max = 1,
-          value = 0.75, step = 0.01,
+          min = 0.1, 
+          max = 1,
+          value = 0.75, 
+          step = 0.01,
           width = "100%"
         )
       ),
@@ -781,7 +799,7 @@ controls_params <- function(ns) {
         inputId = ns("size"),
         label = "Size for points/lines:",
         min = 0.5, 
-        max = 5,
+        max = 4,
         value = 1.2,
         width = "100%"
       )
