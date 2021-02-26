@@ -7,7 +7,7 @@ html_dependency_esquisse <- function() {
   htmlDependency(
     name = "esquisse",
     version = packageVersion("esquisse"),
-    src = c(file = "assets", href = "esquisse"),
+    src = c(file = "assets/esquisse", href = "esquisse/esquisse"),
     package = "esquisse",
     script = c("js/shiny-utils.js"),
     stylesheet = c("css/styles.css", "css/annie-use-your-telescope.css"),
