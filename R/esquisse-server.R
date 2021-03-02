@@ -212,7 +212,6 @@ esquisse_server <- function(id,
       
       
       output$plooooooot <- renderPlot({
-        req(input$play_plot, cancelOutput = TRUE)
         req(data_chart$data)
         req(controls_rv$data)
         req(controls_rv$inputs)

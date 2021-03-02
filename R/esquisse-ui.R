@@ -102,21 +102,6 @@ esquisse_ui <- function(id,
       style = "overflow-y: auto;",
       tags$div(
         style = "height: 100%; min-height: 400px;",
-        tags$div(
-          style = "position: absolute; right: 0; top: 5px; font-weight: bold; z-index: 1000;",
-          prettyToggle(
-            inputId = ns("play_plot"),
-            value = TRUE,
-            label_on = "Play",
-            label_off = "Pause",
-            outline = TRUE,
-            plain = TRUE,
-            bigger = TRUE,
-            inline = TRUE,
-            icon_on = icon("play-circle-o", class = "fa-2x"),
-            icon_off = icon("pause-circle-o", class = "fa-2x")
-          )
-        ),
         plotOutput(outputId = ns("plooooooot"), width = "100%", height = "100%")
       )
     ),
