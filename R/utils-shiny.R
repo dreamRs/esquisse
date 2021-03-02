@@ -15,6 +15,16 @@ html_dependency_esquisse <- function() {
   )
 }
 
+html_dependency_moveable <- function() {
+  htmlDependency(
+    name = "moveable",
+    version = "0.23.0",
+    src = c(file = "assets/moveable", href = "esquisse/moveable"),
+    script = c("moveable.min.js", "resizer-handler.js"),
+    all_files = FALSE
+  )
+}
+
 
 
 #' Enable or disable a Shiny input
@@ -84,3 +94,30 @@ rCodeContainer <- function(...) {
   htmltools::tags$div(htmltools::tags$pre(code))
 }
 
+
+# Resizer handlers
+
+activate_resizer <- function(id,
+                             ..., 
+                             modal = FALSE,
+                             container = "body", 
+                             session = shiny::getDefaultReactiveDomain()) {
+  if (isTRUE(modal))
+    container <- ".modal-body"
+  session$sendCustomMessage("resize", list(
+    id = id,
+    container = container,
+    ...,
+    modal = modal
+  ))
+}
+
+resize <- function(id, 
+                   width, 
+                   height, 
+                   session = shiny::getDefaultReactiveDomain()) {
+  session$sendCustomMessage(paste0("resize-", id), list(
+    width = width,
+    height = height
+  ))
+}
