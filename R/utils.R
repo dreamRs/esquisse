@@ -36,7 +36,18 @@ nullOrEmpty <- function(x) {
 dropNullsOrEmpty <- function(x) {
   x[!vapply(x, nullOrEmpty, FUN.VALUE = logical(1))]
 }
-
+dropNullsOrEmptyRecursive <- function(x) {
+  dropNullsOrEmpty(lapply(
+    X = x, 
+    FUN = function(x) {
+      if (is.list(x)) {
+        dropNullsOrEmpty(x)
+      } else {
+        x
+      }
+    }
+  ))
+}
 
 
 
@@ -237,19 +248,6 @@ dropListColumns <- function(x) {
 
 # colors ------------------------------------------------------------------
 
-#' Convert a color in character into hex format
-#'
-#' @param col name of a color, e.g. 'steelblue'
-#'
-#' @return a hex code
-#' @noRd
-#'
-#' @importFrom grDevices rgb col2rgb
-#'
-col2Hex <- function(col) {
-  mat <- grDevices::col2rgb(col, alpha = TRUE)
-  grDevices::rgb(mat[1, ]/255, mat[2, ]/255, mat[3,]/255)
-}
 
 
 linear_gradient <- function(cols) {

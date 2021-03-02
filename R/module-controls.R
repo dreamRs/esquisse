@@ -1006,7 +1006,18 @@ get_themes <- function() {
   if (!is.list(themes)) {
     stop("Option 'esquisse.themes' must be a list", call. = FALSE)
   }
-  themes
+  themes <- rapply(
+    object = themes, 
+    f = function(x) {
+      if (check_theme_exist(x)) {
+        x
+      } else {
+        warning(paste("Theme", x, "not found!"), call. = FALSE)
+        NULL
+      }
+    }, how = "list"
+  )
+  dropNullsOrEmptyRecursive(themes)
 }
 
 # Get list of palettes

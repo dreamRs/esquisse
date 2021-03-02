@@ -81,30 +81,33 @@ default_themes <- function() {
       "par", "solarized", "solarized_2", "solid",
       "stata", "tufte", "wsj"
     )
-    ggthemes <- ggthemes[check_theme_exist(ggthemes, package = "ggthemes")]
-    if (length(ggthemes) > 0) {
-      ggthemes <- setNames(as.list(paste0("ggthemes::theme_", ggthemes)), ggthemes)
-      themes$ggthemes <- ggthemes
-    }
+    ggthemes <- setNames(as.list(paste0("ggthemes::theme_", ggthemes)), ggthemes)
+    themes$ggthemes <- ggthemes
   }
   
   if (requireNamespace("hrbrthemes", quietly = TRUE)) {
     hrbrthemes <- c(
       "ft_rc", "ipsum", "ipsum_ps", "ipsum_rc", "ipsum_tw", "modern_rc"
     )
-    hrbrthemes <- hrbrthemes[check_theme_exist(hrbrthemes, package = "hrbrthemes")]
-    if (length(hrbrthemes) > 0) {
-      hrbrthemes <- setNames(as.list(paste0("hrbrthemes::theme_", hrbrthemes)), hrbrthemes)
-      themes$hrbrthemes <- hrbrthemes
-    }
+    hrbrthemes <- setNames(as.list(paste0("hrbrthemes::theme_", hrbrthemes)), hrbrthemes)
+    themes$hrbrthemes <- hrbrthemes
   }
   
   return(themes)
 }
 
 check_theme_exist <- function(x, package = "hrbrthemes") {
-  vapply(X = paste0("theme_", x), FUN = function(fun) {
-    exists(fun, where = asNamespace(package), mode = "function")
+  vapply(X = x, FUN = function(fun) {
+    if (grepl(pattern = "::", x = fun)) {
+      x <- strsplit(x = fun, split = "::")[[1]]
+      fun <- x[2]
+      package <- x[1]
+      exists(fun, where = asNamespace(package), mode = "function")
+    } else {
+      if (!startsWith(fun, "theme_"))
+        fun <- paste0("theme_", fun)
+      exists(fun, where = asNamespace(package), mode = "function")
+    }
   }, FUN.VALUE = logical(1), USE.NAMES = FALSE)
 }
 
@@ -114,9 +117,8 @@ check_theme_exist <- function(x, package = "hrbrthemes") {
 default_cols <- function() {
   cols <- list(
     "custom" = c("#0C4C8A", "#EF562D", "forestgreen", "steelblue", "firebrick", "darkorange", "hotpink"),
-    "viridis" = col2Hex(viridis_pal(option = "viridis")(8)),
-    "plasma" = col2Hex(viridis_pal(option = "plasma")(8))#,
-    ,
+    "viridis" = viridis_pal(option = "viridis")(8),
+    "plasma" = viridis_pal(option = "plasma")(8),
     "Blues" = brewer_pal(palette = "Blues")(9)[-1],
     "Greens" = brewer_pal(palette = "Greens")(9)[-1],
     "Reds" = brewer_pal(palette = "Reds")(9)[-1],
