@@ -96,7 +96,7 @@ default_themes <- function() {
   return(themes)
 }
 
-check_theme_exist <- function(x, package = "hrbrthemes") {
+check_theme_exist <- function(x, package = "ggplot2") {
   vapply(X = x, FUN = function(fun) {
     if (grepl(pattern = "::", x = fun)) {
       x <- strsplit(x = fun, split = "::")[[1]]

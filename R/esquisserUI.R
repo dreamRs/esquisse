@@ -1,7 +1,7 @@
 
 #' @title Esquisse Shiny module
 #'
-#' @description Launch \code{esquisse} in a classic Shiny app.
+#' @description DEPRECATED, see \code{\link{esquisse-module}}.
 #'
 #' @param id Module's id.
 #' @param header Logical. Display or not \code{esquisse} header.
@@ -33,13 +33,12 @@
 #' @importFrom shiny fillPage plotOutput icon actionButton NS fluidRow column fillCol
 #' @importFrom shinyWidgets prettyToggle
 #'
-#' @example examples/esquisse-module.R
 esquisserUI <- function(id, header = TRUE,
                         container = esquisseContainer(),
                         choose_data = TRUE,
                         insert_code = FALSE,
                         disable_filters = FALSE) {
-  .Deprecated(new = "esquisse_ui / esquisse_server", package = "esquisse", old = "esquisserUI / esquisserServer")
+  .Deprecated(new = "esquisse_ui", package = "esquisse", old = "esquisserUI")
   ns <- NS(id)
 
   box_title <- tags$div(

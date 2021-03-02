@@ -31,7 +31,7 @@ dropNulls <- function(x) {
   x[!vapply(x, is.null, FUN.VALUE = logical(1))]
 }
 nullOrEmpty <- function(x) {
-  is.null(x) || length(x) == 0 || x == ""
+  is.null(x) || length(x) == 0
 }
 dropNullsOrEmpty <- function(x) {
   x[!vapply(x, nullOrEmpty, FUN.VALUE = logical(1))]
@@ -350,7 +350,9 @@ anyNamed <- function(x) {
   any(nzchar(nms))
 }
 
-
+genId <- function(bytes = 12) {
+  paste(format(as.hexmode(sample(256, bytes, replace = TRUE) - 1), width = 2), collapse = "")
+}
 
 makeId <- function(x) {
   x <- as.character(x)

@@ -22,7 +22,7 @@ esquisserServer <- function(input,
                             data = NULL,
                             dataModule = c("GlobalEnv", "ImportFile"),
                             sizeDataModule = "m") {
-
+  .Deprecated(new = "esquisse_server", package = "esquisse", old = "esquisserServer")
   ns <- session$ns
   ggplotCall <- reactiveValues(code = "")
   dataChart <- reactiveValues(data = NULL, name = NULL)

@@ -700,7 +700,7 @@ controls_appearance <- function(ns) {
       inputId = ns("theme"),
       label = "Theme:",
       choices = themes,
-      selected = getOption("esquisse.default.theme"),
+      selected = getOption("esquisse.default.theme", default = "theme_minimal"),
       options = list(size = 10, container = "body"),
       width = "100%"
     ),
@@ -945,6 +945,8 @@ controls_code <- function(ns, insert_code = FALSE) {
 # Get list of themes
 get_themes <- function() {
   themes <- getOption("esquisse.themes")
+  if (is.null(themes))
+    themes <- default_themes()
   if (is.function(themes))
     themes <- themes()
   if (!is.list(themes)) {
@@ -953,7 +955,7 @@ get_themes <- function() {
   themes <- rapply(
     object = themes, 
     f = function(x) {
-      if (check_theme_exist(x)) {
+      if (all(check_theme_exist(x))) {
         x
       } else {
         warning(paste("Theme", x, "not found!"), call. = FALSE)
@@ -967,6 +969,8 @@ get_themes <- function() {
 # Get list of palettes
 get_palettes <- function() {
   pals <- getOption("esquisse.palettes")
+  if (is.null(pals))
+    pals <- default_pals()
   if (is.function(pals))
     pals <- pals()
   if (!is.list(pals)) {
@@ -980,6 +984,8 @@ get_palettes <- function() {
 # Get list of colors (spectrum)
 get_colors <- function() {
   cols <- getOption("esquisse.colors")
+  if (is.null(cols))
+    cols <- default_cols()
   if (is.function(cols))
     cols <- cols()
   # if (!is.character(cols)) {
