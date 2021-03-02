@@ -5,7 +5,7 @@
 
 #' @title Shiny module to interactively filter a \code{data.frame}
 #' 
-#' @description DEPRECATED, please see package \href{https://github.com/dreamRs/datamods}{datamods} for similar functionnalities.
+#' @description DEPRECATED, please see package \href{https://github.com/dreamRs/datamods}{datamods} for similar features.
 #'
 #' @param id Module id. See \code{\link[shiny]{callModule}}.
 #' @param show_nrow Show number of filtered rows and total.
@@ -24,7 +24,6 @@
 #' @importFrom htmltools tagList singleton tags
 #' @importFrom shiny NS uiOutput
 #'
-#' @example examples/filterDF.R
 filterDF_UI <- function(id, show_nrow = TRUE) {
   
   .Deprecated(new = "datamods::filter_data_ui / datamods::filter_data_server", package = "esquisse", old = "filterDF_UI / filterDF")
@@ -490,7 +489,7 @@ match_class <- function(x, y) {
 
 #' @title Module for choosing data.frame
 #'
-#' @description DEPRECATED, please see package \href{https://github.com/dreamRs/datamods}{datamods} for similar functionnalities.
+#' @description DEPRECATED, please see package \href{https://github.com/dreamRs/datamods}{datamods} for similar features.
 #'
 #' @param id Module's id.
 #' @param label Label for button, passed to \code{\link[shiny:actionButton]{actionButton}}.
@@ -507,7 +506,6 @@ match_class <- function(x, y) {
 #' @importFrom htmltools tagList tags singleton
 #' @importFrom shiny NS actionButton icon
 #'
-#' @example examples/chooseData.R
 chooseDataUI <- function(id,
                          label = "Data",
                          icon = "database",
@@ -630,7 +628,7 @@ chooseDataServer <- function(input,
 
 #' @title Coerce data.frame's columns module
 #' 
-#' @description DEPRECATED, please see package \href{https://github.com/dreamRs/datamods}{datamods} for similar functionnalities.
+#' @description DEPRECATED, please see package \href{https://github.com/dreamRs/datamods}{datamods} for similar features.
 #'
 #' @param id Module id. See \code{\link[shiny]{callModule}}.
 #'
@@ -643,57 +641,7 @@ chooseDataServer <- function(input,
 #' @importFrom htmltools tags
 #' @importFrom shiny NS fluidRow column selectizeInput uiOutput actionButton icon
 #' @importFrom shinyWidgets pickerInput
-#'
-#' @examples
-#'
-#' if (interactive()) {
-#'   library(esquisse)
-#'   library(shiny)
-#'
-#'   foo <- data.frame(
-#'     num_as_char = as.character(1:10),
-#'     char = sample(letters[1:3], 10, TRUE),
-#'     fact = factor(sample(LETTERS[1:3], 10, TRUE)),
-#'     date_as_char =  as.character(
-#'       Sys.Date() + sample(seq(-10, 10), 10, TRUE)
-#'     ),
-#'     date_as_num = as.numeric(
-#'       Sys.Date() + sample(seq(-10, 10), 10, TRUE)
-#'     ),
-#'     datetime = Sys.time() + sample(seq(-10, 10) * 1e4, 10, TRUE),
-#'     stringsAsFactors = FALSE
-#'   )
-#'
-#'   ui <- fluidPage(
-#'     tags$h2("Coerce module"),
-#'     fluidRow(
-#'       column(
-#'         width = 4,
-#'         coerceUI(id = "example")
-#'       ),
-#'       column(
-#'         width = 8,
-#'         verbatimTextOutput(outputId = "print_result"),
-#'         verbatimTextOutput(outputId = "print_names")
-#'       )
-#'     )
-#'   )
-#'
-#'   server <- function(input, output, session) {
-#'
-#'     result <- callModule(module = coerceServer, id = "example", data = reactive({foo}))
-#'
-#'     output$print_result <- renderPrint({
-#'       str(result$data)
-#'     })
-#'     output$print_names <- renderPrint({
-#'       result$names
-#'     })
-#'   }
-#'
-#'   shinyApp(ui, server)
-#' }
-#'
+#' 
 coerceUI <- function(id) {
   .Deprecated(new = "datamods::import_ui / datamods::import_server", package = "esquisse", old = "coerceUI / coerceServer")
   ns <- NS(id)
@@ -1439,7 +1387,7 @@ selectVarsServer <- function(input, output, session, data = list(),
 
 #' @title Run module example
 #' 
-#' @description DEPRECATED, please see package \href{https://github.com/dreamRs/datamods}{datamods} for similar functionnalities.
+#' @description DEPRECATED, please see package \href{https://github.com/dreamRs/datamods}{datamods} for similar features.
 #'
 #' @param module Module for which to see a demo.
 #'

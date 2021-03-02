@@ -10,7 +10,7 @@ run_module(module = c("filterDF", "chooseData", "chooseData2", "coerce"))
 \item{module}{Module for which to see a demo.}
 }
 \description{
-DEPRECATED, please see package \href{https://github.com/dreamRs/datamods}{datamods} for similar functionnalities.
+DEPRECATED, please see package \href{https://github.com/dreamRs/datamods}{datamods} for similar features.
 }
 \examples{
 
