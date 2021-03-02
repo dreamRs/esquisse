@@ -117,7 +117,7 @@ controls_ui <- function(id,
         dropdown_(
           controls_code(ns, insert_code = insert_code),
           style = "default",
-          label = "Export & code",
+          label = "Code",
           up = TRUE,
           right = TRUE,
           inputId = "controls-code",
@@ -192,48 +192,7 @@ controls_server <- function(id,
         updateTextInput(session = session, inputId = "labs_size", value = character(0))
         updateTextInput(session = session, inputId = "labs_shape", value = character(0))
       })
-      
-      
-      # Export ----
-      
-      output$export_png <- downloadHandler(
-        filename = function() {
-          paste0("esquisse_", format(Sys.time(), format = "%Y%m%dT%H%M%S"), ".png")
-        },
-        content = function(file) {
-          pngg <- try(ggsave(filename = file, plot = ggplot_rv$ggobj$plot, width = 12, height = 8, dpi = "retina"))
-          if ("try-error" %in% class(pngg)) {
-            shiny::showNotification(ui = "Export to PNG failed...", type = "error", id = paste("esquisse", sample.int(1e6, 1), sep = "-"))
-          }
-        }
-      )
-      output$export_ppt <- downloadHandler(
-        filename = function() {
-          paste0("esquisse_", format(Sys.time(), format = "%Y%m%dT%H%M%S"), ".pptx")
-        },
-        content = function(file) {
-          if (requireNamespace(package = "rvg") & requireNamespace(package = "officer")) {
-            gg <- ggplot_rv$ggobj$plot
-            ppt <- officer::read_pptx()
-            ppt <- officer::add_slide(ppt, layout = "Title and Content", master = "Office Theme")
-            ppt <- try(officer::ph_with(ppt, rvg::dml(ggobj = gg), location = officer::ph_location_type(type = "body")), silent = TRUE)
-            if ("try-error" %in% class(ppt)) {
-              shiny::showNotification(ui = "Export to PowerPoint failed...", type = "error", id = paste("esquisse", sample.int(1e6, 1), sep = "-"))
-            } else {
-              tmp <- tempfile(pattern = "esquisse", fileext = ".pptx")
-              print(ppt, target = tmp)
-              file.copy(from = tmp, to = file)
-            }
-          } else {
-            warn <- "Packages 'officer' and 'rvg' are required to use this functionality."
-            warning(warn, call. = FALSE)
-            shiny::showNotification(ui = warn, type = "warning", paste("esquisse", sample.int(1e6, 1), sep = "-"))
-          }
-        }
-      )
-      
-      
-      
+
       # Code ----
       observeEvent(input$insert_code, {
         context <- rstudioapi::getSourceEditorContext()
@@ -977,22 +936,7 @@ controls_code <- function(ns, insert_code = FALSE) {
         icon = icon("arrow-circle-left")
       )
     },
-    tags$br(),
-    tags$b("Export:"),
-    tags$br(),
-    tags$div(
-      class = "btn-group btn-group-justified",
-      downloadButton(
-        outputId = ns("export_png"),
-        label = ".png",
-        class = "btn-primary btn-xs"
-      ),
-      downloadButton(
-        outputId = ns("export_ppt"),
-        label = ".pptx",
-        class = "btn-primary btn-xs"
-      )
-    )
+    tags$br()
   )
 }
 
