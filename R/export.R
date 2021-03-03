@@ -1,4 +1,8 @@
 
+
+# Save ggplot -------------------------------------------------------------
+
+
 #' @title Save \code{ggplot} module
 #' 
 #' @description Save a \code{ggplot} object in various format and resize it before saving.
@@ -168,6 +172,193 @@ save_ggplot_server <- function(id, plot_rv) {
   )
 }
 
+
+
+
+
+# Render ggplot -----------------------------------------------------------
+
+
+#' @title Render \code{ggplot} module
+#' 
+#' @description Display a plot on the client and allow to download it.
+#'
+#' @param id Module's ID.
+#' @param width Width of the plot.
+#' @param height Height of the plot
+#' @param downloads Label for export options.
+#' @param ... Parameters passed to \code{\link[shiny:plotOutput]{plotOutput}} or \code{\link[shiny:renderPlot]{renderPlot}}.
+#'
+#' @return Server-side, a `reactiveValues` with the plot.
+#' @export
+#' 
+#' @name ggplot-output
+#' 
+#' @importFrom shiny NS downloadLink actionButton plotOutput actionLink
+#' @importFrom htmltools tags tagList
+#' @importFrom shinyWidgets dropMenu
+#'
+#' @example examples/render-ggplot.R
+ggplot_output <- function(id, width = "100%", height = "400px", downloads = downloads_labels(), ...) {
+  ns <- NS(id)
+  tags$div(
+    class = "ggplot-container",
+    style = "position: relative;",
+    style = if (!is.null(width)) paste0("width:", validateCssUnit(width), ";"),
+    if (!is.null(downloads)) {
+      e <- downloads[-1]
+      e <- e[-length(e)]
+      dlBtn <- lapply(
+        X = seq_along(e),
+        FUN = function(i) {
+          if (is.null(e[[i]]))
+            return(NULL)
+          tagList(
+            downloadLink(
+              outputId = ns(paste0("export_", names(e)[i])),
+              label = e[[i]]
+            ),
+            tags$br()
+          )
+        }
+      )
+      dropMenu(
+        actionButton(
+          inputId = ns("exports"),
+          label = downloads$label,
+          class = "btn-xs",
+          style= "position: absolute; top: 0; right:0;"
+        ),
+        placement = "bottom-end",
+        dlBtn,
+        if (!is.null(downloads$more)) tagList(
+          tags$hr(style = "margin: 5px 0;"),
+          actionLink(inputId = ns("more"), label = downloads$more)
+        )
+      )
+    },
+    plotOutput(outputId = ns("plot"), width = width, height = height, ...)
+  )
+}
+
+#' @param label Main label for export button
+#' @param png,pdf,svg,jpeg,pptx Labels to display in
+#'  export menu, use \code{NULL} to disable specific format.
+#' @param more Label for "more" button, allowing to launch export modal.
+#' 
+#' @rdname ggplot-output
+#' @export
+downloads_labels <- function(label = icon("download"),
+                             png = tagList(icon("file-image-o"), "PNG"),
+                             pdf = tagList(icon("file-pdf-o"), "PDF"),
+                             svg = tagList(icon("chrome"), "SVG"),
+                             jpeg = tagList(icon("file-image-o"), "JPEG"),
+                             pptx = tagList(icon("file-powerpoint-o"), "PPTX"),
+                             more = tagList(icon("gear"), "More options")) {
+  list(
+    label = label,
+    png = png,
+    pdf = pdf,
+    svg = svg,
+    jpeg = jpeg,
+    pptx = pptx,
+    more = more
+  )
+}
+
+#' @param expr An expression that generates a `ggplot` object.
+#' @param env The environment in which to evaluate expr.
+#' @param quoted Is `expr` a quoted expression (with `quote()`)? This
+#'   is useful if you want to save an expression in a variable.
+#' @param filename A string of the filename to export WITHOUT extension,
+#'  it will be added according to type of export.
+#' 
+#' @rdname ggplot-output
+#' 
+#' @export
+#' 
+#' @importFrom shiny exprToFunction moduleServer downloadHandler
+#'  reactiveValues renderPlot observeEvent showNotification is.reactive
+#' @importFrom shinyWidgets hideDropMenu
+render_ggplot <- function(id,
+                          expr,
+                          ...,
+                          env = parent.frame(),
+                          quoted = FALSE,
+                          filename = "export-ggplot") {
+  gg_fun <- exprToFunction(expr, env, quoted)
+  moduleServer(
+    id = id,
+    module = function(input, output, session) {
+      output$export_png <- download_plot_fun(gg_fun, "png", filename, session)
+      output$export_pdf <- download_plot_fun(gg_fun, "pdf", filename, session)
+      output$export_svg <- download_plot_fun(gg_fun, "svg", filename, session)
+      output$export_jpeg <- download_plot_fun(gg_fun, "jpeg", filename, session)
+      output$export_pptx <- downloadHandler(
+        filename = function() {
+          if (is.reactive(filename))
+            filename <- filename()
+          if (endsWith(filename, "\\.pptx"))
+            filename
+          else
+            paste0(filename, ".pptx")
+        },
+        content = function(file) {
+          if (requireNamespace(package = "rvg") & requireNamespace(package = "officer")) {
+            gg <- gg_fun()
+            ppt <- officer::read_pptx()
+            ppt <- officer::add_slide(x = ppt, layout = "Blank")
+            ppt <- try(officer::ph_with(
+              x = ppt, rvg::dml(ggobj = gg), 
+              location = officer::ph_location_fullsize()
+            ), silent = TRUE)
+            if ("try-error" %in% class(ppt)) {
+              shiny::showNotification(
+                ui = "Export to PowerPoint failed...", 
+                type = "error", 
+                id = paste("esquisse", sample.int(1e6, 1), sep = "-")
+              )
+            } else {
+              tmp <- tempfile(pattern = "esquisse", fileext = ".pptx")
+              print(ppt, target = tmp)
+              file.copy(from = tmp, to = file)
+            }
+          } else {
+            warn <- "Packages 'officer' and 'rvg' are required to use this functionality."
+            warning(warn, call. = FALSE)
+            shiny::showNotification(
+              ui = warn, 
+              type = "warning", 
+              id = paste("esquisse", sample.int(1e6, 1), sep = "-")
+            )
+          }
+        }
+      )
+      rv <- reactiveValues(plot = NULL)
+      output$plot <- renderPlot({
+        rv$plot <- gg_fun()
+        rv$plot
+      }, ...)
+      observeEvent(input$more, {
+        hideDropMenu("exports_dropmenu")
+        save_ggplot_modal(
+          id = session$ns("export"),
+          title = "Export chart"
+        )
+      })
+      save_ggplot_server("export", plot_rv = rv)
+      return(rv)
+    }
+  )
+}
+
+
+
+
+
+# Utils donwload handlers -------------------------------------------------
+
+
 #' @importFrom shiny downloadHandler
 #' @importFrom ggplot2 ggsave
 download_plot_rv <- function(input, rv, device) {
@@ -194,3 +385,35 @@ download_plot_rv <- function(input, rv, device) {
     }
   )
 }
+
+#' @importFrom shiny downloadHandler
+#' @importFrom ggplot2 ggsave
+download_plot_fun <- function(fun, device, filename, session) {
+  downloadHandler(
+    filename = function() {
+      if (is.reactive(filename))
+        filename <- filename()
+      if (endsWith(filename, paste0("\\.", device)))
+        filename
+      else
+        paste0(filename, ".", device)
+    },
+    content = function(file) {
+      name <- session$ns("plot")
+      width <- paste0("output_", name, "_width")
+      width <- session$clientData[[width]]
+      height <- paste0("output_", name, "_height")
+      height <- session$clientData[[height]]
+      ggsave(
+        filename = file,
+        plot = fun(),
+        device = device,
+        dpi = 72,
+        width = width / 72,
+        height = height / 72,
+        scale = 1
+      )
+    }
+  )
+}
+
