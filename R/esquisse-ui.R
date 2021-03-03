@@ -100,7 +100,7 @@ esquisse_ui <- function(id,
       style = "overflow-y: auto;",
       tags$div(
         style = "height: 100%; min-height: 400px;",
-        plotOutput(outputId = ns("plooooooot"), width = "100%", height = "100%")
+        ggplot_output(id = ns("plooooooot"), width = "100%", height = "100%")
       )
     ),
     

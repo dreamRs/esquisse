@@ -211,7 +211,7 @@ esquisse_server <- function(id,
       )
       
       
-      output$plooooooot <- renderPlot({
+      render_ggplot("plooooooot", {
         req(data_chart$data)
         req(controls_rv$data)
         req(controls_rv$inputs)
@@ -322,7 +322,7 @@ esquisse_server <- function(id,
           data = setNames(list(data), data_chart$name)
         )
         ggplotCall$ggobj$plot
-      })
+      }, filename = "esquisse-plot")
       
       
       # Close addin

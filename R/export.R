@@ -205,6 +205,7 @@ ggplot_output <- function(id, width = "100%", height = "400px", downloads = down
     class = "ggplot-container",
     style = "position: relative;",
     style = if (!is.null(width)) paste0("width:", validateCssUnit(width), ";"),
+    style = if (!is.null(height)) paste0("height:", validateCssUnit(height), ";"),
     if (!is.null(downloads)) {
       e <- downloads[-1]
       e <- e[-length(e)]
@@ -226,8 +227,8 @@ ggplot_output <- function(id, width = "100%", height = "400px", downloads = down
         actionButton(
           inputId = ns("exports"),
           label = downloads$label,
-          class = "btn-xs",
-          style= "position: absolute; top: 0; right:0;"
+          class = "btn-sm",
+          style= "position: absolute; top: 0; right: 5px;"
         ),
         placement = "bottom-end",
         dlBtn,
