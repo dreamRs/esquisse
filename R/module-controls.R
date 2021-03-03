@@ -924,7 +924,7 @@ controls_code <- function(ns, insert_code = FALSE) {
     tags$button(
       class = "btn btn-default btn-xs pull-right btn-copy-code",
       "Copy to clipboard", `data-clipboard-target` = paste0("#", ns("codeggplot"))
-    ), tags$script("new Clipboard('.btn-copy-code');"),
+    ), tags$script("$(function() {new ClipboardJS('.btn-copy-code');});"),
     tags$br(),
     tags$b("Code:"),
     uiOutput(outputId = ns("code")),

@@ -26,7 +26,7 @@
 #' @name esquisse-module
 #' @order 1
 #'
-#' @importFrom htmltools tags tagList singleton
+#' @importFrom htmltools tags tagList
 #' @importFrom shiny fillPage plotOutput icon actionButton NS fluidRow column fillCol
 #' @importFrom shinyWidgets prettyToggle
 #'
@@ -76,9 +76,7 @@ esquisse_ui <- function(id,
   ui <- fillPage(tags$div(
     class = "esquisse-container",
     html_dependency_esquisse(),
-    singleton(x = tagList(
-      tags$script(src = "esquisse/clipboard/clipboard.min.js")
-    )),
+    html_dependency_clipboard(),
     shinyWidgets::chooseSliderSkin("Modern", "#112446"),
     
     if (isTRUE(header)) tag_header,

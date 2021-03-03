@@ -15,6 +15,16 @@ html_dependency_esquisse <- function() {
   )
 }
 
+html_dependency_clipboard <- function() {
+  htmlDependency(
+    name = "clipboard",
+    version = "2.0.6",
+    src = c(file = "assets/clipboard", href = "esquisse/clipboard"),
+    script = c("clipboard.min.js"),
+    all_files = FALSE
+  )
+}
+
 html_dependency_moveable <- function() {
   htmlDependency(
     name = "moveable",
