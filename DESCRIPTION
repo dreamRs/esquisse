@@ -1,7 +1,7 @@
 Package: esquisse
 Type: Package
 Title: Explore and Visualize Your Data Interactively
-Version: 0.3.1
+Version: 0.9.9.9000
 Authors@R: c(person("Fanny", "Meyer", role = c("aut")),
   person("Victor", "Perrier", email = "victor.perrier@dreamrs.fr", role = c("aut", "cre")),
   person("Ian", "Carroll", comment = "Faceting support", role = "ctb"),
@@ -20,7 +20,7 @@ Imports: datamods,
     shiny (>= 1.1.0),
     htmltools,
     jsonlite,
-    shinyWidgets (>= 0.5.7.9100),
+    shinyWidgets (>= 0.6.0),
     ggplot2 (>= 3.0.0),
     scales,
     rlang (>= 0.3.1),
@@ -35,4 +35,3 @@ Suggests:
     ggthemes,
     hrbrthemes
 VignetteBuilder: knitr
-Remotes: dreamRs/datamods, dreamRs/shinyWidgets
