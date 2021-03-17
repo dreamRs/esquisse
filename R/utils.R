@@ -384,3 +384,21 @@ deparse2 <- function(x) {
   x <- gsub(x = x, pattern = "[\n]+", replacement = "\n")
   return(x)
 }
+
+style_code <- function(x) {
+  code <- lapply(
+    X = strsplit(x, split = "+", fixed = TRUE)[[1]],
+    FUN = function(x) {
+      # paste(expr_deparse(parse_expr(trimws(x)), width = 80), collapse = "\n  ")
+      x <- rlang::expr_deparse(rlang::parse_expr(trimws(x)), width = 800)
+      if (nchar(x) > 80) {
+        x <- sub(pattern = "(", replacement = "(\n    ", x = x, fixed = TRUE)
+        x <- sub(pattern = "\\)$", replacement = "\n  )", x = x)
+      }
+      x
+    }
+  )
+  Reduce(function(x, y) {
+    paste(x, y, sep = " +\n  ")
+  }, code)
+}

@@ -216,7 +216,7 @@ controls_server <- function(id,
       })
       
       output$code <- renderUI({
-        code <- ggplot_rv$code
+        code <- style_code(ggplot_rv$code)
         expr <- output_filter$expr()
         if (!is.null(expr) & !isTRUE(input$disable_filters)) {
           code_dplyr <- deparse2(output_filter$code())
