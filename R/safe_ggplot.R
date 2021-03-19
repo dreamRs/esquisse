@@ -13,40 +13,7 @@
 #' @importFrom rlang eval_tidy
 #' @importFrom ggplot2 ggplot_build
 #'
-#' @examples
-#' if (interactive()) {
-#'   library(shiny)
-#'   library(ggplot2)
-#'   
-#'   ui <- fluidPage(
-#'     fluidRow(
-#'       column(
-#'         width = 3,
-#'         selectInput(
-#'           inputId = "var", 
-#'           label = "Var:", 
-#'           choices = c("Sepal.Width", "Do.Not.Exist")
-#'         )
-#'       ),
-#'       column(
-#'         width = 9,
-#'         plotOutput(outputId = "plot")
-#'       )
-#'     )
-#'   )
-#'   
-#'   server <- function(input, output, session) {
-#'     
-#'     output$plot <- renderPlot({
-#'       p <- ggplot(iris) +
-#'         geom_point(aes_string("Sepal.Length", input$var))
-#'       safe_ggplot(p)
-#'     })
-#'     
-#'   }
-#'   
-#'   shinyApp(ui, server)
-#' }
+#' @example examples/safe_ggplot.R
 safe_ggplot <- function(expr, data = NULL, session = shiny::getDefaultReactiveDomain()) {
   show_condition_message <- function(e, type, session) {
     if (!is.null(session)) {
@@ -56,6 +23,7 @@ safe_ggplot <- function(expr, data = NULL, session = shiny::getDefaultReactiveDo
           conditionMessage(e),
           sep = " : "
         ),
+        duration = 1000,
         id = paste("esquisse", sample.int(1e6, 1), sep = "-"),
         type = type, 
         session = session
