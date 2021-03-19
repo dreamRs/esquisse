@@ -391,14 +391,25 @@ style_code <- function(x) {
     FUN = function(x) {
       # paste(expr_deparse(parse_expr(trimws(x)), width = 80), collapse = "\n  ")
       x <- rlang::expr_deparse(rlang::parse_expr(trimws(x)), width = 800)
-      if (nchar(x) > 80) {
-        x <- sub(pattern = "(", replacement = "(\n    ", x = x, fixed = TRUE)
-        x <- sub(pattern = "\\)$", replacement = "\n  )", x = x)
+      if (nchar(x) > 60) {
+        # x <- sub(pattern = "(", replacement = "(\n    ", x = x, fixed = TRUE)
+        # x <- sub(pattern = "\\)$", replacement = "\n  )", x = x)
+        before <- sub(pattern = "\\(.*", replacement = "", x = x)
+        l <- sub(pattern = "[^\\(]*\\(", replacement = "", x = x)
+        l <- sub(pattern = "\\)$", replacement = "", x = l)
+        s <- gsub(pattern = "[^[:space:]]", replacement = "", x = before)
+        x <- paste(
+          paste0(before, "("),
+          paste0(s, " ", gsub(pattern = ",", replacement = paste0(",\n", s), x = l)),
+          paste0(s, ")"),
+          sep = "\n"
+        )
       }
       x
     }
   )
-  Reduce(function(x, y) {
+  code <- Reduce(function(x, y) {
     paste(x, y, sep = " +\n  ")
   }, code)
+  paste(as.character(styler::style_text(code)), collapse = "\n")
 }

@@ -24,7 +24,8 @@ Imports: datamods,
     ggplot2 (>= 3.0.0),
     scales,
     rlang (>= 0.3.1),
-    grDevices
+    grDevices,
+    styler
 Suggests: 
     officer,
     rvg,
