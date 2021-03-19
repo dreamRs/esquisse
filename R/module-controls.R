@@ -382,6 +382,7 @@ controls_server <- function(id,
         inputs <- reactiveValuesToList(input)
         title <- get_labs_options(inputs, "title")
         subtitle <- get_labs_options(inputs, "subtitle")
+        caption <- get_labs_options(inputs, "caption")
         x <- get_labs_options(inputs, "x")
         y <- get_labs_options(inputs, "y")
         outputs$theme <- list(
@@ -391,6 +392,7 @@ controls_server <- function(id,
               legend.position = if (identical(input$legend_position, "right")) NULL else input$legend_position,
               plot.title = title,
               plot.subtitle = subtitle,
+              plot.caption = caption,
               axis.title.y = y,
               axis.title.x = x
             )
@@ -471,7 +473,12 @@ controls_labs <- function(ns) {
       label = "Subtitle:",
       defaults = get_labs_defaults("subtitle")
     ),
-    textInput(inputId = ns("labs_caption"), placeholder = "Caption", label = "Caption:"),
+    labs_options_input(
+      inputId = ns("labs_caption"), 
+      placeholder = "Caption",
+      label = "Caption:",
+      defaults = get_labs_defaults("caption")
+    ),
     labs_options_input(
       inputId = ns("labs_x"), 
       placeholder = "X label", 
@@ -508,7 +515,7 @@ controls_labs <- function(ns) {
 }
 
 #' @importFrom htmltools tags
-#' @importFrom shinyWidgets dropMenu prettyCheckbox prettyRadioButtons
+#' @importFrom shinyWidgets dropMenu prettyRadioButtons
 #' @importFrom shiny actionButton icon numericInput
 labs_options_input <- function(inputId, label, placeholder, defaults = list()) {
   tags$div(
@@ -538,11 +545,14 @@ labs_options_input <- function(inputId, label, placeholder, defaults = list()) {
         icon = icon("plus"),
         style = "margin-top: 25px; border-radius: 0 4px 4px 0; width: 100%;"
       ),
-      prettyCheckbox(
-        inputId = paste0(inputId, "_bold"),
-        label = "Bold?",
-        value = isTRUE("bold" %in% defaults$face),
-        status = "primary"
+      prettyRadioButtons(
+        inputId = paste0(inputId, "_face"),
+        label = "Font face:",
+        choiceNames = c("Plain", "Italic", "Bold", "Bold/Italic"),
+        choiceValues = c("plain", "italic", "bold", "bold.italic"),
+        selected = defaults$face,
+        status = "primary",
+        inline = TRUE
       ),
       numericInput(
         inputId = paste0(inputId, "_size"),
@@ -552,7 +562,8 @@ labs_options_input <- function(inputId, label, placeholder, defaults = list()) {
       prettyRadioButtons(
         inputId = paste0(inputId, "_align"),
         label = "Align:",
-        choices = c("left", "center", "right"),
+        choiceNames = c("Left", "Center", "Right"),
+        choiceValues = c("left", "center", "right"),
         inline = TRUE,
         status = "primary",
         selected = switch(
@@ -567,28 +578,23 @@ labs_options_input <- function(inputId, label, placeholder, defaults = list()) {
   )
 }
 
-get_labs_defaults <- function(name = c("title", "subtitle", "x", "y")) {
+get_labs_defaults <- function(name = c("title", "subtitle", "caption", "x", "y")) {
   name <- match.arg(name)
   defaults_labs <- list(
-    title = list(size = 13L, face = "plain", hjust = 0),
-    subtitle = list(size = 11L, face = "plain", hjust = 0),
+    title = list(size = 13L, face = "plain", hjust = 0), # theme_get()$plot.title
+    subtitle = list(size = 11L, face = "plain", hjust = 0), # theme_get()$plot.subtitle
+    caption = list(size = 9L, face = "plain", hjust = 1), # theme_get()$plot.caption
     x = list(size = 11L, face = "plain", hjust = 0.5),
     y = list(size = 11L, face = "plain", hjust = 0.5)
   )
   defaults_labs[[name]]
 }
 
-get_labs_options <- function(inputs, name = c("title", "subtitle", "x", "y")) {
+get_labs_options <- function(inputs, name = c("title", "subtitle", "caption", "x", "y")) {
   name <- match.arg(name)
   defaults <- get_labs_defaults(name)
-  inputs <- inputs[paste0("labs_", name, c("_size", "_bold", "_align"))]
-  names(inputs) <- c("size", "bold", "align")
-  if (isTRUE(inputs$bold)) {
-    inputs$face <- "bold"
-  } else {
-    inputs$face <- "plain"
-  }
-  inputs$bold <- NULL
+  inputs <- inputs[paste0("labs_", name, c("_size", "_face", "_align"))]
+  names(inputs) <- c("size", "face", "align")
   if (length(inputs$align) < 1) {
     inputs$hjust <- defaults$hjust
   } else {
