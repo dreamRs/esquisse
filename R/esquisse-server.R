@@ -14,7 +14,7 @@
 #'  renderPlot stopApp plotOutput showNotification isolate reactiveValuesToList
 #' @importFrom ggplot2 ggplot_build ggsave
 #' @import ggplot2
-#' @importFrom datamods import_modal import_server
+#' @importFrom datamods import_modal import_server show_data
 esquisse_server <- function(id, 
                             data_rv = NULL,
                             default_aes = c("fill", "color", "size", "group", "facet"),
@@ -100,12 +100,26 @@ esquisse_server <- function(id,
         )
       })
       
-      # DAta imported and update rv used
+      # Data imported and update rv used
       data_imported_r <- datamods::import_server("import-data", return_class = "tbl_df")
       observeEvent(data_imported_r$data(), {
         data <- data_imported_r$data()
         data_chart$data <- data
         data_chart$name <- data_imported_r$name()
+      })
+      
+      observeEvent(input$show_data, {
+        data <- controls_rv$data
+        if (!is.data.frame(data)) {
+          showNotification(
+            ui = "No data to display",
+            duration = 700,
+            id = paste("esquisse", sample.int(1e6, 1), sep = "-"),
+            type = "warning"
+          )
+        } else {
+          datamods::show_data(data, title = "Dataset", type = "modal")
+        }
       })
       
       # Update drag-and-drop input when data changes

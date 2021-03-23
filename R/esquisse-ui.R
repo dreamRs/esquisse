@@ -69,6 +69,13 @@ esquisse_ui <- function(id,
         icon = icon("database", class = "fa-lg"),
         class = "btn-sm",
         title = "Import data"
+      ),
+      actionButton(
+        inputId = ns("show_data"),
+        label = NULL,
+        icon = icon("table", class = "fa-lg"),
+        class = "btn-sm",
+        title = "Show data"
       )
     )
   )
