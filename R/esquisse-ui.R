@@ -1,24 +1,22 @@
 
 #' @title Esquisse module
 #' 
-#' @description Use esquisse as a module in Shiny applications
+#' @description Use esquisse as a module in a Shiny application.
 #'
-#' @param id Modules's ID.
-#' @param header Logical. Display or not \code{esquisse} header.
+#' @param id Module ID.
+#' @param header Logical. Display or not `esquisse` header.
 #' @param container Container in which display the addin,
-#'  default is to use \code{esquisseContainer}, see examples.
-#'  Use \code{NULL} for no container (behavior in versions <= 0.2.1).
-#'  Must be a \code{function}.
-#' @param controls Controls menu to be displayed. Use \code{NULL} to hide all menus.
+#'  default is to use `esquisseContainer`, see examples.
+#'  Use `NULL` for no container (behavior in versions <= 0.2.1).
+#'  Must be a `function`.
+#' @param controls Controls menu to be displayed. Use `NULL` to hide all menus.
 #' @param insert_code Logical, Display or not a button to insert the ggplot
 #'  code in the current user script (work only in RStudio).
 #'
-#' @return A \code{reactiveValues} with 3 slots :
-#'  \itemize{
-#'   \item \strong{code_plot} : code to generate plot.
-#'   \item \strong{code_filters} : a list of length two with code to reproduce filters.
-#'   \item \strong{data} : \code{data.frame} used in plot (with filters applied).
-#'  }
+#' @return A `reactiveValues` with 3 slots :
+#'   * **code_plot** : code to generate plot.
+#'   * **code_filters** : a list of length two with code to reproduce filters.
+#'   * **data** : `data.frame` used in plot (with filters applied).
 #'  
 #'
 #' @export
@@ -124,10 +122,10 @@ esquisse_ui <- function(id,
   return(ui)
 }
 
-#' @param width,height The width and height of the container, e.g. \code{'400px'},
-#'  or \code{'100\%'}; see \code{\link[htmltools]{validateCssUnit}}.
+#' @param width,height The width and height of the container, e.g. `"400px"`,
+#'  or `"100%"`; see \code{\link[htmltools]{validateCssUnit}}.
 #' @param fixed Use a fixed container, e.g. to use use esquisse full page.
-#'  If \code{TRUE}, width and height are ignored. Default to \code{FALSE}.
+#'  If `TRUE`, width and height are ignored. Default to `FALSE`.
 #'  It's possible to use a vector of CSS unit of length 4 to specify the margins
 #'  (top, right, bottom, left).
 #'

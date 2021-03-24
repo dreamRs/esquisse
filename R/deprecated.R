@@ -1,4 +1,16 @@
 
+#' @title Deprecated functions
+#' 
+#' @note The following functions are deprecated and will be removed in next release:
+#'  * `esquisserUI` / `esquisserServer`: replaced by `esquisse_ui` / `esquisse_server`
+#'  * `filterDF_UI` / `filterDF`: moved to package [datamods](https://github.com/dreamRs/datamods)
+#'  * `chooseDataUI` / `chooseDataServer`: moved to package [datamods](https://github.com/dreamRs/datamods)
+#'  * `coerceUI` / `coerceServer`: moved to package [datamods](https://github.com/dreamRs/datamods)
+#'  
+#' @name esquisse-deprecated
+#'  
+NULL
+
 
 # filterDF ----------------------------------------------------------------
 
@@ -10,12 +22,10 @@
 #' @param id Module id. See \code{\link[shiny]{callModule}}.
 #' @param show_nrow Show number of filtered rows and total.
 #'
-#' @return A \code{list} with 2 elements :
-#'  \itemize{
-#'   \item \strong{data_filtered} : \code{\link[shiny]{reactive}} function returning data filtered.
-#'   \item \strong{code} : \code{\link[shiny]{reactiveValues}} with 2 slots :
+#' @return A `list` with 2 elements :
+#'   * \strong{data_filtered} : \code{\link[shiny]{reactive}} function returning data filtered.
+#'   * \strong{code} : \code{\link[shiny]{reactiveValues}} with 2 slots :
 #'    \code{expr} (raw expression to filter data) and \code{dplyr} (code with dplyr pipeline).
-#'  }
 #'  
 #' @export
 #' 
@@ -48,7 +58,7 @@ filterDF_UI <- function(id, show_nrow = TRUE) {
 #' @param data_name \code{\link[shiny]{reactive}} function returning a
 #'  \code{character} string representing \code{data_table} name.
 #' @param label_nrow Text to display before the number of rows of filtered data / source data.
-#' @param drop_ids Drop columns containing more than 90\% of unique values, or than 50 distinct values.
+#' @param drop_ids Drop columns containing more than 90% of unique values, or than 50 distinct values.
 #' @param picker Use  \code{\link[shinyWidgets:pickerInput]{shinyWidgets::pickerInput}}
 #'  instead of  \code{\link[shiny:selectInput]{shiny::selectizeInput}} (default).
 #' 
@@ -1395,15 +1405,6 @@ selectVarsServer <- function(input, output, session, data = list(),
 #' 
 #' @importFrom shiny shinyAppDir
 #'
-#' @examples
-#' 
-#' if (interactive()) {
-#' 
-#' # Demo for filterDF module
-#' run_module("filterDF")
-#' 
-#' }
-#' 
 run_module <- function(module = c("filterDF", "chooseData", "chooseData2", "coerce")) {
   .Deprecated(new = "See package datamods", package = "esquisse", old = "run_module")
   module <- match.arg(module)

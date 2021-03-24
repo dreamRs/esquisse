@@ -15,11 +15,9 @@
 #' @param disable_filters Logical. Disable the menu allowing to filter data used.
 #'
 #' @return A \code{reactiveValues} with 3 slots :
-#'  \itemize{
-#'   \item \strong{code_plot} : code to generate plot.
-#'   \item \strong{code_filters} : a list of length two with code to reproduce filters.
-#'   \item \strong{data} : \code{data.frame} used in plot (with filters applied).
-#'  }
+#'   * \strong{code_plot} : code to generate plot.
+#'   * \strong{code_filters} : a list of length two with code to reproduce filters.
+#'   * \strong{data} : \code{data.frame} used in plot (with filters applied).
 #'
 #' @note For the module to display correctly, it is necessary to place
 #'  it in a container with a fixed height. Since version >= 0.2.2, the

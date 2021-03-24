@@ -14,7 +14,7 @@ save_ggplot_modal(id, title = NULL)
 save_ggplot_server(id, plot_rv)
 }
 \arguments{
-\item{id}{Module's ID.}
+\item{id}{Module ID.}
 
 \item{title}{Modal's title.}
 

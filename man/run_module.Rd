@@ -12,13 +12,3 @@ run_module(module = c("filterDF", "chooseData", "chooseData2", "coerce"))
 \description{
 DEPRECATED, please see package \href{https://github.com/dreamRs/datamods}{datamods} for similar features.
 }
-\examples{
-
-if (interactive()) {
-
-# Demo for filterDF module
-run_module("filterDF")
-
-}
-
-}

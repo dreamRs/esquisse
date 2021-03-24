@@ -35,13 +35,13 @@ render_ggplot(
 )
 }
 \arguments{
-\item{id}{Module's ID.}
+\item{id}{Module ID.}
 
 \item{width}{Width of the plot.}
 
-\item{height}{Height of the plot}
+\item{height}{Height of the plot.}
 
-\item{downloads}{Label for export options.}
+\item{downloads}{Labels for export options, use \code{downloads_labels}.}
 
 \item{...}{Parameters passed to \code{\link[shiny:plotOutput]{plotOutput}} or \code{\link[shiny:renderPlot]{renderPlot}}.}
 
@@ -52,18 +52,18 @@ export menu, use \code{NULL} to disable specific format.}
 
 \item{more}{Label for "more" button, allowing to launch export modal.}
 
-\item{expr}{An expression that generates a `ggplot` object.}
+\item{expr}{An expression that generates a \code{ggplot} object.}
 
 \item{env}{The environment in which to evaluate expr.}
 
-\item{quoted}{Is `expr` a quoted expression (with `quote()`)? This
+\item{quoted}{Is \code{expr} a quoted expression (with \code{quote()})? This
 is useful if you want to save an expression in a variable.}
 
 \item{filename}{A string of the filename to export WITHOUT extension,
 it will be added according to type of export.}
 }
 \value{
-Server-side, a `reactiveValues` with the plot.
+Server-side, a \code{reactiveValues} with the plot.
 }
 \description{
 Display a plot on the client and allow to download it.

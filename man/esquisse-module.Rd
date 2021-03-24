@@ -25,7 +25,7 @@ esquisse_server(
 esquisseContainer(width = "100\%", height = "700px", fixed = FALSE)
 }
 \arguments{
-\item{id}{Modules's ID.}
+\item{id}{Module ID.}
 
 \item{header}{Logical. Display or not \code{esquisse} header.}
 
@@ -42,13 +42,14 @@ code in the current user script (work only in RStudio).}
 \item{data_rv}{A \code{reactiveValues} with at least a slot \code{data} containing a \code{data.frame}
 to use in the module. And a slot \code{name} corresponding to the name of the \code{data.frame}.}
 
-\item{default_aes}{Default aesthetics to be used, can a \code{character}
+\item{default_aes}{Default aesthetics to be used, can be a \code{character}
 vector or \code{reactive} function returning one.}
 
-\item{import_from}{From where to import data, argument passed to \code{\link[datamods:import-modal]{datamods::import_ui}}.}
+\item{import_from}{From where to import data, argument passed
+to \code{\link[datamods:import-modal]{datamods::import_ui}}.}
 
-\item{width, height}{The width and height of the container, e.g. \code{'400px'},
-or \code{'100\%'}; see \code{\link[htmltools]{validateCssUnit}}.}
+\item{width, height}{The width and height of the container, e.g. \code{"400px"},
+or \code{"100\%"}; see \code{\link[htmltools]{validateCssUnit}}.}
 
 \item{fixed}{Use a fixed container, e.g. to use use esquisse full page.
 If \code{TRUE}, width and height are ignored. Default to \code{FALSE}.
@@ -57,14 +58,14 @@ It's possible to use a vector of CSS unit of length 4 to specify the margins
 }
 \value{
 A \code{reactiveValues} with 3 slots :
- \itemize{
-  \item \strong{code_plot} : code to generate plot.
-  \item \strong{code_filters} : a list of length two with code to reproduce filters.
-  \item \strong{data} : \code{data.frame} used in plot (with filters applied).
- }
+\itemize{
+\item \strong{code_plot} : code to generate plot.
+\item \strong{code_filters} : a list of length two with code to reproduce filters.
+\item \strong{data} : \code{data.frame} used in plot (with filters applied).
+}
 }
 \description{
-Use esquisse as a module in Shiny applications
+Use esquisse as a module in a Shiny application.
 }
 \examples{
 

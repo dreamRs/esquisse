@@ -53,17 +53,17 @@ code in the current user script (work only in RStudio).}
 }
 \value{
 A \code{reactiveValues} with 3 slots :
- \itemize{
-  \item \strong{code_plot} : code to generate plot.
-  \item \strong{code_filters} : a list of length two with code to reproduce filters.
-  \item \strong{data} : \code{data.frame} used in plot (with filters applied).
- }
+\itemize{
+\item \strong{code_plot} : code to generate plot.
+\item \strong{code_filters} : a list of length two with code to reproduce filters.
+\item \strong{data} : \code{data.frame} used in plot (with filters applied).
+}
 }
 \description{
 DEPRECATED, see \code{\link{esquisse-module}}.
 }
 \note{
 For the module to display correctly, it is necessary to place
- it in a container with a fixed height. Since version >= 0.2.2, the
- container is added by default.
+it in a container with a fixed height. Since version >= 0.2.2, the
+container is added by default.
 }

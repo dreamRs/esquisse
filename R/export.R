@@ -3,11 +3,11 @@
 # Save ggplot -------------------------------------------------------------
 
 
-#' @title Save \code{ggplot} module
+#' @title Save `ggplot` module
 #' 
 #' @description Save a \code{ggplot} object in various format and resize it before saving.
 #'
-#' @param id Module's ID.
+#' @param id Module ID.
 #'
 #' @return No value. Use in UI & server of shiny application.
 #' @export
@@ -109,7 +109,7 @@ save_ggplot_modal <- function(id, title = NULL) {
   ))
 }
 
-#' @param plot_rv A \code{reactiveValues} with a slot \code{plot} containing a \code{ggplot} object.
+#' @param plot_rv A `reactiveValues` with a slot `plot` containing a `ggplot` object.
 #' 
 #' @export
 #' 
@@ -183,10 +183,10 @@ save_ggplot_server <- function(id, plot_rv) {
 #' 
 #' @description Display a plot on the client and allow to download it.
 #'
-#' @param id Module's ID.
+#' @param id Module ID.
 #' @param width Width of the plot.
-#' @param height Height of the plot
-#' @param downloads Label for export options.
+#' @param height Height of the plot.
+#' @param downloads Labels for export options, use `downloads_labels`.
 #' @param ... Parameters passed to \code{\link[shiny:plotOutput]{plotOutput}} or \code{\link[shiny:renderPlot]{renderPlot}}.
 #'
 #' @return Server-side, a `reactiveValues` with the plot.

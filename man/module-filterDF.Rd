@@ -45,11 +45,11 @@ instead of  \code{\link[shiny:selectInput]{shiny::selectizeInput}} (default).}
 }
 \value{
 A \code{list} with 2 elements :
- \itemize{
-  \item \strong{data_filtered} : \code{\link[shiny]{reactive}} function returning data filtered.
-  \item \strong{code} : \code{\link[shiny]{reactiveValues}} with 2 slots :
-   \code{expr} (raw expression to filter data) and \code{dplyr} (code with dplyr pipeline).
- }
+\itemize{
+\item \strong{data_filtered} : \code{\link[shiny]{reactive}} function returning data filtered.
+\item \strong{code} : \code{\link[shiny]{reactiveValues}} with 2 slots :
+\code{expr} (raw expression to filter data) and \code{dplyr} (code with dplyr pipeline).
+}
 }
 \description{
 DEPRECATED, please see package \href{https://github.com/dreamRs/datamods}{datamods} for similar features.

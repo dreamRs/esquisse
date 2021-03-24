@@ -25,7 +25,7 @@ specify the name of the slot containing data.}
 }
 \value{
 a \code{reactiveValues} with two slots: \code{data} original \code{data.frame}
- with modified columns, and \code{names} column's names with call to coerce method.
+with modified columns, and \code{names} column's names with call to coerce method.
 }
 \description{
 DEPRECATED, please see package \href{https://github.com/dreamRs/datamods}{datamods} for similar features.

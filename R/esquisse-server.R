@@ -1,9 +1,10 @@
 
-#' @param data_rv A \code{reactiveValues} with at least a slot \code{data} containing a \code{data.frame}
-#'  to use in the module. And a slot \code{name} corresponding to the name of the \code{data.frame}.
-#' @param default_aes Default aesthetics to be used, can a \code{character}
-#'  vector or \code{reactive} function returning one.
-#' @param import_from From where to import data, argument passed to \code{\link[datamods:import-modal]{datamods::import_ui}}.
+#' @param data_rv A `reactiveValues` with at least a slot `data` containing a `data.frame`
+#'  to use in the module. And a slot `name` corresponding to the name of the `data.frame`.
+#' @param default_aes Default aesthetics to be used, can be a `character`
+#'  vector or `reactive` function returning one.
+#' @param import_from From where to import data, argument passed
+#'  to \code{\link[datamods:import-modal]{datamods::import_ui}}.
 #'
 #' @export
 #'
