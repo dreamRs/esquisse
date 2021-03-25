@@ -98,7 +98,7 @@ ggcall <- function(data = NULL,
     }
     ggcall <- expr(!!ggcall + !!theme)
   }
-  if (!any(c("fill", "color", "size") %in% names(mapping))) {
+  if (!any(c("fill", "colour", "color", "size", "shape") %in% names(mapping))) {
     theme_args$legend.position <- NULL
   }
   theme_args <- dropNullsOrEmpty(theme_args)
