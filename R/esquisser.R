@@ -5,15 +5,16 @@
 
 #' @title An add-in to easily create plots with ggplot2
 #' 
-#' @description Select data to be used and map variables to aesthetics to produce a chart.
+#' @description Select data to be used and map variables to aesthetics to produce a chart,
+#'  customize common elements and get code to reproduce the chart.
 #'
-#' @param data a \code{data.frame}, you can pass a \code{data.frame} explicitly to the function,
-#' otherwise you'll have to choose one in global environment.
-#' @param controls Controls menu to be displayed. Use \code{NULL} to hide all menus.
-#' @param viewer Where to display the gadget: \code{"dialog"},
-#'  \code{"pane"} or \code{"browser"} (see \code{\link[shiny]{viewer}}).
+#' @param data a `data.frame`, you can pass a `data.frame` explicitly to the function,
+#'  otherwise you'll have to choose one in global environment.
+#' @param controls Controls menu to be displayed. Use `NULL` to hide all menus.
+#' @param viewer Where to display the gadget: `"dialog"`,
+#'  `"pane"` or `"browser"` (see \code{\link[shiny]{viewer}}).
 #'
-#' @return code to reproduce chart.
+#' @return `NULL`. You can view code used to produce the chart, copy it or insert it in current script.
 #' @export
 #'
 #' @importFrom shiny dialogViewer browserViewer runGadget paneViewer reactiveValues

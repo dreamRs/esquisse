@@ -20,10 +20,11 @@ otherwise you'll have to choose one in global environment.}
 \code{"pane"} or \code{"browser"} (see \code{\link[shiny]{viewer}}).}
 }
 \value{
-code to reproduce chart.
+\code{NULL}. You can view code used to produce the chart, copy it or insert it in current script.
 }
 \description{
-Select data to be used and map variables to aesthetics to produce a chart.
+Select data to be used and map variables to aesthetics to produce a chart,
+customize common elements and get code to reproduce the chart.
 }
 \examples{
 if (interactive()) {

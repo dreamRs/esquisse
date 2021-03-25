@@ -46,22 +46,12 @@ To use a `data.frame` by default, if using the *Addins* menu highlight with the 
 Otherwise, pass the `data.frame` as first argument to the function :
 
 ```{r}
-esquisser(iris)
+esquisser(mtcars)
 ```
 
 
 
 ## Select data
-
-If addin is launched without default data, a window will appear to select a `data.frame` from Global environment (if no `data.frame` are present, datasets from {ggplot2} will be used) :
-
-![](figures/select-data.png)
-
-![](figures/select-data-detail.png)
-
-Once you have selected a `data.frame`, click on the bottom button to start the plotting part.
-
-You can change data selected after that step by clicking *Data* button.
 
 
 

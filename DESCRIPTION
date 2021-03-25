@@ -31,7 +31,6 @@ Suggests:
     officer,
     rvg,
     rio,
-    DT,
     testthat (>= 2.1.0),
     knitr,
     ggthemes,
