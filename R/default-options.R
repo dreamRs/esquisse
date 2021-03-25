@@ -57,16 +57,6 @@ default_pals <- function() {
       rep(c("white", "black"), times = c(23, 18))
     )
   )
-  
-  if (requireNamespace("hrbrthemes", quietly = TRUE)) {
-    pals$choices$hrbrthemes = list(
-      "ipsum" = hrbrthemes::ipsum_pal()(9),
-      "ft" = hrbrthemes::ft_pal()(9)
-    )
-    pals$textColor<- c(
-      rep(c("white", "black"), times = c(25, 18))
-    )
-  }
   return(pals)
 }
 
@@ -91,30 +81,33 @@ default_themes <- function() {
       "par", "solarized", "solarized_2", "solid",
       "stata", "tufte", "wsj"
     )
-    ggthemes <- ggthemes[check_theme_exist(ggthemes, package = "ggthemes")]
-    if (length(ggthemes) > 0) {
-      ggthemes <- setNames(as.list(paste0("ggthemes::theme_", ggthemes)), ggthemes)
-      themes$ggthemes <- ggthemes
-    }
+    ggthemes <- setNames(as.list(paste0("ggthemes::theme_", ggthemes)), ggthemes)
+    themes$ggthemes <- ggthemes
   }
   
   if (requireNamespace("hrbrthemes", quietly = TRUE)) {
     hrbrthemes <- c(
       "ft_rc", "ipsum", "ipsum_ps", "ipsum_rc", "ipsum_tw", "modern_rc"
     )
-    hrbrthemes <- hrbrthemes[check_theme_exist(hrbrthemes, package = "hrbrthemes")]
-    if (length(hrbrthemes) > 0) {
-      hrbrthemes <- setNames(as.list(paste0("hrbrthemes::theme_", hrbrthemes)), hrbrthemes)
-      themes$hrbrthemes <- hrbrthemes
-    }
+    hrbrthemes <- setNames(as.list(paste0("hrbrthemes::theme_", hrbrthemes)), hrbrthemes)
+    themes$hrbrthemes <- hrbrthemes
   }
   
   return(themes)
 }
 
-check_theme_exist <- function(x, package = "hrbrthemes") {
-  vapply(X = paste0("theme_", x), FUN = function(fun) {
-    exists(fun, where = asNamespace(package), mode = "function")
+check_theme_exist <- function(x, package = "ggplot2") {
+  vapply(X = x, FUN = function(fun) {
+    if (grepl(pattern = "::", x = fun)) {
+      x <- strsplit(x = fun, split = "::")[[1]]
+      fun <- x[2]
+      package <- x[1]
+      exists(fun, where = asNamespace(package), mode = "function")
+    } else {
+      if (!startsWith(fun, "theme_"))
+        fun <- paste0("theme_", fun)
+      exists(fun, where = asNamespace(package), mode = "function")
+    }
   }, FUN.VALUE = logical(1), USE.NAMES = FALSE)
 }
 
@@ -123,28 +116,13 @@ check_theme_exist <- function(x, package = "hrbrthemes") {
 #' @importFrom scales viridis_pal brewer_pal
 default_cols <- function() {
   cols <- list(
-    "custom" = c("#0C4C8A", "#EF562D"),
-    "viridis" = col2Hex(viridis_pal(option = "viridis")(10)),
-    # "magma" = col2Hex(viridis_pal(option = "magma")(10)),
-    # "inferno" = col2Hex(viridis_pal(option = "inferno")(10)),
-    "plasma" = col2Hex(viridis_pal(option = "plasma")(10))#,
-    # "cividis" = col2Hex(viridis_pal(option = "cividis")(10))
-    ,
-    "Blues" = brewer_pal(palette = "Blues")(9),
-    "Greens" = brewer_pal(palette = "Greens")(9),
-    "Reds" = brewer_pal(palette = "Reds")(9),
-    # "Oranges" = brewer_pal(palette = "Oranges")(9),
-    # "Purples" = brewer_pal(palette = "Purples")(9),
-    "Greys" = brewer_pal(palette = "Greys")(9)#,
-    # "Dark2" = brewer_pal(palette = "Dark2")(8),
-    # "Set1" = brewer_pal(palette = "Set1")(8),
-    # "Paired" = brewer_pal(palette = "Paired")(12)
+    "custom" = c("#0C4C8A", "#EF562D", "forestgreen", "steelblue", "firebrick", "darkorange", "hotpink"),
+    "viridis" = viridis_pal(option = "viridis")(8),
+    "plasma" = viridis_pal(option = "plasma")(8),
+    "Blues" = brewer_pal(palette = "Blues")(9)[-1],
+    "Greens" = brewer_pal(palette = "Greens")(9)[-1],
+    "Reds" = brewer_pal(palette = "Reds")(9)[-1],
+    "Greys" = brewer_pal(palette = "Greys")(9)[-1]
   )
-  
-  if (requireNamespace("hrbrthemes", quietly = TRUE)) {
-    cols$ipsum <- hrbrthemes::ipsum_pal()(9)
-    cols$ipsum <- hrbrthemes::ft_pal()(9)
-  }
-  
   return(cols)
 }

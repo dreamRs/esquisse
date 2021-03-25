@@ -31,22 +31,25 @@ dropNulls <- function(x) {
   x[!vapply(x, is.null, FUN.VALUE = logical(1))]
 }
 nullOrEmpty <- function(x) {
-  is.null(x) || length(x) == 0 || x == ""
+  is.null(x) || length(x) == 0
 }
 dropNullsOrEmpty <- function(x) {
   x[!vapply(x, nullOrEmpty, FUN.VALUE = logical(1))]
 }
-
-
-# quickly clean a string
-#' @importFrom stringi stri_trans_general stri_trans_tolower stri_replace_all_regex
-clean_string <- function(str) {
-  str <- stri_trans_general(str = str, id = "Latin-ASCII")
-  str <- stri_trans_tolower(str)
-  str <- make.unique(str)
-  str <- stri_replace_all_regex(str = str, pattern = "[^a-zA-Z0-9_]+", replacement = "_")
-  return(str)
+dropNullsOrEmptyRecursive <- function(x) {
+  dropNullsOrEmpty(lapply(
+    X = x, 
+    FUN = function(x) {
+      if (is.list(x)) {
+        dropNullsOrEmpty(x)
+      } else {
+        x
+      }
+    }
+  ))
 }
+
+
 
 
 
@@ -84,7 +87,7 @@ get_df <- function(df, env = globalenv()) {
 #'
 #' # NULL if no data.frame
 #' search_obj("data.frame")
-#' 
+#'
 #' library(ggplot2)
 #' data("mpg")
 #' search_obj("data.frame")
@@ -130,13 +133,15 @@ badgeType <- function(col_name, col_type) {
       col_name_i <- col_name[i]
       col_type_i <- col_type[i]
       if (col_type_i == "discrete") {
-        tags$span(class='label label-discrete badge-dad', col_name_i)
+        tags$span(class = "label label-discrete badge-dad", col_name_i)
       } else if (col_type_i == "time") {
-        tags$span(class='label label-datetime badge-dad', col_name_i)
+        tags$span(class = "label label-datetime badge-dad", col_name_i)
       } else if (col_type_i == "continuous") {
-        tags$span(class='label label-continue badge-dad', col_name_i)
+        tags$span(class="label label-continuous badge-dad", col_name_i)
       } else if (col_type_i == "id") {
-        tags$span(class='label label-default badge-dad', col_name_i)
+        tags$span(class = "label label-default badge-dad", col_name_i)
+      } else {
+        tags$span(class = "label label-other badge-dad", col_name_i)
       }
     }
   )
@@ -155,11 +160,11 @@ badgeType <- function(col_name, col_type) {
 col_type <- function(x, no_id = FALSE) {
   if (is.null(x))
     return(NULL)
-  
+
   if (is.data.frame(x) && inherits(x, what = "sf")) {
     x <- x[, setdiff(names(x), attr(x, "sf_column")), drop = FALSE]
-  } 
-  
+  }
+
   if (is.data.frame(x)) {
     return(unlist(lapply(x, col_type), use.names = FALSE))
   } else {
@@ -172,17 +177,20 @@ col_type <- function(x, no_id = FALSE) {
         return("id")
       }
     }
-    
     if (inherits(x, c("Date", "POSIXct", "POSIXlt"))) {
       return("time")
     }
-    
     if (inherits(x, c("numeric", "integer", "double"))) {
       return("continuous")
     }
+    return("unknown")
   }
-  
   NULL
+}
+
+get_col_names <- function(data) {
+  x <- setdiff(names(data), attr(data, "sf_column"))
+  x[!vapply(data, is.list, FUN.VALUE = logical(1))]
 }
 
 
@@ -190,8 +198,8 @@ col_type <- function(x, no_id = FALSE) {
 # utils for geom icons
 geomIcons <- function() {
   geoms <- c(
-    "auto", "line", "area", "bar", "histogram", 
-    "point", "boxplot", "violin", "density", 
+    "auto", "line", "step", "area", "bar", "histogram",
+    "point", "boxplot", "violin", "density",
     "tile", "sf"
   )
   href <- "esquisse/geomIcon/gg-%s.png"
@@ -212,10 +220,8 @@ geomIcons <- function() {
       )
     }
   )
-  geomsChoicesValues <- unlist(lapply(geomsChoices, `[[`, "label"), use.names = FALSE)
-  geomsChoicesValues <- tolower(geomsChoicesValues)
-  
-  list(names = geomsChoicesNames, values = geomsChoicesValues)
+
+  list(names = geomsChoicesNames, values = geoms)
 }
 
 
@@ -242,19 +248,6 @@ dropListColumns <- function(x) {
 
 # colors ------------------------------------------------------------------
 
-#' Convert a color in character into hex format
-#'
-#' @param col name of a color, e.g. 'steelblue'
-#'
-#' @return a hex code
-#' @noRd
-#'
-#' @importFrom grDevices rgb col2rgb
-#'
-col2Hex <- function(col) {
-  mat <- grDevices::col2rgb(col, alpha = TRUE)
-  grDevices::rgb(mat[1, ]/255, mat[2, ]/255, mat[3,]/255)
-}
 
 
 linear_gradient <- function(cols) {
@@ -349,15 +342,74 @@ choicesWithNames <- function(choices) {
 
 
 anyNamed <- function(x) {
-  if (length(x) == 0) 
+  if (length(x) == 0)
     return(FALSE)
   nms <- names(x)
-  if (is.null(nms)) 
+  if (is.null(nms))
     return(FALSE)
   any(nzchar(nms))
 }
 
+genId <- function(bytes = 12) {
+  paste(format(as.hexmode(sample(256, bytes, replace = TRUE) - 1), width = 2), collapse = "")
+}
 
+makeId <- function(x) {
+  x <- as.character(x)
+  x <- lapply(X = x, FUN = function(y) {
+    paste(as.character(charToRaw(y)), collapse = "")
+  })
+  x <- unlist(x, use.names = FALSE)
+  make.unique(x, sep = "_")
+}
 
+idToChar <- function(x) {
+  if (length(x) > 1) {
+    x <- unlist(lapply(x, idToChar))
+    return(x)
+  }
+  x <- strsplit(x, "")[[1]]
+  x <- paste0(x[c(TRUE, FALSE)], x[c(FALSE, TRUE)])
+  rawToChar(as.raw(as.hexmode(x)))
+}
 
+deparse2 <- function(x) {
+  x <- deparse(x, width.cutoff = 100L)
+  # x <- trimws(x)
+  x <- paste(x, collapse = "\n")
+  x <- gsub(x = x, pattern = "+", replacement = "+\n", fixed = TRUE)
+  x <- gsub(x = x, pattern = "%>%", replacement = "%>%\n", fixed = TRUE)
+  x <- gsub(x = x, pattern = "[ ]+", replacement = " ")
+  x <- gsub(x = x, pattern = "\n \n", replacement = "\n")
+  x <- gsub(x = x, pattern = "[\n]+", replacement = "\n")
+  return(x)
+}
 
+style_code <- function(x) {
+  code <- lapply(
+    X = strsplit(x, split = "+", fixed = TRUE)[[1]],
+    FUN = function(x) {
+      # paste(expr_deparse(parse_expr(trimws(x)), width = 80), collapse = "\n  ")
+      x <- rlang::expr_deparse(rlang::parse_expr(trimws(x)), width = 800)
+      if (nchar(x) > 60) {
+        # x <- sub(pattern = "(", replacement = "(\n    ", x = x, fixed = TRUE)
+        # x <- sub(pattern = "\\)$", replacement = "\n  )", x = x)
+        before <- sub(pattern = "\\(.*", replacement = "", x = x)
+        l <- sub(pattern = "[^\\(]*\\(", replacement = "", x = x)
+        l <- sub(pattern = "\\)$", replacement = "", x = l)
+        s <- gsub(pattern = "[^[:space:]]", replacement = "", x = before)
+        x <- paste(
+          paste0(before, "("),
+          paste0(s, " ", gsub(pattern = ",", replacement = paste0(",\n", s), x = l)),
+          paste0(s, ")"),
+          sep = "\n"
+        )
+      }
+      x
+    }
+  )
+  code <- Reduce(function(x, y) {
+    paste(x, y, sep = " +\n  ")
+  }, code)
+  paste(as.character(styler::style_text(code)), collapse = "\n")
+}

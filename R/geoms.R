@@ -105,12 +105,16 @@ potential_geoms_ref <- function() {
       "discrete",    "continuous",  "bar",       "1",
       "continuous",  "continuous",  "point",     "1",
       "continuous",  "continuous",  "line",      "0", 
+      "continuous",  "continuous",  "step",      "0", 
       "continuous",  "continuous",  "area",      "0",
       "discrete",    "discrete",    "tile",      "1",
-      "time",        "continuous",  "line",      "1", 
+      "time",        "continuous",  "line",      "1",
+      "time",        "continuous",  "point",     "0",
+      "time",        "continuous",  "step",      "0", 
       "time",        "continuous",  "area",      "0", 
       "time",        "continuous",  "bar",       "0", 
       "empty",       "continuous",  "line",      "1",
+      "empty",       "continuous",  "step",      "0",
       "empty",       "continuous",  "area",      "0",
       "continuous",  "continuous",  "tile",      "0",
       "discrete",    "time",        "tile",      "0",
@@ -160,7 +164,7 @@ match_geom_args <- function(geom, args, add_aes = TRUE, mapping = list(), envir 
     if (geom %in% c("bar", "histogram", "boxplot", "violin", "density")) {
       args$fill <- args$fill_color %||% "#0C4C8A"
     }
-    if (geom %in% c("line", "point")) {
+    if (geom %in% c("line", "step", "point")) {
       args$colour <- args$fill_color %||% "#0C4C8A"
     }
   }

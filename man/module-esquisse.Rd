@@ -4,7 +4,6 @@
 \alias{esquisserServer}
 \alias{module-esquisse}
 \alias{esquisserUI}
-\alias{esquisseContainer}
 \title{Esquisse Shiny module}
 \usage{
 esquisserServer(
@@ -24,8 +23,6 @@ esquisserUI(
   insert_code = FALSE,
   disable_filters = FALSE
 )
-
-esquisseContainer(width = "100\%", height = "700px", fixed = FALSE)
 }
 \arguments{
 \item{input, output, session}{Standards \code{shiny} server arguments.}
@@ -42,7 +39,7 @@ or \code{"ImportFile"}.}
 
 \item{header}{Logical. Display or not \code{esquisse} header.}
 
-\item{container}{Container in which display the addin, 
+\item{container}{Container in which display the addin,
 default is to use \code{esquisseContainer}, see examples.
 Use \code{NULL} for no container (behavior in versions <= 0.2.1).
 Must be a \code{function}.}
@@ -53,133 +50,20 @@ Must be a \code{function}.}
 code in the current user script (work only in RStudio).}
 
 \item{disable_filters}{Logical. Disable the menu allowing to filter data used.}
-
-\item{width, height}{The width and height of the container, e.g. \code{'400px'},
-or \code{'100\%'}; see \code{\link[htmltools]{validateCssUnit}}.}
-
-\item{fixed}{Use a fixed container, e.g. to use use esquisse full page.
-If \code{TRUE}, width and height are ignored. Default to \code{FALSE}.
-It's possible to use a vector of CSS unit of length 4 to specify the margins 
-(top, right, bottom, left).}
 }
 \value{
 A \code{reactiveValues} with 3 slots :
- \itemize{
-  \item \strong{code_plot} : code to generate plot.
-  \item \strong{code_filters} : a list of length two with code to reproduce filters.
-  \item \strong{data} : \code{data.frame} used in plot (with filters applied).
- }
+\itemize{
+\item \strong{code_plot} : code to generate plot.
+\item \strong{code_filters} : a list of length two with code to reproduce filters.
+\item \strong{data} : \code{data.frame} used in plot (with filters applied).
+}
 }
 \description{
-Launch \code{esquisse} in a classic Shiny app.
+DEPRECATED, see \code{\link{esquisse-module}}.
 }
 \note{
 For the module to display correctly, it is necessary to place
- it in a container with a fixed height. Since version >= 0.2.2, the 
- container is added by default.
-}
-\examples{
-
-if (interactive()) {
-  
-  ### Part of a Shiny app ###
-  
-  library(shiny)
-  library(esquisse)
-  
-  ui <- fluidPage(
-    tags$h1("Use esquisse as a Shiny module"),
-    
-    radioButtons(
-      inputId = "data", 
-      label = "Data to use:", 
-      choices = c("iris", "mtcars"),
-      inline = TRUE
-    ),
-    esquisserUI(
-      id = "esquisse", 
-      header = FALSE, # dont display gadget title
-      choose_data = FALSE, # dont display button to change data,
-      container = esquisseContainer(height = "700px")
-    )
-  )
-  
-  server <- function(input, output, session) {
-    
-    data_r <- reactiveValues(data = iris, name = "iris")
-    
-    observeEvent(input$data, {
-      if (input$data == "iris") {
-        data_r$data <- iris
-        data_r$name <- "iris"
-      } else {
-        data_r$data <- mtcars
-        data_r$name <- "mtcars"
-      }
-    })
-    
-    callModule(module = esquisserServer, id = "esquisse", data = data_r)
-    
-  }
-  
-  shinyApp(ui, server)
-  
-  
-  
-  ### Whole Shiny app ###
-  
-  library(shiny)
-  library(esquisse)
-  
-  
-  # Load some datasets in app environment
-  my_data <- data.frame(
-    var1 = rnorm(100),
-    var2 = sample(letters[1:5], 100, TRUE)
-  )
-  
-  
-  ui <- fluidPage(
-    esquisserUI(
-      id = "esquisse", 
-      container = esquisseContainer(fixed = TRUE)
-    )
-  )
-  
-  server <- function(input, output, session) {
-    
-    callModule(module = esquisserServer, id = "esquisse")
-    
-  }
-  
-  shinyApp(ui, server)
-  
-  
-  
-  ## You can also use a vector of margins for the fixed argument,
-  # useful if you have a navbar for example
-  
-  ui <- navbarPage(
-    title = "My navbar app",
-    tabPanel(
-      title = "esquisse",
-      esquisserUI(
-        id = "esquisse", 
-        header = FALSE,
-        container = esquisseContainer(
-          fixed = c(55, 0, 0, 0)
-        )
-      )
-    )
-  )
-  
-  server <- function(input, output, session) {
-    
-    callModule(module = esquisserServer, id = "esquisse")
-    
-  }
-  
-  shinyApp(ui, server)
-  
-}
+it in a container with a fixed height. Since version >= 0.2.2, the
+container is added by default.
 }

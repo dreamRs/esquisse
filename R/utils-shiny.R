@@ -1,10 +1,40 @@
 
 # Utils Shiny ----
 
-#' @importFrom htmltools singleton tags
-useShinyUtils <- function() {
-  singleton(tags$head(tags$script(src = "esquisse/shiny-utils.js")))
+#' @importFrom htmltools htmlDependency
+#' @importFrom utils packageVersion
+html_dependency_esquisse <- function() {
+  htmlDependency(
+    name = "esquisse",
+    version = packageVersion("esquisse"),
+    src = c(file = "assets/esquisse", href = "esquisse/esquisse"),
+    package = "esquisse",
+    script = c("js/shiny-utils.js"),
+    stylesheet = c("css/styles.css", "css/annie-use-your-telescope.css"),
+    all_files = TRUE
+  )
 }
+
+html_dependency_clipboard <- function() {
+  htmlDependency(
+    name = "clipboard",
+    version = "2.0.6",
+    src = c(file = "assets/clipboard", href = "esquisse/clipboard"),
+    script = c("clipboard.min.js"),
+    all_files = FALSE
+  )
+}
+
+html_dependency_moveable <- function() {
+  htmlDependency(
+    name = "moveable",
+    version = "0.23.0",
+    src = c(file = "assets/moveable", href = "esquisse/moveable"),
+    script = c("moveable.min.js", "resizer-handler.js"),
+    all_files = FALSE
+  )
+}
+
 
 
 #' Enable or disable a Shiny input
@@ -14,10 +44,11 @@ useShinyUtils <- function() {
 #' @param session shiny session.
 #'
 #' @noRd
-toggleInput <- function(inputId, enable = TRUE,
+toggleInput <- function(inputId,
+                        enable = TRUE,
                         session = shiny::getDefaultReactiveDomain()) {
   session$sendCustomMessage(
-    type = 'toggleInput',
+    type = "toggleInput",
     message = list(id = inputId, enable = enable)
   )
 }
@@ -31,13 +62,14 @@ toggleInput <- function(inputId, enable = TRUE,
 #' @param session shiny session.
 #'
 #' @noRd
-toggleDisplay <- function(id, display = c("none", "block", "inline-block"), 
+toggleDisplay <- function(id,
+                          display = c("none", "block", "inline-block"),
                           session = shiny::getDefaultReactiveDomain()) {
   if (is.logical(display)) {
     display <- ifelse(display, "block", "none")
   }
   session$sendCustomMessage(
-    type = 'toggleDisplay',
+    type = "toggleDisplay",
     message = list(id = id, display = display)
   )
 }
@@ -72,3 +104,30 @@ rCodeContainer <- function(...) {
   htmltools::tags$div(htmltools::tags$pre(code))
 }
 
+
+# Resizer handlers
+
+activate_resizer <- function(id,
+                             ..., 
+                             modal = FALSE,
+                             container = "body", 
+                             session = shiny::getDefaultReactiveDomain()) {
+  if (isTRUE(modal))
+    container <- ".modal-body"
+  session$sendCustomMessage("resize", list(
+    id = id,
+    container = container,
+    ...,
+    modal = modal
+  ))
+}
+
+resize <- function(id, 
+                   width, 
+                   height, 
+                   session = shiny::getDefaultReactiveDomain()) {
+  session$sendCustomMessage(paste0("resize-", id), list(
+    width = width,
+    height = height
+  ))
+}

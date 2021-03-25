@@ -1,0 +1,233 @@
+/*!
+ * Copyright (c) 2018 ~ present dreamRs.
+ *
+ * Additional styles for esquisse addin
+ *
+ * @version 0.3.1
+ */
+
+
+.esquisse-container {
+      display: -webkit-flex;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-flex-direction: column;
+    -ms-flex-direction: column;
+    flex-direction: column;
+    width: 100%;
+    height: 100%
+}
+
+
+/* Title */
+.esquisse-title-container {
+  -webkit-flex: none;
+  -ms-flex: none;
+  flex: none;
+  position: relative;
+  background-color: #112446;
+  height: 45px;
+  margin-bottom: 5px;
+  padding: 0;
+}
+.esquisse-title {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  line-height: 44px;
+  margin: 0;
+  z-index: 0;
+  color: white;
+  text-align: center;
+  font-size: 30px;
+  font-family: 'Annie Use Your Telescope', handwriting;
+}
+
+.esquisse-title-container button.btn {
+  position: relative;
+  height: 31px;
+  z-index: 10;
+  color: #FFF;
+  background: transparent;
+  border: none;
+  margin: 7px 5px 0px 5px;
+}
+
+
+/* Geom & aes block */
+.esquisse-geom-aes {
+  display: grid; 
+  grid-template-columns: 90px 1fr; 
+  grid-template-rows: 1fr;
+  grid-column-gap: 0px;
+  grid-row-gap: 0px;
+}
+
+
+/* Controls menu */
+.btn-group-justified-esquisse {
+  display: table !important;
+  width: 100%;
+  table-layout: fixed;
+  border-collapse: separate;
+}
+
+.btn-group-esquisse {
+  position: relative;
+  /*display: inline-block;*/
+  vertical-align: middle;
+}
+
+.btn-group-justified-esquisse>.btn-group-esquisse {
+  display: table-cell;
+  float: none;
+  width: 1%;
+}
+
+
+.btn-group-justified-esquisse>.btn-group-esquisse .btn-esquisse-controls {
+  width: 100%;
+}
+
+.btn-esquisse-controls {
+  border-radius: 0 !important;
+}
+
+.sw-dropdown-content {
+  border-radius: 4px !important;
+}
+.sw-dropdown-in {
+  padding: 2px !important;
+}
+
+
+.esquisse-labs-options {
+  display: grid; 
+  grid-template-columns: 1fr 40px; 
+  grid-template-rows: 1fr;
+  grid-column-gap: 0px;
+  grid-row-gap: 0px;
+  width: 100%;
+}
+
+
+/* dropdowns width */
+
+#sw-content-controls-labs {
+  min-width: 150px;
+}
+
+#sw-content-controls-parameters {
+  min-width: 270px;
+  overflow-y: auto;
+  max-height: 90vh;
+}
+
+#sw-content-controls-appearance {
+  min-width: 350px; /*430px*/
+}
+
+#sw-content-controls-filters {
+  min-width: 350px;
+  max-height: 90vh;
+  min-height: 30vh;
+  padding-right: 5px;
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+
+#sw-content-controls-code {
+  min-width: 370px;
+  z-index: 1000;
+}
+
+
+/* color pickr */
+.pcr-app[data-theme=monolith] {
+  padding: 0 !important;
+}
+.sw-spectrum {
+  border: none !important;
+}
+.sp-palette-container {
+  border-right: none !important;
+}
+.sp-thumb-inner {
+  border-radius: 3px !important;
+  border: none;
+}
+.sp-palette .sp-thumb-el {
+  width: 18px !important;
+  height: 18px !important;
+}
+.sp-dragger {
+  height: 8px !important;
+  width: 8px !important;
+  background: transparent !important;
+}
+.sp-clear, .sp-color, .sp-hue {
+  border: none !important;
+}
+
+/* box drag and drop */
+.container-drag-source, .box-dad {
+  border-radius: 255px 15px 225px 15px/15px 225px 15px 255px !important;
+  border: dashed 2px #ccc !important;
+}
+
+/* shiny alerts */
+
+div[id^="shiny-notification-esquisse"].shiny-notification-error {
+  color: #fff !important;
+  background-color: #d9534f !important;
+  border: 1px solid #d9534f !important;
+}
+
+div[id^="shiny-notification-esquisse"].shiny-notification-warning {
+  color: #fff !important;
+  background-color: #f39c12 !important;
+  border: 1px solid #f39c12 !important;
+}
+
+div[id^="shiny-notification-esquisse"].shiny-notification-message {
+  color: #fff !important;
+  background-color: #5cb85c !important;
+  border: 1px solid #5cb85c !important;
+}
+
+div[id^="shiny-notification-esquisse"].shiny-notification {
+  font-size: 120% !important;
+  font-weight: bold !important;
+}
+
+/*
+#shiny-notification-panel {
+  width: 100% !important;
+  text-align: center !important;
+}
+*/
+
+div[id^="shiny-notification-esquisse"] > .shiny-notification-close {
+  font-size: 26px;
+  color: #fff;
+  cursor: pointer;
+}
+
+.drop-input, .drop-input-main {
+  height: 100%;
+}
+
+
+/* Color & Palette Picker */
+.color-picker .bootstrap-select .dropdown-menu li a span.text {
+  width: 100%;
+  display: block;
+}
+
+.color-picker-plain .bootstrap-select .dropdown-menu li a span.text div {
+  background: rgba(0,0,0,0) !important;
+}
+
+

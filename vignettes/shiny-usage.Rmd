@@ -31,7 +31,11 @@ img {
 
 {esquisse} is built with Shiny modules (see this [article](https://shiny.rstudio.com/articles/modules.html) for reference), so you can use {esquisse} directly into a Shiny application :
 
-```{r}
+```{r esquisse-module}
+library(esquisse)
+library(shiny)
+library(ggplot2)
+
 ui <- fluidPage(
   
   titlePanel("Use esquisse as a Shiny module"),
@@ -40,24 +44,27 @@ ui <- fluidPage(
     sidebarPanel(
       radioButtons(
         inputId = "data", 
-        label = "Data to use:", 
-        choices = c("iris", "mtcars"),
-        inline = TRUE
+        label = "Select data to use:", 
+        choices = c("mpg", "diamonds", "economics")
       )
     ),
     mainPanel(
       tabsetPanel(
         tabPanel(
           title = "esquisse",
-          esquisserUI(
+          esquisse_ui(
             id = "esquisse", 
-            header = FALSE, # dont display gadget title
-            choose_data = FALSE # dont display button to change data
+            header = FALSE # dont display gadget title
           )
         ),
         tabPanel(
           title = "output",
-          verbatimTextOutput("module_out")
+          tags$b("Code:"),
+          verbatimTextOutput("code"),
+          tags$b("Filters:"),
+          verbatimTextOutput("filters"),
+          tags$b("Data:"),
+          verbatimTextOutput("data")
         )
       )
     )
@@ -69,24 +76,26 @@ server <- function(input, output, session) {
   
   data_r <- reactiveValues(data = iris, name = "iris")
   
-  observeEvent(input$data, {
-    if (input$data == "iris") {
-      data_r$data <- iris
-      data_r$name <- "iris"
-    } else {
-      data_r$data <- mtcars
-      data_r$name <- "mtcars"
-    }
+  observe({
+    data_r$data <- get(input$data)
+    data_r$name <- input$data
   })
   
-  result <- callModule(
-    module = esquisserServer,
+  results <- esquisse_server(
     id = "esquisse",
-    data = data_r
+    data_rv = data_r
   )
   
-  output$module_out <- renderPrint({
-    str(reactiveValuesToList(result))
+  output$code <- renderPrint({
+    results$code_plot
+  })
+  
+  output$filters <- renderPrint({
+    results$code_filters
+  })
+  
+  output$data <- renderPrint({
+    str(results$data)
   })
   
 }
@@ -101,82 +110,79 @@ Result looks like :
 
 The output of the module is a `reactiveValues` with 3 slots : 
 
-```
-List of 3
- $ code_plot   : chr "ggplot(iris) + aes(x = Sepal.Length) + geom_histogram(bins = 30L, fill = \"#0c4c8a\") + theme_minimal()"
- $ code_filters:List of 2
-  ..$ dplyr: language iris %>% filter(Petal.Length >= 1.45 & Petal.Length <= 6.9)
-  ..$ expr : language Petal.Length >= 1.45 & Petal.Length <= 6.9
- $ data        :'data.frame':	126 obs. of  5 variables:
-  ..$ Sepal.Length: num [1:126] 4.6 5.4 5 4.9 5.4 4.8 5.7 5.7 5.1 5.4 ...
-  ..$ Sepal.Width : num [1:126] 3.1 3.9 3.4 3.1 3.7 3.4 4.4 3.8 3.8 3.4 ...
-  ..$ Petal.Length: num [1:126] 1.5 1.7 1.5 1.5 1.5 1.6 1.5 1.7 1.5 1.7 ...
-  ..$ Petal.Width : num [1:126] 0.2 0.4 0.2 0.1 0.2 0.2 0.4 0.3 0.3 0.2 ...
-  ..$ Species     : Factor w/ 3 levels "setosa","versicolor",..: 1 1 1 1 1 1 1 1 1 1 ...
-```
+  * **code_plot** : code to generate plot.
+  * **code_filters** : a list of length two with code to reproduce filters.
+  * **data** : `data.frame` used in plot (with filters applied).
 
 
-## Other exported modules
 
-Some modules used in {esquisse} are exported, so you can use them in your Shiny applications.
+## Module for saving a ggplot object
 
+This modulle allow to save a `ggplot` object in various format and to resize it before:
 
-### Filter data
+![](figures/save-ggplot.png)
 
-Module to interactively filter a `data.frame` and retrieve the code :
+You can call the module from server to display it in a modal window (it's also possible to display it deirectly in your UI): 
 
-```{r}
-?`module-filterDF`
-
-run_module("filterDF")
+```{r save-ggplot}
+function(input, output, session) {
+  
+  observeEvent(input$save, { # actionButton to trigger modal
+    save_ggplot_modal("ID", "Save plot") # launch modal
+  })
+  save_ggplot_server("ID", rv) # rv is a reactiValues with a slot 'plot'
+  
+}
 ```
 
-![](figures/module-filterDF.png)
+See `?"save-ggplot-module"` for complete example.
 
 
-### Choose data
+## Module to render a plot and add export options
 
-Module to interactively choose a `data.frame` in Global environment or to import an external file :
+Add a menu to directly export plot, you can also launch module above for more controls (height, width, filename) by clicking "More options":
 
-```{r}
-?`module-chooseData`
+![](figures/render-ggplot.png)
 
-run_module("chooseData")
+```{r render-ggplot}
+library(shiny)
+library(ggplot2)
+library(esquisse)
+
+
+ui <- fluidPage(
+  tags$h2("ggplot output"),
+  selectInput("var", "Variable:", names(economics)[-1]),
+  ggplot_output("MYID", width = "600px")
+)
+
+server <- function(input, output, session) {
+  
+  render_ggplot("MYID", {
+    ggplot(economics) + 
+      geom_line(aes(date, !!sym(input$var))) + 
+      theme_minimal() + 
+      labs(
+        title = "A cool chart made with ggplot2",
+        subtitle = "that you can export in various format"
+      )
+  })
+}
+
+if (interactive())
+  shinyApp(ui, server)
 ```
 
-![](figures/module-chooseData.png)
-
-With an external file, import will be performed by package [{rio}](https://github.com/leeper/rio) :
-
-```{r}
-run_module("chooseData2")
-```
-
-
-![](figures/module-chooseData2.png)
-
-
-### Coerce variable
-
-Coerce a variable from a class to another :
-
-```{r}
-?`module-coerce`
-
-run_module("coerce")
-```
-
-![](figures/module-coerce.png)
 
 
 
 ## Input widgets
 
-The drag-and-drop widget along with the button to select a geom are exported.
+The drag-and-drop widget along with the button to select a geom and the color/palette picker are exported:
 
 ### dragulaInput
 
-```{r}
+```{r dragula-input}
 ui <- fluidPage(
   tags$h2("Demo dragulaInput"),
   tags$br(),
@@ -209,7 +215,7 @@ shinyApp(ui = ui, server = server)
 
 The widget used to select a geom in `esquisser` addin. You can use images or icons for example:
 
-```{r}
+```{r drop-input}
 ui <- fluidPage(
   tags$h2("Drop Input"),
   dropInput(
@@ -246,7 +252,7 @@ shinyApp(ui, server)
 
 A select menu to choose one or several colors:
 
-```{r}
+```{r color-picker}
 ui <- fluidPage(
   tags$h2("Color Picker"),
   colorPicker(
@@ -275,7 +281,7 @@ shinyApp(ui, server)
 
 A select menu to choose a color palette:
 
-```{r}
+```{r palette-picker}
 library(scales)
 ui <- fluidPage(
   tags$h2("Palette Picker"),

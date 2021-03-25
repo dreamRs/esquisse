@@ -6,7 +6,6 @@
 [![version](http://www.r-pkg.org/badges/version/esquisse)](https://CRAN.R-project.org/package=esquisse)
 [![cranlogs](http://cranlogs.r-pkg.org/badges/esquisse)](https://CRAN.R-project.org/package=esquisse)
 [![Lifecycle: stable](https://img.shields.io/badge/lifecycle-stable-brightgreen.svg)](https://www.tidyverse.org/lifecycle/#stable)
-[![Travis-CI Build Status](https://travis-ci.org/dreamRs/esquisse.svg?branch=master)](https://travis-ci.org/dreamRs/esquisse)
 [![R build status](https://github.com/dreamRs/esquisse/workflows/R-CMD-check/badge.svg)](https://github.com/dreamRs/esquisse/actions)
 <!-- badges: end -->
 
@@ -31,16 +30,21 @@ Or install development version from GitHub :
 remotes::install_github("dreamRs/esquisse")
 ```
 
-Then launch the addin via the RStudio menu, if you don't have `data.frame` in your environment, datasets in `ggplot2` are used.
+Then launch the addin via the RStudio menu or with `esquisse::esquisser()`.
 
 
-## `ggplot2` builder addin
-
-![](man/figures/esquisse.gif)
-
-Launch addin via RStudio menu or with:
+## esquisse addin
 
 ```r
 esquisse::esquisser()
+# or with your data:
+esquisse::esquisser(palmerpenguins::penguins)
 ```
+
+![](man/figures/esquisse.gif)
+
+Above gif was made with :heart: by [@mfanny](https://github.com/mfanny) and cannot be removed, but in the meantime {esquisse} has evolved, the latest version now looks like:
+
+![](man/figures/esquisse.png)
+
 

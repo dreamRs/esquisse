@@ -49,18 +49,6 @@ ggcall <- function(data = NULL,
   if (rlang::is_call(mapping)) 
     mapping <- eval(mapping)
   mapping <- dropNulls(mapping)
-  syms2 <- function(x) {
-    lapply(
-      X = x,
-      FUN = function(y) {
-        if (inherits(y, "AsIs")) {
-          as.character(y)
-        } else {
-          sym(as_name(y))
-        }
-      }
-    )
-  }
   aes <- expr(aes(!!!syms2(mapping)))
   ggcall <- expr(ggplot(!!data) + !!aes)
   if (length(geom) == 1)
@@ -110,7 +98,7 @@ ggcall <- function(data = NULL,
     }
     ggcall <- expr(!!ggcall + !!theme)
   }
-  if (!any(c("fill", "color", "size") %in% names(mapping))) {
+  if (!any(c("fill", "colour", "color", "size", "shape") %in% names(mapping))) {
     theme_args$legend.position <- NULL
   }
   theme_args <- dropNullsOrEmpty(theme_args)
@@ -153,5 +141,16 @@ ggcall <- function(data = NULL,
 }
 
 
-
+syms2 <- function(x) {
+  lapply(
+    X = x,
+    FUN = function(y) {
+      if (inherits(y, "AsIs")) {
+        as.character(y)
+      } else {
+        sym(as_name(y))
+      }
+    }
+  )
+}
 

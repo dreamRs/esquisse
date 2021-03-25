@@ -1,3 +1,18 @@
+# esquisse 1.0.0
+
+* Ability to select aesthetics parameters to use
+* New module to import data from package [datamods](https://github.com/dreamRs/datamods)
+* Possibility to define a manual color palette
+* More format for exporting plots: png, pdf, svg, jpeg, pptx
+* New function to render a `ggplot` and add export options: `ggplot_output()` / `render_ggplot()` 
+* New module to export a plot: `save_ggplot_ui()` / `save_ggplot_server()`
+* Options for setting title, subtitle, axis labels font size / weight, alignment
+* Added geom step
+* ability to select shape if aesthetic is used
+* Allowing `geom_point` when plotting Time vs Continuous Data by [@matton2](https://github.com/matton2)
+
+
+
 # esquisse 0.3.1
 
 * facet wrap displays by [@xiangnandang](https://github.com/xiangnandang)

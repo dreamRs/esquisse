@@ -38,17 +38,17 @@ dragulaInput(
 \code{targetsLabels} are used after removing all not-alphanumeric characters.}
 
 \item{choices}{List of values to select from (if elements of the list are
-named then that name rather than the value is displayed to the user). 
-If this argument is provided, then \code{choiceNames} and \code{choiceValues} must 
-not be provided, and vice-versa. The values should be strings; other 
+named then that name rather than the value is displayed to the user).
+If this argument is provided, then \code{choiceNames} and \code{choiceValues} must
+not be provided, and vice-versa. The values should be strings; other
 types (such as logicals and numbers) will be coerced to strings.}
 
-\item{choiceNames, choiceValues}{List of names and values, respectively, 
-that are displayed to the user in the app and correspond to the each 
-choice (for this reason, choiceNames and choiceValues must have the same length). 
-If either of these arguments is provided, then the other must be provided and 
-choices must not be provided. The advantage of using both of these over a named 
-list for choices is that choiceNames allows any type of UI object to be passed 
+\item{choiceNames, choiceValues}{List of names and values, respectively,
+that are displayed to the user in the app and correspond to the each
+choice (for this reason, choiceNames and choiceValues must have the same length).
+If either of these arguments is provided, then the other must be provided and
+choices must not be provided. The advantage of using both of these over a named
+list for choices is that choiceNames allows any type of UI object to be passed
 through (tag objects, icons, HTML code, ...), instead of just simple text.}
 
 \item{selected}{Default selected values. Must be a \code{list} with \code{targetsIds} as names.}

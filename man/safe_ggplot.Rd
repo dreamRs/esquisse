@@ -23,14 +23,14 @@ Safely render a \code{ggplot} in Shiny application
 if (interactive()) {
   library(shiny)
   library(ggplot2)
-  
+
   ui <- fluidPage(
     fluidRow(
       column(
         width = 3,
         selectInput(
-          inputId = "var", 
-          label = "Var:", 
+          inputId = "var",
+          label = "Var:",
           choices = c("Sepal.Width", "Do.Not.Exist")
         )
       ),
@@ -40,17 +40,17 @@ if (interactive()) {
       )
     )
   )
-  
+
   server <- function(input, output, session) {
-    
+
     output$plot <- renderPlot({
       p <- ggplot(iris) +
         geom_point(aes_string("Sepal.Length", input$var))
       safe_ggplot(p)
     })
-    
+
   }
-  
+
   shinyApp(ui, server)
 }
 }

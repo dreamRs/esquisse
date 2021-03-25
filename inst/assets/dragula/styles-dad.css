@@ -1,0 +1,112 @@
+/*!
+ * Copyright (c) 2018 ~ present dreamRs.
+ *
+ * Styles for dragulaInput
+ *
+ * @version 0.3.1
+ */
+
+.container-drag-source {
+  position: relative;
+  padding: 5px 0 5px 0;
+  border-style: dashed;
+  border-color: #112446;
+  border-radius: 5px;
+  border-width: 1px;
+  overflow: auto;
+  overflow-x: hidden;
+  font-size: 12px;
+}
+
+.box-dad {
+  position: relative;
+  padding: 5px;
+  margin: 5px;
+  margin-top: 8px;
+  border-style: dashed;
+  border-color: #112446;
+  border-radius: 3px;
+  border-width: 1px;
+  overflow: auto;
+  overflow-x: hidden;
+  font-size: 12px;
+}
+
+
+.label-background {
+  position: absolute;
+  bottom: 5px;
+  right: 5px;
+  z-index: -1;
+  overflow: hidden;
+  color: #E6E6E6;
+  font-size: 150%;
+}
+
+/*
+.label-dad {
+  position: relative;
+  float: left;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  color: #E6E6E6;
+  font-size: 150%;
+}
+*/
+.label-dad {
+  position: absolute;
+  padding: 10px;
+  z-index: -1;
+  overflow: hidden;
+  color: #E6E6E6;
+  font-size: 120%;
+}
+
+.label-discrete {
+  background-color: #EF562D;
+  color: #FFFFFF;
+}
+
+.label-continuous {
+  background-color: #0C4C8A;
+  color: #FFFFFF;
+}
+
+.label-datetime {
+  background-color: #97D5E0;
+  color: #FFFFFF;
+}
+
+.label-other {
+  background-color: #2E2E2E;
+  color: #FFFFFF;
+}
+
+.badge-dad {
+  border-radius: 7px !important;
+  cursor: move;
+  font-size: 100% !important;
+  overflow: hidden;
+  margin: 3px;
+}
+
+.box-dad > .badge-dad {
+  max-width: inherit;
+}
+
+.label-dragula {
+  cursor: move;
+}
+
+.badge-dragula {
+  border-radius: 5px !important;
+  font-size: 100% !important;
+  margin: 1px;
+}
+
+.dragula-block {
+  display: inline-block;
+  margin-bottom: 5px;
+}
+

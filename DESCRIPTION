@@ -1,7 +1,7 @@
 Package: esquisse
 Type: Package
 Title: Explore and Visualize Your Data Interactively
-Version: 0.3.1
+Version: 0.9.9.9000
 Authors@R: c(person("Fanny", "Meyer", role = c("aut")),
   person("Victor", "Perrier", email = "victor.perrier@dreamrs.fr", role = c("aut", "cre")),
   person("Ian", "Carroll", comment = "Faceting support", role = "ctb"),
@@ -15,22 +15,22 @@ License: GPL-3 | file LICENSE
 Encoding: UTF-8
 LazyData: true
 RoxygenNote: 7.1.1
-Imports: miniUI,
+Roxygen: list(markdown = TRUE)
+Imports: datamods,
     rstudioapi,
     shiny (>= 1.1.0),
     htmltools,
     jsonlite,
-    shinyWidgets (>= 0.4.5),
+    shinyWidgets (>= 0.6.0),
     ggplot2 (>= 3.0.0),
     scales,
-    stringi,
     rlang (>= 0.3.1),
-    grDevices
+    grDevices,
+    styler
 Suggests: 
     officer,
     rvg,
     rio,
-    DT,
     testthat (>= 2.1.0),
     knitr,
     ggthemes,

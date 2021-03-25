@@ -23,17 +23,17 @@ updateDragulaInput(
 \item{inputId}{The id of the input object.}
 
 \item{choices}{List of values to select from (if elements of the list are
-named then that name rather than the value is displayed to the user). 
-If this argument is provided, then \code{choiceNames} and \code{choiceValues} must 
-not be provided, and vice-versa. The values should be strings; other 
+named then that name rather than the value is displayed to the user).
+If this argument is provided, then \code{choiceNames} and \code{choiceValues} must
+not be provided, and vice-versa. The values should be strings; other
 types (such as logicals and numbers) will be coerced to strings.}
 
-\item{choiceNames, choiceValues}{List of names and values, respectively, 
-that are displayed to the user in the app and correspond to the each 
-choice (for this reason, choiceNames and choiceValues must have the same length). 
-If either of these arguments is provided, then the other must be provided and 
-choices must not be provided. The advantage of using both of these over a named 
-list for choices is that choiceNames allows any type of UI object to be passed 
+\item{choiceNames, choiceValues}{List of names and values, respectively,
+that are displayed to the user in the app and correspond to the each
+choice (for this reason, choiceNames and choiceValues must have the same length).
+If either of these arguments is provided, then the other must be provided and
+choices must not be provided. The advantage of using both of these over a named
+list for choices is that choiceNames allows any type of UI object to be passed
 through (tag objects, icons, HTML code, ...), instead of just simple text.}
 
 \item{selected}{A \code{list} with \code{targetIds} as names to select values.}
@@ -58,7 +58,7 @@ library("esquisse")
 ui <- fluidPage(
   tags$h2("Update dragulaInput"),
   radioButtons(
-    inputId = "update", 
+    inputId = "update",
     label = "Dataset",
     choices = c("iris", "mtcars")
   ),
@@ -67,33 +67,33 @@ ui <- fluidPage(
     inputId = "myDad",
     sourceLabel = "Variables",
     targetsLabels = c("X", "Y", "fill", "color", "size"),
-    choices = names(iris), 
+    choices = names(iris),
     replace = TRUE, width = "400px", status = "success"
   ),
   verbatimTextOutput(outputId = "result")
 )
 
 server <- function(input, output, session) {
-  
+
   output$result <- renderPrint(str(input$myDad))
-  
+
   observeEvent(input$update, {
     if (input$update == "iris") {
       updateDragulaInput(
-        session = session, 
-        inputId = "myDad", 
+        session = session,
+        inputId = "myDad",
         choices = names(iris),
         status = "success"
       )
     } else {
       updateDragulaInput(
-        session = session, 
-        inputId = "myDad", 
+        session = session,
+        inputId = "myDad",
         choices = names(mtcars)
       )
     }
   }, ignoreInit = TRUE)
-  
+
 }
 
 shinyApp(ui, server)
