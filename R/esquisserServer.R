@@ -279,8 +279,9 @@ esquisserServer <- function(input,
       ylim <- NULL
     }
 
+    data_name <- dataChart$name %||% "data"
     gg_call <- ggcall(
-      data = dataChart$name,
+      data = data_name,
       mapping = mapping,
       geom = geom,
       geom_args = geom_args,
@@ -303,7 +304,7 @@ esquisserServer <- function(input,
 
     ggplotCall$ggobj <- safe_ggplot(
       expr = gg_call,
-      data = setNames(list(data), dataChart$name)
+      data = setNames(list(data), data_name)
     )
     ggplotCall$ggobj$plot
   })

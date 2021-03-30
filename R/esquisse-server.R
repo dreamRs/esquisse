@@ -310,8 +310,9 @@ esquisse_server <- function(id,
           ylim <- NULL
         }
         
+        data_name <- data_chart$name %||% "data"
         gg_call <- ggcall(
-          data = data_chart$name,
+          data = data_name,
           mapping = mapping,
           geom = geom,
           geom_args = geom_args,
@@ -334,7 +335,7 @@ esquisse_server <- function(id,
         
         ggplotCall$ggobj <- safe_ggplot(
           expr = gg_call,
-          data = setNames(list(data), data_chart$name)
+          data = setNames(list(data), data_name)
         )
         ggplotCall$ggobj$plot
       }, filename = "esquisse-plot")
