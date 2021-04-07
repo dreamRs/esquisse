@@ -82,7 +82,7 @@ esquisse_ui <- function(id,
     class = "esquisse-container",
     html_dependency_esquisse(),
     html_dependency_clipboard(),
-    shinyWidgets::chooseSliderSkin("Modern", "#112446"),
+    # shinyWidgets::chooseSliderSkin("Modern", "#112446"),
     
     if (isTRUE(header)) tag_header,
     

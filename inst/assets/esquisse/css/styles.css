@@ -8,14 +8,14 @@
 
 
 .esquisse-container {
-      display: -webkit-flex;
-    display: -ms-flexbox;
-    display: flex;
-    -webkit-flex-direction: column;
-    -ms-flex-direction: column;
-    flex-direction: column;
-    width: 100%;
-    height: 100%
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-direction: column;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  width: 100%;
+  height: 100%
 }
 
 
@@ -58,8 +58,11 @@
 
 /* Geom & aes block */
 .esquisse-geom-aes {
+  display: -ms-grid;
   display: grid; 
+  -ms-grid-columns: 90px 1fr;
   grid-template-columns: 90px 1fr; 
+  -ms-grid-rows: 1fr;
   grid-template-rows: 1fr;
   grid-column-gap: 0px;
   grid-row-gap: 0px;
@@ -115,21 +118,22 @@
 
 /* dropdowns width */
 
-#sw-content-controls-labs {
-  min-width: 150px;
+.esquisse-controls-labs {
+  min-width: 200px;
+  width: 280px;
 }
 
-#sw-content-controls-parameters {
+.esquisse-controls-parameters {
   min-width: 270px;
   overflow-y: auto;
   max-height: 90vh;
 }
 
-#sw-content-controls-appearance {
+.esquisse-controls-appearance {
   min-width: 350px; /*430px*/
 }
 
-#sw-content-controls-filters {
+.esquisse-controls-filters {
   min-width: 350px;
   max-height: 90vh;
   min-height: 30vh;
@@ -138,7 +142,7 @@
   overflow-x: hidden;
 }
 
-#sw-content-controls-code {
+.esquisse-controls-code {
   min-width: 370px;
   z-index: 1000;
 }

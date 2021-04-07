@@ -100,8 +100,10 @@ dragulaInput <- function(inputId,
       # style = if (!is.null(height)) paste("height:", validateCssUnit(height), ";"),
       id = inputId,
       tags$div(
-        style = "display: grid; grid-column-gap: 5px; grid-row-gap: 5px;",
+        style = "display: -ms-grid; display: grid;",
+        style = "grid-column-gap: 5px; grid-row-gap: 5px;",
         style = sprintf("grid-template-columns: repeat(%s, 1fr);", ncolGrid),
+        style = sprintf("-ms-grid-columns: %s;", rep("1fr", ncolGrid)),
         tags$div(
           class = "container-drag-source",
           style = if (!is.null(ncolSource)) paste0("grid-area: 1 / 1 / auto / span ", ncolSource, ";"),

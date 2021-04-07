@@ -1,12 +1,21 @@
 
 #' @importFrom shinyWidgets dropdown
 #' @importFrom htmltools tagAppendAttributes
-dropdown_ <- function(...) {
-  tagAppendAttributes(
+dropdown_ <- function(..., class = NULL) {
+  TAG <- tagAppendAttributes(
     dropdown(...),
     class = "btn-group-esquisse"
   )
+  is_content <- grepl(pattern = "sw-dropdown-content", x = TAG$children[[2]]$attribs$class)
+  if (!isTRUE(is_content))
+    warning("Failed to add class to dropdown content", call. = FALSE)
+  TAG$children[[2]] <- tagAppendAttributes(
+    TAG$children[[2]],
+    class = class
+  )
+  TAG
 }
+
 
 # htmltools::tagAppendAttributes(
 #   shinyWidgets::dropMenu(
@@ -64,14 +73,11 @@ controls_ui <- function(id,
   tagList(
     tags$div(
       class = "btn-group-esquisse btn-group-justified-esquisse",
-      tags$style(sprintf(
-        "#%s .sw-dropdown-in {margin: 8px 0 8px 10px !important; padding: 0 !important;}",
-        "sw-content-filterdrop"
-      )),
       if (isTRUE("labs" %in% controls)) {
         dropdown_(
           controls_labs(ns),
-          inputId = "controls-labs",
+          inputId = ns("controls-labs"),
+          class = "esquisse-controls-labs",
           style = "default",
           label = "Labels & Title",
           up = TRUE,
@@ -82,10 +88,11 @@ controls_ui <- function(id,
       if (isTRUE("parameters" %in% controls)) {
         dropdown_(
           controls_params(ns),
+          inputId = ns("controls-parameters"),
+          class = "esquisse-controls-parameters",
           style = "default",
           label = "Plot options",
           up = TRUE,
-          inputId = "controls-parameters",
           icon = icon("gears"),
           status = "default btn-esquisse-controls"
         )
@@ -93,10 +100,11 @@ controls_ui <- function(id,
       if (isTRUE("appearance" %in% controls)) {
         dropdown_(
           controls_appearance(ns),
+          inputId = ns("controls-appearance"),
+          class = "esquisse-controls-appearance",
           style = "default",
           label = "Appearance",
           up = TRUE,
-          inputId = "controls-appearance",
           icon = icon("palette"),
           status = "default btn-esquisse-controls"
         )
@@ -104,23 +112,24 @@ controls_ui <- function(id,
       if (isTRUE("filters" %in% controls)) {
         dropdown_(
           filter_data_ui(id = ns("filter-data")),
+          inputId = ns("controls-filters"),
+          class = "esquisse-controls-filters",
           style = "default",
           label = "Data",
           up = TRUE,
           icon = icon("filter"),
-          right = TRUE,
-          inputId = "controls-filters",
           status = "default btn-esquisse-controls"
         )
       },
       if (isTRUE("code" %in% controls)) {
         dropdown_(
           controls_code(ns, insert_code = insert_code),
+          inputId = ns("controls-code"),
+          class = "esquisse-controls-code",
           style = "default",
           label = "Code",
           up = TRUE,
           right = TRUE,
-          inputId = "controls-code",
           icon = icon("code"),
           status = "default btn-esquisse-controls"
         )
@@ -545,6 +554,7 @@ labs_options_input <- function(inputId, label, placeholder, defaults = list()) {
         icon = icon("plus"),
         style = "margin-top: 25px; border-radius: 0 4px 4px 0; width: 100%;"
       ),
+      style = "width: 320px;",
       prettyRadioButtons(
         inputId = paste0(inputId, "_face"),
         label = "Font face:",
