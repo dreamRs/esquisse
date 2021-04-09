@@ -46,6 +46,11 @@ esquisser <- function(data = NULL,
                       controls = c("labs", "parameters", "appearance", "filters", "code"),
                       viewer = getOption(x = "esquisse.viewer", default = "dialog")) {
   viewer <- match.arg(viewer, choices = c("dialog", "pane", "browser"))
+  
+  rs_version <- try(rstudioapi::versionInfo()$version, silent = TRUE)
+  if (!inherits(rs_version, "try-error") && rs_version < "1.2") {
+    warning("Esquisse may not work properly, try updating RStudio.", call. = FALSE)
+  }
 
   res_data <- get_data(data, name = deparse(substitute(data)))
   if (!is.null(res_data$esquisse_data)) {
