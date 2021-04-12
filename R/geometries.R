@@ -134,7 +134,7 @@ potential_geoms_ref <- function() {
 #' Match list of arguments to arguments of geometry
 #'
 #' @param geom Character. name of the geometry.
-#' @param args Named list, parameters to match to geom's arguments.
+#' @param args Named list, parameters to be matched to the geometry arguments.
 #' @param add_aes Add aesthetics parameters (like size, fill, ...).
 #' @param mapping Mapping used in plot, to avoid setting fixed aesthetics parameters.
 #' @param envir Package environment to search in.

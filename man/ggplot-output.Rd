@@ -54,7 +54,7 @@ export menu, use \code{NULL} to disable specific format.}
 
 \item{expr}{An expression that generates a \code{ggplot} object.}
 
-\item{env}{The environment in which to evaluate expr.}
+\item{env}{The environment in which to evaluate expression.}
 
 \item{quoted}{Is \code{expr} a quoted expression (with \code{quote()})? This
 is useful if you want to save an expression in a variable.}

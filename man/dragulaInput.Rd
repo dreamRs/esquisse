@@ -66,7 +66,7 @@ if you want to pass custom appearance with \code{choiceNames}.}
 
 \item{ncolGrid}{Number of columns used to place source and targets boxes, see examples.}
 
-\item{dragulaOpts}{Options passed to dragula JS library.}
+\item{dragulaOpts}{Options passed to dragula JavaScript library.}
 
 \item{boxStyle}{CSS style string to customize source and target container.}
 

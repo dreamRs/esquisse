@@ -122,7 +122,7 @@ This modulle allow to save a `ggplot` object in various format and to resize it 
 
 ![](figures/save-ggplot.png)
 
-You can call the module from server to display it in a modal window (it's also possible to display it deirectly in your UI): 
+You can call the module from server to display it in a modal window (it's also possible to display it directly in your UI): 
 
 ```{r save-ggplot}
 function(input, output, session) {

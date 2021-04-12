@@ -29,7 +29,7 @@
 #'  status to color them, or \code{NULL}.
 #' @param replace When a choice is dragged in a target container already
 #'  containing a choice, does the later be replaced by the new one ?
-#' @param dragulaOpts Options passed to dragula JS library.
+#' @param dragulaOpts Options passed to dragula JavaScript library.
 #' @param boxStyle CSS style string to customize source and target container.
 #' @param width Width of the input.
 #' @param height Height of each boxes, the total input height is this parameter X 2.

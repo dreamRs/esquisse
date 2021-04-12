@@ -268,7 +268,7 @@ downloads_labels <- function(label = icon("download"),
 }
 
 #' @param expr An expression that generates a `ggplot` object.
-#' @param env The environment in which to evaluate expr.
+#' @param env The environment in which to evaluate expression.
 #' @param quoted Is `expr` a quoted expression (with `quote()`)? This
 #'   is useful if you want to save an expression in a variable.
 #' @param filename A string of the filename to export WITHOUT extension,

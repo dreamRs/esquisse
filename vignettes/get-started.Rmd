@@ -55,7 +55,7 @@ esquisser(mtcars)
 
 If you don't have used a `data.frame` when launching the addin, a window to import data will appear.
 
-This functionnality comes from package [{datamods}](https://github.com/dreamRs/datamods), you can find more documentation about it [here](https://dreamrs.github.io/datamods/articles/datamods.html).
+This feature comes from package [{datamods}](https://github.com/dreamRs/datamods), you can find more documentation about it [here](https://dreamrs.github.io/datamods/articles/datamods.html).
 
 ![](figures/import-data.png)
 
@@ -66,7 +66,7 @@ This is the main interface and the most interesting part of the addin (in exampl
 
 ![](figures/esquisse.png)
 
-You can select aesthetics to used by clicking the gear icon in top right corner, then drag-and-drop into aesthectics boxes to create a plot: 
+You can select aesthetics to used by clicking the gear icon in top right corner, then drag-and-drop into aesthetics boxes to create a plot: 
 
 ![](figures/aesthetics.png)
 
