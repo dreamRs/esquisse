@@ -1,3 +1,9 @@
+# esquisse 1.0.1
+
+* Fixed bug with `sf` objects.
+
+
+
 # esquisse 1.0.0
 
 * Ability to select aesthetics parameters to use

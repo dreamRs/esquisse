@@ -55,7 +55,7 @@ esquisse_server <- function(id,
             choiceValues = var_choices,
             choiceNames = badgeType(
               col_name = var_choices,
-              col_type = col_type(data[, var_choices])
+              col_type = col_type(data[, var_choices, drop = TRUE])
             ),
             selected = dropNulls(isolate(input$dragvars$target)),
             badge = FALSE,
@@ -147,7 +147,7 @@ esquisse_server <- function(id,
             choiceValues = var_choices,
             choiceNames = badgeType(
               col_name = var_choices,
-              col_type = col_type(data[, var_choices])
+              col_type = col_type(data[, var_choices, drop = TRUE])
             ),
             badge = FALSE
           )

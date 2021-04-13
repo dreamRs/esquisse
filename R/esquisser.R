@@ -47,8 +47,7 @@ esquisser <- function(data = NULL,
                       viewer = getOption(x = "esquisse.viewer", default = "dialog")) {
   viewer <- match.arg(viewer, choices = c("dialog", "pane", "browser"))
   
-  rs_version <- try(rstudioapi::versionInfo()$version, silent = TRUE)
-  if (!inherits(rs_version, "try-error") && rs_version < "1.2") {
+  if (!rstudioapi::isAvailable("1.2")) {
     warning("Esquisse may not work properly, try updating RStudio.", call. = FALSE)
   }
 
