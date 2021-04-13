@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Esquisse Shiny module — esquisserServer • esquisse</title>
+<title>Deprecated functions — esquisse-deprecated • esquisse</title>
 
 
 <!-- jquery -->
@@ -39,8 +39,8 @@
 
 
 
-<meta property="og:title" content="Esquisse Shiny module — esquisserServer" />
-<meta property="og:description" content="DEPRECATED, see esquisse-module." />
+<meta property="og:title" content="Deprecated functions — esquisse-deprecated" />
+<meta property="og:description" content="Deprecated functions" />
 
 
 
@@ -126,97 +126,26 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Esquisse Shiny module</h1>
-    <small class="dont-index">Source: <a href='https://github.com/dreamRs/esquisse/blob/master/R/esquisserServer.R'><code>R/esquisserServer.R</code></a>, <a href='https://github.com/dreamRs/esquisse/blob/master/R/esquisserUI.R'><code>R/esquisserUI.R</code></a></small>
-    <div class="hidden name"><code>module-esquisse.Rd</code></div>
+    <h1>Deprecated functions</h1>
+    <small class="dont-index">Source: <a href='https://github.com/dreamRs/esquisse/blob/master/R/deprecated.R'><code>R/deprecated.R</code></a></small>
+    <div class="hidden name"><code>esquisse-deprecated.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>DEPRECATED, see <code><a href='esquisse-module.html'>esquisse-module</a></code>.</p>
+    <p>Deprecated functions</p>
     </div>
 
-    <pre class="usage"><span class='fu'>esquisserServer</span><span class='op'>(</span>
-  <span class='va'>input</span>,
-  <span class='va'>output</span>,
-  <span class='va'>session</span>,
-  data <span class='op'>=</span> <span class='cn'>NULL</span>,
-  dataModule <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"GlobalEnv"</span>, <span class='st'>"ImportFile"</span><span class='op'>)</span>,
-  sizeDataModule <span class='op'>=</span> <span class='st'>"m"</span>
-<span class='op'>)</span>
 
-<span class='fu'>esquisserUI</span><span class='op'>(</span>
-  <span class='va'>id</span>,
-  header <span class='op'>=</span> <span class='cn'>TRUE</span>,
-  container <span class='op'>=</span> <span class='fu'><a href='esquisse-module.html'>esquisseContainer</a></span><span class='op'>(</span><span class='op'>)</span>,
-  choose_data <span class='op'>=</span> <span class='cn'>TRUE</span>,
-  insert_code <span class='op'>=</span> <span class='cn'>FALSE</span>,
-  disable_filters <span class='op'>=</span> <span class='cn'>FALSE</span>
-<span class='op'>)</span></pre>
-
-    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
-    <table class="ref-arguments">
-    <colgroup><col class="name" /><col class="desc" /></colgroup>
-    <tr>
-      <th>input, output, session</th>
-      <td><p>Standards <code>shiny</code> server arguments.</p></td>
-    </tr>
-    <tr>
-      <th>data</th>
-      <td><p>A <code>reactiveValues</code> with at least a slot <code>data</code> containing a <code>data.frame</code>
-to use in the module. And a slot <code>name</code> corresponding to the name of the <code>data.frame</code>.</p></td>
-    </tr>
-    <tr>
-      <th>dataModule</th>
-      <td><p>Data module to use, choose between <code>"GlobalEnv"</code>
-or <code>"ImportFile"</code>.</p></td>
-    </tr>
-    <tr>
-      <th>sizeDataModule</th>
-      <td><p>Size for the modal window for selecting data.</p></td>
-    </tr>
-    <tr>
-      <th>id</th>
-      <td><p>Module's id.</p></td>
-    </tr>
-    <tr>
-      <th>header</th>
-      <td><p>Logical. Display or not <code>esquisse</code> header.</p></td>
-    </tr>
-    <tr>
-      <th>container</th>
-      <td><p>Container in which display the addin,
-default is to use <code>esquisseContainer</code>, see examples.
-Use <code>NULL</code> for no container (behavior in versions &lt;= 0.2.1).
-Must be a <code>function</code>.</p></td>
-    </tr>
-    <tr>
-      <th>choose_data</th>
-      <td><p>Logical. Display or not the button to choose data.</p></td>
-    </tr>
-    <tr>
-      <th>insert_code</th>
-      <td><p>Logical, Display or not a button to insert the ggplot
-code in the current user script (work only in RStudio).</p></td>
-    </tr>
-    <tr>
-      <th>disable_filters</th>
-      <td><p>Logical. Disable the menu allowing to filter data used.</p></td>
-    </tr>
-    </table>
-
-    <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
-
-    <p>A <code>reactiveValues</code> with 3 slots :</p><ul>
-<li><p><strong>code_plot</strong> : code to generate plot.</p></li>
-<li><p><strong>code_filters</strong> : a list of length two with code to reproduce filters.</p></li>
-<li><p><strong>data</strong> : <code>data.frame</code> used in plot (with filters applied).</p></li>
-</ul>
 
     <h2 class="hasAnchor" id="note"><a class="anchor" href="#note"></a>Note</h2>
 
-    <p>For the module to display correctly, it is necessary to place
-it in a container with a fixed height. Since version &gt;= 0.2.2, the
-container is added by default.</p>
+    <p>The following functions are deprecated and will be removed in next release:</p><ul>
+<li><p><code>esquisserUI</code> / <code>esquisserServer</code>: replaced by <code>esquisse_ui</code> / <code>esquisse_server</code></p></li>
+<li><p><code>filterDF_UI</code> / <code>filterDF</code>: moved to package <a href='https://github.com/dreamRs/datamods'>datamods</a></p></li>
+<li><p><code>chooseDataUI</code> / <code>chooseDataServer</code>: moved to package <a href='https://github.com/dreamRs/datamods'>datamods</a></p></li>
+<li><p><code>coerceUI</code> / <code>coerceServer</code>: moved to package <a href='https://github.com/dreamRs/datamods'>datamods</a></p></li>
+</ul>
+
 
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">

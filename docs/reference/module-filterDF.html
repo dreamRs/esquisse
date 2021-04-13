@@ -40,8 +40,7 @@
 
 
 <meta property="og:title" content="Shiny module to interactively filter a data.frame — module-filterDF" />
-<meta property="og:description" content="Module generate inputs to filter data.frame according column's type.
- Code to reproduce the filter is returned as an expression with filtered data." />
+<meta property="og:description" content="DEPRECATED, please see package datamods for similar features." />
 
 
 
@@ -73,7 +72,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">esquisse</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.3.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.0.0</span>
       </span>
     </div>
 
@@ -81,7 +80,7 @@
       <ul class="nav navbar-nav">
         <li>
   <a href="../index.html">
-    <span class="fa fa-home fa-lg"></span>
+    <span class="fas fa-home fa-lg"></span>
      
   </a>
 </li>
@@ -110,7 +109,7 @@
       <ul class="nav navbar-nav navbar-right">
         <li>
   <a href="https://github.com/dreamRs/esquisse">
-    <span class="fa fa-github fa-lg"></span>
+    <span class="fas fa-github fa-lg"></span>
      
   </a>
 </li>
@@ -128,35 +127,34 @@
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Shiny module to interactively filter a <code>data.frame</code></h1>
-    <small class="dont-index">Source: <a href='https://github.com/dreamRs/esquisse/blob/master/R/module-filterDF.R'><code>R/module-filterDF.R</code></a></small>
+    <small class="dont-index">Source: <a href='https://github.com/dreamRs/esquisse/blob/master/R/deprecated.R'><code>R/deprecated.R</code></a></small>
     <div class="hidden name"><code>module-filterDF.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>Module generate inputs to filter <code>data.frame</code> according column's type.
- Code to reproduce the filter is returned as an expression with filtered data.</p>
+    <p>DEPRECATED, please see package <a href='https://github.com/dreamRs/datamods'>datamods</a> for similar features.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>filterDF_UI</span>(<span class='kw'>id</span>, show_nrow = <span class='fl'>TRUE</span>)
+    <pre class="usage"><span class='fu'>filterDF_UI</span><span class='op'>(</span><span class='va'>id</span>, show_nrow <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span>
 
-<span class='fu'>filterDF</span>(
-  <span class='kw'>input</span>,
-  <span class='kw'>output</span>,
-  <span class='kw'>session</span>,
-  data_table = <span class='fu'><a href='https://shiny.rstudio.com/reference/shiny/latest/reactive.html'>reactive</a></span>(),
-  data_vars = <span class='kw'>shiny</span>::<span class='fu'><a href='https://shiny.rstudio.com/reference/shiny/latest/reactive.html'>reactive</a></span>(<span class='kw'>NULL</span>),
-  data_name = <span class='fu'><a href='https://shiny.rstudio.com/reference/shiny/latest/reactive.html'>reactive</a></span>(<span class='st'>"data"</span>),
-  label_nrow = <span class='st'>"Number of rows:"</span>,
-  drop_ids = <span class='fl'>TRUE</span>,
-  picker = <span class='fl'>FALSE</span>
-)</pre>
+<span class='fu'>filterDF</span><span class='op'>(</span>
+  <span class='va'>input</span>,
+  <span class='va'>output</span>,
+  <span class='va'>session</span>,
+  data_table <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/pkg/shiny/man/reactive.html'>reactive</a></span><span class='op'>(</span><span class='op'>)</span>,
+  data_vars <span class='op'>=</span> <span class='fu'>shiny</span><span class='fu'>::</span><span class='fu'><a href='https://rdrr.io/pkg/shiny/man/reactive.html'>reactive</a></span><span class='op'>(</span><span class='cn'>NULL</span><span class='op'>)</span>,
+  data_name <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/pkg/shiny/man/reactive.html'>reactive</a></span><span class='op'>(</span><span class='st'>"data"</span><span class='op'>)</span>,
+  label_nrow <span class='op'>=</span> <span class='st'>"Number of rows:"</span>,
+  drop_ids <span class='op'>=</span> <span class='cn'>TRUE</span>,
+  picker <span class='op'>=</span> <span class='cn'>FALSE</span>
+<span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>id</th>
-      <td><p>Module id. See <code><a href='https://shiny.rstudio.com/reference/shiny/latest/callModule.html'>callModule</a></code>.</p></td>
+      <td><p>Module id. See <code><a href='https://rdrr.io/pkg/shiny/man/callModule.html'>callModule</a></code>.</p></td>
     </tr>
     <tr>
       <th>show_nrow</th>
@@ -168,17 +166,17 @@
     </tr>
     <tr>
       <th>data_table</th>
-      <td><p><code><a href='https://shiny.rstudio.com/reference/shiny/latest/reactive.html'>reactive</a></code> function returning a
+      <td><p><code><a href='https://rdrr.io/pkg/shiny/man/reactive.html'>reactive</a></code> function returning a
 <code>data.frame</code> to filter.</p></td>
     </tr>
     <tr>
       <th>data_vars</th>
-      <td><p><code><a href='https://shiny.rstudio.com/reference/shiny/latest/reactive.html'>reactive</a></code> function returning a
+      <td><p><code><a href='https://rdrr.io/pkg/shiny/man/reactive.html'>reactive</a></code> function returning a
 <code>character</code> vector of variable to use for filters.</p></td>
     </tr>
     <tr>
       <th>data_name</th>
-      <td><p><code><a href='https://shiny.rstudio.com/reference/shiny/latest/reactive.html'>reactive</a></code> function returning a
+      <td><p><code><a href='https://rdrr.io/pkg/shiny/man/reactive.html'>reactive</a></code> function returning a
 <code>character</code> string representing <code>data_table</code> name.</p></td>
     </tr>
     <tr>
@@ -192,115 +190,19 @@
     <tr>
       <th>picker</th>
       <td><p>Use  <code><a href='https://rdrr.io/pkg/shinyWidgets/man/pickerInput.html'>shinyWidgets::pickerInput</a></code>
-instead of  <code><a href='https://shiny.rstudio.com/reference/shiny/latest/selectInput.html'>shiny::selectizeInput</a></code> (default).</p></td>
+instead of  <code><a href='https://rdrr.io/pkg/shiny/man/selectInput.html'>shiny::selectizeInput</a></code> (default).</p></td>
     </tr>
     </table>
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
     <p>A <code>list</code> with 2 elements :</p><ul>
-<li><p><strong>data_filtered</strong> : <code><a href='https://shiny.rstudio.com/reference/shiny/latest/reactive.html'>reactive</a></code> function returning data filtered.</p></li>
-<li><p><strong>code</strong> : <code><a href='https://shiny.rstudio.com/reference/shiny/latest/reactiveValues.html'>reactiveValues</a></code> with 2 slots :
-   <code>expr</code> (raw expression to filter data) and <code>dplyr</code> (code with dplyr pipeline).</p></li>
+<li><p><strong>data_filtered</strong> : <code><a href='https://rdrr.io/pkg/shiny/man/reactive.html'>reactive</a></code> function returning data filtered.</p></li>
+<li><p><strong>code</strong> : <code><a href='https://rdrr.io/pkg/shiny/man/reactiveValues.html'>reactiveValues</a></code> with 2 slots :
+<code>expr</code> (raw expression to filter data) and <code>dplyr</code> (code with dplyr pipeline).</p></li>
 </ul>
 
 
-    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='co'>if</span> (<span class='fu'><a href='https://rdrr.io/r/base/interactive.html'>interactive</a></span>()) {
-  
-  <span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='kw'><a href='http://shiny.rstudio.com'>shiny</a></span>)
-  <span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='kw'><a href='https://github.com/dreamRs/shinyWidgets'>shinyWidgets</a></span>)
-  <span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='kw'><a href='http://ggplot2.tidyverse.org'>ggplot2</a></span>)
-  <span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='kw'><a href='https://github.com/dreamRs/esquisse'>esquisse</a></span>)
-  
-  <span class='co'># Add some NAs to mpg</span>
-  <span class='kw'>mpg_na</span> <span class='op'>&lt;-</span> <span class='kw'>mpg</span>
-  <span class='kw'>mpg_na</span>[] <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/lapply.html'>lapply</a></span>(
-    X = <span class='kw'>mpg_na</span>,
-    FUN = <span class='fu'>function</span>(<span class='kw'>x</span>) {
-      <span class='kw'>x</span>[<span class='fu'><a href='https://rdrr.io/r/base/sample.html'>sample.int</a></span>(n = <span class='fu'><a href='https://rdrr.io/r/base/length.html'>length</a></span>(<span class='kw'>x</span>), size = <span class='fu'><a href='https://rdrr.io/r/base/sample.html'>sample</a></span>(<span class='fl'>15</span><span class='op'>:</span><span class='fl'>30</span>, <span class='fl'>1</span>))] <span class='op'>&lt;-</span> <span class='fl'>NA</span>
-      <span class='kw'>x</span>
-    }
-  )
-  
-  <span class='kw'>ui</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://shiny.rstudio.com/reference/shiny/latest/fluidPage.html'>fluidPage</a></span>(
-    <span class='kw'>tags</span><span class='op'>$</span><span class='fu'><a href='https://rdrr.io/pkg/htmltools/man/builder.html'>h2</a></span>(<span class='st'>"Filter data.frame"</span>),
-    
-    <span class='fu'><a href='https://shiny.rstudio.com/reference/shiny/latest/radioButtons.html'>radioButtons</a></span>(
-      inputId = <span class='st'>"dataset"</span>, 
-      label = <span class='st'>"Data:"</span>,
-      choices = <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(
-        <span class='st'>"iris"</span>, <span class='st'>"mtcars"</span>, <span class='st'>"economics"</span>, 
-        <span class='st'>"midwest"</span>, <span class='st'>"mpg"</span>, <span class='st'>"mpg_na"</span>, <span class='st'>"msleep"</span>, <span class='st'>"diamonds"</span>,
-        <span class='st'>"faithfuld"</span>, <span class='st'>"txhousing"</span>
-      ),
-      inline = <span class='fl'>TRUE</span>
-    ),
-    
-    <span class='fu'><a href='https://shiny.rstudio.com/reference/shiny/latest/fluidPage.html'>fluidRow</a></span>(
-      <span class='fu'><a href='https://shiny.rstudio.com/reference/shiny/latest/column.html'>column</a></span>(
-        width = <span class='fl'>3</span>,
-        <span class='fu'>filterDF_UI</span>(<span class='st'>"filtering"</span>)
-      ),
-      <span class='fu'><a href='https://shiny.rstudio.com/reference/shiny/latest/column.html'>column</a></span>(
-        width = <span class='fl'>9</span>,
-        <span class='fu'><a href='https://rdrr.io/pkg/shinyWidgets/man/progress-bar.html'>progressBar</a></span>(
-          id = <span class='st'>"pbar"</span>, value = <span class='fl'>100</span>, 
-          total = <span class='fl'>100</span>, display_pct = <span class='fl'>TRUE</span>
-        ),
-        <span class='kw'>DT</span>::<span class='fu'><a href='https://rdrr.io/pkg/DT/man/dataTableOutput.html'>dataTableOutput</a></span>(outputId = <span class='st'>"table"</span>),
-        <span class='kw'>tags</span><span class='op'>$</span><span class='fu'><a href='https://rdrr.io/pkg/htmltools/man/builder.html'>p</a></span>(<span class='st'>"Code dplyr:"</span>),
-        <span class='fu'><a href='https://shiny.rstudio.com/reference/shiny/latest/textOutput.html'>verbatimTextOutput</a></span>(outputId = <span class='st'>"code_dplyr"</span>),
-        <span class='kw'>tags</span><span class='op'>$</span><span class='fu'><a href='https://rdrr.io/pkg/htmltools/man/builder.html'>p</a></span>(<span class='st'>"Expression:"</span>),
-        <span class='fu'><a href='https://shiny.rstudio.com/reference/shiny/latest/textOutput.html'>verbatimTextOutput</a></span>(outputId = <span class='st'>"code"</span>),
-        <span class='kw'>tags</span><span class='op'>$</span><span class='fu'><a href='https://rdrr.io/pkg/htmltools/man/builder.html'>p</a></span>(<span class='st'>"Filtered data:"</span>),
-        <span class='fu'><a href='https://shiny.rstudio.com/reference/shiny/latest/textOutput.html'>verbatimTextOutput</a></span>(outputId = <span class='st'>"res_str"</span>)
-      )
-    )
-  )
-  
-  <span class='kw'>server</span> <span class='op'>&lt;-</span> <span class='fu'>function</span>(<span class='kw'>input</span>, <span class='kw'>output</span>, <span class='kw'>session</span>) {
-    
-    <span class='kw'>data</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://shiny.rstudio.com/reference/shiny/latest/reactive.html'>reactive</a></span>({
-      <span class='fu'><a href='https://rdrr.io/r/base/get.html'>get</a></span>(<span class='kw'>input</span><span class='op'>$</span><span class='kw'>dataset</span>)
-    })
-    
-    <span class='kw'>res_filter</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://shiny.rstudio.com/reference/shiny/latest/callModule.html'>callModule</a></span>(
-      module = <span class='kw'>filterDF</span>, 
-      id = <span class='st'>"filtering"</span>, 
-      data_table = <span class='kw'>data</span>,
-      data_name = <span class='fu'><a href='https://shiny.rstudio.com/reference/shiny/latest/reactive.html'>reactive</a></span>(<span class='kw'>input</span><span class='op'>$</span><span class='kw'>dataset</span>)
-    )
-    
-    <span class='fu'><a href='https://shiny.rstudio.com/reference/shiny/latest/observeEvent.html'>observeEvent</a></span>(<span class='kw'>res_filter</span><span class='op'>$</span><span class='fu'>data_filtered</span>(), {
-      <span class='fu'><a href='https://rdrr.io/pkg/shinyWidgets/man/progress-bar.html'>updateProgressBar</a></span>(
-        session = <span class='kw'>session</span>, id = <span class='st'>"pbar"</span>, 
-        value = <span class='fu'><a href='https://rdrr.io/r/base/nrow.html'>nrow</a></span>(<span class='kw'>res_filter</span><span class='op'>$</span><span class='fu'>data_filtered</span>()), total = <span class='fu'><a href='https://rdrr.io/r/base/nrow.html'>nrow</a></span>(<span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span>())
-      )
-    })
-    
-    <span class='kw'>output</span><span class='op'>$</span><span class='kw'>table</span> <span class='op'>&lt;-</span> <span class='kw'>DT</span>::<span class='fu'><a href='https://rdrr.io/pkg/DT/man/dataTableOutput.html'>renderDT</a></span>({
-      <span class='kw'>res_filter</span><span class='op'>$</span><span class='fu'>data_filtered</span>()
-    }, options = <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(pageLength = <span class='fl'>5</span>))
-    
-    
-    <span class='kw'>output</span><span class='op'>$</span><span class='kw'>code_dplyr</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://shiny.rstudio.com/reference/shiny/latest/renderPrint.html'>renderPrint</a></span>({
-      <span class='kw'>res_filter</span><span class='op'>$</span><span class='kw'>code</span><span class='op'>$</span><span class='kw'>dplyr</span>
-    })
-    <span class='kw'>output</span><span class='op'>$</span><span class='kw'>code</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://shiny.rstudio.com/reference/shiny/latest/renderPrint.html'>renderPrint</a></span>({
-      <span class='kw'>res_filter</span><span class='op'>$</span><span class='kw'>code</span><span class='op'>$</span><span class='kw'>expr</span>
-    })
-    
-    <span class='kw'>output</span><span class='op'>$</span><span class='kw'>res_str</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://shiny.rstudio.com/reference/shiny/latest/renderPrint.html'>renderPrint</a></span>({
-      <span class='fu'><a href='https://rdrr.io/r/utils/str.html'>str</a></span>(<span class='kw'>res_filter</span><span class='op'>$</span><span class='fu'>data_filtered</span>())
-    })
-    
-  }
-  
-  <span class='fu'><a href='https://shiny.rstudio.com/reference/shiny/latest/shinyApp.html'>shinyApp</a></span>(<span class='kw'>ui</span>, <span class='kw'>server</span>)
-  
-}
-</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
@@ -316,7 +218,7 @@ instead of  <code><a href='https://shiny.rstudio.com/reference/shiny/latest/sele
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.0.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
 </div>
 
       </footer>

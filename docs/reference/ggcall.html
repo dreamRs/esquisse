@@ -72,7 +72,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">esquisse</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.3.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.0.0</span>
       </span>
     </div>
 
@@ -80,7 +80,7 @@
       <ul class="nav navbar-nav">
         <li>
   <a href="../index.html">
-    <span class="fa fa-home fa-lg"></span>
+    <span class="fas fa-home fa-lg"></span>
      
   </a>
 </li>
@@ -109,7 +109,7 @@
       <ul class="nav navbar-nav navbar-right">
         <li>
   <a href="https://github.com/dreamRs/esquisse">
-    <span class="fa fa-github fa-lg"></span>
+    <span class="fas fa-github fa-lg"></span>
      
   </a>
 </li>
@@ -135,24 +135,24 @@
     <p>Generate code to create a <code>ggplot2</code></p>
     </div>
 
-    <pre class="usage"><span class='fu'>ggcall</span>(
-  data = <span class='kw'>NULL</span>,
-  mapping = <span class='kw'>NULL</span>,
-  geom = <span class='kw'>NULL</span>,
-  geom_args = <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(),
-  scales = <span class='kw'>NULL</span>,
-  scales_args = <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(),
-  coord = <span class='kw'>NULL</span>,
-  labs = <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(),
-  theme = <span class='kw'>NULL</span>,
-  theme_args = <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(),
-  facet = <span class='kw'>NULL</span>,
-  facet_row = <span class='kw'>NULL</span>,
-  facet_col = <span class='kw'>NULL</span>,
-  facet_args = <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(),
-  xlim = <span class='kw'>NULL</span>,
-  ylim = <span class='kw'>NULL</span>
-)</pre>
+    <pre class="usage"><span class='fu'>ggcall</span><span class='op'>(</span>
+  data <span class='op'>=</span> <span class='cn'>NULL</span>,
+  mapping <span class='op'>=</span> <span class='cn'>NULL</span>,
+  geom <span class='op'>=</span> <span class='cn'>NULL</span>,
+  geom_args <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span><span class='op'>)</span>,
+  scales <span class='op'>=</span> <span class='cn'>NULL</span>,
+  scales_args <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span><span class='op'>)</span>,
+  coord <span class='op'>=</span> <span class='cn'>NULL</span>,
+  labs <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span><span class='op'>)</span>,
+  theme <span class='op'>=</span> <span class='cn'>NULL</span>,
+  theme_args <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span><span class='op'>)</span>,
+  facet <span class='op'>=</span> <span class='cn'>NULL</span>,
+  facet_row <span class='op'>=</span> <span class='cn'>NULL</span>,
+  facet_col <span class='op'>=</span> <span class='cn'>NULL</span>,
+  facet_args <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span><span class='op'>)</span>,
+  xlim <span class='op'>=</span> <span class='cn'>NULL</span>,
+  ylim <span class='op'>=</span> <span class='cn'>NULL</span>
+<span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -230,77 +230,77 @@ if <code>scales</code> is length &gt; 1, must be a named list with <code>scales<
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='co'># Default:</span>
-<span class='fu'>ggcall</span>()
+<span class='fu'>ggcall</span><span class='op'>(</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; ggplot()</div><div class='input'>
 <span class='co'># With data and aes</span>
-<span class='fu'>ggcall</span>(<span class='st'>"mtcars"</span>, <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(x = <span class='st'>"mpg"</span>, y = <span class='st'>"wt"</span>))
+<span class='fu'>ggcall</span><span class='op'>(</span><span class='st'>"mtcars"</span>, <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span>x <span class='op'>=</span> <span class='st'>"mpg"</span>, y <span class='op'>=</span> <span class='st'>"wt"</span><span class='op'>)</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; ggplot(mtcars) + aes(x = mpg, y = wt)</div><div class='input'>
 <span class='co'># Evaluate the call</span>
-<span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='kw'><a href='http://ggplot2.tidyverse.org'>ggplot2</a></span>)
-<span class='fu'><a href='https://rdrr.io/r/base/eval.html'>eval</a></span>(<span class='fu'>ggcall</span>(<span class='st'>"mtcars"</span>, <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(x = <span class='st'>"mpg"</span>, y = <span class='st'>"wt"</span>)))
+<span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://ggplot2.tidyverse.org'>ggplot2</a></span><span class='op'>)</span>
+<span class='fu'><a href='https://rdrr.io/r/base/eval.html'>eval</a></span><span class='op'>(</span><span class='fu'>ggcall</span><span class='op'>(</span><span class='st'>"mtcars"</span>, <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span>x <span class='op'>=</span> <span class='st'>"mpg"</span>, y <span class='op'>=</span> <span class='st'>"wt"</span><span class='op'>)</span><span class='op'>)</span><span class='op'>)</span>
 </div><div class='img'><img src='ggcall-1.png' alt='' width='700' height='433' /></div><div class='input'>
 
 <span class='co'># With a geom:</span>
-<span class='fu'>ggcall</span>(
-  data = <span class='st'>"mtcars"</span>,
-  mapping = <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(x = <span class='st'>"mpg"</span>, y = <span class='st'>"wt"</span>),
-  geom = <span class='st'>"point"</span>
-)
+<span class='fu'>ggcall</span><span class='op'>(</span>
+  data <span class='op'>=</span> <span class='st'>"mtcars"</span>,
+  mapping <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span>x <span class='op'>=</span> <span class='st'>"mpg"</span>, y <span class='op'>=</span> <span class='st'>"wt"</span><span class='op'>)</span>,
+  geom <span class='op'>=</span> <span class='st'>"point"</span>
+<span class='op'>)</span>
 </div><div class='output co'>#&gt; ggplot(mtcars) + aes(x = mpg, y = wt) + geom_point()</div><div class='input'>
 <span class='co'># With options</span>
-<span class='fu'>ggcall</span>(
-  data = <span class='st'>"mtcars"</span>,
-  mapping = <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(x = <span class='st'>"hp"</span>, y = <span class='st'>"cyl"</span>, fill = <span class='st'>"color"</span>),
-  geom = <span class='st'>"bar"</span>,
-  coord = <span class='st'>"flip"</span>,
-  labs = <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(title = <span class='st'>"My title"</span>),
-  theme = <span class='st'>"minimal"</span>,
-  facet = <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"gear"</span>, <span class='st'>"carb"</span>),
-  theme_args = <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(legend.position = <span class='st'>"bottom"</span>)
-)
+<span class='fu'>ggcall</span><span class='op'>(</span>
+  data <span class='op'>=</span> <span class='st'>"mtcars"</span>,
+  mapping <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span>x <span class='op'>=</span> <span class='st'>"hp"</span>, y <span class='op'>=</span> <span class='st'>"cyl"</span>, fill <span class='op'>=</span> <span class='st'>"color"</span><span class='op'>)</span>,
+  geom <span class='op'>=</span> <span class='st'>"bar"</span>,
+  coord <span class='op'>=</span> <span class='st'>"flip"</span>,
+  labs <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span>title <span class='op'>=</span> <span class='st'>"My title"</span><span class='op'>)</span>,
+  theme <span class='op'>=</span> <span class='st'>"minimal"</span>,
+  facet <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"gear"</span>, <span class='st'>"carb"</span><span class='op'>)</span>,
+  theme_args <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span>legend.position <span class='op'>=</span> <span class='st'>"bottom"</span><span class='op'>)</span>
+<span class='op'>)</span>
 </div><div class='output co'>#&gt; ggplot(mtcars) + aes(x = hp, y = cyl, fill = color) + geom_bar() + 
 #&gt;     labs(title = "My title") + coord_flip() + theme_minimal() + 
 #&gt;     theme(legend.position = "bottom") + facet_wrap(vars(gear, 
 #&gt;     carb))</div><div class='input'>
 <span class='co'># Theme</span>
-<span class='fu'>ggcall</span>(
-  <span class='st'>"mtcars"</span>, <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(x = <span class='st'>"mpg"</span>, y = <span class='st'>"wt"</span>),
-  theme = <span class='st'>"theme_minimal"</span>,
-  theme_args = <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(
-    panel.ontop = <span class='fl'>TRUE</span>,
-    legend.title = <span class='kw'>rlang</span>::<span class='fu'><a href='https://rlang.r-lib.org/reference/nse-defuse.html'>expr</a></span>(<span class='fu'><a href='https://ggplot2.tidyverse.org/reference/element.html'>element_text</a></span>(face = <span class='st'>"bold"</span>))
-  )
-)
+<span class='fu'>ggcall</span><span class='op'>(</span>
+  <span class='st'>"mtcars"</span>, <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span>x <span class='op'>=</span> <span class='st'>"mpg"</span>, y <span class='op'>=</span> <span class='st'>"wt"</span><span class='op'>)</span>,
+  theme <span class='op'>=</span> <span class='st'>"theme_minimal"</span>,
+  theme_args <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span>
+    panel.ontop <span class='op'>=</span> <span class='cn'>TRUE</span>,
+    legend.title <span class='op'>=</span> <span class='fu'>rlang</span><span class='fu'>::</span><span class='fu'><a href='https://rlang.r-lib.org/reference/nse-defuse.html'>expr</a></span><span class='op'>(</span><span class='fu'><a href='https://ggplot2.tidyverse.org/reference/element.html'>element_text</a></span><span class='op'>(</span>face <span class='op'>=</span> <span class='st'>"bold"</span><span class='op'>)</span><span class='op'>)</span>
+  <span class='op'>)</span>
+<span class='op'>)</span>
 </div><div class='output co'>#&gt; ggplot(mtcars) + aes(x = mpg, y = wt) + theme_minimal() + theme(panel.ontop = TRUE, 
 #&gt;     legend.title = element_text(face = "bold"))</div><div class='input'>
 <span class='co'># Theme from other package than ggplot2</span>
-<span class='fu'>ggcall</span>(
-  <span class='st'>"mtcars"</span>, <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(x = <span class='st'>"mpg"</span>, y = <span class='st'>"wt"</span>),
-  theme = <span class='st'>"ggthemes::theme_economist"</span>
-)
+<span class='fu'>ggcall</span><span class='op'>(</span>
+  <span class='st'>"mtcars"</span>, <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span>x <span class='op'>=</span> <span class='st'>"mpg"</span>, y <span class='op'>=</span> <span class='st'>"wt"</span><span class='op'>)</span>,
+  theme <span class='op'>=</span> <span class='st'>"ggthemes::theme_economist"</span>
+<span class='op'>)</span>
 </div><div class='output co'>#&gt; ggplot(mtcars) + aes(x = mpg, y = wt) + ggthemes::theme_economist()</div><div class='input'>
 
 <span class='co'># One scale</span>
-<span class='fu'>ggcall</span>(
-  data = <span class='st'>"mtcars"</span>,
-  mapping = <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(x = <span class='st'>"mpg"</span>, y = <span class='st'>"wt"</span>, color = <span class='st'>"qsec"</span>),
-  geom = <span class='st'>"point"</span>,
-  scales = <span class='st'>"color_distiller"</span>,
-  scales_args = <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(palette = <span class='st'>"Blues"</span>)
-)
+<span class='fu'>ggcall</span><span class='op'>(</span>
+  data <span class='op'>=</span> <span class='st'>"mtcars"</span>,
+  mapping <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span>x <span class='op'>=</span> <span class='st'>"mpg"</span>, y <span class='op'>=</span> <span class='st'>"wt"</span>, color <span class='op'>=</span> <span class='st'>"qsec"</span><span class='op'>)</span>,
+  geom <span class='op'>=</span> <span class='st'>"point"</span>,
+  scales <span class='op'>=</span> <span class='st'>"color_distiller"</span>,
+  scales_args <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span>palette <span class='op'>=</span> <span class='st'>"Blues"</span><span class='op'>)</span>
+<span class='op'>)</span>
 </div><div class='output co'>#&gt; ggplot(mtcars) + aes(x = mpg, y = wt, color = qsec) + geom_point() + 
 #&gt;     scale_color_distiller(palette = "Blues")</div><div class='input'>
 <span class='co'># Two scales</span>
-<span class='fu'>ggcall</span>(
-  data = <span class='st'>"mtcars"</span>,
-  mapping = <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(x = <span class='st'>"mpg"</span>, y = <span class='st'>"wt"</span>, color = <span class='st'>"qsec"</span>, size = <span class='st'>"qsec"</span>),
-  geom = <span class='st'>"point"</span>,
-  scales = <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"color_distiller"</span>, <span class='st'>"size_continuous"</span>),
-  scales_args = <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(
-    color_distiller = <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(palette = <span class='st'>"Greens"</span>),
-    size_continuous = <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(range = <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>1</span>, <span class='fl'>20</span>))
-  )
-)
+<span class='fu'>ggcall</span><span class='op'>(</span>
+  data <span class='op'>=</span> <span class='st'>"mtcars"</span>,
+  mapping <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span>x <span class='op'>=</span> <span class='st'>"mpg"</span>, y <span class='op'>=</span> <span class='st'>"wt"</span>, color <span class='op'>=</span> <span class='st'>"qsec"</span>, size <span class='op'>=</span> <span class='st'>"qsec"</span><span class='op'>)</span>,
+  geom <span class='op'>=</span> <span class='st'>"point"</span>,
+  scales <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"color_distiller"</span>, <span class='st'>"size_continuous"</span><span class='op'>)</span>,
+  scales_args <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span>
+    color_distiller <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span>palette <span class='op'>=</span> <span class='st'>"Greens"</span><span class='op'>)</span>,
+    size_continuous <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span>range <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>1</span>, <span class='fl'>20</span><span class='op'>)</span><span class='op'>)</span>
+  <span class='op'>)</span>
+<span class='op'>)</span>
 </div><div class='output co'>#&gt; ggplot(mtcars) + aes(x = mpg, y = wt, color = qsec, size = qsec) + 
 #&gt;     geom_point() + scale_color_distiller(palette = "Greens") + 
 #&gt;     scale_size_continuous(range = c(1, 20))</div></pre>
@@ -319,7 +319,7 @@ if <code>scales</code> is length &gt; 1, must be a named list with <code>scales<
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.0.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
 </div>
 
       </footer>

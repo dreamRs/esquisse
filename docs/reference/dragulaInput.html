@@ -72,7 +72,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">esquisse</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.3.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.0.0</span>
       </span>
     </div>
 
@@ -80,7 +80,7 @@
       <ul class="nav navbar-nav">
         <li>
   <a href="../index.html">
-    <span class="fa fa-home fa-lg"></span>
+    <span class="fas fa-home fa-lg"></span>
      
   </a>
 </li>
@@ -109,7 +109,7 @@
       <ul class="nav navbar-nav navbar-right">
         <li>
   <a href="https://github.com/dreamRs/esquisse">
-    <span class="fa fa-github fa-lg"></span>
+    <span class="fas fa-github fa-lg"></span>
      
   </a>
 </li>
@@ -135,26 +135,26 @@
     <p>Drag And Drop Input Widget</p>
     </div>
 
-    <pre class="usage"><span class='fu'>dragulaInput</span>(
-  <span class='kw'>inputId</span>,
-  label = <span class='kw'>NULL</span>,
-  <span class='kw'>sourceLabel</span>,
-  <span class='kw'>targetsLabels</span>,
-  targetsIds = <span class='kw'>NULL</span>,
-  choices = <span class='kw'>NULL</span>,
-  choiceNames = <span class='kw'>NULL</span>,
-  choiceValues = <span class='kw'>NULL</span>,
-  selected = <span class='kw'>NULL</span>,
-  status = <span class='st'>"primary"</span>,
-  replace = <span class='fl'>FALSE</span>,
-  badge = <span class='fl'>TRUE</span>,
-  ncolSource = <span class='st'>"auto"</span>,
-  ncolGrid = <span class='kw'>NULL</span>,
-  dragulaOpts = <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(),
-  boxStyle = <span class='kw'>NULL</span>,
-  width = <span class='kw'>NULL</span>,
-  height = <span class='st'>"100px"</span>
-)</pre>
+    <pre class="usage"><span class='fu'>dragulaInput</span><span class='op'>(</span>
+  <span class='va'>inputId</span>,
+  label <span class='op'>=</span> <span class='cn'>NULL</span>,
+  <span class='va'>sourceLabel</span>,
+  <span class='va'>targetsLabels</span>,
+  targetsIds <span class='op'>=</span> <span class='cn'>NULL</span>,
+  choices <span class='op'>=</span> <span class='cn'>NULL</span>,
+  choiceNames <span class='op'>=</span> <span class='cn'>NULL</span>,
+  choiceValues <span class='op'>=</span> <span class='cn'>NULL</span>,
+  selected <span class='op'>=</span> <span class='cn'>NULL</span>,
+  status <span class='op'>=</span> <span class='st'>"primary"</span>,
+  replace <span class='op'>=</span> <span class='cn'>FALSE</span>,
+  badge <span class='op'>=</span> <span class='cn'>TRUE</span>,
+  ncolSource <span class='op'>=</span> <span class='st'>"auto"</span>,
+  ncolGrid <span class='op'>=</span> <span class='cn'>NULL</span>,
+  dragulaOpts <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span><span class='op'>)</span>,
+  boxStyle <span class='op'>=</span> <span class='cn'>NULL</span>,
+  width <span class='op'>=</span> <span class='cn'>NULL</span>,
+  height <span class='op'>=</span> <span class='st'>"100px"</span>
+<span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -183,19 +183,19 @@
     <tr>
       <th>choices</th>
       <td><p>List of values to select from (if elements of the list are
-named then that name rather than the value is displayed to the user). 
-If this argument is provided, then <code>choiceNames</code> and <code>choiceValues</code> must 
-not be provided, and vice-versa. The values should be strings; other 
+named then that name rather than the value is displayed to the user).
+If this argument is provided, then <code>choiceNames</code> and <code>choiceValues</code> must
+not be provided, and vice-versa. The values should be strings; other
 types (such as logicals and numbers) will be coerced to strings.</p></td>
     </tr>
     <tr>
       <th>choiceNames, choiceValues</th>
-      <td><p>List of names and values, respectively, 
-that are displayed to the user in the app and correspond to the each 
-choice (for this reason, choiceNames and choiceValues must have the same length). 
-If either of these arguments is provided, then the other must be provided and 
-choices must not be provided. The advantage of using both of these over a named 
-list for choices is that choiceNames allows any type of UI object to be passed 
+      <td><p>List of names and values, respectively,
+that are displayed to the user in the app and correspond to the each
+choice (for this reason, choiceNames and choiceValues must have the same length).
+If either of these arguments is provided, then the other must be provided and
+choices must not be provided. The advantage of using both of these over a named
+list for choices is that choiceNames allows any type of UI object to be passed
 through (tag objects, icons, HTML code, ...), instead of just simple text.</p></td>
     </tr>
     <tr>
@@ -227,7 +227,7 @@ if you want to pass custom appearance with <code>choiceNames</code>.</p></td>
     </tr>
     <tr>
       <th>dragulaOpts</th>
-      <td><p>Options passed to dragula JS library.</p></td>
+      <td><p>Options passed to dragula JavaScript library.</p></td>
     </tr>
     <tr>
       <th>boxStyle</th>
@@ -254,85 +254,85 @@ if you want to pass custom appearance with <code>choiceNames</code>.</p></td>
     <div class='dont-index'><p><code><a href='updateDragulaInput.html'>updateDragulaInput</a></code> to update choices server-side.</p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='kw'><a href='http://shiny.rstudio.com'>shiny</a></span>)
-<span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='kw'><a href='https://github.com/dreamRs/esquisse'>esquisse</a></span>)
+    <pre class="examples"><div class='input'><span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://shiny.rstudio.com/'>shiny</a></span><span class='op'>)</span>
+<span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://github.com/dreamRs/esquisse'>esquisse</a></span><span class='op'>)</span>
 
-<span class='kw'>ui</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://shiny.rstudio.com/reference/shiny/latest/fluidPage.html'>fluidPage</a></span>(
-  <span class='kw'>tags</span><span class='op'>$</span><span class='fu'><a href='https://rdrr.io/pkg/htmltools/man/builder.html'>h2</a></span>(<span class='st'>"Demo dragulaInput"</span>),
-  <span class='kw'>tags</span><span class='op'>$</span><span class='fu'><a href='https://rdrr.io/pkg/htmltools/man/builder.html'>br</a></span>(),
-  <span class='fu'><a href='https://shiny.rstudio.com/reference/shiny/latest/fluidPage.html'>fluidRow</a></span>(
-    <span class='fu'><a href='https://shiny.rstudio.com/reference/shiny/latest/column.html'>column</a></span>(
-      width = <span class='fl'>6</span>,
+<span class='va'>ui</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/shiny/man/fluidPage.html'>fluidPage</a></span><span class='op'>(</span>
+  <span class='va'>tags</span><span class='op'>$</span><span class='fu'>h2</span><span class='op'>(</span><span class='st'>"Demo dragulaInput"</span><span class='op'>)</span>,
+  <span class='va'>tags</span><span class='op'>$</span><span class='fu'>br</span><span class='op'>(</span><span class='op'>)</span>,
+  <span class='fu'><a href='https://rdrr.io/pkg/shiny/man/fluidPage.html'>fluidRow</a></span><span class='op'>(</span>
+    <span class='fu'><a href='https://rdrr.io/pkg/shiny/man/column.html'>column</a></span><span class='op'>(</span>
+      width <span class='op'>=</span> <span class='fl'>6</span>,
       
-      <span class='fu'>dragulaInput</span>(
-        inputId = <span class='st'>"dad1"</span>,
-        label = <span class='st'>"Default:"</span>,
-        sourceLabel = <span class='st'>"Source"</span>,
-        targetsLabels = <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"Target 1"</span>, <span class='st'>"Target 2"</span>),
-        choices = <span class='kw'>month.abb</span>,
-        width = <span class='st'>"100%"</span>
-      ),
-      <span class='fu'><a href='https://shiny.rstudio.com/reference/shiny/latest/textOutput.html'>verbatimTextOutput</a></span>(outputId = <span class='st'>"result1"</span>),
+      <span class='fu'>dragulaInput</span><span class='op'>(</span>
+        inputId <span class='op'>=</span> <span class='st'>"dad1"</span>,
+        label <span class='op'>=</span> <span class='st'>"Default:"</span>,
+        sourceLabel <span class='op'>=</span> <span class='st'>"Source"</span>,
+        targetsLabels <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"Target 1"</span>, <span class='st'>"Target 2"</span><span class='op'>)</span>,
+        choices <span class='op'>=</span> <span class='va'>month.abb</span>,
+        width <span class='op'>=</span> <span class='st'>"100%"</span>
+      <span class='op'>)</span>,
+      <span class='fu'><a href='https://rdrr.io/pkg/shiny/man/textOutput.html'>verbatimTextOutput</a></span><span class='op'>(</span>outputId <span class='op'>=</span> <span class='st'>"result1"</span><span class='op'>)</span>,
       
-      <span class='kw'>tags</span><span class='op'>$</span><span class='fu'><a href='https://rdrr.io/pkg/htmltools/man/builder.html'>br</a></span>(),
+      <span class='va'>tags</span><span class='op'>$</span><span class='fu'>br</span><span class='op'>(</span><span class='op'>)</span>,
       
-      <span class='fu'>dragulaInput</span>(
-        inputId = <span class='st'>"dad3"</span>,
-        label = <span class='st'>"On same row:"</span>,
-        sourceLabel = <span class='st'>"Source"</span>,
-        targetsLabels = <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"Target 1"</span>, <span class='st'>"Target 2"</span>),
-        choices = <span class='kw'>month.abb</span>,
-        width = <span class='st'>"100%"</span>,
-        ncolSource = <span class='fl'>1</span>,
-        ncolGrid = <span class='fl'>3</span>
-      ),
-      <span class='fu'><a href='https://shiny.rstudio.com/reference/shiny/latest/textOutput.html'>verbatimTextOutput</a></span>(outputId = <span class='st'>"result3"</span>)
-    ),
+      <span class='fu'>dragulaInput</span><span class='op'>(</span>
+        inputId <span class='op'>=</span> <span class='st'>"dad3"</span>,
+        label <span class='op'>=</span> <span class='st'>"On same row:"</span>,
+        sourceLabel <span class='op'>=</span> <span class='st'>"Source"</span>,
+        targetsLabels <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"Target 1"</span>, <span class='st'>"Target 2"</span><span class='op'>)</span>,
+        choices <span class='op'>=</span> <span class='va'>month.abb</span>,
+        width <span class='op'>=</span> <span class='st'>"100%"</span>,
+        ncolSource <span class='op'>=</span> <span class='fl'>1</span>,
+        ncolGrid <span class='op'>=</span> <span class='fl'>3</span>
+      <span class='op'>)</span>,
+      <span class='fu'><a href='https://rdrr.io/pkg/shiny/man/textOutput.html'>verbatimTextOutput</a></span><span class='op'>(</span>outputId <span class='op'>=</span> <span class='st'>"result3"</span><span class='op'>)</span>
+    <span class='op'>)</span>,
     
-    <span class='fu'><a href='https://shiny.rstudio.com/reference/shiny/latest/column.html'>column</a></span>(
-      width = <span class='fl'>6</span>,
-      <span class='fu'>dragulaInput</span>(
-        inputId = <span class='st'>"dad2"</span>,
-        label = <span class='st'>"Two rows:"</span>,
-        sourceLabel = <span class='st'>"Source"</span>,
-        targetsLabels = <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"x"</span>, <span class='st'>"y"</span>, <span class='st'>"color"</span>, <span class='st'>"fill"</span>, <span class='st'>"size"</span>, <span class='st'>"facet"</span>),
-        choices = <span class='fu'><a href='https://rdrr.io/r/base/names.html'>names</a></span>(<span class='kw'>mtcars</span>),
-        width = <span class='st'>"100%"</span>,
-        ncolGrid = <span class='fl'>3</span>
-      ),
-      <span class='fu'><a href='https://shiny.rstudio.com/reference/shiny/latest/textOutput.html'>verbatimTextOutput</a></span>(outputId = <span class='st'>"result2"</span>),
+    <span class='fu'><a href='https://rdrr.io/pkg/shiny/man/column.html'>column</a></span><span class='op'>(</span>
+      width <span class='op'>=</span> <span class='fl'>6</span>,
+      <span class='fu'>dragulaInput</span><span class='op'>(</span>
+        inputId <span class='op'>=</span> <span class='st'>"dad2"</span>,
+        label <span class='op'>=</span> <span class='st'>"Two rows:"</span>,
+        sourceLabel <span class='op'>=</span> <span class='st'>"Source"</span>,
+        targetsLabels <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"x"</span>, <span class='st'>"y"</span>, <span class='st'>"color"</span>, <span class='st'>"fill"</span>, <span class='st'>"size"</span>, <span class='st'>"facet"</span><span class='op'>)</span>,
+        choices <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/names.html'>names</a></span><span class='op'>(</span><span class='va'>mtcars</span><span class='op'>)</span>,
+        width <span class='op'>=</span> <span class='st'>"100%"</span>,
+        ncolGrid <span class='op'>=</span> <span class='fl'>3</span>
+      <span class='op'>)</span>,
+      <span class='fu'><a href='https://rdrr.io/pkg/shiny/man/textOutput.html'>verbatimTextOutput</a></span><span class='op'>(</span>outputId <span class='op'>=</span> <span class='st'>"result2"</span><span class='op'>)</span>,
       
-      <span class='kw'>tags</span><span class='op'>$</span><span class='fu'><a href='https://rdrr.io/pkg/htmltools/man/builder.html'>br</a></span>(),
+      <span class='va'>tags</span><span class='op'>$</span><span class='fu'>br</span><span class='op'>(</span><span class='op'>)</span>,
       
-      <span class='fu'>dragulaInput</span>(
-        inputId = <span class='st'>"dad4"</span>,
-        label = <span class='st'>"Two rows not filled:"</span>,
-        sourceLabel = <span class='st'>"Source"</span>,
-        targetsLabels = <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"x"</span>, <span class='st'>"y"</span>, <span class='st'>"color"</span>, <span class='st'>"fill"</span>, <span class='st'>"size"</span>),
-        choices = <span class='fu'><a href='https://rdrr.io/r/base/names.html'>names</a></span>(<span class='kw'>mtcars</span>),
-        width = <span class='st'>"100%"</span>,
-        ncolGrid = <span class='fl'>3</span>
-      ),
-      <span class='fu'><a href='https://shiny.rstudio.com/reference/shiny/latest/textOutput.html'>verbatimTextOutput</a></span>(outputId = <span class='st'>"result4"</span>)
-    )
-  )
-)
+      <span class='fu'>dragulaInput</span><span class='op'>(</span>
+        inputId <span class='op'>=</span> <span class='st'>"dad4"</span>,
+        label <span class='op'>=</span> <span class='st'>"Two rows not filled:"</span>,
+        sourceLabel <span class='op'>=</span> <span class='st'>"Source"</span>,
+        targetsLabels <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"x"</span>, <span class='st'>"y"</span>, <span class='st'>"color"</span>, <span class='st'>"fill"</span>, <span class='st'>"size"</span><span class='op'>)</span>,
+        choices <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/names.html'>names</a></span><span class='op'>(</span><span class='va'>mtcars</span><span class='op'>)</span>,
+        width <span class='op'>=</span> <span class='st'>"100%"</span>,
+        ncolGrid <span class='op'>=</span> <span class='fl'>3</span>
+      <span class='op'>)</span>,
+      <span class='fu'><a href='https://rdrr.io/pkg/shiny/man/textOutput.html'>verbatimTextOutput</a></span><span class='op'>(</span>outputId <span class='op'>=</span> <span class='st'>"result4"</span><span class='op'>)</span>
+    <span class='op'>)</span>
+  <span class='op'>)</span>
+<span class='op'>)</span>
 
 
-<span class='kw'>server</span> <span class='op'>&lt;-</span> <span class='fu'>function</span>(<span class='kw'>input</span>, <span class='kw'>output</span>, <span class='kw'>session</span>) {
+<span class='va'>server</span> <span class='op'>&lt;-</span> <span class='kw'>function</span><span class='op'>(</span><span class='va'>input</span>, <span class='va'>output</span>, <span class='va'>session</span><span class='op'>)</span> <span class='op'>{</span>
   
-  <span class='kw'>output</span><span class='op'>$</span><span class='kw'>result1</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://shiny.rstudio.com/reference/shiny/latest/renderPrint.html'>renderPrint</a></span>(<span class='fu'><a href='https://rdrr.io/r/utils/str.html'>str</a></span>(<span class='kw'>input</span><span class='op'>$</span><span class='kw'>dad1</span>))
+  <span class='va'>output</span><span class='op'>$</span><span class='va'>result1</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/shiny/man/renderPrint.html'>renderPrint</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/utils/str.html'>str</a></span><span class='op'>(</span><span class='va'>input</span><span class='op'>$</span><span class='va'>dad1</span><span class='op'>)</span><span class='op'>)</span>
   
-  <span class='kw'>output</span><span class='op'>$</span><span class='kw'>result2</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://shiny.rstudio.com/reference/shiny/latest/renderPrint.html'>renderPrint</a></span>(<span class='fu'><a href='https://rdrr.io/r/utils/str.html'>str</a></span>(<span class='kw'>input</span><span class='op'>$</span><span class='kw'>dad2</span>))
+  <span class='va'>output</span><span class='op'>$</span><span class='va'>result2</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/shiny/man/renderPrint.html'>renderPrint</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/utils/str.html'>str</a></span><span class='op'>(</span><span class='va'>input</span><span class='op'>$</span><span class='va'>dad2</span><span class='op'>)</span><span class='op'>)</span>
   
-  <span class='kw'>output</span><span class='op'>$</span><span class='kw'>result3</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://shiny.rstudio.com/reference/shiny/latest/renderPrint.html'>renderPrint</a></span>(<span class='fu'><a href='https://rdrr.io/r/utils/str.html'>str</a></span>(<span class='kw'>input</span><span class='op'>$</span><span class='kw'>dad3</span>))
+  <span class='va'>output</span><span class='op'>$</span><span class='va'>result3</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/shiny/man/renderPrint.html'>renderPrint</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/utils/str.html'>str</a></span><span class='op'>(</span><span class='va'>input</span><span class='op'>$</span><span class='va'>dad3</span><span class='op'>)</span><span class='op'>)</span>
   
-  <span class='kw'>output</span><span class='op'>$</span><span class='kw'>result4</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://shiny.rstudio.com/reference/shiny/latest/renderPrint.html'>renderPrint</a></span>(<span class='fu'><a href='https://rdrr.io/r/utils/str.html'>str</a></span>(<span class='kw'>input</span><span class='op'>$</span><span class='kw'>dad4</span>))
+  <span class='va'>output</span><span class='op'>$</span><span class='va'>result4</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/shiny/man/renderPrint.html'>renderPrint</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/utils/str.html'>str</a></span><span class='op'>(</span><span class='va'>input</span><span class='op'>$</span><span class='va'>dad4</span><span class='op'>)</span><span class='op'>)</span>
   
-}
+<span class='op'>}</span>
 
-<span class='co'>if</span> (<span class='fu'><a href='https://rdrr.io/r/base/interactive.html'>interactive</a></span>())
-  <span class='fu'><a href='https://shiny.rstudio.com/reference/shiny/latest/shinyApp.html'>shinyApp</a></span>(ui = <span class='kw'>ui</span>, server = <span class='kw'>server</span>)
+<span class='kw'>if</span> <span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/interactive.html'>interactive</a></span><span class='op'>(</span><span class='op'>)</span><span class='op'>)</span>
+  <span class='fu'><a href='https://rdrr.io/pkg/shiny/man/shinyApp.html'>shinyApp</a></span><span class='op'>(</span>ui <span class='op'>=</span> <span class='va'>ui</span>, server <span class='op'>=</span> <span class='va'>server</span><span class='op'>)</span>
 
 
 </div></pre>
@@ -351,7 +351,7 @@ if you want to pass custom appearance with <code>choiceNames</code>.</p></td>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.0.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
 </div>
 
       </footer>

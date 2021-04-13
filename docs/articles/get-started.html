@@ -31,7 +31,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">esquisse</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.3.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.0.0</span>
       </span>
     </div>
 
@@ -39,7 +39,7 @@
       <ul class="nav navbar-nav">
 <li>
   <a href="../index.html">
-    <span class="fa fa-home fa-lg"></span>
+    <span class="fas fa-home fa-lg"></span>
      
   </a>
 </li>
@@ -68,7 +68,7 @@
 <ul class="nav navbar-nav navbar-right">
 <li>
   <a href="https://github.com/dreamRs/esquisse">
-    <span class="fa fa-github fa-lg"></span>
+    <span class="fas fa-github fa-lg"></span>
      
   </a>
 </li>
@@ -95,9 +95,8 @@
 
     
     
-<div class="sourceCode" id="cb1"><pre class="downlit">
-<span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="kw"><a href="https://github.com/dreamRs/esquisse">esquisse</a></span>)
-</pre></div>
+<div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/dreamRs/esquisse">esquisse</a></span><span class="op">)</span></code></pre></div>
 <style>
 img {
   max-width: 700px;
@@ -109,77 +108,85 @@ img {
 <p>In RStudio, you can use the <em>Addins</em> menu :</p>
 <p><img src="figures/launch-addin.png"></p>
 <p>Or in the R console :</p>
-<div class="sourceCode" id="cb2"><pre class="downlit">
-<span class="fu"><a href="../reference/esquisser.html">esquisser</a></span>()
-</pre></div>
+<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="../reference/esquisser.html">esquisser</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
 <p>To use a <code>data.frame</code> by default, if using the <em>Addins</em> menu highlight with the cursor a <code>data.frame</code> in source editor before launching addin. Otherwise, pass the <code>data.frame</code> as first argument to the function :</p>
-<div class="sourceCode" id="cb3"><pre class="downlit">
-<span class="fu"><a href="../reference/esquisser.html">esquisser</a></span>(<span class="kw">iris</span>)
-</pre></div>
+<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="../reference/esquisser.html">esquisser</a></span><span class="op">(</span><span class="va">mtcars</span><span class="op">)</span></code></pre></div>
 </div>
-<div id="select-data" class="section level2">
+<div id="import-data-into-esquisse" class="section level2">
 <h2 class="hasAnchor">
-<a href="#select-data" class="anchor"></a>Select data</h2>
-<p>If addin is launched without default data, a window will appear to select a <code>data.frame</code> from Global environment (if no <code>data.frame</code> are present, datasets from {ggplot2} will be used) :</p>
-<p><img src="figures/select-data.png"></p>
-<p><img src="figures/select-data-detail.png"></p>
-<p>Once you have selected a <code>data.frame</code>, click on the bottom button to start the plotting part.</p>
-<p>You can change data selected after that step by clicking <em>Data</em> button.</p>
+<a href="#import-data-into-esquisse" class="anchor"></a>Import data into {esquisse}</h2>
+<p>If you don’t have used a <code>data.frame</code> when launching the addin, a window to import data will appear.</p>
+<p>This feature comes from package <a href="https://github.com/dreamRs/datamods">{datamods}</a>, you can find more documentation about it <a href="https://dreamrs.github.io/datamods/articles/datamods.html">here</a>.</p>
+<p><img src="figures/import-data.png"></p>
 </div>
 <div id="create-a-plot" class="section level2">
 <h2 class="hasAnchor">
 <a href="#create-a-plot" class="anchor"></a>Create a plot</h2>
-<p>This is the main interface and the most interesting part of the addin (in example below, we use <code>diamonds</code> dataset from {ggplot2}) :</p>
-<p><img src="figures/main-panel.png"></p>
-<p>To create a chart, drag and drop variables into aesthetics boxes :</p>
-<p><img src="figures/create-chart.png"></p>
-<p>A <strong>geom</strong> is automatically picked to represent the data, according to data type you can select an other geom with button in top right corner :</p>
-<p><img src="figures/create-chart-geom.png"></p>
+<p>This is the main interface and the most interesting part of the addin (in example below, we use <code>penguins</code> dataset from <a href="https://github.com/allisonhorst/palmerpenguins">{palmerpenguins}</a>) :</p>
+<p><img src="figures/esquisse.png"></p>
+<p>You can select aesthetics to used by clicking the gear icon in top right corner, then drag-and-drop into aesthetics boxes to create a plot:</p>
+<p><img src="figures/aesthetics.png"></p>
+<p>A <code>geometry</code> is automatically picked to represent the data, according to data type. You can select an other <code>geom</code> with button in top right corner :</p>
+<p><img src="figures/geometries.png"></p>
 </div>
 <div id="controls" class="section level2">
 <h2 class="hasAnchor">
 <a href="#controls" class="anchor"></a>Controls</h2>
-<p>Four menu under plot area are available to set plot parameters, filter data and retrieve code to generate the plot.</p>
+<p>Five menus under plot area are available to set plot parameters, filter data and retrieve code to generate the plot.</p>
 <div id="labels-titles" class="section level3">
 <h3 class="hasAnchor">
 <a href="#labels-titles" class="anchor"></a>Labels &amp; titles</h3>
-<p>This menu allow to set plot’s title, subtitle, caption and axis labels :</p>
-<p><img src="figures/controls-labs.png"></p>
+<p>This menu allow to set plot’s title, subtitle, caption, axis and aesthetics labels :</p>
+<p><img src="figures/controls-labels.png"></p>
 </div>
 <div id="plot-options" class="section level3">
 <h3 class="hasAnchor">
 <a href="#plot-options" class="anchor"></a>Plot options</h3>
-<p>Here you can modify plot appearance and parameters, options available in the menu depends on type of plot :</p>
-<p><img src="figures/controls-plot-bar.png"></p>
-<p><img src="figures/controls-plot-scatter.png"></p>
+<p>Here you can modify plot parameters, options available in the menu depends on type of plot :</p>
+<p><img src="figures/controls-plot-options.png"></p>
+</div>
+<div id="appearance" class="section level3">
+<h3 class="hasAnchor">
+<a href="#appearance" class="anchor"></a>Appearance</h3>
+<p>Here you can modify colors used and global theme :</p>
+<p><img src="figures/controls-appearance.png"></p>
 </div>
 <div id="filter" class="section level3">
 <h3 class="hasAnchor">
 <a href="#filter" class="anchor"></a>Filter</h3>
 <p>Widgets to interactively filter data used in plot :</p>
-<p><img src="figures/controls-filter.png"></p>
+<p><img src="figures/controls-filters.png"></p>
+<p>The filter module is available in package <a href="https://dreamrs.github.io/datamods/articles/datamods.html#filter">{datamods}</a>.</p>
 <p>The code used to filter the data will be available in the following menu.</p>
 </div>
-<div id="export-code" class="section level3">
+<div id="code" class="section level3">
 <h3 class="hasAnchor">
-<a href="#export-code" class="anchor"></a>Export &amp; Code</h3>
-<p>In this menu, you can retrieve the code used to produce the plot, as well as the code used to filter the data, and export the plot to PNG or PowerPoint.</p>
+<a href="#code" class="anchor"></a>Code</h3>
+<p>In this menu, you can retrieve the code used to produce the plot, as well as the code used to filter the data.</p>
 <p><img src="figures/controls-code.png"></p>
 <p>You can copy code to clipboard, or insert it in your current script.</p>
 </div>
+</div>
+<div id="export" class="section level2">
+<h2 class="hasAnchor">
+<a href="#export" class="anchor"></a>Export</h2>
+<p>You can save the plot created in various format by clicking the button in plot area’s top-right corner:</p>
+<p><img src="figures/export.png"></p>
+<p>With “More options”, you can access a new window with more parameters to export the plot:</p>
+<p><img src="figures/export-options.png"></p>
 </div>
 <div id="addin-options" class="section level2">
 <h2 class="hasAnchor">
 <a href="#addin-options" class="anchor"></a>Addin options</h2>
 <p>By default, esquisse is launched into a dialog window (if in RStudio), you can choose to use your browser if you prefer, or the Viewer pane.</p>
-<div class="sourceCode" id="cb4"><pre class="downlit">
-<span class="fu"><a href="../reference/esquisser.html">esquisser</a></span>(viewer = <span class="st">"browser"</span>)
-<span class="fu"><a href="../reference/esquisser.html">esquisser</a></span>(viewer = <span class="st">"pane"</span>)
-</pre></div>
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="../reference/esquisser.html">esquisser</a></span><span class="op">(</span>viewer <span class="op">=</span> <span class="st">"browser"</span><span class="op">)</span>
+<span class="fu"><a href="../reference/esquisser.html">esquisser</a></span><span class="op">(</span>viewer <span class="op">=</span> <span class="st">"pane"</span><span class="op">)</span></code></pre></div>
 <p>You can set display mode with an option (in .Rprofile for example) :</p>
-<div class="sourceCode" id="cb5"><pre class="downlit">
-<span class="fu"><a href="https://rdrr.io/r/base/options.html">options</a></span>(<span class="st">"esquisse.viewer"</span> = <span class="st">"browser"</span>)
-</pre></div>
+<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/options.html">options</a></span><span class="op">(</span><span class="st">"esquisse.viewer"</span> <span class="op">=</span> <span class="st">"browser"</span><span class="op">)</span></code></pre></div>
 </div>
   </div>
 
@@ -198,7 +205,7 @@ img {
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.0.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
 </div>
 
       </footer>

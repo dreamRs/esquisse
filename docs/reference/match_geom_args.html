@@ -72,7 +72,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">esquisse</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.3.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.0.0</span>
       </span>
     </div>
 
@@ -80,7 +80,7 @@
       <ul class="nav navbar-nav">
         <li>
   <a href="../index.html">
-    <span class="fa fa-home fa-lg"></span>
+    <span class="fas fa-home fa-lg"></span>
      
   </a>
 </li>
@@ -109,7 +109,7 @@
       <ul class="nav navbar-nav navbar-right">
         <li>
   <a href="https://github.com/dreamRs/esquisse">
-    <span class="fa fa-github fa-lg"></span>
+    <span class="fas fa-github fa-lg"></span>
      
   </a>
 </li>
@@ -127,7 +127,7 @@
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Match list of arguments to arguments of geometry</h1>
-    <small class="dont-index">Source: <a href='https://github.com/dreamRs/esquisse/blob/master/R/geoms.R'><code>R/geoms.R</code></a></small>
+    <small class="dont-index">Source: <a href='https://github.com/dreamRs/esquisse/blob/master/R/geometries.R'><code>R/geometries.R</code></a></small>
     <div class="hidden name"><code>match_geom_args.Rd</code></div>
     </div>
 
@@ -135,13 +135,13 @@
     <p>Match list of arguments to arguments of geometry</p>
     </div>
 
-    <pre class="usage"><span class='fu'>match_geom_args</span>(
-  <span class='kw'>geom</span>,
-  <span class='kw'>args</span>,
-  add_aes = <span class='fl'>TRUE</span>,
-  mapping = <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(),
-  envir = <span class='st'>"ggplot2"</span>
-)</pre>
+    <pre class="usage"><span class='fu'>match_geom_args</span><span class='op'>(</span>
+  <span class='va'>geom</span>,
+  <span class='va'>args</span>,
+  add_aes <span class='op'>=</span> <span class='cn'>TRUE</span>,
+  mapping <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span><span class='op'>)</span>,
+  envir <span class='op'>=</span> <span class='st'>"ggplot2"</span>
+<span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -152,7 +152,7 @@
     </tr>
     <tr>
       <th>args</th>
-      <td><p>Named list, parameters to match to geom's arguments.</p></td>
+      <td><p>Named list, parameters to be matched to the geometry arguments.</p></td>
     </tr>
     <tr>
       <th>add_aes</th>
@@ -174,23 +174,23 @@
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='co'># List of parameters</span>
-<span class='kw'>params</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(
-  bins = <span class='fl'>30</span>,
-  scale = <span class='st'>"width"</span>,
-  adjust = <span class='fl'>2</span>,
-  position = <span class='st'>"stack"</span>,
-  size = <span class='fl'>1.6</span>,
-  fill = <span class='st'>"#112246"</span>
-)
+<span class='va'>params</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span>
+  bins <span class='op'>=</span> <span class='fl'>30</span>,
+  scale <span class='op'>=</span> <span class='st'>"width"</span>,
+  adjust <span class='op'>=</span> <span class='fl'>2</span>,
+  position <span class='op'>=</span> <span class='st'>"stack"</span>,
+  size <span class='op'>=</span> <span class='fl'>1.6</span>,
+  fill <span class='op'>=</span> <span class='st'>"#112246"</span>
+<span class='op'>)</span>
 
 <span class='co'># Search arguments according to geom</span>
-<span class='fu'>match_geom_args</span>(geom = <span class='st'>"histogram"</span>, args = <span class='kw'>params</span>)
+<span class='fu'>match_geom_args</span><span class='op'>(</span>geom <span class='op'>=</span> <span class='st'>"histogram"</span>, args <span class='op'>=</span> <span class='va'>params</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; $bins
 #&gt; [1] 30
 #&gt; 
 #&gt; $fill
 #&gt; [1] "#112246"
-#&gt; </div><div class='input'><span class='fu'>match_geom_args</span>(geom = <span class='st'>"violin"</span>, args = <span class='kw'>params</span>)
+#&gt; </div><div class='input'><span class='fu'>match_geom_args</span><span class='op'>(</span>geom <span class='op'>=</span> <span class='st'>"violin"</span>, args <span class='op'>=</span> <span class='va'>params</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; $scale
 #&gt; [1] "width"
 #&gt; 
@@ -199,14 +199,14 @@
 #&gt; 
 #&gt; $fill
 #&gt; [1] "#112246"
-#&gt; </div><div class='input'><span class='fu'>match_geom_args</span>(geom = <span class='st'>"bar"</span>, args = <span class='kw'>params</span>, add_aes = <span class='fl'>FALSE</span>)
-</div><div class='output co'>#&gt; named list()</div><div class='input'><span class='fu'>match_geom_args</span>(geom = <span class='st'>"point"</span>, args = <span class='kw'>params</span>)
+#&gt; </div><div class='input'><span class='fu'>match_geom_args</span><span class='op'>(</span>geom <span class='op'>=</span> <span class='st'>"bar"</span>, args <span class='op'>=</span> <span class='va'>params</span>, add_aes <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; named list()</div><div class='input'><span class='fu'>match_geom_args</span><span class='op'>(</span>geom <span class='op'>=</span> <span class='st'>"point"</span>, args <span class='op'>=</span> <span class='va'>params</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; $size
 #&gt; [1] 1.6
 #&gt; 
 #&gt; $fill
 #&gt; [1] "#112246"
-#&gt; </div><div class='input'><span class='fu'>match_geom_args</span>(geom = <span class='st'>"point"</span>, args = <span class='kw'>params</span>, add_aes = <span class='fl'>FALSE</span>)
+#&gt; </div><div class='input'><span class='fu'>match_geom_args</span><span class='op'>(</span>geom <span class='op'>=</span> <span class='st'>"point"</span>, args <span class='op'>=</span> <span class='va'>params</span>, add_aes <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; named list()</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
@@ -223,7 +223,7 @@
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.0.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
 </div>
 
       </footer>

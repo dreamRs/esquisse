@@ -40,7 +40,7 @@
 
 
 <meta property="og:title" content="Coerce data.frame's columns module — module-coerce" />
-<meta property="og:description" content="Coerce data.frame's columns module" />
+<meta property="og:description" content="DEPRECATED, please see package datamods for similar features." />
 
 
 
@@ -72,7 +72,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">esquisse</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.3.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.0.0</span>
       </span>
     </div>
 
@@ -80,7 +80,7 @@
       <ul class="nav navbar-nav">
         <li>
   <a href="../index.html">
-    <span class="fa fa-home fa-lg"></span>
+    <span class="fas fa-home fa-lg"></span>
      
   </a>
 </li>
@@ -109,7 +109,7 @@
       <ul class="nav navbar-nav navbar-right">
         <li>
   <a href="https://github.com/dreamRs/esquisse">
-    <span class="fa fa-github fa-lg"></span>
+    <span class="fas fa-github fa-lg"></span>
      
   </a>
 </li>
@@ -127,24 +127,24 @@
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Coerce data.frame's columns module</h1>
-    <small class="dont-index">Source: <a href='https://github.com/dreamRs/esquisse/blob/master/R/module-coerce.R'><code>R/module-coerce.R</code></a></small>
+    <small class="dont-index">Source: <a href='https://github.com/dreamRs/esquisse/blob/master/R/deprecated.R'><code>R/deprecated.R</code></a></small>
     <div class="hidden name"><code>module-coerce.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>Coerce data.frame's columns module</p>
+    <p>DEPRECATED, please see package <a href='https://github.com/dreamRs/datamods'>datamods</a> for similar features.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>coerceUI</span>(<span class='kw'>id</span>)
+    <pre class="usage"><span class='fu'>coerceUI</span><span class='op'>(</span><span class='va'>id</span><span class='op'>)</span>
 
-<span class='fu'>coerceServer</span>(<span class='kw'>input</span>, <span class='kw'>output</span>, <span class='kw'>session</span>, <span class='kw'>data</span>, reactiveValuesSlot = <span class='st'>"data"</span>)</pre>
+<span class='fu'>coerceServer</span><span class='op'>(</span><span class='va'>input</span>, <span class='va'>output</span>, <span class='va'>session</span>, <span class='va'>data</span>, reactiveValuesSlot <span class='op'>=</span> <span class='st'>"data"</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>id</th>
-      <td><p>Module id. See <code><a href='https://shiny.rstudio.com/reference/shiny/latest/callModule.html'>callModule</a></code>.</p></td>
+      <td><p>Module id. See <code><a href='https://rdrr.io/pkg/shiny/man/callModule.html'>callModule</a></code>.</p></td>
     </tr>
     <tr>
       <th>input, output, session</th>
@@ -153,13 +153,13 @@
     <tr>
       <th>data</th>
       <td><p>A <code>data.frame</code> or a <code>reactive</code>
-function returning a <code>data.frame</code> or a 
-<code>reactivevalues</code> with a slot containing a <code>data.frame</code> 
+function returning a <code>data.frame</code> or a
+<code>reactivevalues</code> with a slot containing a <code>data.frame</code>
 (use <code>reactiveValuesSlot</code> to identify that slot)</p></td>
     </tr>
     <tr>
       <th>reactiveValuesSlot</th>
-      <td><p>If <code>data</code> is a <code>reactivevalues</code>, 
+      <td><p>If <code>data</code> is a <code>reactivevalues</code>,
 specify the name of the slot containing data.</p></td>
     </tr>
     </table>
@@ -167,59 +167,8 @@ specify the name of the slot containing data.</p></td>
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
     <p>a <code>reactiveValues</code> with two slots: <code>data</code> original <code>data.frame</code>
- with modified columns, and <code>names</code> column's names with call to coerce method.</p>
+with modified columns, and <code>names</code> column's names with call to coerce method.</p>
 
-    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'>
-<span class='co'>if</span> (<span class='fu'><a href='https://rdrr.io/r/base/interactive.html'>interactive</a></span>()) {
-  <span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='kw'><a href='https://github.com/dreamRs/esquisse'>esquisse</a></span>)
-  <span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='kw'><a href='http://shiny.rstudio.com'>shiny</a></span>)
-  
-  <span class='kw'>foo</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a></span>(
-    num_as_char = <span class='fu'><a href='https://rdrr.io/r/base/character.html'>as.character</a></span>(<span class='fl'>1</span><span class='op'>:</span><span class='fl'>10</span>),
-    char = <span class='fu'><a href='https://rdrr.io/r/base/sample.html'>sample</a></span>(<span class='kw'>letters</span>[<span class='fl'>1</span><span class='op'>:</span><span class='fl'>3</span>], <span class='fl'>10</span>, <span class='fl'>TRUE</span>),
-    fact = <span class='fu'><a href='https://rdrr.io/r/base/factor.html'>factor</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/sample.html'>sample</a></span>(<span class='kw'>LETTERS</span>[<span class='fl'>1</span><span class='op'>:</span><span class='fl'>3</span>], <span class='fl'>10</span>, <span class='fl'>TRUE</span>)),
-    date_as_char =  <span class='fu'><a href='https://rdrr.io/r/base/character.html'>as.character</a></span>(
-      <span class='fu'><a href='https://rdrr.io/r/base/Sys.time.html'>Sys.Date</a></span>() <span class='op'>+</span> <span class='fu'><a href='https://rdrr.io/r/base/sample.html'>sample</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/seq.html'>seq</a></span>(<span class='op'>-</span><span class='fl'>10</span>, <span class='fl'>10</span>), <span class='fl'>10</span>, <span class='fl'>TRUE</span>)
-    ),
-    date_as_num = <span class='fu'><a href='https://rdrr.io/r/base/numeric.html'>as.numeric</a></span>(
-      <span class='fu'><a href='https://rdrr.io/r/base/Sys.time.html'>Sys.Date</a></span>() <span class='op'>+</span> <span class='fu'><a href='https://rdrr.io/r/base/sample.html'>sample</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/seq.html'>seq</a></span>(<span class='op'>-</span><span class='fl'>10</span>, <span class='fl'>10</span>), <span class='fl'>10</span>, <span class='fl'>TRUE</span>)
-    ),
-    datetime = <span class='fu'><a href='https://rdrr.io/r/base/Sys.time.html'>Sys.time</a></span>() <span class='op'>+</span> <span class='fu'><a href='https://rdrr.io/r/base/sample.html'>sample</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/seq.html'>seq</a></span>(<span class='op'>-</span><span class='fl'>10</span>, <span class='fl'>10</span>) <span class='op'>*</span> <span class='fl'>1e4</span>, <span class='fl'>10</span>, <span class='fl'>TRUE</span>), 
-    stringsAsFactors = <span class='fl'>FALSE</span>
-  )
-  
-  <span class='kw'>ui</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://shiny.rstudio.com/reference/shiny/latest/fluidPage.html'>fluidPage</a></span>(
-    <span class='kw'>tags</span><span class='op'>$</span><span class='fu'><a href='https://rdrr.io/pkg/htmltools/man/builder.html'>h2</a></span>(<span class='st'>"Coerce module"</span>),
-    <span class='fu'><a href='https://shiny.rstudio.com/reference/shiny/latest/fluidPage.html'>fluidRow</a></span>(
-      <span class='fu'><a href='https://shiny.rstudio.com/reference/shiny/latest/column.html'>column</a></span>(
-        width = <span class='fl'>4</span>,
-        <span class='fu'>coerceUI</span>(id = <span class='st'>"example"</span>)
-      ),
-      <span class='fu'><a href='https://shiny.rstudio.com/reference/shiny/latest/column.html'>column</a></span>(
-        width = <span class='fl'>8</span>,
-        <span class='fu'><a href='https://shiny.rstudio.com/reference/shiny/latest/textOutput.html'>verbatimTextOutput</a></span>(outputId = <span class='st'>"print_result"</span>),
-        <span class='fu'><a href='https://shiny.rstudio.com/reference/shiny/latest/textOutput.html'>verbatimTextOutput</a></span>(outputId = <span class='st'>"print_names"</span>)
-      )
-    )
-  )
-  
-  <span class='kw'>server</span> <span class='op'>&lt;-</span> <span class='fu'>function</span>(<span class='kw'>input</span>, <span class='kw'>output</span>, <span class='kw'>session</span>) {
-    
-    <span class='kw'>result</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://shiny.rstudio.com/reference/shiny/latest/callModule.html'>callModule</a></span>(module = <span class='kw'>coerceServer</span>, id = <span class='st'>"example"</span>, data = <span class='fu'><a href='https://shiny.rstudio.com/reference/shiny/latest/reactive.html'>reactive</a></span>({<span class='kw'>foo</span>}))
-    
-    <span class='kw'>output</span><span class='op'>$</span><span class='kw'>print_result</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://shiny.rstudio.com/reference/shiny/latest/renderPrint.html'>renderPrint</a></span>({
-      <span class='fu'><a href='https://rdrr.io/r/utils/str.html'>str</a></span>(<span class='kw'>result</span><span class='op'>$</span><span class='kw'>data</span>)
-    })
-    <span class='kw'>output</span><span class='op'>$</span><span class='kw'>print_names</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://shiny.rstudio.com/reference/shiny/latest/renderPrint.html'>renderPrint</a></span>({
-      <span class='kw'>result</span><span class='op'>$</span><span class='kw'>names</span>
-    })
-  }
-  
-  <span class='fu'><a href='https://shiny.rstudio.com/reference/shiny/latest/shinyApp.html'>shinyApp</a></span>(<span class='kw'>ui</span>, <span class='kw'>server</span>)
-}
-
-</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
@@ -235,7 +184,7 @@ specify the name of the slot containing data.</p></td>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.0.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
 </div>
 
       </footer>

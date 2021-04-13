@@ -72,7 +72,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">esquisse</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.3.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.0.0</span>
       </span>
     </div>
 
@@ -80,7 +80,7 @@
       <ul class="nav navbar-nav">
         <li>
   <a href="../index.html">
-    <span class="fa fa-home fa-lg"></span>
+    <span class="fas fa-home fa-lg"></span>
      
   </a>
 </li>
@@ -109,7 +109,7 @@
       <ul class="nav navbar-nav navbar-right">
         <li>
   <a href="https://github.com/dreamRs/esquisse">
-    <span class="fa fa-github fa-lg"></span>
+    <span class="fas fa-github fa-lg"></span>
      
   </a>
 </li>
@@ -135,7 +135,7 @@
     <p>Change the value of a drop input on the client</p>
     </div>
 
-    <pre class="usage"><span class='fu'>updateDropInput</span>(<span class='kw'>session</span>, <span class='kw'>inputId</span>, selected = <span class='kw'>NULL</span>, disabled = <span class='kw'>NULL</span>)</pre>
+    <pre class="usage"><span class='fu'>updateDropInput</span><span class='op'>(</span><span class='va'>session</span>, <span class='va'>inputId</span>, selected <span class='op'>=</span> <span class='cn'>NULL</span>, disabled <span class='op'>=</span> <span class='cn'>NULL</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -163,89 +163,89 @@
     <div class='dont-index'><p><code><a href='dropInput.html'>dropInput</a></code></p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='co'>if</span> (<span class='fu'><a href='https://rdrr.io/r/base/interactive.html'>interactive</a></span>()) {
+    <pre class="examples"><div class='input'><span class='kw'>if</span> <span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/interactive.html'>interactive</a></span><span class='op'>(</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>{</span>
   
-  <span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='kw'><a href='http://shiny.rstudio.com'>shiny</a></span>)
-  <span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='kw'><a href='https://github.com/dreamRs/esquisse'>esquisse</a></span>)
+  <span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://shiny.rstudio.com/'>shiny</a></span><span class='op'>)</span>
+  <span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://github.com/dreamRs/esquisse'>esquisse</a></span><span class='op'>)</span>
   
-  <span class='kw'>myChoices</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/htmltools/man/tag.html'>tagList</a></span>(
-    <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(<span class='fu'><a href='https://shiny.rstudio.com/reference/shiny/latest/icon.html'>icon</a></span>(<span class='st'>"home"</span>), style = <span class='st'>"width: 100px;"</span>), 
-    <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(<span class='fu'><a href='https://shiny.rstudio.com/reference/shiny/latest/icon.html'>icon</a></span>(<span class='st'>"flash"</span>), style = <span class='st'>"width: 100px;"</span>),
-    <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(<span class='fu'><a href='https://shiny.rstudio.com/reference/shiny/latest/icon.html'>icon</a></span>(<span class='st'>"cogs"</span>), style = <span class='st'>"width: 100px;"</span>),
-    <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(<span class='fu'><a href='https://shiny.rstudio.com/reference/shiny/latest/icon.html'>icon</a></span>(<span class='st'>"fire"</span>), style = <span class='st'>"width: 100px;"</span>), 
-    <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(<span class='fu'><a href='https://shiny.rstudio.com/reference/shiny/latest/icon.html'>icon</a></span>(<span class='st'>"users"</span>), style = <span class='st'>"width: 100px;"</span>), 
-    <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(<span class='fu'><a href='https://shiny.rstudio.com/reference/shiny/latest/icon.html'>icon</a></span>(<span class='st'>"info"</span>), style = <span class='st'>"width: 100px;"</span>)
-  )
+  <span class='va'>myChoices</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/htmltools/man/tag.html'>tagList</a></span><span class='op'>(</span>
+    <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/pkg/shiny/man/icon.html'>icon</a></span><span class='op'>(</span><span class='st'>"home"</span><span class='op'>)</span>, style <span class='op'>=</span> <span class='st'>"width: 100px;"</span><span class='op'>)</span>, 
+    <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/pkg/shiny/man/icon.html'>icon</a></span><span class='op'>(</span><span class='st'>"flash"</span><span class='op'>)</span>, style <span class='op'>=</span> <span class='st'>"width: 100px;"</span><span class='op'>)</span>,
+    <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/pkg/shiny/man/icon.html'>icon</a></span><span class='op'>(</span><span class='st'>"cogs"</span><span class='op'>)</span>, style <span class='op'>=</span> <span class='st'>"width: 100px;"</span><span class='op'>)</span>,
+    <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/pkg/shiny/man/icon.html'>icon</a></span><span class='op'>(</span><span class='st'>"fire"</span><span class='op'>)</span>, style <span class='op'>=</span> <span class='st'>"width: 100px;"</span><span class='op'>)</span>, 
+    <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/pkg/shiny/man/icon.html'>icon</a></span><span class='op'>(</span><span class='st'>"users"</span><span class='op'>)</span>, style <span class='op'>=</span> <span class='st'>"width: 100px;"</span><span class='op'>)</span>, 
+    <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/pkg/shiny/man/icon.html'>icon</a></span><span class='op'>(</span><span class='st'>"info"</span><span class='op'>)</span>, style <span class='op'>=</span> <span class='st'>"width: 100px;"</span><span class='op'>)</span>
+  <span class='op'>)</span>
   
   
-  <span class='kw'>ui</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://shiny.rstudio.com/reference/shiny/latest/fluidPage.html'>fluidPage</a></span>(
-    <span class='kw'>tags</span><span class='op'>$</span><span class='fu'><a href='https://rdrr.io/pkg/htmltools/man/builder.html'>h2</a></span>(<span class='st'>"Update Drop Input"</span>),
-    <span class='fu'><a href='https://shiny.rstudio.com/reference/shiny/latest/fluidPage.html'>fluidRow</a></span>(
-      <span class='fu'><a href='https://shiny.rstudio.com/reference/shiny/latest/column.html'>column</a></span>(
-        width = <span class='fl'>6</span>,
-        <span class='fu'><a href='dropInput.html'>dropInput</a></span>(
-          inputId = <span class='st'>"mydrop"</span>,
-          choicesNames = <span class='kw'>myChoices</span>, 
-          choicesValues = <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"home"</span>, <span class='st'>"flash"</span>, <span class='st'>"cogs"</span>, <span class='st'>"fire"</span>, <span class='st'>"users"</span>, <span class='st'>"info"</span>),
-          dropWidth = <span class='st'>"220px"</span>
-        ),
-        <span class='fu'><a href='https://shiny.rstudio.com/reference/shiny/latest/textOutput.html'>verbatimTextOutput</a></span>(outputId = <span class='st'>"res"</span>)
-      ), 
-      <span class='fu'><a href='https://shiny.rstudio.com/reference/shiny/latest/column.html'>column</a></span>(
-        width = <span class='fl'>6</span>,
-        <span class='fu'><a href='https://shiny.rstudio.com/reference/shiny/latest/actionButton.html'>actionButton</a></span>(<span class='st'>"home"</span>, <span class='st'>"Select home"</span>),
-        <span class='fu'><a href='https://shiny.rstudio.com/reference/shiny/latest/actionButton.html'>actionButton</a></span>(<span class='st'>"flash"</span>, <span class='st'>"Select flash"</span>),
-        <span class='fu'><a href='https://shiny.rstudio.com/reference/shiny/latest/actionButton.html'>actionButton</a></span>(<span class='st'>"cogs"</span>, <span class='st'>"Select cogs"</span>),
-        <span class='fu'><a href='https://shiny.rstudio.com/reference/shiny/latest/actionButton.html'>actionButton</a></span>(<span class='st'>"fire"</span>, <span class='st'>"Select fire"</span>),
-        <span class='fu'><a href='https://shiny.rstudio.com/reference/shiny/latest/actionButton.html'>actionButton</a></span>(<span class='st'>"users"</span>, <span class='st'>"Select users"</span>),
-        <span class='fu'><a href='https://shiny.rstudio.com/reference/shiny/latest/actionButton.html'>actionButton</a></span>(<span class='st'>"info"</span>, <span class='st'>"Select info"</span>),
-        <span class='fu'><a href='https://shiny.rstudio.com/reference/shiny/latest/checkboxGroupInput.html'>checkboxGroupInput</a></span>(
-          inputId = <span class='st'>"disabled"</span>,
-          label = <span class='st'>"Choices to disable"</span>,
-          choices = <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"home"</span>, <span class='st'>"flash"</span>, <span class='st'>"cogs"</span>, <span class='st'>"fire"</span>, <span class='st'>"users"</span>, <span class='st'>"info"</span>)
-        ),
-        <span class='fu'><a href='https://shiny.rstudio.com/reference/shiny/latest/actionButton.html'>actionButton</a></span>(<span class='st'>"disable"</span>, <span class='st'>"Disable"</span>)
-      )
-    )
-  )
+  <span class='va'>ui</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/shiny/man/fluidPage.html'>fluidPage</a></span><span class='op'>(</span>
+    <span class='va'>tags</span><span class='op'>$</span><span class='fu'>h2</span><span class='op'>(</span><span class='st'>"Update Drop Input"</span><span class='op'>)</span>,
+    <span class='fu'><a href='https://rdrr.io/pkg/shiny/man/fluidPage.html'>fluidRow</a></span><span class='op'>(</span>
+      <span class='fu'><a href='https://rdrr.io/pkg/shiny/man/column.html'>column</a></span><span class='op'>(</span>
+        width <span class='op'>=</span> <span class='fl'>6</span>,
+        <span class='fu'><a href='dropInput.html'>dropInput</a></span><span class='op'>(</span>
+          inputId <span class='op'>=</span> <span class='st'>"mydrop"</span>,
+          choicesNames <span class='op'>=</span> <span class='va'>myChoices</span>, 
+          choicesValues <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"home"</span>, <span class='st'>"flash"</span>, <span class='st'>"cogs"</span>, <span class='st'>"fire"</span>, <span class='st'>"users"</span>, <span class='st'>"info"</span><span class='op'>)</span>,
+          dropWidth <span class='op'>=</span> <span class='st'>"220px"</span>
+        <span class='op'>)</span>,
+        <span class='fu'><a href='https://rdrr.io/pkg/shiny/man/textOutput.html'>verbatimTextOutput</a></span><span class='op'>(</span>outputId <span class='op'>=</span> <span class='st'>"res"</span><span class='op'>)</span>
+      <span class='op'>)</span>, 
+      <span class='fu'><a href='https://rdrr.io/pkg/shiny/man/column.html'>column</a></span><span class='op'>(</span>
+        width <span class='op'>=</span> <span class='fl'>6</span>,
+        <span class='fu'><a href='https://rdrr.io/pkg/shiny/man/actionButton.html'>actionButton</a></span><span class='op'>(</span><span class='st'>"home"</span>, <span class='st'>"Select home"</span><span class='op'>)</span>,
+        <span class='fu'><a href='https://rdrr.io/pkg/shiny/man/actionButton.html'>actionButton</a></span><span class='op'>(</span><span class='st'>"flash"</span>, <span class='st'>"Select flash"</span><span class='op'>)</span>,
+        <span class='fu'><a href='https://rdrr.io/pkg/shiny/man/actionButton.html'>actionButton</a></span><span class='op'>(</span><span class='st'>"cogs"</span>, <span class='st'>"Select cogs"</span><span class='op'>)</span>,
+        <span class='fu'><a href='https://rdrr.io/pkg/shiny/man/actionButton.html'>actionButton</a></span><span class='op'>(</span><span class='st'>"fire"</span>, <span class='st'>"Select fire"</span><span class='op'>)</span>,
+        <span class='fu'><a href='https://rdrr.io/pkg/shiny/man/actionButton.html'>actionButton</a></span><span class='op'>(</span><span class='st'>"users"</span>, <span class='st'>"Select users"</span><span class='op'>)</span>,
+        <span class='fu'><a href='https://rdrr.io/pkg/shiny/man/actionButton.html'>actionButton</a></span><span class='op'>(</span><span class='st'>"info"</span>, <span class='st'>"Select info"</span><span class='op'>)</span>,
+        <span class='fu'><a href='https://rdrr.io/pkg/shiny/man/checkboxGroupInput.html'>checkboxGroupInput</a></span><span class='op'>(</span>
+          inputId <span class='op'>=</span> <span class='st'>"disabled"</span>,
+          label <span class='op'>=</span> <span class='st'>"Choices to disable"</span>,
+          choices <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"home"</span>, <span class='st'>"flash"</span>, <span class='st'>"cogs"</span>, <span class='st'>"fire"</span>, <span class='st'>"users"</span>, <span class='st'>"info"</span><span class='op'>)</span>
+        <span class='op'>)</span>,
+        <span class='fu'><a href='https://rdrr.io/pkg/shiny/man/actionButton.html'>actionButton</a></span><span class='op'>(</span><span class='st'>"disable"</span>, <span class='st'>"Disable"</span><span class='op'>)</span>
+      <span class='op'>)</span>
+    <span class='op'>)</span>
+  <span class='op'>)</span>
   
-  <span class='kw'>server</span> <span class='op'>&lt;-</span> <span class='fu'>function</span>(<span class='kw'>input</span>, <span class='kw'>output</span>, <span class='kw'>session</span>) {
+  <span class='va'>server</span> <span class='op'>&lt;-</span> <span class='kw'>function</span><span class='op'>(</span><span class='va'>input</span>, <span class='va'>output</span>, <span class='va'>session</span><span class='op'>)</span> <span class='op'>{</span>
     
-    <span class='kw'>output</span><span class='op'>$</span><span class='kw'>res</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://shiny.rstudio.com/reference/shiny/latest/renderPrint.html'>renderPrint</a></span>({
-      <span class='kw'>input</span><span class='op'>$</span><span class='kw'>mydrop</span>
-    })
+    <span class='va'>output</span><span class='op'>$</span><span class='va'>res</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/shiny/man/renderPrint.html'>renderPrint</a></span><span class='op'>(</span><span class='op'>{</span>
+      <span class='va'>input</span><span class='op'>$</span><span class='va'>mydrop</span>
+    <span class='op'>}</span><span class='op'>)</span>
     
-    <span class='fu'><a href='https://shiny.rstudio.com/reference/shiny/latest/observeEvent.html'>observeEvent</a></span>(<span class='kw'>input</span><span class='op'>$</span><span class='kw'>home</span>, {
-      <span class='fu'>updateDropInput</span>(<span class='kw'>session</span>, <span class='st'>"mydrop"</span>, <span class='st'>"home"</span>)
-    })
-    <span class='fu'><a href='https://shiny.rstudio.com/reference/shiny/latest/observeEvent.html'>observeEvent</a></span>(<span class='kw'>input</span><span class='op'>$</span><span class='kw'>flash</span>, {
-      <span class='fu'>updateDropInput</span>(<span class='kw'>session</span>, <span class='st'>"mydrop"</span>, <span class='st'>"flash"</span>)
-    })
-    <span class='fu'><a href='https://shiny.rstudio.com/reference/shiny/latest/observeEvent.html'>observeEvent</a></span>(<span class='kw'>input</span><span class='op'>$</span><span class='kw'>cogs</span>, {
-      <span class='fu'>updateDropInput</span>(<span class='kw'>session</span>, <span class='st'>"mydrop"</span>, <span class='st'>"cogs"</span>)
-    })
-    <span class='fu'><a href='https://shiny.rstudio.com/reference/shiny/latest/observeEvent.html'>observeEvent</a></span>(<span class='kw'>input</span><span class='op'>$</span><span class='kw'>fire</span>, {
-      <span class='fu'>updateDropInput</span>(<span class='kw'>session</span>, <span class='st'>"mydrop"</span>, <span class='st'>"fire"</span>)
-    })
-    <span class='fu'><a href='https://shiny.rstudio.com/reference/shiny/latest/observeEvent.html'>observeEvent</a></span>(<span class='kw'>input</span><span class='op'>$</span><span class='kw'>users</span>, {
-      <span class='fu'>updateDropInput</span>(<span class='kw'>session</span>, <span class='st'>"mydrop"</span>, <span class='st'>"users"</span>)
-    })
-    <span class='fu'><a href='https://shiny.rstudio.com/reference/shiny/latest/observeEvent.html'>observeEvent</a></span>(<span class='kw'>input</span><span class='op'>$</span><span class='kw'>info</span>, {
-      <span class='fu'>updateDropInput</span>(<span class='kw'>session</span>, <span class='st'>"mydrop"</span>, <span class='st'>"info"</span>)
-    })
+    <span class='fu'><a href='https://rdrr.io/pkg/shiny/man/observeEvent.html'>observeEvent</a></span><span class='op'>(</span><span class='va'>input</span><span class='op'>$</span><span class='va'>home</span>, <span class='op'>{</span>
+      <span class='fu'>updateDropInput</span><span class='op'>(</span><span class='va'>session</span>, <span class='st'>"mydrop"</span>, <span class='st'>"home"</span><span class='op'>)</span>
+    <span class='op'>}</span><span class='op'>)</span>
+    <span class='fu'><a href='https://rdrr.io/pkg/shiny/man/observeEvent.html'>observeEvent</a></span><span class='op'>(</span><span class='va'>input</span><span class='op'>$</span><span class='va'>flash</span>, <span class='op'>{</span>
+      <span class='fu'>updateDropInput</span><span class='op'>(</span><span class='va'>session</span>, <span class='st'>"mydrop"</span>, <span class='st'>"flash"</span><span class='op'>)</span>
+    <span class='op'>}</span><span class='op'>)</span>
+    <span class='fu'><a href='https://rdrr.io/pkg/shiny/man/observeEvent.html'>observeEvent</a></span><span class='op'>(</span><span class='va'>input</span><span class='op'>$</span><span class='va'>cogs</span>, <span class='op'>{</span>
+      <span class='fu'>updateDropInput</span><span class='op'>(</span><span class='va'>session</span>, <span class='st'>"mydrop"</span>, <span class='st'>"cogs"</span><span class='op'>)</span>
+    <span class='op'>}</span><span class='op'>)</span>
+    <span class='fu'><a href='https://rdrr.io/pkg/shiny/man/observeEvent.html'>observeEvent</a></span><span class='op'>(</span><span class='va'>input</span><span class='op'>$</span><span class='va'>fire</span>, <span class='op'>{</span>
+      <span class='fu'>updateDropInput</span><span class='op'>(</span><span class='va'>session</span>, <span class='st'>"mydrop"</span>, <span class='st'>"fire"</span><span class='op'>)</span>
+    <span class='op'>}</span><span class='op'>)</span>
+    <span class='fu'><a href='https://rdrr.io/pkg/shiny/man/observeEvent.html'>observeEvent</a></span><span class='op'>(</span><span class='va'>input</span><span class='op'>$</span><span class='va'>users</span>, <span class='op'>{</span>
+      <span class='fu'>updateDropInput</span><span class='op'>(</span><span class='va'>session</span>, <span class='st'>"mydrop"</span>, <span class='st'>"users"</span><span class='op'>)</span>
+    <span class='op'>}</span><span class='op'>)</span>
+    <span class='fu'><a href='https://rdrr.io/pkg/shiny/man/observeEvent.html'>observeEvent</a></span><span class='op'>(</span><span class='va'>input</span><span class='op'>$</span><span class='va'>info</span>, <span class='op'>{</span>
+      <span class='fu'>updateDropInput</span><span class='op'>(</span><span class='va'>session</span>, <span class='st'>"mydrop"</span>, <span class='st'>"info"</span><span class='op'>)</span>
+    <span class='op'>}</span><span class='op'>)</span>
     
-    <span class='fu'><a href='https://shiny.rstudio.com/reference/shiny/latest/observeEvent.html'>observeEvent</a></span>(<span class='kw'>input</span><span class='op'>$</span><span class='kw'>disable</span>, {
-      <span class='co'>if</span> (<span class='op'>!</span><span class='fu'><a href='https://rdrr.io/r/base/NULL.html'>is.null</a></span>(<span class='kw'>input</span><span class='op'>$</span><span class='kw'>disabled</span>)) {
-        <span class='fu'>updateDropInput</span>(<span class='kw'>session</span>, <span class='st'>"mydrop"</span>, disabled = <span class='kw'>input</span><span class='op'>$</span><span class='kw'>disabled</span>)
-      } <span class='co'>else</span> {
-        <span class='fu'>updateDropInput</span>(<span class='kw'>session</span>, <span class='st'>"mydrop"</span>, disabled = <span class='fu'><a href='https://rdrr.io/r/base/character.html'>character</a></span>(<span class='fl'>0</span>))
-      }
-    })
-  }
+    <span class='fu'><a href='https://rdrr.io/pkg/shiny/man/observeEvent.html'>observeEvent</a></span><span class='op'>(</span><span class='va'>input</span><span class='op'>$</span><span class='va'>disable</span>, <span class='op'>{</span>
+      <span class='kw'>if</span> <span class='op'>(</span><span class='op'>!</span><span class='fu'><a href='https://rdrr.io/r/base/NULL.html'>is.null</a></span><span class='op'>(</span><span class='va'>input</span><span class='op'>$</span><span class='va'>disabled</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>{</span>
+        <span class='fu'>updateDropInput</span><span class='op'>(</span><span class='va'>session</span>, <span class='st'>"mydrop"</span>, disabled <span class='op'>=</span> <span class='va'>input</span><span class='op'>$</span><span class='va'>disabled</span><span class='op'>)</span>
+      <span class='op'>}</span> <span class='kw'>else</span> <span class='op'>{</span>
+        <span class='fu'>updateDropInput</span><span class='op'>(</span><span class='va'>session</span>, <span class='st'>"mydrop"</span>, disabled <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/character.html'>character</a></span><span class='op'>(</span><span class='fl'>0</span><span class='op'>)</span><span class='op'>)</span>
+      <span class='op'>}</span>
+    <span class='op'>}</span><span class='op'>)</span>
+  <span class='op'>}</span>
   
-  <span class='fu'><a href='https://shiny.rstudio.com/reference/shiny/latest/shinyApp.html'>shinyApp</a></span>(<span class='kw'>ui</span>, <span class='kw'>server</span>)
+  <span class='fu'><a href='https://rdrr.io/pkg/shiny/man/shinyApp.html'>shinyApp</a></span><span class='op'>(</span><span class='va'>ui</span>, <span class='va'>server</span><span class='op'>)</span>
   
-}
+<span class='op'>}</span>
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
@@ -262,7 +262,7 @@
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.0.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
 </div>
 
       </footer>

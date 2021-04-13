@@ -40,8 +40,7 @@
 
 
 <meta property="og:title" content="Module for choosing data.frame — module-chooseData" />
-<meta property="og:description" content="Module for choosing data.frame from
-user environment and select variable to use." />
+<meta property="og:description" content="DEPRECATED, please see package datamods for similar features." />
 
 
 
@@ -73,7 +72,7 @@ user environment and select variable to use." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">esquisse</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.3.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.0.0</span>
       </span>
     </div>
 
@@ -81,7 +80,7 @@ user environment and select variable to use." />
       <ul class="nav navbar-nav">
         <li>
   <a href="../index.html">
-    <span class="fa fa-home fa-lg"></span>
+    <span class="fas fa-home fa-lg"></span>
      
   </a>
 </li>
@@ -110,7 +109,7 @@ user environment and select variable to use." />
       <ul class="nav navbar-nav navbar-right">
         <li>
   <a href="https://github.com/dreamRs/esquisse">
-    <span class="fa fa-github fa-lg"></span>
+    <span class="fas fa-github fa-lg"></span>
      
   </a>
 </li>
@@ -128,30 +127,29 @@ user environment and select variable to use." />
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Module for choosing data.frame</h1>
-    <small class="dont-index">Source: <a href='https://github.com/dreamRs/esquisse/blob/master/R/module-chooseData.R'><code>R/module-chooseData.R</code></a></small>
+    <small class="dont-index">Source: <a href='https://github.com/dreamRs/esquisse/blob/master/R/deprecated.R'><code>R/deprecated.R</code></a></small>
     <div class="hidden name"><code>module-chooseData.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>Module for choosing data.frame from
-user environment and select variable to use.</p>
+    <p>DEPRECATED, please see package <a href='https://github.com/dreamRs/datamods'>datamods</a> for similar features.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>chooseDataUI</span>(<span class='kw'>id</span>, label = <span class='st'>"Data"</span>, icon = <span class='st'>"database"</span>, width = <span class='st'>"100%"</span>, <span class='kw'>...</span>)
+    <pre class="usage"><span class='fu'>chooseDataUI</span><span class='op'>(</span><span class='va'>id</span>, label <span class='op'>=</span> <span class='st'>"Data"</span>, icon <span class='op'>=</span> <span class='st'>"database"</span>, width <span class='op'>=</span> <span class='st'>"100%"</span>, <span class='va'>...</span><span class='op'>)</span>
 
-<span class='fu'>chooseDataServer</span>(
-  <span class='kw'>input</span>,
-  <span class='kw'>output</span>,
-  <span class='kw'>session</span>,
-  dataModule = <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"GlobalEnv"</span>, <span class='st'>"ImportFile"</span>),
-  data = <span class='kw'>NULL</span>,
-  name = <span class='kw'>NULL</span>,
-  selectVars = <span class='fl'>TRUE</span>,
-  selectedTypes = <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"continuous"</span>, <span class='st'>"discrete"</span>, <span class='st'>"time"</span>),
-  coerceVars = <span class='fl'>FALSE</span>,
-  launchOnStart = <span class='fl'>TRUE</span>,
-  size = <span class='st'>"m"</span>
-)</pre>
+<span class='fu'>chooseDataServer</span><span class='op'>(</span>
+  <span class='va'>input</span>,
+  <span class='va'>output</span>,
+  <span class='va'>session</span>,
+  dataModule <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"GlobalEnv"</span>, <span class='st'>"ImportFile"</span><span class='op'>)</span>,
+  data <span class='op'>=</span> <span class='cn'>NULL</span>,
+  name <span class='op'>=</span> <span class='cn'>NULL</span>,
+  selectVars <span class='op'>=</span> <span class='cn'>TRUE</span>,
+  selectedTypes <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"continuous"</span>, <span class='st'>"discrete"</span>, <span class='st'>"time"</span><span class='op'>)</span>,
+  coerceVars <span class='op'>=</span> <span class='cn'>FALSE</span>,
+  launchOnStart <span class='op'>=</span> <span class='cn'>TRUE</span>,
+  size <span class='op'>=</span> <span class='st'>"m"</span>
+<span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -162,19 +160,19 @@ user environment and select variable to use.</p>
     </tr>
     <tr>
       <th>label</th>
-      <td><p>Label for button, passed to <code><a href='https://shiny.rstudio.com/reference/shiny/latest/actionButton.html'>actionButton</a></code>.</p></td>
+      <td><p>Label for button, passed to <code><a href='https://rdrr.io/pkg/shiny/man/actionButton.html'>actionButton</a></code>.</p></td>
     </tr>
     <tr>
       <th>icon</th>
-      <td><p>Icon to appears on the button, passed to <code><a href='https://shiny.rstudio.com/reference/shiny/latest/actionButton.html'>actionButton</a></code>.</p></td>
+      <td><p>Icon to appears on the button, passed to <code><a href='https://rdrr.io/pkg/shiny/man/actionButton.html'>actionButton</a></code>.</p></td>
     </tr>
     <tr>
       <th>width</th>
-      <td><p>Width of button, passed to <code><a href='https://shiny.rstudio.com/reference/shiny/latest/actionButton.html'>actionButton</a></code>.</p></td>
+      <td><p>Width of button, passed to <code><a href='https://rdrr.io/pkg/shiny/man/actionButton.html'>actionButton</a></code>.</p></td>
     </tr>
     <tr>
       <th>...</th>
-      <td><p>Other arguments passed to <code><a href='https://shiny.rstudio.com/reference/shiny/latest/actionButton.html'>actionButton</a></code></p></td>
+      <td><p>Other arguments passed to <code><a href='https://rdrr.io/pkg/shiny/man/actionButton.html'>actionButton</a></code></p></td>
     </tr>
     <tr>
       <th>input, output, session</th>
@@ -201,7 +199,7 @@ or <code>"ImportFile"</code> (import an external file supported by <code><a href
     <tr>
       <th>selectedTypes</th>
       <td><p>Type of variables selected by default in select variables module.
-Possible types are <code>"discrete"</code>, <code>"time"</code>, <code>"continuous"</code> and <code>"id"</code>, 
+Possible types are <code>"discrete"</code>, <code>"time"</code>, <code>"continuous"</code> and <code>"id"</code>,
 by default <code>"id"</code> is discarded.</p></td>
     </tr>
     <tr>
@@ -220,72 +218,9 @@ by default <code>"id"</code> is discarded.</p></td>
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>a <code><a href='https://shiny.rstudio.com/reference/shiny/latest/reactiveValues.html'>reactiveValues</a></code> containing the data selected under slot <code>data</code>
+    <p>a <code><a href='https://rdrr.io/pkg/shiny/man/reactiveValues.html'>reactiveValues</a></code> containing the data selected under slot <code>data</code>
 and the name of the selected <code>data.frame</code> under slot <code>name</code>.</p>
 
-    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='co'>if</span> (<span class='fu'><a href='https://rdrr.io/r/base/interactive.html'>interactive</a></span>()) {
-  
-  <span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='kw'><a href='http://shiny.rstudio.com'>shiny</a></span>)
-  <span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='kw'><a href='https://github.com/dreamRs/esquisse'>esquisse</a></span>)
-  
-  <span class='kw'>ui</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://shiny.rstudio.com/reference/shiny/latest/fluidPage.html'>fluidPage</a></span>(
-    <span class='kw'>tags</span><span class='op'>$</span><span class='fu'><a href='https://rdrr.io/pkg/htmltools/man/builder.html'>h2</a></span>(<span class='st'>"Choose data module"</span>),
-    <span class='fu'><a href='https://shiny.rstudio.com/reference/shiny/latest/fluidPage.html'>fluidRow</a></span>(
-      <span class='fu'><a href='https://shiny.rstudio.com/reference/shiny/latest/column.html'>column</a></span>(
-        width = <span class='fl'>4</span>,
-        <span class='kw'>tags</span><span class='op'>$</span><span class='fu'><a href='https://rdrr.io/pkg/htmltools/man/builder.html'>h4</a></span>(<span class='st'>"Default"</span>),
-        <span class='fu'>chooseDataUI</span>(id = <span class='st'>"choose1"</span>),
-        <span class='fu'><a href='https://shiny.rstudio.com/reference/shiny/latest/textOutput.html'>verbatimTextOutput</a></span>(outputId = <span class='st'>"res1"</span>)
-      ),
-      <span class='fu'><a href='https://shiny.rstudio.com/reference/shiny/latest/column.html'>column</a></span>(
-        width = <span class='fl'>4</span>,
-        <span class='kw'>tags</span><span class='op'>$</span><span class='fu'><a href='https://rdrr.io/pkg/htmltools/man/builder.html'>h4</a></span>(<span class='st'>"No variable selection"</span>),
-        <span class='fu'>chooseDataUI</span>(id = <span class='st'>"choose2"</span>),
-        <span class='fu'><a href='https://shiny.rstudio.com/reference/shiny/latest/textOutput.html'>verbatimTextOutput</a></span>(outputId = <span class='st'>"res2"</span>)
-      ),
-      <span class='fu'><a href='https://shiny.rstudio.com/reference/shiny/latest/column.html'>column</a></span>(
-        width = <span class='fl'>4</span>,
-        <span class='kw'>tags</span><span class='op'>$</span><span class='fu'><a href='https://rdrr.io/pkg/htmltools/man/builder.html'>h4</a></span>(<span class='st'>"Default data on start"</span>),
-        <span class='fu'>chooseDataUI</span>(id = <span class='st'>"choose3"</span>),
-        <span class='fu'><a href='https://shiny.rstudio.com/reference/shiny/latest/textOutput.html'>verbatimTextOutput</a></span>(outputId = <span class='st'>"res3"</span>)
-      )
-    )
-  )
-  
-  <span class='kw'>server</span> <span class='op'>&lt;-</span> <span class='fu'>function</span>(<span class='kw'>input</span>, <span class='kw'>output</span>, <span class='kw'>session</span>) {
-    
-    <span class='kw'>res_dat1</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://shiny.rstudio.com/reference/shiny/latest/callModule.html'>callModule</a></span>(
-      <span class='kw'>chooseDataServer</span>, id = <span class='st'>"choose1"</span>,
-      launchOnStart = <span class='fl'>FALSE</span>
-    )
-    <span class='kw'>output</span><span class='op'>$</span><span class='kw'>res1</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://shiny.rstudio.com/reference/shiny/latest/renderPrint.html'>renderPrint</a></span>({
-      <span class='fu'><a href='https://rdrr.io/r/utils/str.html'>str</a></span>(<span class='fu'><a href='https://shiny.rstudio.com/reference/shiny/latest/reactiveValuesToList.html'>reactiveValuesToList</a></span>(<span class='kw'>res_dat1</span>))
-    })
-    
-    <span class='kw'>res_dat2</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://shiny.rstudio.com/reference/shiny/latest/callModule.html'>callModule</a></span>(
-      <span class='kw'>chooseDataServer</span>, id = <span class='st'>"choose2"</span>, selectVars = <span class='fl'>FALSE</span>,
-      launchOnStart = <span class='fl'>FALSE</span>
-    )
-    <span class='kw'>output</span><span class='op'>$</span><span class='kw'>res2</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://shiny.rstudio.com/reference/shiny/latest/renderPrint.html'>renderPrint</a></span>({
-      <span class='fu'><a href='https://rdrr.io/r/utils/str.html'>str</a></span>(<span class='fu'><a href='https://shiny.rstudio.com/reference/shiny/latest/reactiveValuesToList.html'>reactiveValuesToList</a></span>(<span class='kw'>res_dat2</span>))
-    })
-    
-    <span class='kw'>res_dat3</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://shiny.rstudio.com/reference/shiny/latest/callModule.html'>callModule</a></span>(
-      <span class='kw'>chooseDataServer</span>, id = <span class='st'>"choose3"</span>, data = <span class='kw'>iris</span>,
-      launchOnStart = <span class='fl'>FALSE</span>
-    )
-    <span class='kw'>output</span><span class='op'>$</span><span class='kw'>res3</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://shiny.rstudio.com/reference/shiny/latest/renderPrint.html'>renderPrint</a></span>({
-      <span class='fu'><a href='https://rdrr.io/r/utils/str.html'>str</a></span>(<span class='fu'><a href='https://shiny.rstudio.com/reference/shiny/latest/reactiveValuesToList.html'>reactiveValuesToList</a></span>(<span class='kw'>res_dat3</span>))
-    })
-    
-  }
-  
-  <span class='fu'><a href='https://shiny.rstudio.com/reference/shiny/latest/shinyApp.html'>shinyApp</a></span>(<span class='kw'>ui</span>, <span class='kw'>server</span>)
-  
-  
-}
-</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
@@ -301,7 +236,7 @@ and the name of the selected <code>data.frame</code> under slot <code>name</code
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.0.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
 </div>
 
       </footer>
