@@ -32,6 +32,7 @@ Suggests:
     rio,
     testthat (>= 2.1.0),
     knitr,
+    rmarkdown,
     ggthemes,
     hrbrthemes
 VignetteBuilder: knitr
