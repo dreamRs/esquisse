@@ -309,7 +309,6 @@ esquisse_server <- function(id,
         } else {
           ylim <- NULL
         }
-        
         data_name <- data_chart$name %||% "data"
         gg_call <- ggcall(
           data = data_name,

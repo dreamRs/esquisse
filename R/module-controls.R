@@ -325,10 +325,10 @@ controls_server <- function(id,
       # labs input
       labs_r <- debounce(reactive({
         asth <- names(aesthetics())
-        labs_fill <- ifelse("fill" %in% asth, input$labs_fill, "")
-        labs_color <- ifelse("color" %in% asth, input$labs_color, "")
-        labs_size <- ifelse("size" %in% asth, input$labs_size, "")
-        labs_shape <- ifelse("shape" %in% asth, input$labs_shape, "")
+        labs_fill <- `if`(isTRUE("fill" %in% asth), input$labs_fill, "")
+        labs_color <- `if`(isTRUE("color" %in% asth), input$labs_color, "")
+        labs_size <- `if`(isTRUE("size" %in% asth), input$labs_size, "")
+        labs_shape <- `if`(isTRUE("shape" %in% asth), input$labs_shape, "")
         list(
           x = input$labs_x %empty% NULL,
           y = input$labs_y %empty% NULL,
