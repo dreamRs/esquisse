@@ -293,7 +293,11 @@ controls_server <- function(id,
         data = reactive({
           req(data_table())
           req(names(data_table()))
-          data_table()
+          if (isTRUE(input$disable_filters)) {
+            return(NULL)
+          } else {
+            data_table()
+          }
         }),
         name = data_name
       )
@@ -450,7 +454,7 @@ controls_server <- function(id,
       })
       
       observeEvent(output_filter$filtered(), {
-        if(!isTRUE(input$disable_filters)){
+        if (!isTRUE(input$disable_filters)) {
           outputs$data <- output_filter$filtered()
           outputs$code <- output_filter$code()
         }
