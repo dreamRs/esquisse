@@ -13,9 +13,10 @@
 #'
 #' @importFrom shiny moduleServer reactiveValues observeEvent is.reactive
 #'  renderPlot stopApp plotOutput showNotification isolate reactiveValuesToList
-#' @importFrom ggplot2 ggplot_build ggsave
+#' @importFrom ggplot2 ggplot_build ggsave %+%
 #' @import ggplot2
 #' @importFrom datamods import_modal import_server show_data
+#' @importFrom rlang expr sym
 esquisse_server <- function(id, 
                             data_rv = NULL,
                             default_aes = c("fill", "color", "size", "group", "facet"),
@@ -331,10 +332,10 @@ esquisse_server <- function(id,
         
         ggplotCall$code <- deparse2(gg_call)
         ggplotCall$call <- gg_call
-        
+
         ggplotCall$ggobj <- safe_ggplot(
-          expr = gg_call,
-          data = setNames(list(data), data_name)
+          expr = expr((!!gg_call) %+% !!sym("esquisse_data")),
+          data = setNames(list(data), "esquisse_data")
         )
         ggplotCall$ggobj$plot
       }, filename = "esquisse-plot")
