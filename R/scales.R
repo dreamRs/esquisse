@@ -215,7 +215,7 @@ which_pal_scale <- function(mapping,
     fill_scale <- switch(
       fill_type,
       "discrete" = "scale_fill_manual",
-      "continuous" = "scale_colour_gradientn"
+      "continuous" = "scale_fill_gradientn"
     )
     args[[fill_scale]] <- switch(
       fill_type,
