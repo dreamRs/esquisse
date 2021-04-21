@@ -6,6 +6,7 @@ dropdown_ <- function(..., class = NULL) {
     dropdown(...),
     class = "btn-group-esquisse"
   )
+  TAG$children[[1]]$attribs <- TAG$children[[1]]$attribs[-2]
   is_content <- grepl(pattern = "sw-dropdown-content", x = TAG$children[[2]]$attribs$class)
   if (!isTRUE(is_content))
     warning("Failed to add class to dropdown content", call. = FALSE)

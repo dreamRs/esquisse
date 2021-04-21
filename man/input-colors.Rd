@@ -44,6 +44,7 @@ updatePalettePicker(
   session = getDefaultReactiveDomain(),
   inputId,
   choices,
+  selected = NULL,
   textColor = "#000",
   plainColor = FALSE
 )

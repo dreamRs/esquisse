@@ -160,12 +160,14 @@ palettePicker <- function(inputId,
 updatePalettePicker <- function(session = getDefaultReactiveDomain(),
                                 inputId, 
                                 choices,
+                                selected = NULL,
                                 textColor = "#000", 
                                 plainColor = FALSE) {
   opts <- palettePickerOptions(choices, textColor, plainColor)
   updatePickerInput(
     session = session,
     inputId = inputId,
+    selected = selected,
     choices = opts$choices,
     choicesOpt = opts$choicesOpt
   )
@@ -265,7 +267,7 @@ palette_ui <- function(id) {
 
 #' @importFrom shinyWidgets colorPickr
 #' @importFrom htmltools tagList tags tagAppendAttributes
-#' @importFrom shiny callModule reactiveValues renderUI reactive
+#' @importFrom shiny callModule reactiveValues renderUI reactive isolate
 #' @importFrom grDevices colorRampPalette
 #' @importFrom scales seq_gradient_pal
 palette_server <- function(id, variable) {
@@ -381,23 +383,18 @@ palette_server <- function(id, variable) {
       
       observeEvent(colors_manual$type, {
         pals <- get_palettes()
-        if (identical(colors_manual$type, "discrete")) {
-          updatePalettePicker(
-            inputId = "palette",
-            choices = pals$choices,
-            textColor = pals$textColor
-          )
-        } else if (identical(colors_manual$type, "continuous")) {
+        if (identical(colors_manual$type, "continuous")) {
           if (!is.null(pals$choices$Default$ggplot2)) {
             x <- seq(0, 1, length.out = 10)
             pals$choices$Default$ggplot2 <- seq_gradient_pal("#132B43", "#56B1F7", "Lab")(x)
           }
-          updatePalettePicker(
-            inputId = "palette",
-            choices = pals$choices,
-            textColor = pals$textColor
-          )
         }
+        updatePalettePicker(
+          inputId = "palette",
+          choices = pals$choices,
+          textColor = pals$textColor, 
+          selected = isolate(input$palette)
+        )
       }, ignoreInit = TRUE)
       
       return(reactive({
