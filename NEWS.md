@@ -1,3 +1,9 @@
+# esquisse 1.0.2
+
+* Use named character vector for scale manual instead of list.
+
+
+
 # esquisse 1.0.1
 
 * Corrected a bug when using `sf` objects (fix [#147](https://github.com/dreamRs/esquisse/issues/147)).

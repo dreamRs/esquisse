@@ -81,7 +81,7 @@ which_pal_scale <- function(mapping,
       )
       args[[fill_scale]] <- switch(
         fill_type,
-        "discrete" = list(values = palette),
+        "discrete" = list(values = unlist(palette, use.names = TRUE)),
         "continuous" = palette
       )
     } else {
@@ -95,7 +95,7 @@ which_pal_scale <- function(mapping,
       )
       args[[color_scale]] <- switch(
         color_type,
-        "discrete" = list(values = palette),
+        "discrete" = list(values = unlist(palette, use.names = TRUE)),
         "continuous" = palette
       )
     } else {
