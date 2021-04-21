@@ -72,6 +72,8 @@ which_pal_scale <- function(mapping,
       color_type <- "continuous"
     }
   }
+  
+  # Option 1: manual color palette
   if (rlang::is_named(palette)) {
     if (!is.null(mapping$fill)) {
       fill_scale <- switch(
@@ -106,94 +108,141 @@ which_pal_scale <- function(mapping,
       args = args
     ))
   }
+  
+  # Option 2: known palette
   palettes <- unlist(lapply(default_pals()$choices, names), recursive = TRUE, use.names = FALSE)
-  palette <- match.arg(arg = palette, choices = palettes)
-  scale_pal_d <- function(pal, aesthetic) {
-    if (pal == "ggplot2") {
-      s_p <- "hue"
-    } else if (pal %in% c("viridis", "plasma", "magma", "cividis", "inferno")) {
-      s_p <- "viridis_d"
-    } else if (identical(pal, "ipsum")) {
-      s_p <- "ipsum"
-    } else if (identical(pal, "ft")) {
-      s_p <- "ft"
+  if (isTRUE(palette %in% palettes)) {
+    scale_pal_d <- function(pal, aesthetic) {
+      if (pal == "ggplot2") {
+        s_p <- "hue"
+      } else if (pal %in% c("viridis", "plasma", "magma", "cividis", "inferno")) {
+        s_p <- "viridis_d"
+      } else if (identical(pal, "ipsum")) {
+        s_p <- "ipsum"
+      } else if (identical(pal, "ft")) {
+        s_p <- "ft"
+      } else {
+        s_p <- "brewer"
+      }
+      scl <- paste("scale", aesthetic, s_p, sep = "_")
+      if (palette %in% c("ipsum", "ft")) {
+        scl <- paste0("hrbrthemes::", scl)
+      }
+      return(scl)
+    }
+    scale_pal_c <- function(pal, aesthetic) {
+      if (pal == "ggplot2") {
+        s_p <- "gradient"
+      } else if (pal %in% c("viridis", "plasma", "magma", "cividis", "inferno")) {
+        s_p <- "viridis_c"
+      } else if (identical(pal, "ipsum")) {
+        s_p <- "ipsum"
+      } else if (identical(pal, "ft")) {
+        s_p <- "ft"
+      } else {
+        s_p <- "distiller"
+      }
+      scl <- paste("scale", aesthetic, s_p, sep = "_")
+      if (palette %in% c("ipsum", "ft")) {
+        scl <- paste0("hrbrthemes::", scl)
+      }
+      return(scl)
+    }
+    if (!is.null(mapping$fill)) {
+      fill_scale <- switch(
+        fill_type,
+        "discrete" = scale_pal_d(palette, "fill"),
+        "continuous" = scale_pal_c(palette, "fill")
+      )
+      if (!identical(palette, "ggplot2")) {
+        args[[fill_scale]] <- setNames(
+          object = list(palette), 
+          nm = ifelse(grepl("viridis", fill_scale), "option", "palette")
+        )
+        if (palette %in% c("ipsum", "ft")) {
+          args[[fill_scale]] <- NULL
+        }
+      }
+      if (!endsWith(fill_scale, "gradient") & isTRUE(reverse)) {
+        args[[fill_scale]] <- c(args[[fill_scale]], list(direction = -1))
+      }
+      if (!endsWith(fill_scale, "gradient") & !isTRUE(reverse)) {
+        args[[fill_scale]] <- c(args[[fill_scale]], list(direction = 1))
+      }
     } else {
-      s_p <- "brewer"
+      fill_scale <- NULL
     }
-    scl <- paste("scale", aesthetic, s_p, sep = "_")
-    if (palette %in% c("ipsum", "ft")) {
-      scl <- paste0("hrbrthemes::", scl)
+    if (!is.null(mapping$colour)) {
+      color_scale <- switch(
+        color_type,
+        "discrete" = scale_pal_d(palette, "color"),
+        "continuous" = scale_pal_c(palette, "color")
+      )
+      if (!identical(palette, "ggplot2")) {
+        args[[color_scale]] <- setNames(
+          object = list(palette), 
+          nm = ifelse(grepl("viridis", color_scale), "option", "palette")
+        )
+        if (palette %in% c("ipsum", "ft")) {
+          args[[color_scale]] <- NULL
+        }
+      }
+      if (!endsWith(color_scale, "gradient") & isTRUE(reverse)) {
+        args[[color_scale]] <- c(args[[color_scale]], list(direction = -1))
+      }
+      if (!endsWith(color_scale, "gradient") & !isTRUE(reverse)) {
+        args[[color_scale]] <- c(args[[color_scale]], list(direction = 1))
+      }
+    } else {
+      color_scale <- NULL
     }
-    return(scl)
+    return(list(
+      scales = c(fill_scale, color_scale),
+      args = args
+    ))
   }
-  scale_pal_c <- function(pal, aesthetic) {
-    if (pal == "ggplot2") {
-      s_p <- "gradient"
-    } else if (pal %in% c("viridis", "plasma", "magma", "cividis", "inferno")) {
-      s_p <- "viridis_c"
-    } else if (identical(pal, "ipsum")) {
-      s_p <- "ipsum"
-    } else if (identical(pal, "ft")) {
-      s_p <- "ft"
-    } else {
-      s_p <- "distiller"
-    }
-    scl <- paste("scale", aesthetic, s_p, sep = "_")
-    if (palette %in% c("ipsum", "ft")) {
-      scl <- paste0("hrbrthemes::", scl)
-    }
-    return(scl)
+  
+  # Option 3: custom palette
+  palettes <- get_palettes()$choices
+  if (isTRUE(palette %in% names(palettes))) {
+    palette <- palettes[[palette]]
+  } else if (isTRUE(palette %in% names(Reduce(c, palettes)))) {
+    palette <- Reduce(c, palettes)[[palette]]
+  } else {
+    stop("Unable to find palette ", palette, "!")
   }
   if (!is.null(mapping$fill)) {
     fill_scale <- switch(
       fill_type,
-      "discrete" = scale_pal_d(palette, "fill"),
-      "continuous" = scale_pal_c(palette, "fill")
+      "discrete" = "scale_fill_manual",
+      "continuous" = "scale_colour_gradientn"
     )
-    if (!identical(palette, "ggplot2")) {
-      args[[fill_scale]] <- setNames(
-        object = list(palette), 
-        nm = ifelse(grepl("viridis", fill_scale), "option", "palette")
-      )
-      if (palette %in% c("ipsum", "ft")) {
-        args[[fill_scale]] <- NULL
-      }
-    }
-    if (!endsWith(fill_scale, "gradient") & isTRUE(reverse)) {
-      args[[fill_scale]] <- c(args[[fill_scale]], list(direction = -1))
-    }
-    if (!endsWith(fill_scale, "gradient") & !isTRUE(reverse)) {
-      args[[fill_scale]] <- c(args[[fill_scale]], list(direction = 1))
-    }
+    args[[fill_scale]] <- switch(
+      fill_type,
+      "discrete" = list(values = unlist(palette, use.names = FALSE)),
+      "continuous" = list(colours = unlist(palette, use.names = FALSE))
+    )
   } else {
     fill_scale <- NULL
   }
   if (!is.null(mapping$colour)) {
     color_scale <- switch(
       color_type,
-      "discrete" = scale_pal_d(palette, "color"),
-      "continuous" = scale_pal_c(palette, "color")
+      "discrete" = "scale_color_manual",
+      "continuous" = "scale_colour_gradientn"
     )
-    if (!identical(palette, "ggplot2")) {
-      args[[color_scale]] <- setNames(
-        object = list(palette), 
-        nm = ifelse(grepl("viridis", color_scale), "option", "palette")
-      )
-      if (palette %in% c("ipsum", "ft")) {
-        args[[color_scale]] <- NULL
-      }
-    }
-    if (!endsWith(color_scale, "gradient") & isTRUE(reverse)) {
-      args[[color_scale]] <- c(args[[color_scale]], list(direction = -1))
-    }
-    if (!endsWith(color_scale, "gradient") & !isTRUE(reverse)) {
-      args[[color_scale]] <- c(args[[color_scale]], list(direction = 1))
-    }
+    args[[color_scale]] <- switch(
+      color_type,
+      "discrete" = list(values = unlist(palette, use.names = FALSE)),
+      "continuous" = list(colours = unlist(palette, use.names = FALSE))
+    )
   } else {
     color_scale <- NULL
   }
-  list(
+  return(list(
     scales = c(fill_scale, color_scale),
     args = args
-  )
+  ))
 }
+
+
