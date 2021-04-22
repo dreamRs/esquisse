@@ -107,7 +107,7 @@ esquisse_server <- function(id,
       observeEvent(data_imported_r$data(), {
         data <- data_imported_r$data()
         data_chart$data <- data
-        data_chart$name <- data_imported_r$name()
+        data_chart$name <- data_imported_r$name() %||% "imported_data"
       })
       
       observeEvent(input$show_data, {
@@ -335,7 +335,7 @@ esquisse_server <- function(id,
 
         ggplotCall$ggobj <- safe_ggplot(
           expr = expr((!!gg_call) %+% !!sym("esquisse_data")),
-          data = setNames(list(data), "esquisse_data")
+          data = setNames(list(data, data), c("esquisse_data", data_chart$name))
         )
         ggplotCall$ggobj$plot
       }, filename = "esquisse-plot")
