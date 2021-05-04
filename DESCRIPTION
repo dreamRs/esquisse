@@ -5,7 +5,10 @@ Version: 1.0.1.9100
 Authors@R: c(person("Fanny", "Meyer", role = c("aut")),
   person("Victor", "Perrier", email = "victor.perrier@dreamrs.fr", role = c("aut", "cre")),
   person("Ian", "Carroll", comment = "Faceting support", role = "ctb"),
-  person("Xiangnan", "Dang", comment = "Facets rows and cols, X/Y limits", role = "ctb"))
+  person("Xiangnan", "Dang", comment = "Facets rows and cols, X/Y limits", role = "ctb"),
+  person("Nicolas", "Bevacqua", role = "cph", comment = "author of dragula JavaScript library"),
+  person("Daybrush (Younkue Choi)", role = "cph", comment = "author of moveable JavaScript library"),
+  person("Zeno", "Rocha", role = "cph", comment = "author of clipboard JavaScript library"))
 Description: A 'shiny' gadget to create 'ggplot2' figures interactively with drag-and-drop to map your variables to different aesthetics.
     You can quickly visualize your data accordingly to their type, export in various formats,
     and retrieve the code to reproduce the plot.
