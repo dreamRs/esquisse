@@ -18,7 +18,8 @@ License: GPL-3 | file LICENSE
 Encoding: UTF-8
 RoxygenNote: 7.1.1
 Roxygen: list(markdown = TRUE)
-Imports: datamods,
+Imports: 
+    datamods,
     rstudioapi,
     shiny (>= 1.1.0),
     htmltools,

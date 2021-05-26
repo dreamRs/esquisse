@@ -70,7 +70,18 @@ dragulaInput <- function(inputId,
   if (!is.null(selected) && !is.list(selected))
     stop("If provided 'selected' must be a list.", call. = FALSE)
 
-  targets <- generate_targets(inputId, args, targetsLabels, targetsIds, selected, replace, boxStyle, badge, status, height)
+  targets <- generate_targets(
+    inputId = inputId,
+    args = args, 
+    targetsLabels = targetsLabels,
+    targetsIds = targetsIds, 
+    selected = selected,
+    replace = replace, 
+    boxStyle = boxStyle, 
+    badge = badge, 
+    status = status, 
+    height = height
+  )
   targetsIds <- targets$ids
   replaceTargets <- targets$replace
 
@@ -164,7 +175,7 @@ generate_targets <- function(inputId, args, targetsLabels, targetsIds, selected,
           style = make_bg_svg(targetsLabels[i])
         )
       } else {
-        choicesTarget <- get_choices(args, selected[[targetsIds[i]]])
+        choicesTarget <- get_choices(args, selected[[targetsLabels[i]]])
         tags$div(
           style = "margin: 0;",
           style = if (!is.null(height)) paste("height:", validateCssUnit(height), ";"),
