@@ -147,15 +147,15 @@ dragulaInput <- function(inputId,
 
 generate_targets <- function(inputId, args, targetsLabels, targetsIds, selected, replace, boxStyle, badge, status, height) {
   if (is.null(targetsIds)) {
-    targetsIds <- makeId(targetsLabels)
-  } else {
-    stopifnot(length(targetsLabels) == length(targetsIds))
-    targetsIds <- makeId(targetsIds)
+    targetsIds <- targetsLabels
   }
+  stopifnot(length(targetsLabels) == length(targetsIds))
+  
+  target_ids <- makeId(targetsIds)
 
-  replaceTargets <- targetsIds
+  replaceTargets <- target_ids
   if (is.numeric(replace)) {
-    replaceTargets <- targetsIds[replace]
+    replaceTargets <- target_ids[replace]
     replace <- TRUE
   } else {
     stopifnot(is.logical(replace))
@@ -171,17 +171,17 @@ generate_targets <- function(inputId, args, targetsLabels, targetsIds, selected,
           style = if (!is.null(height)) paste("height:", validateCssUnit(height), ";"),
           style = boxStyle,
           class = "box-dad xyvar dragula-target",
-          id = paste(inputId, "target", targetsIds[i], sep = "-"),
+          id = paste(inputId, "target", target_ids[i], sep = "-"),
           style = make_bg_svg(targetsLabels[i])
         )
       } else {
-        choicesTarget <- get_choices(args, selected[[targetsLabels[i]]])
+        choicesTarget <- get_choices(args, selected[[targetsIds[i]]])
         tags$div(
           style = "margin: 0;",
           style = if (!is.null(height)) paste("height:", validateCssUnit(height), ";"),
           style = boxStyle,
           class = "box-dad xyvar dragula-target",
-          id = paste(inputId, "target", targetsIds[i], sep = "-"),
+          id = paste(inputId, "target", target_ids[i], sep = "-"),
           style = make_bg_svg(targetsLabels[i]),
           makeDragulaChoices(inputId = inputId, args = choicesTarget, status = status, badge = badge)
         )
@@ -189,7 +189,7 @@ generate_targets <- function(inputId, args, targetsLabels, targetsIds, selected,
     }
   )
   list(
-    ids = targetsIds,
+    ids = target_ids,
     replace = replaceTargets,
     targets = targets
   )
