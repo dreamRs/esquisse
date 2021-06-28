@@ -338,7 +338,7 @@ updateDragulaInput <- function(session,
         ))
       }
     )
-    names(selected) <- paste(session$ns(inputId), "target", nms, sep = "-")
+    names(selected) <- paste(session$ns(inputId), "target", makeId(nms), sep = "-")
   }
   if (!is.null(selectedNames) & !is.null(selectedValues)) {
     if (length(selectedNames) != length(selectedValues))
@@ -356,7 +356,7 @@ updateDragulaInput <- function(session,
         ))
       }
     )
-    names(selected) <- paste(session$ns(inputId), "target", nms, sep = "-")
+    names(selected) <- paste(session$ns(inputId), "target", makeId(nms), sep = "-")
   }
   message <- dropNulls(list(choices = choices, selected = selected))
   session$sendInputMessage(inputId, message)
