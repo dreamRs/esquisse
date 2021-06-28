@@ -1,6 +1,6 @@
 library(shiny)
 library(ggplot2)
-library(shinyWidgets)
+library(esquisse)
 
 
 ui <- fluidPage(

@@ -8,6 +8,7 @@
 #' @description Save a \code{ggplot} object in various format and resize it before saving.
 #'
 #' @param id Module ID.
+#' @param output_format Output formats offered to the user.
 #'
 #' @return No value. Use in UI & server of shiny application.
 #' @export
@@ -19,8 +20,9 @@
 #' @importFrom shinyWidgets textInputIcon numericInputIcon
 #'
 #' @example examples/save-ggplot-module.R
-save_ggplot_ui <- function(id) {
+save_ggplot_ui <- function(id, output_format = c("png", "pdf", "svg", "jpeg", "bmp", "eps", "tiff")) {
   ns <- NS(id)
+  output_format <- match.arg(output_format, several.ok = TRUE)
   tagList(
     html_dependency_moveable(),
     tags$div(plotOutput(ns("plot"))),
@@ -60,15 +62,18 @@ save_ggplot_ui <- function(id) {
       )
     ),
     tags$div(
-      tags$b("Export format:"),
-      tags$br(),
-      downloadButton(outputId = ns("png"), label = "PNG", style = "width: 120px;"),
-      downloadButton(outputId = ns("pdf"), label = "PDF", style = "width: 120px;"),
-      downloadButton(outputId = ns("svg"), label = "SVG", style = "width: 120px;"),
-      downloadButton(outputId = ns("jpeg"), label = "JPEG", style = "width: 120px;"),
-      downloadButton(outputId = ns("bmp"), label = "BMP", style = "width: 120px;"),
-      downloadButton(outputId = ns("eps"), label = "EPS", style = "width: 120px;"),
-      downloadButton(outputId = ns("tiff"), label = "TIFF", style = "width: 120px;")
+      tags$label("Export format:"),
+      tags$div(
+        style = "display: grid;",
+        style = sprintf("grid-template-columns: repeat(%s, 1fr);", length(output_format)),
+        style = "grid-column-gap: 10px;",
+        lapply(
+          X = output_format,
+          FUN = function(x) {
+            downloadButton(outputId = ns(x), label = toupper(x), style = "width: 100%;")
+          }
+        )
+      )
     ),
     tags$div(
       style = "display: none;",
@@ -85,7 +90,9 @@ save_ggplot_ui <- function(id) {
 #' 
 #' @importFrom shiny NS showModal modalDialog checkboxInput
 #' @importFrom htmltools tagList tags
-save_ggplot_modal <- function(id, title = NULL) {
+save_ggplot_modal <- function(id, 
+                              title = NULL, 
+                              output_format = c("png", "pdf", "svg", "jpeg", "bmp", "eps", "tiff")) {
   ns <- NS(id)
   showModal(modalDialog(
     title = tagList(
@@ -101,7 +108,7 @@ save_ggplot_modal <- function(id, title = NULL) {
     footer = NULL,
     size = "l",
     fade = FALSE,
-    save_ggplot_ui(id),
+    save_ggplot_ui(id, output_format = output_format),
     tags$div(
       style = "display: none;",
       checkboxInput(inputId = ns("modal"), label = NULL, value = TRUE)

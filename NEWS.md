@@ -1,6 +1,7 @@
 # esquisse 1.0.2
 
 * Use named character vector for scale manual instead of list.
+* `save_ggplot_modal()` / `save_ggplot_ui()` added `output_format` argument to select the exported format allowed.
 
 
 

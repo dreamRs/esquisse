@@ -7,14 +7,23 @@
 \alias{save_ggplot_server}
 \title{Save \code{ggplot} module}
 \usage{
-save_ggplot_ui(id)
+save_ggplot_ui(
+  id,
+  output_format = c("png", "pdf", "svg", "jpeg", "bmp", "eps", "tiff")
+)
 
-save_ggplot_modal(id, title = NULL)
+save_ggplot_modal(
+  id,
+  title = NULL,
+  output_format = c("png", "pdf", "svg", "jpeg", "bmp", "eps", "tiff")
+)
 
 save_ggplot_server(id, plot_rv)
 }
 \arguments{
 \item{id}{Module ID.}
+
+\item{output_format}{Output formats offered to the user.}
 
 \item{title}{Modal's title.}
 
@@ -29,7 +38,7 @@ Save a \code{ggplot} object in various format and resize it before saving.
 \examples{
 library(shiny)
 library(ggplot2)
-library(shinyWidgets)
+library(esquisse)
 
 
 ui <- fluidPage(
