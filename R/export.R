@@ -56,7 +56,7 @@ save_ggplot_ui <- function(id, output_format = c("png", "pdf", "svg", "jpeg", "b
       ),
       actionButton(
         inputId = ns("update_preview"),
-        label = "Update Preview",
+        label = i18n("Update Preview"),
         icon = icon("eye"),
         style = "margin-bottom: 15px;"
       )
@@ -216,7 +216,7 @@ ggplot_output <- function(id, width = "100%", height = "400px", downloads = down
     if (!is.null(downloads)) {
       e <- downloads[-1]
       e <- e[-length(e)]
-      dlBtn <- lapply(
+      download_links <- lapply(
         X = seq_along(e),
         FUN = function(i) {
           if (is.null(e[[i]]))
@@ -238,11 +238,13 @@ ggplot_output <- function(id, width = "100%", height = "400px", downloads = down
           style= "position: absolute; top: 0; right: 5px;"
         ),
         placement = "bottom-end",
-        dlBtn,
-        if (!is.null(downloads$more)) tagList(
-          tags$hr(style = "margin: 5px 0;"),
-          actionLink(inputId = ns("more"), label = downloads$more)
-        )
+        download_links,
+        if (!is.null(downloads$more)) {
+          tagList(
+            tags$hr(style = "margin: 5px 0;"),
+            actionLink(inputId = ns("more"), label = downloads$more)
+          )
+        }
       )
     },
     plotOutput(outputId = ns("plot"), width = width, height = height, ...)
