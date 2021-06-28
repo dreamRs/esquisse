@@ -16,6 +16,7 @@ dragulaInput(
   selected = NULL,
   status = "primary",
   replace = FALSE,
+  copySource = TRUE,
   badge = TRUE,
   ncolSource = "auto",
   ncolGrid = NULL,
@@ -58,6 +59,8 @@ status to color them, or \code{NULL}.}
 
 \item{replace}{When a choice is dragged in a target container already
 containing a choice, does the later be replaced by the new one ?}
+
+\item{copySource}{When \code{replace = TRUE}, does elements in source must be copied or moved ?}
 
 \item{badge}{Displays choices inside a Bootstrap badge. Use \code{FALSE}
 if you want to pass custom appearance with \code{choiceNames}.}

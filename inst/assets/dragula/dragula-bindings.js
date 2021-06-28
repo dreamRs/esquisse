@@ -15,6 +15,7 @@ $.extend(dragulaBinding, {
     config = JSON.parse(config.html());
 
     var opts = config.options;
+    var copySource = config.copySource;
 
     if (!opts.hasOwnProperty("removeOnSpill")) {
       opts.removeOnSpill = false;
@@ -35,13 +36,16 @@ $.extend(dragulaBinding, {
       containersId.push(document.querySelector("#" + element));
     });
 
+
     if (replaceold) {
-      opts.copy = function(el, source) {
-        return source === document.getElementById(sourceContainer);
-      };
-      opts.isContainer = function(el) {
-        return el.classList.contains("target");
-      };
+      if (copySource) {
+        opts.copy = function(el, source) {
+          return source === document.getElementById(sourceContainer);
+        };
+        opts.isContainer = function(el) {
+          return el.classList.contains("target");
+        };
+      }
     }
 
     var drake = dragula(containersId, opts).on("dragend", function(el) {
@@ -50,25 +54,33 @@ $.extend(dragulaBinding, {
 
     if (replaceold) {
       drake.on("drop", function(el, target) {
-        if (target !== document.getElementById(sourceContainer)) {
+        var source = document.getElementById(sourceContainer);
+        if (target !== source) {
           if (target !== null) {
             if (replaceIds.indexOf(target.id) >= 0) {
-              $(target)
-                .children(".dragula-block")
-                .remove();
+              var tgt = $(target)
+                .children(".dragula-block");
+              if (!copySource) {
+                $(source).append(tgt);
+              }
+              $(target).empty();
             }
-            target.appendChild(el);
+            $(target).append($(el));
           }
         } else {
-          $(target)
-            .find(
-              "#" +
-                $(el)
-                  .children()
-                  .attr("id")
-            )
-            .parent()
-            .remove();
+          if (copySource) {
+            $(target)
+              .find(
+                "#" +
+                  $(el)
+                    .children()
+                    .attr("id")
+              )
+              .parent()
+              .remove();
+          } else {
+            source.appendChild(el);
+          }
         }
         $el.trigger("change");
       });

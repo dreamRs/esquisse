@@ -29,6 +29,7 @@
 #'  status to color them, or \code{NULL}.
 #' @param replace When a choice is dragged in a target container already
 #'  containing a choice, does the later be replaced by the new one ?
+#' @param copySource When \code{replace = TRUE}, does elements in source must be copied or moved ?
 #' @param dragulaOpts Options passed to dragula JavaScript library.
 #' @param boxStyle CSS style string to customize source and target container.
 #' @param width Width of the input.
@@ -57,6 +58,7 @@ dragulaInput <- function(inputId,
                          selected = NULL,
                          status = "primary",
                          replace = FALSE,
+                         copySource = TRUE,
                          badge = TRUE,
                          ncolSource = "auto",
                          ncolGrid = NULL,
@@ -123,6 +125,7 @@ dragulaInput <- function(inputId,
           style = if (!is.null(height)) paste("height:", validateCssUnit(height), ";"),
           tags$div(
             id = paste(inputId, "source", sep = "-"),
+            class = "dragula-source",
             style = "min-height: 15px;",
             makeDragulaChoices(inputId = inputId, args = args, status = status, badge = badge)
           )
@@ -137,6 +140,7 @@ dragulaInput <- function(inputId,
           targets = list1(paste(inputId, "target", targetsIds, sep = "-")),
           replace = replace,
           replaceIds = list1(replaceTargets),
+          copySource = copySource,
           options = dragulaOpts
         ), auto_unbox = TRUE, json_verbatim = TRUE)
       )
