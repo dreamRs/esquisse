@@ -12,7 +12,9 @@
 #' @examples 
 #' \dontrun{
 #' 
-#' # Launch esquisse with:
+#' esquisser()
+#' 
+#' # launch esquisse with specific data:
 #' esquisser(mtcars)
 #' 
 #' }

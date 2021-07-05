@@ -22,7 +22,7 @@ downloads_labels(
   svg = tagList(icon("chrome"), "SVG"),
   jpeg = tagList(icon("file-image-o"), "JPEG"),
   pptx = tagList(icon("file-powerpoint-o"), "PPTX"),
-  more = tagList(icon("gear"), "More options")
+  more = tagList(icon("gear"), i18n("More options"))
 )
 
 render_ggplot(

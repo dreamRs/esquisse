@@ -1,2 +1,11 @@
 label,translation
 "Update Preview","Actualiser la vue"
+"Height:","Hauteur :"
+"Width:","Largeur :"
+"Filename:","Nom de fichier :"
+"Filename","Nom de fichier"
+"Close","Fermer"
+"More options","Plus d'options"
+"Export chart","Export graphique"
+"Export to PowerPoint failed...","Echec de l'export en PowerPoint"
+"Export format:","Type de fichier :"

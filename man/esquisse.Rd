@@ -12,6 +12,9 @@ and retrieve the code to reproduce the plot.
 \examples{
 \dontrun{
 
+esquisser()
+
+# launch esquisse with specific data:
 esquisser(mtcars)
 
 }

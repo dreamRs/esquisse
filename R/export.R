@@ -36,22 +36,22 @@ save_ggplot_ui <- function(id, output_format = c("png", "pdf", "svg", "jpeg", "b
         inputId = ns("filename"),
         label = NULL,
         value = "export-plot",
-        placeholder = "Filename",
-        icon = list("Filename:"),
+        placeholder = i18n("Filename"),
+        icon = list(i18n("Filename:")),
         width = "100%"
       ),
       numericInputIcon(
         inputId = ns("width"),
         label = NULL,
         value = 868,
-        icon = list("Width:"),
+        icon = list(i18n("Width:")),
         width = "100%"
       ),
       numericInputIcon(
         inputId = ns("height"),
         label = NULL,
         value = 400,
-        icon = list("Height:"),
+        icon = list(i18n("Height:")),
         width = "100%"
       ),
       actionButton(
@@ -62,7 +62,7 @@ save_ggplot_ui <- function(id, output_format = c("png", "pdf", "svg", "jpeg", "b
       )
     ),
     tags$div(
-      tags$label("Export format:"),
+      tags$label(i18n("Export format:")),
       tags$div(
         style = "display: grid;",
         style = sprintf("grid-template-columns: repeat(%s, 1fr);", length(output_format)),
@@ -101,7 +101,7 @@ save_ggplot_modal <- function(id,
         class = "btn btn-default pull-right",
         style = "border: 0 none;",
         `data-dismiss` = "modal",
-        `aria-label` = "Close"
+        `aria-label` = i18n("Close")
       ),
       title
     ),
@@ -264,7 +264,7 @@ downloads_labels <- function(label = icon("download"),
                              svg = tagList(icon("chrome"), "SVG"),
                              jpeg = tagList(icon("file-image-o"), "JPEG"),
                              pptx = tagList(icon("file-powerpoint-o"), "PPTX"),
-                             more = tagList(icon("gear"), "More options")) {
+                             more = tagList(icon("gear"), i18n("More options"))) {
   list(
     label = label,
     png = png,
@@ -324,7 +324,7 @@ render_ggplot <- function(id,
             ), silent = TRUE)
             if ("try-error" %in% class(ppt)) {
               shiny::showNotification(
-                ui = "Export to PowerPoint failed...", 
+                ui = i18n("Export to PowerPoint failed..."), 
                 type = "error", 
                 id = paste("esquisse", sample.int(1e6, 1), sep = "-")
               )
@@ -353,7 +353,7 @@ render_ggplot <- function(id,
         hideDropMenu("exports_dropmenu")
         save_ggplot_modal(
           id = session$ns("export"),
-          title = "Export chart"
+          title = i18n("Export chart")
         )
       })
       save_ggplot_server("export", plot_rv = rv)
