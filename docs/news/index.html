@@ -8,6 +8,13 @@
 
 <title>Changelog • esquisse</title>
 
+<!-- favicons -->
+<link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
+<link rel="icon" type="image/png" sizes="32x32" href="../favicon-32x32.png">
+<link rel="apple-touch-icon" type="image/png" sizes="180x180" href="../apple-touch-icon.png" />
+<link rel="apple-touch-icon" type="image/png" sizes="120x120" href="../apple-touch-icon-120x120.png" />
+<link rel="apple-touch-icon" type="image/png" sizes="76x76" href="../apple-touch-icon-76x76.png" />
+<link rel="apple-touch-icon" type="image/png" sizes="60x60" href="../apple-touch-icon-60x60.png" />
 
 <!-- jquery -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
@@ -40,6 +47,7 @@
 
 
 <meta property="og:title" content="Changelog" />
+<meta property="og:image" content="/logo.png" />
 
 
 
@@ -71,7 +79,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">esquisse</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.0.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.0.2</span>
       </span>
     </div>
 
@@ -79,7 +87,7 @@
       <ul class="nav navbar-nav">
         <li>
   <a href="../index.html">
-    <span class="fas fa-home fa-lg"></span>
+    <span class="fa fa-home fa-lg"></span>
      
   </a>
 </li>
@@ -108,7 +116,7 @@
       <ul class="nav navbar-nav navbar-right">
         <li>
   <a href="https://github.com/dreamRs/esquisse">
-    <span class="fas fa-github fa-lg"></span>
+    <span class="fa fa-github fa-lg"></span>
      
   </a>
 </li>
@@ -129,6 +137,29 @@
       <small>Source: <a href='https://github.com/dreamRs/esquisse/blob/master/NEWS.md'><code>NEWS.md</code></a></small>
     </div>
 
+    <div id="esquisse-102" class="section level1">
+<h1 class="page-header" data-toc-text="1.0.2">
+<a href="#esquisse-102" class="anchor"></a>esquisse 1.0.2<small> 2021-07-05 </small>
+</h1>
+<ul>
+<li>Use named character vector for scale manual instead of list (for generated code).</li>
+<li>
+<code><a href="../reference/save-ggplot-module.html">save_ggplot_modal()</a></code> / <code><a href="../reference/save-ggplot-module.html">save_ggplot_ui()</a></code>: added <code>output_format</code> argument to select the exported format allowed.</li>
+<li>Fix bug with data imported from other source than an environment <a href="https://github.com/dreamRs/esquisse/issues/154"><a href='https://github.com/dreamRs/esquisse/issues/154'>#154</a></a>, <a href="https://github.com/dreamRs/esquisse/issues/169"><a href='https://github.com/dreamRs/esquisse/issues/169'>#169</a></a>
+</li>
+<li>Fix bug in <code><a href="../reference/dragulaInput.html">dragulaInput()</a></code> / <code><a href="../reference/updateDragulaInput.html">updateDragulaInput()</a></code> with selected values.</li>
+</ul>
+</div>
+    <div id="esquisse-101" class="section level1">
+<h1 class="page-header" data-toc-text="1.0.1">
+<a href="#esquisse-101" class="anchor"></a>esquisse 1.0.1<small> 2021-04-20 </small>
+</h1>
+<ul>
+<li>Corrected a bug when using <code>sf</code> objects (fix <a href="https://github.com/dreamRs/esquisse/issues/147"><a href='https://github.com/dreamRs/esquisse/issues/147'>#147</a></a>).</li>
+<li>Use <code>pkg::data</code> notation if data used in addin comes from a package (fix <a href="https://github.com/dreamRs/esquisse/issues/150"><a href='https://github.com/dreamRs/esquisse/issues/150'>#150</a></a>).</li>
+<li>Corrected a bug when labs’ input controls when the panel is disabled (fix <a href="https://github.com/dreamRs/esquisse/issues/148"><a href='https://github.com/dreamRs/esquisse/issues/148'>#148</a></a>)</li>
+</ul>
+</div>
     <div id="esquisse-100" class="section level1">
 <h1 class="page-header" data-toc-text="1.0.0">
 <a href="#esquisse-100" class="anchor"></a>esquisse 1.0.0<small> 2021-04-12 </small>
