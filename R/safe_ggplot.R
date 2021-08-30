@@ -11,20 +11,25 @@
 #' @importFrom shiny showNotification getDefaultReactiveDomain
 #' @importFrom tools toTitleCase
 #' @importFrom rlang eval_tidy
-#' @importFrom ggplot2 ggplot_build
+#' @importFrom ggplot2 ggplot_build ggplot_gtable
 #'
 #' @example examples/safe_ggplot.R
 safe_ggplot <- function(expr, data = NULL, session = shiny::getDefaultReactiveDomain()) {
   show_condition_message <- function(e, type, session) {
     if (!is.null(session)) {
+      msg <- conditionMessage(e)
       showNotification(
         ui = paste(
           tools::toTitleCase(type),
-          conditionMessage(e),
+          msg,
           sep = " : "
         ),
         duration = 1000,
-        id = paste("esquisse", sample.int(1e6, 1), sep = "-"),
+        id = paste(
+          "esquisse", 
+          paste(format(as.hexmode(unique(utf8ToInt(msg))), width = 2), collapse = ""), 
+          sep = "-"
+        ),
         type = type, 
         session = session
       )
@@ -34,8 +39,9 @@ safe_ggplot <- function(expr, data = NULL, session = shiny::getDefaultReactiveDo
     expr = tryCatch(
       expr = {
         gg <- eval_tidy(expr = expr, data = data)
-        gg <- ggplot_build(gg)
-        gg
+        gb <- ggplot_build(gg)
+        ggt <- ggplot_gtable(gb)
+        return(gb)
       },
       error = function(e) {
         show_condition_message(e, "error", session)
@@ -44,7 +50,6 @@ safe_ggplot <- function(expr, data = NULL, session = shiny::getDefaultReactiveDo
     ), 
     warning = function(w) {
       show_condition_message(w, "warning", session)
-      list(plot = NULL, data = NULL, layout = NULL)
     }
   )
 }
