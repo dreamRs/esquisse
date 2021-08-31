@@ -165,7 +165,7 @@ col_type <- function(x, no_id = FALSE) {
     x <- x[, setdiff(names(x), attr(x, "sf_column")), drop = FALSE]
   }
 
-  if (is.data.frame(x)) {
+  if (inherits(x, c("data.frame", "list"))) {
     return(unlist(lapply(x, col_type), use.names = FALSE))
   } else {
     if (inherits(x, c("logical", "character", "factor", "AsIs"))) {
