@@ -49,14 +49,14 @@ esquisse_ui <- function(id,
         label = NULL,
         icon = icon("gear", class = "fa-lg"),
         class = "btn-sm",
-        title = "Display settings"
+        title = i18n("Display settings")
       ),
       actionButton(
         inputId = ns("close"),
         label = NULL,
         icon = icon("times", class = "fa-lg"),
         class = "btn-sm",
-        title = "Close Window"
+        title = i18n("Close Window")
       )
     ),
     tags$div(
@@ -66,14 +66,14 @@ esquisse_ui <- function(id,
         label = NULL,
         icon = icon("database", class = "fa-lg"),
         class = "btn-sm",
-        title = "Import data"
+        title = i18n("Import data")
       ),
       actionButton(
         inputId = ns("show_data"),
         label = NULL,
         icon = icon("table", class = "fa-lg"),
         class = "btn-sm",
-        title = "Show data"
+        title = i18n("Show data")
       )
     )
   )

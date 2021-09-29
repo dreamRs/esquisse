@@ -80,7 +80,7 @@ controls_ui <- function(id,
           inputId = ns("controls-labs"),
           class = "esquisse-controls-labs",
           style = "default",
-          label = "Labels & Title",
+          label = i18n("Labels & Title"),
           up = TRUE,
           icon = icon("font"),
           status = "default btn-esquisse-controls"
@@ -92,7 +92,7 @@ controls_ui <- function(id,
           inputId = ns("controls-parameters"),
           class = "esquisse-controls-parameters",
           style = "default",
-          label = "Plot options",
+          label = i18n("Plot options"),
           up = TRUE,
           icon = icon("gears"),
           status = "default btn-esquisse-controls"
@@ -104,7 +104,7 @@ controls_ui <- function(id,
           inputId = ns("controls-appearance"),
           class = "esquisse-controls-appearance",
           style = "default",
-          label = "Appearance",
+          label = i18n("Appearance"),
           up = TRUE,
           icon = icon("palette"),
           status = "default btn-esquisse-controls"
@@ -116,7 +116,7 @@ controls_ui <- function(id,
           inputId = ns("controls-filters"),
           class = "esquisse-controls-filters",
           style = "default",
-          label = "Data",
+          label = i18n("Data"),
           up = TRUE,
           icon = icon("filter"),
           status = "default btn-esquisse-controls"
@@ -128,7 +128,7 @@ controls_ui <- function(id,
           inputId = ns("controls-code"),
           class = "esquisse-controls-code",
           style = "default",
-          label = "Code",
+          label = i18n("Code"),
           up = TRUE,
           right = TRUE,
           icon = icon("code"),
@@ -482,53 +482,53 @@ controls_labs <- function(ns) {
     class = "form-group",
     labs_options_input(
       inputId = ns("labs_title"), 
-      placeholder = "Title", 
-      label = "Title:",
+      placeholder = i18n("Title"), 
+      label = i18n("Title:"),
       defaults = get_labs_defaults("title")
     ),
     labs_options_input(
       inputId = ns("labs_subtitle"), 
-      placeholder = "Subtitle",
-      label = "Subtitle:",
+      placeholder = i18n("Subtitle"),
+      label = i18n("Subtitle:"),
       defaults = get_labs_defaults("subtitle")
     ),
     labs_options_input(
       inputId = ns("labs_caption"), 
-      placeholder = "Caption",
-      label = "Caption:",
+      placeholder = i18n("Caption"),
+      label = i18n("Caption:"),
       defaults = get_labs_defaults("caption")
     ),
     labs_options_input(
       inputId = ns("labs_x"), 
-      placeholder = "X label", 
-      label = "X label:",
+      placeholder = i18n("X label"), 
+      label = i18n("X label:"),
       defaults = get_labs_defaults("x")
     ),
     labs_options_input(
       inputId = ns("labs_y"),
       placeholder = "Y label", 
-      label = "Y label:",
+      label = i18n("Y label:"),
       defaults = get_labs_defaults("y")
     ),
     tags$div(
       id = ns("controls-labs-fill"), 
       style = "display: none;",
-      textInput(inputId = ns("labs_fill"), placeholder = "Fill label", label = "Fill label:")
+      textInput(inputId = ns("labs_fill"), placeholder = i18n("Fill label"), label = i18n("Fill label:"))
     ),
     tags$div(
       id = ns("controls-labs-color"), 
       style = "display: none;",
-      textInput(inputId = ns("labs_color"), placeholder = "Color label", label = "Color label:")
+      textInput(inputId = ns("labs_color"), placeholder = i18n("Color label"), label = i18n("Color label:"))
     ),
     tags$div(
       id = ns("controls-labs-size"), 
       style = "display: none;",
-      textInput(inputId = ns("labs_size"), placeholder = "Size label", label = "Size label:")
+      textInput(inputId = ns("labs_size"), placeholder = i18n("Size label"), label = i18n("Size label:"))
     ),
     tags$div(
       id = ns("controls-labs-shape"), 
       style = "display: none;",
-      textInput(inputId = ns("labs_shape"), placeholder = "Shape label", label = "Shape label:")
+      textInput(inputId = ns("labs_shape"), placeholder = i18n("Shape label"), label = i18n("Shape label:"))
     )
   )
 }
@@ -567,7 +567,7 @@ labs_options_input <- function(inputId, label, placeholder, defaults = list()) {
       style = "width: 320px;",
       prettyRadioButtons(
         inputId = paste0(inputId, "_face"),
-        label = "Font face:",
+        label = i18n("Font face:"),
         choiceNames = c("Plain", "Italic", "Bold", "Bold/Italic"),
         choiceValues = c("plain", "italic", "bold", "bold.italic"),
         selected = defaults$face,
@@ -576,13 +576,13 @@ labs_options_input <- function(inputId, label, placeholder, defaults = list()) {
       ),
       numericInput(
         inputId = paste0(inputId, "_size"),
-        label = "Font size:",
+        label = i18n("Font size:"),
         value = defaults$size
       ),
       prettyRadioButtons(
         inputId = paste0(inputId, "_align"),
-        label = "Align:",
-        choiceNames = c("Left", "Center", "Right"),
+        label = i18n("Align:"),
+        choiceNames = c(i18n("Left"), i18n("Center"), i18n("Right")),
         choiceValues = c("left", "center", "right"),
         inline = TRUE,
         status = "primary",
@@ -673,7 +673,7 @@ controls_appearance <- function(ns) {
       id = ns("controls-fill-color"), style = "display: block;",
       shinyWidgets::colorPickr(
         inputId = ns("fill_color"),
-        label = "Color:",
+        label = i18n("Color:"),
         theme = "monolith",
         update = "changestop",
         inline = TRUE,
@@ -698,7 +698,7 @@ controls_appearance <- function(ns) {
       colorPickr(
         inputId = ns("color_ribbon"),
         selected = "#A4A4A4",
-        label = "Ribbon color:",
+        label = i18n("Ribbon color:"),
         theme = "nano",
         useAsButton = TRUE,
         update = "save",
@@ -715,7 +715,7 @@ controls_appearance <- function(ns) {
       id = ns("controls-shape"), style = "display: none;",
       pickerInput(
         inputId = ns("shape"),
-        label = "Point symbol:",
+        label = i18n("Point symbol:"),
         choices = shape_names,
         selected = "circle",
         options = list(size = 10, container = "body"),
@@ -724,7 +724,7 @@ controls_appearance <- function(ns) {
     ),
     pickerInput(
       inputId = ns("theme"),
-      label = "Theme:",
+      label = i18n("Theme:"),
       choices = themes,
       selected = getOption("esquisse.default.theme", default = "theme_minimal"),
       options = list(size = 10, container = "body"),
@@ -735,7 +735,7 @@ controls_appearance <- function(ns) {
     ),
     radioGroupButtons(
       inputId = ns("legend_position"),
-      label = "Legend position:",
+      label = i18n("Legend position:"),
       choiceNames = list(
         icon("arrow-left"), icon("arrow-up"),
         icon("arrow-down"), icon("arrow-right"), icon("close")
@@ -777,15 +777,15 @@ controls_params <- function(ns) {
       tags$label(
         class = "control-label",
         `for` = ns("smooth_add"),
-        "Add a smooth line:"
+        i18n("Add a smooth line:")
       ),
       prettyToggle(
         inputId = ns("smooth_add"),
-        label_on = "Yes",
+        label_on = i18n("Yes"),
         icon_on = icon("check"),
         status_on = "success",
         status_off = "danger",
-        label_off = "No",
+        label_off = i18n("No"),
         icon_off = icon("remove"),
         inline = TRUE
       ),
@@ -794,7 +794,7 @@ controls_params <- function(ns) {
         ns = ns,
         sliderInput(
           inputId = ns("smooth_span"),
-          label = "Smooth line span:",
+          label = i18n("Smooth line span:"),
           min = 0.1, 
           max = 1,
           value = 0.75, 
@@ -807,7 +807,7 @@ controls_params <- function(ns) {
       id = ns("controls-size"), style = "display: none;",
       sliderInput(
         inputId = ns("size"),
-        label = "Size for points/lines:",
+        label = i18n("Size for points/lines:"),
         min = 0.5, 
         max = 4,
         value = 1.2,
@@ -818,7 +818,7 @@ controls_params <- function(ns) {
       id = ns("controls-facet"), style = "display: none;",
       prettyRadioButtons(
         inputId = ns("facet_scales"),
-        label = "Facet scales:",
+        label = i18n("Facet scales:"),
         inline = TRUE,
         status = "primary",
         choices = c("fixed", "free", "free_x", "free_y"),
@@ -827,13 +827,13 @@ controls_params <- function(ns) {
       ),
       sliderInput(
         inputId = ns("facet_ncol"),
-        label = "Facet ncol:",
+        label = i18n("Facet ncol:"),
         min = 0, max = 10,
         value = 0, step = 1
       ),
       sliderInput(
         inputId = ns("facet_nrow"),
-        label = "Facet nrow:",
+        label = i18n("Facet nrow:"),
         min = 0, max = 10,
         value = 0, step = 1
       )
@@ -842,7 +842,7 @@ controls_params <- function(ns) {
       id = ns("controls-histogram"), style = "display: none;",
       sliderInput(
         inputId = ns("bins"),
-        label = "Numbers of bins:",
+        label = i18n("Numbers of bins:"),
         min = 10, max = 100,
         value = 30,
         width = "100%"
@@ -852,7 +852,7 @@ controls_params <- function(ns) {
       id = ns("controls-violin"), style = "display: none;",
       prettyRadioButtons(
         inputId = ns("scale"),
-        label = "Scale:",
+        label = i18n("Scale:"),
         inline = TRUE,
         status = "primary",
         choices = c("area", "count", "width"),
@@ -864,12 +864,12 @@ controls_params <- function(ns) {
       id = ns("controls-scale-trans-x"), style = "display: none;",
       numericRangeInput(
         inputId = ns("xlim"),
-        label = "X-Axis limits (empty for none):",
+        label = i18n("X-Axis limits (empty for none):"),
         value = c(NA, NA)
       ),
       selectInput(
         inputId = ns("transX"),
-        label = "X-Axis transform:",
+        label = i18n("X-Axis transform:"),
         selected = "identity",
         choices = scales_trans,
         width = "100%"
@@ -879,12 +879,12 @@ controls_params <- function(ns) {
       id = ns("controls-scale-trans-y"), style = "display: none;",
       numericRangeInput(
         inputId = ns("ylim"),
-        label = "Y-Axis limits (empty for none):",
+        label = i18n("Y-Axis limits (empty for none):"),
         value = c(NA, NA)
       ),
       selectInput(
         inputId = ns("transY"),
-        label = "Y-Axis transform:",
+        label = i18n("Y-Axis transform:"),
         selected = "identity",
         choices = scales_trans,
         width = "100%"
@@ -895,7 +895,7 @@ controls_params <- function(ns) {
       style = "display: none;",
       sliderInput(
         inputId = ns("adjust"),
-        label = "Bandwidth adjustment:",
+        label = i18n("Bandwidth adjustment:"),
         min = 0.2,
         max = 6,
         value = 1,
@@ -908,7 +908,7 @@ controls_params <- function(ns) {
       style = "display: none;",
       prettyRadioButtons(
         inputId = ns("position"),
-        label = "Position:",
+        label = i18n("Position:"),
         choices = c("stack", "dodge", "fill"),
         inline = TRUE,
         selected = "stack",
@@ -919,15 +919,15 @@ controls_params <- function(ns) {
     tags$label(
       class = "control-label",
       `for` = ns("flip"),
-      "Flip coordinate:"
+      i18n("Flip coordinate:")
     ),
     prettyToggle(
       inputId = ns("flip"),
-      label_on = "Yes",
+      label_on = i18n("Yes"),
       icon_on = icon("check"),
       status_on = "success",
       status_off = "danger",
-      label_off = "No",
+      label_off = i18n("No"),
       icon_off = icon("remove"),
       inline = TRUE
     )
@@ -949,16 +949,17 @@ controls_code <- function(ns, insert_code = FALSE) {
   tagList(
     tags$button(
       class = "btn btn-default btn-xs pull-right btn-copy-code",
-      "Copy to clipboard", `data-clipboard-target` = paste0("#", ns("codeggplot"))
+      i18n("Copy to clipboard"), 
+      `data-clipboard-target` = paste0("#", ns("codeggplot"))
     ), tags$script("$(function() {new ClipboardJS('.btn-copy-code');});"),
     tags$br(),
-    tags$b("Code:"),
+    tags$b(i18n("Code:")),
     uiOutput(outputId = ns("code")),
     tags$textarea(id = ns("holderCode"), style = "display: none;"),
     if (insert_code) {
       actionLink(
         inputId = ns("insert_code"),
-        label = "Insert code in script",
+        label = i18n("Insert code in script"),
         icon = icon("arrow-circle-left")
       )
     },
