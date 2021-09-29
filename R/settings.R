@@ -8,7 +8,7 @@ modal_settings <- function(aesthetics = NULL, session = shiny::getDefaultReactiv
     title = tagList(
       i18n("Esquisse settings"),
       tags$button(
-        icon("close"),
+        ph("x"),
         title = i18n("Close"),
         class = "btn btn-default pull-right",
         style = "border: 0 none;",
@@ -21,7 +21,7 @@ modal_settings <- function(aesthetics = NULL, session = shiny::getDefaultReactiv
       class = "control-label"
     ),
     shinyWidgets::alert(
-      icon("info"), 
+      ph("info"), 
       i18n("Aesthetic mappings describe how variables in the data are mapped to visual properties (aesthetics) of geoms."),
       status = "info"
     ),

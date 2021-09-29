@@ -16,13 +16,13 @@ ggplot_output(
 )
 
 downloads_labels(
-  label = icon("download"),
-  png = tagList(icon("file-image-o"), "PNG"),
-  pdf = tagList(icon("file-pdf-o"), "PDF"),
-  svg = tagList(icon("chrome"), "SVG"),
-  jpeg = tagList(icon("file-image-o"), "JPEG"),
-  pptx = tagList(icon("file-powerpoint-o"), "PPTX"),
-  more = tagList(icon("gear"), i18n("More options"))
+  label = ph("download-simple"),
+  png = tagList(ph("image"), "PNG"),
+  pdf = tagList(ph("file-pdf"), "PDF"),
+  svg = tagList(ph("browsers"), "SVG"),
+  jpeg = tagList(ph("image"), "JPEG"),
+  pptx = tagList(ph("projector-screen"), "PPTX"),
+  more = tagList(ph("gear"), i18n("More options"))
 )
 
 render_ggplot(

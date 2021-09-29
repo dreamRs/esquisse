@@ -44,7 +44,7 @@ dropdown_ <- function(..., class = NULL) {
 #' @noRd
 #'
 #' @importFrom htmltools tags tagList HTML
-#' @importFrom shiny icon checkboxInput
+#' @importFrom shiny checkboxInput
 #' @importFrom datamods filter_data_ui
 #'
 controls_ui <- function(id,
@@ -82,7 +82,7 @@ controls_ui <- function(id,
           style = "default",
           label = i18n("Labels & Title"),
           up = TRUE,
-          icon = icon("font"),
+          icon = ph("text-aa"),
           status = "default btn-esquisse-controls"
         )
       },
@@ -94,7 +94,7 @@ controls_ui <- function(id,
           style = "default",
           label = i18n("Plot options"),
           up = TRUE,
-          icon = icon("gears"),
+          icon = ph("gear"),
           status = "default btn-esquisse-controls"
         )
       },
@@ -106,7 +106,7 @@ controls_ui <- function(id,
           style = "default",
           label = i18n("Appearance"),
           up = TRUE,
-          icon = icon("palette"),
+          icon = ph("palette"),
           status = "default btn-esquisse-controls"
         )
       },
@@ -118,7 +118,7 @@ controls_ui <- function(id,
           style = "default",
           label = i18n("Data"),
           up = TRUE,
-          icon = icon("filter"),
+          icon = ph("sliders-horizontal"),
           status = "default btn-esquisse-controls"
         )
       },
@@ -131,7 +131,7 @@ controls_ui <- function(id,
           label = i18n("Code"),
           up = TRUE,
           right = TRUE,
-          icon = icon("code"),
+          icon = ph("code"),
           status = "default btn-esquisse-controls"
         )
       }
@@ -535,7 +535,7 @@ controls_labs <- function(ns) {
 
 #' @importFrom htmltools tags
 #' @importFrom shinyWidgets dropMenu prettyRadioButtons
-#' @importFrom shiny actionButton icon numericInput
+#' @importFrom shiny actionButton numericInput
 labs_options_input <- function(inputId, label, placeholder, defaults = list()) {
   tags$div(
     class = "esquisse-labs-options",
@@ -560,8 +560,7 @@ labs_options_input <- function(inputId, label, placeholder, defaults = list()) {
     dropMenu(
       actionButton(
         inputId = paste0(inputId, "_options"), 
-        label = NULL, 
-        icon = icon("plus"),
+        label = ph("plus"),
         style = "margin-top: 25px; border-radius: 0 4px 4px 0; width: 100%;"
       ),
       style = "width: 320px;",
@@ -650,7 +649,6 @@ get_labs_options <- function(inputs, name = c("title", "subtitle", "caption", "x
 #' @noRd
 #' 
 #' @importFrom utils head
-#' @importFrom shiny icon
 #' @importFrom htmltools tagList tags
 #' @importFrom shinyWidgets pickerInput radioGroupButtons colorPickr
 controls_appearance <- function(ns) {
@@ -737,8 +735,11 @@ controls_appearance <- function(ns) {
       inputId = ns("legend_position"),
       label = i18n("Legend position:"),
       choiceNames = list(
-        icon("arrow-left"), icon("arrow-up"),
-        icon("arrow-down"), icon("arrow-right"), icon("close")
+        ph("arrow-left"), 
+        ph("arrow-up"),
+        ph("arrow-down"), 
+        ph("arrow-right"), 
+        ph("x")
       ),
       choiceValues = c("left", "top", "bottom", "right", "none"),
       selected = "right",
@@ -782,11 +783,9 @@ controls_params <- function(ns) {
       prettyToggle(
         inputId = ns("smooth_add"),
         label_on = i18n("Yes"),
-        icon_on = icon("check"),
         status_on = "success",
         status_off = "danger",
         label_off = i18n("No"),
-        icon_off = icon("remove"),
         inline = TRUE
       ),
       conditionalPanel(
@@ -822,20 +821,23 @@ controls_params <- function(ns) {
         inline = TRUE,
         status = "primary",
         choices = c("fixed", "free", "free_x", "free_y"),
-        outline = TRUE,
-        icon = icon("check")
+        outline = TRUE
       ),
       sliderInput(
         inputId = ns("facet_ncol"),
         label = i18n("Facet ncol:"),
-        min = 0, max = 10,
-        value = 0, step = 1
+        min = 0,
+        max = 10,
+        value = 0, 
+        step = 1
       ),
       sliderInput(
         inputId = ns("facet_nrow"),
         label = i18n("Facet nrow:"),
-        min = 0, max = 10,
-        value = 0, step = 1
+        min = 0, 
+        max = 10,
+        value = 0, 
+        step = 1
       )
     ),
     tags$div(
@@ -843,7 +845,8 @@ controls_params <- function(ns) {
       sliderInput(
         inputId = ns("bins"),
         label = i18n("Numbers of bins:"),
-        min = 10, max = 100,
+        min = 10,
+        max = 100,
         value = 30,
         width = "100%"
       )
@@ -856,8 +859,7 @@ controls_params <- function(ns) {
         inline = TRUE,
         status = "primary",
         choices = c("area", "count", "width"),
-        outline = TRUE,
-        icon = icon("check")
+        outline = TRUE
       )
     ),
     tags$div(
@@ -924,11 +926,9 @@ controls_params <- function(ns) {
     prettyToggle(
       inputId = ns("flip"),
       label_on = i18n("Yes"),
-      icon_on = icon("check"),
       status_on = "success",
       status_off = "danger",
       label_off = i18n("No"),
-      icon_off = icon("remove"),
       inline = TRUE
     )
   )
@@ -942,7 +942,7 @@ controls_params <- function(ns) {
 #' @param ns Namespace from module
 #'
 #' @noRd
-#' @importFrom shiny icon downloadButton uiOutput actionLink
+#' @importFrom shiny downloadButton uiOutput actionLink
 #' @importFrom htmltools tagList tags
 #'
 controls_code <- function(ns, insert_code = FALSE) {
@@ -959,8 +959,7 @@ controls_code <- function(ns, insert_code = FALSE) {
     if (insert_code) {
       actionLink(
         inputId = ns("insert_code"),
-        label = i18n("Insert code in script"),
-        icon = icon("arrow-circle-left")
+        label = tagList(ph("arrow-circle-left"), i18n("Insert code in script"))
       )
     },
     tags$br()

@@ -31,3 +31,9 @@ NULL
 #' @export
 #' @rdname esquisse-exports
 NULL
+
+#' @importFrom phosphoricons ph
+#' @name ph
+#' @export
+#' @rdname esquisse-exports
+NULL

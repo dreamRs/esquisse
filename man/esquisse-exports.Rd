@@ -3,6 +3,7 @@
 \name{esquisse-exports}
 \alias{esquisse-exports}
 \alias{i18n}
+\alias{ph}
 \title{esquisse exported operators and S3 methods}
 \description{
 esquisse exported operators and S3 methods

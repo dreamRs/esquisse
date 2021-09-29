@@ -1,3 +1,10 @@
+# esquisse 1.0.2.9000
+
+* Internationalization support based on [{datamods} mechanism](https://dreamrs.github.io/datamods/articles/i18n.html).
+* Added french translations file, activate with `options("esquisse.i18n" = "fr")`.
+
+
+
 # esquisse 1.0.2
 
 * Use named character vector for scale manual instead of list (for generated code).

@@ -16,19 +16,20 @@ URL: https://github.com/dreamRs/esquisse
 BugReports: https://github.com/dreamRs/esquisse/issues
 License: GPL-3 | file LICENSE
 Encoding: UTF-8
-RoxygenNote: 7.1.1
+RoxygenNote: 7.1.2
 Roxygen: list(markdown = TRUE)
 Imports: 
     datamods (>= 1.1.5),
-    rstudioapi,
-    shiny (>= 1.1.0),
+    ggplot2 (>= 3.0.0),
+    grDevices,
     htmltools,
     jsonlite,
-    shinyWidgets (>= 0.6.0),
-    ggplot2 (>= 3.0.0),
-    scales,
+    phosphoricons,
     rlang (>= 0.3.1),
-    grDevices
+    rstudioapi,
+    scales,
+    shiny (>= 1.1.0),
+    shinyWidgets (>= 0.6.0)
 Suggests: 
     officer,
     rvg,

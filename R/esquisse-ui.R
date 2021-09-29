@@ -25,7 +25,7 @@
 #' @order 1
 #'
 #' @importFrom htmltools tags tagList
-#' @importFrom shiny fillPage plotOutput icon actionButton NS fluidRow column fillCol
+#' @importFrom shiny fillPage plotOutput actionButton NS fluidRow column fillCol
 #' @importFrom shinyWidgets prettyToggle
 #'
 #' @example examples/esquisse-module-1.R
@@ -46,15 +46,13 @@ esquisse_ui <- function(id,
       class = "pull-right",
       actionButton(
         inputId = ns("settings"),
-        label = NULL,
-        icon = icon("gear", class = "fa-lg"),
+        label = ph("gear-six", height = "2em"),
         class = "btn-sm",
         title = i18n("Display settings")
       ),
       actionButton(
         inputId = ns("close"),
-        label = NULL,
-        icon = icon("times", class = "fa-lg"),
+        label = ph("x", height = "2em"),
         class = "btn-sm",
         title = i18n("Close Window")
       )
@@ -63,15 +61,13 @@ esquisse_ui <- function(id,
       class = "pull-left",
       actionButton(
         inputId = ns("launch_import_data"),
-        label = NULL,
-        icon = icon("database", class = "fa-lg"),
+        label = ph("database", height = "2em"),
         class = "btn-sm",
         title = i18n("Import data")
       ),
       actionButton(
         inputId = ns("show_data"),
-        label = NULL,
-        icon = icon("table", class = "fa-lg"),
+        label = ph("table", height = "2em"),
         class = "btn-sm",
         title = i18n("Show data")
       )

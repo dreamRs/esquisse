@@ -15,7 +15,7 @@
 #' 
 #' @name save-ggplot-module
 #' 
-#' @importFrom shiny NS plotOutput actionButton downloadButton textInput icon
+#' @importFrom shiny NS plotOutput actionButton downloadButton textInput
 #' @importFrom htmltools tagList tags
 #' @importFrom shinyWidgets textInputIcon numericInputIcon
 #'
@@ -56,8 +56,7 @@ save_ggplot_ui <- function(id, output_format = c("png", "pdf", "svg", "jpeg", "b
       ),
       actionButton(
         inputId = ns("update_preview"),
-        label = i18n("Update Preview"),
-        icon = icon("eye"),
+        label = tagList(ph("eye"), i18n("Update Preview")),
         style = "margin-bottom: 15px;"
       )
     ),
@@ -70,7 +69,12 @@ save_ggplot_ui <- function(id, output_format = c("png", "pdf", "svg", "jpeg", "b
         lapply(
           X = output_format,
           FUN = function(x) {
-            downloadButton(outputId = ns(x), label = toupper(x), style = "width: 100%;")
+            downloadButton(
+              outputId = ns(x), 
+              label = tagList(ph("download"), toupper(x)), 
+              style = "width: 100%;",
+              icon = NULL
+            )
           }
         )
       )
@@ -97,10 +101,11 @@ save_ggplot_modal <- function(id,
   showModal(modalDialog(
     title = tagList(
       tags$button(
-        icon("close"),
+        ph("x"),
         class = "btn btn-default pull-right",
         style = "border: 0 none;",
         `data-dismiss` = "modal",
+        title = i18n("Close"),
         `aria-label` = i18n("Close")
       ),
       title
@@ -235,7 +240,7 @@ ggplot_output <- function(id, width = "100%", height = "400px", downloads = down
           inputId = ns("exports"),
           label = downloads$label,
           class = "btn-sm",
-          style= "position: absolute; top: 0; right: 5px;"
+          style = "position: absolute; top: 0; right: 5px;"
         ),
         placement = "bottom-end",
         download_links,
@@ -258,13 +263,13 @@ ggplot_output <- function(id, width = "100%", height = "400px", downloads = down
 #' 
 #' @rdname ggplot-output
 #' @export
-downloads_labels <- function(label = icon("download"),
-                             png = tagList(icon("file-image-o"), "PNG"),
-                             pdf = tagList(icon("file-pdf-o"), "PDF"),
-                             svg = tagList(icon("chrome"), "SVG"),
-                             jpeg = tagList(icon("file-image-o"), "JPEG"),
-                             pptx = tagList(icon("file-powerpoint-o"), "PPTX"),
-                             more = tagList(icon("gear"), i18n("More options"))) {
+downloads_labels <- function(label = ph("download-simple"),
+                             png = tagList(ph("image"), "PNG"),
+                             pdf = tagList(ph("file-pdf"), "PDF"),
+                             svg = tagList(ph("browsers"), "SVG"),
+                             jpeg = tagList(ph("image"), "JPEG"),
+                             pptx = tagList(ph("projector-screen"), "PPTX"),
+                             more = tagList(ph("gear"), i18n("More options"))) {
   list(
     label = label,
     png = png,
