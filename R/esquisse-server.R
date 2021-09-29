@@ -89,7 +89,7 @@ esquisse_server <- function(id,
         datamods::import_modal(
           id = ns("import-data"),
           from = import_from,
-          title = "Import data to create a graph"
+          title = i18n("Import data to create a graph")
         )
       }
       
@@ -98,7 +98,7 @@ esquisse_server <- function(id,
         datamods::import_modal(
           id = ns("import-data"),
           from = import_from,
-          title = "Import data to create a graph"
+          title = i18n("Import data to create a graph")
         )
       })
       
@@ -120,7 +120,7 @@ esquisse_server <- function(id,
             type = "warning"
           )
         } else {
-          datamods::show_data(data, title = "Dataset", type = "modal")
+          datamods::show_data(data, title = i18n("Dataset"), type = "modal")
         }
       })
       

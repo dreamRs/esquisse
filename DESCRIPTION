@@ -19,7 +19,7 @@ Encoding: UTF-8
 RoxygenNote: 7.1.1
 Roxygen: list(markdown = TRUE)
 Imports: 
-    datamods (>= 1.1.4.9200),
+    datamods (>= 1.1.5),
     rstudioapi,
     shiny (>= 1.1.0),
     htmltools,
