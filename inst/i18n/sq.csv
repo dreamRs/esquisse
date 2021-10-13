@@ -1,0 +1,86 @@
+label,translation
+Update Preview,Azhurno pamjen
+Height:,Lartësia:
+Width:,Gjerësia:
+Filename:,Emri i skedarit:
+Filename,Emri i skedarit
+Close,Mbylle
+More options,Më shumë opsione
+Export chart,Eksporto grafikun
+Export to PowerPoint failed...,Eksporto në PowerPoint
+Export format:,Formati i eksportit:
+Import data to create a graph,Importo të dhëna për të krijuar një grafik
+Display settings,Cilësimet e pamjes
+Close Window,Mbylle dritaren
+Import data,Importo të dhëna
+Show data,Trego të dhënat
+Labels & Title,Etiketat dhe titulli
+Plot options,Opsionet e grafikut
+Appearance,Pamja
+Data,Të dhënat
+Code,Kodi
+Title:,Titulli:
+Title,Titulli
+Subtitle:,Nëntitulli:
+Subtitle,Nëntitulli
+Caption:,Legjenda:
+Caption,Legjenda
+X label:,Teksti në boshtin X:
+X label,Teksti në boshtin X
+Y label:,Teksti në boshtin Y:
+Y label,Teksti në boshtin Y
+Fill label:,Teksti për ngjyrën për t’u mbushur:
+Fill label,Tekst për ngjyrën për t’u mbushur
+Color label:,Teksti për ngjyrën:
+Color label,Teksti për ngjyrën
+Size label:,Teksti për madhësinë:
+Size label,Teksti për madhësinë
+Shape label:,Teksti për formën:
+Shape label,Teksti për formën
+Font face:,Fonti:
+Font size:,Madhësia e fontit:
+Align:,Radhitja:
+Left,Majtas
+Center,Në mes
+Right,Djathtas
+Color:,Ngjyra:
+Ribbon color:,Ngjyra e shiritit:
+Point symbol:,Simboli i pikës:
+Theme:,Tema:
+Legend position:,Pozicioni i legjendës:
+Add a smooth line:,Shtoni një vijë të trendit:
+Yes,Po
+No,Jo
+Smooth line span:,Spektri i linjës së trendit
+Size for points/lines:,Madhësia e pikave/vijave:
+Facet scales:,Shkalla e aspektit:
+Facet ncol:,Numri i kolonave:
+Facet nrow:,Numri i rreshtave:
+Numbers of bins:,Numri i shtyllave:
+Scale:,Shkalla:
+X-Axis limits (empty for none):,Kufijtë e boshtit X:
+X-Axis transform:,Transformimi i boshtit X:
+Y-Axis limits (empty for none):,Kufijtë e boshtit Y:
+Y-Axis transform:,Transformimi i boshtit Y:
+Bandwidth adjustment:,Rregullimi i densitetit:
+Position:,Pozita:
+Flip coordinate:,Koordinatat e kundërta (inverze):
+Copy to clipboard,Kopjo në kujtesën e fragmenteve:
+Code:,Kodi:
+Insert code in script,Fut kodin e skriptit
+Esquisse settings,Cilësimet e Esquisse
+Select aesthetics to be used to build a graph:,Zgjidh estetikën për të krijuar grafikun
+Aesthetic mappings describe how variables in the data are mapped to visual properties (aesthetics) of geoms.,Cilësimet estetike përshkruajnë se si të dhënat duhet të lidhen me elementet vizuale
+fill color for shapes,ngjyra e mbushjes së formave
+color points and lines,ngjyra e pikave dhe vijave
+size of the points,madhësia e pikave
+shape of the points,forma e pikave
+frequency weights,peshat e frekuencës
+identifies series of points with a grouping variable,identifikon serinë e pikave me një ndryshore për grupim
+used in ribbons charts with ymax to display an interval between two lines,përdoret në grafikët me ymax për të treguar intervalin midis dy vijave
+used in ribbons charts with ymin to display an interval between two lines,përdoret në grafikët me ymin për të treguar intervalin midis dy vijave
+create small multiples,Krijoni më shumë grafikë
+create small multiples by rows,Krijoni më shumë grafikë sipas rreshtave
+create small multiples by columns,"
+Krijoni më shumë grafikë sipas kolonave"
+Dataset,Grupi i të dhënave
