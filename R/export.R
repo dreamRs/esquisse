@@ -403,6 +403,7 @@ download_plot_rv <- function(input, rv, device) {
 
 #' @importFrom shiny downloadHandler
 #' @importFrom ggplot2 ggsave
+#' @importFrom grDevices cairo_pdf
 download_plot_fun <- function(fun, device, filename, session) {
   downloadHandler(
     filename = function() {
@@ -419,6 +420,8 @@ download_plot_fun <- function(fun, device, filename, session) {
       width <- session$clientData[[width]]
       height <- paste0("output_", name, "_height")
       height <- session$clientData[[height]]
+      if (identical(device, "pdf") && isTRUE(capabilities("cairo")))
+        device <- grDevices::cairo_pdf
       ggsave(
         filename = file,
         plot = fun(),
