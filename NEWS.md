@@ -1,7 +1,9 @@
 # esquisse 1.0.2.9000
 
 * Internationalization support based on [{datamods} mechanism](https://dreamrs.github.io/datamods/articles/i18n.html).
-* Added french translations file, activate with `options("esquisse.i18n" = "fr")`.
+* i18n: :fr: french translations added, activate with `options("esquisse.i18n" = "fr")`.
+* i18n: :macedonia: macedonian translations added, thanks to [@novica](https://github.com/novica).
+* i18n: :albania: albanian translations added, thanks to [@novica](https://github.com/novica).
 
 
 
