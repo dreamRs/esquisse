@@ -6,7 +6,7 @@
 [![version](http://www.r-pkg.org/badges/version/esquisse)](https://CRAN.R-project.org/package=esquisse)
 [![cranlogs](http://cranlogs.r-pkg.org/badges/esquisse)](https://CRAN.R-project.org/package=esquisse)
 [![Lifecycle: stable](https://img.shields.io/badge/lifecycle-stable-brightgreen.svg)](https://lifecycle.r-lib.org/articles/stages.html)
-[![R build status](https://github.com/dreamRs/esquisse/workflows/R-CMD-check/badge.svg)](https://github.com/dreamRs/esquisse/actions)
+[![R-CMD-check](https://github.com/dreamRs/esquisse/workflows/R-CMD-check/badge.svg)](https://github.com/dreamRs/esquisse/actions)
 <!-- badges: end -->
 
 This addin allows you to interactively explore your data by visualizing it with the [ggplot2](https://github.com/tidyverse/ggplot2) package. It allows you to draw bar plots, curves, scatter plots, histograms, boxplot and [sf](https://github.com/r-spatial/sf) objects, then export the graph or retrieve the code to reproduce the graph.
@@ -18,13 +18,13 @@ If you find bugs, please open an [issue](https://github.com/dreamRs/esquisse/iss
 
 ## Installation
 
-Install from CRAN with :
+Install from [CRAN](https://CRAN.R-project.org/package=esquisse) with :
 
 ```r
 install.packages("esquisse")
 ```
 
-Or install development version from GitHub :
+Or install development version from [GitHub](https://github.com/dreamRs/esquisse) :
 
 ```r
 remotes::install_github("dreamRs/esquisse")
