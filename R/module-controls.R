@@ -54,7 +54,7 @@ controls_ui <- function(id,
   if (!is.null(controls)) {
     controls <- match.arg(
       controls,
-      choices = c("labs", "parameters", "appearance", "filters", "code"), 
+      choices = c("labs", "parameters", "appearance", "filters", "code"),
       several.ok = TRUE
     )
   } else {
@@ -70,7 +70,7 @@ controls_ui <- function(id,
   disable_filters <- !"filters" %in% controls
   if (isTRUE(disable_filters))
     controls <- setdiff(controls, "filters")
-  
+
   tagList(
     tags$div(
       class = "btn-group-esquisse btn-group-justified-esquisse",
@@ -186,10 +186,10 @@ controls_server <- function(id,
                             use_transY = reactive(FALSE)) {
 
   callModule(
-    id = id, 
+    id = id,
     module = function(input, output, session) {
       ns <- session$ns
-      
+
       # Reset labs ----
       observeEvent(data_table(), {
         updateTextInput(session = session, inputId = "labs_title", value = character(0))
@@ -224,7 +224,7 @@ controls_server <- function(id,
         }
         rstudioapi::insertText(text = paste0("\n", code, "\n"), id = context$id)
       })
-      
+
       output$code <- renderUI({
         code <- style_code(ggplot_rv$code)
         expr <- output_filter$expr()
@@ -238,11 +238,11 @@ controls_server <- function(id,
           rCodeContainer(id = ns("codeggplot"), code)
         )
       })
-      
-      
-      
+
+
+
       # Controls ----
-      
+
       observeEvent(aesthetics(), {
         aesthetics <- names(aesthetics())
         toggleDisplay(id = ns("controls-labs-fill"), display = "fill" %in% aesthetics)
@@ -251,29 +251,29 @@ controls_server <- function(id,
         toggleDisplay(id = ns("controls-labs-shape"), display = "shape" %in% aesthetics)
         toggleDisplay(id = ns("controls-ribbon-color"), display = "ymin" %in% aesthetics)
       })
-      
+
       observeEvent(use_facet(), {
         toggleDisplay(id = ns("controls-facet"), display = isTRUE(use_facet()))
       })
-      
+
       observeEvent(use_transX(), {
         toggleDisplay(id = ns("controls-scale-trans-x"), display = isTRUE(use_transX()))
       })
-      
+
       observeEvent(use_transY(), {
         toggleDisplay(id = ns("controls-scale-trans-y"), display = isTRUE(use_transY()))
       })
-      
+
       observeEvent(type$palette, {
         toggleDisplay(id = ns("controls-palette"), display = isTRUE(type$palette))
         toggleDisplay(id = ns("controls-fill-color"), display = !isTRUE(type$palette))
       })
-      
+
       observe({
         aesthetics <- names(aesthetics())
         toggleDisplay(id = ns("controls-shape"), display = type$x %in% "point" & !"shape" %in% aesthetics)
       })
-      
+
       observeEvent(type$x, {
         toggleDisplay(id = ns("controls-position"), display = type$x %in% c("bar", "line", "area"))
         toggleDisplay(id = ns("controls-histogram"), display = type$x %in% "histogram")
@@ -281,14 +281,14 @@ controls_server <- function(id,
         toggleDisplay(id = ns("controls-scatter"), display = type$x %in% "point")
         toggleDisplay(id = ns("controls-size"), display = type$x %in% c("point", "line", "step", "sf"))
         toggleDisplay(id = ns("controls-violin"), display = type$x %in% "violin")
-        
+
         if (type$x %in% c("point")) {
           updateSliderInput(session = session, inputId = "size", value = 1.5)
         } else if (type$x %in% c("line", "step")) {
           updateSliderInput(session = session, inputId = "size", value = 0.5)
         }
       })
-      
+
       output_filter <- filter_data_server(
         id = "filter-data",
         data = reactive({
@@ -302,18 +302,18 @@ controls_server <- function(id,
         }),
         name = data_name
       )
-      
+
       outputs <- reactiveValues(
         inputs = NULL,
         export_ppt = NULL,
         export_png = NULL
       )
-      
+
       observeEvent(data_table(), {
         outputs$data <- data_table()
         outputs$code <- reactiveValues(expr = NULL, dplyr = NULL)
       })
-      
+
       observeEvent({
         all_inputs <- reactiveValuesToList(input)
         all_inputs[grep(pattern = "filter-data", x = names(all_inputs), invert = TRUE)]
@@ -326,7 +326,7 @@ controls_server <- function(id,
         inputs <- inputs[order(names(inputs))]
         outputs$inputs <- inputs
       })
-      
+
       # labs input
       labs_r <- debounce(reactive({
         asth <- names(aesthetics())
@@ -349,7 +349,7 @@ controls_server <- function(id,
       observe({
         outputs$labs <- labs_r()
       })
-      
+
       # Colors input
       colors_r <- palette_server("colors", reactive({
         data_ <- data_table()
@@ -366,8 +366,8 @@ controls_server <- function(id,
       observe({
         outputs$colors <- colors_r_d()
       })
-      
-      
+
+
       # limits input
       observe({
         outputs$limits <- list(
@@ -377,8 +377,8 @@ controls_server <- function(id,
           ylim = input$ylim
         )
       })
-      
-      
+
+
       # facet input
       observe({
         outputs$facet <- list(
@@ -395,7 +395,7 @@ controls_server <- function(id,
           }
         )
       })
-      
+
       # theme input
       observe({
         inputs <- reactiveValuesToList(input)
@@ -418,12 +418,12 @@ controls_server <- function(id,
           )
         )
       })
-      
+
       # coord input
       observe({
         outputs$coord <- if (isTRUE(input$flip)) "flip" else NULL
       })
-      
+
       # smooth input
       observe({
         outputs$smooth <- list(
@@ -433,7 +433,7 @@ controls_server <- function(id,
           )
         )
       })
-      
+
       # transX input
       observe({
         outputs$transX <- list(
@@ -443,7 +443,7 @@ controls_server <- function(id,
           )
         )
       })
-      
+
       # transY input
       observe({
         outputs$transY <- list(
@@ -453,14 +453,14 @@ controls_server <- function(id,
           )
         )
       })
-      
+
       observeEvent(output_filter$filtered(), {
         if (!isTRUE(input$disable_filters)) {
           outputs$data <- output_filter$filtered()
           outputs$code <- output_filter$code()
         }
       })
-      
+
       return(outputs)
     }
   )
@@ -481,52 +481,52 @@ controls_labs <- function(ns) {
   tags$div(
     class = "form-group",
     labs_options_input(
-      inputId = ns("labs_title"), 
-      placeholder = i18n("Title"), 
+      inputId = ns("labs_title"),
+      placeholder = i18n("Title"),
       label = i18n("Title:"),
       defaults = get_labs_defaults("title")
     ),
     labs_options_input(
-      inputId = ns("labs_subtitle"), 
+      inputId = ns("labs_subtitle"),
       placeholder = i18n("Subtitle"),
       label = i18n("Subtitle:"),
       defaults = get_labs_defaults("subtitle")
     ),
     labs_options_input(
-      inputId = ns("labs_caption"), 
+      inputId = ns("labs_caption"),
       placeholder = i18n("Caption"),
       label = i18n("Caption:"),
       defaults = get_labs_defaults("caption")
     ),
     labs_options_input(
-      inputId = ns("labs_x"), 
-      placeholder = i18n("X label"), 
+      inputId = ns("labs_x"),
+      placeholder = i18n("X label"),
       label = i18n("X label:"),
       defaults = get_labs_defaults("x")
     ),
     labs_options_input(
       inputId = ns("labs_y"),
-      placeholder = "Y label", 
+      placeholder = i18n("Y label"),
       label = i18n("Y label:"),
       defaults = get_labs_defaults("y")
     ),
     tags$div(
-      id = ns("controls-labs-fill"), 
+      id = ns("controls-labs-fill"),
       style = "display: none;",
       textInput(inputId = ns("labs_fill"), placeholder = i18n("Fill label"), label = i18n("Fill label:"))
     ),
     tags$div(
-      id = ns("controls-labs-color"), 
+      id = ns("controls-labs-color"),
       style = "display: none;",
       textInput(inputId = ns("labs_color"), placeholder = i18n("Color label"), label = i18n("Color label:"))
     ),
     tags$div(
-      id = ns("controls-labs-size"), 
+      id = ns("controls-labs-size"),
       style = "display: none;",
       textInput(inputId = ns("labs_size"), placeholder = i18n("Size label"), label = i18n("Size label:"))
     ),
     tags$div(
-      id = ns("controls-labs-shape"), 
+      id = ns("controls-labs-shape"),
       style = "display: none;",
       textInput(inputId = ns("labs_shape"), placeholder = i18n("Shape label"), label = i18n("Shape label:"))
     )
@@ -544,13 +544,13 @@ labs_options_input <- function(inputId, label, placeholder, defaults = list()) {
       style = "width: 100%;",
       tags$label(
         class = "control-label",
-        id = paste0(inputId, "-label"), 
+        id = paste0(inputId, "-label"),
         `for` = inputId,
         label
       ),
       tags$input(
         id = inputId,
-        type = "text", 
+        type = "text",
         class = "form-control",
         value = "",
         placeholder = placeholder,
@@ -559,7 +559,7 @@ labs_options_input <- function(inputId, label, placeholder, defaults = list()) {
     ),
     dropMenu(
       actionButton(
-        inputId = paste0(inputId, "_options"), 
+        inputId = paste0(inputId, "_options"),
         label = ph("plus"),
         style = "margin-top: 25px; border-radius: 0 4px 4px 0; width: 100%;"
       ),
@@ -647,7 +647,7 @@ get_labs_options <- function(inputs, name = c("title", "subtitle", "caption", "x
 #' @param ns Namespace from module
 #'
 #' @noRd
-#' 
+#'
 #' @importFrom utils head
 #' @importFrom htmltools tagList tags
 #' @importFrom shinyWidgets pickerInput radioGroupButtons colorPickr
@@ -656,7 +656,7 @@ controls_appearance <- function(ns) {
   themes <- get_themes()
   cols <- get_colors()
   pals <- get_palettes()
-  
+
   shape_names <- c(
     "circle", paste("circle", c("open", "filled", "cross", "plus", "small")), "bullet",
     "square", paste("square", c("open", "filled", "cross", "plus", "triangle")),
@@ -735,10 +735,10 @@ controls_appearance <- function(ns) {
       inputId = ns("legend_position"),
       label = i18n("Legend position:"),
       choiceNames = list(
-        ph("arrow-left"), 
+        ph("arrow-left"),
         ph("arrow-up"),
-        ph("arrow-down"), 
-        ph("arrow-right"), 
+        ph("arrow-down"),
+        ph("arrow-right"),
         ph("x")
       ),
       choiceValues = c("left", "top", "bottom", "right", "none"),
@@ -794,9 +794,9 @@ controls_params <- function(ns) {
         sliderInput(
           inputId = ns("smooth_span"),
           label = i18n("Smooth line span:"),
-          min = 0.1, 
+          min = 0.1,
           max = 1,
-          value = 0.75, 
+          value = 0.75,
           step = 0.01,
           width = "100%"
         )
@@ -807,7 +807,7 @@ controls_params <- function(ns) {
       sliderInput(
         inputId = ns("size"),
         label = i18n("Size for points/lines:"),
-        min = 0.5, 
+        min = 0.5,
         max = 4,
         value = 1.2,
         width = "100%"
@@ -828,15 +828,15 @@ controls_params <- function(ns) {
         label = i18n("Facet ncol:"),
         min = 0,
         max = 10,
-        value = 0, 
+        value = 0,
         step = 1
       ),
       sliderInput(
         inputId = ns("facet_nrow"),
         label = i18n("Facet nrow:"),
-        min = 0, 
+        min = 0,
         max = 10,
-        value = 0, 
+        value = 0,
         step = 1
       )
     ),
@@ -949,7 +949,7 @@ controls_code <- function(ns, insert_code = FALSE) {
   tagList(
     tags$button(
       class = "btn btn-default btn-xs pull-right btn-copy-code",
-      i18n("Copy to clipboard"), 
+      i18n("Copy to clipboard"),
       `data-clipboard-target` = paste0("#", ns("codeggplot"))
     ), tags$script("$(function() {new ClipboardJS('.btn-copy-code');});"),
     tags$br(),
