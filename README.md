@@ -48,3 +48,17 @@ Above gif was made with :heart: by [@mfanny](https://github.com/mfanny) and cann
 ![](man/figures/esquisse.png)
 
 
+### Internationalization
+
+Currently you can use {esquisse} in the following language: <img src="man/figures/i18n/gb.svg" height="16"/> english (default), <img src="man/figures/i18n/fr.svg" height="16"/> french (`"fr"`), <img src="man/figures/i18n/mk.svg" height="16"/> macedonian (`"mk"`), <img src="man/figures/i18n/al.svg" height="16"/> albanian (`"sq"`). Activate with:
+
+```r
+library(esquisse)
+set_i18n("fr")
+esquisser()
+```
+
+If you want another language to be supported, you can submit a Pull Request to add a CSV file like the one used for french (file is located in `inst/i18n` folder in the package, you can see it [here on GitHub](https://github.com/dreamRs/esquisse/blob/master/inst/i18n/fr.csv)).
+
+See [{datamods} vignette](https://dreamrs.github.io/datamods/articles/i18n.html) for more on this topic.
+
