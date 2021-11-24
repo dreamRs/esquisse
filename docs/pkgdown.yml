@@ -1,8 +1,0 @@
-pandoc: 2.11.4
-pkgdown: 1.6.1
-pkgdown_sha: ~
-articles:
-  get-started: get-started.html
-  shiny-usage: shiny-usage.html
-last_built: 2021-07-07T14:02Z
-
