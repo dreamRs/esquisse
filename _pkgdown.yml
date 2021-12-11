@@ -1,27 +1,14 @@
-destination: docs
+url: https://dreamrs.github.io/esquisse
 
 template:
-  params:
-    bootswatch: flatly
-    
+  bootstrap: 5
+  bootswatch: zephyr
+  bslib:
+    base_font: {google: "Poppins"}
+    primary: "#112446"
+
 navbar:
-  type: default
-  left:
-  - icon: fa-home fa-lg
-    href: index.html
-  - text: Get started
-    href: articles/get-started.html
-  - text: Reference
-    href: reference/index.html
-  - text: Articles
-    menu:
-    - text: "Shiny usage"
-      href: articles/shiny-usage.html
-  - text: News
-    href: news/index.html
-  right:
-  - icon: fa-github fa-lg
-    href: https://github.com/dreamRs/esquisse
+  bg: primary
 
 authors:
   Victor Perrier:

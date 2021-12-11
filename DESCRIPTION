@@ -12,7 +12,7 @@ Authors@R: c(person("Fanny", "Meyer", role = c("aut")),
 Description: A 'shiny' gadget to create 'ggplot2' figures interactively with drag-and-drop to map your variables to different aesthetics.
     You can quickly visualize your data accordingly to their type, export in various formats,
     and retrieve the code to reproduce the plot.
-URL: https://github.com/dreamRs/esquisse
+URL: https://dreamrs.github.io/esquisse, https://github.com/dreamRs/esquisse
 BugReports: https://github.com/dreamRs/esquisse/issues
 License: GPL-3 | file LICENSE
 Encoding: UTF-8
