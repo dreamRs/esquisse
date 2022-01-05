@@ -1,50 +1,49 @@
 
-
 #' Drag And Drop Input Widget
 #'
-#' @param inputId The \code{input} slot that will be used to access the value.
-#' @param label Display label for the control, or \code{NULL} for no label.
+#' @param inputId The `input` slot that will be used to access the value.
+#' @param label Display label for the control, or `NULL` for no label.
 #' @param sourceLabel Label display in the source box
 #' @param targetsLabels Labels for each target element.
-#' @param targetsIds Ids for retrieving values server-side, if \code{NULL}, the default,
-#'  \code{targetsLabels} are used after removing all not-alphanumeric characters.
+#' @param targetsIds Ids for retrieving values server-side, if `NULL`, the default,
+#'  `targetsLabels` are used after removing all not-alphanumeric characters.
 #' @param choices List of values to select from (if elements of the list are
 #'  named then that name rather than the value is displayed to the user).
-#'  If this argument is provided, then \code{choiceNames} and \code{choiceValues} must
+#'  If this argument is provided, then `choiceNames` and `choiceValues` must
 #'  not be provided, and vice-versa. The values should be strings; other
 #'  types (such as logicals and numbers) will be coerced to strings.
 #' @param choiceNames,choiceValues List of names and values, respectively,
 #' that are displayed to the user in the app and correspond to the each
-#' choice (for this reason, choiceNames and choiceValues must have the same length).
+#' choice (for this reason, `choiceNames` and `choiceValues` must have the same length).
 #' If either of these arguments is provided, then the other must be provided and
 #' choices must not be provided. The advantage of using both of these over a named
-#' list for choices is that choiceNames allows any type of UI object to be passed
+#' list for choices is that `choiceNames` allows any type of UI object to be passed
 #' through (tag objects, icons, HTML code, ...), instead of just simple text.
-#' @param selected Default selected values. Must be a \code{list} with \code{targetsIds} as names.
-#' @param badge Displays choices inside a Bootstrap badge. Use \code{FALSE}
-#'  if you want to pass custom appearance with \code{choiceNames}.
-#' @param ncolSource Number of columns occupied by the source, default is \code{"auto"}, meaning full row.
+#' @param selected Default selected values. Must be a `list` with `targetsIds` as names.
+#' @param badge Displays choices inside a Bootstrap badge. Use `FALSE`
+#'  if you want to pass custom appearance with `choiceNames`.
+#' @param ncolSource Number of columns occupied by the source, default is `"auto"`, meaning full row.
 #' @param ncolGrid Number of columns used to place source and targets boxes, see examples.
 #' @param status If choices are displayed into a Bootstrap label, you can use Bootstrap
-#'  status to color them, or \code{NULL}.
+#'  status to color them, or `NULL`.
 #' @param replace When a choice is dragged in a target container already
 #'  containing a choice, does the later be replaced by the new one ?
-#' @param copySource When \code{replace = TRUE}, does elements in source must be copied or moved ?
+#' @param copySource When `replace = TRUE`, does elements in source must be copied or moved ?
 #' @param dragulaOpts Options passed to dragula JavaScript library.
 #' @param boxStyle CSS style string to customize source and target container.
 #' @param width Width of the input.
 #' @param height Height of each boxes, the total input height is this parameter X 2.
 #'
-#' @note The output server-side is a list with two slots: \code{source} and \code{targets}.
+#' @note The output server-side is a list with two slots: `source` and `targets`.
 #'
-#' @seealso \code{\link{updateDragulaInput}} to update choices server-side.
+#' @seealso [updateDragulaInput()] to update choices server-side.
 #'
 #' @return a UI definition
 #' @export
 #'
-#' @importFrom htmltools validateCssUnit singleton tags
+#' @importFrom htmltools validateCssUnit singleton tags css
 #' @importFrom jsonlite toJSON
-#' @importFrom shiny fillRow splitLayout
+#' @importFrom shiny fillRow splitLayout restoreInput
 #'
 #' @example examples/dragulaInput.R
 dragulaInput <- function(inputId,
@@ -66,7 +65,11 @@ dragulaInput <- function(inputId,
                          boxStyle = NULL,
                          width = NULL,
                          height = "100px") {
-
+  
+  bookmark <- restoreInput(id = inputId, default = selected)
+  if (!is.null(bookmark)) {
+    selected <- bookmark$target
+  }
   args <- normalizeChoicesArgs(choices, choiceNames, choiceValues)
 
   if (!is.null(selected) && !is.list(selected))
@@ -109,14 +112,17 @@ dragulaInput <- function(inputId,
     ),
     tags$div(
       class="form-group shiny-input-container shiny-input-dragula shiny-input-container-inline",
-      style = if (!is.null(width)) paste("width:", validateCssUnit(width), ";"),
-      # style = if (!is.null(height)) paste("height:", validateCssUnit(height), ";"),
+      style = css(width = validateCssUnit(width)),
       id = inputId,
       tags$div(
-        style = "display: -ms-grid; display: grid;",
-        style = "grid-column-gap: 5px; grid-row-gap: 5px;",
-        style = sprintf("grid-template-columns: repeat(%s, 1fr);", ncolGrid),
-        style = sprintf("-ms-grid-columns: %s;", rep("1fr", ncolGrid)),
+        style = css(
+          display = "-ms-grid",
+          display = "grid",
+          gridTemplateColumns = "5px",
+          gridRowGap = "5px",
+          gridTemplateColumns = sprintf("repeat(%s, 1fr)", ncolGrid),
+          "-ms-grid-columns" = rep("1fr", ncolGrid)
+        ),
         tags$div(
           class = "container-drag-source",
           style = if (!is.null(ncolSource)) paste0("grid-area: 1 / 1 / auto / span ", ncolSource, ";"),
@@ -230,27 +236,13 @@ make_bg_svg <- function(text) {
 }
 
 
-#' Update Dragula Input
+#' @title Update Dragula Input
+#' 
+#' @description Update [dragulaInput()] widget server-side.
 #'
-#' @param session The \code{session} object passed to function given to \code{shinyServer}.
-#' @param inputId The id of the input object.
-#' @param choices List of values to select from (if elements of the list are
-#'  named then that name rather than the value is displayed to the user).
-#'  If this argument is provided, then \code{choiceNames} and \code{choiceValues} must
-#'  not be provided, and vice-versa. The values should be strings; other
-#'  types (such as logicals and numbers) will be coerced to strings.
-#' @param choiceNames,choiceValues List of names and values, respectively,
-#' that are displayed to the user in the app and correspond to the each
-#' choice (for this reason, choiceNames and choiceValues must have the same length).
-#' If either of these arguments is provided, then the other must be provided and
-#' choices must not be provided. The advantage of using both of these over a named
-#' list for choices is that choiceNames allows any type of UI object to be passed
-#' through (tag objects, icons, HTML code, ...), instead of just simple text.
-#' @param selected A \code{list} with \code{targetIds} as names to select values.
+#' @param session The `session` object passed to function given to `shinyServer`.
+#' @inheritParams dragulaInput
 #' @param selectedNames,selectedValues Update selected items with custom names and values.
-#' @param badge Displays choices inside a Bootstrap badge.
-#' @param status If choices are displayed into a Bootstrap badge, you can use Bootstrap
-#'  status to color them, or \code{NULL}.
 #'
 #'
 #' @export

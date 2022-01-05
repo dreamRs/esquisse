@@ -20,7 +20,7 @@ updateDragulaInput(
 \arguments{
 \item{session}{The \code{session} object passed to function given to \code{shinyServer}.}
 
-\item{inputId}{The id of the input object.}
+\item{inputId}{The \code{input} slot that will be used to access the value.}
 
 \item{choices}{List of values to select from (if elements of the list are
 named then that name rather than the value is displayed to the user).
@@ -28,25 +28,34 @@ If this argument is provided, then \code{choiceNames} and \code{choiceValues} mu
 not be provided, and vice-versa. The values should be strings; other
 types (such as logicals and numbers) will be coerced to strings.}
 
-\item{choiceNames, choiceValues}{List of names and values, respectively,
+\item{choiceNames}{List of names and values, respectively,
 that are displayed to the user in the app and correspond to the each
-choice (for this reason, choiceNames and choiceValues must have the same length).
+choice (for this reason, \code{choiceNames} and \code{choiceValues} must have the same length).
 If either of these arguments is provided, then the other must be provided and
 choices must not be provided. The advantage of using both of these over a named
-list for choices is that choiceNames allows any type of UI object to be passed
+list for choices is that \code{choiceNames} allows any type of UI object to be passed
 through (tag objects, icons, HTML code, ...), instead of just simple text.}
 
-\item{selected}{A \code{list} with \code{targetIds} as names to select values.}
+\item{choiceValues}{List of names and values, respectively,
+that are displayed to the user in the app and correspond to the each
+choice (for this reason, \code{choiceNames} and \code{choiceValues} must have the same length).
+If either of these arguments is provided, then the other must be provided and
+choices must not be provided. The advantage of using both of these over a named
+list for choices is that \code{choiceNames} allows any type of UI object to be passed
+through (tag objects, icons, HTML code, ...), instead of just simple text.}
+
+\item{selected}{Default selected values. Must be a \code{list} with \code{targetsIds} as names.}
 
 \item{selectedNames, selectedValues}{Update selected items with custom names and values.}
 
-\item{badge}{Displays choices inside a Bootstrap badge.}
+\item{badge}{Displays choices inside a Bootstrap badge. Use \code{FALSE}
+if you want to pass custom appearance with \code{choiceNames}.}
 
-\item{status}{If choices are displayed into a Bootstrap badge, you can use Bootstrap
+\item{status}{If choices are displayed into a Bootstrap label, you can use Bootstrap
 status to color them, or \code{NULL}.}
 }
 \description{
-Update Dragula Input
+Update \code{\link[=dragulaInput]{dragulaInput()}} widget server-side.
 }
 \examples{
 
