@@ -176,5 +176,5 @@ $.extend(dragulaBinding, {
   getState: function getState(el) {}
 });
 
-Shiny.inputBindings.register(dragulaBinding, "shiny.dragula");
+Shiny.inputBindings.register(dragulaBinding, "esquisse.dragulaInput");
 

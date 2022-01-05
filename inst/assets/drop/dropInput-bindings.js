@@ -1,16 +1,20 @@
-
 // dropInput binding
 var dropInputBinding = new Shiny.InputBinding();
 
 $.extend(dropInputBinding, {
-  
   initialize: function(el) {
-    $(el).find('.drop-input-button').on("click", function(e) {
-      $(el).find('.drop-input-main').html(e.currentTarget.innerHTML);
-      var value = $(e.currentTarget).data("value");
-      $(el).find('.drop-input-main').data("value", value);
-      $(el).trigger('change');
-    });
+    $(el)
+      .find(".drop-input-button")
+      .on("click", function(e) {
+        $(el)
+          .find(".drop-input-main")
+          .html(e.currentTarget.innerHTML);
+        var value = $(e.currentTarget).data("value");
+        $(el)
+          .find(".drop-input-main")
+          .data("value", value);
+        $(el).trigger("change");
+      });
   },
 
   find: function(scope) {
@@ -19,15 +23,21 @@ $.extend(dropInputBinding, {
 
   // Given the DOM element for the input, return the value
   getValue: function(el) {
-    return $(el).find('.drop-input-main').data('value');
+    return $(el)
+      .find(".drop-input-main")
+      .data("value");
   },
-  
+
   setValue: function setValue(el, value) {
-    var selected = $(el).find(".drop-input-button[data-value='" + value + "']"); 
-    if (typeof selected[0] !== 'undefined') {
-      $(el).find('.drop-input-main').html(selected[0].innerHTML);
+    var selected = $(el).find(".drop-input-button[data-value='" + value + "']");
+    if (typeof selected[0] !== "undefined") {
+      $(el)
+        .find(".drop-input-main")
+        .html(selected[0].innerHTML);
       var datavalue = selected.data("value");
-      $(el).find('.drop-input-main').data("value", datavalue);
+      $(el)
+        .find(".drop-input-main")
+        .data("value", datavalue);
     }
   },
 
@@ -36,24 +46,26 @@ $.extend(dropInputBinding, {
       callback();
     });
   },
-  
+
   receiveMessage: function(el, data) {
-    if (data.hasOwnProperty('selected')) {
+    if (data.hasOwnProperty("selected")) {
       this.setValue(el, data.selected);
     }
-    
-    if (data.hasOwnProperty('disabled')) {
+
+    if (data.hasOwnProperty("disabled")) {
       var btns = $(el).find(".drop-input-button");
       btns.each(function(index) {
-        $(this).prop('disabled', false);
+        $(this).prop("disabled", false);
+        $(this).css("opacity", 1);
       });
       data.disabled.map(function(value) {
         var btn = $(el).find(".drop-input-button[data-value='" + value + "']");
-        btn.prop('disabled', true);
+        btn.prop("disabled", true);
+        btn.css("opacity", 0.3);
       });
     }
-    
-    $(el).trigger('change');
+
+    $(el).trigger("change");
   },
 
   unsubscribe: function(el) {
@@ -61,4 +73,5 @@ $.extend(dropInputBinding, {
   }
 });
 
-Shiny.inputBindings.register(dropInputBinding);
+Shiny.inputBindings.register(dropInputBinding, "esquisse.dropInput");
+
