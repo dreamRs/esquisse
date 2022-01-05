@@ -103,10 +103,10 @@ types (such as logicals and numbers) will be coerced to strings.</p></dd>
 <dt>choiceNames, choiceValues</dt>
 <dd><p>List of names and values, respectively,
 that are displayed to the user in the app and correspond to the each
-choice (for this reason, choiceNames and choiceValues must have the same length).
+choice (for this reason, <code>choiceNames</code> and <code>choiceValues</code> must have the same length).
 If either of these arguments is provided, then the other must be provided and
 choices must not be provided. The advantage of using both of these over a named
-list for choices is that choiceNames allows any type of UI object to be passed
+list for choices is that <code>choiceNames</code> allows any type of UI object to be passed
 through (tag objects, icons, HTML code, ...), instead of just simple text.</p></dd>
 <dt>selected</dt>
 <dd><p>Default selected values. Must be a <code>list</code> with <code>targetsIds</code> as names.</p></dd>
@@ -144,7 +144,7 @@ if you want to pass custom appearance with <code>choiceNames</code>.</p></dd>
     </div>
     <div class="section level2">
     <h2 id="see-also">See also<a class="anchor" aria-label="anchor" href="#see-also"></a></h2>
-    <div class="dont-index"><p><code><a href="updateDragulaInput.html">updateDragulaInput</a></code> to update choices server-side.</p></div>
+    <div class="dont-index"><p><code><a href="updateDragulaInput.html">updateDragulaInput()</a></code> to update choices server-side.</p></div>
     </div>
 
     <div class="section level2">
