@@ -43,7 +43,7 @@ render_ggplot(
 
 \item{downloads}{Labels for export options, use \code{downloads_labels}.}
 
-\item{...}{Parameters passed to \code{\link[shiny:plotOutput]{plotOutput}} or \code{\link[shiny:renderPlot]{renderPlot}}.}
+\item{...}{Parameters passed to \code{\link[shiny:plotOutput]{shiny::plotOutput()}} (\code{ggplot_output}) or \code{\link[shiny:renderPlot]{shiny::renderPlot()}} (\code{render_ggplot}).}
 
 \item{label}{Main label for export button}
 

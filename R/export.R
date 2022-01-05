@@ -1,11 +1,10 @@
 
-
 # Save ggplot -------------------------------------------------------------
 
 
 #' @title Save `ggplot` module
 #' 
-#' @description Save a \code{ggplot} object in various format and resize it before saving.
+#' @description Save a `ggplot` object in various format and resize it before saving.
 #'
 #' @param id Module ID.
 #' @param output_format Output formats offered to the user.
@@ -16,7 +15,7 @@
 #' @name save-ggplot-module
 #' 
 #' @importFrom shiny NS plotOutput actionButton downloadButton textInput
-#' @importFrom htmltools tagList tags
+#' @importFrom htmltools tagList tags css
 #' @importFrom shinyWidgets textInputIcon numericInputIcon
 #'
 #' @example examples/save-ggplot-module.R
@@ -28,10 +27,12 @@ save_ggplot_ui <- function(id, output_format = c("png", "pdf", "svg", "jpeg", "b
     tags$div(plotOutput(ns("plot"))),
     tags$br(),
     tags$div(
-      style = "display: grid;",
-      style = "grid-template-columns: 4fr 2fr 2fr 2fr;",
-      style = "grid-column-gap: 10px;",
-      style = "width: 100%;", # 868px
+      style = css(
+        display = "grid",
+        gridTemplateColumns = "4fr 2fr 2fr 2fr",
+        gridColumnGap = "10px",
+        width = "100%"
+      ),
       textInputIcon(
         inputId = ns("filename"),
         label = NULL,
@@ -63,9 +64,11 @@ save_ggplot_ui <- function(id, output_format = c("png", "pdf", "svg", "jpeg", "b
     tags$div(
       tags$label(i18n("Export format:")),
       tags$div(
-        style = "display: grid;",
-        style = sprintf("grid-template-columns: repeat(%s, 1fr);", length(output_format)),
-        style = "grid-column-gap: 10px;",
+        style = css(
+          display = "grid",
+          gridTemplateColumns = sprintf("repeat(%s, 1fr)", length(output_format)),
+          gridColumnGap = "10px"
+        ),
         lapply(
           X = output_format,
           FUN = function(x) {
@@ -199,7 +202,7 @@ save_ggplot_server <- function(id, plot_rv) {
 #' @param width Width of the plot.
 #' @param height Height of the plot.
 #' @param downloads Labels for export options, use `downloads_labels`.
-#' @param ... Parameters passed to \code{\link[shiny:plotOutput]{plotOutput}} or \code{\link[shiny:renderPlot]{renderPlot}}.
+#' @param ... Parameters passed to [shiny::plotOutput()] (`ggplot_output`) or [shiny::renderPlot()] (`render_ggplot`).
 #'
 #' @return Server-side, a `reactiveValues` with the plot.
 #' @export
@@ -215,9 +218,11 @@ ggplot_output <- function(id, width = "100%", height = "400px", downloads = down
   ns <- NS(id)
   tags$div(
     class = "ggplot-container",
-    style = "position: relative;",
-    style = if (!is.null(width)) paste0("width:", validateCssUnit(width), ";"),
-    style = if (!is.null(height)) paste0("height:", validateCssUnit(height), ";"),
+    style = css(
+      position = "relative",
+      width = validateCssUnit(width),
+      height = validateCssUnit(height)
+    ),
     if (!is.null(downloads)) {
       e <- downloads[-1]
       e <- e[-length(e)]
@@ -240,7 +245,12 @@ ggplot_output <- function(id, width = "100%", height = "400px", downloads = down
           inputId = ns("exports"),
           label = downloads$label,
           class = "btn-sm",
-          style = "position: absolute; top: 0; right: 5px;"
+          style = css(
+            position = "absolute",
+            top = 0,
+            right = "5px",
+            zIndex = 30
+          )
         ),
         placement = "bottom-end",
         download_links,
