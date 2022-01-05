@@ -273,6 +273,14 @@ esquisse_server <- function(id,
             list(smooth = controls_rv$smooth$args)
           )
         }
+        if (isTRUE(controls_rv$jitter$add) & input$geom %in% c("boxplot", "violin")) {
+          geom <- c(geom, "jitter")
+          geom_args <- c(
+            setNames(list(geom_args), input$geom),
+            list(jitter = controls_rv$jitter$args)
+          )
+          
+        }
         if (!is.null(aes_input$ymin) & !is.null(aes_input$ymax) & input$geom %in% c("line")) {
           geom <- c("ribbon", geom)
           mapping_ribbon <- aes_input[c("ymin", "ymax")]

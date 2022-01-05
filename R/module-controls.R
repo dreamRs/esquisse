@@ -281,6 +281,7 @@ controls_server <- function(id,
         toggleDisplay(id = ns("controls-scatter"), display = type$x %in% "point")
         toggleDisplay(id = ns("controls-size"), display = type$x %in% c("point", "line", "step", "sf"))
         toggleDisplay(id = ns("controls-violin"), display = type$x %in% "violin")
+        toggleDisplay(id = ns("controls-jitter"), display = type$x %in% c("boxplot", "violin"))
 
         if (type$x %in% c("point")) {
           updateSliderInput(session = session, inputId = "size", value = 1.5)
@@ -431,6 +432,14 @@ controls_server <- function(id,
           args = list(
             span = input$smooth_span
           )
+        )
+      })
+      
+      # jittered input
+      observe({
+        outputs$jitter <- list(
+          add = input$jitter_add,
+          args = list()
         )
       })
 
@@ -803,6 +812,23 @@ controls_params <- function(ns) {
       ),
     ),
     tags$div(
+      id = ns("controls-jitter"),
+      style = "display: none; padding-top: 10px;",
+      tags$label(
+        class = "control-label",
+        `for` = ns("jitter_add"),
+        i18n("Jittered points:")
+      ),
+      prettyToggle(
+        inputId = ns("jitter_add"),
+        label_on = i18n("Yes"),
+        status_on = "success",
+        status_off = "danger",
+        label_off = i18n("No"),
+        inline = TRUE
+      )
+    ),
+    tags$div(
       id = ns("controls-size"), style = "display: none;",
       sliderInput(
         inputId = ns("size"),
@@ -989,6 +1015,8 @@ select_geom_controls <- function(x, geoms) {
     "area"
   } else if ("violin" %in% geoms & x %in% c("violin")) {
     "violin"
+  } else if ("boxplot" %in% geoms & x %in% c("boxplot")) {
+    "boxplot"
   } else if ("sf" %in% geoms & x %in% c("sf")) {
     "sf"
   } else {
