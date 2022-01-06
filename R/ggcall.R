@@ -45,11 +45,13 @@ ggcall <- function(data = NULL,
                    ylim = NULL) {
   if (is.null(data))
     return(expr(ggplot()))
-  data <- as.character(data)
-  if (grepl("::", data)) {
-    data <- str2lang(data) 
-  } else {
-    data <- sym(data)
+  if (!is_call(data)) {
+    data <- as.character(data)
+    if (grepl("::", data)) {
+      data <- str2lang(data) 
+    } else {
+      data <- sym(data)
+    }
   }
   if (rlang::is_call(mapping)) 
     mapping <- eval(mapping)

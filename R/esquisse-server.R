@@ -198,8 +198,11 @@ esquisse_server <- function(id,
         type = geom_controls,
         data_table = reactive(data_chart$data),
         data_name = reactive({
-          req(data_chart$name)
-          data_chart$name
+          nm <- req(data_chart$name)
+          if (is_call(nm)) {
+            nm <- as_label(nm)
+          }
+          nm
         }),
         ggplot_rv = ggplotCall,
         aesthetics = reactive({

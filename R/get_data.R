@@ -1,8 +1,6 @@
 
-
-
-
 #' @importFrom rstudioapi isAvailable getSourceEditorContext
+#' @importFrom rlang parse_expr
 get_data <- function(data = NULL, name = NULL) {
   
   if (!is.null(data)) {
@@ -43,8 +41,12 @@ get_data <- function(data = NULL, name = NULL) {
       
       # esquisse_data_name <- gsub("\\[.*", "", esquisse_data_name)
     } else {
-      esquisse_data <- NULL
-      esquisse_data_name <- ""
+      esquisse_data <- try(as.data.frame(data), silent = TRUE)
+      esquisse_data_name <- call2("as.data.frame", parse_expr(as.character(name)))
+      if (inherits(esquisse_data, "try-error")) {
+        esquisse_data <- NULL
+        esquisse_data_name <- ""
+      }
     }
   } else {
     if (rstudioapi::isAvailable()) {
