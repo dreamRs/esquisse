@@ -180,7 +180,7 @@ esquisse_server <- function(id,
       observeEvent(geom_possible$x, {
         geoms <- c(
           "auto", "line", "area", "bar", "histogram",
-          "point", "boxplot", "violin", "density",
+          "point", "jitter", "boxplot", "violin", "density",
           "tile", "sf"
         )
         updateDropInput(

@@ -131,6 +131,15 @@ dev.off()
 
 
 
+# Geom jitter --------------------------------------------------------------
+
+png(filename = "inst/geomIcon/www/gg-jitter.png", bg = "transparent")
+ggplot(data = coord_circle(centre = c(0, 0), r = 1)) + geom_polygon(aes(x = x, y = y), fill = "#36D2A9") + coord_fixed() + theme_void()
+# p <- ggplot(data = mtcars) + geom_point(mapping = aes(wt, mpg), size = 10, color = "white") + theme_void()
+p <- qplot(x = 1:10, y = 1:10, size = I(10), color = I("white"), geom = "jitter", width = I(1), height = I(1)) + theme_void()
+print(p, vp = viewport(width = unit(0.6, "npc"), height = unit(0.6, "npc")))
+dev.off()
+
 
 
 # Geom boxplot ------------------------------------------------------------

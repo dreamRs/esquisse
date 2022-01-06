@@ -199,7 +199,7 @@ get_col_names <- function(data) {
 geomIcons <- function() {
   geoms <- c(
     "auto", "line", "step", "area", "bar", "histogram",
-    "point", "boxplot", "violin", "density",
+    "point", "jitter", "boxplot", "violin", "density",
     "tile", "sf"
   )
   href <- "esquisse/geomIcon/gg-%s.png"

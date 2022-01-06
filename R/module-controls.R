@@ -325,6 +325,10 @@ controls_server <- function(id,
         inputs <- inputs[grep(pattern = "^labs_", x = names(inputs), invert = TRUE)]
         inputs <- inputs[grep(pattern = "^export_", x = names(inputs), invert = TRUE)]
         inputs <- inputs[order(names(inputs))]
+        aesthetics <- names(aesthetics())
+        if (!(type$x %in% "point" & !"shape" %in% aesthetics)) {
+          inputs$shape <- NULL
+        }
         outputs$inputs <- inputs
       })
 

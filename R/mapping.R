@@ -56,13 +56,6 @@ build_aes <- function(data, ..., .list = NULL, geom = NULL) {
     args$y <- args$x
     args$x <- tmp
   }
-  if (!is.null(args$x) & !is.null(args$y) & geom %in% c("boxplot", "violin")) {
-    if (x_type == "continuous" & (!is.null(y_type) && y_type == "discrete")) {
-      tmp <- args$y
-      args$y <- args$x
-      args$x <- tmp
-    }
-  }
   if (!is.null(args$x) & !is.null(args$y) & geom == "bar") {
     if (x_type == "continuous" & y_type == "discrete") {
       args$weight <- args$x
