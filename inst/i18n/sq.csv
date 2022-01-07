@@ -81,6 +81,6 @@ used in ribbons charts with ymax to display an interval between two lines,përdo
 used in ribbons charts with ymin to display an interval between two lines,përdoret në grafikët me ymin për të treguar intervalin midis dy vijave
 create small multiples,Krijoni më shumë grafikë
 create small multiples by rows,Krijoni më shumë grafikë sipas rreshtave
-create small multiples by columns,"
-Krijoni më shumë grafikë sipas kolonave"
+create small multiples by columns,"Krijoni më shumë grafikë sipas kolonave"
 Dataset,Grupi i të dhënave
+"Jittered points:","Jittered points:"
