@@ -1,4 +1,4 @@
-# esquisse 1.0.2.9000
+# esquisse 1.1.0
 
 * Internationalization support based on [{datamods} mechanism](https://dreamrs.github.io/datamods/articles/i18n.html).
   + i18n: :fr: french translations added, activate with `set_i18n("fr")`.

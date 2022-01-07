@@ -118,7 +118,7 @@ The output of the module is a `reactiveValues` with 3 slots :
 
 ## Module for saving a ggplot object
 
-This modulle allow to save a `ggplot` object in various format and to resize it before:
+This module allow to save a `ggplot` object in various format and to resize it before:
 
 ![](figures/save-ggplot.png)
 
