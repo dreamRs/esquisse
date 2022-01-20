@@ -3,7 +3,7 @@
 * Internationalization support based on [{datamods} mechanism](https://dreamrs.github.io/datamods/articles/i18n.html).
   + i18n: :fr: french translations added, activate with `set_i18n("fr")`.
   + i18n: :macedonia: macedonian translations added, activate with `set_i18n("mk")`, thanks to [@novica](https://github.com/novica).
-  + i18n: :albania: albanian translations added, activate with `set_i18n("sq")`, thanks to [@novica](https://github.com/novica).
+  + i18n: :albania: albanian translations added, activate with `set_i18n("al")`, thanks to [@novica](https://github.com/novica).
 * Added `geom_jitter()` as possible geom.
 * Added the possibility to add jittered points above a boxplot.
 

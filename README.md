@@ -50,7 +50,7 @@ Above gif was made with :heart: by [@mfanny](https://github.com/mfanny) and cann
 
 ### Internationalization
 
-Currently you can use {esquisse} in the following language: <img src="man/figures/i18n/gb.svg" height="16" style="height:16px"/> english (default), <img src="man/figures/i18n/fr.svg" height="16" style="height:16px"/> french (`"fr"`), <img src="man/figures/i18n/mk.svg" height="16" style="height:16px"/> macedonian (`"mk"`), <img src="man/figures/i18n/al.svg" height="16" style="height:16px"/> albanian (`"sq"`). Activate with:
+Currently you can use {esquisse} in the following language: <img src="man/figures/i18n/gb.svg" height="16" style="height:16px"/> english (default), <img src="man/figures/i18n/fr.svg" height="16" style="height:16px"/> french (`"fr"`), <img src="man/figures/i18n/mk.svg" height="16" style="height:16px"/> macedonian (`"mk"`), <img src="man/figures/i18n/al.svg" height="16" style="height:16px"/> albanian (`"al"`). Activate with:
 
 ```r
 library(esquisse)
