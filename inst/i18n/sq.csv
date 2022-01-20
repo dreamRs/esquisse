@@ -1,5 +1,5 @@
 label,translation
-Update Preview,Azhurno pamjen
+Update Preview,Përditëso pamjen
 Height:,Lartësia:
 Width:,Gjerësia:
 Filename:,Emri i skedarit:
@@ -7,10 +7,10 @@ Filename,Emri i skedarit
 Close,Mbylle
 More options,Më shumë opsione
 Export chart,Eksporto grafikun
-Export to PowerPoint failed...,Eksporto në PowerPoint
+Export to PowerPoint failed...,Eksportimi në PowerPoint dështoi
 Export format:,Formati i eksportit:
 Import data to create a graph,Importo të dhëna për të krijuar një grafik
-Display settings,Cilësimet e pamjes
+Display settings,Cilësitë e paraqitjes
 Close Window,Mbylle dritaren
 Import data,Importo të dhëna
 Show data,Trego të dhënat
@@ -25,62 +25,62 @@ Subtitle:,Nëntitulli:
 Subtitle,Nëntitulli
 Caption:,Legjenda:
 Caption,Legjenda
-X label:,Teksti në boshtin X:
-X label,Teksti në boshtin X
-Y label:,Teksti në boshtin Y:
-Y label,Teksti në boshtin Y
-Fill label:,Teksti për ngjyrën për t’u mbushur:
-Fill label,Tekst për ngjyrën për t’u mbushur
-Color label:,Teksti për ngjyrën:
-Color label,Teksti për ngjyrën
-Size label:,Teksti për madhësinë:
-Size label,Teksti për madhësinë
-Shape label:,Teksti për formën:
-Shape label,Teksti për formën
-Font face:,Fonti:
-Font size:,Madhësia e fontit:
+X label:,Emërtimi i boshtit X:
+X label,Emërtimi i boshtit X
+Y label:,Emërtimi i boshtit Y:
+Y label,Emërtimi i boshtit Y
+Fill label:,Teksti për variablin mbushje:
+Fill label,Teksti për variablin mbushje
+Color label:,Teksti për variablin ngjyrë:
+Color label,Teksti për variablin ngjyrë:
+Size label:,Teksti për variablin madhësi:
+Size label,Teksti për variablin madhësi:
+Shape label:,Teksti për variablin formë:
+Shape label,Teksti për variablin formën:
+Font face:,Shkrimi:
+Font size:,Madhësia e shkrimit:
 Align:,Radhitja:
-Left,Majtas
-Center,Në mes
+Left,Majtas:
+Center,Në qëndër:
 Right,Djathtas
 Color:,Ngjyra:
 Ribbon color:,Ngjyra e shiritit:
 Point symbol:,Simboli i pikës:
-Theme:,Tema:
+Theme:,Modeli i paraqitjes:
 Legend position:,Pozicioni i legjendës:
-Add a smooth line:,Shtoni një vijë të trendit:
+Add a smooth line:,Shtoni një vijë të sheshimit
 Yes,Po
 No,Jo
-Smooth line span:,Spektri i linjës së trendit
+Smooth line span:,Spektri i linjës së sheshimit
 Size for points/lines:,Madhësia e pikave/vijave:
-Facet scales:,Shkalla e aspektit:
-Facet ncol:,Numri i kolonave:
-Facet nrow:,Numri i rreshtave:
+Facet scales:,Shkalla e kategorive:
+Facet ncol:,Numri i shtyllave të kategorive:
+Facet nrow:,Numri i rreshtave të kategorive:
 Numbers of bins:,Numri i shtyllave:
 Scale:,Shkalla:
-X-Axis limits (empty for none):,Kufijtë e boshtit X:
+X-Axis limits (empty for none):,Kufijtë e boshtit X (bosh për asnjë):
 X-Axis transform:,Transformimi i boshtit X:
-Y-Axis limits (empty for none):,Kufijtë e boshtit Y:
+Y-Axis limits (empty for none):,Kufijtë e boshtit Y (bosh për asnjë):
 Y-Axis transform:,Transformimi i boshtit Y:
 Bandwidth adjustment:,Rregullimi i densitetit:
-Position:,Pozita:
-Flip coordinate:,Koordinatat e kundërta (inverze):
+Position:,Pozicioni:
+Flip coordinate:, Shkëmbe koordinatat:
 Copy to clipboard,Kopjo në kujtesën e fragmenteve:
 Code:,Kodi:
-Insert code in script,Fut kodin e skriptit
+Insert code in script, Përfshi kodin në skript
 Esquisse settings,Cilësimet e Esquisse
 Select aesthetics to be used to build a graph:,Zgjidh estetikën për të krijuar grafikun
-Aesthetic mappings describe how variables in the data are mapped to visual properties (aesthetics) of geoms.,Cilësimet estetike përshkruajnë se si të dhënat duhet të lidhen me elementet vizuale
+Aesthetic mappings describe how variables in the data are mapped to visual properties (aesthetics) of geoms.,Cilësimet estetike përshkruajnë se si variablat në të dhënat janë hartuar me qëllim vizualizimin e vetive të objekteve gjeometrike
 fill color for shapes,ngjyra e mbushjes së formave
 color points and lines,ngjyra e pikave dhe vijave
 size of the points,madhësia e pikave
 shape of the points,forma e pikave
-frequency weights,peshat e frekuencës
-identifies series of points with a grouping variable,identifikon serinë e pikave me një ndryshore për grupim
-used in ribbons charts with ymax to display an interval between two lines,përdoret në grafikët me ymax për të treguar intervalin midis dy vijave
-used in ribbons charts with ymin to display an interval between two lines,përdoret në grafikët me ymin për të treguar intervalin midis dy vijave
+frequency weights,peshat e frekuencave
+identifies series of points with a grouping variable,identifikon serinë e pikave me një ndryshore grupimi
+used in ribbons charts with ymax to display an interval between two lines,përdoret në grafikët fjongo me ymax për të shfaqur një interval midis dy vijave
+used in ribbons charts with ymin to display an interval between two lines,përdoret në grafikët fjongo me ymin për të shfaqur një interval midis dy vijave
 create small multiples,Krijoni më shumë grafikë
 create small multiples by rows,Krijoni më shumë grafikë sipas rreshtave
-create small multiples by columns,"Krijoni më shumë grafikë sipas kolonave"
-Dataset,Grupi i të dhënave
+create small multiples by columns,"Krijoni më shumë grafikë sipas shtyllave"
+Dataset,Të dhënat
 "Jittered points:","Jittered points:"
