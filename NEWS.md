@@ -1,3 +1,11 @@
+# esquisse (unreleased)
+
+* New translations added:
+ + spanish, activate with `set_i18n("es")`, thanks to [@drdsdaniel](https://github.com/drdsdaniel)
+ + albanian (updated), activate with `set_i18n("al")`, thanks to [@EGjika](https://github.com/EGjika)
+
+
+
 # esquisse 1.1.0
 
 * Internationalization support based on [{datamods} mechanism](https://dreamrs.github.io/datamods/articles/i18n.html).
