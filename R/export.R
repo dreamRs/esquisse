@@ -430,15 +430,14 @@ download_plot_fun <- function(fun, device, filename, session) {
       width <- session$clientData[[width]]
       height <- paste0("output_", name, "_height")
       height <- session$clientData[[height]]
-      if (identical(device, "pdf") && isTRUE(capabilities("cairo")))
-        device <- grDevices::cairo_pdf
+      if (identical(device, "pdf")) device <- cairo_pdf
       ggsave(
         filename = file,
         plot = fun(),
         device = device,
-        dpi = 72,
-        width = width / 72,
-        height = height / 72,
+        dpi = 300,
+        width = width / 300,
+        height = height / 300,
         scale = 1
       )
     }
