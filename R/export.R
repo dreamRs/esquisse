@@ -398,11 +398,12 @@ download_plot_rv <- function(input, rv, device) {
     content = function(file) {
       width <- input$width
       height <- input$height
+      if (identical(device, "pdf")) device <- cairo_pdf
       ggsave(
         filename = file,
         plot = rv$plot,
         device = device,
-        dpi = 72,
+        dpi = 300,
         width = width / 72,
         height = height / 72,
         scale = 1
@@ -436,8 +437,8 @@ download_plot_fun <- function(fun, device, filename, session) {
         plot = fun(),
         device = device,
         dpi = 300,
-        width = width / 300,
-        height = height / 300,
+        width = width / 72,
+        height = height / 72,
         scale = 1
       )
     }
