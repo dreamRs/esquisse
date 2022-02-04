@@ -1,0 +1,86 @@
+label,translation
+Update Preview,刷新文件预览
+Height:,高度:
+Width:,宽度:
+Filename:,文件名:
+Filename,文件名
+Close,关闭
+More options,更多选项
+Export chart,另存为
+Export to PowerPoint failed...,PPT保存失败
+Export format:,文件格式:
+Import data to create a graph,导入数据
+Display settings,展开设置
+Close Window,关闭窗口
+Import data,导入数据
+Show data,预览数据
+Labels & Title,标签和标题
+Plot options,绘图选项
+Appearance,绘图美学
+Data,数据
+Code,代码
+Title:,标题:
+Title,标题
+Subtitle:,副标题:
+Subtitle,副标题:
+Caption:,图表说明:
+Caption,图标说明
+X label:,X轴标题:
+X label,X轴标题
+Y label:,Y轴标题:
+Y label,Y轴标题
+Fill label:,图例标题(填充):
+Fill label,图例标题(填充)
+Color label:,图例标题(颜色):
+Color label,图例标题(颜色)
+Size label:,图例标题(尺寸):
+Size label,图例标题(尺寸)
+Shape label:,图例标题(形状):
+Shape label,图例标题(形状)
+Font face:,文字形状:
+Font size:,文字大小:
+Align:,对齐:
+Left,左对齐
+Center,居中对齐
+Right,右对齐
+Color:,颜色:
+Ribbon color:,区间颜色:
+Point symbol:,点符号:
+Theme:,主题:
+Legend position:,图例位置:
+Add a smooth line:,增加平滑曲线:
+Yes,是
+No,否
+Smooth line span:,平滑曲线区间:
+Size for points/lines:,点/线尺寸:
+Facet scales:,分面:
+Facet ncol:,分面(行数):
+Facet nrow:,分面(列数):
+Numbers of bins:,区间数:
+Scale:,尺度:
+X-Axis limits (empty for none):,X轴端点(空值为不限):
+X-Axis transform:,X轴转换:
+Y-Axis limits (empty for none):,Y轴端点(空值为不限):
+Y-Axis transform:,Y轴转换:
+Bandwidth adjustment:,区间宽度调整:
+Position:,位置:
+Flip coordinate:,坐标系旋转:
+Copy to clipboard,复制至粘贴板
+Code:,代码:
+Insert code in script,在脚本中插入代码
+Esquisse settings,Esquisse设置
+Select aesthetics to be used to build a graph:,设置图表绘制的美学元素:
+Aesthetic mappings describe how variables in the data are mapped to visual properties (aesthetics) of geoms.,美学映射是指数据的变量映射到几何图形上的视觉属性(美学).
+fill color for shapes,填充颜色(形状)
+color points and lines,填充颜色(点、线)
+size of the points,点尺寸
+shape of the points,点形状
+frequency weights,权重
+identifies series of points with a grouping variable,分组变量
+used in ribbons charts with ymax to display an interval between two lines,设置带状图Y轴的极大值(显示两线间隔)
+used in ribbons charts with ymin to display an interval between two lines,设置带状图Y轴的极小值(显示两线间隔)
+create small multiples,创建分面图
+create small multiples by rows,按行创建分面图
+create small multiples by columns,按列创建分面图
+Dataset,数据集
+Jittered points:,散点抖动:
