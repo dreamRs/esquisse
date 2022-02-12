@@ -38,7 +38,7 @@ dropNullsOrEmpty <- function(x) {
 }
 dropNullsOrEmptyRecursive <- function(x) {
   dropNullsOrEmpty(lapply(
-    X = x, 
+    X = x,
     FUN = function(x) {
       if (is.list(x)) {
         dropNullsOrEmpty(x)
@@ -198,7 +198,7 @@ get_col_names <- function(data) {
 # utils for geom icons
 geomIcons <- function() {
   geoms <- c(
-    "auto", "line", "step", "area", "bar", "histogram",
+    "auto", "line", "step", "area", "bar", "col", "histogram",
     "point", "jitter", "boxplot", "violin", "density",
     "tile", "sf"
   )

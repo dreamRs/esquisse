@@ -438,7 +438,7 @@ controls_server <- function(id,
           )
         )
       })
-      
+
       # jittered input
       observe({
         outputs$jitter <- list(
@@ -1005,7 +1005,7 @@ controls_code <- function(ns, insert_code = FALSE) {
 select_geom_controls <- function(x, geoms) {
   if (length(x) < 1)
     return("auto")
-  if ("bar" %in% geoms & x %in% c("auto", "bar")) {
+  if ("bar" %in% geoms & x %in% c("auto", "bar", "col")) {
     "bar"
   } else if ("histogram" %in% geoms & x %in% c("auto", "histogram")) {
     "histogram"

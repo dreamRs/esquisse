@@ -179,7 +179,7 @@ esquisse_server <- function(id,
 
       observeEvent(geom_possible$x, {
         geoms <- c(
-          "auto", "line", "area", "bar", "histogram",
+          "auto", "line", "area", "bar", "col", "histogram",
           "point", "jitter", "boxplot", "violin", "density",
           "tile", "sf"
         )

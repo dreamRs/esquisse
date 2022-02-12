@@ -9,42 +9,42 @@
 #' @export
 #'
 #' @examples
-#' 
+#'
 #' library(ggplot2)
-#' 
+#'
 #' # One continuous variable
 #' potential_geoms(
 #'   data = iris,
 #'   mapping = aes(x = Sepal.Length)
 #' )
-#' 
+#'
 #' # Automatic pick a geom
 #' potential_geoms(
 #'   data = iris,
 #'   mapping = aes(x = Sepal.Length),
 #'   auto = TRUE
 #' )
-#' 
+#'
 #' # One discrete variable
 #' potential_geoms(
 #'   data = iris,
 #'   mapping = aes(x = Species)
 #' )
-#' 
+#'
 #' # Two continuous variables
 #' potential_geoms(
 #'   data = iris,
 #'   mapping = aes(x = Sepal.Length, y = Sepal.Width)
 #' )
 potential_geoms <- function(data, mapping, auto = FALSE) {
-  
+
   data_mapped <- lapply(mapping, rlang::eval_tidy, data = data)
-  
+
   x_type <- col_type(data_mapped$x, no_id = TRUE)
   y_type <- col_type(data_mapped$y, no_id = TRUE)
-  
+
   potential_geoms_ref <- potential_geoms_ref()
-  
+
   if (is.null(x_type) & !is.null(y_type)) {
     if (all(y_type %nin% "continuous")) {
       x_type <- y_type
@@ -56,19 +56,19 @@ potential_geoms <- function(data, mapping, auto = FALSE) {
   if (!is.null(x_type) & is.null(y_type)) {
     y_type <- "empty"
   }
-  
+
   if (isTRUE(auto)) {
     auto_ <- 1
   } else {
     auto_ <- c(0, 1)
   }
-  
+
   geoms_ind <- eval_tidy(
     expr = expr(!!sym("x") == !!x_type & !!sym("y") %in% !!y_type & auto %in% !!auto_),
     data = potential_geoms_ref
   )
   geoms <- potential_geoms_ref[geoms_ind, "geom"]
-  
+
   if (inherits(data, what = "sf")) {
     if (isTRUE(auto)) {
       geoms <- "sf"
@@ -76,7 +76,7 @@ potential_geoms <- function(data, mapping, auto = FALSE) {
       geoms <- c(geoms, "sf")
     }
   }
-  
+
   return(geoms)
 }
 
@@ -84,40 +84,41 @@ potential_geoms <- function(data, mapping, auto = FALSE) {
 
 
 
-#' @importFrom ggplot2 geom_histogram geom_density geom_bar geom_sf 
+#' @importFrom ggplot2 geom_histogram geom_density geom_bar geom_sf
 #' geom_boxplot geom_bar geom_point geom_line geom_tile geom_violin
 #' geom_area geom_smooth geom_col
 potential_geoms_ref <- function() {
   x <- matrix(
     data = c(
-      "continuous",  "empty",       "histogram", "1", 
-      "continuous",  "empty",       "boxplot",   "0", 
-      "continuous",  "empty",       "violin",    "0", 
-      "continuous",  "empty",       "density",   "0", 
-      "discrete",    "empty",       "bar",       "1", 
+      "continuous",  "empty",       "histogram", "1",
+      "continuous",  "empty",       "boxplot",   "0",
+      "continuous",  "empty",       "violin",    "0",
+      "continuous",  "empty",       "density",   "0",
+      "discrete",    "empty",       "bar",       "1",
       "time",        "empty",       "histogram", "1",
       "time",        "empty",       "bar",       "0",
-      "continuous",  "discrete",    "boxplot",   "0", 
-      "continuous",  "discrete",    "point",     "0", 
-      "continuous",  "discrete",    "jitter",    "0", 
-      "continuous",  "discrete",    "violin",    "0", 
+      "continuous",  "discrete",    "boxplot",   "0",
+      "continuous",  "discrete",    "point",     "0",
+      "continuous",  "discrete",    "jitter",    "0",
+      "continuous",  "discrete",    "violin",    "0",
       "continuous",  "discrete",    "bar",       "1",
-      "discrete",    "continuous",  "boxplot",   "0", 
-      "discrete",    "continuous",  "point",     "0", 
-      "discrete",    "continuous",  "jitter",    "0", 
-      "discrete",    "continuous",  "violin",    "0", 
-      "discrete",    "continuous",  "bar",       "1",
+      "discrete",    "continuous",  "col",       "1",
+      "discrete",    "continuous",  "bar",       "0",
+      "discrete",    "continuous",  "boxplot",   "0",
+      "discrete",    "continuous",  "point",     "0",
+      "discrete",    "continuous",  "jitter",    "0",
+      "discrete",    "continuous",  "violin",    "0",
       "continuous",  "continuous",  "point",     "1",
       "continuous",  "continuous",  "jitter",    "0",
-      "continuous",  "continuous",  "line",      "0", 
-      "continuous",  "continuous",  "step",      "0", 
+      "continuous",  "continuous",  "line",      "0",
+      "continuous",  "continuous",  "step",      "0",
       "continuous",  "continuous",  "area",      "0",
       "discrete",    "discrete",    "tile",      "1",
       "time",        "continuous",  "line",      "1",
       "time",        "continuous",  "point",     "0",
-      "time",        "continuous",  "step",      "0", 
-      "time",        "continuous",  "area",      "0", 
-      "time",        "continuous",  "bar",       "0", 
+      "time",        "continuous",  "step",      "0",
+      "time",        "continuous",  "area",      "0",
+      "time",        "continuous",  "bar",       "0",
       "empty",       "continuous",  "line",      "1",
       "empty",       "continuous",  "step",      "0",
       "empty",       "continuous",  "area",      "0",
@@ -157,7 +158,7 @@ potential_geoms_ref <- function() {
 #'   size = 1.6,
 #'   fill = "#112246"
 #' )
-#' 
+#'
 #' # Search arguments according to geom
 #' match_geom_args(geom = "histogram", args = params)
 #' match_geom_args(geom = "violin", args = params)
@@ -166,14 +167,14 @@ potential_geoms_ref <- function() {
 #' match_geom_args(geom = "point", args = params, add_aes = FALSE)
 match_geom_args <- function(geom, args, add_aes = TRUE, mapping = list(), envir = "ggplot2") {
   if (!is.null(args$fill_color)) {
-    if (geom %in% c("bar", "histogram", "boxplot", "violin", "density")) {
+    if (geom %in% c("bar", "col", "histogram", "boxplot", "violin", "density")) {
       args$fill <- args$fill_color %||% "#0C4C8A"
     }
     if (geom %in% c("line", "step", "point")) {
       args$colour <- args$fill_color %||% "#0C4C8A"
     }
   }
-  if (geom %in% c("bar", "histogram", "boxplot", "violin", "density")) {
+  if (geom %in% c("bar", "col", "histogram", "boxplot", "violin", "density")) {
     args$size <- NULL
   }
   if (identical(args$position, "stack")) {

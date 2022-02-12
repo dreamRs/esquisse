@@ -38,7 +38,7 @@ build_aes(df, x = "LET", y = "VAL", geom = "bar")
 
 # e.g. :
 library(ggplot2)
-ggplot(df) + 
-  build_aes(df, x = "LET", y = "VAL", geom = "bar") + 
+ggplot(df) +
+  build_aes(df, x = "LET", y = "VAL", geom = "bar") +
   geom_bar()
 }
