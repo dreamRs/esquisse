@@ -105,12 +105,34 @@ rCodeContainer <- function(...) {
 }
 
 
+play_pause_input <- function(inputId) {
+  play_pause <- shinyWidgets::prettyToggle(
+    inputId = inputId,
+    value = TRUE,
+    label_on = "Play",
+    label_off = "Pause",
+    outline = TRUE,
+    plain = TRUE,
+    bigger = TRUE,
+    inline = TRUE,
+    icon_on = phosphoricons::ph_i("play-circle"),
+    icon_off = phosphoricons::ph_i("pause-circle")
+  )
+  play_pause$attribs$style <- "display: inline-block; margin-right: -5px;"
+  tags$div(
+    # style = "position: absolute; right: 0; top: 35px; font-weight: bold; z-index: 1000;",
+    style = "position: absolute; right: 40px; top: 5px; font-weight: bold; z-index: 1000;",
+    play_pause
+  )
+}
+
+
 # Resizer handlers
 
 activate_resizer <- function(id,
-                             ..., 
+                             ...,
                              modal = FALSE,
-                             container = "body", 
+                             container = "body",
                              session = shiny::getDefaultReactiveDomain()) {
   if (isTRUE(modal))
     container <- ".modal-body"
@@ -122,9 +144,9 @@ activate_resizer <- function(id,
   ))
 }
 
-resize <- function(id, 
-                   width, 
-                   height, 
+resize <- function(id,
+                   width,
+                   height,
                    session = shiny::getDefaultReactiveDomain()) {
   session$sendCustomMessage(paste0("resize-", id), list(
     width = width,

@@ -1,6 +1,6 @@
 
 #' @title Esquisse module
-#' 
+#'
 #' @description Use esquisse as a module in a Shiny application.
 #'
 #' @param id Module ID.
@@ -17,10 +17,10 @@
 #'   * **code_plot** : code to generate plot.
 #'   * **code_filters** : a list of length two with code to reproduce filters.
 #'   * **data** : `data.frame` used in plot (with filters applied).
-#'  
+#'
 #'
 #' @export
-#' 
+#'
 #' @name esquisse-module
 #' @order 1
 #'
@@ -29,11 +29,11 @@
 #' @importFrom shinyWidgets prettyToggle
 #'
 #' @example examples/esquisse-module-1.R
-#' 
+#'
 #' @example examples/esquisse-module-2.R
-#' 
+#'
 #' @example examples/esquisse-module-3.R
-esquisse_ui <- function(id, 
+esquisse_ui <- function(id,
                         header = TRUE,
                         container = esquisseContainer(),
                         controls = c("labs", "parameters", "appearance", "filters", "code"),
@@ -73,15 +73,15 @@ esquisse_ui <- function(id,
       )
     )
   )
-  
+
   ui <- fillPage(tags$div(
     class = "esquisse-container",
     html_dependency_esquisse(),
     html_dependency_clipboard(),
     # shinyWidgets::chooseSliderSkin("Modern", "#112446"),
-    
+
     if (isTRUE(header)) tag_header,
-    
+
     tags$div(
       class = "esquisse-geom-aes",
       tags$div(
@@ -96,22 +96,23 @@ esquisse_ui <- function(id,
       ),
       uiOutput(outputId = ns("ui_aesthetics"))
     ),
-    
+
     fillCol(
       style = "overflow-y: auto;",
       tags$div(
         style = "height: 100%; min-height: 400px;",
+        play_pause_input(ns("play_plot")),
         ggplot_output(id = ns("plooooooot"), width = "100%", height = "100%")
       )
     ),
-    
+
     controls_ui(
       id = ns("controls"),
       insert_code = insert_code,
       controls = controls
     )
   ))
-  
+
   if (is.function(container)) {
     ui <- container(ui)
   }
@@ -127,7 +128,7 @@ esquisse_ui <- function(id,
 #'
 #' @rdname esquisse-module
 #' @order 3
-#' 
+#'
 #' @export
 esquisseContainer <- function(width = "100%", height = "700px", fixed = FALSE) {
   force(width)

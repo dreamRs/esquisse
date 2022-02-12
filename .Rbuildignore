@@ -11,3 +11,4 @@ img/
 ^examples$
 ^\.github$
 revdep/
+^CRAN-SUBMISSION$

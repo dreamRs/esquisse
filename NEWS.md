@@ -1,5 +1,6 @@
 # esquisse (unreleased)
 
+* Play/Pause button is back: it allow to set reactivity in "pause" when doing multiple changes, and so avoiding to render intermediate plots.
 * New translations added:
  + spanish, activate with `set_i18n("es")`, thanks to [@drdsdaniel](https://github.com/drdsdaniel)
  + albanian (updated), activate with `set_i18n("al")`, thanks to [@EGjika](https://github.com/EGjika)
