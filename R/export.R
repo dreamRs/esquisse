@@ -398,7 +398,7 @@ download_plot_rv <- function(input, rv, device) {
     content = function(file) {
       width <- input$width
       height <- input$height
-      # if (identical(device, "pdf")) device <- cairo_pdf
+      if (identical(device, "pdf")) device <- cairo_pdf
       ggsave(
         filename = file,
         plot = rv$plot,
