@@ -5,6 +5,10 @@
  + spanish, activate with `set_i18n("es")`, thanks to [@drdsdaniel](https://github.com/drdsdaniel)
  + albanian (updated), activate with `set_i18n("al")`, thanks to [@EGjika](https://github.com/EGjika)
 
+### Bug fixes
+
+* Fix `selected` argument of `dragulaInput()` being ignored outside bookmarking.
+
 
 
 # esquisse 1.1.0

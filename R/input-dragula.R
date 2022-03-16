@@ -65,8 +65,8 @@ dragulaInput <- function(inputId,
                          boxStyle = NULL,
                          width = NULL,
                          height = "100px") {
-  
-  bookmark <- restoreInput(id = inputId, default = selected)
+
+  bookmark <- restoreInput(id = inputId, default = NULL)
   if (!is.null(bookmark)) {
     selected <- bookmark$target
   }
@@ -77,14 +77,14 @@ dragulaInput <- function(inputId,
 
   targets <- generate_targets(
     inputId = inputId,
-    args = args, 
+    args = args,
     targetsLabels = targetsLabels,
-    targetsIds = targetsIds, 
+    targetsIds = targetsIds,
     selected = selected,
-    replace = replace, 
-    boxStyle = boxStyle, 
-    badge = badge, 
-    status = status, 
+    replace = replace,
+    boxStyle = boxStyle,
+    badge = badge,
+    status = status,
     height = height
   )
   targetsIds <- targets$ids
@@ -160,7 +160,7 @@ generate_targets <- function(inputId, args, targetsLabels, targetsIds, selected,
     targetsIds <- targetsLabels
   }
   stopifnot(length(targetsLabels) == length(targetsIds))
-  
+
   target_ids <- makeId(targetsIds)
 
   replaceTargets <- target_ids
@@ -237,7 +237,7 @@ make_bg_svg <- function(text) {
 
 
 #' @title Update Dragula Input
-#' 
+#'
 #' @description Update [dragulaInput()] widget server-side.
 #'
 #' @param session The `session` object passed to function given to `shinyServer`.
