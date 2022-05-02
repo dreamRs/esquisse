@@ -1,10 +1,10 @@
 pandoc: 2.7.3
-pkgdown: 2.0.2
+pkgdown: 2.0.3
 pkgdown_sha: ~
 articles:
   get-started: get-started.html
   shiny-usage: shiny-usage.html
-last_built: 2022-03-16T13:18Z
+last_built: 2022-05-02T07:23Z
 urls:
   reference: https://dreamrs.github.io/esquisse/reference
   article: https://dreamrs.github.io/esquisse/articles

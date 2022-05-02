@@ -2,4 +2,4 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
 <link href="deps/bootstrap-5.1.0/bootstrap.min.css" rel="stylesheet" />
 <script src="deps/bootstrap-5.1.0/bootstrap.bundle.min.js"></script>
-<link href="deps/_Poppins-0.4.0/font.css" rel="stylesheet" />
+<link href="deps/_Poppins-0.4.1/font.css" rel="stylesheet" />
