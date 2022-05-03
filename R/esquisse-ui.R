@@ -46,13 +46,13 @@ esquisse_ui <- function(id,
       class = "pull-right",
       actionButton(
         inputId = ns("settings"),
-        label = ph("gear-six", height = "2em"),
+        label = ph("gear-six", height = "2em", title = i18n("Display settings")),
         class = "btn-sm",
         title = i18n("Display settings")
       ),
       actionButton(
         inputId = ns("close"),
-        label = ph("x", height = "2em"),
+        label = ph("x", height = "2em", title = i18n("Close Window")),
         class = "btn-sm",
         title = i18n("Close Window")
       )
@@ -61,13 +61,13 @@ esquisse_ui <- function(id,
       class = "pull-left",
       actionButton(
         inputId = ns("launch_import_data"),
-        label = ph("database", height = "2em"),
+        label = ph("database", height = "2em", title = i18n("Import data")),
         class = "btn-sm",
         title = i18n("Import data")
       ),
       actionButton(
         inputId = ns("show_data"),
-        label = ph("table", height = "2em"),
+        label = ph("table", height = "2em", title = i18n("Show data")),
         class = "btn-sm",
         title = i18n("Show data")
       )

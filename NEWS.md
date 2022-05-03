@@ -1,9 +1,10 @@
-# esquisse (unreleased)
+# esquisse 1.1.1
 
 * Play/Pause button is back: it allow to set reactivity in "pause" when doing multiple changes, and so avoiding to render intermediate plots.
 * New translations added:
- + spanish, activate with `set_i18n("es")`, thanks to [@drdsdaniel](https://github.com/drdsdaniel)
+ + spanish, activate with `set_i18n("es")`, thanks to [@dnldelarosa](https://github.com/dnldelarosa)
  + albanian (updated), activate with `set_i18n("al")`, thanks to [@EGjika](https://github.com/EGjika)
+ + portuguese, activate with `set_i18n("pt")`, thanks to [@mribeirodantas](https://github.com/mribeirodantas)
 
 ### Bug fixes
 
