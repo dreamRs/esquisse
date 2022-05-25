@@ -38,3 +38,6 @@ vignettes/*.pdf
 # testdata
 testdata/
 inst/doc
+
+
+*.DS_Store
