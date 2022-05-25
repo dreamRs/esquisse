@@ -1,0 +1,86 @@
+﻿label,translation
+Update Preview,Aggiornare l'anteprima
+Height:,Altezza:
+Width:,Larghezza:
+Filename:,Nome de file:
+Filename,Nome de file
+Close,Chiudere
+More options,Più opzioni
+Export chart,Esporta grafico
+Export to PowerPoint failed...,Esportazione in PowerPoint non riuscita …
+Export format:,Formato di esportazione:
+Import data to create a graph,Importa i dati per creare un grafico
+Display settings,Visualizza impostazioni
+Close Window,Chiudere la finestra
+Import data,Importare i dati
+Show data,Mostra dati
+Labels & Title,Etichette & titolo
+Plot options,Opzioni del grafico
+Appearance,Aspetto
+Data,Dati
+Code,Codice
+Title:,Titolo:
+Title,Titolo
+Subtitle:,Sottotitolo:
+Subtitle,Sottotitolo
+Caption:,Leggenda:
+Caption,Leggenda
+X label:,Titolo dell'asse X:
+X label,Titolo dell'asse X
+Y label:,Titolo dell'asse Y:
+Y label,Titolo dell'asse Y
+Fill label:,Etichetta colore riempimento:
+Fill label,Etichetta colore riempimento 
+Color label:,Etichetta a colori:
+Color label,Etichetta a colori
+Size label:,Etichetta taglia:
+Size label,Etichetta taglia
+Shape label:,Etichetta di forma:
+Shape label,Etichetta di forma
+Font face:,Carattere:
+Font size:,Dimensione del carattere:
+Align:,Allineamento:
+Left,Sinistra
+Center,Centro
+Right,Destra
+Color:,Colore:
+Ribbon color:,Colore del nastro:
+Point symbol:,Simbolo del punto:
+Theme:,Tema:
+Legend position:,Posizione della legenda:
+Add a smooth line:,Aggiungi una linea di tendenza:
+Yes,Sì
+No,No
+Smooth line span:,Ammontare del livellamento della linea di tendenza:
+Size for points/lines:,Dimensione per punti/linee:
+Facet scales:,Scale sfaccettate:
+Facet ncol:,Numero di colonne facet:
+Facet nrow:,Numero di righe di faccette:
+Numbers of bins:,Numero di piazzole:
+Scale:,Scala:
+X-Axis limits (empty for none):,Limite dell'asse X (vuoto per nessun limite):
+X-Axis transform:,Trasformazione dell'asse X:
+Y-Axis limits (empty for none):,Limite dell'asse Y (vuoto per nessun limite):
+Y-Axis transform:,Trasformazione dell'asse Y:
+Bandwidth adjustment:,Regolazione della larghezza di banda della densità:
+Position:,Posizione:
+Flip coordinate:,Inverti coordinate:
+Copy to clipboard,Copia negli appunti
+Code:,Codice:
+Insert code in script,Inserisci codice nello script
+Esquisse settings,Impostazioni di Esquisse
+Select aesthetics to be used to build a graph:,Seleziona gli aspetti da utilizzare per creare un grafico:
+Aesthetic mappings describe how variables in the data are mapped to visual properties (aesthetics) of geoms.,Le mappature estetiche descrivono come le variabili nei dati vengono mappate alle proprietà visive (estetiche) dei geom.
+fill color for shapes,colore di riempimento della forma
+color points and lines,colore per punti e linee
+size of the points,dimensione dei punti
+shape of the points,froma dei punti
+frequency weights,pesi di frequenza
+identifies series of points with a grouping variable,identifica serie di punti con una variabile di raggruppamento
+used in ribbons charts with ymax to display an interval between two lines,utilizzato nei grafici a nastro con ymax per visualizzare un intervallo tra due righe
+used in ribbons charts with ymin to display an interval between two lines,utilizzato nei grafici a nastro con ymin per visualizzare un intervallo tra due righe
+create small multiples,creare piccoli multipli
+create small multiples by rows,create small multiples by rows
+create small multiples by columns,creare piccoli multipli per colonne
+Dataset,Set di dati
+Jittered points:,Punti casuali sparsi:
