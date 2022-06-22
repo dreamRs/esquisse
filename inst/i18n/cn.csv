@@ -1,86 +1,86 @@
 label,translation
-Update Preview,Ë¢ĞÂÎÄ¼şÔ¤ÀÀ
-Height:,¸ß¶È:
-Width:,¿í¶È:
-Filename:,ÎÄ¼şÃû:
-Filename,ÎÄ¼şÃû
-Close,¹Ø±Õ
-More options,¸ü¶àÑ¡Ïî
-Export chart,Áí´æÎª
-Export to PowerPoint failed...,PPT±£´æÊ§°Ü
-Export format:,ÎÄ¼ş¸ñÊ½:
-Import data to create a graph,µ¼ÈëÊı¾İ
-Display settings,Õ¹¿ªÉèÖÃ
-Close Window,¹Ø±Õ´°¿Ú
-Import data,µ¼ÈëÊı¾İ
-Show data,Ô¤ÀÀÊı¾İ
-Labels & Title,±êÇ©ºÍ±êÌâ
-Plot options,»æÍ¼Ñ¡Ïî
-Appearance,»æÍ¼ÃÀÑ§
-Data,Êı¾İ
-Code,´úÂë
-Title:,±êÌâ:
-Title,±êÌâ
-Subtitle:,¸±±êÌâ:
-Subtitle,¸±±êÌâ:
-Caption:,Í¼±íËµÃ÷:
-Caption,Í¼±êËµÃ÷
-X label:,XÖá±êÌâ:
-X label,XÖá±êÌâ
-Y label:,YÖá±êÌâ:
-Y label,YÖá±êÌâ
-Fill label:,Í¼Àı±êÌâ(Ìî³ä):
-Fill label,Í¼Àı±êÌâ(Ìî³ä)
-Color label:,Í¼Àı±êÌâ(ÑÕÉ«):
-Color label,Í¼Àı±êÌâ(ÑÕÉ«)
-Size label:,Í¼Àı±êÌâ(³ß´ç):
-Size label,Í¼Àı±êÌâ(³ß´ç)
-Shape label:,Í¼Àı±êÌâ(ĞÎ×´):
-Shape label,Í¼Àı±êÌâ(ĞÎ×´)
-Font face:,ÎÄ×ÖĞÎ×´:
-Font size:,ÎÄ×Ö´óĞ¡:
-Align:,¶ÔÆë:
-Left,×ó¶ÔÆë
-Center,¾ÓÖĞ¶ÔÆë
-Right,ÓÒ¶ÔÆë
-Color:,ÑÕÉ«:
-Ribbon color:,Çø¼äÑÕÉ«:
-Point symbol:,µã·ûºÅ:
-Theme:,Ö÷Ìâ:
-Legend position:,Í¼ÀıÎ»ÖÃ:
-Add a smooth line:,Ôö¼ÓÆ½»¬ÇúÏß:
-Yes,ÊÇ
-No,·ñ
-Smooth line span:,Æ½»¬ÇúÏßÇø¼ä:
-Size for points/lines:,µã/Ïß³ß´ç:
-Facet scales:,·ÖÃæ:
-Facet ncol:,·ÖÃæ(ĞĞÊı):
-Facet nrow:,·ÖÃæ(ÁĞÊı):
-Numbers of bins:,Çø¼äÊı:
-Scale:,³ß¶È:
-X-Axis limits (empty for none):,XÖá¶Ëµã(¿ÕÖµÎª²»ÏŞ):
-X-Axis transform:,XÖá×ª»»:
-Y-Axis limits (empty for none):,YÖá¶Ëµã(¿ÕÖµÎª²»ÏŞ):
-Y-Axis transform:,YÖá×ª»»:
-Bandwidth adjustment:,Çø¼ä¿í¶Èµ÷Õû:
-Position:,Î»ÖÃ:
-Flip coordinate:,×ø±êÏµĞı×ª:
-Copy to clipboard,¸´ÖÆÖÁÕ³Ìù°å
-Code:,´úÂë:
-Insert code in script,ÔÚ½Å±¾ÖĞ²åÈë´úÂë
-Esquisse settings,EsquisseÉèÖÃ
-Select aesthetics to be used to build a graph:,ÉèÖÃÍ¼±í»æÖÆµÄÃÀÑ§ÔªËØ:
-Aesthetic mappings describe how variables in the data are mapped to visual properties (aesthetics) of geoms.,ÃÀÑ§Ó³ÉäÊÇÖ¸Êı¾İµÄ±äÁ¿Ó³Éäµ½¼¸ºÎÍ¼ĞÎÉÏµÄÊÓ¾õÊôĞÔ(ÃÀÑ§).
-fill color for shapes,Ìî³äÑÕÉ«(ĞÎ×´)
-color points and lines,Ìî³äÑÕÉ«(µã¡¢Ïß)
-size of the points,µã³ß´ç
-shape of the points,µãĞÎ×´
-frequency weights,È¨ÖØ
-identifies series of points with a grouping variable,·Ö×é±äÁ¿
-used in ribbons charts with ymax to display an interval between two lines,ÉèÖÃ´ø×´Í¼YÖáµÄ¼«´óÖµ(ÏÔÊ¾Á½Ïß¼ä¸ô)
-used in ribbons charts with ymin to display an interval between two lines,ÉèÖÃ´ø×´Í¼YÖáµÄ¼«Ğ¡Öµ(ÏÔÊ¾Á½Ïß¼ä¸ô)
-create small multiples,´´½¨·ÖÃæÍ¼
-create small multiples by rows,°´ĞĞ´´½¨·ÖÃæÍ¼
-create small multiples by columns,°´ÁĞ´´½¨·ÖÃæÍ¼
-Dataset,Êı¾İ¼¯
-Jittered points:,É¢µã¶¶¶¯:
+Update Preview,åˆ·æ–°æ–‡ä»¶é¢„è§ˆ
+Height:,é«˜åº¦:
+Width:,å®½åº¦:
+Filename:,æ–‡ä»¶å:
+Filename,æ–‡ä»¶å
+Close,å…³é—­
+More options,æ›´å¤šé€‰é¡¹
+Export chart,å¦å­˜ä¸º
+Export to PowerPoint failed...,PPTä¿å­˜å¤±è´¥
+Export format:,æ–‡ä»¶æ ¼å¼:
+Import data to create a graph,å¯¼å…¥æ•°æ®
+Display settings,å±•å¼€è®¾ç½®
+Close Window,å…³é—­çª—å£
+Import data,å¯¼å…¥æ•°æ®
+Show data,é¢„è§ˆæ•°æ®
+Labels & Title,æ ‡ç­¾å’Œæ ‡é¢˜
+Plot options,ç»˜å›¾é€‰é¡¹
+Appearance,ç»˜å›¾ç¾å­¦
+Data,æ•°æ®
+Code,ä»£ç 
+Title:,æ ‡é¢˜:
+Title,æ ‡é¢˜
+Subtitle:,å‰¯æ ‡é¢˜:
+Subtitle,å‰¯æ ‡é¢˜:
+Caption:,å›¾è¡¨è¯´æ˜:
+Caption,å›¾æ ‡è¯´æ˜
+X label:,Xè½´æ ‡é¢˜:
+X label,Xè½´æ ‡é¢˜
+Y label:,Yè½´æ ‡é¢˜:
+Y label,Yè½´æ ‡é¢˜
+Fill label:,å›¾ä¾‹æ ‡é¢˜(å¡«å……):
+Fill label,å›¾ä¾‹æ ‡é¢˜(å¡«å……)
+Color label:,å›¾ä¾‹æ ‡é¢˜(é¢œè‰²):
+Color label,å›¾ä¾‹æ ‡é¢˜(é¢œè‰²)
+Size label:,å›¾ä¾‹æ ‡é¢˜(å°ºå¯¸):
+Size label,å›¾ä¾‹æ ‡é¢˜(å°ºå¯¸)
+Shape label:,å›¾ä¾‹æ ‡é¢˜(å½¢çŠ¶):
+Shape label,å›¾ä¾‹æ ‡é¢˜(å½¢çŠ¶)
+Font face:,æ–‡å­—å½¢çŠ¶:
+Font size:,æ–‡å­—å¤§å°:
+Align:,å¯¹é½:
+Left,å·¦å¯¹é½
+Center,å±…ä¸­å¯¹é½
+Right,å³å¯¹é½
+Color:,é¢œè‰²:
+Ribbon color:,åŒºé—´é¢œè‰²:
+Point symbol:,ç‚¹ç¬¦å·:
+Theme:,ä¸»é¢˜:
+Legend position:,å›¾ä¾‹ä½ç½®:
+Add a smooth line:,å¢åŠ å¹³æ»‘æ›²çº¿:
+Yes,æ˜¯
+No,å¦
+Smooth line span:,å¹³æ»‘æ›²çº¿åŒºé—´:
+Size for points/lines:,ç‚¹/çº¿å°ºå¯¸:
+Facet scales:,åˆ†é¢:
+Facet ncol:,åˆ†é¢(è¡Œæ•°):
+Facet nrow:,åˆ†é¢(åˆ—æ•°):
+Numbers of bins:,åŒºé—´æ•°:
+Scale:,å°ºåº¦:
+X-Axis limits (empty for none):,Xè½´ç«¯ç‚¹(ç©ºå€¼ä¸ºä¸é™):
+X-Axis transform:,Xè½´è½¬æ¢:
+Y-Axis limits (empty for none):,Yè½´ç«¯ç‚¹(ç©ºå€¼ä¸ºä¸é™):
+Y-Axis transform:,Yè½´è½¬æ¢:
+Bandwidth adjustment:,åŒºé—´å®½åº¦è°ƒæ•´:
+Position:,ä½ç½®:
+Flip coordinate:,åæ ‡ç³»æ—‹è½¬:
+Copy to clipboard,å¤åˆ¶è‡³ç²˜è´´æ¿
+Code:,ä»£ç :
+Insert code in script,åœ¨è„šæœ¬ä¸­æ’å…¥ä»£ç 
+Esquisse settings,Esquisseè®¾ç½®
+Select aesthetics to be used to build a graph:,è®¾ç½®å›¾è¡¨ç»˜åˆ¶çš„ç¾å­¦å…ƒç´ :
+Aesthetic mappings describe how variables in the data are mapped to visual properties (aesthetics) of geoms.,ç¾å­¦æ˜ å°„æ˜¯æŒ‡æ•°æ®çš„å˜é‡æ˜ å°„åˆ°å‡ ä½•å›¾å½¢ä¸Šçš„è§†è§‰å±æ€§(ç¾å­¦).
+fill color for shapes,å¡«å……é¢œè‰²(å½¢çŠ¶)
+color points and lines,å¡«å……é¢œè‰²(ç‚¹ã€çº¿)
+size of the points,ç‚¹å°ºå¯¸
+shape of the points,ç‚¹å½¢çŠ¶
+frequency weights,æƒé‡
+identifies series of points with a grouping variable,åˆ†ç»„å˜é‡
+used in ribbons charts with ymax to display an interval between two lines,è®¾ç½®å¸¦çŠ¶å›¾Yè½´çš„æå¤§å€¼(æ˜¾ç¤ºä¸¤çº¿é—´éš”)
+used in ribbons charts with ymin to display an interval between two lines,è®¾ç½®å¸¦çŠ¶å›¾Yè½´çš„æå°å€¼(æ˜¾ç¤ºä¸¤çº¿é—´éš”)
+create small multiples,åˆ›å»ºåˆ†é¢å›¾
+create small multiples by rows,æŒ‰è¡Œåˆ›å»ºåˆ†é¢å›¾
+create small multiples by columns,æŒ‰åˆ—åˆ›å»ºåˆ†é¢å›¾
+Dataset,æ•°æ®é›†
+Jittered points:,æ•£ç‚¹æŠ–åŠ¨:
