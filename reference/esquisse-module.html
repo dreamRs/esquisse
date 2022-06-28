@@ -58,199 +58,220 @@
 
     <div class="section level2">
     <h2 id="ref-usage">Usage<a class="anchor" aria-label="anchor" href="#ref-usage"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">esquisse_ui</span><span class="op">(</span>
-  <span class="va">id</span>,
-  header <span class="op">=</span> <span class="cn">TRUE</span>,
-  container <span class="op">=</span> <span class="fu">esquisseContainer</span><span class="op">(</span><span class="op">)</span>,
-  controls <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"labs"</span>, <span class="st">"parameters"</span>, <span class="st">"appearance"</span>, <span class="st">"filters"</span>, <span class="st">"code"</span><span class="op">)</span>,
-  insert_code <span class="op">=</span> <span class="cn">FALSE</span>
-<span class="op">)</span>
-
-<span class="fu">esquisse_server</span><span class="op">(</span>
-  <span class="va">id</span>,
-  data_rv <span class="op">=</span> <span class="cn">NULL</span>,
-  default_aes <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"fill"</span>, <span class="st">"color"</span>, <span class="st">"size"</span>, <span class="st">"group"</span>, <span class="st">"facet"</span><span class="op">)</span>,
-  import_from <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"env"</span>, <span class="st">"file"</span>, <span class="st">"copypaste"</span>, <span class="st">"googlesheets"</span><span class="op">)</span>
-<span class="op">)</span>
-
-<span class="fu">esquisseContainer</span><span class="op">(</span>width <span class="op">=</span> <span class="st">"100%"</span>, height <span class="op">=</span> <span class="st">"700px"</span>, fixed <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">esquisse_ui</span><span class="op">(</span></span>
+<span>  <span class="va">id</span>,</span>
+<span>  header <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>  container <span class="op">=</span> <span class="fu">esquisseContainer</span><span class="op">(</span><span class="op">)</span>,</span>
+<span>  controls <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"labs"</span>, <span class="st">"parameters"</span>, <span class="st">"appearance"</span>, <span class="st">"filters"</span>, <span class="st">"code"</span><span class="op">)</span>,</span>
+<span>  insert_code <span class="op">=</span> <span class="cn">FALSE</span></span>
+<span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu">esquisse_server</span><span class="op">(</span></span>
+<span>  <span class="va">id</span>,</span>
+<span>  data_rv <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  default_aes <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"fill"</span>, <span class="st">"color"</span>, <span class="st">"size"</span>, <span class="st">"group"</span>, <span class="st">"facet"</span><span class="op">)</span>,</span>
+<span>  import_from <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"env"</span>, <span class="st">"file"</span>, <span class="st">"copypaste"</span>, <span class="st">"googlesheets"</span><span class="op">)</span></span>
+<span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu">esquisseContainer</span><span class="op">(</span>width <span class="op">=</span> <span class="st">"100%"</span>, height <span class="op">=</span> <span class="st">"700px"</span>, fixed <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div class="section level2">
     <h2 id="arguments">Arguments<a class="anchor" aria-label="anchor" href="#arguments"></a></h2>
     <dl><dt>id</dt>
 <dd><p>Module ID.</p></dd>
+
+
 <dt>header</dt>
 <dd><p>Logical. Display or not <code>esquisse</code> header.</p></dd>
+
+
 <dt>container</dt>
 <dd><p>Container in which display the addin,
 default is to use <code>esquisseContainer</code>, see examples.
 Use <code>NULL</code> for no container (behavior in versions &lt;= 0.2.1).
 Must be a <code>function</code>.</p></dd>
+
+
 <dt>controls</dt>
 <dd><p>Controls menu to be displayed. Use <code>NULL</code> to hide all menus.</p></dd>
+
+
 <dt>insert_code</dt>
 <dd><p>Logical, Display or not a button to insert the ggplot
 code in the current user script (work only in RStudio).</p></dd>
+
+
 <dt>data_rv</dt>
 <dd><p>A <code>reactiveValues</code> with at least a slot <code>data</code> containing a <code>data.frame</code>
 to use in the module. And a slot <code>name</code> corresponding to the name of the <code>data.frame</code>.</p></dd>
+
+
 <dt>default_aes</dt>
 <dd><p>Default aesthetics to be used, can be a <code>character</code>
 vector or <code>reactive</code> function returning one.</p></dd>
+
+
 <dt>import_from</dt>
 <dd><p>From where to import data, argument passed
 to <code><a href="https://rdrr.io/pkg/datamods/man/import-modal.html" class="external-link">datamods::import_ui</a></code>.</p></dd>
+
+
 <dt>width, height</dt>
 <dd><p>The width and height of the container, e.g. <code>"400px"</code>,
 or <code>"100%"</code>; see <code><a href="https://rdrr.io/pkg/htmltools/man/validateCssUnit.html" class="external-link">validateCssUnit</a></code>.</p></dd>
+
+
 <dt>fixed</dt>
 <dd><p>Use a fixed container, e.g. to use use esquisse full page.
 If <code>TRUE</code>, width and height are ignored. Default to <code>FALSE</code>.
 It's possible to use a vector of CSS unit of length 4 to specify the margins
 (top, right, bottom, left).</p></dd>
+
 </dl></div>
     <div class="section level2">
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
-    <p>A <code>reactiveValues</code> with 3 slots :</p><ul><li><p><strong>code_plot</strong> : code to generate plot.</p></li>
+    
+
+<p>A <code>reactiveValues</code> with 3 slots :</p><ul><li><p><strong>code_plot</strong> : code to generate plot.</p></li>
 <li><p><strong>code_filters</strong> : a list of length two with code to reproduce filters.</p></li>
 <li><p><strong>data</strong> : <code>data.frame</code> used in plot (with filters applied).</p></li>
 </ul></div>
 
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"></span>
-<span class="r-in"><span class="co">### Part of a Shiny app ###</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://shiny.rstudio.com/" class="external-link">shiny</a></span><span class="op">)</span></span>
-<span class="r-in"><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://dreamrs.github.io/esquisse/">esquisse</a></span><span class="op">)</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="va">ui</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/shiny/man/fluidPage.html" class="external-link">fluidPage</a></span><span class="op">(</span></span>
-<span class="r-in">  <span class="va">tags</span><span class="op">$</span><span class="fu">h1</span><span class="op">(</span><span class="st">"Use esquisse as a Shiny module"</span><span class="op">)</span>,</span>
-<span class="r-in">  </span>
-<span class="r-in">  <span class="fu"><a href="https://rdrr.io/pkg/shiny/man/radioButtons.html" class="external-link">radioButtons</a></span><span class="op">(</span></span>
-<span class="r-in">    inputId <span class="op">=</span> <span class="st">"data"</span>, </span>
-<span class="r-in">    label <span class="op">=</span> <span class="st">"Data to use:"</span>, </span>
-<span class="r-in">    choices <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"iris"</span>, <span class="st">"mtcars"</span><span class="op">)</span>,</span>
-<span class="r-in">    inline <span class="op">=</span> <span class="cn">TRUE</span></span>
-<span class="r-in">  <span class="op">)</span>,</span>
-<span class="r-in">  <span class="fu"><a href="https://rdrr.io/pkg/shiny/man/checkboxGroupInput.html" class="external-link">checkboxGroupInput</a></span><span class="op">(</span></span>
-<span class="r-in">    inputId <span class="op">=</span> <span class="st">"aes"</span>, </span>
-<span class="r-in">    label <span class="op">=</span> <span class="st">"Aesthetics to use:"</span>, </span>
-<span class="r-in">    choices <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span></span>
-<span class="r-in">      <span class="st">"fill"</span>, <span class="st">"color"</span>, <span class="st">"size"</span>, <span class="st">"shape"</span>, </span>
-<span class="r-in">      <span class="st">"weight"</span>, <span class="st">"group"</span>, <span class="st">"facet"</span>, <span class="st">"facet_row"</span>, <span class="st">"facet_col"</span></span>
-<span class="r-in">    <span class="op">)</span>,</span>
-<span class="r-in">    selected <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"fill"</span>, <span class="st">"color"</span>, <span class="st">"size"</span>, <span class="st">"facet"</span><span class="op">)</span>,</span>
-<span class="r-in">    inline <span class="op">=</span> <span class="cn">TRUE</span></span>
-<span class="r-in">  <span class="op">)</span>,</span>
-<span class="r-in">  <span class="fu">esquisse_ui</span><span class="op">(</span></span>
-<span class="r-in">    id <span class="op">=</span> <span class="st">"esquisse"</span>, </span>
-<span class="r-in">    header <span class="op">=</span> <span class="cn">FALSE</span>, <span class="co"># dont display gadget title</span></span>
-<span class="r-in">    container <span class="op">=</span> <span class="fu">esquisseContainer</span><span class="op">(</span>height <span class="op">=</span> <span class="st">"700px"</span><span class="op">)</span></span>
-<span class="r-in">  <span class="op">)</span></span>
-<span class="r-in"><span class="op">)</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="va">server</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">input</span>, <span class="va">output</span>, <span class="va">session</span><span class="op">)</span> <span class="op">{</span></span>
-<span class="r-in">  </span>
-<span class="r-in">  <span class="va">data_rv</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/shiny/man/reactiveValues.html" class="external-link">reactiveValues</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">iris</span>, name <span class="op">=</span> <span class="st">"iris"</span><span class="op">)</span></span>
-<span class="r-in">  </span>
-<span class="r-in">  <span class="fu"><a href="https://rdrr.io/pkg/shiny/man/observeEvent.html" class="external-link">observeEvent</a></span><span class="op">(</span><span class="va">input</span><span class="op">$</span><span class="va">data</span>, <span class="op">{</span></span>
-<span class="r-in">    <span class="kw">if</span> <span class="op">(</span><span class="va">input</span><span class="op">$</span><span class="va">data</span> <span class="op">==</span> <span class="st">"iris"</span><span class="op">)</span> <span class="op">{</span></span>
-<span class="r-in">      <span class="va">data_rv</span><span class="op">$</span><span class="va">data</span> <span class="op">&lt;-</span> <span class="va">iris</span></span>
-<span class="r-in">      <span class="va">data_rv</span><span class="op">$</span><span class="va">name</span> <span class="op">&lt;-</span> <span class="st">"iris"</span></span>
-<span class="r-in">    <span class="op">}</span> <span class="kw">else</span> <span class="op">{</span></span>
-<span class="r-in">      <span class="va">data_rv</span><span class="op">$</span><span class="va">data</span> <span class="op">&lt;-</span> <span class="va">mtcars</span></span>
-<span class="r-in">      <span class="va">data_rv</span><span class="op">$</span><span class="va">name</span> <span class="op">&lt;-</span> <span class="st">"mtcars"</span></span>
-<span class="r-in">    <span class="op">}</span></span>
-<span class="r-in">  <span class="op">}</span><span class="op">)</span></span>
-<span class="r-in">  </span>
-<span class="r-in">  <span class="fu">esquisse_server</span><span class="op">(</span></span>
-<span class="r-in">    id <span class="op">=</span> <span class="st">"esquisse"</span>, </span>
-<span class="r-in">    data_rv <span class="op">=</span> <span class="va">data_rv</span>, </span>
-<span class="r-in">    default_aes <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/shiny/man/reactive.html" class="external-link">reactive</a></span><span class="op">(</span><span class="va">input</span><span class="op">$</span><span class="va">aes</span><span class="op">)</span></span>
-<span class="r-in">  <span class="op">)</span></span>
-<span class="r-in">  </span>
-<span class="r-in"><span class="op">}</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="kw">if</span> <span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/interactive.html" class="external-link">interactive</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span>
-<span class="r-in">  <span class="fu"><a href="https://rdrr.io/pkg/shiny/man/shinyApp.html" class="external-link">shinyApp</a></span><span class="op">(</span><span class="va">ui</span>, <span class="va">server</span><span class="op">)</span></span>
-<span class="r-in"></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co">### Whole Shiny app ###</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://shiny.rstudio.com/" class="external-link">shiny</a></span><span class="op">)</span></span>
-<span class="r-in"><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://dreamrs.github.io/esquisse/">esquisse</a></span><span class="op">)</span></span>
-<span class="r-in"></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co"># Load some datasets in app environment</span></span>
-<span class="r-in"><span class="va">my_data</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span></span>
-<span class="r-in">  var1 <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/Normal.html" class="external-link">rnorm</a></span><span class="op">(</span><span class="fl">100</span><span class="op">)</span>,</span>
-<span class="r-in">  var2 <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/sample.html" class="external-link">sample</a></span><span class="op">(</span><span class="va">letters</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">5</span><span class="op">]</span>, <span class="fl">100</span>, <span class="cn">TRUE</span><span class="op">)</span></span>
-<span class="r-in"><span class="op">)</span></span>
-<span class="r-in"></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="va">ui</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/shiny/man/fluidPage.html" class="external-link">fluidPage</a></span><span class="op">(</span></span>
-<span class="r-in">  <span class="fu">esquisse_ui</span><span class="op">(</span></span>
-<span class="r-in">    id <span class="op">=</span> <span class="st">"esquisse"</span>, </span>
-<span class="r-in">    container <span class="op">=</span> <span class="fu">esquisseContainer</span><span class="op">(</span>fixed <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
-<span class="r-in">  <span class="op">)</span></span>
-<span class="r-in"><span class="op">)</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="va">server</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">input</span>, <span class="va">output</span>, <span class="va">session</span><span class="op">)</span> <span class="op">{</span></span>
-<span class="r-in">  </span>
-<span class="r-in">  <span class="fu">esquisse_server</span><span class="op">(</span>id <span class="op">=</span> <span class="st">"esquisse"</span><span class="op">)</span></span>
-<span class="r-in">  </span>
-<span class="r-in"><span class="op">}</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="kw">if</span> <span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/interactive.html" class="external-link">interactive</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span>
-<span class="r-in">  <span class="fu"><a href="https://rdrr.io/pkg/shiny/man/shinyApp.html" class="external-link">shinyApp</a></span><span class="op">(</span><span class="va">ui</span>, <span class="va">server</span><span class="op">)</span></span>
-<span class="r-in"></span>
-<span class="r-in"></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co">## You can also use a vector of margins for the fixed argument,</span></span>
-<span class="r-in"><span class="co"># useful if you have a navbar for example</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://shiny.rstudio.com/" class="external-link">shiny</a></span><span class="op">)</span></span>
-<span class="r-in"><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://dreamrs.github.io/esquisse/">esquisse</a></span><span class="op">)</span></span>
-<span class="r-in"><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/dreamRs/datamods" class="external-link">datamods</a></span><span class="op">)</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="va">ui</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/shiny/man/navbarPage.html" class="external-link">navbarPage</a></span><span class="op">(</span></span>
-<span class="r-in">  title <span class="op">=</span> <span class="st">"My navbar app"</span>,</span>
-<span class="r-in">  <span class="fu"><a href="https://rdrr.io/pkg/shiny/man/tabPanel.html" class="external-link">tabPanel</a></span><span class="op">(</span></span>
-<span class="r-in">    title <span class="op">=</span> <span class="st">"esquisse"</span>,</span>
-<span class="r-in">    <span class="fu">esquisse_ui</span><span class="op">(</span></span>
-<span class="r-in">      id <span class="op">=</span> <span class="st">"esquisse"</span>, </span>
-<span class="r-in">      header <span class="op">=</span> <span class="cn">FALSE</span>,</span>
-<span class="r-in">      container <span class="op">=</span> <span class="fu">esquisseContainer</span><span class="op">(</span></span>
-<span class="r-in">        fixed <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">55</span>, <span class="fl">0</span>, <span class="fl">0</span>, <span class="fl">0</span><span class="op">)</span></span>
-<span class="r-in">      <span class="op">)</span></span>
-<span class="r-in">    <span class="op">)</span></span>
-<span class="r-in">  <span class="op">)</span></span>
-<span class="r-in"><span class="op">)</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="va">server</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">input</span>, <span class="va">output</span>, <span class="va">session</span><span class="op">)</span> <span class="op">{</span></span>
-<span class="r-in">  </span>
-<span class="r-in">  <span class="co"># lauch import data modal</span></span>
-<span class="r-in">  <span class="fu"><a href="https://rdrr.io/pkg/datamods/man/import-modal.html" class="external-link">import_modal</a></span><span class="op">(</span></span>
-<span class="r-in">    id <span class="op">=</span> <span class="st">"import-data"</span>,</span>
-<span class="r-in">    from <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"env"</span>, <span class="st">"file"</span>, <span class="st">"copypaste"</span><span class="op">)</span>,</span>
-<span class="r-in">    title <span class="op">=</span> <span class="st">"Import data"</span></span>
-<span class="r-in">  <span class="op">)</span></span>
-<span class="r-in">  <span class="va">data_imported_r</span> <span class="op">&lt;-</span> <span class="fu">datamods</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/datamods/man/import-modal.html" class="external-link">import_server</a></span><span class="op">(</span><span class="st">"import-data"</span><span class="op">)</span></span>
-<span class="r-in"></span>
-<span class="r-in">  <span class="va">data_rv</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/shiny/man/reactiveValues.html" class="external-link">reactiveValues</a></span><span class="op">(</span>data <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span>
-<span class="r-in">  <span class="fu"><a href="https://rdrr.io/pkg/shiny/man/observeEvent.html" class="external-link">observeEvent</a></span><span class="op">(</span><span class="va">data_imported_r</span><span class="op">$</span><span class="fu">data</span><span class="op">(</span><span class="op">)</span>, <span class="op">{</span></span>
-<span class="r-in">    <span class="va">data_rv</span><span class="op">$</span><span class="va">data</span> <span class="op">&lt;-</span> <span class="va">data_imported_r</span><span class="op">$</span><span class="fu">data</span><span class="op">(</span><span class="op">)</span></span>
-<span class="r-in">    <span class="va">data_rv</span><span class="op">$</span><span class="va">name</span> <span class="op">&lt;-</span> <span class="va">data_imported_r</span><span class="op">$</span><span class="fu">name</span><span class="op">(</span><span class="op">)</span></span>
-<span class="r-in">  <span class="op">}</span><span class="op">)</span></span>
-<span class="r-in">  </span>
-<span class="r-in">  <span class="fu">esquisse_server</span><span class="op">(</span>id <span class="op">=</span> <span class="st">"esquisse"</span>, data_rv <span class="op">=</span> <span class="va">data_rv</span><span class="op">)</span></span>
-<span class="r-in">  </span>
-<span class="r-in"><span class="op">}</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="kw">if</span> <span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/interactive.html" class="external-link">interactive</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span>
-<span class="r-in">  <span class="fu"><a href="https://rdrr.io/pkg/shiny/man/shinyApp.html" class="external-link">shinyApp</a></span><span class="op">(</span><span class="va">ui</span>, <span class="va">server</span><span class="op">)</span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co">### Part of a Shiny app ###</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://shiny.rstudio.com/" class="external-link">shiny</a></span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://dreamrs.github.io/esquisse/">esquisse</a></span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="va">ui</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/shiny/man/fluidPage.html" class="external-link">fluidPage</a></span><span class="op">(</span></span></span>
+<span class="r-in"><span>  <span class="va">tags</span><span class="op">$</span><span class="fu">h1</span><span class="op">(</span><span class="st">"Use esquisse as a Shiny module"</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>  </span></span>
+<span class="r-in"><span>  <span class="fu"><a href="https://rdrr.io/pkg/shiny/man/radioButtons.html" class="external-link">radioButtons</a></span><span class="op">(</span></span></span>
+<span class="r-in"><span>    inputId <span class="op">=</span> <span class="st">"data"</span>, </span></span>
+<span class="r-in"><span>    label <span class="op">=</span> <span class="st">"Data to use:"</span>, </span></span>
+<span class="r-in"><span>    choices <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"iris"</span>, <span class="st">"mtcars"</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>    inline <span class="op">=</span> <span class="cn">TRUE</span></span></span>
+<span class="r-in"><span>  <span class="op">)</span>,</span></span>
+<span class="r-in"><span>  <span class="fu"><a href="https://rdrr.io/pkg/shiny/man/checkboxGroupInput.html" class="external-link">checkboxGroupInput</a></span><span class="op">(</span></span></span>
+<span class="r-in"><span>    inputId <span class="op">=</span> <span class="st">"aes"</span>, </span></span>
+<span class="r-in"><span>    label <span class="op">=</span> <span class="st">"Aesthetics to use:"</span>, </span></span>
+<span class="r-in"><span>    choices <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span></span></span>
+<span class="r-in"><span>      <span class="st">"fill"</span>, <span class="st">"color"</span>, <span class="st">"size"</span>, <span class="st">"shape"</span>, </span></span>
+<span class="r-in"><span>      <span class="st">"weight"</span>, <span class="st">"group"</span>, <span class="st">"facet"</span>, <span class="st">"facet_row"</span>, <span class="st">"facet_col"</span></span></span>
+<span class="r-in"><span>    <span class="op">)</span>,</span></span>
+<span class="r-in"><span>    selected <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"fill"</span>, <span class="st">"color"</span>, <span class="st">"size"</span>, <span class="st">"facet"</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>    inline <span class="op">=</span> <span class="cn">TRUE</span></span></span>
+<span class="r-in"><span>  <span class="op">)</span>,</span></span>
+<span class="r-in"><span>  <span class="fu">esquisse_ui</span><span class="op">(</span></span></span>
+<span class="r-in"><span>    id <span class="op">=</span> <span class="st">"esquisse"</span>, </span></span>
+<span class="r-in"><span>    header <span class="op">=</span> <span class="cn">FALSE</span>, <span class="co"># dont display gadget title</span></span></span>
+<span class="r-in"><span>    container <span class="op">=</span> <span class="fu">esquisseContainer</span><span class="op">(</span>height <span class="op">=</span> <span class="st">"700px"</span><span class="op">)</span></span></span>
+<span class="r-in"><span>  <span class="op">)</span></span></span>
+<span class="r-in"><span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="va">server</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">input</span>, <span class="va">output</span>, <span class="va">session</span><span class="op">)</span> <span class="op">{</span></span></span>
+<span class="r-in"><span>  </span></span>
+<span class="r-in"><span>  <span class="va">data_rv</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/shiny/man/reactiveValues.html" class="external-link">reactiveValues</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">iris</span>, name <span class="op">=</span> <span class="st">"iris"</span><span class="op">)</span></span></span>
+<span class="r-in"><span>  </span></span>
+<span class="r-in"><span>  <span class="fu"><a href="https://rdrr.io/pkg/shiny/man/observeEvent.html" class="external-link">observeEvent</a></span><span class="op">(</span><span class="va">input</span><span class="op">$</span><span class="va">data</span>, <span class="op">{</span></span></span>
+<span class="r-in"><span>    <span class="kw">if</span> <span class="op">(</span><span class="va">input</span><span class="op">$</span><span class="va">data</span> <span class="op">==</span> <span class="st">"iris"</span><span class="op">)</span> <span class="op">{</span></span></span>
+<span class="r-in"><span>      <span class="va">data_rv</span><span class="op">$</span><span class="va">data</span> <span class="op">&lt;-</span> <span class="va">iris</span></span></span>
+<span class="r-in"><span>      <span class="va">data_rv</span><span class="op">$</span><span class="va">name</span> <span class="op">&lt;-</span> <span class="st">"iris"</span></span></span>
+<span class="r-in"><span>    <span class="op">}</span> <span class="kw">else</span> <span class="op">{</span></span></span>
+<span class="r-in"><span>      <span class="va">data_rv</span><span class="op">$</span><span class="va">data</span> <span class="op">&lt;-</span> <span class="va">mtcars</span></span></span>
+<span class="r-in"><span>      <span class="va">data_rv</span><span class="op">$</span><span class="va">name</span> <span class="op">&lt;-</span> <span class="st">"mtcars"</span></span></span>
+<span class="r-in"><span>    <span class="op">}</span></span></span>
+<span class="r-in"><span>  <span class="op">}</span><span class="op">)</span></span></span>
+<span class="r-in"><span>  </span></span>
+<span class="r-in"><span>  <span class="fu">esquisse_server</span><span class="op">(</span></span></span>
+<span class="r-in"><span>    id <span class="op">=</span> <span class="st">"esquisse"</span>, </span></span>
+<span class="r-in"><span>    data_rv <span class="op">=</span> <span class="va">data_rv</span>, </span></span>
+<span class="r-in"><span>    default_aes <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/shiny/man/reactive.html" class="external-link">reactive</a></span><span class="op">(</span><span class="va">input</span><span class="op">$</span><span class="va">aes</span><span class="op">)</span></span></span>
+<span class="r-in"><span>  <span class="op">)</span></span></span>
+<span class="r-in"><span>  </span></span>
+<span class="r-in"><span><span class="op">}</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="kw">if</span> <span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/interactive.html" class="external-link">interactive</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-in"><span>  <span class="fu"><a href="https://rdrr.io/pkg/shiny/man/shinyApp.html" class="external-link">shinyApp</a></span><span class="op">(</span><span class="va">ui</span>, <span class="va">server</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co">### Whole Shiny app ###</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://shiny.rstudio.com/" class="external-link">shiny</a></span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://dreamrs.github.io/esquisse/">esquisse</a></span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># Load some datasets in app environment</span></span></span>
+<span class="r-in"><span><span class="va">my_data</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span></span></span>
+<span class="r-in"><span>  var1 <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/Normal.html" class="external-link">rnorm</a></span><span class="op">(</span><span class="fl">100</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>  var2 <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/sample.html" class="external-link">sample</a></span><span class="op">(</span><span class="va">letters</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">5</span><span class="op">]</span>, <span class="fl">100</span>, <span class="cn">TRUE</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="va">ui</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/shiny/man/fluidPage.html" class="external-link">fluidPage</a></span><span class="op">(</span></span></span>
+<span class="r-in"><span>  <span class="fu">esquisse_ui</span><span class="op">(</span></span></span>
+<span class="r-in"><span>    id <span class="op">=</span> <span class="st">"esquisse"</span>, </span></span>
+<span class="r-in"><span>    container <span class="op">=</span> <span class="fu">esquisseContainer</span><span class="op">(</span>fixed <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></span>
+<span class="r-in"><span>  <span class="op">)</span></span></span>
+<span class="r-in"><span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="va">server</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">input</span>, <span class="va">output</span>, <span class="va">session</span><span class="op">)</span> <span class="op">{</span></span></span>
+<span class="r-in"><span>  </span></span>
+<span class="r-in"><span>  <span class="fu">esquisse_server</span><span class="op">(</span>id <span class="op">=</span> <span class="st">"esquisse"</span><span class="op">)</span></span></span>
+<span class="r-in"><span>  </span></span>
+<span class="r-in"><span><span class="op">}</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="kw">if</span> <span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/interactive.html" class="external-link">interactive</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-in"><span>  <span class="fu"><a href="https://rdrr.io/pkg/shiny/man/shinyApp.html" class="external-link">shinyApp</a></span><span class="op">(</span><span class="va">ui</span>, <span class="va">server</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co">## You can also use a vector of margins for the fixed argument,</span></span></span>
+<span class="r-in"><span><span class="co"># useful if you have a navbar for example</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://shiny.rstudio.com/" class="external-link">shiny</a></span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://dreamrs.github.io/esquisse/">esquisse</a></span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/dreamRs/datamods" class="external-link">datamods</a></span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="va">ui</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/shiny/man/navbarPage.html" class="external-link">navbarPage</a></span><span class="op">(</span></span></span>
+<span class="r-in"><span>  title <span class="op">=</span> <span class="st">"My navbar app"</span>,</span></span>
+<span class="r-in"><span>  <span class="fu"><a href="https://rdrr.io/pkg/shiny/man/tabPanel.html" class="external-link">tabPanel</a></span><span class="op">(</span></span></span>
+<span class="r-in"><span>    title <span class="op">=</span> <span class="st">"esquisse"</span>,</span></span>
+<span class="r-in"><span>    <span class="fu">esquisse_ui</span><span class="op">(</span></span></span>
+<span class="r-in"><span>      id <span class="op">=</span> <span class="st">"esquisse"</span>, </span></span>
+<span class="r-in"><span>      header <span class="op">=</span> <span class="cn">FALSE</span>,</span></span>
+<span class="r-in"><span>      container <span class="op">=</span> <span class="fu">esquisseContainer</span><span class="op">(</span></span></span>
+<span class="r-in"><span>        fixed <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">55</span>, <span class="fl">0</span>, <span class="fl">0</span>, <span class="fl">0</span><span class="op">)</span></span></span>
+<span class="r-in"><span>      <span class="op">)</span></span></span>
+<span class="r-in"><span>    <span class="op">)</span></span></span>
+<span class="r-in"><span>  <span class="op">)</span></span></span>
+<span class="r-in"><span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="va">server</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">input</span>, <span class="va">output</span>, <span class="va">session</span><span class="op">)</span> <span class="op">{</span></span></span>
+<span class="r-in"><span>  </span></span>
+<span class="r-in"><span>  <span class="co"># lauch import data modal</span></span></span>
+<span class="r-in"><span>  <span class="fu"><a href="https://rdrr.io/pkg/datamods/man/import-modal.html" class="external-link">import_modal</a></span><span class="op">(</span></span></span>
+<span class="r-in"><span>    id <span class="op">=</span> <span class="st">"import-data"</span>,</span></span>
+<span class="r-in"><span>    from <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"env"</span>, <span class="st">"file"</span>, <span class="st">"copypaste"</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>    title <span class="op">=</span> <span class="st">"Import data"</span></span></span>
+<span class="r-in"><span>  <span class="op">)</span></span></span>
+<span class="r-in"><span>  <span class="va">data_imported_r</span> <span class="op">&lt;-</span> <span class="fu">datamods</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/datamods/man/import-modal.html" class="external-link">import_server</a></span><span class="op">(</span><span class="st">"import-data"</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span>  <span class="va">data_rv</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/shiny/man/reactiveValues.html" class="external-link">reactiveValues</a></span><span class="op">(</span>data <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-in"><span>  <span class="fu"><a href="https://rdrr.io/pkg/shiny/man/observeEvent.html" class="external-link">observeEvent</a></span><span class="op">(</span><span class="va">data_imported_r</span><span class="op">$</span><span class="fu">data</span><span class="op">(</span><span class="op">)</span>, <span class="op">{</span></span></span>
+<span class="r-in"><span>    <span class="va">data_rv</span><span class="op">$</span><span class="va">data</span> <span class="op">&lt;-</span> <span class="va">data_imported_r</span><span class="op">$</span><span class="fu">data</span><span class="op">(</span><span class="op">)</span></span></span>
+<span class="r-in"><span>    <span class="va">data_rv</span><span class="op">$</span><span class="va">name</span> <span class="op">&lt;-</span> <span class="va">data_imported_r</span><span class="op">$</span><span class="fu">name</span><span class="op">(</span><span class="op">)</span></span></span>
+<span class="r-in"><span>  <span class="op">}</span><span class="op">)</span></span></span>
+<span class="r-in"><span>  </span></span>
+<span class="r-in"><span>  <span class="fu">esquisse_server</span><span class="op">(</span>id <span class="op">=</span> <span class="st">"esquisse"</span>, data_rv <span class="op">=</span> <span class="va">data_rv</span><span class="op">)</span></span></span>
+<span class="r-in"><span>  </span></span>
+<span class="r-in"><span><span class="op">}</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="kw">if</span> <span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/interactive.html" class="external-link">interactive</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-in"><span>  <span class="fu"><a href="https://rdrr.io/pkg/shiny/man/shinyApp.html" class="external-link">shinyApp</a></span><span class="op">(</span><span class="va">ui</span>, <span class="va">server</span><span class="op">)</span></span></span>
 </code></pre></div>
     </div>
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>
@@ -262,7 +283,7 @@ It's possible to use a vector of CSS unit of length 4 to specify the margins
 </div>
 
 <div class="pkgdown-footer-right">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.3.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.5.</p>
 </div>
 
     </footer></div>

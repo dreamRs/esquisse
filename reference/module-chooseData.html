@@ -58,61 +58,93 @@
 
     <div class="section level2">
     <h2 id="ref-usage">Usage<a class="anchor" aria-label="anchor" href="#ref-usage"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">chooseDataUI</span><span class="op">(</span><span class="va">id</span>, label <span class="op">=</span> <span class="st">"Data"</span>, icon <span class="op">=</span> <span class="st">"database"</span>, width <span class="op">=</span> <span class="st">"100%"</span>, <span class="va">...</span><span class="op">)</span>
-
-<span class="fu">chooseDataServer</span><span class="op">(</span>
-  <span class="va">input</span>,
-  <span class="va">output</span>,
-  <span class="va">session</span>,
-  dataModule <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"GlobalEnv"</span>, <span class="st">"ImportFile"</span><span class="op">)</span>,
-  data <span class="op">=</span> <span class="cn">NULL</span>,
-  name <span class="op">=</span> <span class="cn">NULL</span>,
-  selectVars <span class="op">=</span> <span class="cn">TRUE</span>,
-  selectedTypes <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"continuous"</span>, <span class="st">"discrete"</span>, <span class="st">"time"</span><span class="op">)</span>,
-  coerceVars <span class="op">=</span> <span class="cn">FALSE</span>,
-  launchOnStart <span class="op">=</span> <span class="cn">TRUE</span>,
-  size <span class="op">=</span> <span class="st">"m"</span>
-<span class="op">)</span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">chooseDataUI</span><span class="op">(</span><span class="va">id</span>, label <span class="op">=</span> <span class="st">"Data"</span>, icon <span class="op">=</span> <span class="st">"database"</span>, width <span class="op">=</span> <span class="st">"100%"</span>, <span class="va">...</span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu">chooseDataServer</span><span class="op">(</span></span>
+<span>  <span class="va">input</span>,</span>
+<span>  <span class="va">output</span>,</span>
+<span>  <span class="va">session</span>,</span>
+<span>  dataModule <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"GlobalEnv"</span>, <span class="st">"ImportFile"</span><span class="op">)</span>,</span>
+<span>  data <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  name <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  selectVars <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>  selectedTypes <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"continuous"</span>, <span class="st">"discrete"</span>, <span class="st">"time"</span><span class="op">)</span>,</span>
+<span>  coerceVars <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>  launchOnStart <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>  size <span class="op">=</span> <span class="st">"m"</span></span>
+<span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div class="section level2">
     <h2 id="arguments">Arguments<a class="anchor" aria-label="anchor" href="#arguments"></a></h2>
     <dl><dt>id</dt>
 <dd><p>Module's id.</p></dd>
+
+
 <dt>label</dt>
 <dd><p>Label for button, passed to <code><a href="https://rdrr.io/pkg/shiny/man/actionButton.html" class="external-link">actionButton</a></code>.</p></dd>
+
+
 <dt>icon</dt>
 <dd><p>Icon to appears on the button, passed to <code><a href="https://rdrr.io/pkg/shiny/man/actionButton.html" class="external-link">actionButton</a></code>.</p></dd>
+
+
 <dt>width</dt>
 <dd><p>Width of button, passed to <code><a href="https://rdrr.io/pkg/shiny/man/actionButton.html" class="external-link">actionButton</a></code>.</p></dd>
+
+
 <dt>...</dt>
 <dd><p>Other arguments passed to <code><a href="https://rdrr.io/pkg/shiny/man/actionButton.html" class="external-link">actionButton</a></code></p></dd>
+
+
 <dt>input, output, session</dt>
 <dd><p>standards <code>shiny</code> server arguments.</p></dd>
+
+
 <dt>dataModule</dt>
 <dd><p>Data module to use, choose between <code>"GlobalEnv"</code>
 (select ad <code>data.frame</code> from Global environment)
 or <code>"ImportFile"</code> (import an external file supported by <code><a href="https://rdrr.io/pkg/rio/man/import.html" class="external-link">import</a></code>).</p></dd>
+
+
 <dt>data</dt>
 <dd><p>A <code>data.frame</code> to use by default.</p></dd>
+
+
 <dt>name</dt>
 <dd><p>Character, object's name to use for <code>data</code>.</p></dd>
+
+
 <dt>selectVars</dt>
 <dd><p>Display module to select variables, <code>TRUE</code> by default.</p></dd>
+
+
 <dt>selectedTypes</dt>
 <dd><p>Type of variables selected by default in select variables module.
 Possible types are <code>"discrete"</code>, <code>"time"</code>, <code>"continuous"</code> and <code>"id"</code>,
 by default <code>"id"</code> is discarded.</p></dd>
+
+
 <dt>coerceVars</dt>
 <dd><p>Display module to coerce variables between different class, <code>TRUE</code> by default.</p></dd>
+
+
 <dt>launchOnStart</dt>
 <dd><p>Opens modal window when the application starts.</p></dd>
+
+
 <dt>size</dt>
 <dd><p>Size for the modal window.</p></dd>
+
 </dl></div>
     <div class="section level2">
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
-    <p>a <code><a href="https://rdrr.io/pkg/shiny/man/reactiveValues.html" class="external-link">reactiveValues</a></code> containing the data selected under slot <code>data</code>and the name of the selected <code>data.frame</code> under slot <code>name</code>.</p>
+    
+
+<p>a <code><a href="https://rdrr.io/pkg/shiny/man/reactiveValues.html" class="external-link">reactiveValues</a></code> containing the data selected under slot <code>data</code></p>
+
+
+<p>and the name of the selected <code>data.frame</code> under slot <code>name</code>.</p>
     </div>
 
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>
@@ -124,7 +156,7 @@ by default <code>"id"</code> is discarded.</p></dd>
 </div>
 
 <div class="pkgdown-footer-right">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.3.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.5.</p>
 </div>
 
     </footer></div>

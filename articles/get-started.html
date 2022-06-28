@@ -78,7 +78,7 @@
 
 
 <script src="get-started_files/accessible-code-block-0.0.1/empty-anchor.js"></script><div class="row">
-  <main id="main"><div class="page-header">
+  <main id="main" class="col-md-9"><div class="page-header">
       <img src="../logo.png" class="logo" alt=""><h1>Get started with esquisse</h1>
             
       
@@ -89,7 +89,7 @@
     
     
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://dreamrs.github.io/esquisse/">esquisse</a></span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://dreamrs.github.io/esquisse/">esquisse</a></span><span class="op">)</span></span></code></pre></div>
 <style>
 img {
   max-width: 700px;
@@ -102,10 +102,10 @@ img {
 <p><img src="figures/launch-addin.png"></p>
 <p>Or in the R console :</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="../reference/esquisser.html">esquisser</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/esquisser.html">esquisser</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
 <p>To use a <code>data.frame</code> by default, if using the <em>Addins</em> menu highlight with the cursor a <code>data.frame</code> in source editor before launching addin. Otherwise, pass the <code>data.frame</code> as first argument to the function :</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="../reference/esquisser.html">esquisser</a></span><span class="op">(</span><span class="va">mtcars</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/esquisser.html">esquisser</a></span><span class="op">(</span><span class="va">mtcars</span><span class="op">)</span></span></code></pre></div>
 </div>
 <div class="section level2">
 <h2 id="import-data-into-esquisse">Import data into {esquisse}<a class="anchor" aria-label="anchor" href="#import-data-into-esquisse"></a>
@@ -175,19 +175,19 @@ img {
 </h2>
 <p>By default, esquisse is launched into a dialog window (if in RStudio), you can choose to use your browser if you prefer, or the Viewer pane.</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="../reference/esquisser.html">esquisser</a></span><span class="op">(</span>viewer <span class="op">=</span> <span class="st">"browser"</span><span class="op">)</span>
-<span class="fu"><a href="../reference/esquisser.html">esquisser</a></span><span class="op">(</span>viewer <span class="op">=</span> <span class="st">"pane"</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/esquisser.html">esquisser</a></span><span class="op">(</span>viewer <span class="op">=</span> <span class="st">"browser"</span><span class="op">)</span></span>
+<span><span class="fu"><a href="../reference/esquisser.html">esquisser</a></span><span class="op">(</span>viewer <span class="op">=</span> <span class="st">"pane"</span><span class="op">)</span></span></code></pre></div>
 <p>You can set display mode with an option (in .Rprofile for example) :</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/options.html" class="external-link">options</a></span><span class="op">(</span><span class="st">"esquisse.viewer"</span> <span class="op">=</span> <span class="st">"browser"</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/options.html" class="external-link">options</a></span><span class="op">(</span><span class="st">"esquisse.viewer"</span> <span class="op">=</span> <span class="st">"browser"</span><span class="op">)</span></span></code></pre></div>
 <div class="section level3">
 <h3 id="internationalization">Internationalization<a class="anchor" aria-label="anchor" href="#internationalization"></a>
 </h3>
 <p>Currently you can use {esquisse} in the following language: <img src="figures/i18n/gb.svg" height="16"> english (default), <img src="figures/i18n/fr.svg" height="16"> french (<code>"fr"</code>), <img src="figures/i18n/mk.svg" height="16"> macedonian (<code>"mk"</code>), <img src="figures/i18n/al.svg" height="16"> albanian (<code>"sq"</code>). Activate with:</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://dreamrs.github.io/esquisse/">esquisse</a></span><span class="op">)</span>
-<span class="fu"><a href="../reference/esquisse-exports.html">set_i18n</a></span><span class="op">(</span><span class="st">"fr"</span><span class="op">)</span>
-<span class="fu"><a href="../reference/esquisser.html">esquisser</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://dreamrs.github.io/esquisse/">esquisse</a></span><span class="op">)</span></span>
+<span><span class="fu"><a href="../reference/esquisse-exports.html">set_i18n</a></span><span class="op">(</span><span class="st">"fr"</span><span class="op">)</span></span>
+<span><span class="fu"><a href="../reference/esquisser.html">esquisser</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
 <p>If you want another language to be supported, you can submit a Pull Request to add a CSV file like the one used for french (file is located in <code>inst/i18n</code> folder in the package, you can see it <a href="https://github.com/dreamRs/esquisse/blob/master/inst/i18n/fr.csv" class="external-link">here on GitHub</a>).</p>
 <p>See <a href="https://dreamrs.github.io/datamods/articles/i18n.html" class="external-link">{datamods} vignette</a> for more on this topic.</p>
 </div>
@@ -205,7 +205,7 @@ img {
 
 <div class="pkgdown-footer-right">
   <p></p>
-<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.3.</p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.5.</p>
 </div>
 
     </footer>

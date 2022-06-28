@@ -78,7 +78,7 @@
 
 
 <script src="shiny-usage_files/accessible-code-block-0.0.1/empty-anchor.js"></script><div class="row">
-  <main id="main"><div class="page-header">
+  <main id="main" class="col-md-9"><div class="page-header">
       <img src="../logo.png" class="logo" alt=""><h1>Shiny usage</h1>
             
       
@@ -89,8 +89,8 @@
     
     
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://shiny.rstudio.com/" class="external-link">shiny</a></span><span class="op">)</span>
-<span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://dreamrs.github.io/esquisse/">esquisse</a></span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://shiny.rstudio.com/" class="external-link">shiny</a></span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://dreamrs.github.io/esquisse/">esquisse</a></span><span class="op">)</span></span></code></pre></div>
 <style>
 img {
   max-width: 700px;
@@ -101,75 +101,75 @@ img {
 </h2>
 <p>{esquisse} is built with Shiny modules (see this <a href="https://shiny.rstudio.com/articles/modules.html" class="external-link">article</a> for reference), so you can use {esquisse} directly into a Shiny application :</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://dreamrs.github.io/esquisse/">esquisse</a></span><span class="op">)</span>
-<span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://shiny.rstudio.com/" class="external-link">shiny</a></span><span class="op">)</span>
-<span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://ggplot2.tidyverse.org" class="external-link">ggplot2</a></span><span class="op">)</span>
-
-<span class="va">ui</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/shiny/man/fluidPage.html" class="external-link">fluidPage</a></span><span class="op">(</span>
-  
-  <span class="fu"><a href="https://rdrr.io/pkg/shiny/man/titlePanel.html" class="external-link">titlePanel</a></span><span class="op">(</span><span class="st">"Use esquisse as a Shiny module"</span><span class="op">)</span>,
-  
-  <span class="fu"><a href="https://rdrr.io/pkg/shiny/man/sidebarLayout.html" class="external-link">sidebarLayout</a></span><span class="op">(</span>
-    <span class="fu"><a href="https://rdrr.io/pkg/shiny/man/sidebarLayout.html" class="external-link">sidebarPanel</a></span><span class="op">(</span>
-      <span class="fu"><a href="https://rdrr.io/pkg/shiny/man/radioButtons.html" class="external-link">radioButtons</a></span><span class="op">(</span>
-        inputId <span class="op">=</span> <span class="st">"data"</span>, 
-        label <span class="op">=</span> <span class="st">"Select data to use:"</span>, 
-        choices <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"mpg"</span>, <span class="st">"diamonds"</span>, <span class="st">"economics"</span><span class="op">)</span>
-      <span class="op">)</span>
-    <span class="op">)</span>,
-    <span class="fu"><a href="https://rdrr.io/pkg/shiny/man/sidebarLayout.html" class="external-link">mainPanel</a></span><span class="op">(</span>
-      <span class="fu"><a href="https://rdrr.io/pkg/shiny/man/tabsetPanel.html" class="external-link">tabsetPanel</a></span><span class="op">(</span>
-        <span class="fu"><a href="https://rdrr.io/pkg/shiny/man/tabPanel.html" class="external-link">tabPanel</a></span><span class="op">(</span>
-          title <span class="op">=</span> <span class="st">"esquisse"</span>,
-          <span class="fu"><a href="../reference/esquisse-module.html">esquisse_ui</a></span><span class="op">(</span>
-            id <span class="op">=</span> <span class="st">"esquisse"</span>, 
-            header <span class="op">=</span> <span class="cn">FALSE</span> <span class="co"># dont display gadget title</span>
-          <span class="op">)</span>
-        <span class="op">)</span>,
-        <span class="fu"><a href="https://rdrr.io/pkg/shiny/man/tabPanel.html" class="external-link">tabPanel</a></span><span class="op">(</span>
-          title <span class="op">=</span> <span class="st">"output"</span>,
-          <span class="va">tags</span><span class="op">$</span><span class="fu">b</span><span class="op">(</span><span class="st">"Code:"</span><span class="op">)</span>,
-          <span class="fu"><a href="https://rdrr.io/pkg/shiny/man/textOutput.html" class="external-link">verbatimTextOutput</a></span><span class="op">(</span><span class="st">"code"</span><span class="op">)</span>,
-          <span class="va">tags</span><span class="op">$</span><span class="fu">b</span><span class="op">(</span><span class="st">"Filters:"</span><span class="op">)</span>,
-          <span class="fu"><a href="https://rdrr.io/pkg/shiny/man/textOutput.html" class="external-link">verbatimTextOutput</a></span><span class="op">(</span><span class="st">"filters"</span><span class="op">)</span>,
-          <span class="va">tags</span><span class="op">$</span><span class="fu">b</span><span class="op">(</span><span class="st">"Data:"</span><span class="op">)</span>,
-          <span class="fu"><a href="https://rdrr.io/pkg/shiny/man/textOutput.html" class="external-link">verbatimTextOutput</a></span><span class="op">(</span><span class="st">"data"</span><span class="op">)</span>
-        <span class="op">)</span>
-      <span class="op">)</span>
-    <span class="op">)</span>
-  <span class="op">)</span>
-<span class="op">)</span>
-
-
-<span class="va">server</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">input</span>, <span class="va">output</span>, <span class="va">session</span><span class="op">)</span> <span class="op">{</span>
-  
-  <span class="va">data_r</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/shiny/man/reactiveValues.html" class="external-link">reactiveValues</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">iris</span>, name <span class="op">=</span> <span class="st">"iris"</span><span class="op">)</span>
-  
-  <span class="fu"><a href="https://rdrr.io/pkg/shiny/man/observe.html" class="external-link">observe</a></span><span class="op">(</span><span class="op">{</span>
-    <span class="va">data_r</span><span class="op">$</span><span class="va">data</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/get.html" class="external-link">get</a></span><span class="op">(</span><span class="va">input</span><span class="op">$</span><span class="va">data</span><span class="op">)</span>
-    <span class="va">data_r</span><span class="op">$</span><span class="va">name</span> <span class="op">&lt;-</span> <span class="va">input</span><span class="op">$</span><span class="va">data</span>
-  <span class="op">}</span><span class="op">)</span>
-  
-  <span class="va">results</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/esquisse-module.html">esquisse_server</a></span><span class="op">(</span>
-    id <span class="op">=</span> <span class="st">"esquisse"</span>,
-    data_rv <span class="op">=</span> <span class="va">data_r</span>
-  <span class="op">)</span>
-  
-  <span class="va">output</span><span class="op">$</span><span class="va">code</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/shiny/man/renderPrint.html" class="external-link">renderPrint</a></span><span class="op">(</span><span class="op">{</span>
-    <span class="va">results</span><span class="op">$</span><span class="va">code_plot</span>
-  <span class="op">}</span><span class="op">)</span>
-  
-  <span class="va">output</span><span class="op">$</span><span class="va">filters</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/shiny/man/renderPrint.html" class="external-link">renderPrint</a></span><span class="op">(</span><span class="op">{</span>
-    <span class="va">results</span><span class="op">$</span><span class="va">code_filters</span>
-  <span class="op">}</span><span class="op">)</span>
-  
-  <span class="va">output</span><span class="op">$</span><span class="va">data</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/shiny/man/renderPrint.html" class="external-link">renderPrint</a></span><span class="op">(</span><span class="op">{</span>
-    <span class="fu"><a href="https://rdrr.io/r/utils/str.html" class="external-link">str</a></span><span class="op">(</span><span class="va">results</span><span class="op">$</span><span class="va">data</span><span class="op">)</span>
-  <span class="op">}</span><span class="op">)</span>
-  
-<span class="op">}</span>
-
-<span class="fu"><a href="https://rdrr.io/pkg/shiny/man/shinyApp.html" class="external-link">shinyApp</a></span><span class="op">(</span><span class="va">ui</span>, <span class="va">server</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://dreamrs.github.io/esquisse/">esquisse</a></span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://shiny.rstudio.com/" class="external-link">shiny</a></span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://ggplot2.tidyverse.org" class="external-link">ggplot2</a></span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">ui</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/shiny/man/fluidPage.html" class="external-link">fluidPage</a></span><span class="op">(</span></span>
+<span>  </span>
+<span>  <span class="fu"><a href="https://rdrr.io/pkg/shiny/man/titlePanel.html" class="external-link">titlePanel</a></span><span class="op">(</span><span class="st">"Use esquisse as a Shiny module"</span><span class="op">)</span>,</span>
+<span>  </span>
+<span>  <span class="fu"><a href="https://rdrr.io/pkg/shiny/man/sidebarLayout.html" class="external-link">sidebarLayout</a></span><span class="op">(</span></span>
+<span>    <span class="fu"><a href="https://rdrr.io/pkg/shiny/man/sidebarLayout.html" class="external-link">sidebarPanel</a></span><span class="op">(</span></span>
+<span>      <span class="fu"><a href="https://rdrr.io/pkg/shiny/man/radioButtons.html" class="external-link">radioButtons</a></span><span class="op">(</span></span>
+<span>        inputId <span class="op">=</span> <span class="st">"data"</span>, </span>
+<span>        label <span class="op">=</span> <span class="st">"Select data to use:"</span>, </span>
+<span>        choices <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"mpg"</span>, <span class="st">"diamonds"</span>, <span class="st">"economics"</span><span class="op">)</span></span>
+<span>      <span class="op">)</span></span>
+<span>    <span class="op">)</span>,</span>
+<span>    <span class="fu"><a href="https://rdrr.io/pkg/shiny/man/sidebarLayout.html" class="external-link">mainPanel</a></span><span class="op">(</span></span>
+<span>      <span class="fu"><a href="https://rdrr.io/pkg/shiny/man/tabsetPanel.html" class="external-link">tabsetPanel</a></span><span class="op">(</span></span>
+<span>        <span class="fu"><a href="https://rdrr.io/pkg/shiny/man/tabPanel.html" class="external-link">tabPanel</a></span><span class="op">(</span></span>
+<span>          title <span class="op">=</span> <span class="st">"esquisse"</span>,</span>
+<span>          <span class="fu"><a href="../reference/esquisse-module.html">esquisse_ui</a></span><span class="op">(</span></span>
+<span>            id <span class="op">=</span> <span class="st">"esquisse"</span>, </span>
+<span>            header <span class="op">=</span> <span class="cn">FALSE</span> <span class="co"># dont display gadget title</span></span>
+<span>          <span class="op">)</span></span>
+<span>        <span class="op">)</span>,</span>
+<span>        <span class="fu"><a href="https://rdrr.io/pkg/shiny/man/tabPanel.html" class="external-link">tabPanel</a></span><span class="op">(</span></span>
+<span>          title <span class="op">=</span> <span class="st">"output"</span>,</span>
+<span>          <span class="va">tags</span><span class="op">$</span><span class="fu">b</span><span class="op">(</span><span class="st">"Code:"</span><span class="op">)</span>,</span>
+<span>          <span class="fu"><a href="https://rdrr.io/pkg/shiny/man/textOutput.html" class="external-link">verbatimTextOutput</a></span><span class="op">(</span><span class="st">"code"</span><span class="op">)</span>,</span>
+<span>          <span class="va">tags</span><span class="op">$</span><span class="fu">b</span><span class="op">(</span><span class="st">"Filters:"</span><span class="op">)</span>,</span>
+<span>          <span class="fu"><a href="https://rdrr.io/pkg/shiny/man/textOutput.html" class="external-link">verbatimTextOutput</a></span><span class="op">(</span><span class="st">"filters"</span><span class="op">)</span>,</span>
+<span>          <span class="va">tags</span><span class="op">$</span><span class="fu">b</span><span class="op">(</span><span class="st">"Data:"</span><span class="op">)</span>,</span>
+<span>          <span class="fu"><a href="https://rdrr.io/pkg/shiny/man/textOutput.html" class="external-link">verbatimTextOutput</a></span><span class="op">(</span><span class="st">"data"</span><span class="op">)</span></span>
+<span>        <span class="op">)</span></span>
+<span>      <span class="op">)</span></span>
+<span>    <span class="op">)</span></span>
+<span>  <span class="op">)</span></span>
+<span><span class="op">)</span></span>
+<span></span>
+<span></span>
+<span><span class="va">server</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">input</span>, <span class="va">output</span>, <span class="va">session</span><span class="op">)</span> <span class="op">{</span></span>
+<span>  </span>
+<span>  <span class="va">data_r</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/shiny/man/reactiveValues.html" class="external-link">reactiveValues</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">iris</span>, name <span class="op">=</span> <span class="st">"iris"</span><span class="op">)</span></span>
+<span>  </span>
+<span>  <span class="fu"><a href="https://rdrr.io/pkg/shiny/man/observe.html" class="external-link">observe</a></span><span class="op">(</span><span class="op">{</span></span>
+<span>    <span class="va">data_r</span><span class="op">$</span><span class="va">data</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/get.html" class="external-link">get</a></span><span class="op">(</span><span class="va">input</span><span class="op">$</span><span class="va">data</span><span class="op">)</span></span>
+<span>    <span class="va">data_r</span><span class="op">$</span><span class="va">name</span> <span class="op">&lt;-</span> <span class="va">input</span><span class="op">$</span><span class="va">data</span></span>
+<span>  <span class="op">}</span><span class="op">)</span></span>
+<span>  </span>
+<span>  <span class="va">results</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/esquisse-module.html">esquisse_server</a></span><span class="op">(</span></span>
+<span>    id <span class="op">=</span> <span class="st">"esquisse"</span>,</span>
+<span>    data_rv <span class="op">=</span> <span class="va">data_r</span></span>
+<span>  <span class="op">)</span></span>
+<span>  </span>
+<span>  <span class="va">output</span><span class="op">$</span><span class="va">code</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/shiny/man/renderPrint.html" class="external-link">renderPrint</a></span><span class="op">(</span><span class="op">{</span></span>
+<span>    <span class="va">results</span><span class="op">$</span><span class="va">code_plot</span></span>
+<span>  <span class="op">}</span><span class="op">)</span></span>
+<span>  </span>
+<span>  <span class="va">output</span><span class="op">$</span><span class="va">filters</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/shiny/man/renderPrint.html" class="external-link">renderPrint</a></span><span class="op">(</span><span class="op">{</span></span>
+<span>    <span class="va">results</span><span class="op">$</span><span class="va">code_filters</span></span>
+<span>  <span class="op">}</span><span class="op">)</span></span>
+<span>  </span>
+<span>  <span class="va">output</span><span class="op">$</span><span class="va">data</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/shiny/man/renderPrint.html" class="external-link">renderPrint</a></span><span class="op">(</span><span class="op">{</span></span>
+<span>    <span class="fu"><a href="https://rdrr.io/r/utils/str.html" class="external-link">str</a></span><span class="op">(</span><span class="va">results</span><span class="op">$</span><span class="va">data</span><span class="op">)</span></span>
+<span>  <span class="op">}</span><span class="op">)</span></span>
+<span>  </span>
+<span><span class="op">}</span></span>
+<span></span>
+<span><span class="fu"><a href="https://rdrr.io/pkg/shiny/man/shinyApp.html" class="external-link">shinyApp</a></span><span class="op">(</span><span class="va">ui</span>, <span class="va">server</span><span class="op">)</span></span></code></pre></div>
 <p>Result looks like :</p>
 <p><img src="figures/shiny-esquisse.png"></p>
 <p>The output of the module is a <code>reactiveValues</code> with 3 slots :</p>
@@ -189,14 +189,14 @@ img {
 <p><img src="figures/save-ggplot.png"></p>
 <p>You can call the module from server to display it in a modal window (it’s also possible to display it directly in your UI):</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="kw">function</span><span class="op">(</span><span class="va">input</span>, <span class="va">output</span>, <span class="va">session</span><span class="op">)</span> <span class="op">{</span>
-  
-  <span class="fu"><a href="https://rdrr.io/pkg/shiny/man/observeEvent.html" class="external-link">observeEvent</a></span><span class="op">(</span><span class="va">input</span><span class="op">$</span><span class="va">save</span>, <span class="op">{</span> <span class="co"># actionButton to trigger modal</span>
-    <span class="fu"><a href="../reference/save-ggplot-module.html">save_ggplot_modal</a></span><span class="op">(</span><span class="st">"ID"</span>, <span class="st">"Save plot"</span><span class="op">)</span> <span class="co"># launch modal</span>
-  <span class="op">}</span><span class="op">)</span>
-  <span class="fu"><a href="../reference/save-ggplot-module.html">save_ggplot_server</a></span><span class="op">(</span><span class="st">"ID"</span>, <span class="va">rv</span><span class="op">)</span> <span class="co"># rv is a reactiValues with a slot 'plot'</span>
-  
-<span class="op">}</span></code></pre></div>
+<code class="sourceCode R"><span><span class="kw">function</span><span class="op">(</span><span class="va">input</span>, <span class="va">output</span>, <span class="va">session</span><span class="op">)</span> <span class="op">{</span></span>
+<span>  </span>
+<span>  <span class="fu"><a href="https://rdrr.io/pkg/shiny/man/observeEvent.html" class="external-link">observeEvent</a></span><span class="op">(</span><span class="va">input</span><span class="op">$</span><span class="va">save</span>, <span class="op">{</span> <span class="co"># actionButton to trigger modal</span></span>
+<span>    <span class="fu"><a href="../reference/save-ggplot-module.html">save_ggplot_modal</a></span><span class="op">(</span><span class="st">"ID"</span>, <span class="st">"Save plot"</span><span class="op">)</span> <span class="co"># launch modal</span></span>
+<span>  <span class="op">}</span><span class="op">)</span></span>
+<span>  <span class="fu"><a href="../reference/save-ggplot-module.html">save_ggplot_server</a></span><span class="op">(</span><span class="st">"ID"</span>, <span class="va">rv</span><span class="op">)</span> <span class="co"># rv is a reactiValues with a slot 'plot'</span></span>
+<span>  </span>
+<span><span class="op">}</span></span></code></pre></div>
 <p>See <code><a href="../reference/save-ggplot-module.html">?"save-ggplot-module"</a></code> for complete example.</p>
 </div>
 <div class="section level2">
@@ -205,32 +205,32 @@ img {
 <p>Add a menu to directly export plot, you can also launch module above for more controls (height, width, filename) by clicking “More options”:</p>
 <p><img src="figures/render-ggplot.png"></p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://shiny.rstudio.com/" class="external-link">shiny</a></span><span class="op">)</span>
-<span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://ggplot2.tidyverse.org" class="external-link">ggplot2</a></span><span class="op">)</span>
-<span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://dreamrs.github.io/esquisse/">esquisse</a></span><span class="op">)</span>
-
-
-<span class="va">ui</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/shiny/man/fluidPage.html" class="external-link">fluidPage</a></span><span class="op">(</span>
-  <span class="va">tags</span><span class="op">$</span><span class="fu">h2</span><span class="op">(</span><span class="st">"ggplot output"</span><span class="op">)</span>,
-  <span class="fu"><a href="https://rdrr.io/pkg/shiny/man/selectInput.html" class="external-link">selectInput</a></span><span class="op">(</span><span class="st">"var"</span>, <span class="st">"Variable:"</span>, <span class="fu"><a href="https://rdrr.io/r/base/names.html" class="external-link">names</a></span><span class="op">(</span><span class="va">economics</span><span class="op">)</span><span class="op">[</span><span class="op">-</span><span class="fl">1</span><span class="op">]</span><span class="op">)</span>,
-  <span class="fu"><a href="../reference/ggplot-output.html">ggplot_output</a></span><span class="op">(</span><span class="st">"MYID"</span>, width <span class="op">=</span> <span class="st">"600px"</span><span class="op">)</span>
-<span class="op">)</span>
-
-<span class="va">server</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">input</span>, <span class="va">output</span>, <span class="va">session</span><span class="op">)</span> <span class="op">{</span>
-  
-  <span class="fu"><a href="../reference/ggplot-output.html">render_ggplot</a></span><span class="op">(</span><span class="st">"MYID"</span>, <span class="op">{</span>
-    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span><span class="va">economics</span><span class="op">)</span> <span class="op">+</span> 
-      <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_path.html" class="external-link">geom_line</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span><span class="va">date</span>, <span class="op">!</span><span class="op">!</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/tidyeval.html" class="external-link">sym</a></span><span class="op">(</span><span class="va">input</span><span class="op">$</span><span class="va">var</span><span class="op">)</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> 
-      <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html" class="external-link">theme_minimal</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span> 
-      <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html" class="external-link">labs</a></span><span class="op">(</span>
-        title <span class="op">=</span> <span class="st">"A cool chart made with ggplot2"</span>,
-        subtitle <span class="op">=</span> <span class="st">"that you can export in various format"</span>
-      <span class="op">)</span>
-  <span class="op">}</span><span class="op">)</span>
-<span class="op">}</span>
-
-<span class="kw">if</span> <span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/interactive.html" class="external-link">interactive</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span>
-  <span class="fu"><a href="https://rdrr.io/pkg/shiny/man/shinyApp.html" class="external-link">shinyApp</a></span><span class="op">(</span><span class="va">ui</span>, <span class="va">server</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://shiny.rstudio.com/" class="external-link">shiny</a></span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://ggplot2.tidyverse.org" class="external-link">ggplot2</a></span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://dreamrs.github.io/esquisse/">esquisse</a></span><span class="op">)</span></span>
+<span></span>
+<span></span>
+<span><span class="va">ui</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/shiny/man/fluidPage.html" class="external-link">fluidPage</a></span><span class="op">(</span></span>
+<span>  <span class="va">tags</span><span class="op">$</span><span class="fu">h2</span><span class="op">(</span><span class="st">"ggplot output"</span><span class="op">)</span>,</span>
+<span>  <span class="fu"><a href="https://rdrr.io/pkg/shiny/man/selectInput.html" class="external-link">selectInput</a></span><span class="op">(</span><span class="st">"var"</span>, <span class="st">"Variable:"</span>, <span class="fu"><a href="https://rdrr.io/r/base/names.html" class="external-link">names</a></span><span class="op">(</span><span class="va">economics</span><span class="op">)</span><span class="op">[</span><span class="op">-</span><span class="fl">1</span><span class="op">]</span><span class="op">)</span>,</span>
+<span>  <span class="fu"><a href="../reference/ggplot-output.html">ggplot_output</a></span><span class="op">(</span><span class="st">"MYID"</span>, width <span class="op">=</span> <span class="st">"600px"</span><span class="op">)</span></span>
+<span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">server</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">input</span>, <span class="va">output</span>, <span class="va">session</span><span class="op">)</span> <span class="op">{</span></span>
+<span>  </span>
+<span>  <span class="fu"><a href="../reference/ggplot-output.html">render_ggplot</a></span><span class="op">(</span><span class="st">"MYID"</span>, <span class="op">{</span></span>
+<span>    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span><span class="va">economics</span><span class="op">)</span> <span class="op">+</span> </span>
+<span>      <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_path.html" class="external-link">geom_line</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span><span class="va">date</span>, <span class="op">!</span><span class="op">!</span><span class="fu"><a href="https://rlang.r-lib.org/reference/sym.html" class="external-link">sym</a></span><span class="op">(</span><span class="va">input</span><span class="op">$</span><span class="va">var</span><span class="op">)</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> </span>
+<span>      <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html" class="external-link">theme_minimal</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span> </span>
+<span>      <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html" class="external-link">labs</a></span><span class="op">(</span></span>
+<span>        title <span class="op">=</span> <span class="st">"A cool chart made with ggplot2"</span>,</span>
+<span>        subtitle <span class="op">=</span> <span class="st">"that you can export in various format"</span></span>
+<span>      <span class="op">)</span></span>
+<span>  <span class="op">}</span><span class="op">)</span></span>
+<span><span class="op">}</span></span>
+<span></span>
+<span><span class="kw">if</span> <span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/interactive.html" class="external-link">interactive</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/pkg/shiny/man/shinyApp.html" class="external-link">shinyApp</a></span><span class="op">(</span><span class="va">ui</span>, <span class="va">server</span><span class="op">)</span></span></code></pre></div>
 </div>
 <div class="section level2">
 <h2 id="input-widgets">Input widgets<a class="anchor" aria-label="anchor" href="#input-widgets"></a>
@@ -240,27 +240,27 @@ img {
 <h3 id="dragulainput">dragulaInput<a class="anchor" aria-label="anchor" href="#dragulainput"></a>
 </h3>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">ui</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/shiny/man/fluidPage.html" class="external-link">fluidPage</a></span><span class="op">(</span>
-  <span class="va">tags</span><span class="op">$</span><span class="fu">h2</span><span class="op">(</span><span class="st">"Demo dragulaInput"</span><span class="op">)</span>,
-  <span class="va">tags</span><span class="op">$</span><span class="fu">br</span><span class="op">(</span><span class="op">)</span>,
-  <span class="fu"><a href="../reference/dragulaInput.html">dragulaInput</a></span><span class="op">(</span>
-    inputId <span class="op">=</span> <span class="st">"dad"</span>,
-    sourceLabel <span class="op">=</span> <span class="st">"Source"</span>,
-    targetsLabels <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Target 1"</span>, <span class="st">"Target 2"</span><span class="op">)</span>,
-    choices <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/names.html" class="external-link">names</a></span><span class="op">(</span><span class="va">iris</span><span class="op">)</span>,
-    width <span class="op">=</span> <span class="st">"400px"</span>
-  <span class="op">)</span>,
-  <span class="fu"><a href="https://rdrr.io/pkg/shiny/man/textOutput.html" class="external-link">verbatimTextOutput</a></span><span class="op">(</span>outputId <span class="op">=</span> <span class="st">"result"</span><span class="op">)</span>
-<span class="op">)</span>
-
-
-<span class="va">server</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">input</span>, <span class="va">output</span>, <span class="va">session</span><span class="op">)</span> <span class="op">{</span>
-  
-  <span class="va">output</span><span class="op">$</span><span class="va">result</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/shiny/man/renderPrint.html" class="external-link">renderPrint</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/utils/str.html" class="external-link">str</a></span><span class="op">(</span><span class="va">input</span><span class="op">$</span><span class="va">dad</span><span class="op">)</span><span class="op">)</span>
-
-<span class="op">}</span>
-
-<span class="fu"><a href="https://rdrr.io/pkg/shiny/man/shinyApp.html" class="external-link">shinyApp</a></span><span class="op">(</span>ui <span class="op">=</span> <span class="va">ui</span>, server <span class="op">=</span> <span class="va">server</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">ui</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/shiny/man/fluidPage.html" class="external-link">fluidPage</a></span><span class="op">(</span></span>
+<span>  <span class="va">tags</span><span class="op">$</span><span class="fu">h2</span><span class="op">(</span><span class="st">"Demo dragulaInput"</span><span class="op">)</span>,</span>
+<span>  <span class="va">tags</span><span class="op">$</span><span class="fu">br</span><span class="op">(</span><span class="op">)</span>,</span>
+<span>  <span class="fu"><a href="../reference/dragulaInput.html">dragulaInput</a></span><span class="op">(</span></span>
+<span>    inputId <span class="op">=</span> <span class="st">"dad"</span>,</span>
+<span>    sourceLabel <span class="op">=</span> <span class="st">"Source"</span>,</span>
+<span>    targetsLabels <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Target 1"</span>, <span class="st">"Target 2"</span><span class="op">)</span>,</span>
+<span>    choices <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/names.html" class="external-link">names</a></span><span class="op">(</span><span class="va">iris</span><span class="op">)</span>,</span>
+<span>    width <span class="op">=</span> <span class="st">"400px"</span></span>
+<span>  <span class="op">)</span>,</span>
+<span>  <span class="fu"><a href="https://rdrr.io/pkg/shiny/man/textOutput.html" class="external-link">verbatimTextOutput</a></span><span class="op">(</span>outputId <span class="op">=</span> <span class="st">"result"</span><span class="op">)</span></span>
+<span><span class="op">)</span></span>
+<span></span>
+<span></span>
+<span><span class="va">server</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">input</span>, <span class="va">output</span>, <span class="va">session</span><span class="op">)</span> <span class="op">{</span></span>
+<span>  </span>
+<span>  <span class="va">output</span><span class="op">$</span><span class="va">result</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/shiny/man/renderPrint.html" class="external-link">renderPrint</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/utils/str.html" class="external-link">str</a></span><span class="op">(</span><span class="va">input</span><span class="op">$</span><span class="va">dad</span><span class="op">)</span><span class="op">)</span></span>
+<span></span>
+<span><span class="op">}</span></span>
+<span></span>
+<span><span class="fu"><a href="https://rdrr.io/pkg/shiny/man/shinyApp.html" class="external-link">shinyApp</a></span><span class="op">(</span>ui <span class="op">=</span> <span class="va">ui</span>, server <span class="op">=</span> <span class="va">server</span><span class="op">)</span></span></code></pre></div>
 <p><img src="figures/input-dragula.png"></p>
 </div>
 <div class="section level3">
@@ -268,32 +268,32 @@ img {
 </h3>
 <p>The widget used to select a geom in <code>esquisser</code> addin. You can use images or icons for example:</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">ui</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/shiny/man/fluidPage.html" class="external-link">fluidPage</a></span><span class="op">(</span>
-  <span class="va">tags</span><span class="op">$</span><span class="fu">h2</span><span class="op">(</span><span class="st">"Drop Input"</span><span class="op">)</span>,
-  <span class="fu"><a href="../reference/dropInput.html">dropInput</a></span><span class="op">(</span>
-    inputId <span class="op">=</span> <span class="st">"mydrop"</span>,
-    choicesNames <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/htmltools/man/tagList.html" class="external-link">tagList</a></span><span class="op">(</span>
-      <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/pkg/shiny/man/icon.html" class="external-link">icon</a></span><span class="op">(</span><span class="st">"home"</span><span class="op">)</span>, style <span class="op">=</span> <span class="st">"width: 100px;"</span><span class="op">)</span>, 
-      <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/pkg/shiny/man/icon.html" class="external-link">icon</a></span><span class="op">(</span><span class="st">"flash"</span><span class="op">)</span>, style <span class="op">=</span> <span class="st">"width: 100px;"</span><span class="op">)</span>,
-      <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/pkg/shiny/man/icon.html" class="external-link">icon</a></span><span class="op">(</span><span class="st">"cogs"</span><span class="op">)</span>, style <span class="op">=</span> <span class="st">"width: 100px;"</span><span class="op">)</span>,
-      <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/pkg/shiny/man/icon.html" class="external-link">icon</a></span><span class="op">(</span><span class="st">"fire"</span><span class="op">)</span>, style <span class="op">=</span> <span class="st">"width: 100px;"</span><span class="op">)</span>, 
-      <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/pkg/shiny/man/icon.html" class="external-link">icon</a></span><span class="op">(</span><span class="st">"users"</span><span class="op">)</span>, style <span class="op">=</span> <span class="st">"width: 100px;"</span><span class="op">)</span>, 
-      <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/pkg/shiny/man/icon.html" class="external-link">icon</a></span><span class="op">(</span><span class="st">"info"</span><span class="op">)</span>, style <span class="op">=</span> <span class="st">"width: 100px;"</span><span class="op">)</span>
-    <span class="op">)</span>, 
-    choicesValues <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"home"</span>, <span class="st">"flash"</span>, <span class="st">"cogs"</span>,
-                      <span class="st">"fire"</span>, <span class="st">"users"</span>, <span class="st">"info"</span><span class="op">)</span>,
-    dropWidth <span class="op">=</span> <span class="st">"220px"</span>
-  <span class="op">)</span>,
-  <span class="fu"><a href="https://rdrr.io/pkg/shiny/man/textOutput.html" class="external-link">verbatimTextOutput</a></span><span class="op">(</span>outputId <span class="op">=</span> <span class="st">"res"</span><span class="op">)</span>
-<span class="op">)</span>
-
-<span class="va">server</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">input</span>, <span class="va">output</span>, <span class="va">session</span><span class="op">)</span> <span class="op">{</span>
-  <span class="va">output</span><span class="op">$</span><span class="va">res</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/shiny/man/renderPrint.html" class="external-link">renderPrint</a></span><span class="op">(</span><span class="op">{</span>
-    <span class="va">input</span><span class="op">$</span><span class="va">mydrop</span>
-  <span class="op">}</span><span class="op">)</span>
-<span class="op">}</span>
-
-<span class="fu"><a href="https://rdrr.io/pkg/shiny/man/shinyApp.html" class="external-link">shinyApp</a></span><span class="op">(</span><span class="va">ui</span>, <span class="va">server</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">ui</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/shiny/man/fluidPage.html" class="external-link">fluidPage</a></span><span class="op">(</span></span>
+<span>  <span class="va">tags</span><span class="op">$</span><span class="fu">h2</span><span class="op">(</span><span class="st">"Drop Input"</span><span class="op">)</span>,</span>
+<span>  <span class="fu"><a href="../reference/dropInput.html">dropInput</a></span><span class="op">(</span></span>
+<span>    inputId <span class="op">=</span> <span class="st">"mydrop"</span>,</span>
+<span>    choicesNames <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/htmltools/man/tagList.html" class="external-link">tagList</a></span><span class="op">(</span></span>
+<span>      <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/pkg/shiny/man/icon.html" class="external-link">icon</a></span><span class="op">(</span><span class="st">"home"</span><span class="op">)</span>, style <span class="op">=</span> <span class="st">"width: 100px;"</span><span class="op">)</span>, </span>
+<span>      <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/pkg/shiny/man/icon.html" class="external-link">icon</a></span><span class="op">(</span><span class="st">"flash"</span><span class="op">)</span>, style <span class="op">=</span> <span class="st">"width: 100px;"</span><span class="op">)</span>,</span>
+<span>      <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/pkg/shiny/man/icon.html" class="external-link">icon</a></span><span class="op">(</span><span class="st">"cogs"</span><span class="op">)</span>, style <span class="op">=</span> <span class="st">"width: 100px;"</span><span class="op">)</span>,</span>
+<span>      <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/pkg/shiny/man/icon.html" class="external-link">icon</a></span><span class="op">(</span><span class="st">"fire"</span><span class="op">)</span>, style <span class="op">=</span> <span class="st">"width: 100px;"</span><span class="op">)</span>, </span>
+<span>      <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/pkg/shiny/man/icon.html" class="external-link">icon</a></span><span class="op">(</span><span class="st">"users"</span><span class="op">)</span>, style <span class="op">=</span> <span class="st">"width: 100px;"</span><span class="op">)</span>, </span>
+<span>      <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/pkg/shiny/man/icon.html" class="external-link">icon</a></span><span class="op">(</span><span class="st">"info"</span><span class="op">)</span>, style <span class="op">=</span> <span class="st">"width: 100px;"</span><span class="op">)</span></span>
+<span>    <span class="op">)</span>, </span>
+<span>    choicesValues <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"home"</span>, <span class="st">"flash"</span>, <span class="st">"cogs"</span>,</span>
+<span>                      <span class="st">"fire"</span>, <span class="st">"users"</span>, <span class="st">"info"</span><span class="op">)</span>,</span>
+<span>    dropWidth <span class="op">=</span> <span class="st">"220px"</span></span>
+<span>  <span class="op">)</span>,</span>
+<span>  <span class="fu"><a href="https://rdrr.io/pkg/shiny/man/textOutput.html" class="external-link">verbatimTextOutput</a></span><span class="op">(</span>outputId <span class="op">=</span> <span class="st">"res"</span><span class="op">)</span></span>
+<span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">server</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">input</span>, <span class="va">output</span>, <span class="va">session</span><span class="op">)</span> <span class="op">{</span></span>
+<span>  <span class="va">output</span><span class="op">$</span><span class="va">res</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/shiny/man/renderPrint.html" class="external-link">renderPrint</a></span><span class="op">(</span><span class="op">{</span></span>
+<span>    <span class="va">input</span><span class="op">$</span><span class="va">mydrop</span></span>
+<span>  <span class="op">}</span><span class="op">)</span></span>
+<span><span class="op">}</span></span>
+<span></span>
+<span><span class="fu"><a href="https://rdrr.io/pkg/shiny/man/shinyApp.html" class="external-link">shinyApp</a></span><span class="op">(</span><span class="va">ui</span>, <span class="va">server</span><span class="op">)</span></span></code></pre></div>
 <p><img src="figures/input-drop.png"></p>
 </div>
 <div class="section level3">
@@ -301,24 +301,24 @@ img {
 </h3>
 <p>A select menu to choose one or several colors:</p>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">ui</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/shiny/man/fluidPage.html" class="external-link">fluidPage</a></span><span class="op">(</span>
-  <span class="va">tags</span><span class="op">$</span><span class="fu">h2</span><span class="op">(</span><span class="st">"Color Picker"</span><span class="op">)</span>,
-  <span class="fu"><a href="../reference/input-colors.html">colorPicker</a></span><span class="op">(</span>
-    inputId <span class="op">=</span> <span class="st">"col"</span>,
-    label <span class="op">=</span> <span class="st">"Choose a color:"</span>,
-    choices <span class="op">=</span> <span class="fu">scales</span><span class="fu">::</span><span class="fu"><a href="https://scales.r-lib.org/reference/brewer_pal.html" class="external-link">brewer_pal</a></span><span class="op">(</span>palette <span class="op">=</span> <span class="st">"Dark2"</span><span class="op">)</span><span class="op">(</span><span class="fl">8</span><span class="op">)</span>,
-    textColor <span class="op">=</span> <span class="st">"white"</span>
-  <span class="op">)</span>,
-  <span class="fu"><a href="https://rdrr.io/pkg/shiny/man/textOutput.html" class="external-link">verbatimTextOutput</a></span><span class="op">(</span>outputId <span class="op">=</span> <span class="st">"res"</span><span class="op">)</span>
-<span class="op">)</span>
-
-<span class="va">server</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">input</span>, <span class="va">output</span>, <span class="va">session</span><span class="op">)</span> <span class="op">{</span>
-  <span class="va">output</span><span class="op">$</span><span class="va">res</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/shiny/man/renderPrint.html" class="external-link">renderPrint</a></span><span class="op">(</span><span class="op">{</span>
-    <span class="va">input</span><span class="op">$</span><span class="va">col</span>
-  <span class="op">}</span><span class="op">)</span>
-<span class="op">}</span>
-
-<span class="fu"><a href="https://rdrr.io/pkg/shiny/man/shinyApp.html" class="external-link">shinyApp</a></span><span class="op">(</span><span class="va">ui</span>, <span class="va">server</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">ui</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/shiny/man/fluidPage.html" class="external-link">fluidPage</a></span><span class="op">(</span></span>
+<span>  <span class="va">tags</span><span class="op">$</span><span class="fu">h2</span><span class="op">(</span><span class="st">"Color Picker"</span><span class="op">)</span>,</span>
+<span>  <span class="fu"><a href="../reference/input-colors.html">colorPicker</a></span><span class="op">(</span></span>
+<span>    inputId <span class="op">=</span> <span class="st">"col"</span>,</span>
+<span>    label <span class="op">=</span> <span class="st">"Choose a color:"</span>,</span>
+<span>    choices <span class="op">=</span> <span class="fu">scales</span><span class="fu">::</span><span class="fu"><a href="https://scales.r-lib.org/reference/brewer_pal.html" class="external-link">brewer_pal</a></span><span class="op">(</span>palette <span class="op">=</span> <span class="st">"Dark2"</span><span class="op">)</span><span class="op">(</span><span class="fl">8</span><span class="op">)</span>,</span>
+<span>    textColor <span class="op">=</span> <span class="st">"white"</span></span>
+<span>  <span class="op">)</span>,</span>
+<span>  <span class="fu"><a href="https://rdrr.io/pkg/shiny/man/textOutput.html" class="external-link">verbatimTextOutput</a></span><span class="op">(</span>outputId <span class="op">=</span> <span class="st">"res"</span><span class="op">)</span></span>
+<span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">server</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">input</span>, <span class="va">output</span>, <span class="va">session</span><span class="op">)</span> <span class="op">{</span></span>
+<span>  <span class="va">output</span><span class="op">$</span><span class="va">res</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/shiny/man/renderPrint.html" class="external-link">renderPrint</a></span><span class="op">(</span><span class="op">{</span></span>
+<span>    <span class="va">input</span><span class="op">$</span><span class="va">col</span></span>
+<span>  <span class="op">}</span><span class="op">)</span></span>
+<span><span class="op">}</span></span>
+<span></span>
+<span><span class="fu"><a href="https://rdrr.io/pkg/shiny/man/shinyApp.html" class="external-link">shinyApp</a></span><span class="op">(</span><span class="va">ui</span>, <span class="va">server</span><span class="op">)</span></span></code></pre></div>
 <p><img src="figures/input-color.png"></p>
 </div>
 <div class="section level3">
@@ -326,41 +326,41 @@ img {
 </h3>
 <p>A select menu to choose a color palette:</p>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://scales.r-lib.org" class="external-link">scales</a></span><span class="op">)</span>
-<span class="va">ui</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/shiny/man/fluidPage.html" class="external-link">fluidPage</a></span><span class="op">(</span>
-  <span class="va">tags</span><span class="op">$</span><span class="fu">h2</span><span class="op">(</span><span class="st">"Palette Picker"</span><span class="op">)</span>,
-  <span class="fu"><a href="../reference/input-colors.html">palettePicker</a></span><span class="op">(</span>
-    inputId <span class="op">=</span> <span class="st">"pal"</span>, 
-    label <span class="op">=</span> <span class="st">"Choose a palette"</span>, 
-    choices <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>
-      <span class="st">"Viridis"</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>
-        <span class="st">"viridis"</span> <span class="op">=</span> <span class="fu"><a href="https://scales.r-lib.org/reference/viridis_pal.html" class="external-link">viridis_pal</a></span><span class="op">(</span>option <span class="op">=</span> <span class="st">"viridis"</span><span class="op">)</span><span class="op">(</span><span class="fl">10</span><span class="op">)</span>,
-        <span class="st">"magma"</span> <span class="op">=</span> <span class="fu"><a href="https://scales.r-lib.org/reference/viridis_pal.html" class="external-link">viridis_pal</a></span><span class="op">(</span>option <span class="op">=</span> <span class="st">"magma"</span><span class="op">)</span><span class="op">(</span><span class="fl">10</span><span class="op">)</span>,
-        <span class="st">"inferno"</span> <span class="op">=</span> <span class="fu"><a href="https://scales.r-lib.org/reference/viridis_pal.html" class="external-link">viridis_pal</a></span><span class="op">(</span>option <span class="op">=</span> <span class="st">"inferno"</span><span class="op">)</span><span class="op">(</span><span class="fl">10</span><span class="op">)</span>,
-        <span class="st">"plasma"</span> <span class="op">=</span> <span class="fu"><a href="https://scales.r-lib.org/reference/viridis_pal.html" class="external-link">viridis_pal</a></span><span class="op">(</span>option <span class="op">=</span> <span class="st">"plasma"</span><span class="op">)</span><span class="op">(</span><span class="fl">10</span><span class="op">)</span>,
-        <span class="st">"cividis"</span> <span class="op">=</span> <span class="fu"><a href="https://scales.r-lib.org/reference/viridis_pal.html" class="external-link">viridis_pal</a></span><span class="op">(</span>option <span class="op">=</span> <span class="st">"cividis"</span><span class="op">)</span><span class="op">(</span><span class="fl">10</span><span class="op">)</span>
-      <span class="op">)</span>,
-      <span class="st">"Brewer"</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>
-        <span class="st">"Blues"</span> <span class="op">=</span> <span class="fu"><a href="https://scales.r-lib.org/reference/brewer_pal.html" class="external-link">brewer_pal</a></span><span class="op">(</span>palette <span class="op">=</span> <span class="st">"Blues"</span><span class="op">)</span><span class="op">(</span><span class="fl">8</span><span class="op">)</span>,
-        <span class="st">"Reds"</span> <span class="op">=</span> <span class="fu"><a href="https://scales.r-lib.org/reference/brewer_pal.html" class="external-link">brewer_pal</a></span><span class="op">(</span>palette <span class="op">=</span> <span class="st">"Reds"</span><span class="op">)</span><span class="op">(</span><span class="fl">8</span><span class="op">)</span>,
-        <span class="st">"Paired"</span> <span class="op">=</span> <span class="fu"><a href="https://scales.r-lib.org/reference/brewer_pal.html" class="external-link">brewer_pal</a></span><span class="op">(</span>palette <span class="op">=</span> <span class="st">"Paired"</span><span class="op">)</span><span class="op">(</span><span class="fl">8</span><span class="op">)</span>,
-        <span class="st">"Set1"</span> <span class="op">=</span> <span class="fu"><a href="https://scales.r-lib.org/reference/brewer_pal.html" class="external-link">brewer_pal</a></span><span class="op">(</span>palette <span class="op">=</span> <span class="st">"Set1"</span><span class="op">)</span><span class="op">(</span><span class="fl">8</span><span class="op">)</span>
-      <span class="op">)</span>
-    <span class="op">)</span>, 
-    textColor <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span>
-      <span class="fu"><a href="https://rdrr.io/r/base/rep.html" class="external-link">rep</a></span><span class="op">(</span><span class="st">"white"</span>, <span class="fl">5</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/rep.html" class="external-link">rep</a></span><span class="op">(</span><span class="st">"black"</span>, <span class="fl">4</span><span class="op">)</span> 
-    <span class="op">)</span>
-  <span class="op">)</span>,
-  <span class="fu"><a href="https://rdrr.io/pkg/shiny/man/textOutput.html" class="external-link">verbatimTextOutput</a></span><span class="op">(</span>outputId <span class="op">=</span> <span class="st">"res"</span><span class="op">)</span>
-<span class="op">)</span>
-
-<span class="va">server</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">input</span>, <span class="va">output</span>, <span class="va">session</span><span class="op">)</span> <span class="op">{</span>
-  <span class="va">output</span><span class="op">$</span><span class="va">res</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/shiny/man/renderPrint.html" class="external-link">renderPrint</a></span><span class="op">(</span><span class="op">{</span>
-    <span class="va">input</span><span class="op">$</span><span class="va">pal</span>
-  <span class="op">}</span><span class="op">)</span>
-<span class="op">}</span>
-
-<span class="fu"><a href="https://rdrr.io/pkg/shiny/man/shinyApp.html" class="external-link">shinyApp</a></span><span class="op">(</span><span class="va">ui</span>, <span class="va">server</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://scales.r-lib.org" class="external-link">scales</a></span><span class="op">)</span></span>
+<span><span class="va">ui</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/shiny/man/fluidPage.html" class="external-link">fluidPage</a></span><span class="op">(</span></span>
+<span>  <span class="va">tags</span><span class="op">$</span><span class="fu">h2</span><span class="op">(</span><span class="st">"Palette Picker"</span><span class="op">)</span>,</span>
+<span>  <span class="fu"><a href="../reference/input-colors.html">palettePicker</a></span><span class="op">(</span></span>
+<span>    inputId <span class="op">=</span> <span class="st">"pal"</span>, </span>
+<span>    label <span class="op">=</span> <span class="st">"Choose a palette"</span>, </span>
+<span>    choices <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span></span>
+<span>      <span class="st">"Viridis"</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span></span>
+<span>        <span class="st">"viridis"</span> <span class="op">=</span> <span class="fu"><a href="https://scales.r-lib.org/reference/viridis_pal.html" class="external-link">viridis_pal</a></span><span class="op">(</span>option <span class="op">=</span> <span class="st">"viridis"</span><span class="op">)</span><span class="op">(</span><span class="fl">10</span><span class="op">)</span>,</span>
+<span>        <span class="st">"magma"</span> <span class="op">=</span> <span class="fu"><a href="https://scales.r-lib.org/reference/viridis_pal.html" class="external-link">viridis_pal</a></span><span class="op">(</span>option <span class="op">=</span> <span class="st">"magma"</span><span class="op">)</span><span class="op">(</span><span class="fl">10</span><span class="op">)</span>,</span>
+<span>        <span class="st">"inferno"</span> <span class="op">=</span> <span class="fu"><a href="https://scales.r-lib.org/reference/viridis_pal.html" class="external-link">viridis_pal</a></span><span class="op">(</span>option <span class="op">=</span> <span class="st">"inferno"</span><span class="op">)</span><span class="op">(</span><span class="fl">10</span><span class="op">)</span>,</span>
+<span>        <span class="st">"plasma"</span> <span class="op">=</span> <span class="fu"><a href="https://scales.r-lib.org/reference/viridis_pal.html" class="external-link">viridis_pal</a></span><span class="op">(</span>option <span class="op">=</span> <span class="st">"plasma"</span><span class="op">)</span><span class="op">(</span><span class="fl">10</span><span class="op">)</span>,</span>
+<span>        <span class="st">"cividis"</span> <span class="op">=</span> <span class="fu"><a href="https://scales.r-lib.org/reference/viridis_pal.html" class="external-link">viridis_pal</a></span><span class="op">(</span>option <span class="op">=</span> <span class="st">"cividis"</span><span class="op">)</span><span class="op">(</span><span class="fl">10</span><span class="op">)</span></span>
+<span>      <span class="op">)</span>,</span>
+<span>      <span class="st">"Brewer"</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span></span>
+<span>        <span class="st">"Blues"</span> <span class="op">=</span> <span class="fu"><a href="https://scales.r-lib.org/reference/brewer_pal.html" class="external-link">brewer_pal</a></span><span class="op">(</span>palette <span class="op">=</span> <span class="st">"Blues"</span><span class="op">)</span><span class="op">(</span><span class="fl">8</span><span class="op">)</span>,</span>
+<span>        <span class="st">"Reds"</span> <span class="op">=</span> <span class="fu"><a href="https://scales.r-lib.org/reference/brewer_pal.html" class="external-link">brewer_pal</a></span><span class="op">(</span>palette <span class="op">=</span> <span class="st">"Reds"</span><span class="op">)</span><span class="op">(</span><span class="fl">8</span><span class="op">)</span>,</span>
+<span>        <span class="st">"Paired"</span> <span class="op">=</span> <span class="fu"><a href="https://scales.r-lib.org/reference/brewer_pal.html" class="external-link">brewer_pal</a></span><span class="op">(</span>palette <span class="op">=</span> <span class="st">"Paired"</span><span class="op">)</span><span class="op">(</span><span class="fl">8</span><span class="op">)</span>,</span>
+<span>        <span class="st">"Set1"</span> <span class="op">=</span> <span class="fu"><a href="https://scales.r-lib.org/reference/brewer_pal.html" class="external-link">brewer_pal</a></span><span class="op">(</span>palette <span class="op">=</span> <span class="st">"Set1"</span><span class="op">)</span><span class="op">(</span><span class="fl">8</span><span class="op">)</span></span>
+<span>      <span class="op">)</span></span>
+<span>    <span class="op">)</span>, </span>
+<span>    textColor <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span></span>
+<span>      <span class="fu"><a href="https://rdrr.io/r/base/rep.html" class="external-link">rep</a></span><span class="op">(</span><span class="st">"white"</span>, <span class="fl">5</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/rep.html" class="external-link">rep</a></span><span class="op">(</span><span class="st">"black"</span>, <span class="fl">4</span><span class="op">)</span> </span>
+<span>    <span class="op">)</span></span>
+<span>  <span class="op">)</span>,</span>
+<span>  <span class="fu"><a href="https://rdrr.io/pkg/shiny/man/textOutput.html" class="external-link">verbatimTextOutput</a></span><span class="op">(</span>outputId <span class="op">=</span> <span class="st">"res"</span><span class="op">)</span></span>
+<span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">server</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">input</span>, <span class="va">output</span>, <span class="va">session</span><span class="op">)</span> <span class="op">{</span></span>
+<span>  <span class="va">output</span><span class="op">$</span><span class="va">res</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/shiny/man/renderPrint.html" class="external-link">renderPrint</a></span><span class="op">(</span><span class="op">{</span></span>
+<span>    <span class="va">input</span><span class="op">$</span><span class="va">pal</span></span>
+<span>  <span class="op">}</span><span class="op">)</span></span>
+<span><span class="op">}</span></span>
+<span></span>
+<span><span class="fu"><a href="https://rdrr.io/pkg/shiny/man/shinyApp.html" class="external-link">shinyApp</a></span><span class="op">(</span><span class="va">ui</span>, <span class="va">server</span><span class="op">)</span></span></code></pre></div>
 <p><img src="figures/input-palette.png"></p>
 </div>
 </div>
@@ -377,7 +377,7 @@ img {
 
 <div class="pkgdown-footer-right">
   <p></p>
-<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.3.</p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.5.</p>
 </div>
 
     </footer>

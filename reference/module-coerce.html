@@ -58,29 +58,41 @@
 
     <div class="section level2">
     <h2 id="ref-usage">Usage<a class="anchor" aria-label="anchor" href="#ref-usage"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">coerceUI</span><span class="op">(</span><span class="va">id</span><span class="op">)</span>
-
-<span class="fu">coerceServer</span><span class="op">(</span><span class="va">input</span>, <span class="va">output</span>, <span class="va">session</span>, <span class="va">data</span>, reactiveValuesSlot <span class="op">=</span> <span class="st">"data"</span><span class="op">)</span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">coerceUI</span><span class="op">(</span><span class="va">id</span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu">coerceServer</span><span class="op">(</span><span class="va">input</span>, <span class="va">output</span>, <span class="va">session</span>, <span class="va">data</span>, reactiveValuesSlot <span class="op">=</span> <span class="st">"data"</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div class="section level2">
     <h2 id="arguments">Arguments<a class="anchor" aria-label="anchor" href="#arguments"></a></h2>
     <dl><dt>id</dt>
 <dd><p>Module id. See <code><a href="https://rdrr.io/pkg/shiny/man/callModule.html" class="external-link">callModule</a></code>.</p></dd>
+
+
 <dt>input, output, session</dt>
 <dd><p>standards <code>shiny</code> server arguments.²</p></dd>
+
+
 <dt>data</dt>
 <dd><p>A <code>data.frame</code> or a <code>reactive</code>
 function returning a <code>data.frame</code> or a
 <code>reactivevalues</code> with a slot containing a <code>data.frame</code>
 (use <code>reactiveValuesSlot</code> to identify that slot)</p></dd>
+
+
 <dt>reactiveValuesSlot</dt>
 <dd><p>If <code>data</code> is a <code>reactivevalues</code>,
 specify the name of the slot containing data.</p></dd>
+
 </dl></div>
     <div class="section level2">
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
-    <p>a <code>reactiveValues</code> with two slots: <code>data</code> original <code>data.frame</code>with modified columns, and <code>names</code> column's names with call to coerce method.</p>
+    
+
+<p>a <code>reactiveValues</code> with two slots: <code>data</code> original <code>data.frame</code></p>
+
+
+<p>with modified columns, and <code>names</code> column's names with call to coerce method.</p>
     </div>
 
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>
@@ -92,7 +104,7 @@ specify the name of the slot containing data.</p></dd>
 </div>
 
 <div class="pkgdown-footer-right">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.3.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.5.</p>
 </div>
 
     </footer></div>

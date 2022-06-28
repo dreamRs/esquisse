@@ -58,302 +58,323 @@
 
     <div class="section level2">
     <h2 id="ref-usage">Usage<a class="anchor" aria-label="anchor" href="#ref-usage"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">colorPicker</span><span class="op">(</span>
-  <span class="va">inputId</span>,
-  <span class="va">label</span>,
-  <span class="va">choices</span>,
-  selected <span class="op">=</span> <span class="cn">NULL</span>,
-  textColor <span class="op">=</span> <span class="st">"#000"</span>,
-  plainColor <span class="op">=</span> <span class="cn">FALSE</span>,
-  multiple <span class="op">=</span> <span class="cn">FALSE</span>,
-  pickerOpts <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="op">)</span>,
-  width <span class="op">=</span> <span class="cn">NULL</span>
-<span class="op">)</span>
-
-<span class="fu">updateColorPicker</span><span class="op">(</span>
-  session <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/shiny/man/domains.html" class="external-link">getDefaultReactiveDomain</a></span><span class="op">(</span><span class="op">)</span>,
-  <span class="va">inputId</span>,
-  <span class="va">choices</span>,
-  textColor <span class="op">=</span> <span class="st">"#000"</span>,
-  plainColor <span class="op">=</span> <span class="cn">FALSE</span>,
-  multiple <span class="op">=</span> <span class="cn">FALSE</span>
-<span class="op">)</span>
-
-<span class="fu">palettePicker</span><span class="op">(</span>
-  <span class="va">inputId</span>,
-  <span class="va">label</span>,
-  <span class="va">choices</span>,
-  selected <span class="op">=</span> <span class="cn">NULL</span>,
-  textColor <span class="op">=</span> <span class="st">"#000"</span>,
-  plainColor <span class="op">=</span> <span class="cn">FALSE</span>,
-  pickerOpts <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="op">)</span>,
-  width <span class="op">=</span> <span class="cn">NULL</span>
-<span class="op">)</span>
-
-<span class="fu">updatePalettePicker</span><span class="op">(</span>
-  session <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/shiny/man/domains.html" class="external-link">getDefaultReactiveDomain</a></span><span class="op">(</span><span class="op">)</span>,
-  <span class="va">inputId</span>,
-  <span class="va">choices</span>,
-  selected <span class="op">=</span> <span class="cn">NULL</span>,
-  textColor <span class="op">=</span> <span class="st">"#000"</span>,
-  plainColor <span class="op">=</span> <span class="cn">FALSE</span>
-<span class="op">)</span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">colorPicker</span><span class="op">(</span></span>
+<span>  <span class="va">inputId</span>,</span>
+<span>  <span class="va">label</span>,</span>
+<span>  <span class="va">choices</span>,</span>
+<span>  selected <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  textColor <span class="op">=</span> <span class="st">"#000"</span>,</span>
+<span>  plainColor <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>  multiple <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>  pickerOpts <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="op">)</span>,</span>
+<span>  width <span class="op">=</span> <span class="cn">NULL</span></span>
+<span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu">updateColorPicker</span><span class="op">(</span></span>
+<span>  session <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/shiny/man/domains.html" class="external-link">getDefaultReactiveDomain</a></span><span class="op">(</span><span class="op">)</span>,</span>
+<span>  <span class="va">inputId</span>,</span>
+<span>  <span class="va">choices</span>,</span>
+<span>  textColor <span class="op">=</span> <span class="st">"#000"</span>,</span>
+<span>  plainColor <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>  multiple <span class="op">=</span> <span class="cn">FALSE</span></span>
+<span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu">palettePicker</span><span class="op">(</span></span>
+<span>  <span class="va">inputId</span>,</span>
+<span>  <span class="va">label</span>,</span>
+<span>  <span class="va">choices</span>,</span>
+<span>  selected <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  textColor <span class="op">=</span> <span class="st">"#000"</span>,</span>
+<span>  plainColor <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>  pickerOpts <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="op">)</span>,</span>
+<span>  width <span class="op">=</span> <span class="cn">NULL</span></span>
+<span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu">updatePalettePicker</span><span class="op">(</span></span>
+<span>  session <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/shiny/man/domains.html" class="external-link">getDefaultReactiveDomain</a></span><span class="op">(</span><span class="op">)</span>,</span>
+<span>  <span class="va">inputId</span>,</span>
+<span>  <span class="va">choices</span>,</span>
+<span>  selected <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  textColor <span class="op">=</span> <span class="st">"#000"</span>,</span>
+<span>  plainColor <span class="op">=</span> <span class="cn">FALSE</span></span>
+<span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div class="section level2">
     <h2 id="arguments">Arguments<a class="anchor" aria-label="anchor" href="#arguments"></a></h2>
     <dl><dt>inputId</dt>
 <dd><p>The <code>input</code> slot that will be used to access the value.</p></dd>
+
+
 <dt>label</dt>
 <dd><p>Display label for the control, or <code>NULL</code> for no label.</p></dd>
+
+
 <dt>choices</dt>
 <dd><p>List of values to select from. Values must be valid Hex colors.
 If elements of the list are named then that name rather than the value is displayed to the user.</p></dd>
+
+
 <dt>selected</dt>
 <dd><p>The initially selected value (or multiple values if <code>multiple = TRUE</code>).
 If not specified then defaults to the first value for single-select lists and no values for multiple select lists.</p></dd>
+
+
 <dt>textColor</dt>
 <dd><p>Color of the text displayed above colors, can be a vector of the same length as choices.</p></dd>
+
+
 <dt>plainColor</dt>
 <dd><p>Color the full space of the choice menu.</p></dd>
+
+
 <dt>multiple</dt>
 <dd><p>Is selection of multiple items allowed?</p></dd>
+
+
 <dt>pickerOpts</dt>
 <dd><p>Options for <code><a href="https://dreamrs.github.io/shinyWidgets/reference/pickerInput.html" class="external-link">pickerInput</a></code>.</p></dd>
+
+
 <dt>width</dt>
 <dd><p>The width of the input : <code>'auto'</code>, <code>'fit'</code>, <code>'100px'</code>, <code>'75%'</code>.</p></dd>
+
+
 <dt>session</dt>
 <dd><p>Shiny session.</p></dd>
+
 </dl></div>
     <div class="section level2">
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
-    <p>A select control that can be added to a UI definition.</p>
+    
+
+<p>A select control that can be added to a UI definition.</p>
     </div>
 
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"></span>
-<span class="r-in"><span class="co"># colorPicker -------------------------------------------------------------</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://shiny.rstudio.com/" class="external-link">shiny</a></span><span class="op">)</span></span>
-<span class="r-in"><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://dreamrs.github.io/esquisse/">esquisse</a></span><span class="op">)</span></span>
-<span class="r-in"><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://scales.r-lib.org" class="external-link">scales</a></span><span class="op">)</span></span>
-<span class="r-in"></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="va">ui</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/shiny/man/fluidPage.html" class="external-link">fluidPage</a></span><span class="op">(</span></span>
-<span class="r-in">  <span class="va">tags</span><span class="op">$</span><span class="fu">h2</span><span class="op">(</span><span class="st">"colorPicker examples"</span><span class="op">)</span>,</span>
-<span class="r-in">  <span class="fu"><a href="https://rdrr.io/pkg/shiny/man/fluidPage.html" class="external-link">fluidRow</a></span><span class="op">(</span></span>
-<span class="r-in">    <span class="fu"><a href="https://rdrr.io/pkg/shiny/man/column.html" class="external-link">column</a></span><span class="op">(</span></span>
-<span class="r-in">      width <span class="op">=</span> <span class="fl">3</span>,</span>
-<span class="r-in">      <span class="fu">colorPicker</span><span class="op">(</span></span>
-<span class="r-in">        inputId <span class="op">=</span> <span class="st">"col1"</span>,</span>
-<span class="r-in">        label <span class="op">=</span> <span class="st">"With a vector of colors:"</span>,</span>
-<span class="r-in">        choices <span class="op">=</span> <span class="fu"><a href="https://scales.r-lib.org/reference/brewer_pal.html" class="external-link">brewer_pal</a></span><span class="op">(</span>palette <span class="op">=</span> <span class="st">"Dark2"</span><span class="op">)</span><span class="op">(</span><span class="fl">8</span><span class="op">)</span></span>
-<span class="r-in">      <span class="op">)</span>,</span>
-<span class="r-in">      <span class="fu"><a href="https://rdrr.io/pkg/shiny/man/textOutput.html" class="external-link">verbatimTextOutput</a></span><span class="op">(</span><span class="st">"res1"</span><span class="op">)</span>,</span>
-<span class="r-in">      <span class="fu">colorPicker</span><span class="op">(</span></span>
-<span class="r-in">        inputId <span class="op">=</span> <span class="st">"col5"</span>,</span>
-<span class="r-in">        label <span class="op">=</span> <span class="st">"Update colors:"</span>,</span>
-<span class="r-in">        choices <span class="op">=</span> <span class="fu"><a href="https://scales.r-lib.org/reference/brewer_pal.html" class="external-link">brewer_pal</a></span><span class="op">(</span>palette <span class="op">=</span> <span class="st">"Blues"</span>, direction <span class="op">=</span> <span class="op">-</span><span class="fl">1</span><span class="op">)</span><span class="op">(</span><span class="fl">8</span><span class="op">)</span>,</span>
-<span class="r-in">        textColor <span class="op">=</span> <span class="st">"#FFF"</span></span>
-<span class="r-in">      <span class="op">)</span>,</span>
-<span class="r-in">      <span class="fu"><a href="https://rdrr.io/pkg/shiny/man/textOutput.html" class="external-link">verbatimTextOutput</a></span><span class="op">(</span><span class="st">"res5"</span><span class="op">)</span>,</span>
-<span class="r-in">      <span class="fu"><a href="https://rdrr.io/pkg/shiny/man/radioButtons.html" class="external-link">radioButtons</a></span><span class="op">(</span></span>
-<span class="r-in">        <span class="st">"update"</span>, <span class="st">"Colors"</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Blues"</span>, <span class="st">"Greens"</span>, <span class="st">"Reds"</span><span class="op">)</span>,</span>
-<span class="r-in">        inline <span class="op">=</span> <span class="cn">TRUE</span></span>
-<span class="r-in">      <span class="op">)</span></span>
-<span class="r-in">    <span class="op">)</span>,</span>
-<span class="r-in">    <span class="fu"><a href="https://rdrr.io/pkg/shiny/man/column.html" class="external-link">column</a></span><span class="op">(</span></span>
-<span class="r-in">      width <span class="op">=</span> <span class="fl">3</span>,</span>
-<span class="r-in">      <span class="fu">colorPicker</span><span class="op">(</span></span>
-<span class="r-in">        inputId <span class="op">=</span> <span class="st">"col2"</span>,</span>
-<span class="r-in">        label <span class="op">=</span> <span class="st">"Change text color:"</span>,</span>
-<span class="r-in">        choices <span class="op">=</span> <span class="fu"><a href="https://scales.r-lib.org/reference/brewer_pal.html" class="external-link">brewer_pal</a></span><span class="op">(</span>palette <span class="op">=</span> <span class="st">"Blues"</span><span class="op">)</span><span class="op">(</span><span class="fl">8</span><span class="op">)</span>, </span>
-<span class="r-in">        textColor <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"black"</span>, <span class="st">"black"</span>, <span class="st">"black"</span>, <span class="st">"white"</span>,</span>
-<span class="r-in">                      <span class="st">"white"</span>, <span class="st">"white"</span>, <span class="st">"white"</span>, <span class="st">"white"</span><span class="op">)</span></span>
-<span class="r-in">      <span class="op">)</span>,</span>
-<span class="r-in">      <span class="fu"><a href="https://rdrr.io/pkg/shiny/man/textOutput.html" class="external-link">verbatimTextOutput</a></span><span class="op">(</span><span class="st">"res2"</span><span class="op">)</span></span>
-<span class="r-in">    <span class="op">)</span>,</span>
-<span class="r-in">    <span class="fu"><a href="https://rdrr.io/pkg/shiny/man/column.html" class="external-link">column</a></span><span class="op">(</span></span>
-<span class="r-in">      width <span class="op">=</span> <span class="fl">3</span>,</span>
-<span class="r-in">      <span class="fu">colorPicker</span><span class="op">(</span></span>
-<span class="r-in">        inputId <span class="op">=</span> <span class="st">"col3"</span>,</span>
-<span class="r-in">        label <span class="op">=</span> <span class="st">"With a list of vector of colors:"</span>,</span>
-<span class="r-in">        choices <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span></span>
-<span class="r-in">          <span class="st">"Blues"</span> <span class="op">=</span> <span class="fu"><a href="https://scales.r-lib.org/reference/brewer_pal.html" class="external-link">brewer_pal</a></span><span class="op">(</span>palette <span class="op">=</span> <span class="st">"Blues"</span><span class="op">)</span><span class="op">(</span><span class="fl">8</span><span class="op">)</span>,</span>
-<span class="r-in">          <span class="st">"Reds"</span> <span class="op">=</span> <span class="fu"><a href="https://scales.r-lib.org/reference/brewer_pal.html" class="external-link">brewer_pal</a></span><span class="op">(</span>palette <span class="op">=</span> <span class="st">"Reds"</span><span class="op">)</span><span class="op">(</span><span class="fl">8</span><span class="op">)</span>,</span>
-<span class="r-in">          <span class="st">"Greens"</span> <span class="op">=</span> <span class="fu"><a href="https://scales.r-lib.org/reference/brewer_pal.html" class="external-link">brewer_pal</a></span><span class="op">(</span>palette <span class="op">=</span> <span class="st">"Greens"</span><span class="op">)</span><span class="op">(</span><span class="fl">8</span><span class="op">)</span></span>
-<span class="r-in">        <span class="op">)</span></span>
-<span class="r-in">      <span class="op">)</span>,</span>
-<span class="r-in">      <span class="fu"><a href="https://rdrr.io/pkg/shiny/man/textOutput.html" class="external-link">verbatimTextOutput</a></span><span class="op">(</span><span class="st">"res3"</span><span class="op">)</span></span>
-<span class="r-in">    <span class="op">)</span>,</span>
-<span class="r-in">    <span class="fu"><a href="https://rdrr.io/pkg/shiny/man/column.html" class="external-link">column</a></span><span class="op">(</span></span>
-<span class="r-in">      width <span class="op">=</span> <span class="fl">3</span>,</span>
-<span class="r-in">      <span class="fu">colorPicker</span><span class="op">(</span></span>
-<span class="r-in">        inputId <span class="op">=</span> <span class="st">"col4"</span>,</span>
-<span class="r-in">        label <span class="op">=</span> <span class="st">"Plain color &amp; multiple choices:"</span>,</span>
-<span class="r-in">        choices <span class="op">=</span> <span class="fu"><a href="https://scales.r-lib.org/reference/brewer_pal.html" class="external-link">brewer_pal</a></span><span class="op">(</span>palette <span class="op">=</span> <span class="st">"Paired"</span><span class="op">)</span><span class="op">(</span><span class="fl">8</span><span class="op">)</span>, </span>
-<span class="r-in">        plainColor <span class="op">=</span> <span class="cn">TRUE</span>, </span>
-<span class="r-in">        multiple <span class="op">=</span> <span class="cn">TRUE</span>, </span>
-<span class="r-in">        pickerOpts <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>`selected-text-format`<span class="op">=</span> <span class="st">"count &gt; 3"</span><span class="op">)</span></span>
-<span class="r-in">      <span class="op">)</span>,</span>
-<span class="r-in">      <span class="fu"><a href="https://rdrr.io/pkg/shiny/man/textOutput.html" class="external-link">verbatimTextOutput</a></span><span class="op">(</span><span class="st">"res4"</span><span class="op">)</span></span>
-<span class="r-in">    <span class="op">)</span></span>
-<span class="r-in">  <span class="op">)</span></span>
-<span class="r-in"><span class="op">)</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="va">server</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">input</span>, <span class="va">output</span>, <span class="va">session</span><span class="op">)</span> <span class="op">{</span></span>
-<span class="r-in">  </span>
-<span class="r-in">  <span class="va">output</span><span class="op">$</span><span class="va">res1</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/shiny/man/renderPrint.html" class="external-link">renderPrint</a></span><span class="op">(</span><span class="va">input</span><span class="op">$</span><span class="va">col1</span><span class="op">)</span></span>
-<span class="r-in">  <span class="va">output</span><span class="op">$</span><span class="va">res2</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/shiny/man/renderPrint.html" class="external-link">renderPrint</a></span><span class="op">(</span><span class="va">input</span><span class="op">$</span><span class="va">col2</span><span class="op">)</span></span>
-<span class="r-in">  <span class="va">output</span><span class="op">$</span><span class="va">res3</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/shiny/man/renderPrint.html" class="external-link">renderPrint</a></span><span class="op">(</span><span class="va">input</span><span class="op">$</span><span class="va">col3</span><span class="op">)</span></span>
-<span class="r-in">  <span class="va">output</span><span class="op">$</span><span class="va">res4</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/shiny/man/renderPrint.html" class="external-link">renderPrint</a></span><span class="op">(</span><span class="va">input</span><span class="op">$</span><span class="va">col4</span><span class="op">)</span></span>
-<span class="r-in">  <span class="va">output</span><span class="op">$</span><span class="va">res5</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/shiny/man/renderPrint.html" class="external-link">renderPrint</a></span><span class="op">(</span><span class="va">input</span><span class="op">$</span><span class="va">col5</span><span class="op">)</span></span>
-<span class="r-in">  </span>
-<span class="r-in">  <span class="fu"><a href="https://rdrr.io/pkg/shiny/man/observeEvent.html" class="external-link">observeEvent</a></span><span class="op">(</span><span class="va">input</span><span class="op">$</span><span class="va">update</span>, <span class="op">{</span></span>
-<span class="r-in">    <span class="fu">updateColorPicker</span><span class="op">(</span></span>
-<span class="r-in">      inputId <span class="op">=</span> <span class="st">"col5"</span>,</span>
-<span class="r-in">      choices <span class="op">=</span> <span class="fu"><a href="https://scales.r-lib.org/reference/brewer_pal.html" class="external-link">brewer_pal</a></span><span class="op">(</span>palette <span class="op">=</span> <span class="va">input</span><span class="op">$</span><span class="va">update</span>, direction <span class="op">=</span> <span class="op">-</span><span class="fl">1</span><span class="op">)</span><span class="op">(</span><span class="fl">8</span><span class="op">)</span>,</span>
-<span class="r-in">      textColor <span class="op">=</span> <span class="st">"#FFF"</span></span>
-<span class="r-in">    <span class="op">)</span></span>
-<span class="r-in">  <span class="op">}</span><span class="op">)</span></span>
-<span class="r-in">  </span>
-<span class="r-in"><span class="op">}</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="kw">if</span> <span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/interactive.html" class="external-link">interactive</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span>
-<span class="r-in">  <span class="fu"><a href="https://rdrr.io/pkg/shiny/man/shinyApp.html" class="external-link">shinyApp</a></span><span class="op">(</span><span class="va">ui</span>, <span class="va">server</span><span class="op">)</span></span>
-<span class="r-in"><span class="op">}</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co"># palettePicker -----------------------------------------------------------</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://shiny.rstudio.com/" class="external-link">shiny</a></span><span class="op">)</span></span>
-<span class="r-in"><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://dreamrs.github.io/esquisse/">esquisse</a></span><span class="op">)</span></span>
-<span class="r-in"><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://scales.r-lib.org" class="external-link">scales</a></span><span class="op">)</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="va">ui</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/shiny/man/fluidPage.html" class="external-link">fluidPage</a></span><span class="op">(</span></span>
-<span class="r-in">  <span class="va">tags</span><span class="op">$</span><span class="fu">h2</span><span class="op">(</span><span class="st">"pickerColor examples"</span><span class="op">)</span>,</span>
-<span class="r-in">  </span>
-<span class="r-in">  <span class="fu"><a href="https://rdrr.io/pkg/shiny/man/fluidPage.html" class="external-link">fluidRow</a></span><span class="op">(</span></span>
-<span class="r-in">    <span class="fu"><a href="https://rdrr.io/pkg/shiny/man/column.html" class="external-link">column</a></span><span class="op">(</span></span>
-<span class="r-in">      width <span class="op">=</span> <span class="fl">4</span>,</span>
-<span class="r-in">      <span class="fu">palettePicker</span><span class="op">(</span></span>
-<span class="r-in">        inputId <span class="op">=</span> <span class="st">"pal1"</span>, </span>
-<span class="r-in">        label <span class="op">=</span> <span class="st">"Select a palette:"</span>, </span>
-<span class="r-in">        choices <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span></span>
-<span class="r-in">          <span class="st">"Blues"</span> <span class="op">=</span> <span class="fu"><a href="https://scales.r-lib.org/reference/brewer_pal.html" class="external-link">brewer_pal</a></span><span class="op">(</span>palette <span class="op">=</span> <span class="st">"Blues"</span><span class="op">)</span><span class="op">(</span><span class="fl">8</span><span class="op">)</span>,</span>
-<span class="r-in">          <span class="st">"Reds"</span> <span class="op">=</span> <span class="fu"><a href="https://scales.r-lib.org/reference/brewer_pal.html" class="external-link">brewer_pal</a></span><span class="op">(</span>palette <span class="op">=</span> <span class="st">"Reds"</span><span class="op">)</span><span class="op">(</span><span class="fl">8</span><span class="op">)</span></span>
-<span class="r-in">        <span class="op">)</span></span>
-<span class="r-in">      <span class="op">)</span>,</span>
-<span class="r-in">      <span class="fu"><a href="https://rdrr.io/pkg/shiny/man/textOutput.html" class="external-link">verbatimTextOutput</a></span><span class="op">(</span><span class="st">"res1"</span><span class="op">)</span>,</span>
-<span class="r-in">      <span class="fu">palettePicker</span><span class="op">(</span></span>
-<span class="r-in">        inputId <span class="op">=</span> <span class="st">"pal4"</span>, </span>
-<span class="r-in">        label <span class="op">=</span> <span class="st">"Update palette:"</span>, </span>
-<span class="r-in">        choices <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span></span>
-<span class="r-in">          <span class="st">"Blues"</span> <span class="op">=</span> <span class="fu"><a href="https://scales.r-lib.org/reference/brewer_pal.html" class="external-link">brewer_pal</a></span><span class="op">(</span>palette <span class="op">=</span> <span class="st">"Blues"</span><span class="op">)</span><span class="op">(</span><span class="fl">8</span><span class="op">)</span>,</span>
-<span class="r-in">          <span class="st">"Reds"</span> <span class="op">=</span> <span class="fu"><a href="https://scales.r-lib.org/reference/brewer_pal.html" class="external-link">brewer_pal</a></span><span class="op">(</span>palette <span class="op">=</span> <span class="st">"Reds"</span><span class="op">)</span><span class="op">(</span><span class="fl">8</span><span class="op">)</span></span>
-<span class="r-in">        <span class="op">)</span></span>
-<span class="r-in">      <span class="op">)</span>,</span>
-<span class="r-in">      <span class="fu"><a href="https://rdrr.io/pkg/shiny/man/textOutput.html" class="external-link">verbatimTextOutput</a></span><span class="op">(</span><span class="st">"res4"</span><span class="op">)</span>,</span>
-<span class="r-in">      <span class="fu"><a href="https://rdrr.io/pkg/shiny/man/radioButtons.html" class="external-link">radioButtons</a></span><span class="op">(</span></span>
-<span class="r-in">        <span class="st">"update"</span>, <span class="st">"Palettes:"</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"default"</span>, <span class="st">"viridis"</span>, <span class="st">"brewer"</span><span class="op">)</span>,</span>
-<span class="r-in">        inline <span class="op">=</span> <span class="cn">TRUE</span></span>
-<span class="r-in">      <span class="op">)</span></span>
-<span class="r-in">    <span class="op">)</span>,</span>
-<span class="r-in">    <span class="fu"><a href="https://rdrr.io/pkg/shiny/man/column.html" class="external-link">column</a></span><span class="op">(</span></span>
-<span class="r-in">      width <span class="op">=</span> <span class="fl">4</span>,</span>
-<span class="r-in">      <span class="fu">palettePicker</span><span class="op">(</span></span>
-<span class="r-in">        inputId <span class="op">=</span> <span class="st">"pal2"</span>, </span>
-<span class="r-in">        label <span class="op">=</span> <span class="st">"With a list of palette:"</span>, </span>
-<span class="r-in">        choices <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span></span>
-<span class="r-in">          <span class="st">"Viridis"</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span></span>
-<span class="r-in">            <span class="st">"viridis"</span> <span class="op">=</span> <span class="fu"><a href="https://scales.r-lib.org/reference/viridis_pal.html" class="external-link">viridis_pal</a></span><span class="op">(</span>option <span class="op">=</span> <span class="st">"viridis"</span><span class="op">)</span><span class="op">(</span><span class="fl">10</span><span class="op">)</span>,</span>
-<span class="r-in">            <span class="st">"magma"</span> <span class="op">=</span> <span class="fu"><a href="https://scales.r-lib.org/reference/viridis_pal.html" class="external-link">viridis_pal</a></span><span class="op">(</span>option <span class="op">=</span> <span class="st">"magma"</span><span class="op">)</span><span class="op">(</span><span class="fl">10</span><span class="op">)</span>,</span>
-<span class="r-in">            <span class="st">"inferno"</span> <span class="op">=</span> <span class="fu"><a href="https://scales.r-lib.org/reference/viridis_pal.html" class="external-link">viridis_pal</a></span><span class="op">(</span>option <span class="op">=</span> <span class="st">"inferno"</span><span class="op">)</span><span class="op">(</span><span class="fl">10</span><span class="op">)</span>,</span>
-<span class="r-in">            <span class="st">"plasma"</span> <span class="op">=</span> <span class="fu"><a href="https://scales.r-lib.org/reference/viridis_pal.html" class="external-link">viridis_pal</a></span><span class="op">(</span>option <span class="op">=</span> <span class="st">"plasma"</span><span class="op">)</span><span class="op">(</span><span class="fl">10</span><span class="op">)</span>,</span>
-<span class="r-in">            <span class="st">"cividis"</span> <span class="op">=</span> <span class="fu"><a href="https://scales.r-lib.org/reference/viridis_pal.html" class="external-link">viridis_pal</a></span><span class="op">(</span>option <span class="op">=</span> <span class="st">"cividis"</span><span class="op">)</span><span class="op">(</span><span class="fl">10</span><span class="op">)</span></span>
-<span class="r-in">          <span class="op">)</span>,</span>
-<span class="r-in">          <span class="st">"Brewer"</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span></span>
-<span class="r-in">            <span class="st">"Blues"</span> <span class="op">=</span> <span class="fu"><a href="https://scales.r-lib.org/reference/brewer_pal.html" class="external-link">brewer_pal</a></span><span class="op">(</span>palette <span class="op">=</span> <span class="st">"Blues"</span><span class="op">)</span><span class="op">(</span><span class="fl">8</span><span class="op">)</span>,</span>
-<span class="r-in">            <span class="st">"Reds"</span> <span class="op">=</span> <span class="fu"><a href="https://scales.r-lib.org/reference/brewer_pal.html" class="external-link">brewer_pal</a></span><span class="op">(</span>palette <span class="op">=</span> <span class="st">"Reds"</span><span class="op">)</span><span class="op">(</span><span class="fl">8</span><span class="op">)</span>,</span>
-<span class="r-in">            <span class="st">"Paired"</span> <span class="op">=</span> <span class="fu"><a href="https://scales.r-lib.org/reference/brewer_pal.html" class="external-link">brewer_pal</a></span><span class="op">(</span>palette <span class="op">=</span> <span class="st">"Paired"</span><span class="op">)</span><span class="op">(</span><span class="fl">8</span><span class="op">)</span>,</span>
-<span class="r-in">            <span class="st">"Set1"</span> <span class="op">=</span> <span class="fu"><a href="https://scales.r-lib.org/reference/brewer_pal.html" class="external-link">brewer_pal</a></span><span class="op">(</span>palette <span class="op">=</span> <span class="st">"Set1"</span><span class="op">)</span><span class="op">(</span><span class="fl">8</span><span class="op">)</span></span>
-<span class="r-in">          <span class="op">)</span></span>
-<span class="r-in">        <span class="op">)</span>, </span>
-<span class="r-in">        textColor <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span></span>
-<span class="r-in">          <span class="fu"><a href="https://rdrr.io/r/base/rep.html" class="external-link">rep</a></span><span class="op">(</span><span class="st">"white"</span>, <span class="fl">5</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/rep.html" class="external-link">rep</a></span><span class="op">(</span><span class="st">"black"</span>, <span class="fl">4</span><span class="op">)</span> </span>
-<span class="r-in">        <span class="op">)</span></span>
-<span class="r-in">      <span class="op">)</span>,</span>
-<span class="r-in">      <span class="fu"><a href="https://rdrr.io/pkg/shiny/man/textOutput.html" class="external-link">verbatimTextOutput</a></span><span class="op">(</span><span class="st">"res2"</span><span class="op">)</span></span>
-<span class="r-in">    <span class="op">)</span>,</span>
-<span class="r-in">    <span class="fu"><a href="https://rdrr.io/pkg/shiny/man/column.html" class="external-link">column</a></span><span class="op">(</span></span>
-<span class="r-in">      width <span class="op">=</span> <span class="fl">4</span>,</span>
-<span class="r-in">      <span class="fu">palettePicker</span><span class="op">(</span></span>
-<span class="r-in">        inputId <span class="op">=</span> <span class="st">"pal3"</span>, </span>
-<span class="r-in">        label <span class="op">=</span> <span class="st">"With plain colors:"</span>, </span>
-<span class="r-in">        choices <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span></span>
-<span class="r-in">          <span class="st">"BrBG"</span> <span class="op">=</span> <span class="fu"><a href="https://scales.r-lib.org/reference/brewer_pal.html" class="external-link">brewer_pal</a></span><span class="op">(</span>palette <span class="op">=</span> <span class="st">"BrBG"</span><span class="op">)</span><span class="op">(</span><span class="fl">8</span><span class="op">)</span>, </span>
-<span class="r-in">          <span class="st">"PiYG"</span> <span class="op">=</span> <span class="fu"><a href="https://scales.r-lib.org/reference/brewer_pal.html" class="external-link">brewer_pal</a></span><span class="op">(</span>palette <span class="op">=</span> <span class="st">"PiYG"</span><span class="op">)</span><span class="op">(</span><span class="fl">8</span><span class="op">)</span>, </span>
-<span class="r-in">          <span class="st">"PRGn"</span> <span class="op">=</span> <span class="fu"><a href="https://scales.r-lib.org/reference/brewer_pal.html" class="external-link">brewer_pal</a></span><span class="op">(</span>palette <span class="op">=</span> <span class="st">"PRGn"</span><span class="op">)</span><span class="op">(</span><span class="fl">8</span><span class="op">)</span>, </span>
-<span class="r-in">          <span class="st">"PuOr"</span> <span class="op">=</span> <span class="fu"><a href="https://scales.r-lib.org/reference/brewer_pal.html" class="external-link">brewer_pal</a></span><span class="op">(</span>palette <span class="op">=</span> <span class="st">"PuOr"</span><span class="op">)</span><span class="op">(</span><span class="fl">8</span><span class="op">)</span>, </span>
-<span class="r-in">          <span class="st">"RdBu"</span> <span class="op">=</span> <span class="fu"><a href="https://scales.r-lib.org/reference/brewer_pal.html" class="external-link">brewer_pal</a></span><span class="op">(</span>palette <span class="op">=</span> <span class="st">"RdBu"</span><span class="op">)</span><span class="op">(</span><span class="fl">8</span><span class="op">)</span>, </span>
-<span class="r-in">          <span class="st">"RdGy"</span> <span class="op">=</span> <span class="fu"><a href="https://scales.r-lib.org/reference/brewer_pal.html" class="external-link">brewer_pal</a></span><span class="op">(</span>palette <span class="op">=</span> <span class="st">"RdGy"</span><span class="op">)</span><span class="op">(</span><span class="fl">8</span><span class="op">)</span>, </span>
-<span class="r-in">          <span class="st">"RdYlBu"</span> <span class="op">=</span> <span class="fu"><a href="https://scales.r-lib.org/reference/brewer_pal.html" class="external-link">brewer_pal</a></span><span class="op">(</span>palette <span class="op">=</span> <span class="st">"RdYlBu"</span><span class="op">)</span><span class="op">(</span><span class="fl">8</span><span class="op">)</span>, </span>
-<span class="r-in">          <span class="st">"RdYlGn"</span> <span class="op">=</span> <span class="fu"><a href="https://scales.r-lib.org/reference/brewer_pal.html" class="external-link">brewer_pal</a></span><span class="op">(</span>palette <span class="op">=</span> <span class="st">"RdYlGn"</span><span class="op">)</span><span class="op">(</span><span class="fl">8</span><span class="op">)</span>, </span>
-<span class="r-in">          <span class="st">"Spectral"</span> <span class="op">=</span> <span class="fu"><a href="https://scales.r-lib.org/reference/brewer_pal.html" class="external-link">brewer_pal</a></span><span class="op">(</span>palette <span class="op">=</span> <span class="st">"Spectral"</span><span class="op">)</span><span class="op">(</span><span class="fl">8</span><span class="op">)</span></span>
-<span class="r-in">        <span class="op">)</span>, </span>
-<span class="r-in">        plainColor <span class="op">=</span> <span class="cn">TRUE</span>, </span>
-<span class="r-in">        textColor <span class="op">=</span> <span class="st">"white"</span></span>
-<span class="r-in">      <span class="op">)</span>,</span>
-<span class="r-in">      <span class="fu"><a href="https://rdrr.io/pkg/shiny/man/textOutput.html" class="external-link">verbatimTextOutput</a></span><span class="op">(</span><span class="st">"res3"</span><span class="op">)</span></span>
-<span class="r-in">    <span class="op">)</span></span>
-<span class="r-in">  <span class="op">)</span></span>
-<span class="r-in"><span class="op">)</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="va">server</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">input</span>, <span class="va">output</span>, <span class="va">session</span><span class="op">)</span> <span class="op">{</span></span>
-<span class="r-in">  </span>
-<span class="r-in">  <span class="va">output</span><span class="op">$</span><span class="va">res1</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/shiny/man/renderPrint.html" class="external-link">renderPrint</a></span><span class="op">(</span><span class="va">input</span><span class="op">$</span><span class="va">pal1</span><span class="op">)</span></span>
-<span class="r-in">  <span class="va">output</span><span class="op">$</span><span class="va">res2</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/shiny/man/renderPrint.html" class="external-link">renderPrint</a></span><span class="op">(</span><span class="va">input</span><span class="op">$</span><span class="va">pal2</span><span class="op">)</span></span>
-<span class="r-in">  <span class="va">output</span><span class="op">$</span><span class="va">res3</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/shiny/man/renderPrint.html" class="external-link">renderPrint</a></span><span class="op">(</span><span class="va">input</span><span class="op">$</span><span class="va">pal3</span><span class="op">)</span></span>
-<span class="r-in">  <span class="va">output</span><span class="op">$</span><span class="va">res4</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/shiny/man/renderPrint.html" class="external-link">renderPrint</a></span><span class="op">(</span><span class="va">input</span><span class="op">$</span><span class="va">pal4</span><span class="op">)</span></span>
-<span class="r-in">  </span>
-<span class="r-in">  <span class="fu"><a href="https://rdrr.io/pkg/shiny/man/observeEvent.html" class="external-link">observeEvent</a></span><span class="op">(</span><span class="va">input</span><span class="op">$</span><span class="va">update</span>, <span class="op">{</span></span>
-<span class="r-in">    <span class="kw">if</span> <span class="op">(</span><span class="va">input</span><span class="op">$</span><span class="va">update</span> <span class="op">==</span> <span class="st">"default"</span><span class="op">)</span> <span class="op">{</span></span>
-<span class="r-in">      <span class="fu">updatePalettePicker</span><span class="op">(</span></span>
-<span class="r-in">        inputId <span class="op">=</span> <span class="st">"pal4"</span>,</span>
-<span class="r-in">        choices <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span></span>
-<span class="r-in">          <span class="st">"Blues"</span> <span class="op">=</span> <span class="fu"><a href="https://scales.r-lib.org/reference/brewer_pal.html" class="external-link">brewer_pal</a></span><span class="op">(</span>palette <span class="op">=</span> <span class="st">"Blues"</span><span class="op">)</span><span class="op">(</span><span class="fl">8</span><span class="op">)</span>,</span>
-<span class="r-in">          <span class="st">"Reds"</span> <span class="op">=</span> <span class="fu"><a href="https://scales.r-lib.org/reference/brewer_pal.html" class="external-link">brewer_pal</a></span><span class="op">(</span>palette <span class="op">=</span> <span class="st">"Reds"</span><span class="op">)</span><span class="op">(</span><span class="fl">8</span><span class="op">)</span></span>
-<span class="r-in">        <span class="op">)</span></span>
-<span class="r-in">      <span class="op">)</span></span>
-<span class="r-in">    <span class="op">}</span> <span class="kw">else</span> <span class="kw">if</span> <span class="op">(</span><span class="va">input</span><span class="op">$</span><span class="va">update</span> <span class="op">==</span> <span class="st">"viridis"</span><span class="op">)</span> <span class="op">{</span></span>
-<span class="r-in">      <span class="fu">updatePalettePicker</span><span class="op">(</span></span>
-<span class="r-in">        inputId <span class="op">=</span> <span class="st">"pal4"</span>,</span>
-<span class="r-in">        choices <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span></span>
-<span class="r-in">          <span class="st">"viridis"</span> <span class="op">=</span> <span class="fu"><a href="https://scales.r-lib.org/reference/viridis_pal.html" class="external-link">viridis_pal</a></span><span class="op">(</span>option <span class="op">=</span> <span class="st">"viridis"</span><span class="op">)</span><span class="op">(</span><span class="fl">10</span><span class="op">)</span>,</span>
-<span class="r-in">          <span class="st">"magma"</span> <span class="op">=</span> <span class="fu"><a href="https://scales.r-lib.org/reference/viridis_pal.html" class="external-link">viridis_pal</a></span><span class="op">(</span>option <span class="op">=</span> <span class="st">"magma"</span><span class="op">)</span><span class="op">(</span><span class="fl">10</span><span class="op">)</span>,</span>
-<span class="r-in">          <span class="st">"inferno"</span> <span class="op">=</span> <span class="fu"><a href="https://scales.r-lib.org/reference/viridis_pal.html" class="external-link">viridis_pal</a></span><span class="op">(</span>option <span class="op">=</span> <span class="st">"inferno"</span><span class="op">)</span><span class="op">(</span><span class="fl">10</span><span class="op">)</span>,</span>
-<span class="r-in">          <span class="st">"plasma"</span> <span class="op">=</span> <span class="fu"><a href="https://scales.r-lib.org/reference/viridis_pal.html" class="external-link">viridis_pal</a></span><span class="op">(</span>option <span class="op">=</span> <span class="st">"plasma"</span><span class="op">)</span><span class="op">(</span><span class="fl">10</span><span class="op">)</span>,</span>
-<span class="r-in">          <span class="st">"cividis"</span> <span class="op">=</span> <span class="fu"><a href="https://scales.r-lib.org/reference/viridis_pal.html" class="external-link">viridis_pal</a></span><span class="op">(</span>option <span class="op">=</span> <span class="st">"cividis"</span><span class="op">)</span><span class="op">(</span><span class="fl">10</span><span class="op">)</span></span>
-<span class="r-in">        <span class="op">)</span>,</span>
-<span class="r-in">        textColor <span class="op">=</span> <span class="st">"#FFF"</span></span>
-<span class="r-in">      <span class="op">)</span></span>
-<span class="r-in">    <span class="op">}</span> <span class="kw">else</span> <span class="kw">if</span> <span class="op">(</span><span class="va">input</span><span class="op">$</span><span class="va">update</span> <span class="op">==</span> <span class="st">"brewer"</span><span class="op">)</span> <span class="op">{</span></span>
-<span class="r-in">      <span class="fu">updatePalettePicker</span><span class="op">(</span></span>
-<span class="r-in">        inputId <span class="op">=</span> <span class="st">"pal4"</span>,</span>
-<span class="r-in">        choices <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span></span>
-<span class="r-in">          <span class="st">"Blues"</span> <span class="op">=</span> <span class="fu"><a href="https://scales.r-lib.org/reference/brewer_pal.html" class="external-link">brewer_pal</a></span><span class="op">(</span>palette <span class="op">=</span> <span class="st">"Blues"</span><span class="op">)</span><span class="op">(</span><span class="fl">8</span><span class="op">)</span>,</span>
-<span class="r-in">          <span class="st">"Reds"</span> <span class="op">=</span> <span class="fu"><a href="https://scales.r-lib.org/reference/brewer_pal.html" class="external-link">brewer_pal</a></span><span class="op">(</span>palette <span class="op">=</span> <span class="st">"Reds"</span><span class="op">)</span><span class="op">(</span><span class="fl">8</span><span class="op">)</span>,</span>
-<span class="r-in">          <span class="st">"Paired"</span> <span class="op">=</span> <span class="fu"><a href="https://scales.r-lib.org/reference/brewer_pal.html" class="external-link">brewer_pal</a></span><span class="op">(</span>palette <span class="op">=</span> <span class="st">"Paired"</span><span class="op">)</span><span class="op">(</span><span class="fl">8</span><span class="op">)</span>,</span>
-<span class="r-in">          <span class="st">"Set1"</span> <span class="op">=</span> <span class="fu"><a href="https://scales.r-lib.org/reference/brewer_pal.html" class="external-link">brewer_pal</a></span><span class="op">(</span>palette <span class="op">=</span> <span class="st">"Set1"</span><span class="op">)</span><span class="op">(</span><span class="fl">8</span><span class="op">)</span></span>
-<span class="r-in">        <span class="op">)</span></span>
-<span class="r-in">      <span class="op">)</span></span>
-<span class="r-in">    <span class="op">}</span></span>
-<span class="r-in">  <span class="op">}</span><span class="op">)</span></span>
-<span class="r-in"><span class="op">}</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="kw">if</span> <span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/interactive.html" class="external-link">interactive</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span>
-<span class="r-in">  <span class="fu"><a href="https://rdrr.io/pkg/shiny/man/shinyApp.html" class="external-link">shinyApp</a></span><span class="op">(</span><span class="va">ui</span>, <span class="va">server</span><span class="op">)</span></span>
-<span class="r-in"><span class="op">}</span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># colorPicker -------------------------------------------------------------</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://shiny.rstudio.com/" class="external-link">shiny</a></span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://dreamrs.github.io/esquisse/">esquisse</a></span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://scales.r-lib.org" class="external-link">scales</a></span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="va">ui</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/shiny/man/fluidPage.html" class="external-link">fluidPage</a></span><span class="op">(</span></span></span>
+<span class="r-in"><span>  <span class="va">tags</span><span class="op">$</span><span class="fu">h2</span><span class="op">(</span><span class="st">"colorPicker examples"</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>  <span class="fu"><a href="https://rdrr.io/pkg/shiny/man/fluidPage.html" class="external-link">fluidRow</a></span><span class="op">(</span></span></span>
+<span class="r-in"><span>    <span class="fu"><a href="https://rdrr.io/pkg/shiny/man/column.html" class="external-link">column</a></span><span class="op">(</span></span></span>
+<span class="r-in"><span>      width <span class="op">=</span> <span class="fl">3</span>,</span></span>
+<span class="r-in"><span>      <span class="fu">colorPicker</span><span class="op">(</span></span></span>
+<span class="r-in"><span>        inputId <span class="op">=</span> <span class="st">"col1"</span>,</span></span>
+<span class="r-in"><span>        label <span class="op">=</span> <span class="st">"With a vector of colors:"</span>,</span></span>
+<span class="r-in"><span>        choices <span class="op">=</span> <span class="fu"><a href="https://scales.r-lib.org/reference/brewer_pal.html" class="external-link">brewer_pal</a></span><span class="op">(</span>palette <span class="op">=</span> <span class="st">"Dark2"</span><span class="op">)</span><span class="op">(</span><span class="fl">8</span><span class="op">)</span></span></span>
+<span class="r-in"><span>      <span class="op">)</span>,</span></span>
+<span class="r-in"><span>      <span class="fu"><a href="https://rdrr.io/pkg/shiny/man/textOutput.html" class="external-link">verbatimTextOutput</a></span><span class="op">(</span><span class="st">"res1"</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>      <span class="fu">colorPicker</span><span class="op">(</span></span></span>
+<span class="r-in"><span>        inputId <span class="op">=</span> <span class="st">"col5"</span>,</span></span>
+<span class="r-in"><span>        label <span class="op">=</span> <span class="st">"Update colors:"</span>,</span></span>
+<span class="r-in"><span>        choices <span class="op">=</span> <span class="fu"><a href="https://scales.r-lib.org/reference/brewer_pal.html" class="external-link">brewer_pal</a></span><span class="op">(</span>palette <span class="op">=</span> <span class="st">"Blues"</span>, direction <span class="op">=</span> <span class="op">-</span><span class="fl">1</span><span class="op">)</span><span class="op">(</span><span class="fl">8</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>        textColor <span class="op">=</span> <span class="st">"#FFF"</span></span></span>
+<span class="r-in"><span>      <span class="op">)</span>,</span></span>
+<span class="r-in"><span>      <span class="fu"><a href="https://rdrr.io/pkg/shiny/man/textOutput.html" class="external-link">verbatimTextOutput</a></span><span class="op">(</span><span class="st">"res5"</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>      <span class="fu"><a href="https://rdrr.io/pkg/shiny/man/radioButtons.html" class="external-link">radioButtons</a></span><span class="op">(</span></span></span>
+<span class="r-in"><span>        <span class="st">"update"</span>, <span class="st">"Colors"</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Blues"</span>, <span class="st">"Greens"</span>, <span class="st">"Reds"</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>        inline <span class="op">=</span> <span class="cn">TRUE</span></span></span>
+<span class="r-in"><span>      <span class="op">)</span></span></span>
+<span class="r-in"><span>    <span class="op">)</span>,</span></span>
+<span class="r-in"><span>    <span class="fu"><a href="https://rdrr.io/pkg/shiny/man/column.html" class="external-link">column</a></span><span class="op">(</span></span></span>
+<span class="r-in"><span>      width <span class="op">=</span> <span class="fl">3</span>,</span></span>
+<span class="r-in"><span>      <span class="fu">colorPicker</span><span class="op">(</span></span></span>
+<span class="r-in"><span>        inputId <span class="op">=</span> <span class="st">"col2"</span>,</span></span>
+<span class="r-in"><span>        label <span class="op">=</span> <span class="st">"Change text color:"</span>,</span></span>
+<span class="r-in"><span>        choices <span class="op">=</span> <span class="fu"><a href="https://scales.r-lib.org/reference/brewer_pal.html" class="external-link">brewer_pal</a></span><span class="op">(</span>palette <span class="op">=</span> <span class="st">"Blues"</span><span class="op">)</span><span class="op">(</span><span class="fl">8</span><span class="op">)</span>, </span></span>
+<span class="r-in"><span>        textColor <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"black"</span>, <span class="st">"black"</span>, <span class="st">"black"</span>, <span class="st">"white"</span>,</span></span>
+<span class="r-in"><span>                      <span class="st">"white"</span>, <span class="st">"white"</span>, <span class="st">"white"</span>, <span class="st">"white"</span><span class="op">)</span></span></span>
+<span class="r-in"><span>      <span class="op">)</span>,</span></span>
+<span class="r-in"><span>      <span class="fu"><a href="https://rdrr.io/pkg/shiny/man/textOutput.html" class="external-link">verbatimTextOutput</a></span><span class="op">(</span><span class="st">"res2"</span><span class="op">)</span></span></span>
+<span class="r-in"><span>    <span class="op">)</span>,</span></span>
+<span class="r-in"><span>    <span class="fu"><a href="https://rdrr.io/pkg/shiny/man/column.html" class="external-link">column</a></span><span class="op">(</span></span></span>
+<span class="r-in"><span>      width <span class="op">=</span> <span class="fl">3</span>,</span></span>
+<span class="r-in"><span>      <span class="fu">colorPicker</span><span class="op">(</span></span></span>
+<span class="r-in"><span>        inputId <span class="op">=</span> <span class="st">"col3"</span>,</span></span>
+<span class="r-in"><span>        label <span class="op">=</span> <span class="st">"With a list of vector of colors:"</span>,</span></span>
+<span class="r-in"><span>        choices <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span></span></span>
+<span class="r-in"><span>          <span class="st">"Blues"</span> <span class="op">=</span> <span class="fu"><a href="https://scales.r-lib.org/reference/brewer_pal.html" class="external-link">brewer_pal</a></span><span class="op">(</span>palette <span class="op">=</span> <span class="st">"Blues"</span><span class="op">)</span><span class="op">(</span><span class="fl">8</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>          <span class="st">"Reds"</span> <span class="op">=</span> <span class="fu"><a href="https://scales.r-lib.org/reference/brewer_pal.html" class="external-link">brewer_pal</a></span><span class="op">(</span>palette <span class="op">=</span> <span class="st">"Reds"</span><span class="op">)</span><span class="op">(</span><span class="fl">8</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>          <span class="st">"Greens"</span> <span class="op">=</span> <span class="fu"><a href="https://scales.r-lib.org/reference/brewer_pal.html" class="external-link">brewer_pal</a></span><span class="op">(</span>palette <span class="op">=</span> <span class="st">"Greens"</span><span class="op">)</span><span class="op">(</span><span class="fl">8</span><span class="op">)</span></span></span>
+<span class="r-in"><span>        <span class="op">)</span></span></span>
+<span class="r-in"><span>      <span class="op">)</span>,</span></span>
+<span class="r-in"><span>      <span class="fu"><a href="https://rdrr.io/pkg/shiny/man/textOutput.html" class="external-link">verbatimTextOutput</a></span><span class="op">(</span><span class="st">"res3"</span><span class="op">)</span></span></span>
+<span class="r-in"><span>    <span class="op">)</span>,</span></span>
+<span class="r-in"><span>    <span class="fu"><a href="https://rdrr.io/pkg/shiny/man/column.html" class="external-link">column</a></span><span class="op">(</span></span></span>
+<span class="r-in"><span>      width <span class="op">=</span> <span class="fl">3</span>,</span></span>
+<span class="r-in"><span>      <span class="fu">colorPicker</span><span class="op">(</span></span></span>
+<span class="r-in"><span>        inputId <span class="op">=</span> <span class="st">"col4"</span>,</span></span>
+<span class="r-in"><span>        label <span class="op">=</span> <span class="st">"Plain color &amp; multiple choices:"</span>,</span></span>
+<span class="r-in"><span>        choices <span class="op">=</span> <span class="fu"><a href="https://scales.r-lib.org/reference/brewer_pal.html" class="external-link">brewer_pal</a></span><span class="op">(</span>palette <span class="op">=</span> <span class="st">"Paired"</span><span class="op">)</span><span class="op">(</span><span class="fl">8</span><span class="op">)</span>, </span></span>
+<span class="r-in"><span>        plainColor <span class="op">=</span> <span class="cn">TRUE</span>, </span></span>
+<span class="r-in"><span>        multiple <span class="op">=</span> <span class="cn">TRUE</span>, </span></span>
+<span class="r-in"><span>        pickerOpts <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>`selected-text-format`<span class="op">=</span> <span class="st">"count &gt; 3"</span><span class="op">)</span></span></span>
+<span class="r-in"><span>      <span class="op">)</span>,</span></span>
+<span class="r-in"><span>      <span class="fu"><a href="https://rdrr.io/pkg/shiny/man/textOutput.html" class="external-link">verbatimTextOutput</a></span><span class="op">(</span><span class="st">"res4"</span><span class="op">)</span></span></span>
+<span class="r-in"><span>    <span class="op">)</span></span></span>
+<span class="r-in"><span>  <span class="op">)</span></span></span>
+<span class="r-in"><span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="va">server</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">input</span>, <span class="va">output</span>, <span class="va">session</span><span class="op">)</span> <span class="op">{</span></span></span>
+<span class="r-in"><span>  </span></span>
+<span class="r-in"><span>  <span class="va">output</span><span class="op">$</span><span class="va">res1</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/shiny/man/renderPrint.html" class="external-link">renderPrint</a></span><span class="op">(</span><span class="va">input</span><span class="op">$</span><span class="va">col1</span><span class="op">)</span></span></span>
+<span class="r-in"><span>  <span class="va">output</span><span class="op">$</span><span class="va">res2</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/shiny/man/renderPrint.html" class="external-link">renderPrint</a></span><span class="op">(</span><span class="va">input</span><span class="op">$</span><span class="va">col2</span><span class="op">)</span></span></span>
+<span class="r-in"><span>  <span class="va">output</span><span class="op">$</span><span class="va">res3</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/shiny/man/renderPrint.html" class="external-link">renderPrint</a></span><span class="op">(</span><span class="va">input</span><span class="op">$</span><span class="va">col3</span><span class="op">)</span></span></span>
+<span class="r-in"><span>  <span class="va">output</span><span class="op">$</span><span class="va">res4</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/shiny/man/renderPrint.html" class="external-link">renderPrint</a></span><span class="op">(</span><span class="va">input</span><span class="op">$</span><span class="va">col4</span><span class="op">)</span></span></span>
+<span class="r-in"><span>  <span class="va">output</span><span class="op">$</span><span class="va">res5</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/shiny/man/renderPrint.html" class="external-link">renderPrint</a></span><span class="op">(</span><span class="va">input</span><span class="op">$</span><span class="va">col5</span><span class="op">)</span></span></span>
+<span class="r-in"><span>  </span></span>
+<span class="r-in"><span>  <span class="fu"><a href="https://rdrr.io/pkg/shiny/man/observeEvent.html" class="external-link">observeEvent</a></span><span class="op">(</span><span class="va">input</span><span class="op">$</span><span class="va">update</span>, <span class="op">{</span></span></span>
+<span class="r-in"><span>    <span class="fu">updateColorPicker</span><span class="op">(</span></span></span>
+<span class="r-in"><span>      inputId <span class="op">=</span> <span class="st">"col5"</span>,</span></span>
+<span class="r-in"><span>      choices <span class="op">=</span> <span class="fu"><a href="https://scales.r-lib.org/reference/brewer_pal.html" class="external-link">brewer_pal</a></span><span class="op">(</span>palette <span class="op">=</span> <span class="va">input</span><span class="op">$</span><span class="va">update</span>, direction <span class="op">=</span> <span class="op">-</span><span class="fl">1</span><span class="op">)</span><span class="op">(</span><span class="fl">8</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>      textColor <span class="op">=</span> <span class="st">"#FFF"</span></span></span>
+<span class="r-in"><span>    <span class="op">)</span></span></span>
+<span class="r-in"><span>  <span class="op">}</span><span class="op">)</span></span></span>
+<span class="r-in"><span>  </span></span>
+<span class="r-in"><span><span class="op">}</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="kw">if</span> <span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/interactive.html" class="external-link">interactive</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span></span>
+<span class="r-in"><span>  <span class="fu"><a href="https://rdrr.io/pkg/shiny/man/shinyApp.html" class="external-link">shinyApp</a></span><span class="op">(</span><span class="va">ui</span>, <span class="va">server</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="op">}</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># palettePicker -----------------------------------------------------------</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://shiny.rstudio.com/" class="external-link">shiny</a></span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://dreamrs.github.io/esquisse/">esquisse</a></span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://scales.r-lib.org" class="external-link">scales</a></span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="va">ui</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/shiny/man/fluidPage.html" class="external-link">fluidPage</a></span><span class="op">(</span></span></span>
+<span class="r-in"><span>  <span class="va">tags</span><span class="op">$</span><span class="fu">h2</span><span class="op">(</span><span class="st">"pickerColor examples"</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>  </span></span>
+<span class="r-in"><span>  <span class="fu"><a href="https://rdrr.io/pkg/shiny/man/fluidPage.html" class="external-link">fluidRow</a></span><span class="op">(</span></span></span>
+<span class="r-in"><span>    <span class="fu"><a href="https://rdrr.io/pkg/shiny/man/column.html" class="external-link">column</a></span><span class="op">(</span></span></span>
+<span class="r-in"><span>      width <span class="op">=</span> <span class="fl">4</span>,</span></span>
+<span class="r-in"><span>      <span class="fu">palettePicker</span><span class="op">(</span></span></span>
+<span class="r-in"><span>        inputId <span class="op">=</span> <span class="st">"pal1"</span>, </span></span>
+<span class="r-in"><span>        label <span class="op">=</span> <span class="st">"Select a palette:"</span>, </span></span>
+<span class="r-in"><span>        choices <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span></span></span>
+<span class="r-in"><span>          <span class="st">"Blues"</span> <span class="op">=</span> <span class="fu"><a href="https://scales.r-lib.org/reference/brewer_pal.html" class="external-link">brewer_pal</a></span><span class="op">(</span>palette <span class="op">=</span> <span class="st">"Blues"</span><span class="op">)</span><span class="op">(</span><span class="fl">8</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>          <span class="st">"Reds"</span> <span class="op">=</span> <span class="fu"><a href="https://scales.r-lib.org/reference/brewer_pal.html" class="external-link">brewer_pal</a></span><span class="op">(</span>palette <span class="op">=</span> <span class="st">"Reds"</span><span class="op">)</span><span class="op">(</span><span class="fl">8</span><span class="op">)</span></span></span>
+<span class="r-in"><span>        <span class="op">)</span></span></span>
+<span class="r-in"><span>      <span class="op">)</span>,</span></span>
+<span class="r-in"><span>      <span class="fu"><a href="https://rdrr.io/pkg/shiny/man/textOutput.html" class="external-link">verbatimTextOutput</a></span><span class="op">(</span><span class="st">"res1"</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>      <span class="fu">palettePicker</span><span class="op">(</span></span></span>
+<span class="r-in"><span>        inputId <span class="op">=</span> <span class="st">"pal4"</span>, </span></span>
+<span class="r-in"><span>        label <span class="op">=</span> <span class="st">"Update palette:"</span>, </span></span>
+<span class="r-in"><span>        choices <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span></span></span>
+<span class="r-in"><span>          <span class="st">"Blues"</span> <span class="op">=</span> <span class="fu"><a href="https://scales.r-lib.org/reference/brewer_pal.html" class="external-link">brewer_pal</a></span><span class="op">(</span>palette <span class="op">=</span> <span class="st">"Blues"</span><span class="op">)</span><span class="op">(</span><span class="fl">8</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>          <span class="st">"Reds"</span> <span class="op">=</span> <span class="fu"><a href="https://scales.r-lib.org/reference/brewer_pal.html" class="external-link">brewer_pal</a></span><span class="op">(</span>palette <span class="op">=</span> <span class="st">"Reds"</span><span class="op">)</span><span class="op">(</span><span class="fl">8</span><span class="op">)</span></span></span>
+<span class="r-in"><span>        <span class="op">)</span></span></span>
+<span class="r-in"><span>      <span class="op">)</span>,</span></span>
+<span class="r-in"><span>      <span class="fu"><a href="https://rdrr.io/pkg/shiny/man/textOutput.html" class="external-link">verbatimTextOutput</a></span><span class="op">(</span><span class="st">"res4"</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>      <span class="fu"><a href="https://rdrr.io/pkg/shiny/man/radioButtons.html" class="external-link">radioButtons</a></span><span class="op">(</span></span></span>
+<span class="r-in"><span>        <span class="st">"update"</span>, <span class="st">"Palettes:"</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"default"</span>, <span class="st">"viridis"</span>, <span class="st">"brewer"</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>        inline <span class="op">=</span> <span class="cn">TRUE</span></span></span>
+<span class="r-in"><span>      <span class="op">)</span></span></span>
+<span class="r-in"><span>    <span class="op">)</span>,</span></span>
+<span class="r-in"><span>    <span class="fu"><a href="https://rdrr.io/pkg/shiny/man/column.html" class="external-link">column</a></span><span class="op">(</span></span></span>
+<span class="r-in"><span>      width <span class="op">=</span> <span class="fl">4</span>,</span></span>
+<span class="r-in"><span>      <span class="fu">palettePicker</span><span class="op">(</span></span></span>
+<span class="r-in"><span>        inputId <span class="op">=</span> <span class="st">"pal2"</span>, </span></span>
+<span class="r-in"><span>        label <span class="op">=</span> <span class="st">"With a list of palette:"</span>, </span></span>
+<span class="r-in"><span>        choices <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span></span></span>
+<span class="r-in"><span>          <span class="st">"Viridis"</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span></span></span>
+<span class="r-in"><span>            <span class="st">"viridis"</span> <span class="op">=</span> <span class="fu"><a href="https://scales.r-lib.org/reference/viridis_pal.html" class="external-link">viridis_pal</a></span><span class="op">(</span>option <span class="op">=</span> <span class="st">"viridis"</span><span class="op">)</span><span class="op">(</span><span class="fl">10</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>            <span class="st">"magma"</span> <span class="op">=</span> <span class="fu"><a href="https://scales.r-lib.org/reference/viridis_pal.html" class="external-link">viridis_pal</a></span><span class="op">(</span>option <span class="op">=</span> <span class="st">"magma"</span><span class="op">)</span><span class="op">(</span><span class="fl">10</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>            <span class="st">"inferno"</span> <span class="op">=</span> <span class="fu"><a href="https://scales.r-lib.org/reference/viridis_pal.html" class="external-link">viridis_pal</a></span><span class="op">(</span>option <span class="op">=</span> <span class="st">"inferno"</span><span class="op">)</span><span class="op">(</span><span class="fl">10</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>            <span class="st">"plasma"</span> <span class="op">=</span> <span class="fu"><a href="https://scales.r-lib.org/reference/viridis_pal.html" class="external-link">viridis_pal</a></span><span class="op">(</span>option <span class="op">=</span> <span class="st">"plasma"</span><span class="op">)</span><span class="op">(</span><span class="fl">10</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>            <span class="st">"cividis"</span> <span class="op">=</span> <span class="fu"><a href="https://scales.r-lib.org/reference/viridis_pal.html" class="external-link">viridis_pal</a></span><span class="op">(</span>option <span class="op">=</span> <span class="st">"cividis"</span><span class="op">)</span><span class="op">(</span><span class="fl">10</span><span class="op">)</span></span></span>
+<span class="r-in"><span>          <span class="op">)</span>,</span></span>
+<span class="r-in"><span>          <span class="st">"Brewer"</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span></span></span>
+<span class="r-in"><span>            <span class="st">"Blues"</span> <span class="op">=</span> <span class="fu"><a href="https://scales.r-lib.org/reference/brewer_pal.html" class="external-link">brewer_pal</a></span><span class="op">(</span>palette <span class="op">=</span> <span class="st">"Blues"</span><span class="op">)</span><span class="op">(</span><span class="fl">8</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>            <span class="st">"Reds"</span> <span class="op">=</span> <span class="fu"><a href="https://scales.r-lib.org/reference/brewer_pal.html" class="external-link">brewer_pal</a></span><span class="op">(</span>palette <span class="op">=</span> <span class="st">"Reds"</span><span class="op">)</span><span class="op">(</span><span class="fl">8</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>            <span class="st">"Paired"</span> <span class="op">=</span> <span class="fu"><a href="https://scales.r-lib.org/reference/brewer_pal.html" class="external-link">brewer_pal</a></span><span class="op">(</span>palette <span class="op">=</span> <span class="st">"Paired"</span><span class="op">)</span><span class="op">(</span><span class="fl">8</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>            <span class="st">"Set1"</span> <span class="op">=</span> <span class="fu"><a href="https://scales.r-lib.org/reference/brewer_pal.html" class="external-link">brewer_pal</a></span><span class="op">(</span>palette <span class="op">=</span> <span class="st">"Set1"</span><span class="op">)</span><span class="op">(</span><span class="fl">8</span><span class="op">)</span></span></span>
+<span class="r-in"><span>          <span class="op">)</span></span></span>
+<span class="r-in"><span>        <span class="op">)</span>, </span></span>
+<span class="r-in"><span>        textColor <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span></span></span>
+<span class="r-in"><span>          <span class="fu"><a href="https://rdrr.io/r/base/rep.html" class="external-link">rep</a></span><span class="op">(</span><span class="st">"white"</span>, <span class="fl">5</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/rep.html" class="external-link">rep</a></span><span class="op">(</span><span class="st">"black"</span>, <span class="fl">4</span><span class="op">)</span> </span></span>
+<span class="r-in"><span>        <span class="op">)</span></span></span>
+<span class="r-in"><span>      <span class="op">)</span>,</span></span>
+<span class="r-in"><span>      <span class="fu"><a href="https://rdrr.io/pkg/shiny/man/textOutput.html" class="external-link">verbatimTextOutput</a></span><span class="op">(</span><span class="st">"res2"</span><span class="op">)</span></span></span>
+<span class="r-in"><span>    <span class="op">)</span>,</span></span>
+<span class="r-in"><span>    <span class="fu"><a href="https://rdrr.io/pkg/shiny/man/column.html" class="external-link">column</a></span><span class="op">(</span></span></span>
+<span class="r-in"><span>      width <span class="op">=</span> <span class="fl">4</span>,</span></span>
+<span class="r-in"><span>      <span class="fu">palettePicker</span><span class="op">(</span></span></span>
+<span class="r-in"><span>        inputId <span class="op">=</span> <span class="st">"pal3"</span>, </span></span>
+<span class="r-in"><span>        label <span class="op">=</span> <span class="st">"With plain colors:"</span>, </span></span>
+<span class="r-in"><span>        choices <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span></span></span>
+<span class="r-in"><span>          <span class="st">"BrBG"</span> <span class="op">=</span> <span class="fu"><a href="https://scales.r-lib.org/reference/brewer_pal.html" class="external-link">brewer_pal</a></span><span class="op">(</span>palette <span class="op">=</span> <span class="st">"BrBG"</span><span class="op">)</span><span class="op">(</span><span class="fl">8</span><span class="op">)</span>, </span></span>
+<span class="r-in"><span>          <span class="st">"PiYG"</span> <span class="op">=</span> <span class="fu"><a href="https://scales.r-lib.org/reference/brewer_pal.html" class="external-link">brewer_pal</a></span><span class="op">(</span>palette <span class="op">=</span> <span class="st">"PiYG"</span><span class="op">)</span><span class="op">(</span><span class="fl">8</span><span class="op">)</span>, </span></span>
+<span class="r-in"><span>          <span class="st">"PRGn"</span> <span class="op">=</span> <span class="fu"><a href="https://scales.r-lib.org/reference/brewer_pal.html" class="external-link">brewer_pal</a></span><span class="op">(</span>palette <span class="op">=</span> <span class="st">"PRGn"</span><span class="op">)</span><span class="op">(</span><span class="fl">8</span><span class="op">)</span>, </span></span>
+<span class="r-in"><span>          <span class="st">"PuOr"</span> <span class="op">=</span> <span class="fu"><a href="https://scales.r-lib.org/reference/brewer_pal.html" class="external-link">brewer_pal</a></span><span class="op">(</span>palette <span class="op">=</span> <span class="st">"PuOr"</span><span class="op">)</span><span class="op">(</span><span class="fl">8</span><span class="op">)</span>, </span></span>
+<span class="r-in"><span>          <span class="st">"RdBu"</span> <span class="op">=</span> <span class="fu"><a href="https://scales.r-lib.org/reference/brewer_pal.html" class="external-link">brewer_pal</a></span><span class="op">(</span>palette <span class="op">=</span> <span class="st">"RdBu"</span><span class="op">)</span><span class="op">(</span><span class="fl">8</span><span class="op">)</span>, </span></span>
+<span class="r-in"><span>          <span class="st">"RdGy"</span> <span class="op">=</span> <span class="fu"><a href="https://scales.r-lib.org/reference/brewer_pal.html" class="external-link">brewer_pal</a></span><span class="op">(</span>palette <span class="op">=</span> <span class="st">"RdGy"</span><span class="op">)</span><span class="op">(</span><span class="fl">8</span><span class="op">)</span>, </span></span>
+<span class="r-in"><span>          <span class="st">"RdYlBu"</span> <span class="op">=</span> <span class="fu"><a href="https://scales.r-lib.org/reference/brewer_pal.html" class="external-link">brewer_pal</a></span><span class="op">(</span>palette <span class="op">=</span> <span class="st">"RdYlBu"</span><span class="op">)</span><span class="op">(</span><span class="fl">8</span><span class="op">)</span>, </span></span>
+<span class="r-in"><span>          <span class="st">"RdYlGn"</span> <span class="op">=</span> <span class="fu"><a href="https://scales.r-lib.org/reference/brewer_pal.html" class="external-link">brewer_pal</a></span><span class="op">(</span>palette <span class="op">=</span> <span class="st">"RdYlGn"</span><span class="op">)</span><span class="op">(</span><span class="fl">8</span><span class="op">)</span>, </span></span>
+<span class="r-in"><span>          <span class="st">"Spectral"</span> <span class="op">=</span> <span class="fu"><a href="https://scales.r-lib.org/reference/brewer_pal.html" class="external-link">brewer_pal</a></span><span class="op">(</span>palette <span class="op">=</span> <span class="st">"Spectral"</span><span class="op">)</span><span class="op">(</span><span class="fl">8</span><span class="op">)</span></span></span>
+<span class="r-in"><span>        <span class="op">)</span>, </span></span>
+<span class="r-in"><span>        plainColor <span class="op">=</span> <span class="cn">TRUE</span>, </span></span>
+<span class="r-in"><span>        textColor <span class="op">=</span> <span class="st">"white"</span></span></span>
+<span class="r-in"><span>      <span class="op">)</span>,</span></span>
+<span class="r-in"><span>      <span class="fu"><a href="https://rdrr.io/pkg/shiny/man/textOutput.html" class="external-link">verbatimTextOutput</a></span><span class="op">(</span><span class="st">"res3"</span><span class="op">)</span></span></span>
+<span class="r-in"><span>    <span class="op">)</span></span></span>
+<span class="r-in"><span>  <span class="op">)</span></span></span>
+<span class="r-in"><span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="va">server</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">input</span>, <span class="va">output</span>, <span class="va">session</span><span class="op">)</span> <span class="op">{</span></span></span>
+<span class="r-in"><span>  </span></span>
+<span class="r-in"><span>  <span class="va">output</span><span class="op">$</span><span class="va">res1</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/shiny/man/renderPrint.html" class="external-link">renderPrint</a></span><span class="op">(</span><span class="va">input</span><span class="op">$</span><span class="va">pal1</span><span class="op">)</span></span></span>
+<span class="r-in"><span>  <span class="va">output</span><span class="op">$</span><span class="va">res2</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/shiny/man/renderPrint.html" class="external-link">renderPrint</a></span><span class="op">(</span><span class="va">input</span><span class="op">$</span><span class="va">pal2</span><span class="op">)</span></span></span>
+<span class="r-in"><span>  <span class="va">output</span><span class="op">$</span><span class="va">res3</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/shiny/man/renderPrint.html" class="external-link">renderPrint</a></span><span class="op">(</span><span class="va">input</span><span class="op">$</span><span class="va">pal3</span><span class="op">)</span></span></span>
+<span class="r-in"><span>  <span class="va">output</span><span class="op">$</span><span class="va">res4</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/shiny/man/renderPrint.html" class="external-link">renderPrint</a></span><span class="op">(</span><span class="va">input</span><span class="op">$</span><span class="va">pal4</span><span class="op">)</span></span></span>
+<span class="r-in"><span>  </span></span>
+<span class="r-in"><span>  <span class="fu"><a href="https://rdrr.io/pkg/shiny/man/observeEvent.html" class="external-link">observeEvent</a></span><span class="op">(</span><span class="va">input</span><span class="op">$</span><span class="va">update</span>, <span class="op">{</span></span></span>
+<span class="r-in"><span>    <span class="kw">if</span> <span class="op">(</span><span class="va">input</span><span class="op">$</span><span class="va">update</span> <span class="op">==</span> <span class="st">"default"</span><span class="op">)</span> <span class="op">{</span></span></span>
+<span class="r-in"><span>      <span class="fu">updatePalettePicker</span><span class="op">(</span></span></span>
+<span class="r-in"><span>        inputId <span class="op">=</span> <span class="st">"pal4"</span>,</span></span>
+<span class="r-in"><span>        choices <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span></span></span>
+<span class="r-in"><span>          <span class="st">"Blues"</span> <span class="op">=</span> <span class="fu"><a href="https://scales.r-lib.org/reference/brewer_pal.html" class="external-link">brewer_pal</a></span><span class="op">(</span>palette <span class="op">=</span> <span class="st">"Blues"</span><span class="op">)</span><span class="op">(</span><span class="fl">8</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>          <span class="st">"Reds"</span> <span class="op">=</span> <span class="fu"><a href="https://scales.r-lib.org/reference/brewer_pal.html" class="external-link">brewer_pal</a></span><span class="op">(</span>palette <span class="op">=</span> <span class="st">"Reds"</span><span class="op">)</span><span class="op">(</span><span class="fl">8</span><span class="op">)</span></span></span>
+<span class="r-in"><span>        <span class="op">)</span></span></span>
+<span class="r-in"><span>      <span class="op">)</span></span></span>
+<span class="r-in"><span>    <span class="op">}</span> <span class="kw">else</span> <span class="kw">if</span> <span class="op">(</span><span class="va">input</span><span class="op">$</span><span class="va">update</span> <span class="op">==</span> <span class="st">"viridis"</span><span class="op">)</span> <span class="op">{</span></span></span>
+<span class="r-in"><span>      <span class="fu">updatePalettePicker</span><span class="op">(</span></span></span>
+<span class="r-in"><span>        inputId <span class="op">=</span> <span class="st">"pal4"</span>,</span></span>
+<span class="r-in"><span>        choices <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span></span></span>
+<span class="r-in"><span>          <span class="st">"viridis"</span> <span class="op">=</span> <span class="fu"><a href="https://scales.r-lib.org/reference/viridis_pal.html" class="external-link">viridis_pal</a></span><span class="op">(</span>option <span class="op">=</span> <span class="st">"viridis"</span><span class="op">)</span><span class="op">(</span><span class="fl">10</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>          <span class="st">"magma"</span> <span class="op">=</span> <span class="fu"><a href="https://scales.r-lib.org/reference/viridis_pal.html" class="external-link">viridis_pal</a></span><span class="op">(</span>option <span class="op">=</span> <span class="st">"magma"</span><span class="op">)</span><span class="op">(</span><span class="fl">10</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>          <span class="st">"inferno"</span> <span class="op">=</span> <span class="fu"><a href="https://scales.r-lib.org/reference/viridis_pal.html" class="external-link">viridis_pal</a></span><span class="op">(</span>option <span class="op">=</span> <span class="st">"inferno"</span><span class="op">)</span><span class="op">(</span><span class="fl">10</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>          <span class="st">"plasma"</span> <span class="op">=</span> <span class="fu"><a href="https://scales.r-lib.org/reference/viridis_pal.html" class="external-link">viridis_pal</a></span><span class="op">(</span>option <span class="op">=</span> <span class="st">"plasma"</span><span class="op">)</span><span class="op">(</span><span class="fl">10</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>          <span class="st">"cividis"</span> <span class="op">=</span> <span class="fu"><a href="https://scales.r-lib.org/reference/viridis_pal.html" class="external-link">viridis_pal</a></span><span class="op">(</span>option <span class="op">=</span> <span class="st">"cividis"</span><span class="op">)</span><span class="op">(</span><span class="fl">10</span><span class="op">)</span></span></span>
+<span class="r-in"><span>        <span class="op">)</span>,</span></span>
+<span class="r-in"><span>        textColor <span class="op">=</span> <span class="st">"#FFF"</span></span></span>
+<span class="r-in"><span>      <span class="op">)</span></span></span>
+<span class="r-in"><span>    <span class="op">}</span> <span class="kw">else</span> <span class="kw">if</span> <span class="op">(</span><span class="va">input</span><span class="op">$</span><span class="va">update</span> <span class="op">==</span> <span class="st">"brewer"</span><span class="op">)</span> <span class="op">{</span></span></span>
+<span class="r-in"><span>      <span class="fu">updatePalettePicker</span><span class="op">(</span></span></span>
+<span class="r-in"><span>        inputId <span class="op">=</span> <span class="st">"pal4"</span>,</span></span>
+<span class="r-in"><span>        choices <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span></span></span>
+<span class="r-in"><span>          <span class="st">"Blues"</span> <span class="op">=</span> <span class="fu"><a href="https://scales.r-lib.org/reference/brewer_pal.html" class="external-link">brewer_pal</a></span><span class="op">(</span>palette <span class="op">=</span> <span class="st">"Blues"</span><span class="op">)</span><span class="op">(</span><span class="fl">8</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>          <span class="st">"Reds"</span> <span class="op">=</span> <span class="fu"><a href="https://scales.r-lib.org/reference/brewer_pal.html" class="external-link">brewer_pal</a></span><span class="op">(</span>palette <span class="op">=</span> <span class="st">"Reds"</span><span class="op">)</span><span class="op">(</span><span class="fl">8</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>          <span class="st">"Paired"</span> <span class="op">=</span> <span class="fu"><a href="https://scales.r-lib.org/reference/brewer_pal.html" class="external-link">brewer_pal</a></span><span class="op">(</span>palette <span class="op">=</span> <span class="st">"Paired"</span><span class="op">)</span><span class="op">(</span><span class="fl">8</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>          <span class="st">"Set1"</span> <span class="op">=</span> <span class="fu"><a href="https://scales.r-lib.org/reference/brewer_pal.html" class="external-link">brewer_pal</a></span><span class="op">(</span>palette <span class="op">=</span> <span class="st">"Set1"</span><span class="op">)</span><span class="op">(</span><span class="fl">8</span><span class="op">)</span></span></span>
+<span class="r-in"><span>        <span class="op">)</span></span></span>
+<span class="r-in"><span>      <span class="op">)</span></span></span>
+<span class="r-in"><span>    <span class="op">}</span></span></span>
+<span class="r-in"><span>  <span class="op">}</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="op">}</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="kw">if</span> <span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/interactive.html" class="external-link">interactive</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span></span>
+<span class="r-in"><span>  <span class="fu"><a href="https://rdrr.io/pkg/shiny/man/shinyApp.html" class="external-link">shinyApp</a></span><span class="op">(</span><span class="va">ui</span>, <span class="va">server</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="op">}</span></span></span>
 </code></pre></div>
     </div>
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>
@@ -365,7 +386,7 @@ If not specified then defaults to the first value for single-select lists and no
 </div>
 
 <div class="pkgdown-footer-right">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.3.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.5.</p>
 </div>
 
     </footer></div>
