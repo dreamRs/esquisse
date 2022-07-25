@@ -59,9 +59,9 @@
 /* Geom & aes block */
 .esquisse-geom-aes {
   display: -ms-grid;
-  display: grid; 
+  display: grid;
   -ms-grid-columns: 90px 1fr;
-  grid-template-columns: 90px 1fr; 
+  grid-template-columns: 90px 1fr;
   -ms-grid-rows: 1fr;
   grid-template-rows: 1fr;
   grid-column-gap: 0px;
@@ -107,8 +107,8 @@
 
 
 .esquisse-labs-options {
-  display: grid; 
-  grid-template-columns: 1fr 40px; 
+  display: grid;
+  grid-template-columns: 1fr 40px;
   grid-template-rows: 1fr;
   grid-column-gap: 0px;
   grid-row-gap: 0px;
@@ -140,11 +140,12 @@
   padding-right: 5px;
   overflow-y: auto;
   overflow-x: hidden;
+  z-index: 1000 !important;
 }
 
 .esquisse-controls-code {
   min-width: 370px;
-  z-index: 1000;
+  z-index: 1000 !important;
 }
 
 

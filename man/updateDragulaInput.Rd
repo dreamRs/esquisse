@@ -28,15 +28,7 @@ If this argument is provided, then \code{choiceNames} and \code{choiceValues} mu
 not be provided, and vice-versa. The values should be strings; other
 types (such as logicals and numbers) will be coerced to strings.}
 
-\item{choiceNames}{List of names and values, respectively,
-that are displayed to the user in the app and correspond to the each
-choice (for this reason, \code{choiceNames} and \code{choiceValues} must have the same length).
-If either of these arguments is provided, then the other must be provided and
-choices must not be provided. The advantage of using both of these over a named
-list for choices is that \code{choiceNames} allows any type of UI object to be passed
-through (tag objects, icons, HTML code, ...), instead of just simple text.}
-
-\item{choiceValues}{List of names and values, respectively,
+\item{choiceNames, choiceValues}{List of names and values, respectively,
 that are displayed to the user in the app and correspond to the each
 choice (for this reason, \code{choiceNames} and \code{choiceValues} must have the same length).
 If either of these arguments is provided, then the other must be provided and
