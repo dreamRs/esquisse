@@ -83,7 +83,7 @@ controls_ui <- function(id,
           label = i18n("Labels & Title"),
           up = TRUE,
           icon = ph("text-aa"),
-          status = "default btn-esquisse-controls"
+          status = "default border btn-esquisse-controls"
         )
       },
       if (isTRUE("parameters" %in% controls)) {
@@ -95,7 +95,7 @@ controls_ui <- function(id,
           label = i18n("Plot options"),
           up = TRUE,
           icon = ph("gear"),
-          status = "default btn-esquisse-controls"
+          status = "default border btn-esquisse-controls"
         )
       },
       if (isTRUE("appearance" %in% controls)) {
@@ -107,7 +107,7 @@ controls_ui <- function(id,
           label = i18n("Appearance"),
           up = TRUE,
           icon = ph("palette"),
-          status = "default btn-esquisse-controls"
+          status = "default border btn-esquisse-controls"
         )
       },
       if (isTRUE("filters" %in% controls)) {
@@ -119,7 +119,7 @@ controls_ui <- function(id,
           label = i18n("Data"),
           up = TRUE,
           icon = ph("sliders-horizontal"),
-          status = "default btn-esquisse-controls"
+          status = "default border btn-esquisse-controls"
         )
       },
       if (isTRUE("code" %in% controls)) {
@@ -132,7 +132,7 @@ controls_ui <- function(id,
           up = TRUE,
           right = TRUE,
           icon = ph("code"),
-          status = "default btn-esquisse-controls"
+          status = "default border btn-esquisse-controls"
         )
       }
     ),
@@ -551,61 +551,65 @@ controls_labs <- function(ns) {
 #' @importFrom shiny actionButton numericInput
 labs_options_input <- function(inputId, label, placeholder, defaults = list()) {
   tags$div(
-    class = "esquisse-labs-options",
-    tags$div(
-      class = "form-group shiny-input-container",
-      style = "width: 100%;",
-      tags$label(
-        class = "control-label",
-        id = paste0(inputId, "-label"),
-        `for` = inputId,
-        label
-      ),
-      tags$input(
-        id = inputId,
-        type = "text",
-        class = "form-control",
-        value = "",
-        placeholder = placeholder,
-        style = "border-radius: 4px 0 0 4px;"
-      )
+    class = "esquisse-labs",
+    tags$label(
+      class = "control-label",
+      id = paste0(inputId, "-label"),
+      `for` = inputId,
+      label
     ),
-    dropMenu(
-      actionButton(
-        inputId = paste0(inputId, "_options"),
-        label = ph("plus"),
-        style = "margin-top: 25px; border-radius: 0 4px 4px 0; width: 100%;"
-      ),
-      style = "width: 320px;",
-      prettyRadioButtons(
-        inputId = paste0(inputId, "_face"),
-        label = i18n("Font face:"),
-        choiceNames = c("Plain", "Italic", "Bold", "Bold/Italic"),
-        choiceValues = c("plain", "italic", "bold", "bold.italic"),
-        selected = defaults$face,
-        status = "primary",
-        inline = TRUE
-      ),
-      numericInput(
-        inputId = paste0(inputId, "_size"),
-        label = i18n("Font size:"),
-        value = defaults$size
-      ),
-      prettyRadioButtons(
-        inputId = paste0(inputId, "_align"),
-        label = i18n("Align:"),
-        choiceNames = c(i18n("Left"), i18n("Center"), i18n("Right")),
-        choiceValues = c("left", "center", "right"),
-        inline = TRUE,
-        status = "primary",
-        selected = switch(
-          as.character(defaults$hjust),
-          "0" = "left",
-          "0.5" = "center",
-          "1" = "right"
+    tags$div(
+      class = "esquisse-labs-options",
+      tags$div(
+        class = "form-group shiny-input-container",
+        style = "width: 100%;",
+        tags$input(
+          id = inputId,
+          type = "text",
+          class = "form-control",
+          value = "",
+          placeholder = placeholder,
+          style = "border-radius: 4px 0 0 4px;"
         )
       ),
-      placement = "right"
+      dropMenu(
+        actionButton(
+          inputId = paste0(inputId, "_options"),
+          label = ph("plus", title = "Options"),
+          style = "border-radius: 0 4px 4px 0; width: 100%;",
+          class = "border px-0"
+        ),
+        style = "width: 320px;",
+        prettyRadioButtons(
+          inputId = paste0(inputId, "_face"),
+          label = i18n("Font face:"),
+          choiceNames = c("Plain", "Italic", "Bold", "Bold/Italic"),
+          choiceValues = c("plain", "italic", "bold", "bold.italic"),
+          selected = defaults$face,
+          status = "primary",
+          inline = TRUE
+        ),
+        numericInput(
+          inputId = paste0(inputId, "_size"),
+          label = i18n("Font size:"),
+          value = defaults$size
+        ),
+        prettyRadioButtons(
+          inputId = paste0(inputId, "_align"),
+          label = i18n("Align:"),
+          choiceNames = c(i18n("Left"), i18n("Center"), i18n("Right")),
+          choiceValues = c("left", "center", "right"),
+          inline = TRUE,
+          status = "primary",
+          selected = switch(
+            as.character(defaults$hjust),
+            "0" = "left",
+            "0.5" = "center",
+            "1" = "right"
+          )
+        ),
+        placement = "right"
+      )
     )
   )
 }

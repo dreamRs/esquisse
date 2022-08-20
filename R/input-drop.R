@@ -1,6 +1,6 @@
 
 #' @title Dropdown Input
-#' 
+#'
 #' @description A dropdown menu for selecting a value.
 #'
 #' @param inputId The \code{input} slot that will be used to access the value.
@@ -18,48 +18,54 @@
 #' @param width The width of the input.
 #'
 #' @export
-#' 
+#'
 #' @importFrom htmltools validateCssUnit tags tagList singleton
-#' 
+#'
 #' @seealso \code{\link{updateDropInput}}
 #'
 #' @examples
 #' if (interactive()) {
-#'   
+#'
 #'   library(shiny)
 #'   library(esquisse)
-#'   
+#'
 #'   ui <- fluidPage(
 #'     tags$h2("Drop Input"),
 #'     dropInput(
 #'       inputId = "mydrop",
 #'       choicesNames = tagList(
-#'         list(icon("home"), style = "width: 100px;"), 
+#'         list(icon("home"), style = "width: 100px;"),
 #'         list(icon("flash"), style = "width: 100px;"),
 #'         list(icon("cogs"), style = "width: 100px;"),
-#'         list(icon("fire"), style = "width: 100px;"), 
-#'         list(icon("users"), style = "width: 100px;"), 
+#'         list(icon("fire"), style = "width: 100px;"),
+#'         list(icon("users"), style = "width: 100px;"),
 #'         list(icon("info"), style = "width: 100px;")
-#'       ), 
+#'       ),
 #'       choicesValues = c("home", "flash", "cogs",
 #'                         "fire", "users", "info"),
 #'       dropWidth = "220px"
 #'     ),
 #'     verbatimTextOutput(outputId = "res")
 #'   )
-#'   
+#'
 #'   server <- function(input, output, session) {
 #'     output$res <- renderPrint({
 #'       input$mydrop
 #'     })
 #'   }
-#'   
+#'
 #'   shinyApp(ui, server)
-#'   
+#'
 #' }
-dropInput <- function(inputId, choicesNames, choicesValues, selected = NULL,
-                      dropUp = FALSE, dropWidth = NULL, dropMaxHeight = NULL,
-                      dropPreScrollable = FALSE, btnClass = "btn-link",
+dropInput <- function(inputId,
+                      choicesNames,
+                      choicesValues,
+                      selected = NULL,
+                      dropUp = FALSE,
+                      dropWidth = NULL,
+                      dropMaxHeight = NULL,
+                      dropPreScrollable = FALSE,
+                      btnClass = "btn-link",
                       width = NULL) {
   if (length(choicesValues) != length(choicesNames))
     stop("dropInput: 'choicesNames' and 'choicesValues' must have same length!", call. = FALSE)
@@ -75,8 +81,9 @@ dropInput <- function(inputId, choicesNames, choicesValues, selected = NULL,
     args = c(tagSelected, list(
       style = if (!is.null(width))
         paste0("width: ", validateCssUnit(width), ";"),
-      class = "btn btn-default drop-input-main dropdown-toggle", 
+      class = "btn btn-default border drop-input-main dropdown-toggle",
       `data-toggle` = "dropdown",
+      `data-bs-toggle` = "dropdown",
       `data-value` = selected
     ))
   )
@@ -110,7 +117,8 @@ dropInput <- function(inputId, choicesNames, choicesValues, selected = NULL,
       )
     ),
     tags$div(
-      id = inputId, class = "drop-input",
+      id = inputId,
+      class = "drop-input",
       class = ifelse(dropUp, "dropup", "dropdown"),
       btn, dropTag
     )
@@ -126,25 +134,25 @@ dropInput <- function(inputId, choicesNames, choicesValues, selected = NULL,
 #' @param disabled Choices (\code{choicesValues}) to disable.
 #'
 #' @export
-#' 
+#'
 #' @seealso \code{\link{dropInput}}
 #'
 #' @examples
 #' if (interactive()) {
-#'   
+#'
 #'   library(shiny)
 #'   library(esquisse)
-#'   
+#'
 #'   myChoices <- tagList(
-#'     list(icon("home"), style = "width: 100px;"), 
+#'     list(icon("home"), style = "width: 100px;"),
 #'     list(icon("flash"), style = "width: 100px;"),
 #'     list(icon("cogs"), style = "width: 100px;"),
-#'     list(icon("fire"), style = "width: 100px;"), 
-#'     list(icon("users"), style = "width: 100px;"), 
+#'     list(icon("fire"), style = "width: 100px;"),
+#'     list(icon("users"), style = "width: 100px;"),
 #'     list(icon("info"), style = "width: 100px;")
 #'   )
-#'   
-#'   
+#'
+#'
 #'   ui <- fluidPage(
 #'     tags$h2("Update Drop Input"),
 #'     fluidRow(
@@ -152,12 +160,12 @@ dropInput <- function(inputId, choicesNames, choicesValues, selected = NULL,
 #'         width = 6,
 #'         dropInput(
 #'           inputId = "mydrop",
-#'           choicesNames = myChoices, 
+#'           choicesNames = myChoices,
 #'           choicesValues = c("home", "flash", "cogs", "fire", "users", "info"),
 #'           dropWidth = "220px"
 #'         ),
 #'         verbatimTextOutput(outputId = "res")
-#'       ), 
+#'       ),
 #'       column(
 #'         width = 6,
 #'         actionButton("home", "Select home"),
@@ -175,13 +183,13 @@ dropInput <- function(inputId, choicesNames, choicesValues, selected = NULL,
 #'       )
 #'     )
 #'   )
-#'   
+#'
 #'   server <- function(input, output, session) {
-#'     
+#'
 #'     output$res <- renderPrint({
 #'       input$mydrop
 #'     })
-#'     
+#'
 #'     observeEvent(input$home, {
 #'       updateDropInput(session, "mydrop", "home")
 #'     })
@@ -200,7 +208,7 @@ dropInput <- function(inputId, choicesNames, choicesValues, selected = NULL,
 #'     observeEvent(input$info, {
 #'       updateDropInput(session, "mydrop", "info")
 #'     })
-#'     
+#'
 #'     observeEvent(input$disable, {
 #'       if (!is.null(input$disabled)) {
 #'         updateDropInput(session, "mydrop", disabled = input$disabled)
@@ -209,9 +217,9 @@ dropInput <- function(inputId, choicesNames, choicesValues, selected = NULL,
 #'       }
 #'     })
 #'   }
-#'   
+#'
 #'   shinyApp(ui, server)
-#'   
+#'
 #' }
 updateDropInput <- function(session, inputId, selected = NULL, disabled = NULL) {
   if (!is.null(disabled) && length(disabled) == 1)

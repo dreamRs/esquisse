@@ -3,7 +3,7 @@
 
 
 #' @title Save `ggplot` module
-#' 
+#'
 #' @description Save a `ggplot` object in various format and resize it before saving.
 #'
 #' @param id Module ID.
@@ -11,9 +11,9 @@
 #'
 #' @return No value. Use in UI & server of shiny application.
 #' @export
-#' 
+#'
 #' @name save-ggplot-module
-#' 
+#'
 #' @importFrom shiny NS plotOutput actionButton downloadButton textInput
 #' @importFrom htmltools tagList tags css
 #' @importFrom shinyWidgets textInputIcon numericInputIcon
@@ -73,10 +73,11 @@ save_ggplot_ui <- function(id, output_format = c("png", "pdf", "svg", "jpeg", "b
           X = output_format,
           FUN = function(x) {
             downloadButton(
-              outputId = ns(x), 
-              label = tagList(ph("download"), toupper(x)), 
+              outputId = ns(x),
+              label = tagList(ph("download"), toupper(x)),
               style = "width: 100%;",
-              icon = NULL
+              icon = NULL,
+              class = "border"
             )
           }
         )
@@ -90,24 +91,25 @@ save_ggplot_ui <- function(id, output_format = c("png", "pdf", "svg", "jpeg", "b
 }
 
 #' @param title Modal's title.
-#' 
+#'
 #' @export
-#' 
+#'
 #' @rdname save-ggplot-module
-#' 
+#'
 #' @importFrom shiny NS showModal modalDialog checkboxInput
 #' @importFrom htmltools tagList tags
-save_ggplot_modal <- function(id, 
-                              title = NULL, 
+save_ggplot_modal <- function(id,
+                              title = NULL,
                               output_format = c("png", "pdf", "svg", "jpeg", "bmp", "eps", "tiff")) {
   ns <- NS(id)
   showModal(modalDialog(
     title = tagList(
       tags$button(
-        ph("x"),
-        class = "btn btn-default pull-right",
-        style = "border: 0 none;",
+        ph("x", title = i18n("Close")),
+        class = "btn btn-default",
+        style = "border: 0 none; position: absolute; top: 5px; right: 5px;",
         `data-dismiss` = "modal",
+        `data-bs-dismiss` = "modal",
         title = i18n("Close"),
         `aria-label` = i18n("Close")
       ),
@@ -125,26 +127,26 @@ save_ggplot_modal <- function(id,
 }
 
 #' @param plot_rv A `reactiveValues` with a slot `plot` containing a `ggplot` object.
-#' 
+#'
 #' @export
-#' 
+#'
 #' @rdname save-ggplot-module
-#' 
+#'
 #' @importFrom shiny moduleServer observeEvent req renderPlot isTruthy
 #' @importFrom shinyWidgets updateNumericInputIcon
 save_ggplot_server <- function(id, plot_rv) {
   moduleServer(
     id = id,
     module = function(input, output, session) {
-      
+
       ns <- session$ns
       plot_width <- paste0("output_", ns("plot"), "_width")
       plot_height <- paste0("output_", ns("plot"), "_height")
-      
+
       observeEvent(input$hidden, {
         activate_resizer(id = ns("plot"), modal = isTRUE(input$modal))
       })
-      
+
       observeEvent(input$update_preview, {
         if (isTruthy(input$width) & isTruthy(input$height)) {
           resize(
@@ -168,12 +170,12 @@ save_ggplot_server <- function(id, plot_rv) {
           value = session$clientData[[plot_height]]
         )
       })
-      
+
       output$plot <- renderPlot({
         req(plot_rv$plot)
         plot_rv$plot
       })
-      
+
       output$png <- download_plot_rv(input, plot_rv, "png")
       output$pdf <- download_plot_rv(input, plot_rv, "pdf")
       output$bmp <- download_plot_rv(input, plot_rv, "bmp")
@@ -181,7 +183,7 @@ save_ggplot_server <- function(id, plot_rv) {
       output$tiff <- download_plot_rv(input, plot_rv, "tiff")
       output$eps <- download_plot_rv(input, plot_rv, "eps")
       output$jpeg <- download_plot_rv(input, plot_rv, "jpeg")
-      
+
       return(NULL)
     }
   )
@@ -195,7 +197,7 @@ save_ggplot_server <- function(id, plot_rv) {
 
 
 #' @title Render \code{ggplot} module
-#' 
+#'
 #' @description Display a plot on the client and allow to download it.
 #'
 #' @param id Module ID.
@@ -206,9 +208,9 @@ save_ggplot_server <- function(id, plot_rv) {
 #'
 #' @return Server-side, a `reactiveValues` with the plot.
 #' @export
-#' 
+#'
 #' @name ggplot-output
-#' 
+#'
 #' @importFrom shiny NS downloadLink actionButton plotOutput actionLink
 #' @importFrom htmltools tags tagList
 #' @importFrom shinyWidgets dropMenu
@@ -270,7 +272,7 @@ ggplot_output <- function(id, width = "100%", height = "400px", downloads = down
 #' @param png,pdf,svg,jpeg,pptx Labels to display in
 #'  export menu, use \code{NULL} to disable specific format.
 #' @param more Label for "more" button, allowing to launch export modal.
-#' 
+#'
 #' @rdname ggplot-output
 #' @export
 downloads_labels <- function(label = ph("download-simple"),
@@ -297,11 +299,11 @@ downloads_labels <- function(label = ph("download-simple"),
 #'   is useful if you want to save an expression in a variable.
 #' @param filename A string of the filename to export WITHOUT extension,
 #'  it will be added according to type of export.
-#' 
+#'
 #' @rdname ggplot-output
-#' 
+#'
 #' @export
-#' 
+#'
 #' @importFrom shiny exprToFunction moduleServer downloadHandler
 #'  reactiveValues renderPlot observeEvent showNotification is.reactive
 #' @importFrom shinyWidgets hideDropMenu
@@ -334,13 +336,13 @@ render_ggplot <- function(id,
             ppt <- officer::read_pptx()
             ppt <- officer::add_slide(x = ppt, layout = "Blank")
             ppt <- try(officer::ph_with(
-              x = ppt, rvg::dml(ggobj = gg), 
+              x = ppt, rvg::dml(ggobj = gg),
               location = officer::ph_location_fullsize()
             ), silent = TRUE)
             if ("try-error" %in% class(ppt)) {
               shiny::showNotification(
-                ui = i18n("Export to PowerPoint failed..."), 
-                type = "error", 
+                ui = i18n("Export to PowerPoint failed..."),
+                type = "error",
                 id = paste("esquisse", sample.int(1e6, 1), sep = "-")
               )
             } else {
@@ -352,8 +354,8 @@ render_ggplot <- function(id,
             warn <- "Packages 'officer' and 'rvg' are required to use this functionality."
             warning(warn, call. = FALSE)
             shiny::showNotification(
-              ui = warn, 
-              type = "warning", 
+              ui = warn,
+              type = "warning",
               id = paste("esquisse", sample.int(1e6, 1), sep = "-")
             )
           }
