@@ -4,7 +4,7 @@
 
 
 #' @title An add-in to easily create plots with ggplot2
-#' 
+#'
 #' @description Select data to be used and map variables to aesthetics to produce a chart,
 #'  customize common elements and get code to reproduce the chart.
 #'
@@ -46,7 +46,7 @@ esquisser <- function(data = NULL,
                       controls = c("labs", "parameters", "appearance", "filters", "code"),
                       viewer = getOption(x = "esquisse.viewer", default = "dialog")) {
   viewer <- match.arg(viewer, choices = c("dialog", "pane", "browser"))
-  
+
   if (!rstudioapi::isAvailable("1.2")) {
     warning("Esquisse may not work properly, try updating RStudio.", call. = FALSE)
   }
@@ -67,8 +67,7 @@ esquisser <- function(data = NULL,
   } else {
     inviewer <- dialogViewer(
       paste(
-        "Les grandes personnes ne comprennent jamais rien toutes seules, et c'est fatigant,",
-        "pour les enfants, de toujours et toujours leur donner des explications."
+        "Le petit prince, qui me posait beaucoup de questions, ne semblait jamais entendre les miennes."
       ),
       width = 1100,
       height = 750

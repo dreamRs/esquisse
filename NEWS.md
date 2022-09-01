@@ -1,15 +1,18 @@
-# esquisse (unreleased)
+# esquisse 1.1.2
 
-* New translations added:
+* i18n: new translations added:
  + turkish, activate with `set_i18n("tr")`, thanks to [@sbalci](https://github.com/sbalci)
  + italian, activate with `set_i18n("it")`, thanks to [@SantiagoGiordano](https://github.com/SantiagoGiordano)
+ + chinese, activate with `set_i18n("cn")`, thanks to [@xmusphlkg](https://github.com/xmusphlkg)
+ + korean, activate with `set_i18n("kr")`, thanks to [@ChangwooLim](https://github.com/ChangwooLim)
+* Bootstrap 5 support.
  
  
 
 # esquisse 1.1.1
 
 * Play/Pause button is back: it allow to set reactivity in "pause" when doing multiple changes, and so avoiding to render intermediate plots.
-* New translations added:
+* i18n: new translations added:
  + spanish, activate with `set_i18n("es")`, thanks to [@dnldelarosa](https://github.com/dnldelarosa)
  + albanian (updated), activate with `set_i18n("al")`, thanks to [@EGjika](https://github.com/EGjika)
  + portuguese, activate with `set_i18n("pt")`, thanks to [@mribeirodantas](https://github.com/mribeirodantas)
