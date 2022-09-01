@@ -84,3 +84,6 @@ label,translation
 "create small multiples by columns","sütunlara göre küçük parçalar oluştur"
 "Dataset","Veri seti"
 "Jittered points:","Yerleştirilmiş noktalar :"
+"Use a color palette:","Bir renk paleti kullanın:"
+"Reverse the order of colors?","Renklerin sırasını tersine çevirmek mi?"
+"Use specific colors:","Belirli renkleri kullanın:"

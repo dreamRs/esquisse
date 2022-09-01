@@ -84,3 +84,6 @@ label,translation
 "create small multiples by columns","création d'une matrice de petits multiples par colonnes"
 "Dataset","Jeu de données"
 "Jittered points:","Ajouter les points (dispersés) :"
+"Use a color palette:","Utiliser une palette :"
+"Reverse the order of colors?","Inverser l'ordre des couleurs ?"
+"Use specific colors:","Utiliser des couleurs spécifiques :"

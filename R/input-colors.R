@@ -1,6 +1,6 @@
 
 #' @title Picker input to select color(s) or palette
-#' 
+#'
 #' @description Select menu to view and choose a color or a palette of colors.
 #'
 #' @param inputId The \code{input} slot that will be used to access the value.
@@ -17,20 +17,20 @@
 #'
 #' @return A select control that can be added to a UI definition.
 #' @export
-#' 
+#'
 #' @name input-colors
-#' 
+#'
 #' @importFrom htmltools tagAppendAttributes tags
 #' @importFrom shinyWidgets pickerInput
 #'
 #' @example examples/colorPicker.R
-colorPicker <- function(inputId, 
-                        label, 
-                        choices, 
+colorPicker <- function(inputId,
+                        label,
+                        choices,
                         selected = NULL,
-                        textColor = "#000", 
+                        textColor = "#000",
                         plainColor = FALSE,
-                        multiple = FALSE, 
+                        multiple = FALSE,
                         pickerOpts = list(),
                         width = NULL) {
   opts <- colorPickerOptions(choices, textColor, plainColor, multiple)
@@ -38,14 +38,14 @@ colorPicker <- function(inputId,
     inputId = inputId,
     label = label,
     choices = opts$choices,
-    selected = selected, 
+    selected = selected,
     multiple = multiple,
     choicesOpt = opts$choicesOpt,
     options = pickerOpts,
     width = width
   )
   colPicTag <- tagAppendAttributes(
-    tag = colPicTag, 
+    tag = colPicTag,
     class = ifelse(isTRUE(plainColor), "color-picker-plain", "color-picker")
   )
   tagList(
@@ -55,16 +55,16 @@ colorPicker <- function(inputId,
 }
 
 #' @param session Shiny session.
-#' 
+#'
 #' @rdname input-colors
 #' @export
-#' 
+#'
 #' @importFrom shinyWidgets updatePickerInput
 #' @importFrom shiny getDefaultReactiveDomain
 updateColorPicker <- function(session = getDefaultReactiveDomain(),
-                              inputId, 
+                              inputId,
                               choices,
-                              textColor = "#000", 
+                              textColor = "#000",
                               plainColor = FALSE,
                               multiple = FALSE) {
   opts <- colorPickerOptions(choices, textColor, plainColor, multiple)
@@ -81,7 +81,7 @@ colorPickerOptions <- function(choices, textColor, plainColor, multiple) {
   choices <- choicesWithNames(choices)
   cols <- unlist(x = choices, recursive = TRUE, use.names = FALSE)
   colsNames <- unlist(lapply(
-    X = seq_along(choices), 
+    X = seq_along(choices),
     FUN = function(x) {
       if (is.list(choices[[x]])) {
         names(choices[[x]])
@@ -92,7 +92,7 @@ colorPickerOptions <- function(choices, textColor, plainColor, multiple) {
   ))
   if (isTRUE(plainColor)) {
     style <- sprintf(
-      "background: %s; color: %s;", 
+      "background: %s; color: %s;",
       cols, rep_len(textColor, length.out = length(cols))
     )
   } else {
@@ -109,8 +109,8 @@ colorPickerOptions <- function(choices, textColor, plainColor, multiple) {
       style = style,
       content = sprintf(
         content_str,
-        cols, 
-        rep_len(textColor, length.out = length(cols)), 
+        cols,
+        rep_len(textColor, length.out = length(cols)),
         colsNames
       )
     ))
@@ -120,28 +120,28 @@ colorPickerOptions <- function(choices, textColor, plainColor, multiple) {
 
 #' @rdname input-colors
 #' @export
-#' 
+#'
 #' @example examples/palettePicker.R
-palettePicker <- function(inputId, 
-                          label, 
-                          choices, 
-                          selected = NULL, 
-                          textColor = "#000", 
-                          plainColor = FALSE, 
-                          pickerOpts = list(), 
+palettePicker <- function(inputId,
+                          label,
+                          choices,
+                          selected = NULL,
+                          textColor = "#000",
+                          plainColor = FALSE,
+                          pickerOpts = list(),
                           width = NULL) {
   opts <- palettePickerOptions(choices, textColor, plainColor)
   palPicTag <- pickerInput(
     inputId = inputId,
     label = label,
     choices = opts$choices,
-    selected = selected, 
+    selected = selected,
     choicesOpt = opts$choicesOpt,
     options = pickerOpts,
     width = width
   )
   palPicTag <- tagAppendAttributes(
-    tag = palPicTag, 
+    tag = palPicTag,
     class = ifelse(isTRUE(plainColor), "color-picker-plain", "color-picker")
   )
   tagList(
@@ -151,17 +151,17 @@ palettePicker <- function(inputId,
 }
 
 #' @param session Shiny session.
-#' 
+#'
 #' @rdname input-colors
 #' @export
-#' 
+#'
 #' @importFrom shinyWidgets updatePickerInput
 #' @importFrom shiny getDefaultReactiveDomain
 updatePalettePicker <- function(session = getDefaultReactiveDomain(),
-                                inputId, 
+                                inputId,
                                 choices,
                                 selected = NULL,
-                                textColor = "#000", 
+                                textColor = "#000",
                                 plainColor = FALSE) {
   opts <- palettePickerOptions(choices, textColor, plainColor)
   updatePickerInput(
@@ -175,7 +175,7 @@ updatePalettePicker <- function(session = getDefaultReactiveDomain(),
 
 palettePickerOptions <- function(choices, textColor, plainColor) {
   choicesNames <- lapply(
-    X = seq_along(choices), 
+    X = seq_along(choices),
     FUN = function(x) {
       if (is.list(choices[[x]])) {
         names(choices[[x]])
@@ -186,7 +186,7 @@ palettePickerOptions <- function(choices, textColor, plainColor) {
   )
   names(choicesNames) <- names(choices)
   choicesColors <- lapply(
-    X = seq_along(choices), 
+    X = seq_along(choices),
     FUN = function(x) {
       if (is.list(choices[[x]])) {
         lapply(choices[[x]], linear_gradient)
@@ -196,28 +196,28 @@ palettePickerOptions <- function(choices, textColor, plainColor) {
     }
   )
   choicesColors <- unlist(
-    x = choicesColors, 
-    recursive = TRUE, 
+    x = choicesColors,
+    recursive = TRUE,
     use.names = FALSE
   )
   if (isTRUE(plainColor)) {
     style <- sprintf(
-      "background: %s; color: %s;", 
+      "background: %s; color: %s;",
       choicesColors, rep_len(textColor, length.out = length(choicesColors))
     )
   } else {
     style <- NULL
   }
   content_str <- "<div style='width:100%%;border-radius:4px; padding: 2px;background:%s;color:%s'>%s</div>"
-  
+
   list(
     choices = choicesNames,
     choicesOpt = dropNulls(list(
       style = style,
       content = sprintf(
         content_str,
-        choicesColors, 
-        rep_len(textColor, length.out = length(choicesColors)), 
+        choicesColors,
+        rep_len(textColor, length.out = length(choicesColors)),
         unlist(choicesNames, recursive = TRUE, use.names = FALSE)
       )
     ))
@@ -242,7 +242,7 @@ palette_ui <- function(id) {
       choiceValues = c("palette", "manual"),
       choiceNames = tagList(
         tags$div(
-          tags$b("Use a palette:"),
+          tags$b(i18n("Use a color palette:")),
           palettePicker(
             inputId = ns("palette"),
             label = NULL,
@@ -253,11 +253,11 @@ palette_ui <- function(id) {
           checkboxInput(
             inputId = ns("reverse"),
             value = FALSE,
-            label = "Reverse colors?"
+            label = i18n("Reverse the order of colors?")
           )
         ),
         tags$div(
-          tags$b("Use specific colors:"),
+          tags$b(i18n("Use specific colors:")),
           uiOutput(outputId = ns("manual"))
         )
       )
@@ -271,12 +271,12 @@ palette_ui <- function(id) {
 #' @importFrom grDevices colorRampPalette
 #' @importFrom scales seq_gradient_pal
 palette_server <- function(id, variable) {
-  
+
   palettes <- get_palettes()
   palettes <- palettes$choices
   palettes <- unlist(palettes, recursive = FALSE, use.names = TRUE)
   names(palettes) <- gsub("^.+\\.", "", names(palettes))
-  
+
   callModule(
     id = id,
     module = function(input, output, session) {
@@ -380,7 +380,7 @@ palette_server <- function(id, variable) {
           )
         }
       })
-      
+
       observeEvent(colors_manual$type, {
         pals <- get_palettes()
         if (identical(colors_manual$type, "continuous")) {
@@ -392,11 +392,11 @@ palette_server <- function(id, variable) {
         updatePalettePicker(
           inputId = "palette",
           choices = pals$choices,
-          textColor = pals$textColor, 
+          textColor = pals$textColor,
           selected = isolate(input$palette)
         )
       }, ignoreInit = TRUE)
-      
+
       return(reactive({
         if (identical(input$type, "palette")) {
           list(

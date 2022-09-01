@@ -1,4 +1,4 @@
-﻿label,translation
+label,translation
 Update Preview,منظر تازہ کریں
 Height:,اونچائی:
 Width:,لمبائی:
@@ -70,7 +70,7 @@ Code:,کوڈ:
 Insert code in script,کوڈ کو سکرپٹ میں داخل کریں
 Esquisse settings,ایکسکیوزے کی سیٹنگز
 Select aesthetics to be used to build a graph:,گراف میں شامل کی جانے والی جمالیات کو منتخب کریں:
-Aesthetic mappings describe how variables in the data are mapped to visual properties (aesthetics) of geoms.,جمالیات کی میپنگ بتاتی ہے کیسے ڈیٹا کے ویری ایبل جیوم کی ظاہری خصیوصیات (جمالیات) کو پرکھتے ہیں 
+Aesthetic mappings describe how variables in the data are mapped to visual properties (aesthetics) of geoms.,جمالیات کی میپنگ بتاتی ہے کیسے ڈیٹا کے ویری ایبل جیوم کی ظاہری خصیوصیات (جمالیات) کو پرکھتے ہیں
 fill color for shapes,شیپ میں رنگ بھیریں
 color points and lines,پوائنٹ اور لائن میں رنگ بھریں
 size of the points,پوائنٹ کا سائز
@@ -84,3 +84,6 @@ create small multiples by rows,  رو کے حساب سےچھوٹے ملٹیپل 
 create small multiples by columns,کالم کے حساب سےچھوٹے ملٹیپل بنائیں
 Dataset,ڈیٹاسیٹ
 Jittered points:,منتشر پوائنٹ:
+Use a color palette:,رنگ پیلیٹ کا استعمال کریں:
+Reverse the order of colors?,رنگوں کی ترتیب کو ریورس کریں؟
+Use specific colors:,مخصوص رنگ استعمال کریں:

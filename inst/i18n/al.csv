@@ -84,3 +84,6 @@ create small multiples by rows,Krijoni më shumë grafikë sipas rreshtave
 create small multiples by columns,"Krijoni më shumë grafikë sipas shtyllave"
 Dataset,Të dhënat
 "Jittered points:","Jittered points:"
+"Use a color palette:","Përdorni një gamë ngjyrash:"
+"Reverse the order of colors?","Ngjyra të kundërta?"
+"Use specific colors:","Përdorni ngjyra specifike:"

@@ -83,3 +83,6 @@ label,translation
 "create small multiples by columns","criar pequenos múltiplos por colunas"
 "Dataset","Conjunto de dados"
 "Jittered points:","Adicionar pontos (jitter):"
+"Use a color palette:","Use uma paleta de cores:"
+"Reverse the order of colors?","Inverter a ordem das cores?"
+"Use specific colors:","Use cores específicas:"

@@ -136,3 +136,6 @@ label,translation
 "Y-Axis transform:","Transformación del eje Y :"
 "You can import %s files","Puede importar %s archivos"
 "You can either use:","Puede usar:"
+"Use a color palette:","Usa una paleta de colores:"
+"Reverse the order of colors?","¿Invertir el orden de los colores?"
+"Use specific colors:","Usa colores específicos:"

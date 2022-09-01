@@ -1,4 +1,4 @@
-﻿label,translation
+label,translation
 Update Preview,Aggiornare l'anteprima
 Height:,Altezza:
 Width:,Larghezza:
@@ -30,7 +30,7 @@ X label,Titolo dell'asse X
 Y label:,Titolo dell'asse Y:
 Y label,Titolo dell'asse Y
 Fill label:,Etichetta colore riempimento:
-Fill label,Etichetta colore riempimento 
+Fill label,Etichetta colore riempimento
 Color label:,Etichetta a colori:
 Color label,Etichetta a colori
 Size label:,Etichetta taglia:
@@ -84,3 +84,6 @@ create small multiples by rows,create small multiples by rows
 create small multiples by columns,creare piccoli multipli per colonne
 Dataset,Set di dati
 Jittered points:,Punti casuali sparsi:
+Use a color palette:,Usa una tavolozza di colori:
+Reverse the order of colors?,Invertire l'ordine dei colori?
+Use specific colors:,Usa colori specifici:

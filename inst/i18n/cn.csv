@@ -84,3 +84,6 @@ create small multiples by rows,按行创建分面图
 create small multiples by columns,按列创建分面图
 Dataset,数据集
 Jittered points:,散点抖动:
+Use a color palette:,使用调色板:
+Reverse the order of colors?,颠倒颜色顺序？
+Use specific colors:,使用特定颜色:
