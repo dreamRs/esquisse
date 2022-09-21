@@ -266,7 +266,7 @@ palette_ui <- function(id) {
 }
 
 #' @importFrom shinyWidgets colorPickr
-#' @importFrom htmltools tagList tags tagAppendAttributes
+#' @importFrom htmltools tagList tags tagAppendAttributes css
 #' @importFrom shiny callModule reactiveValues renderUI reactive isolate
 #' @importFrom grDevices colorRampPalette
 #' @importFrom scales seq_gradient_pal
@@ -313,7 +313,12 @@ palette_server <- function(id, variable) {
                         clear = FALSE
                       )
                     ),
-                    style = "display: inline; vertical-align: middle;"
+                    style = htmltools::css(
+                      display = "inline-block",
+                      width = "auto",
+                      marginBottom = 0,
+                      verticalAlign = "middle"
+                    )
                   ),
                   values[i]
                 ),
@@ -346,7 +351,12 @@ palette_server <- function(id, variable) {
                     clear = FALSE
                   )
                 ),
-                style = "display: inline; vertical-align: middle;"
+                style = htmltools::css(
+                  display = "inline-block",
+                  width = "auto",
+                  marginBottom = 0,
+                  verticalAlign = "middle"
+                )
               ),
               "Low value"
             ),
@@ -368,7 +378,12 @@ palette_server <- function(id, variable) {
                     clear = FALSE
                   )
                 ),
-                style = "display: inline; vertical-align: middle;"
+                style = htmltools::css(
+                  display = "inline-block",
+                  width = "auto",
+                  marginBottom = 0,
+                  verticalAlign = "middle"
+                )
               ),
               "High value"
             )
