@@ -468,6 +468,7 @@ controls_server <- function(id,
       })
 
       observeEvent(output_filter$filtered(), {
+        req(is.logical(input$disable_filters))
         if (!isTRUE(input$disable_filters)) {
           outputs$data <- output_filter$filtered()
           outputs$code <- output_filter$code()
