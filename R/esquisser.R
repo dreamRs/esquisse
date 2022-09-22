@@ -77,7 +77,7 @@ esquisser <- function(data = NULL,
   runGadget(
     app = esquisse_ui(
       id = "esquisse",
-      container = NULL,
+      container = shiny::fillPage,
       insert_code = TRUE,
       controls = controls
     ),

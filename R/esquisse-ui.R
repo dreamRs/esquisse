@@ -73,52 +73,50 @@ esquisse_ui <- function(id,
       )
     )
   )
-
-  ui <- fillPage(
+  
+  ui <- tags$div(
+    class = "esquisse-container",
+    html_dependency_esquisse(),
+    html_dependency_clipboard(),
+    # shinyWidgets::chooseSliderSkin("Modern", "#112446"),
+    
+    if (isTRUE(header)) tag_header,
+    
     tags$div(
-      class = "esquisse-container",
-      html_dependency_esquisse(),
-      html_dependency_clipboard(),
-      # shinyWidgets::chooseSliderSkin("Modern", "#112446"),
-
-      if (isTRUE(header)) tag_header,
-
+      class = "esquisse-geom-aes",
       tags$div(
-        class = "esquisse-geom-aes",
-        tags$div(
-          style = "padding: 3px 3px 0 3px; height: 144px;",
-          dropInput(
-            inputId = ns("geom"),
-            choicesNames = geomIcons()$names,
-            choicesValues = geomIcons()$values,
-            dropWidth = "292px",
-            width = "100%"
-          )
-        ),
-        uiOutput(outputId = ns("ui_aesthetics"))
-      ),
-
-      fillCol(
-        style = "overflow-y: auto;",
-        tags$div(
-          style = "height: 100%; min-height: 400px; overflow: hidden;",
-          play_pause_input(ns("play_plot")),
-          ggplot_output(
-            id = ns("plooooooot"),
-            width = "100%",
-            height = "100%"
-          )
+        style = "padding: 3px 3px 0 3px; height: 144px;",
+        dropInput(
+          inputId = ns("geom"),
+          choicesNames = geomIcons()$names,
+          choicesValues = geomIcons()$values,
+          dropWidth = "292px",
+          width = "100%"
         )
       ),
-
-      controls_ui(
-        id = ns("controls"),
-        insert_code = insert_code,
-        controls = controls
+      uiOutput(outputId = ns("ui_aesthetics"))
+    ),
+    
+    fillCol(
+      style = "overflow-y: auto;",
+      tags$div(
+        style = "height: 100%; min-height: 400px; overflow: hidden;",
+        play_pause_input(ns("play_plot")),
+        ggplot_output(
+          id = ns("plooooooot"),
+          width = "100%",
+          height = "100%"
+        )
       )
+    ),
+    
+    controls_ui(
+      id = ns("controls"),
+      insert_code = insert_code,
+      controls = controls
     )
   )
-
+  
   if (is.function(container)) {
     ui <- container(ui)
   }
