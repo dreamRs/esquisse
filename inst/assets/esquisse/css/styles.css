@@ -232,3 +232,33 @@ div[id^="shiny-notification-esquisse"] > .shiny-notification-close {
 }
 
 
+
+/* Style for variable badges */
+.label-esquisse {
+	display: inline;
+	padding: .2em .6em .3em;
+	font-size: 80%;
+	font-weight: 700;
+	line-height: 1;
+	color: #fff;
+	text-align: center;
+	white-space: nowrap;
+	vertical-align: baseline;
+	border-radius: .25em;
+}
+.label-discrete {
+  background-color: #EF562D;
+  color: #FFFFFF;
+}
+.label-continuous {
+  background-color: #0C4C8A;
+  color: #FFFFFF;
+}
+.label-datetime {
+  background-color: #97D5E0;
+  color: #FFFFFF;
+}
+.label-other {
+  background-color: #2E2E2E;
+  color: #FFFFFF;
+}

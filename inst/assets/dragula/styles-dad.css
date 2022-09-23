@@ -63,25 +63,6 @@
   font-size: 120%;
 }
 
-.label-discrete {
-  background-color: #EF562D;
-  color: #FFFFFF;
-}
-
-.label-continuous {
-  background-color: #0C4C8A;
-  color: #FFFFFF;
-}
-
-.label-datetime {
-  background-color: #97D5E0;
-  color: #FFFFFF;
-}
-
-.label-other {
-  background-color: #2E2E2E;
-  color: #FFFFFF;
-}
 
 .badge-dad {
   border-radius: 7px !important;
