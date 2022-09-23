@@ -202,10 +202,6 @@ div[id^="shiny-notification-esquisse"].shiny-notification-message {
   border: 1px solid #5cb85c !important;
 }
 
-div[id^="shiny-notification-esquisse"].shiny-notification {
-  font-size: 120% !important;
-  font-weight: bold !important;
-}
 
 /*
 #shiny-notification-panel {

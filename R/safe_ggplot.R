@@ -19,8 +19,8 @@ safe_ggplot <- function(expr, data = NULL, session = shiny::getDefaultReactiveDo
     if (!is.null(session)) {
       msg <- conditionMessage(e)
       showNotification(
-        ui = paste(
-          tools::toTitleCase(type),
+        ui = tagList(
+          tags$b(phosphoricons::ph("warning", weight = "bold"), tools::toTitleCase(type), ":"),
           msg,
           sep = " : "
         ),
