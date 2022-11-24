@@ -105,8 +105,9 @@ code in the current user script (work only in RStudio).</p></dd>
 
 <dt>data_rv</dt>
 <dd><p>Either:</p><ul><li><p>A <code><a href="https://rdrr.io/pkg/shiny/man/reactiveValues.html" class="external-link">shiny::reactiveValues()</a></code> with a slot <code>data</code> containing a <code>data.frame</code>
-to use in the module and a slot <code>name</code> corresponding to the name of the <code>data.frame</code> use for the generated code.</p></li>
+to use in the module and a slot <code>name</code> corresponding to the name of the <code>data.frame</code> used for the generated code.</p></li>
 <li><p>A <code><a href="https://rdrr.io/pkg/shiny/man/reactive.html" class="external-link">shiny::reactive()</a></code> function returning a <code>data.frame</code>. See argument <code>name</code> for the name used in generated code.</p></li>
+<li><p>A <code>data.frame</code> object.</p></li>
 </ul></dd>
 
 
