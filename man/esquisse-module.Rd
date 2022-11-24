@@ -43,8 +43,9 @@ code in the current user script (work only in RStudio).}
 \item{data_rv}{Either:
 \itemize{
 \item A \code{\link[shiny:reactiveValues]{shiny::reactiveValues()}} with a slot \code{data} containing a \code{data.frame}
-to use in the module and a slot \code{name} corresponding to the name of the \code{data.frame} use for the generated code.
+to use in the module and a slot \code{name} corresponding to the name of the \code{data.frame} used for the generated code.
 \item A \code{\link[shiny:reactive]{shiny::reactive()}} function returning a \code{data.frame}. See argument \code{name} for the name used in generated code.
+\item A \code{data.frame} object.
 }}
 
 \item{name}{The default name to use in generated code. Can be a \code{reactive} function return a single character.}

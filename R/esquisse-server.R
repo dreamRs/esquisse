@@ -1,8 +1,9 @@
 
 #' @param data_rv Either:
 #'  * A [shiny::reactiveValues()] with a slot `data` containing a `data.frame` 
-#'    to use in the module and a slot `name` corresponding to the name of the `data.frame` use for the generated code.
+#'    to use in the module and a slot `name` corresponding to the name of the `data.frame` used for the generated code.
 #'  * A [shiny::reactive()] function returning a `data.frame`. See argument `name` for the name used in generated code.
+#'  * A `data.frame` object.
 #' @param name The default name to use in generated code. Can be a `reactive` function return a single character.
 #' @param default_aes Default aesthetics to be used, can be a `character`
 #'  vector or `reactive` function returning one.
