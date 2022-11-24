@@ -1,3 +1,8 @@
+# esquisse 1.2.0
+
+*  Allow `esquisse_server()` to be initialized with NULL without forcing the import module to appear using `import_from = NULL` [#232](https://github.com/dreamRs/esquisse/issues/232) 
+
+
 # esquisse 1.1.2
 
 * i18n: new translations added:

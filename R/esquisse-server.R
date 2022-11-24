@@ -4,7 +4,7 @@
 #' @param default_aes Default aesthetics to be used, can be a `character`
 #'  vector or `reactive` function returning one.
 #' @param import_from From where to import data, argument passed
-#'  to \code{\link[datamods:import-modal]{datamods::import_ui}}.
+#'  to [datamods::import_server()].
 #'
 #' @export
 #'
@@ -85,7 +85,7 @@ esquisse_server <- function(id,
       }, ignoreInit = FALSE)
 
       # Launch import modal if no data at start
-      if (is.null(isolate(data_rv$data))) {
+      if (!is.null(import_from) && is.null(isolate(data_rv$data))) {
         datamods::import_modal(
           id = ns("import-data"),
           from = import_from,

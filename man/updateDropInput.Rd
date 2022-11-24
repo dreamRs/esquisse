@@ -20,20 +20,20 @@ Change the value of a drop input on the client
 }
 \examples{
 if (interactive()) {
-  
+
   library(shiny)
   library(esquisse)
-  
+
   myChoices <- tagList(
-    list(icon("home"), style = "width: 100px;"), 
+    list(icon("home"), style = "width: 100px;"),
     list(icon("flash"), style = "width: 100px;"),
     list(icon("cogs"), style = "width: 100px;"),
-    list(icon("fire"), style = "width: 100px;"), 
-    list(icon("users"), style = "width: 100px;"), 
+    list(icon("fire"), style = "width: 100px;"),
+    list(icon("users"), style = "width: 100px;"),
     list(icon("info"), style = "width: 100px;")
   )
-  
-  
+
+
   ui <- fluidPage(
     tags$h2("Update Drop Input"),
     fluidRow(
@@ -41,12 +41,12 @@ if (interactive()) {
         width = 6,
         dropInput(
           inputId = "mydrop",
-          choicesNames = myChoices, 
+          choicesNames = myChoices,
           choicesValues = c("home", "flash", "cogs", "fire", "users", "info"),
           dropWidth = "220px"
         ),
         verbatimTextOutput(outputId = "res")
-      ), 
+      ),
       column(
         width = 6,
         actionButton("home", "Select home"),
@@ -64,13 +64,13 @@ if (interactive()) {
       )
     )
   )
-  
+
   server <- function(input, output, session) {
-    
+
     output$res <- renderPrint({
       input$mydrop
     })
-    
+
     observeEvent(input$home, {
       updateDropInput(session, "mydrop", "home")
     })
@@ -89,7 +89,7 @@ if (interactive()) {
     observeEvent(input$info, {
       updateDropInput(session, "mydrop", "info")
     })
-    
+
     observeEvent(input$disable, {
       if (!is.null(input$disabled)) {
         updateDropInput(session, "mydrop", disabled = input$disabled)
@@ -98,9 +98,9 @@ if (interactive()) {
       }
     })
   }
-  
+
   shinyApp(ui, server)
-  
+
 }
 }
 \seealso{
