@@ -1,5 +1,6 @@
 # esquisse 1.2.0
 
+* `esquisse_server()` : support for reactive functions for `data_rv` argument.
 *  Allow `esquisse_server()` to be initialized with NULL without forcing the import module to appear using `import_from = NULL` [#232](https://github.com/dreamRs/esquisse/issues/232) 
 
 

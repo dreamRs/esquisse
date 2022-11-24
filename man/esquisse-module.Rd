@@ -18,6 +18,7 @@ esquisse_ui(
 esquisse_server(
   id,
   data_rv = NULL,
+  name = "data",
   default_aes = c("fill", "color", "size", "group", "facet"),
   import_from = c("env", "file", "copypaste", "googlesheets")
 )
@@ -39,14 +40,20 @@ Must be a \code{function}.}
 \item{insert_code}{Logical, Display or not a button to insert the ggplot
 code in the current user script (work only in RStudio).}
 
-\item{data_rv}{A \code{reactiveValues} with at least a slot \code{data} containing a \code{data.frame}
-to use in the module. And a slot \code{name} corresponding to the name of the \code{data.frame}.}
+\item{data_rv}{Either:
+\itemize{
+\item A \code{\link[shiny:reactiveValues]{shiny::reactiveValues()}} with a slot \code{data} containing a \code{data.frame}
+to use in the module and a slot \code{name} corresponding to the name of the \code{data.frame} use for the generated code.
+\item A \code{\link[shiny:reactive]{shiny::reactive()}} function returning a \code{data.frame}. See argument \code{name} for the name used in generated code.
+}}
+
+\item{name}{The default name to use in generated code. Can be a \code{reactive} function return a single character.}
 
 \item{default_aes}{Default aesthetics to be used, can be a \code{character}
 vector or \code{reactive} function returning one.}
 
 \item{import_from}{From where to import data, argument passed
-to \code{\link[datamods:import-modal]{datamods::import_ui}}.}
+to \code{\link[datamods:import-modal]{datamods::import_server()}}, use \code{NULL} to prevent the modal to appear.}
 
 \item{width, height}{The width and height of the container, e.g. \code{"400px"},
 or \code{"100\%"}; see \code{\link[htmltools]{validateCssUnit}}.}

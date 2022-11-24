@@ -1,10 +1,14 @@
 
-#' @param data_rv A `reactiveValues` with at least a slot `data` containing a `data.frame`
-#'  to use in the module. And a slot `name` corresponding to the name of the `data.frame`.
+#' @param data_rv Either:
+#'  * A [shiny::reactiveValues()] with a slot `data` containing a `data.frame` 
+#'    to use in the module and a slot `name` corresponding to the name of the `data.frame` use for the generated code.
+#'  * A [shiny::reactive()] function returning a `data.frame`. See argument `name` for the name used in generated code.
+#' @param name The default name to use in generated code. Can be a `reactive` function return a single character.
 #' @param default_aes Default aesthetics to be used, can be a `character`
 #'  vector or `reactive` function returning one.
 #' @param import_from From where to import data, argument passed
-#'  to [datamods::import_server()].
+#'  to [datamods::import_server()], use `NULL` to prevent the modal to appear.
+#' 
 #'
 #' @export
 #'
@@ -13,12 +17,14 @@
 #'
 #' @importFrom shiny moduleServer reactiveValues observeEvent is.reactive
 #'  renderPlot stopApp plotOutput showNotification isolate reactiveValuesToList
+#'  is.reactivevalues
 #' @importFrom ggplot2 ggplot_build ggsave %+%
 #' @import ggplot2
 #' @importFrom datamods import_modal import_server show_data
 #' @importFrom rlang expr sym
 esquisse_server <- function(id,
                             data_rv = NULL,
+                            name = "data",
                             default_aes = c("fill", "color", "size", "group", "facet"),
                             import_from = c("env", "file", "copypaste", "googlesheets")) {
 
@@ -79,13 +85,31 @@ esquisse_server <- function(id,
         }
       })
 
-      observeEvent(data_rv$data, {
-        data_chart$data <- data_rv$data
-        data_chart$name <- data_rv$name
-      }, ignoreInit = FALSE)
+      if (is.reactivevalues(data_rv)) {
+        observeEvent(data_rv$data, {
+          data_chart$data <- data_rv$data
+          data_chart$name <- data_rv$name %||% if (is.reactive(name)) {
+            name()
+          } else {
+            name
+          }
+        }, ignoreInit = FALSE)
+      } else if (is.reactive(data_rv)) {
+        observeEvent(data_rv(), {
+          data_chart$data <- data_rv()
+          data_chart$name <- if (is.reactive(name)) {
+            name()
+          } else {
+            name
+          }
+        }, ignoreInit = FALSE)
+      } else if (is.data.frame(data_rv)) {
+        data_chart$data <- as.data.frame(data_rv)
+        data_chart$name <- if (is.character(name)) name
+      }
 
       # Launch import modal if no data at start
-      if (!is.null(import_from) && is.null(isolate(data_rv$data))) {
+      if (!is.null(import_from) && is.null(isolate(data_chart$data))) {
         datamods::import_modal(
           id = ns("import-data"),
           from = import_from,
