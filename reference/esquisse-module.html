@@ -69,6 +69,7 @@
 <span><span class="fu">esquisse_server</span><span class="op">(</span></span>
 <span>  <span class="va">id</span>,</span>
 <span>  data_rv <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  name <span class="op">=</span> <span class="st">"data"</span>,</span>
 <span>  default_aes <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"fill"</span>, <span class="st">"color"</span>, <span class="st">"size"</span>, <span class="st">"group"</span>, <span class="st">"facet"</span><span class="op">)</span>,</span>
 <span>  import_from <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"env"</span>, <span class="st">"file"</span>, <span class="st">"copypaste"</span>, <span class="st">"googlesheets"</span><span class="op">)</span></span>
 <span><span class="op">)</span></span>
@@ -103,8 +104,14 @@ code in the current user script (work only in RStudio).</p></dd>
 
 
 <dt>data_rv</dt>
-<dd><p>A <code>reactiveValues</code> with at least a slot <code>data</code> containing a <code>data.frame</code>
-to use in the module. And a slot <code>name</code> corresponding to the name of the <code>data.frame</code>.</p></dd>
+<dd><p>Either:</p><ul><li><p>A <code><a href="https://rdrr.io/pkg/shiny/man/reactiveValues.html" class="external-link">shiny::reactiveValues()</a></code> with a slot <code>data</code> containing a <code>data.frame</code>
+to use in the module and a slot <code>name</code> corresponding to the name of the <code>data.frame</code> use for the generated code.</p></li>
+<li><p>A <code><a href="https://rdrr.io/pkg/shiny/man/reactive.html" class="external-link">shiny::reactive()</a></code> function returning a <code>data.frame</code>. See argument <code>name</code> for the name used in generated code.</p></li>
+</ul></dd>
+
+
+<dt>name</dt>
+<dd><p>The default name to use in generated code. Can be a <code>reactive</code> function return a single character.</p></dd>
 
 
 <dt>default_aes</dt>
@@ -114,7 +121,7 @@ vector or <code>reactive</code> function returning one.</p></dd>
 
 <dt>import_from</dt>
 <dd><p>From where to import data, argument passed
-to <code><a href="https://rdrr.io/pkg/datamods/man/import-modal.html" class="external-link">datamods::import_ui</a></code>.</p></dd>
+to <code><a href="https://rdrr.io/pkg/datamods/man/import-modal.html" class="external-link">datamods::import_server()</a></code>, use <code>NULL</code> to prevent the modal to appear.</p></dd>
 
 
 <dt>width, height</dt>
