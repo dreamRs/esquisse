@@ -7,8 +7,8 @@ html_dependency_esquisse <- function() {
   htmlDependency(
     name = "esquisse",
     version = packageVersion("esquisse"),
-    src = c(file = "assets/esquisse", href = "esquisse/esquisse"),
     package = "esquisse",
+    src = c(file = "assets/esquisse"),
     script = c("js/shiny-utils.js"),
     stylesheet = c("css/styles.css", "css/annie-use-your-telescope.css"),
     all_files = TRUE
@@ -19,7 +19,8 @@ html_dependency_clipboard <- function() {
   htmlDependency(
     name = "clipboard",
     version = "2.0.6",
-    src = c(file = "assets/clipboard", href = "esquisse/clipboard"),
+    package = "esquisse",
+    src = c(file = "assets/clipboard"),
     script = c("clipboard.min.js"),
     all_files = FALSE
   )
@@ -29,7 +30,8 @@ html_dependency_moveable <- function() {
   htmlDependency(
     name = "moveable",
     version = "0.23.0",
-    src = c(file = "assets/moveable", href = "esquisse/moveable"),
+    package = "esquisse",
+    src = c(file = "assets/moveable"),
     script = c("moveable.min.js", "resizer-handler.js"),
     all_files = FALSE
   )
