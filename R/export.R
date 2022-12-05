@@ -246,7 +246,7 @@ ggplot_output <- function(id, width = "100%", height = "400px", downloads = down
         actionButton(
           inputId = ns("exports"),
           label = downloads$label,
-          class = "btn-sm",
+          class = "btn-sm esquisse-export-btn",
           style = css(
             position = "absolute",
             top = 0,
