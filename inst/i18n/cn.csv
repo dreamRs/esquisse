@@ -1,15 +1,15 @@
 label,translation
-Update Preview,刷新文件预览
+Update Preview,更新预览
 Height:,高度:
 Width:,宽度:
 Filename:,文件名:
 Filename,文件名
 Close,关闭
 More options,更多选项
-Export chart,另存为
-Export to PowerPoint failed...,PPT保存失败
-Export format:,文件格式:
-Import data to create a graph,导入数据
+Export chart,导出图表
+Export to PowerPoint failed...,导出PPT失败
+Export format:,导出格式:
+Import data to create a graph,导入数据以创建图表
 Display settings,展开设置
 Close Window,关闭窗口
 Import data,导入数据
@@ -22,9 +22,9 @@ Code,代码
 Title:,标题:
 Title,标题
 Subtitle:,副标题:
-Subtitle,副标题:
+Subtitle,副标题
 Caption:,图表说明:
-Caption,图标说明
+Caption,图表说明
 X label:,X轴标题:
 X label,X轴标题
 Y label:,Y轴标题:
@@ -64,8 +64,8 @@ Y-Axis limits (empty for none):,Y轴端点(空值为不限):
 Y-Axis transform:,Y轴转换:
 Bandwidth adjustment:,区间宽度调整:
 Position:,位置:
-Flip coordinate:,坐标系旋转:
-Copy to clipboard,复制至粘贴板
+Flip coordinate:,坐标系翻转:
+Copy to clipboard,复制到剪贴板
 Code:,代码:
 Insert code in script,在脚本中插入代码
 Esquisse settings,Esquisse设置
@@ -85,5 +85,5 @@ create small multiples by columns,按列创建分面图
 Dataset,数据集
 Jittered points:,散点抖动:
 Use a color palette:,使用调色板:
-Reverse the order of colors?,颠倒颜色顺序？
+Reverse the order of colors?,反转颜色顺序？
 Use specific colors:,使用特定颜色:
