@@ -124,6 +124,7 @@ play_pause_input <- function(inputId) {
   tags$div(
     # style = "position: absolute; right: 0; top: 35px; font-weight: bold; z-index: 1000;",
     style = "position: absolute; right: 40px; top: 5px; font-weight: bold; z-index: 1000;",
+    class = "esquisse-playpause-btn",
     play_pause
   )
 }
