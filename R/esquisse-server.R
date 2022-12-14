@@ -27,7 +27,7 @@ esquisse_server <- function(id,
                             data_rv = NULL,
                             name = "data",
                             default_aes = c("fill", "color", "size", "group", "facet"),
-                            import_from = c("env", "file", "copypaste", "googlesheets")) {
+                            import_from = c("env", "file", "copypaste", "googlesheets", "url")) {
 
   moduleServer(
     id = id,

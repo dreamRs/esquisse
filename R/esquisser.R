@@ -82,7 +82,11 @@ esquisser <- function(data = NULL,
       controls = controls
     ),
     server = function(input, output, session) {
-      esquisse_server("esquisse", rv)
+      esquisse_server(
+        id = "esquisse", 
+        data_rv = rv, 
+        import_from = if (is.null(res_data$esquisse_data)) c("env", "file", "copypaste", "googlesheets", "url")
+      )
     },
     viewer = inviewer
   )
