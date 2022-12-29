@@ -24,7 +24,7 @@ dropdown_ <- function(..., class = NULL) {
 #       inputId = "controls-appearance",
 #       label = "Appearance",
 #       icon = icon("palette"),
-#       class = "btn-esquisse-controls"
+#       class = "btn-esquisse-controls btn-outline-primary"
 #     ),
 #     controls_appearance(ns),
 #     placement = "top"
@@ -83,7 +83,7 @@ controls_ui <- function(id,
           label = i18n("Labels & Title"),
           up = TRUE,
           icon = ph("text-aa"),
-          status = "default border btn-esquisse-controls"
+          status = "default btn-esquisse-controls btn-outline-primary text-nowrap"
         )
       },
       if (isTRUE("parameters" %in% controls)) {
@@ -95,7 +95,7 @@ controls_ui <- function(id,
           label = i18n("Plot options"),
           up = TRUE,
           icon = ph("gear"),
-          status = "default border btn-esquisse-controls"
+          status = "default btn-esquisse-controls btn-outline-primary text-nowrap"
         )
       },
       if (isTRUE("appearance" %in% controls)) {
@@ -107,7 +107,7 @@ controls_ui <- function(id,
           label = i18n("Appearance"),
           up = TRUE,
           icon = ph("palette"),
-          status = "default border btn-esquisse-controls"
+          status = "default btn-esquisse-controls btn-outline-primary text-nowrap"
         )
       },
       if (isTRUE("filters" %in% controls)) {
@@ -119,7 +119,7 @@ controls_ui <- function(id,
           label = i18n("Data"),
           up = TRUE,
           icon = ph("sliders-horizontal"),
-          status = "default border btn-esquisse-controls"
+          status = "default btn-esquisse-controls btn-outline-primary text-nowrap"
         )
       },
       if (isTRUE("code" %in% controls)) {
@@ -132,7 +132,7 @@ controls_ui <- function(id,
           up = TRUE,
           right = TRUE,
           icon = ph("code"),
-          status = "default border btn-esquisse-controls"
+          status = "default btn-esquisse-controls btn-outline-primary text-nowrap"
         )
       }
     ),
@@ -578,7 +578,7 @@ labs_options_input <- function(inputId, label, placeholder, defaults = list()) {
           inputId = paste0(inputId, "_options"),
           label = ph("plus", title = "Options"),
           style = "border-radius: 0 4px 4px 0; width: 100%;",
-          class = "border px-0"
+          class = "btn-outline-primary border px-0"
         ),
         style = "width: 320px;",
         prettyRadioButtons(
@@ -983,7 +983,7 @@ controls_params <- function(ns) {
 controls_code <- function(ns, insert_code = FALSE) {
   tagList(
     tags$button(
-      class = "btn btn-default btn-xs pull-right btn-copy-code",
+      class = "btn btn-link btn-xs pull-right float-end btn-copy-code",
       i18n("Copy to clipboard"),
       `data-clipboard-target` = paste0("#", ns("codeggplot"))
     ), tags$script("$(function() {new ClipboardJS('.btn-copy-code');});"),

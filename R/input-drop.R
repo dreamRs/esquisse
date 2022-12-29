@@ -81,7 +81,8 @@ dropInput <- function(inputId,
     args = c(tagSelected, list(
       style = if (!is.null(width))
         paste0("width: ", validateCssUnit(width), ";"),
-      class = "btn btn-default border drop-input-main dropdown-toggle",
+      class = "btn btn-default btn-outline-primary drop-input-main dropdown-toggle",
+      style = "font-size: .75rem;",
       `data-toggle` = "dropdown",
       `data-bs-toggle` = "dropdown",
       `data-value` = selected

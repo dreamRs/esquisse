@@ -236,31 +236,40 @@ palette_ui <- function(id) {
     tags$style(
       ".bootstrap-select .dropdown-menu li a span.text { display: block !important; }"
     ),
-    radioButtons(
+    
+    radioGroupButtons(
       inputId = ns("type"),
       label = NULL,
       choiceValues = c("palette", "manual"),
-      choiceNames = tagList(
-        tags$div(
-          tags$b(i18n("Use a color palette:")),
-          palettePicker(
-            inputId = ns("palette"),
-            label = NULL,
-            choices = pals$choices,
-            textColor = pals$textColor,
-            pickerOpts = list(container = "body")
-          ),
-          checkboxInput(
-            inputId = ns("reverse"),
-            value = FALSE,
-            label = i18n("Reverse the order of colors?")
-          )
-        ),
-        tags$div(
-          tags$b(i18n("Use specific colors:")),
-          uiOutput(outputId = ns("manual"))
-        )
+      choiceNames = c(
+        gsub(pattern = ":", replacement = "", x = i18n("Use a color palette:")),
+        gsub(pattern = ":", replacement = "", x = i18n("Use specific colors:"))
+      ), 
+      size = "sm",
+      justified = TRUE
+    ),
+    
+    conditionalPanel(
+      condition = "input.type == 'palette'",
+      ns = ns,
+      palettePicker(
+        inputId = ns("palette"),
+        label = NULL,
+        choices = pals$choices,
+        textColor = pals$textColor,
+        pickerOpts = list(container = "body")
+      ),
+      checkboxInput(
+        inputId = ns("reverse"),
+        value = FALSE,
+        label = i18n("Reverse the order of colors?")
       )
+    ),
+    
+    conditionalPanel(
+      condition = "input.type == 'manual'",
+      ns = ns,
+      uiOutput(outputId = ns("manual"))
     )
   )
 }

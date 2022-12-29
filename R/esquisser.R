@@ -67,7 +67,7 @@ esquisser <- function(data = NULL,
   } else {
     inviewer <- dialogViewer(
       paste(
-        "Le petit prince, qui me posait beaucoup de questions, ne semblait jamais entendre les miennes."
+        "Les étoiles sont éclairées pour que chacun puisse un jour retrouver la sienne."
       ),
       width = 1100,
       height = 750
@@ -77,7 +77,12 @@ esquisser <- function(data = NULL,
   runGadget(
     app = esquisse_ui(
       id = "esquisse",
-      container = shiny::fillPage,
+      container = function(...) {
+        shiny::fillPage(
+          theme = bslib::bs_theme(version = 5L, primary = "#112446"),
+          ...
+        )
+      },
       insert_code = TRUE,
       controls = controls
     ),

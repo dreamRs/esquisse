@@ -135,7 +135,7 @@
 
 .esquisse-controls-filters {
   min-width: 350px;
-  max-height: 90vh;
+  max-height: min(90vh, 600px);
   min-height: 30vh;
   padding-right: 5px;
   overflow-y: auto;
@@ -216,8 +216,14 @@ div[id^="shiny-notification-esquisse"] > .shiny-notification-close {
   cursor: pointer;
 }
 
+
+/* drop menu input */
 .drop-input, .drop-input-main {
   height: 100%;
+}
+.drop-input-button:disabled {
+  cursor: not-allowed;
+  pointer-events: auto;
 }
 
 
