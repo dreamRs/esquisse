@@ -78,8 +78,15 @@ esquisser <- function(data = NULL,
     app = esquisse_ui(
       id = "esquisse",
       container = function(...) {
+        theme <- bslib::bs_theme(version = 5L, primary = "#112446")
+        theme <- bslib::bs_add_rules(
+          theme = theme,
+          c(
+            ".modal-title { @extend .mt-0 }"
+          )
+        )
         shiny::fillPage(
-          theme = bslib::bs_theme(version = 5L, primary = "#112446"),
+          theme = theme,
           ...
         )
       },
@@ -88,8 +95,8 @@ esquisser <- function(data = NULL,
     ),
     server = function(input, output, session) {
       esquisse_server(
-        id = "esquisse", 
-        data_rv = rv, 
+        id = "esquisse",
+        data_rv = rv,
         import_from = if (is.null(res_data$esquisse_data)) c("env", "file", "copypaste", "googlesheets", "url")
       )
     },
