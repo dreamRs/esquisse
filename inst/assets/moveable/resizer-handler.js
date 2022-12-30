@@ -55,20 +55,29 @@ $(function() {
           if (e.width > widthModal) {
             if (e.width > browserWidth) {
               moveable.resizable = false;
-              $(".modal-dialog").width(browserWidth - 40);
+              $(".modal-dialog").css({
+                "width": browserWidth - 40,
+                "max-width": browserWidth - 40
+              });
               $("#" + obj.id)
                 .parent()
                 .css("overflow-x", "scroll");
             } else {
               moveable.resizable = true;
-              $(".modal-dialog").width(e.width + 30);
+              $(".modal-dialog").css({
+                "width": e.width + 30,
+                "max-width": e.width + 30
+              });
               $("#" + obj.id)
                 .parent()
                 .css("overflow-x", "hidden");
             }
           } else {
             moveable.resizable = true;
-            $(".modal-dialog").width(widthModal);
+            $(".modal-dialog").css({
+              "width": widthModal,
+              "max-width": widthModal
+            });
             $("#" + obj.id)
               .parent()
               .css("overflow-x", "hidden");
