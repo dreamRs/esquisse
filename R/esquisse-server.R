@@ -55,35 +55,30 @@ esquisse_server <- function(id,
         data <- isolate(data_chart$data)
         if (!is.null(data)) {
           var_choices <- get_col_names(data)
-          dragulaInput(
-            inputId = ns("dragvars"),
-            sourceLabel = "Variables",
-            targetsLabels = c("X", "Y", aesthetics),
-            targetsIds = c("xvar", "yvar", aesthetics),
-            choiceValues = var_choices,
-            choiceNames = badgeType(
-              col_name = var_choices,
-              col_type = col_type(data[, var_choices, drop = TRUE])
-            ),
-            selected = dropNulls(isolate(input$dragvars$target)),
-            badge = FALSE,
-            width = "100%",
-            height = "70px",
-            replace = TRUE
+          choiceValues <- var_choices
+          choiceNames <- badgeType(
+            col_name = var_choices,
+            col_type = col_type(data[, var_choices, drop = TRUE])
           )
+          selected <- dropNulls(isolate(input$dragvars$target))
         } else {
-          dragulaInput(
-            inputId = ns("dragvars"),
-            sourceLabel = "Variables",
-            targetsLabels = c("X", "Y", aesthetics),
-            targetsIds = c("xvar", "yvar", aesthetics),
-            choices = "",
-            badge = FALSE,
-            width = "100%",
-            height = "70px",
-            replace = TRUE
-          )
+          choiceValues <- ""
+          choiceNames <- ""
+          selected <- NULL
         }
+        dragulaInput(
+          inputId = ns("dragvars"),
+          sourceLabel = "Variables",
+          targetsLabels = c("X", "Y", aesthetics),
+          targetsIds = c("xvar", "yvar", aesthetics),
+          choiceValues = choiceValues,
+          choiceNames = choiceNames,
+          selected = selected,
+          badge = FALSE,
+          width = "100%",
+          height = "70px",
+          replace = TRUE
+        )
       })
 
       if (is.reactivevalues(data_rv)) {
@@ -135,19 +130,7 @@ esquisse_server <- function(id,
         data_chart$name <- data_imported_r$name() %||% "imported_data"
       })
 
-      observeEvent(input$show_data, {
-        data <- controls_rv$data
-        if (!is.data.frame(data)) {
-          showNotification(
-            ui = "No data to display",
-            duration = 700,
-            id = paste("esquisse", sample.int(1e6, 1), sep = "-"),
-            type = "warning"
-          )
-        } else {
-          datamods::show_data(data, title = i18n("Dataset"), type = "modal")
-        }
-      })
+      show_data_server("show_data", reactive(controls_rv$data))
 
       # Update drag-and-drop input when data changes
       observeEvent(data_chart$data, {

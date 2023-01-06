@@ -65,12 +65,7 @@ esquisse_ui <- function(id,
         class = "btn-sm",
         title = i18n("Import data")
       ),
-      actionButton(
-        inputId = ns("show_data"),
-        label = ph("table", height = "2em", title = i18n("Show data")),
-        class = "btn-sm",
-        title = i18n("Show data")
-      )
+      show_data_ui(ns("show_data"))
     )
   )
   

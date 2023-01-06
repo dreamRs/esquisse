@@ -67,7 +67,7 @@ esquisser <- function(data = NULL,
   } else {
     inviewer <- dialogViewer(
       paste(
-        "Les étoiles sont éclairées pour que chacun puisse un jour retrouver la sienne."
+        "Les \u00e9toiles sont \u00e9clair\u00e9es pour que chacun puisse un jour retrouver la sienne."
       ),
       width = 1100,
       height = 750
