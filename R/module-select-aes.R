@@ -1,5 +1,6 @@
 
-
+#' @importFrom shiny NS uiOutput
+#' @importFrom htmltools tagList
 select_aes_ui <- function(id) {
   ns <- NS(id)
   tagList(
@@ -7,6 +8,7 @@ select_aes_ui <- function(id) {
   )
 }
 
+#' @importFrom shiny moduleServer reactiveValues renderUI is.reactive observeEvent
 select_aes_server <- function(id,
                               data_r = reactive(NULL),
                               default_aes = c("fill", "color", "size", "group", "facet"),

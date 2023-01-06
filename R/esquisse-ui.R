@@ -89,7 +89,7 @@ esquisse_ui <- function(id,
           width = "100%"
         )
       ),
-      uiOutput(outputId = ns("ui_aesthetics"))
+      select_aes_ui(ns("aes"))
     ),
     
     fillCol(

@@ -271,21 +271,21 @@ controls_server <- function(id,
 
       observe({
         aesthetics <- names(aesthetics())
-        toggleDisplay(id = ns("controls-shape"), display = type$x %in% "point" & !"shape" %in% aesthetics)
+        toggleDisplay(id = ns("controls-shape"), display = type$controls %in% "point" & !"shape" %in% aesthetics)
       })
 
-      observeEvent(type$x, {
-        toggleDisplay(id = ns("controls-position"), display = type$x %in% c("bar", "line", "area"))
-        toggleDisplay(id = ns("controls-histogram"), display = type$x %in% "histogram")
-        toggleDisplay(id = ns("controls-density"), display = type$x %in% c("density", "violin"))
-        toggleDisplay(id = ns("controls-scatter"), display = type$x %in% "point")
-        toggleDisplay(id = ns("controls-size"), display = type$x %in% c("point", "line", "step", "sf"))
-        toggleDisplay(id = ns("controls-violin"), display = type$x %in% "violin")
-        toggleDisplay(id = ns("controls-jitter"), display = type$x %in% c("boxplot", "violin"))
+      observeEvent(type$controls, {
+        toggleDisplay(id = ns("controls-position"), display = type$controls %in% c("bar", "line", "area"))
+        toggleDisplay(id = ns("controls-histogram"), display = type$controls %in% "histogram")
+        toggleDisplay(id = ns("controls-density"), display = type$controls %in% c("density", "violin"))
+        toggleDisplay(id = ns("controls-scatter"), display = type$controls %in% "point")
+        toggleDisplay(id = ns("controls-size"), display = type$controls %in% c("point", "line", "step", "sf"))
+        toggleDisplay(id = ns("controls-violin"), display = type$controls %in% "violin")
+        toggleDisplay(id = ns("controls-jitter"), display = type$controls %in% c("boxplot", "violin"))
 
-        if (type$x %in% c("point")) {
+        if (type$controls %in% c("point")) {
           updateSliderInput(session = session, inputId = "size", value = 1.5)
-        } else if (type$x %in% c("line", "step")) {
+        } else if (type$controls %in% c("line", "step")) {
           updateSliderInput(session = session, inputId = "size", value = 0.5)
         }
       })
@@ -326,7 +326,7 @@ controls_server <- function(id,
         inputs <- inputs[grep(pattern = "^export_", x = names(inputs), invert = TRUE)]
         inputs <- inputs[order(names(inputs))]
         aesthetics <- names(aesthetics())
-        if (!(type$x %in% "point" & !"shape" %in% aesthetics)) {
+        if (!(type$controls %in% "point" & !"shape" %in% aesthetics)) {
           inputs$shape <- NULL
         }
         outputs$inputs <- inputs

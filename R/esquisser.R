@@ -55,10 +55,6 @@ esquisser <- function(data = NULL,
   if (!is.null(res_data$esquisse_data)) {
     res_data$esquisse_data <- dropListColumns(res_data$esquisse_data)
   }
-  rv <- reactiveValues(
-    data = res_data$esquisse_data,
-    name = res_data$esquisse_data_name
-  )
 
   if (viewer == "browser") {
     inviewer <- browserViewer(browser = getOption("browser"))
@@ -96,8 +92,9 @@ esquisser <- function(data = NULL,
     server = function(input, output, session) {
       esquisse_server(
         id = "esquisse",
-        data_rv = rv,
-        import_from = if (is.null(res_data$esquisse_data)) c("env", "file", "copypaste", "googlesheets", "url")
+        data_rv = res_data$esquisse_data,
+        name = res_data$esquisse_data_name,
+        import_from = c("env", "file", "copypaste", "googlesheets", "url")
       )
     },
     viewer = inviewer

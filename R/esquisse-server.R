@@ -32,55 +32,18 @@ esquisse_server <- function(id,
   moduleServer(
     id = id,
     module = function(input, output, session) {
+      
       ns <- session$ns
       ggplotCall <- reactiveValues(code = "")
       data_chart <- reactiveValues(data = NULL, name = NULL)
+      geom_rv <- reactiveValues(possible = "auto", controls = "auto", palette = FALSE)
 
       # Settings modal (aesthetics choices)
       observeEvent(input$settings, {
         showModal(modal_settings(aesthetics = input$aesthetics))
       })
 
-      # Generate drag-and-drop input
-      output$ui_aesthetics <- renderUI({
-        if (is.reactive(default_aes)) {
-          aesthetics <- default_aes()
-        } else {
-          if (is.null(input$aesthetics)) {
-            aesthetics <- default_aes
-          } else {
-            aesthetics <- input$aesthetics
-          }
-        }
-        data <- isolate(data_chart$data)
-        if (!is.null(data)) {
-          var_choices <- get_col_names(data)
-          choiceValues <- var_choices
-          choiceNames <- badgeType(
-            col_name = var_choices,
-            col_type = col_type(data[, var_choices, drop = TRUE])
-          )
-          selected <- dropNulls(isolate(input$dragvars$target))
-        } else {
-          choiceValues <- ""
-          choiceNames <- ""
-          selected <- NULL
-        }
-        dragulaInput(
-          inputId = ns("dragvars"),
-          sourceLabel = "Variables",
-          targetsLabels = c("X", "Y", aesthetics),
-          targetsIds = c("xvar", "yvar", aesthetics),
-          choiceValues = choiceValues,
-          choiceNames = choiceNames,
-          selected = selected,
-          badge = FALSE,
-          width = "100%",
-          height = "70px",
-          replace = TRUE
-        )
-      })
-
+      
       if (is.reactivevalues(data_rv)) {
         observeEvent(data_rv$data, {
           data_chart$data <- data_rv$data
@@ -105,7 +68,7 @@ esquisse_server <- function(id,
       }
 
       # Launch import modal if no data at start
-      if (!is.null(import_from) && is.null(isolate(data_chart$data))) {
+      if (!is.null(import_from) & is.null(isolate(data_chart$data))) {
         datamods::import_modal(
           id = ns("import-data"),
           from = import_from,
@@ -130,62 +93,46 @@ esquisse_server <- function(id,
         data_chart$name <- data_imported_r$name() %||% "imported_data"
       })
 
+      # show data if button clicked
       show_data_server("show_data", reactive(controls_rv$data))
-
-      # Update drag-and-drop input when data changes
+      
+      # special case: geom_sf
       observeEvent(data_chart$data, {
-        data <- data_chart$data
-        if (is.null(data)) {
-          updateDragulaInput(
-            session = session,
-            inputId = "dragvars",
-            status = NULL,
-            choices = character(0),
-            badge = FALSE
-          )
-        } else {
-          # special case: geom_sf
-          if (inherits(data, what = "sf")) {
-            geom_possible$x <- c("sf", geom_possible$x)
-          }
-          var_choices <- get_col_names(data)
-          updateDragulaInput(
-            session = session,
-            inputId = "dragvars",
-            status = NULL,
-            choiceValues = var_choices,
-            choiceNames = badgeType(
-              col_name = var_choices,
-              col_type = col_type(data[, var_choices, drop = TRUE])
-            ),
-            badge = FALSE
-          )
+        if (inherits(data_chart$data, what = "sf")) {
+          geom_rv$possible <- c("sf", geom_rv$possible)
         }
-      }, ignoreNULL = FALSE)
+      })
+      
+      # Aesthetic selector
+      aes_r <- select_aes_server(
+        id = "aes", 
+        data_r = reactive(data_chart$data), 
+        default_aes = default_aes,
+        input_aes = reactive(input$aesthetics)
+      )
 
-      geom_possible <- reactiveValues(x = "auto")
-      geom_controls <- reactiveValues(x = "auto")
-      observeEvent(list(input$dragvars$target, input$geom), {
+      
+      observeEvent(list(aes_r(), input$geom), {
         geoms <- potential_geoms(
           data = data_chart$data,
           mapping = build_aes(
             data = data_chart$data,
-            x = input$dragvars$target$xvar,
-            y = input$dragvars$target$yvar
+            x = aes_r()$xvar,
+            y = aes_r()$yvar
           )
         )
-        geom_possible$x <- c("auto", geoms)
+        geom_rv$possible <- c("auto", geoms)
 
-        geom_controls$x <- select_geom_controls(input$geom, geoms)
+        geom_rv$controls <- select_geom_controls(input$geom, geoms)
 
-        if (!is.null(input$dragvars$target$fill) | !is.null(input$dragvars$target$color)) {
-          geom_controls$palette <- TRUE
+        if (!is.null(aes_r()$fill) | !is.null(aes_r()$color)) {
+          geom_rv$palette <- TRUE
         } else {
-          geom_controls$palette <- FALSE
+          geom_rv$palette <- FALSE
         }
       }, ignoreInit = TRUE)
 
-      observeEvent(geom_possible$x, {
+      observeEvent(geom_rv$possible, {
         geoms <- c(
           "auto", "line", "area", "bar", "col", "histogram",
           "point", "jitter", "boxplot", "violin", "density",
@@ -194,8 +141,8 @@ esquisse_server <- function(id,
         updateDropInput(
           session = session,
           inputId = "geom",
-          selected = setdiff(geom_possible$x, "auto")[1],
-          disabled = setdiff(geoms, geom_possible$x)
+          selected = setdiff(geom_rv$possible, "auto")[1],
+          disabled = setdiff(geoms, geom_rv$possible)
         )
       })
 
@@ -203,7 +150,7 @@ esquisse_server <- function(id,
       # paramsChart <- reactiveValues(inputs = NULL)
       controls_rv <- controls_server(
         id = "controls",
-        type = geom_controls,
+        type = geom_rv,
         data_table = reactive(data_chart$data),
         data_name = reactive({
           nm <- req(data_chart$name)
@@ -214,24 +161,24 @@ esquisse_server <- function(id,
         }),
         ggplot_rv = ggplotCall,
         aesthetics = reactive({
-          dropNullsOrEmpty(input$dragvars$target)
+          dropNullsOrEmpty(aes_r())
         }),
         use_facet = reactive({
-          !is.null(input$dragvars$target$facet) | !is.null(input$dragvars$target$facet_row) | !is.null(input$dragvars$target$facet_col)
+          !is.null(aes_r()$facet) | !is.null(aes_r()$facet_row) | !is.null(aes_r()$facet_col)
         }),
         use_transX = reactive({
-          if (is.null(input$dragvars$target$xvar))
+          if (is.null(aes_r()$xvar))
             return(FALSE)
           identical(
-            x = col_type(data_chart$data[[input$dragvars$target$xvar]]),
+            x = col_type(data_chart$data[[aes_r()$xvar]]),
             y = "continuous"
           )
         }),
         use_transY = reactive({
-          if (is.null(input$dragvars$target$yvar))
+          if (is.null(aes_r()$yvar))
             return(FALSE)
           identical(
-            x = col_type(data_chart$data[[input$dragvars$target$yvar]]),
+            x = col_type(data_chart$data[[aes_r()$yvar]]),
             y = "continuous"
           )
         })
@@ -245,7 +192,7 @@ esquisse_server <- function(id,
         req(controls_rv$inputs)
         req(input$geom)
 
-        aes_input <- make_aes(input$dragvars$target)
+        aes_input <- make_aes(aes_r())
 
         req(unlist(aes_input) %in% names(data_chart$data))
 
@@ -342,9 +289,9 @@ esquisse_server <- function(id,
           theme = controls_rv$theme$theme,
           theme_args = controls_rv$theme$args,
           coord = controls_rv$coord,
-          facet = input$dragvars$target$facet,
-          facet_row = input$dragvars$target$facet_row,
-          facet_col = input$dragvars$target$facet_col,
+          facet = aes_r()$facet,
+          facet_row = aes_r()$facet_row,
+          facet_col = aes_r()$facet_col,
           facet_args = controls_rv$facet,
           xlim = xlim,
           ylim = ylim
