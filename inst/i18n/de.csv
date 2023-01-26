@@ -51,7 +51,7 @@ label,translation
 "Add a smooth line:","geglättete Trendlinie hinzufügen:"
 "Yes","Ja"
 "No","Nein"
-"Smooth line span:","Glättungs-Intervall:"
+"Smooth line span:","Glättungs-Spannweite (window):"
 "Size for points/lines:","Punktgröße/Liniendicke:"
 "Facet scales:","Achsenskalierung der Kacheln:"
 "Facet ncol:","Kacheln pro Zeile:"
