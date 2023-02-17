@@ -275,7 +275,7 @@ controls_server <- function(id,
       })
 
       observeEvent(type$controls, {
-        toggleDisplay(id = ns("controls-position"), display = type$controls %in% c("bar", "line", "area"))
+        toggleDisplay(id = ns("controls-position"), display = type$controls %in% c("bar", "line", "area", "histogram"))
         toggleDisplay(id = ns("controls-histogram"), display = type$controls %in% "histogram")
         toggleDisplay(id = ns("controls-density"), display = type$controls %in% c("density", "violin"))
         toggleDisplay(id = ns("controls-scatter"), display = type$controls %in% "point")
