@@ -1,0 +1,90 @@
+﻿label,translation
+Update Preview,Odśwież podgląd
+Height:,Wysokość:
+Width:,Szerokość:
+Filename:,Nazwa pliku:
+Filename,Nazwa pliku
+Close,Zamknij
+More options,Więcej opcji
+Export chart,Eksportuj wykres
+Export to PowerPoint failed...,Eksport do PowerPoint zakończony niepowodzeniem...
+Export format:,Format eksportu:
+Import data to create a graph,Importuj dane do stworzenia wykresu
+Display settings,Pokaż ustawienia
+Close Window,Zamknij okno
+Import data,Importuj dane
+Show data,Pokaż dane
+Labels & Title,Etykiety i tytuł
+Plot options,Opcje wykresu
+Appearance,Wygląd
+Data,Dane
+Code,Kod
+Title:,Tytuł:
+Title,Tytuł
+Subtitle:,Podtytuł:
+Subtitle,Podtytuł
+Caption:,Adnotacja:
+Caption,Adnotacja
+X label:,Etykieta osi X:
+X label,Etykieta osi X
+Y label:,Etykieta osi Y:
+Y label,Etykieta osi Y
+Fill label:,Etykieta wypełnienia:
+Fill label,Etykieta wypełnienia
+Color label:,Etykieta koloru:
+Color label,Etykieta koloru
+Size label:,Etykieta rozmiaru:
+Size label,Etykieta rozmiaru
+Shape label:,Etykieta kształtu:
+Shape label,Etykieta kształtu
+Font face:,Krój pisma:
+Font size:,Stopień pisma:
+Align:,Wyrównanie:
+Left,Do lewej
+Center,Do środka
+Right,Do prawej
+Color:,Kolor:
+Ribbon color:,Kolor wstążki:
+Point symbol:,Symbol punktów:
+Theme:,Motyw:
+Legend position:,Pozycja legendy:
+Add a smooth line:,Dodaj linię odwzorowania:
+Yes,Tak
+No,Nie
+Smooth line span:,Zakres linii odwzorowania:
+Size for points/lines:,Wielkość punktów/linii:
+Facet scales:,Skale fasetek:
+Facet ncol:,Liczba kolumn fasetek:
+Facet nrow:,Liczba wierszy fasetek:
+Numbers of bins:,Liczba słupków:
+Scale:,Skala:
+X-Axis limits (empty for none):,Granice osi X (puste jeśli bez):
+X-Axis transform:,Transformacja osi X:
+Y-Axis limits (empty for none):,Granice osi Y (puste jeśli bez):
+Y-Axis transform:,Transformacja osi Y:
+Bandwidth adjustment:,Dostosowania przepustu:
+Position:,Pozycja:
+Flip coordinate:,Zmiana współrzędnych
+Copy to clipboard,Kopiuj do schowka
+Code:,Kod:
+Insert code in script,Wskaw kod do skryptu
+Esquisse settings,Ustawienia Esquisse
+Select aesthetics to be used to build a graph:,Wybierz estetyki do budowy wykresu:
+Aesthetic mappings describe how variables in the data are mapped to visual properties (aesthetics) of geoms.,"Mapowanie estetyk opisuje, w jaki sposób zmienne z bazy danych połączone są z właściwościami wizualnymi (estetykami) obiektów geom."
+fill color for shapes,kolor wypełnienia kształtów
+color points and lines,kolor punktów i linii
+size of the points,rozmiar punktów
+shape of the points,kształt punktów
+frequency weights,wagi na podstawie częstości
+identifies series of points with a grouping variable,identyfikuje punkty na podstawie zmiennej grupującej
+used in ribbons charts with ymax to display an interval between two lines,używane w wykresach wstążkowych z ymax do wyświetlenia odstępu między dwiema liniami
+used in ribbons charts with ymin to display an interval between two lines,używane w wykresach wstążkowych z ymin do wyświetlenia odstępu między dwiema liniami
+create small multiples,tworzy niewielkie oddzielne wykresy
+create small multiples by rows,tworzy niewielkie oddzielne wykresy ustawione w wiersze
+create small multiples by columns,tworzy niewielkie oddzielne wykresy ustawione w kolumny
+Dataset,Zbiór danych
+Jittered points:,Przesunięcie punktów:
+Use a color palette:,Użyj palety kolorów:
+Reverse the order of colors?,Odwrócić kolejność kolorów?
+Use specific colors:,Użyj konkretnych kolorów:
+,
