@@ -85,7 +85,9 @@ turkish,
 <img src="man/figures/i18n/kr.svg" height="16" style="height:16px"/>
 korean,
 <img src="man/figures/i18n/pl.svg" height="16" style="height:16px"/>
-polish.
+polish,
+<img src="man/figures/i18n/ja.svg" height="16" style="height:16px"/>
+japanese.
 
 ``` r
 library(esquisse)
