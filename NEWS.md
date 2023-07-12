@@ -3,6 +3,12 @@
 * `esquisse_server()` : support for reactive functions for `data_rv` argument.
 *  Allow `esquisse_server()` to be initialized with NULL without forcing the import module to appear using `import_from = NULL` [#232](https://github.com/dreamRs/esquisse/issues/232) 
 
+* i18n: new translations added:
+ + polish, activate with `set_i18n("pl")`, thanks to [@jakub-jedrusiak](https://github.com/jakub-jedrusiak)
+ + japanese, activate with `set_i18n("ja")`, thanks to [@nissinbo](https://github.com/nissinbo)
+ + german, activate with `set_i18n("de")`, thanks to [@1O](https://github.com/1O)
+ 
+
 
 # esquisse 1.1.2
 

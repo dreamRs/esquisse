@@ -89,12 +89,15 @@ languages <- list(
   es = "spanish",
   # de = "german",
   tr = "turkish",
-  kr = "korean"
+  kr = "korean",
+  pl = "polish",
+  ja = "japanese",
+  de = "german"
 )
 ```
 
 
-Currently you can use {datamods} in the following language: `r i18n_flags(languages)`.
+Currently you can use {esquisse} in the following language: `r i18n_flags(languages)`.
 
 ```r
 library(esquisse)
