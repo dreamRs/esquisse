@@ -264,6 +264,10 @@ div[id^="shiny-notification-esquisse"] > .shiny-notification-close {
   background-color: #97D5E0;
   color: #FFFFFF;
 }
+.label-id {
+  background-color: #848484;
+  color: #FFFFFF;
+}
 .label-other {
   background-color: #2E2E2E;
   color: #FFFFFF;

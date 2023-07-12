@@ -1,6 +1,6 @@
 
 #' @param data_rv Either:
-#'  * A [shiny::reactiveValues()] with a slot `data` containing a `data.frame` 
+#'  * A [shiny::reactiveValues()] with a slot `data` containing a `data.frame`
 #'    to use in the module and a slot `name` corresponding to the name of the `data.frame` used for the generated code.
 #'  * A [shiny::reactive()] function returning a `data.frame`. See argument `name` for the name used in generated code.
 #'  * A `data.frame` object.
@@ -9,7 +9,7 @@
 #'  vector or `reactive` function returning one.
 #' @param import_from From where to import data, argument passed
 #'  to [datamods::import_server()], use `NULL` to prevent the modal to appear.
-#' 
+#'
 #'
 #' @export
 #'
@@ -32,7 +32,7 @@ esquisse_server <- function(id,
   moduleServer(
     id = id,
     module = function(input, output, session) {
-      
+
       ns <- session$ns
       ggplotCall <- reactiveValues(code = "")
       data_chart <- reactiveValues(data = NULL, name = NULL)
@@ -43,7 +43,7 @@ esquisse_server <- function(id,
         showModal(modal_settings(aesthetics = input$aesthetics))
       })
 
-      
+
       if (is.reactivevalues(data_rv)) {
         observeEvent(data_rv$data, {
           data_chart$data <- data_rv$data
@@ -63,7 +63,7 @@ esquisse_server <- function(id,
           }
         }, ignoreInit = FALSE)
       } else if (is.data.frame(data_rv)) {
-        data_chart$data <- as.data.frame(data_rv)
+        data_chart$data <- data_rv
         data_chart$name <- if (is.character(name)) name
       }
 
@@ -95,23 +95,24 @@ esquisse_server <- function(id,
 
       # show data if button clicked
       show_data_server("show_data", reactive(controls_rv$data))
-      
+
       # special case: geom_sf
       observeEvent(data_chart$data, {
+        check_data <<- data_chart$data
         if (inherits(data_chart$data, what = "sf")) {
           geom_rv$possible <- c("sf", geom_rv$possible)
         }
       })
-      
+
       # Aesthetic selector
       aes_r <- select_aes_server(
-        id = "aes", 
-        data_r = reactive(data_chart$data), 
+        id = "aes",
+        data_r = reactive(data_chart$data),
         default_aes = default_aes,
         input_aes = reactive(input$aesthetics)
       )
 
-      
+
       observeEvent(list(aes_r(), input$geom), {
         geoms <- potential_geoms(
           data = data_chart$data,
