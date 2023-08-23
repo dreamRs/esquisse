@@ -27,7 +27,8 @@ esquisse_server <- function(id,
                             data_rv = NULL,
                             name = "data",
                             default_aes = c("fill", "color", "size", "group", "facet"),
-                            import_from = c("env", "file", "copypaste", "googlesheets", "url")) {
+                            import_from = c("env", "file", "copypaste", "googlesheets", "url"),
+                            drop_ids = TRUE) {
 
   moduleServer(
     id = id,
@@ -177,7 +178,8 @@ esquisse_server <- function(id,
             x = col_type(data_chart$data[[aes_r()$yvar]]),
             y = "continuous"
           )
-        })
+        }),
+        drop_ids = drop_ids
       )
 
 

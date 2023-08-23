@@ -183,7 +183,8 @@ controls_server <- function(id,
                             aesthetics = reactive(NULL),
                             use_facet = reactive(FALSE),
                             use_transX = reactive(FALSE),
-                            use_transY = reactive(FALSE)) {
+                            use_transY = reactive(FALSE),
+                            drop_ids = TRUE) {
 
   callModule(
     id = id,
@@ -301,7 +302,10 @@ controls_server <- function(id,
             data_table()
           }
         }),
-        name = data_name
+        name = data_name,
+        #########
+        drop_ids = drop_ids
+        ########
       )
 
       outputs <- reactiveValues(
