@@ -98,7 +98,6 @@ esquisse_server <- function(id,
 
       # special case: geom_sf
       observeEvent(data_chart$data, {
-        check_data <<- data_chart$data
         if (inherits(data_chart$data, what = "sf")) {
           geom_rv$possible <- c("sf", geom_rv$possible)
         }

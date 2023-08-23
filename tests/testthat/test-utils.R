@@ -11,7 +11,7 @@ test_that("badgeType works", {
   expect_true(grepl(pattern = "label-discrete", x = badges[[1]]))
   expect_true(grepl(pattern = "label-datetime", x = badges[[2]]))
   expect_true(grepl(pattern = "label-continuous", x = badges[[3]]))
-  expect_true(grepl(pattern = "label-default", x = badges[[4]]))
+  expect_true(grepl(pattern = "label-id", x = badges[[4]]))
 })
 
 
