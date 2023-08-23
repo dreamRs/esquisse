@@ -71,7 +71,8 @@
 <span>  data_rv <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  name <span class="op">=</span> <span class="st">"data"</span>,</span>
 <span>  default_aes <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"fill"</span>, <span class="st">"color"</span>, <span class="st">"size"</span>, <span class="st">"group"</span>, <span class="st">"facet"</span><span class="op">)</span>,</span>
-<span>  import_from <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"env"</span>, <span class="st">"file"</span>, <span class="st">"copypaste"</span>, <span class="st">"googlesheets"</span>, <span class="st">"url"</span><span class="op">)</span></span>
+<span>  import_from <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"env"</span>, <span class="st">"file"</span>, <span class="st">"copypaste"</span>, <span class="st">"googlesheets"</span>, <span class="st">"url"</span><span class="op">)</span>,</span>
+<span>  drop_ids <span class="op">=</span> <span class="cn">TRUE</span></span>
 <span><span class="op">)</span></span>
 <span></span>
 <span><span class="fu">esquisseContainer</span><span class="op">(</span>width <span class="op">=</span> <span class="st">"100%"</span>, height <span class="op">=</span> <span class="st">"700px"</span>, fixed <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></code></pre></div>
@@ -123,6 +124,10 @@ vector or <code>reactive</code> function returning one.</p></dd>
 <dt>import_from</dt>
 <dd><p>From where to import data, argument passed
 to <code><a href="https://rdrr.io/pkg/datamods/man/import-modal.html" class="external-link">datamods::import_server()</a></code>, use <code>NULL</code> to prevent the modal to appear.</p></dd>
+
+
+<dt>drop_ids</dt>
+<dd><p>Argument passed to <a href="https://rdrr.io/pkg/datamods/man/filter-data.html" class="external-link">datamods::filter_data_server</a>. Drop columns containing more than 90% of unique values, or than 50 distinct values.</p></dd>
 
 
 <dt>width, height</dt>
