@@ -3,6 +3,7 @@
 \docType{package}
 \name{esquisse}
 \alias{esquisse}
+\alias{esquisse-package}
 \title{Explore and Visualize Your Data Interactively}
 \description{
 A 'shiny' gadget to create 'ggplot2' figures interactively with drag-and-drop to map your variables to different aesthetics.
@@ -18,6 +19,15 @@ esquisser()
 esquisser(mtcars)
 
 }
+}
+\seealso{
+Useful links:
+\itemize{
+  \item \url{https://dreamrs.github.io/esquisse/}
+  \item \url{https://github.com/dreamRs/esquisse}
+  \item Report bugs at \url{https://github.com/dreamRs/esquisse/issues}
+}
+
 }
 \author{
 Fanny Meyer & Victor Perrier (@dreamRs_fr)

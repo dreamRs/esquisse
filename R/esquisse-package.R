@@ -6,7 +6,6 @@
 #' and retrieve the code to reproduce the plot.
 #'
 #' @name esquisse
-#' @docType package
 #' @author Fanny Meyer & Victor Perrier (@@dreamRs_fr)
 #'
 #' @examples
@@ -18,7 +17,8 @@
 #' esquisser(mtcars)
 #'
 #' }
-NULL
+"_PACKAGE"
+
 
 #' esquisse exported operators and S3 methods
 #'
