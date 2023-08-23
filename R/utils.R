@@ -195,35 +195,6 @@ get_col_names <- function(data) {
 
 
 
-# utils for geom icons
-geomIcons <- function() {
-  geoms <- c(
-    "auto", "line", "step", "area", "bar", "col", "histogram",
-    "point", "jitter", "boxplot", "violin", "density",
-    "tile", "sf"
-  )
-  href <- "esquisse/geomIcon/gg-%s.png"
-  geomsChoices <- lapply(
-    X = geoms,
-    FUN = function(x) {
-      list(inputId = x, img = sprintf(fmt = href, x), label = capitalize(x))
-    }
-  )
-
-  geomsChoicesNames <- lapply(
-    X = geomsChoices,
-    FUN = function(x) {
-      list(
-        style = "width: 90px;",
-        tags$img(src = x$img, width = 56, height = 56),
-        tags$br(), x$label
-      )
-    }
-  )
-
-  list(names = geomsChoicesNames, values = geoms)
-}
-
 
 capitalize <- function(x) {
   lo <- substring(text = x, first = 2)

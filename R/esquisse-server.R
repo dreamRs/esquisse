@@ -133,11 +133,7 @@ esquisse_server <- function(id,
       }, ignoreInit = TRUE)
 
       observeEvent(geom_rv$possible, {
-        geoms <- c(
-          "auto", "line", "area", "bar", "col", "histogram",
-          "point", "jitter", "boxplot", "violin", "density",
-          "tile", "sf"
-        )
+        geoms <- geomIcons()$values
         updateDropInput(
           session = session,
           inputId = "geom",

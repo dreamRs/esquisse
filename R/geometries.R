@@ -112,6 +112,7 @@ potential_geoms_ref <- function() {
       "continuous",  "continuous",  "jitter",    "0",
       "continuous",  "continuous",  "line",      "0",
       "continuous",  "continuous",  "step",      "0",
+      "continuous",  "continuous",  "path",      "0",
       "continuous",  "continuous",  "area",      "0",
       "discrete",    "discrete",    "tile",      "1",
       "time",        "continuous",  "line",      "1",
@@ -121,6 +122,7 @@ potential_geoms_ref <- function() {
       "time",        "continuous",  "bar",       "0",
       "empty",       "continuous",  "line",      "1",
       "empty",       "continuous",  "step",      "0",
+      "empty",       "continuous",  "path",      "0",
       "empty",       "continuous",  "area",      "0",
       "continuous",  "continuous",  "tile",      "0",
       "discrete",    "time",        "tile",      "0",
@@ -170,7 +172,7 @@ match_geom_args <- function(geom, args, add_aes = TRUE, mapping = list(), envir 
     if (geom %in% c("bar", "col", "histogram", "boxplot", "violin", "density")) {
       args$fill <- args$fill_color %||% "#0C4C8A"
     }
-    if (geom %in% c("line", "step", "point")) {
+    if (geom %in% c("line", "step", "path", "point")) {
       args$colour <- args$fill_color %||% "#0C4C8A"
     }
   }
@@ -211,5 +213,38 @@ match_geom_args <- function(geom, args, add_aes = TRUE, mapping = list(), envir 
     }
   }
   args[names(args) %in% setdiff(names(geom_args), names(mapping))]
+}
+
+
+
+
+
+# utils for geom icons
+geomIcons <- function() {
+  geoms <- c(
+    "auto", "line", "step", "path", "area", "bar", "col", "histogram",
+    "point", "jitter", "boxplot", "violin", "density",
+    "tile", "sf"
+  )
+  href <- "esquisse/geomIcon/gg-%s.png"
+  geomsChoices <- lapply(
+    X = geoms,
+    FUN = function(x) {
+      list(inputId = x, img = sprintf(fmt = href, x), label = capitalize(x))
+    }
+  )
+  
+  geomsChoicesNames <- lapply(
+    X = geomsChoices,
+    FUN = function(x) {
+      list(
+        style = "width: 90px;",
+        tags$img(src = x$img, width = 56, height = 56),
+        tags$br(), x$label
+      )
+    }
+  )
+  
+  list(names = geomsChoicesNames, values = geoms)
 }
 

@@ -94,11 +94,21 @@ dev.off()
 
 
 
-# Geom line ---------------------------------------------------------------
+# Geom step ---------------------------------------------------------------
 
 png(filename = "inst/geomIcon/www/gg-step.png", bg = "transparent")
 ggplot(data = coord_circle(centre = c(0, 0), r = 1)) + geom_polygon(aes(x = x, y = y), fill = "#85b6d5") + coord_fixed() + theme_void()
 p <- ggplot(data = tail(economics, 25)) + geom_step(mapping = aes(x = date, y = psavert), color = "white", size = 2) + theme_void()
+print(p, vp = viewport(width = unit(0.6, "npc"), height = unit(0.6, "npc")))
+dev.off()
+
+
+
+# Geom path ---------------------------------------------------------------
+
+png(filename = "inst/geomIcon/www/gg-path.png", bg = "transparent")
+ggplot(data = coord_circle(centre = c(0, 0), r = 1)) + geom_polygon(aes(x = x, y = y), fill = "#7390BC") + coord_fixed() + theme_void()
+p <- ggplot(tail(economics, 100), aes(unemploy/pop, psavert)) + geom_path(color = "white", size = 2) + theme_void()
 print(p, vp = viewport(width = unit(0.6, "npc"), height = unit(0.6, "npc")))
 dev.off()
 
