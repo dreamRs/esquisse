@@ -19,7 +19,7 @@
 #'
 #' @export
 #'
-#' @importFrom htmltools validateCssUnit tags tagList singleton
+#' @importFrom htmltools validateCssUnit tags tagList singleton css
 #'
 #' @seealso \code{\link{updateDropInput}}
 #'
@@ -81,7 +81,7 @@ dropInput <- function(inputId,
     args = c(tagSelected, list(
       style = if (!is.null(width))
         paste0("width: ", validateCssUnit(width), ";"),
-      class = "btn btn-default btn-outline-primary drop-input-main dropdown-toggle",
+      class = "btn btn-default btn-outline-secondary text-dark drop-input-main dropdown-toggle",
       style = "font-size: .75rem;",
       `data-toggle` = "dropdown",
       `data-bs-toggle` = "dropdown",
@@ -91,11 +91,11 @@ dropInput <- function(inputId,
   dropTag <- tags$div(
     class = "dropdown-menu",
     class = if (isTRUE(dropPreScrollable)) "pre-scrollable",
-    style = "padding: 5px;",
-    style = if (!is.null(dropMaxHeight))
-      paste0("max-height: ", validateCssUnit(dropMaxHeight), ";"),
-    style = if (!is.null(dropWidth))
-      paste0("width: ", validateCssUnit(dropWidth), ";"),
+    style = css(
+      padding = "5px", 
+      maxHeight = validateCssUnit(dropMaxHeight),
+      width = validateCssUnit(dropWidth)
+    ),
     lapply(
       X = seq_along(choicesNames),
       FUN = function(i) {

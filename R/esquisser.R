@@ -74,7 +74,7 @@ esquisser <- function(data = NULL,
     app = esquisse_ui(
       id = "esquisse",
       container = function(...) {
-        theme <- bslib::bs_theme(version = 5L, primary = "#112446")
+        theme <- bslib::bs_theme(version = 5L, primary = "#112446", secondary = "#cccccc")
         theme <- bslib::bs_add_rules(
           theme = theme,
           c(
