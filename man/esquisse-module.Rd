@@ -20,7 +20,8 @@ esquisse_server(
   data_rv = NULL,
   name = "data",
   default_aes = c("fill", "color", "size", "group", "facet"),
-  import_from = c("env", "file", "copypaste", "googlesheets", "url")
+  import_from = c("env", "file", "copypaste", "googlesheets", "url"),
+  drop_ids = TRUE
 )
 
 esquisseContainer(width = "100\%", height = "700px", fixed = FALSE)
@@ -55,6 +56,8 @@ vector or \code{reactive} function returning one.}
 
 \item{import_from}{From where to import data, argument passed
 to \code{\link[datamods:import-modal]{datamods::import_server()}}, use \code{NULL} to prevent the modal to appear.}
+
+\item{drop_ids}{Argument passed to \link[datamods:filter-data]{datamods::filter_data_server}. Drop columns containing more than 90\% of unique values, or than 50 distinct values.}
 
 \item{width, height}{The width and height of the container, e.g. \code{"400px"},
 or \code{"100\%"}; see \code{\link[htmltools]{validateCssUnit}}.}
