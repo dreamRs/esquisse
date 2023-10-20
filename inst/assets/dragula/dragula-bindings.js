@@ -21,6 +21,16 @@ $.extend(dragulaBinding, {
       opts.removeOnSpill = false;
     }
 
+    if (opts.hasOwnProperty("invalid")) {
+      opts.invalid = eval('(' + opts.invalid + ')');;
+    }
+    if (opts.hasOwnProperty("accepts")) {
+      opts.accepts = eval('(' + opts.accepts + ')');;
+    }
+    if (opts.hasOwnProperty("moves")) {
+      opts.moves = eval('(' + opts.moves + ')');;
+    }
+
     var replaceold = config.replace;
     var replaceIds = config.replaceIds;
 

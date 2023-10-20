@@ -29,7 +29,9 @@
 #' @param replace When a choice is dragged in a target container already
 #'  containing a choice, does the later be replaced by the new one ?
 #' @param copySource When `replace = TRUE`, does elements in source must be copied or moved ?
-#' @param dragulaOpts Options passed to dragula JavaScript library.
+#' @param dragulaOpts Options passed to dragula JavaScript library
+#'  (see [online documentation on GitHub](https://github.com/bevacqua/dragula#dragulacontainers-options)).
+#'  Note that options `moves`, `accepts` and `invalid` must be valid JavaScript code as they are evaluated on the client.
 #' @param boxStyle CSS style string to customize source and target container.
 #' @param width Width of the input.
 #' @param height Height of each boxes, the total input height is this parameter X 2.
