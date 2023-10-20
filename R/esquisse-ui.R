@@ -4,7 +4,9 @@
 #' @description Use esquisse as a module in a Shiny application.
 #'
 #' @param id Module ID.
-#' @param header Logical. Display or not `esquisse` header.
+#' @param header Either `TRUE` or `FALSE` to display or not `esquisse` header, or a named `list`
+#'  where names are : `settings`, `close`, `import` and `show_data` and values are `TRUE` or
+#'  `FALSE` to display or not the corresponding button.
 #' @param container Container in which display the addin,
 #'  default is to use `esquisseContainer`, see examples.
 #'  Use `NULL` for no container (behavior in versions <= 0.2.1).
@@ -12,6 +14,8 @@
 #' @param controls Controls menu to be displayed. Use `NULL` to hide all menus.
 #' @param insert_code Logical, Display or not a button to insert the ggplot
 #'  code in the current user script (work only in RStudio).
+#' @param play_pause Display or not the play / pause button.
+#' @param downloads Export options available or `NULL` for no export. See [downloads_labels()].
 #'
 #' @return A `reactiveValues` with 3 slots :
 #'   * **code_plot** : code to generate plot.
@@ -27,6 +31,8 @@
 #' @importFrom htmltools tags tagList
 #' @importFrom shiny fillPage plotOutput actionButton NS fluidRow column fillCol
 #' @importFrom shinyWidgets prettyToggle
+#' @importFrom rlang is_list
+#' @importFrom utils modifyList
 #'
 #' @example examples/esquisse-module-1.R
 #'
@@ -37,46 +43,58 @@ esquisse_ui <- function(id,
                         header = TRUE,
                         container = esquisseContainer(),
                         controls = c("labs", "parameters", "appearance", "filters", "code"),
-                        insert_code = FALSE) {
+                        insert_code = FALSE,
+                        play_pause = TRUE,
+                        downloads = downloads_labels()) {
   ns <- NS(id)
+  header_btns <- list(settings = TRUE, close = TRUE, import = TRUE, show_data = TRUE)
+  if (is_list(header)) {
+    header_btns <- modifyList(header_btns, header)
+    header <- TRUE
+  }
   tag_header <- tags$div(
     class = "esquisse-title-container",
     tags$h1("Esquisse", class = "esquisse-title"),
     tags$div(
       class = "pull-right float-end",
-      actionButton(
-        inputId = ns("settings"),
-        label = ph("gear-six", height = "2em", title = i18n("Display settings")),
-        class = "btn-sm",
-        title = i18n("Display settings")
-      ),
-      actionButton(
-        inputId = ns("close"),
-        label = ph("x", height = "2em", title = i18n("Close Window")),
-        class = "btn-sm",
-        title = i18n("Close Window")
-      )
+      if (isTRUE(header_btns$settings)) {
+        actionButton(
+          inputId = ns("settings"),
+          label = ph("gear-six", height = "2em", title = i18n("Display settings")),
+          class = "btn-sm",
+          title = i18n("Display settings")
+        )
+      },
+      if (isTRUE(header_btns$close)) {
+        actionButton(
+          inputId = ns("close"),
+          label = ph("x", height = "2em", title = i18n("Close Window")),
+          class = "btn-sm",
+          title = i18n("Close Window")
+        )
+      }
     ),
     tags$div(
       class = "pull-left",
-      actionButton(
-        inputId = ns("launch_import_data"),
-        label = ph("database", height = "2em", title = i18n("Import data")),
-        class = "btn-sm",
-        title = i18n("Import data")
-      ),
-      show_data_ui(ns("show_data"))
+      if (isTRUE(header_btns$import)) {
+        actionButton(
+          inputId = ns("launch_import_data"),
+          label = ph("database", height = "2em", title = i18n("Import data")),
+          class = "btn-sm",
+          title = i18n("Import data")
+        )
+      },
+      if (isTRUE(header_btns$show_data)) show_data_ui(ns("show_data"))
     )
   )
-  
+
   ui <- tags$div(
     class = "esquisse-container",
     html_dependency_esquisse(),
     html_dependency_clipboard(),
-    # shinyWidgets::chooseSliderSkin("Modern", "#112446"),
-    
+
     if (isTRUE(header)) tag_header,
-    
+
     tags$div(
       class = "esquisse-geom-aes",
       tags$div(
@@ -91,27 +109,28 @@ esquisse_ui <- function(id,
       ),
       select_aes_ui(ns("aes"))
     ),
-    
+
     fillCol(
       style = "overflow-y: auto;",
       tags$div(
         style = "height: 100%; min-height: 400px; overflow: hidden;",
-        play_pause_input(ns("play_plot")),
+        play_pause_input(ns("play_plot"), show = play_pause),
         ggplot_output(
           id = ns("plooooooot"),
           width = "100%",
-          height = "100%"
+          height = "100%",
+          downloads = downloads
         )
       )
     ),
-    
+
     controls_ui(
       id = ns("controls"),
       insert_code = insert_code,
       controls = controls
     )
   )
-  
+
   if (is.function(container)) {
     ui <- container(ui)
   }

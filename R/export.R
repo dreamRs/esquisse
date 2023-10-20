@@ -196,7 +196,7 @@ save_ggplot_server <- function(id, plot_rv) {
 #' @param id Module ID.
 #' @param width Width of the plot.
 #' @param height Height of the plot.
-#' @param downloads Labels for export options, use `downloads_labels`.
+#' @param downloads Labels for export options, use `downloads_labels()` or `NULL` to disable export options.
 #' @param ... Parameters passed to [shiny::plotOutput()] (`ggplot_output`) or [shiny::renderPlot()] (`render_ggplot`).
 #'
 #' @return Server-side, a `reactiveValues` with the plot.

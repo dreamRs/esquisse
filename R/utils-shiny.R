@@ -107,8 +107,10 @@ rCodeContainer <- function(...) {
 }
 
 
-play_pause_input <- function(inputId) {
-  play_pause <- shinyWidgets::prettyToggle(
+#' @importFrom shinyWidgets prettyToggle
+#' @importFrom htmltools css
+play_pause_input <- function(inputId, show = TRUE) {
+  play_pause <- prettyToggle(
     inputId = inputId,
     value = TRUE,
     label_on = "Play",
@@ -122,8 +124,14 @@ play_pause_input <- function(inputId) {
   )
   play_pause$attribs$style <- "display: inline-block; margin-right: -5px;"
   tags$div(
-    # style = "position: absolute; right: 0; top: 35px; font-weight: bold; z-index: 1000;",
-    style = "position: absolute; right: 40px; top: 5px; font-weight: bold; z-index: 1000;",
+    style = css(
+      position = "absolute",
+      right = "40px",
+      top = "5px",
+      fontWeight = "bold",
+      zIndex = 1000,
+      display = if (!isTRUE(show)) "none"
+    ),
     class = "esquisse-playpause-btn",
     play_pause
   )

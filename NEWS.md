@@ -3,6 +3,7 @@
 * `esquisse_server()` : support for reactive functions for `data_rv` argument.
 * Allow `esquisse_server()` to be initialized with NULL without forcing the import module to appear using `import_from = NULL` [#232](https://github.com/dreamRs/esquisse/issues/232).
 * New geom available in the interface : `geom_path`.
+* `esquisse_ui()`: ability to display not element of the module (header's button, play/pause button, export options).
 
 * i18n: new translations added:
  + polish, activate with `set_i18n("pl")`, thanks to [@jakub-jedrusiak](https://github.com/jakub-jedrusiak)

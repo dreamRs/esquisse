@@ -41,7 +41,7 @@ render_ggplot(
 
 \item{height}{Height of the plot.}
 
-\item{downloads}{Labels for export options, use \code{downloads_labels}.}
+\item{downloads}{Labels for export options, use \code{downloads_labels()} or \code{NULL} to disable export options.}
 
 \item{...}{Parameters passed to \code{\link[shiny:plotOutput]{shiny::plotOutput()}} (\code{ggplot_output}) or \code{\link[shiny:renderPlot]{shiny::renderPlot()}} (\code{render_ggplot}).}
 

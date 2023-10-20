@@ -12,7 +12,9 @@ esquisse_ui(
   header = TRUE,
   container = esquisseContainer(),
   controls = c("labs", "parameters", "appearance", "filters", "code"),
-  insert_code = FALSE
+  insert_code = FALSE,
+  play_pause = TRUE,
+  downloads = downloads_labels()
 )
 
 esquisse_server(
@@ -29,7 +31,9 @@ esquisseContainer(width = "100\%", height = "700px", fixed = FALSE)
 \arguments{
 \item{id}{Module ID.}
 
-\item{header}{Logical. Display or not \code{esquisse} header.}
+\item{header}{Either \code{TRUE} or \code{FALSE} to display or not \code{esquisse} header, or a named \code{list}
+where names are : \code{settings}, \code{close}, \code{import} and \code{show_data} and values are \code{TRUE} or
+\code{FALSE} to display or not the corresponding button.}
 
 \item{container}{Container in which display the addin,
 default is to use \code{esquisseContainer}, see examples.
@@ -40,6 +44,10 @@ Must be a \code{function}.}
 
 \item{insert_code}{Logical, Display or not a button to insert the ggplot
 code in the current user script (work only in RStudio).}
+
+\item{play_pause}{Display or not the play / pause button.}
+
+\item{downloads}{Export options available or \code{NULL} for no export. See \code{\link[=downloads_labels]{downloads_labels()}}.}
 
 \item{data_rv}{Either:
 \itemize{
@@ -152,15 +160,17 @@ my_data <- data.frame(
 
 ui <- fluidPage(
   esquisse_ui(
-    id = "esquisse", 
-    container = esquisseContainer(fixed = TRUE)
+    id = "esquisse",
+    header = list(close = FALSE), # hide the close button
+    container = esquisseContainer(fixed = TRUE),
+    play_pause = FALSE
   )
 )
 
 server <- function(input, output, session) {
-  
+
   esquisse_server(id = "esquisse")
-  
+
 }
 
 if (interactive())

@@ -14,15 +14,17 @@ my_data <- data.frame(
 
 ui <- fluidPage(
   esquisse_ui(
-    id = "esquisse", 
-    container = esquisseContainer(fixed = TRUE)
+    id = "esquisse",
+    header = list(close = FALSE), # hide the close button
+    container = esquisseContainer(fixed = TRUE),
+    play_pause = FALSE
   )
 )
 
 server <- function(input, output, session) {
-  
+
   esquisse_server(id = "esquisse")
-  
+
 }
 
 if (interactive())
