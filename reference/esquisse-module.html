@@ -10,7 +10,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">esquisse</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.1.2.9500</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.1.2.9600</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -63,7 +63,9 @@
 <span>  header <span class="op">=</span> <span class="cn">TRUE</span>,</span>
 <span>  container <span class="op">=</span> <span class="fu">esquisseContainer</span><span class="op">(</span><span class="op">)</span>,</span>
 <span>  controls <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"labs"</span>, <span class="st">"parameters"</span>, <span class="st">"appearance"</span>, <span class="st">"filters"</span>, <span class="st">"code"</span><span class="op">)</span>,</span>
-<span>  insert_code <span class="op">=</span> <span class="cn">FALSE</span></span>
+<span>  insert_code <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>  play_pause <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>  downloads <span class="op">=</span> <span class="fu"><a href="ggplot-output.html">downloads_labels</a></span><span class="op">(</span><span class="op">)</span></span>
 <span><span class="op">)</span></span>
 <span></span>
 <span><span class="fu">esquisse_server</span><span class="op">(</span></span>
@@ -85,7 +87,9 @@
 
 
 <dt>header</dt>
-<dd><p>Logical. Display or not <code>esquisse</code> header.</p></dd>
+<dd><p>Either <code>TRUE</code> or <code>FALSE</code> to display or not <code>esquisse</code> header, or a named <code>list</code>
+where names are : <code>settings</code>, <code>close</code>, <code>import</code> and <code>show_data</code> and values are <code>TRUE</code> or
+<code>FALSE</code> to display or not the corresponding button.</p></dd>
 
 
 <dt>container</dt>
@@ -102,6 +106,14 @@ Must be a <code>function</code>.</p></dd>
 <dt>insert_code</dt>
 <dd><p>Logical, Display or not a button to insert the ggplot
 code in the current user script (work only in RStudio).</p></dd>
+
+
+<dt>play_pause</dt>
+<dd><p>Display or not the play / pause button.</p></dd>
+
+
+<dt>downloads</dt>
+<dd><p>Export options available or <code>NULL</code> for no export. See <code><a href="ggplot-output.html">downloads_labels()</a></code>.</p></dd>
 
 
 <dt>data_rv</dt>
@@ -226,15 +238,17 @@ It's possible to use a vector of CSS unit of length 4 to specify the margins
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="va">ui</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/shiny/man/fluidPage.html" class="external-link">fluidPage</a></span><span class="op">(</span></span></span>
 <span class="r-in"><span>  <span class="fu">esquisse_ui</span><span class="op">(</span></span></span>
-<span class="r-in"><span>    id <span class="op">=</span> <span class="st">"esquisse"</span>, </span></span>
-<span class="r-in"><span>    container <span class="op">=</span> <span class="fu">esquisseContainer</span><span class="op">(</span>fixed <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></span>
+<span class="r-in"><span>    id <span class="op">=</span> <span class="st">"esquisse"</span>,</span></span>
+<span class="r-in"><span>    header <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>close <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span>, <span class="co"># hide the close button</span></span></span>
+<span class="r-in"><span>    container <span class="op">=</span> <span class="fu">esquisseContainer</span><span class="op">(</span>fixed <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>    play_pause <span class="op">=</span> <span class="cn">FALSE</span></span></span>
 <span class="r-in"><span>  <span class="op">)</span></span></span>
 <span class="r-in"><span><span class="op">)</span></span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="va">server</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">input</span>, <span class="va">output</span>, <span class="va">session</span><span class="op">)</span> <span class="op">{</span></span></span>
-<span class="r-in"><span>  </span></span>
+<span class="r-in"><span></span></span>
 <span class="r-in"><span>  <span class="fu">esquisse_server</span><span class="op">(</span>id <span class="op">=</span> <span class="st">"esquisse"</span><span class="op">)</span></span></span>
-<span class="r-in"><span>  </span></span>
+<span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="op">}</span></span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="kw">if</span> <span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/interactive.html" class="external-link">interactive</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span></span>
