@@ -376,7 +376,7 @@ render_ggplot <- function(id,
 
 
 
-# Utils donwload handlers -------------------------------------------------
+# Utils download handlers -------------------------------------------------
 
 
 #' @importFrom shiny downloadHandler
