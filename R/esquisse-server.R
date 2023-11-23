@@ -10,7 +10,7 @@
 #' @param import_from From where to import data, argument passed
 #'  to [datamods::import_server()], use `NULL` to prevent the modal to appear.
 #' @param drop_ids Argument passed to [datamods::filter_data_server]. Drop columns containing more than 90% of unique values, or than 50 distinct values.
-#' 
+#'
 #'
 #' @export
 #'
@@ -70,12 +70,16 @@ esquisse_server <- function(id,
       }
 
       # Launch import modal if no data at start
-      if (!is.null(import_from) & is.null(isolate(data_chart$data))) {
-        datamods::import_modal(
-          id = ns("import-data"),
-          from = import_from,
-          title = i18n("Import data to create a graph")
-        )
+      if (!is.null(import_from)) {
+        observe({
+          if (is.null(data_chart$data)) {
+            datamods::import_modal(
+              id = ns("import-data"),
+              from = import_from,
+              title = i18n("Import data to create a graph")
+            )
+          }
+        })
       }
 
       # Launch import modal if button clicked
@@ -301,7 +305,8 @@ esquisse_server <- function(id,
 
         ggplotCall$ggobj <- safe_ggplot(
           expr = expr((!!gg_call) %+% !!sym("esquisse_data")),
-          data = setNames(list(data, data), c("esquisse_data", data_chart$name))
+          data = setNames(list(data, data), c("esquisse_data", data_chart$name)),
+          show_notification = "yes"
         )
         ggplotCall$ggobj$plot
       }, filename = "esquisse-plot")

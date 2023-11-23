@@ -4,12 +4,24 @@
 \alias{safe_ggplot}
 \title{Safely render a \code{ggplot} in Shiny application}
 \usage{
-safe_ggplot(expr, data = NULL, session = shiny::getDefaultReactiveDomain())
+safe_ggplot(
+  expr,
+  data = NULL,
+  show_notification = c("yes", "once", "no"),
+  session = shiny::getDefaultReactiveDomain()
+)
 }
 \arguments{
 \item{expr}{Code to produce a \code{ggplot} object.}
 
 \item{data}{Argument passed to \code{\link[rlang]{eval_tidy}} to evaluate expression.}
+
+\item{show_notification}{Strategy for notifications when a warning occurs:
+\itemize{
+\item \code{"yes"} : default, show notifications for each warnings
+\item \verb{"once} : show notification once per warning
+\item \code{"no"} : do not display notifications.
+}}
 
 \item{session}{Session object to send notification to.}
 }
