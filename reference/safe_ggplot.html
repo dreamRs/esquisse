@@ -10,7 +10,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">esquisse</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.1.2.9600</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.1.2.9700</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -58,7 +58,12 @@
 
     <div class="section level2">
     <h2 id="ref-usage">Usage<a class="anchor" aria-label="anchor" href="#ref-usage"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">safe_ggplot</span><span class="op">(</span><span class="va">expr</span>, data <span class="op">=</span> <span class="cn">NULL</span>, session <span class="op">=</span> <span class="fu">shiny</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/shiny/man/domains.html" class="external-link">getDefaultReactiveDomain</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">safe_ggplot</span><span class="op">(</span></span>
+<span>  <span class="va">expr</span>,</span>
+<span>  data <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  show_notification <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"yes"</span>, <span class="st">"once"</span>, <span class="st">"no"</span><span class="op">)</span>,</span>
+<span>  session <span class="op">=</span> <span class="fu">shiny</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/shiny/man/domains.html" class="external-link">getDefaultReactiveDomain</a></span><span class="op">(</span><span class="op">)</span></span>
+<span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div class="section level2">
@@ -69,6 +74,13 @@
 
 <dt>data</dt>
 <dd><p>Argument passed to <code><a href="https://rlang.r-lib.org/reference/eval_tidy.html" class="external-link">eval_tidy</a></code> to evaluate expression.</p></dd>
+
+
+<dt>show_notification</dt>
+<dd><p>Strategy for notifications when a warning occurs:</p><ul><li><p><code>"yes"</code> : default, show notifications for each warnings</p></li>
+<li><p><code>"once</code> : show notification once per warning</p></li>
+<li><p><code>"no"</code> : do not display notifications.</p></li>
+</ul></dd>
 
 
 <dt>session</dt>
