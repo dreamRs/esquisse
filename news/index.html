@@ -10,7 +10,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">esquisse</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.1.2.9700</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.1.2.9800</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -53,7 +53,8 @@
 
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="1.2.0" id="esquisse-120">esquisse 1.2.0<a class="anchor" aria-label="anchor" href="#esquisse-120"></a></h2>
-<ul><li><p><code><a href="../reference/esquisse-module.html">esquisse_server()</a></code> : support for reactive functions for <code>data_rv</code> argument.</p></li>
+<ul><li><p>Warning messages are now displayed only once per session, and the user can choose via the settings menu not to display them at all. If you’re using the <code><a href="../reference/esquisse-module.html">esquisse_server()</a></code> module, there’s a new <code>notify_warnings =</code> argument for choosing what to do with notifications: display them all, only once per warning or never display them at all.</p></li>
+<li><p><code><a href="../reference/esquisse-module.html">esquisse_server()</a></code> : support for reactive functions for <code>data_rv</code> argument.</p></li>
 <li><p>Allow <code><a href="../reference/esquisse-module.html">esquisse_server()</a></code> to be initialized with NULL without forcing the import module to appear using <code>import_from = NULL</code> <a href="https://github.com/dreamRs/esquisse/issues/232" class="external-link">#232</a>.</p></li>
 <li><p>New geom available in the interface : <code>geom_path</code>.</p></li>
 <li><p><code><a href="../reference/esquisse-module.html">esquisse_ui()</a></code>: ability to display not element of the module (header’s button, play/pause button, export options).</p></li>
