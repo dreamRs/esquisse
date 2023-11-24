@@ -98,16 +98,17 @@ esquisser <- function(data = NULL,
 #' @importFrom bslib bs_theme bs_add_rules
 bs_theme_esquisse <- function() {
   theme <- bslib::bs_theme(
-    version = 5L, 
-    primary = "#112446", 
-    secondary = "#cccccc", 
+    version = 5L,
+    primary = "#112446",
+    secondary = "#cccccc",
     preset = "bootstrap",
     font_scale = 0.8
   )
   bslib::bs_add_rules(
     theme = theme,
     c(
-      ".modal-title { @extend .mt-0 }"
+      ".modal-title { @extend .mt-0 }",
+      "#NotiflixNotifyWrap { inset: auto 5px 38px auto !important; }"
     )
   )
 }

@@ -23,7 +23,8 @@ esquisse_server(
   name = "data",
   default_aes = c("fill", "color", "size", "group", "facet"),
   import_from = c("env", "file", "copypaste", "googlesheets", "url"),
-  drop_ids = TRUE
+  drop_ids = TRUE,
+  notify_warnings = NULL
 )
 
 esquisseContainer(width = "100\%", height = "700px", fixed = FALSE)
@@ -66,6 +67,8 @@ vector or \code{reactive} function returning one.}
 to \code{\link[datamods:import-modal]{datamods::import_server()}}, use \code{NULL} to prevent the modal to appear.}
 
 \item{drop_ids}{Argument passed to \link[datamods:filter-data]{datamods::filter_data_server}. Drop columns containing more than 90\% of unique values, or than 50 distinct values.}
+
+\item{notify_warnings}{See \code{\link[=safe_ggplot]{safe_ggplot()}}. If \code{NULL}, the user can make his or her own choice via the settings menu, default is to show warnings once.}
 
 \item{width, height}{The width and height of the container, e.g. \code{"400px"},
 or \code{"100\%"}; see \code{\link[htmltools]{validateCssUnit}}.}

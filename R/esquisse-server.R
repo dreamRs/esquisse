@@ -10,6 +10,7 @@
 #' @param import_from From where to import data, argument passed
 #'  to [datamods::import_server()], use `NULL` to prevent the modal to appear.
 #' @param drop_ids Argument passed to [datamods::filter_data_server]. Drop columns containing more than 90% of unique values, or than 50 distinct values.
+#' @param notify_warnings See [safe_ggplot()]. If `NULL`, the user can make his or her own choice via the settings menu, default is to show warnings once.
 #'
 #'
 #' @export
@@ -29,7 +30,8 @@ esquisse_server <- function(id,
                             name = "data",
                             default_aes = c("fill", "color", "size", "group", "facet"),
                             import_from = c("env", "file", "copypaste", "googlesheets", "url"),
-                            drop_ids = TRUE) {
+                            drop_ids = TRUE,
+                            notify_warnings = NULL) {
 
   moduleServer(
     id = id,
@@ -306,7 +308,7 @@ esquisse_server <- function(id,
         ggplotCall$ggobj <- safe_ggplot(
           expr = expr((!!gg_call) %+% !!sym("esquisse_data")),
           data = setNames(list(data, data), c("esquisse_data", data_chart$name)),
-          show_notification = "yes"
+          show_notification = notify_warnings %||% input$notify_warnings  %||% "once"
         )
         ggplotCall$ggobj$plot
       }, filename = "esquisse-plot")

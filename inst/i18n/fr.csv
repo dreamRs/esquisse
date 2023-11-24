@@ -87,3 +87,7 @@ label,translation
 "Use a color palette:","Utiliser une palette :"
 "Reverse the order of colors?","Inverser l'ordre des couleurs ?"
 "Use specific colors:","Utiliser des couleurs spécifiques :"
+"Show notifications when the plot generate a warning:","Afficher les notifications lorsque le graphiique génère un avertissement :"
+"Always","Toujours"
+"Once per warning","Une seule fois par avertissement"
+"Never","Jamais"

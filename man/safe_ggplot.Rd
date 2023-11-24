@@ -7,7 +7,7 @@
 safe_ggplot(
   expr,
   data = NULL,
-  show_notification = c("yes", "once", "no"),
+  show_notification = c("always", "once", "never"),
   session = shiny::getDefaultReactiveDomain()
 )
 }
@@ -18,9 +18,9 @@ safe_ggplot(
 
 \item{show_notification}{Strategy for notifications when a warning occurs:
 \itemize{
-\item \code{"yes"} : default, show notifications for each warnings
+\item \code{"always"} : default, show notifications for each warnings
 \item \verb{"once} : show notification once per warning
-\item \code{"no"} : do not display notifications.
+\item \code{"never"} : do not display notifications.
 }}
 
 \item{session}{Session object to send notification to.}

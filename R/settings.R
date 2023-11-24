@@ -1,7 +1,7 @@
 
 #' @importFrom htmltools tags tagList
 #' @importFrom shiny getDefaultReactiveDomain modalDialog
-#' @importFrom shinyWidgets alert prettyCheckboxGroup
+#' @importFrom shinyWidgets alert prettyCheckboxGroup prettyRadioButtons
 modal_settings <- function(aesthetics = NULL, session = shiny::getDefaultReactiveDomain()) {
   ns <- session$ns
   modalDialog(
@@ -37,7 +37,22 @@ modal_settings <- function(aesthetics = NULL, session = shiny::getDefaultReactiv
       ),
       choiceValues = c("fill", "color", "size", "shape", "weight", "group", "ymin", "ymax", "facet", "facet_row", "facet_col"),
       selected = aesthetics %||% c("fill", "color", "size", "facet"),
-      status = "primary"
+      status = "primary",
+      outline = TRUE
+    ),
+    prettyRadioButtons(
+      inputId = ns("notify_warnings"),
+      label = i18n("Show notifications when the plot generate a warning:"),
+      choiceNames = c(
+        i18n("Always"),
+        i18n("Once per warning"),
+        i18n("Never")
+      ),
+      choiceValues = c("always", "once", "never"),
+      selected = "once",
+      status = "primary",
+      inline = TRUE,
+      outline = TRUE
     ),
     easyClose = TRUE,
     footer = NULL,

@@ -182,39 +182,6 @@
   border: dashed 2px #ccc !important;
 }
 
-/* shiny alerts */
-
-div[id^="shiny-notification-esquisse"].shiny-notification-error {
-  color: #fff !important;
-  background-color: #d9534f !important;
-  border: 1px solid #d9534f !important;
-}
-
-div[id^="shiny-notification-esquisse"].shiny-notification-warning {
-  color: #fff !important;
-  background-color: #f39c12 !important;
-  border: 1px solid #f39c12 !important;
-}
-
-div[id^="shiny-notification-esquisse"].shiny-notification-message {
-  color: #fff !important;
-  background-color: #5cb85c !important;
-  border: 1px solid #5cb85c !important;
-}
-
-
-/*
-#shiny-notification-panel {
-  width: 100% !important;
-  text-align: center !important;
-}
-*/
-
-div[id^="shiny-notification-esquisse"] > .shiny-notification-close {
-  font-size: 26px;
-  color: #fff;
-  cursor: pointer;
-}
 
 
 /* drop menu input */
