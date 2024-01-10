@@ -1,6 +1,6 @@
 ## Test environments
-* local Ubuntu 22.04.1 LTS install, R 4.2.1
-* ubuntu 20.04, Windows 10, macOS (on GitHub Actions), R 4.2.1
+* local Ubuntu 22.04.1 LTS install, R 4.3.1
+* ubuntu 20.04, Windows 10, macOS (on GitHub Actions), R 4.3.2
 * win-builder (devel)
 
 ## R CMD check results
