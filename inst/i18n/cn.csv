@@ -76,6 +76,7 @@ color points and lines,填充颜色(点、线)
 size of the points,点尺寸
 shape of the points,点形状
 frequency weights,权重
+alpha transparency,透明度
 identifies series of points with a grouping variable,分组变量
 used in ribbons charts with ymax to display an interval between two lines,设置带状图Y轴的极大值(显示两线间隔)
 used in ribbons charts with ymin to display an interval between two lines,设置带状图Y轴的极小值(显示两线间隔)
