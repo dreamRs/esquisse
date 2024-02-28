@@ -1,3 +1,9 @@
+# esquisse 1.2.1
+
+* Add alpha transparency in aes setting, by [@MajoroMask](https://github.com/MajoroMask).
+
+
+
 # esquisse 1.2.0
 
 * Warning messages are now displayed only once per session, and the user can choose via the settings menu not to display them at all. If you're using the `esquisse_server()` module, there's a new `notify_warnings =` argument for choosing what to do with notifications: display them all, only once per warning or never display them at all.
