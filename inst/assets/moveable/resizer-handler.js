@@ -93,5 +93,11 @@ $(function() {
       );
     });
   });
+  Shiny.addCustomMessageHandler("esquisse-resize-plot", function(obj) {
+    $("#" + obj.id).css({
+      "width": obj.width, 
+      "height": obj.height
+    }).trigger("resize");
+  });
 });
 

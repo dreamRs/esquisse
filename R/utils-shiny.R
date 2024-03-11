@@ -172,9 +172,14 @@ activate_resizer <- function(id,
 resize <- function(id,
                    width,
                    height,
+                   with_moveable = TRUE,
                    session = shiny::getDefaultReactiveDomain()) {
-  session$sendCustomMessage(paste0("resize-", id), list(
-    width = width,
-    height = height
-  ))
+  session$sendCustomMessage(
+    if (isTRUE(with_moveable)) paste0("resize-", id) else "esquisse-resize-plot", 
+    list(
+      id = id,
+      width = width,
+      height = height
+    )
+  )
 }

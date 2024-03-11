@@ -194,8 +194,7 @@ save_ggplot_server <- function(id, plot_rv) {
 #' @description Display a plot on the client and allow to download it.
 #'
 #' @param id Module ID.
-#' @param width Width of the plot.
-#' @param height Height of the plot.
+#' @param width,height Width / Height of the plot, in the server it has to be a [shiny::reactive()] function returning a new width/height for the plot.
 #' @param downloads Labels for export options, use `downloads_labels()` or `NULL` to disable export options.
 #' @param ... Parameters passed to [shiny::plotOutput()] (`ggplot_output`) or [shiny::renderPlot()] (`render_ggplot`).
 #'
@@ -212,12 +211,14 @@ save_ggplot_server <- function(id, plot_rv) {
 ggplot_output <- function(id, width = "100%", height = "400px", downloads = downloads_labels(), ...) {
   ns <- NS(id)
   tags$div(
+    id = ns("ggplot-container"),
     class = "ggplot-container",
     style = css(
       position = "relative",
       width = validateCssUnit(width),
       height = validateCssUnit(height)
     ),
+    html_dependency_moveable(),
     if (!is.null(downloads)) {
       e <- downloads[-1]
       e <- e[-length(e)]
@@ -257,7 +258,11 @@ ggplot_output <- function(id, width = "100%", height = "400px", downloads = down
         }
       )
     },
-    plotOutput(outputId = ns("plot"), width = width, height = height, ...)
+    plotOutput(outputId = ns("plot"), width = "100%", height = "100%", ...),
+    tags$div(
+      style = "display: none;",
+      textInput(inputId = ns("hidden"), label = NULL, value = genId())
+    )
   )
 }
 
@@ -292,24 +297,55 @@ downloads_labels <- function(label = ph("download-simple"),
 #'   is useful if you want to save an expression in a variable.
 #' @param filename A string of the filename to export WITHOUT extension,
 #'  it will be added according to type of export.
+#' @param resizable Can the chart size be adjusted by the user?
 #'
 #' @rdname ggplot-output
 #'
 #' @export
 #'
 #' @importFrom shiny exprToFunction moduleServer downloadHandler
-#'  reactiveValues renderPlot observeEvent showNotification is.reactive
+#'  reactiveValues renderPlot observeEvent showNotification is.reactive bindEvent
 #' @importFrom shinyWidgets hideDropMenu
 render_ggplot <- function(id,
                           expr,
                           ...,
                           env = parent.frame(),
                           quoted = FALSE,
-                          filename = "export-ggplot") {
+                          filename = "export-ggplot",
+                          resizable = FALSE,
+                          width = reactive(NULL),
+                          height = reactive(NULL)) {
   gg_fun <- exprToFunction(expr, env, quoted)
   moduleServer(
     id = id,
     module = function(input, output, session) {
+      ns <- session$ns
+      plot_width <- paste0("output_", ns("plot"), "_width")
+      plot_height <- paste0("output_", ns("plot"), "_height")
+      
+      observeEvent(input$hidden, {
+        if (isTRUE(resizable)) 
+          activate_resizer(id = ns("ggplot-container"), modal = FALSE)
+      })
+      
+      bindEvent(
+        observe({
+          if (
+            (is.reactive(width) && isTruthy(width())) & 
+            (is.reactive(height) && isTruthy(height()))
+          ) {
+            resize(
+              id = ns("ggplot-container"),
+              width = width(),
+              height = height(),
+              with_moveable = resizable
+            )
+          }
+        }),
+        width(),
+        height()
+      )
+      
       output$export_png <- download_plot_fun(gg_fun, "png", filename, session)
       output$export_pdf <- download_plot_fun(gg_fun, "pdf", filename, session)
       output$export_svg <- download_plot_fun(gg_fun, "svg", filename, session)
@@ -367,6 +403,12 @@ render_ggplot <- function(id,
         )
       })
       save_ggplot_server("export", plot_rv = rv)
+      observe({
+        rv$plot_width <- session$clientData[[plot_width]]
+      })
+      observe({
+        rv$plot_height <- session$clientData[[plot_height]]
+      })
       return(rv)
     }
   )

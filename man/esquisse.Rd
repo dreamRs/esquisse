@@ -2,8 +2,8 @@
 % Please edit documentation in R/esquisse-package.R
 \docType{package}
 \name{esquisse}
-\alias{esquisse}
 \alias{esquisse-package}
+\alias{esquisse}
 \title{Explore and Visualize Your Data Interactively}
 \description{
 A 'shiny' gadget to create 'ggplot2' figures interactively with drag-and-drop to map your variables to different aesthetics.
