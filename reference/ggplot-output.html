@@ -82,7 +82,10 @@
 <span>  <span class="va">...</span>,</span>
 <span>  env <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/sys.parent.html" class="external-link">parent.frame</a></span><span class="op">(</span><span class="op">)</span>,</span>
 <span>  quoted <span class="op">=</span> <span class="cn">FALSE</span>,</span>
-<span>  filename <span class="op">=</span> <span class="st">"export-ggplot"</span></span>
+<span>  filename <span class="op">=</span> <span class="st">"export-ggplot"</span>,</span>
+<span>  resizable <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>  width <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/shiny/man/reactive.html" class="external-link">reactive</a></span><span class="op">(</span><span class="cn">NULL</span><span class="op">)</span>,</span>
+<span>  height <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/shiny/man/reactive.html" class="external-link">reactive</a></span><span class="op">(</span><span class="cn">NULL</span><span class="op">)</span></span>
 <span><span class="op">)</span></span></code></pre></div>
     </div>
 
@@ -92,12 +95,8 @@
 <dd><p>Module ID.</p></dd>
 
 
-<dt>width</dt>
-<dd><p>Width of the plot.</p></dd>
-
-
-<dt>height</dt>
-<dd><p>Height of the plot.</p></dd>
+<dt>width, height</dt>
+<dd><p>Width / Height of the plot, in the server it has to be a <code><a href="https://rdrr.io/pkg/shiny/man/reactive.html" class="external-link">shiny::reactive()</a></code> function returning a new width/height for the plot.</p></dd>
 
 
 <dt>downloads</dt>
@@ -137,6 +136,10 @@ is useful if you want to save an expression in a variable.</p></dd>
 <dt>filename</dt>
 <dd><p>A string of the filename to export WITHOUT extension,
 it will be added according to type of export.</p></dd>
+
+
+<dt>resizable</dt>
+<dd><p>Can the chart size be adjusted by the user?</p></dd>
 
 </dl></div>
     <div class="section level2">
