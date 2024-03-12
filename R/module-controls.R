@@ -325,7 +325,9 @@ controls_server <- function(id,
               plot.subtitle = theme_labs$subtitle,
               plot.caption = theme_labs$caption,
               axis.title.y = theme_labs$y,
-              axis.title.x = theme_labs$x
+              axis.title.x = theme_labs$x,
+              axis.text.y = theme_appearance$axis_text_y,
+              axis.text.x = theme_appearance$axis_text_x
             )
           )
         )

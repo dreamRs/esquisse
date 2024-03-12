@@ -27,7 +27,13 @@ controls_appearance_ui <- function(id) {
     "plus", "cross", "asterisk"
   )
 
-  tagList(
+  tags$div(
+    style = css(
+      maxHeight = "80vh",
+      overflowY = "auto",
+      overflowX = "hidden",
+      padding = "5px 7px"
+    ),
     tags$div(
       id = ns("controls-fill-color"), style = "display: block;",
       shinyWidgets::colorPickr(
@@ -121,7 +127,9 @@ controls_appearance_ui <- function(id) {
       selected = "center",
       justified = TRUE,
       size = "sm"
-    )
+    ),
+    input_axis_text("x", ns = ns),
+    input_axis_text("y", ns = ns)
   )
 }
 
@@ -169,6 +177,20 @@ controls_appearance_server <- function(id,
           theme = input$theme,
           legend_position = legend_position,
           legend_justification = legend_justification,
+          axis_text_x = get_axis_text(
+            input$x_axis_text_face,
+            input$x_axis_text_size,
+            input$x_axis_text_angle,
+            input$x_axis_text_hjust,
+            input$x_axis_text_vjust
+          ),
+          axis_text_y = get_axis_text(
+            input$y_axis_text_face,
+            input$y_axis_text_size,
+            input$y_axis_text_angle,
+            input$y_axis_text_hjust,
+            input$y_axis_text_vjust
+          ),
           shape = shape
         )
       })
@@ -191,3 +213,93 @@ controls_appearance_server <- function(id,
     }
   )
 }
+
+
+
+get_axis_text <- function(face, size, angle, hjust, vjust, lineheight = 1) {
+  options <- dropNulls(list(
+    face = if (face != "plain") face,
+    size = if (size != 10) size,
+    angle = if (angle != 0) angle,
+    hjust = if (hjust != 0) hjust,
+    vjust = if (vjust != 0) vjust,
+    lineheight = if (lineheight != 1) lineheight
+  ))
+  if (length(options) > 0) {
+    call2("element_text", !!!options)
+  } else {
+    NULL
+  }
+}
+
+
+input_axis_text <- function(axis = c("x", "y"), ns = identity) {
+  axis <- match.arg(axis)
+  tagList(
+    tags$b(toupper(axis), "axis text options:"),
+    tags$div(
+      style = css(
+        display = "grid",
+        gridTemplateColumns = "repeat(3, 1fr)",
+        gridColumnGap = "2px"
+      ),
+      shinyWidgets::virtualSelectInput(
+        inputId = ns(paste0(axis, "_axis_text_face")),
+        label = "Font face:",
+        choices = setNames(
+          c("plain", "italic", "bold", "bold.italic"),
+          c("Plain", "Italic", "Bold", "Bold/Italic")
+        ),
+        width = "100%"
+      ),
+      numericInput(
+        inputId = ns(paste0(axis, "_axis_text_size")),
+        label = "Size:",
+        value = 10,
+        min = 0,
+        width = "100%"
+      ),
+      numericInput(
+        inputId = ns(paste0(axis, "_axis_text_angle")),
+        label = "Angle:",
+        value = 0,
+        min = 0,
+        max = 360,
+        width = "100%"
+      )
+    ),
+    tags$div(
+      style = css(
+        display = "grid",
+        gridTemplateColumns = "repeat(2, 1fr)",
+        gridColumnGap = "2px"
+      ),
+      numericInput(
+        inputId = ns(paste0(axis, "_axis_text_hjust")),
+        label = "Horizontal justification:",
+        value = 0,
+        min = 0,
+        step = 0.1,
+        max = 1,
+        width = "100%"
+      ),
+      numericInput(
+        inputId = ns(paste0(axis, "_axis_text_vjust")),
+        label = "Vertical justification:",
+        value = 0,
+        min = 0,
+        step = 0.1,
+        max = 1,
+        width = "100%"
+      )#,
+      # numericInput(
+      #   inputId = ns(paste0(axis, "_axis_text_lineheight")),
+      #   label = "Line height:",
+      #   value = 1,
+      #   step = 0.1,
+      #   width = "100%"
+      # )
+    )
+  )
+}
+

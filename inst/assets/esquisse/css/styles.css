@@ -105,6 +105,11 @@
   padding: 2px !important;
 }
 
+.esquisse-controls-appearance .sw-dropdown-in {
+  padding: 0 !important;
+  margin: 0 !important;
+}
+
 
 .esquisse-labs-options {
   display: grid;
