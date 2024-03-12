@@ -24,7 +24,7 @@ controls_export_ui <- function(id, downloads = downloads_labels()) {
           label = e[[i]],
           icon = NULL,
           class = "btn-outline-primary",
-          style = css(width = "220px", margin = "2px auto")
+          style = css(width = "100%", minWidth = "200px", margin = "2px auto")
         ),
         tags$br()
       )
@@ -32,10 +32,18 @@ controls_export_ui <- function(id, downloads = downloads_labels()) {
   )
 
   tags$div(
-    style = css(textAlign = "center"),
+    textInputIcon(
+      inputId = ns("filename"),
+      label = NULL,
+      value = "esquisse-plot",
+      placeholder = i18n("Filename"),
+      icon = list(i18n("Filename:")),
+      width = "100%"
+    ),
     download_links,
     if (!is.null(downloads$more)) {
-      tagList(
+      tags$div(
+        style = css(textAlign = "center"),
         tags$hr(style = "margin: 5px 0;"),
         actionLink(inputId = ns("more"), label = downloads$more)
       )
@@ -55,13 +63,40 @@ controls_export_server <- function(id,
 
       rv <- reactiveValues(plot = NULL)
 
-      output$export_png <- download_plot_r(plot_r, "png", filename = "esquisse-plot", width = width, height = height)
-      output$export_pdf <- download_plot_r(plot_r, "pdf", filename = "esquisse-plot", width = width, height = height)
-      output$export_svg <- download_plot_r(plot_r, "svg", filename = "esquisse-plot", width = width, height = height)
-      output$export_jpeg <- download_plot_r(plot_r, "jpeg", filename = "esquisse-plot", width = width, height = height)
+      output$export_png <- download_plot_r(
+        plot_r, "png",
+        filename = reactive(input$filename),
+        width = width,
+        height = height
+      )
+      output$export_pdf <- download_plot_r(
+        plot_r, "pdf",
+        filename = reactive(input$filename),
+        width = width,
+        height = height
+      )
+      output$export_svg <- download_plot_r(
+        plot_r, "svg",
+        filename = reactive(input$filename),
+        width = width,
+        height = height
+      )
+      output$export_jpeg <- download_plot_r(
+        plot_r, "jpeg",
+        filename = reactive(input$filename),
+        width = width,
+        height = height
+      )
 
       output$export_pptx <- downloadHandler(
-        filename = "esquisse-plot.pptx",
+        filename = function() {
+          if (is.reactive(filename))
+            filename <- filename()
+          if (endsWith(filename, "\\.pptx"))
+            filename
+          else
+            paste0(filename, ".pptx")
+        },
         content = function(file) {
           if (requireNamespace(package = "rvg") & requireNamespace(package = "officer")) {
             gg <- plot_r()
@@ -113,7 +148,11 @@ controls_export_server <- function(id,
 
 
 
-download_plot_r <- function(p_r = reactive(NULL), device, filename, width = reactive(868), height = reactive(400)) {
+download_plot_r <- function(p_r = reactive(NULL),
+                            device,
+                            filename = "esquisse-plot",
+                            width = reactive(868),
+                            height = reactive(400)) {
   downloadHandler(
     filename = function() {
       if (is.reactive(filename))
