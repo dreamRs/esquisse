@@ -334,19 +334,6 @@ controls_server <- function(id,
         outputs$code <- reactiveValues(expr = NULL, dplyr = NULL)
       })
 
-      observeEvent({
-        all_inputs <- reactiveValuesToList(input)
-        all_inputs[grep(pattern = "filter-data", x = names(all_inputs), invert = TRUE)]
-      }, {
-        all_inputs <- reactiveValuesToList(input)
-        # remove inputs from filterDataServer module with ID "filter-data"
-        inputs <- all_inputs[grep(pattern = "filter-data", x = names(all_inputs), invert = TRUE)]
-        inputs <- inputs[grep(pattern = "^labs_", x = names(inputs), invert = TRUE)]
-        inputs <- inputs[grep(pattern = "^export_", x = names(inputs), invert = TRUE)]
-        inputs <- inputs[order(names(inputs))]
-
-        outputs$inputs <- modifyList(outputs$inputs, inputs)
-      })
 
       observeEvent(appearance_r$inputs(), {
         outputs$inputs <- modifyList(outputs$inputs, appearance_r$inputs())
