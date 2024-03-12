@@ -99,93 +99,96 @@ controls_ui <- function(id,
     }
   )
 
+  listControls <- list()
+  if (isTRUE("labs" %in% controls)) {
+    listControls[[length(listControls) + 1]] <- funControl(
+      controls_labs_ui(id = ns("labs")),
+      inputId = ns("controls-labs"),
+      class = "esquisse-controls-labs",
+      style = "default",
+      label = i18n("Labels & Title"),
+      up = TRUE,
+      icon = ph("text-aa"),
+      status = "default btn-esquisse-controls btn-outline-primary text-nowrap"
+    )
+  }
+  if (isTRUE("parameters" %in% controls)) {
+    listControls[[length(listControls) + 1]] <- funControl(
+      controls_parameters_ui(ns("parameters")),
+      inputId = ns("controls-parameters"),
+      class = "esquisse-controls-parameters",
+      style = "default",
+      label = i18n("Plot options"),
+      up = TRUE,
+      icon = ph("gear"),
+      status = "default btn-esquisse-controls btn-outline-primary text-nowrap"
+    )
+  }
+  if (isTRUE("appearance" %in% controls)) {
+    listControls[[length(listControls) + 1]] <- funControl(
+      controls_appearance_ui(
+        ns("appearance"),
+        style = if (layout == "dropdown") {
+          css(
+            maxHeight = "80vh",
+            overflowY = "auto",
+            overflowX = "hidden",
+            padding = "5px 7px"
+          )
+        }
+      ),
+      inputId = ns("controls-appearance"),
+      class = "esquisse-controls-appearance",
+      style = "default",
+      label = i18n("Appearance"),
+      up = TRUE,
+      icon = ph("palette"),
+      status = "default btn-esquisse-controls btn-outline-primary text-nowrap"
+    )
+  }
+  if (isTRUE("filters" %in% controls)) {
+    listControls[[length(listControls) + 1]] <- funControl(
+      filter_data_ui(id = ns("filter-data")),
+      inputId = ns("controls-filters"),
+      class = "esquisse-controls-filters",
+      style = "default",
+      label = i18n("Data"),
+      up = TRUE,
+      icon = ph("sliders-horizontal"),
+      status = "default btn-esquisse-controls btn-outline-primary text-nowrap"
+    )
+  }
+  if (isTRUE("code" %in% controls)) {
+    listControls[[length(listControls) + 1]] <- funControl(
+      controls_code_ui(ns("code"), insert_code = insert_code),
+      inputId = ns("controls-code"),
+      class = "esquisse-controls-code",
+      style = "default",
+      label = i18n("Code"),
+      up = TRUE,
+      right = TRUE,
+      icon = ph("code"),
+      status = "default btn-esquisse-controls btn-outline-primary text-nowrap"
+    )
+  }
+  if (isTRUE("export" %in% controls)) {
+    listControls[[length(listControls) + 1]] <- funControl(
+      controls_export_ui(ns("export"), downloads = downloads),
+      inputId = ns("controls-export"),
+      class = "esquisse-controls-export",
+      style = "default",
+      label = i18n("Export"),
+      up = TRUE,
+      right = TRUE,
+      icon = ph("file-arrow-down"),
+      status = "default btn-esquisse-controls btn-outline-primary text-nowrap"
+    )
+  }
+  if (length(listControls) > 0) {
+    listControls <- containerControls(!!!listControls)
+  }
   tagList(
-    containerControls(
-      if (isTRUE("labs" %in% controls)) {
-        funControl(
-          controls_labs_ui(id = ns("labs")),
-          inputId = ns("controls-labs"),
-          class = "esquisse-controls-labs",
-          style = "default",
-          label = i18n("Labels & Title"),
-          up = TRUE,
-          icon = ph("text-aa"),
-          status = "default btn-esquisse-controls btn-outline-primary text-nowrap"
-        )
-      },
-      if (isTRUE("parameters" %in% controls)) {
-        funControl(
-          controls_parameters_ui(ns("parameters")),
-          inputId = ns("controls-parameters"),
-          class = "esquisse-controls-parameters",
-          style = "default",
-          label = i18n("Plot options"),
-          up = TRUE,
-          icon = ph("gear"),
-          status = "default btn-esquisse-controls btn-outline-primary text-nowrap"
-        )
-      },
-      if (isTRUE("appearance" %in% controls)) {
-        funControl(
-          controls_appearance_ui(
-            ns("appearance"),
-            style = if (layout == "dropdown") {
-              css(
-                maxHeight = "80vh",
-                overflowY = "auto",
-                overflowX = "hidden",
-                padding = "5px 7px"
-              )
-            }
-          ),
-          inputId = ns("controls-appearance"),
-          class = "esquisse-controls-appearance",
-          style = "default",
-          label = i18n("Appearance"),
-          up = TRUE,
-          icon = ph("palette"),
-          status = "default btn-esquisse-controls btn-outline-primary text-nowrap"
-        )
-      },
-      if (isTRUE("filters" %in% controls)) {
-        funControl(
-          filter_data_ui(id = ns("filter-data")),
-          inputId = ns("controls-filters"),
-          class = "esquisse-controls-filters",
-          style = "default",
-          label = i18n("Data"),
-          up = TRUE,
-          icon = ph("sliders-horizontal"),
-          status = "default btn-esquisse-controls btn-outline-primary text-nowrap"
-        )
-      },
-      if (isTRUE("code" %in% controls)) {
-        funControl(
-          controls_code_ui(ns("code"), insert_code = insert_code),
-          inputId = ns("controls-code"),
-          class = "esquisse-controls-code",
-          style = "default",
-          label = i18n("Code"),
-          up = TRUE,
-          right = TRUE,
-          icon = ph("code"),
-          status = "default btn-esquisse-controls btn-outline-primary text-nowrap"
-        )
-      },
-      if (isTRUE("export" %in% controls)) {
-        funControl(
-          controls_export_ui(ns("export"), downloads = downloads),
-          inputId = ns("controls-export"),
-          class = "esquisse-controls-export",
-          style = "default",
-          label = i18n("Export"),
-          up = TRUE,
-          right = TRUE,
-          icon = ph("file-arrow-down"),
-          status = "default btn-esquisse-controls btn-outline-primary text-nowrap"
-        )
-      }
-    ),
+    listControls,
     tags$div(
       style = "display: none;",
       checkboxInput(
