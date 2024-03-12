@@ -17,6 +17,11 @@ dropdown_ <- function(..., class = NULL) {
   TAG
 }
 
+accordion_panel_ <- function(..., label, icon) {
+  args <- list(...)
+  args <- args[!rlang::have_name(args)]
+  bslib::accordion_panel(title = tagList(icon, tags$b(label)), value = label, !!!args)
+}
 
 # htmltools::tagAppendAttributes(
 #   shinyWidgets::dropMenu(
@@ -49,8 +54,10 @@ dropdown_ <- function(..., class = NULL) {
 #'
 controls_ui <- function(id,
                         controls = c("labs", "parameters", "appearance", "filters", "code"),
-                        insert_code = FALSE) {
+                        insert_code = FALSE,
+                        layout = c("dropdown", "accordion")) {
   ns <- NS(id)
+  layout <- match.arg(layout)
   if (!is.null(controls)) {
     controls <- match.arg(
       controls,
@@ -71,11 +78,28 @@ controls_ui <- function(id,
   if (isTRUE(disable_filters))
     controls <- setdiff(controls, "filters")
 
+  funControl <- switch(
+    layout,
+    "dropdown" = dropdown_,
+    "accordion" = accordion_panel_
+  )
+  containerControls <- switch(
+    layout,
+    "dropdown" = function(...) {
+      tags$div(
+        class = "btn-group-esquisse btn-group-justified-esquisse",
+        ...
+      )
+    },
+    "accordion" = function(...) {
+      bslib::accordion(..., multiple = FALSE)
+    }
+  )
+
   tagList(
-    tags$div(
-      class = "btn-group-esquisse btn-group-justified-esquisse",
+    containerControls(
       if (isTRUE("labs" %in% controls)) {
-        dropdown_(
+        funControl(
           controls_labs_ui(id = ns("labs")),
           inputId = ns("controls-labs"),
           class = "esquisse-controls-labs",
@@ -87,7 +111,7 @@ controls_ui <- function(id,
         )
       },
       if (isTRUE("parameters" %in% controls)) {
-        dropdown_(
+        funControl(
           controls_parameters_ui(ns("parameters")),
           inputId = ns("controls-parameters"),
           class = "esquisse-controls-parameters",
@@ -99,8 +123,18 @@ controls_ui <- function(id,
         )
       },
       if (isTRUE("appearance" %in% controls)) {
-        dropdown_(
-          controls_appearance_ui(ns("appearance")),
+        funControl(
+          controls_appearance_ui(
+            ns("appearance"),
+            style = if (layout == "dropdown") {
+              css(
+                maxHeight = "80vh",
+                overflowY = "auto",
+                overflowX = "hidden",
+                padding = "5px 7px"
+              )
+            }
+          ),
           inputId = ns("controls-appearance"),
           class = "esquisse-controls-appearance",
           style = "default",
@@ -111,7 +145,7 @@ controls_ui <- function(id,
         )
       },
       if (isTRUE("filters" %in% controls)) {
-        dropdown_(
+        funControl(
           filter_data_ui(id = ns("filter-data")),
           inputId = ns("controls-filters"),
           class = "esquisse-controls-filters",
@@ -123,7 +157,7 @@ controls_ui <- function(id,
         )
       },
       if (isTRUE("code" %in% controls)) {
-        dropdown_(
+        funControl(
           controls_code(ns, insert_code = insert_code),
           inputId = ns("controls-code"),
           class = "esquisse-controls-code",

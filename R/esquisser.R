@@ -102,14 +102,17 @@ bs_theme_esquisse <- function() {
     primary = "#112446",
     secondary = "#cccccc",
     preset = "bootstrap",
-    font_scale = 0.8
+    font_scale = 0.8,
+    "accordion-body-padding-y" = "5px",
+    "accordion-body-padding-x" = "5px"
   )
-  bslib::bs_add_rules(
+  theme <- bslib::bs_add_rules(
     theme = theme,
     c(
       ".modal-title { @extend .mt-0 }",
       "#NotiflixNotifyWrap { inset: auto 5px 38px auto !important; }"
     )
   )
+  return(theme)
 }
 

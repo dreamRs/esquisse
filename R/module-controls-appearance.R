@@ -10,7 +10,7 @@
 #' @importFrom utils head
 #' @importFrom htmltools tagList tags
 #' @importFrom shinyWidgets radioGroupButtons colorPickr virtualSelectInput
-controls_appearance_ui <- function(id) {
+controls_appearance_ui <- function(id, style = NULL) {
 
   ns <- NS(id)
 
@@ -29,12 +29,7 @@ controls_appearance_ui <- function(id) {
 
   tags$div(
     class = "esquisse-controls-appearance-container",
-    style = css(
-      maxHeight = "80vh",
-      overflowY = "auto",
-      overflowX = "hidden",
-      padding = "5px 7px"
-    ),
+    style = style,
     tags$div(
       id = ns("controls-fill-color"), style = "display: block;",
       shinyWidgets::colorPickr(

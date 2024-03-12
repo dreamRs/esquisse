@@ -45,6 +45,7 @@ esquisse_ui <- function(id,
                         controls = c("labs", "parameters", "appearance", "filters", "code"),
                         insert_code = FALSE,
                         play_pause = TRUE,
+                        layout_sidebar = TRUE,
                         downloads = downloads_labels()) {
   ns <- NS(id)
   header_btns <- list(settings = TRUE, close = TRUE, import = TRUE, show_data = TRUE)
@@ -95,40 +96,94 @@ esquisse_ui <- function(id,
 
     if (isTRUE(header)) tag_header,
 
-    tags$div(
-      class = "esquisse-geom-aes",
-      tags$div(
-        style = "padding: 3px 3px 0 3px; height: 144px;",
-        dropInput(
-          inputId = ns("geom"),
-          choicesNames = geomIcons()$names,
-          choicesValues = geomIcons()$values,
-          dropWidth = "292px",
-          width = "100%"
-        )
-      ),
-      select_aes_ui(ns("aes"))
-    ),
+    if (!isTRUE(layout_sidebar)) {
+      tagList(
+        tags$div(
+          class = "esquisse-geom-aes",
+          tags$div(
+            style = "padding: 3px 3px 0 3px; height: 144px;",
+            dropInput(
+              inputId = ns("geom"),
+              choicesNames = geomIcons()$names,
+              choicesValues = geomIcons()$values,
+              dropWidth = "292px",
+              width = "100%"
+            )
+          ),
+          select_aes_ui(ns("aes"))
+        ),
 
-    fillCol(
-      style = "overflow-y: auto;",
-      tags$div(
-        style = "height: 100%; min-height: 400px; overflow: hidden;",
-        play_pause_input(ns("play_plot"), show = play_pause),
-        ggplot_output(
-          id = ns("plooooooot"),
-          width = "100%",
-          height = "100%",
-          downloads = downloads
+        fillCol(
+          style = "overflow-y: auto;",
+          tags$div(
+            style = "height: 100%; min-height: 400px; overflow: hidden;",
+            play_pause_input(ns("play_plot"), show = play_pause),
+            ggplot_output(
+              id = ns("plooooooot"),
+              width = "100%",
+              height = "100%",
+              downloads = downloads
+            )
+          )
+        ),
+
+        controls_ui(
+          id = ns("controls"),
+          insert_code = insert_code,
+          controls = controls
         )
       )
-    ),
+    } else {
+      bslib::layout_sidebar(
+        padding = 0,
+        fillable = FALSE,
+        fill = FALSE,
+        height = "100%",
+        sidebar = bslib::sidebar(
+          position = "right",
+          open = "always",
+          controls_ui(
+            id = ns("controls"),
+            insert_code = insert_code,
+            controls = controls,
+            layout = "accordion"
+          )
+        ),
+        tags$div(
+          class = "esquisse-geom-aes",
+          tags$div(
+            style = css(
+              padding = "3px 3px 0 3px",
+              height = "144px"
+            ),
+            dropInput(
+              inputId = ns("geom"),
+              choicesNames = geomIcons()$names,
+              choicesValues = geomIcons()$values,
+              dropWidth = "292px",
+              width = "100%"
+            )
+          ),
+          select_aes_ui(ns("aes"))
+        ),
 
-    controls_ui(
-      id = ns("controls"),
-      insert_code = insert_code,
-      controls = controls
-    )
+        tags$div(
+          style = css(
+            height = "calc(100% - 165px)",
+            minHeight = "400px",
+            overflow = "hidden",
+            position = "relative"
+          ),
+          play_pause_input(ns("play_plot"), show = play_pause),
+          ggplot_output(
+            id = ns("plooooooot"),
+            width = "100%",
+            height = "100%",
+            downloads = downloads
+          )
+        )
+      )
+    }
   )
 
   if (is.function(container)) {
