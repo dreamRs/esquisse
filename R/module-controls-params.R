@@ -214,27 +214,27 @@ controls_parameters_server <- function(id,
       ns <- session$ns
 
       observeEvent(use_facet(), {
-        toggleDisplay(id = ns("controls-facet"), display = isTRUE(use_facet()))
+        toggleDisplay("controls-facet", display = isTRUE(use_facet()))
       })
 
       observeEvent(use_transX(), {
-        toggleDisplay(id = ns("controls-scale-trans-x"), display = isTRUE(use_transX()))
+        toggleDisplay("controls-scale-trans-x", display = isTRUE(use_transX()))
       })
 
       observeEvent(use_transY(), {
-        toggleDisplay(id = ns("controls-scale-trans-y"), display = isTRUE(use_transY()))
+        toggleDisplay("controls-scale-trans-y", display = isTRUE(use_transY()))
       })
 
 
 
       observeEvent(type$controls, {
-        toggleDisplay(id = ns("controls-position"), display = type$controls %in% c("bar", "line", "area", "histogram"))
-        toggleDisplay(id = ns("controls-histogram"), display = type$controls %in% "histogram")
-        toggleDisplay(id = ns("controls-density"), display = type$controls %in% c("density", "violin"))
-        toggleDisplay(id = ns("controls-scatter"), display = type$controls %in% "point")
-        toggleDisplay(id = ns("controls-size"), display = type$controls %in% c("point", "line", "step", "sf"))
-        toggleDisplay(id = ns("controls-violin"), display = type$controls %in% "violin")
-        toggleDisplay(id = ns("controls-jitter"), display = type$controls %in% c("boxplot", "violin"))
+        toggleDisplay("controls-position", display = type$controls %in% c("bar", "line", "area", "histogram"))
+        toggleDisplay("controls-histogram", display = type$controls %in% "histogram")
+        toggleDisplay("controls-density", display = type$controls %in% c("density", "violin"))
+        toggleDisplay("controls-scatter", display = type$controls %in% "point")
+        toggleDisplay("controls-size", display = type$controls %in% c("point", "line", "step", "sf"))
+        toggleDisplay("controls-violin", display = type$controls %in% "violin")
+        toggleDisplay("controls-jitter", display = type$controls %in% c("boxplot", "violin"))
 
         if (type$controls %in% c("point")) {
           updateSliderInput(session = session, inputId = "size", value = 1.5)

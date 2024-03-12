@@ -138,14 +138,14 @@ controls_appearance_server <- function(id,
       ns <- session$ns
 
       observeEvent(type$palette, {
-        toggleDisplay(id = ns("controls-palette"), display = isTRUE(type$palette))
-        toggleDisplay(id = ns("controls-fill-color"), display = !isTRUE(type$palette))
+        toggleDisplay("controls-palette", display = isTRUE(type$palette))
+        toggleDisplay("controls-fill-color", display = !isTRUE(type$palette))
       })
 
       observe({
         req(aesthetics())
         aesthetics <- names(aesthetics())
-        toggleDisplay(id = ns("controls-shape"), display = type$controls %in% "point" & !"shape" %in% aesthetics)
+        toggleDisplay("controls-shape", display = type$controls %in% "point" & !"shape" %in% aesthetics)
       })
 
       inputs_r <- reactive({

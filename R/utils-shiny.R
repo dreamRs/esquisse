@@ -72,7 +72,7 @@ toggleDisplay <- function(id,
   }
   session$sendCustomMessage(
     type = "toggleDisplay",
-    message = list(id = id, display = display)
+    message = list(id = session$ns(id), display = display)
   )
 }
 
@@ -86,7 +86,8 @@ toggleDisplay <- function(id,
 #' @param session shiny session.
 #'
 #' @noRd
-toggleBtn <- function(inputId, type = "disable",
+toggleBtn <- function(inputId,
+                      type = "disable",
                       session = shiny::getDefaultReactiveDomain()) {
   session$sendCustomMessage(
     type = "togglewidget",
@@ -175,7 +176,7 @@ resize <- function(id,
                    with_moveable = TRUE,
                    session = shiny::getDefaultReactiveDomain()) {
   session$sendCustomMessage(
-    if (isTRUE(with_moveable)) paste0("resize-", id) else "esquisse-resize-plot", 
+    if (isTRUE(with_moveable)) paste0("resize-", id) else "esquisse-resize-plot",
     list(
       id = id,
       width = width,

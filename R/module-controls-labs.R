@@ -65,15 +65,15 @@ controls_labs_ui <- function(id) {
 }
 
 
-controls_labs_server <- function(id, 
-                                 data_table = reactive(NULL), 
+controls_labs_server <- function(id,
+                                 data_table = reactive(NULL),
                                  aesthetics = reactive(NULL)) {
   moduleServer(
     id = id,
     function(input, output, session) {
-      
+
       ns <- session$ns
-      
+
       # Reset labs ----
       observeEvent(data_table(), {
         updateTextInput(session = session, inputId = "labs_title", value = character(0))
@@ -86,18 +86,18 @@ controls_labs_server <- function(id,
         updateTextInput(session = session, inputId = "labs_size", value = character(0))
         updateTextInput(session = session, inputId = "labs_shape", value = character(0))
       })
-      
+
       # display specific control according to aesthetics set
       observeEvent(aesthetics(), {
         aesthetics <- names(aesthetics())
-        toggleDisplay(id = ns("controls-labs-fill"), display = "fill" %in% aesthetics)
-        toggleDisplay(id = ns("controls-labs-color"), display = "color" %in% aesthetics)
-        toggleDisplay(id = ns("controls-labs-size"), display = "size" %in% aesthetics)
-        toggleDisplay(id = ns("controls-labs-shape"), display = "shape" %in% aesthetics)
-        toggleDisplay(id = ns("controls-ribbon-color"), display = "ymin" %in% aesthetics)
+        toggleDisplay("controls-labs-fill", display = "fill" %in% aesthetics)
+        toggleDisplay("controls-labs-color", display = "color" %in% aesthetics)
+        toggleDisplay("controls-labs-size", display = "size" %in% aesthetics)
+        toggleDisplay("controls-labs-shape", display = "shape" %in% aesthetics)
+        toggleDisplay("controls-ribbon-color", display = "ymin" %in% aesthetics)
       })
-      
-      
+
+
       # labs input
       labs_r <- debounce(reactive({
         asth <- names(aesthetics())
@@ -117,8 +117,8 @@ controls_labs_server <- function(id,
           shape = labs_shape %empty% NULL
         )
       }), millis = 1000)
-      
-      
+
+
       theme_r <- reactive({
         inputs <- reactiveValuesToList(input)
         list(
@@ -129,7 +129,7 @@ controls_labs_server <- function(id,
           y = get_labs_options(inputs, "y")
         )
       })
-      
+
       return(list(labs = labs_r, theme = theme_r))
     }
   )
