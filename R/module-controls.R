@@ -57,13 +57,14 @@ accordion_panel_ <- function(..., label, icon) {
 controls_ui <- function(id,
                         controls = c("labs", "parameters", "appearance", "filters", "code"),
                         insert_code = FALSE,
-                        layout = c("dropdown", "accordion")) {
+                        layout = c("dropdown", "accordion"),
+                        downloads = downloads_labels()) {
   ns <- NS(id)
   layout <- match.arg(layout)
   if (!is.null(controls)) {
     controls <- match.arg(
       controls,
-      choices = c("labs", "parameters", "appearance", "filters", "code"),
+      choices = c("labs", "parameters", "appearance", "filters", "code", "export"),
       several.ok = TRUE
     )
   } else {
@@ -170,6 +171,19 @@ controls_ui <- function(id,
           icon = ph("code"),
           status = "default btn-esquisse-controls btn-outline-primary text-nowrap"
         )
+      },
+      if (isTRUE("export" %in% controls)) {
+        funControl(
+          controls_export_ui(ns("export"), downloads = downloads),
+          inputId = ns("controls-export"),
+          class = "esquisse-controls-export",
+          style = "default",
+          label = i18n("Export"),
+          up = TRUE,
+          right = TRUE,
+          icon = ph("file-arrow-down"),
+          status = "default btn-esquisse-controls btn-outline-primary text-nowrap"
+        )
       }
     ),
     tags$div(
@@ -246,6 +260,11 @@ controls_server <- function(id,
         use_transX = use_transX,
         use_transY = use_transY,
         type = type
+      )
+
+      controls_export_server(
+        id = "export",
+        plot_r = reactive(ggplot_rv$ggobj)
       )
 
       # Code ----

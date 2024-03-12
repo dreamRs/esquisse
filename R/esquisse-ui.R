@@ -124,7 +124,7 @@ esquisse_ui <- function(id,
               id = ns("plooooooot"),
               width = "100%",
               height = "100%",
-              downloads = downloads
+              downloads = if ("export" %in% controls) NULL else downloads
             )
           )
         ),
@@ -132,7 +132,8 @@ esquisse_ui <- function(id,
         controls_ui(
           id = ns("controls"),
           insert_code = insert_code,
-          controls = controls
+          controls = controls,
+          downloads = downloads
         )
       )
     } else {
@@ -150,7 +151,8 @@ esquisse_ui <- function(id,
             id = ns("controls"),
             insert_code = insert_code,
             controls = controls,
-            layout = "accordion"
+            layout = "accordion",
+            downloads = downloads
           )
         ),
         tags$div(
@@ -183,7 +185,7 @@ esquisse_ui <- function(id,
             id = ns("plooooooot"),
             width = "100%",
             height = "100%",
-            downloads = downloads
+            downloads = if ("export" %in% controls) NULL else downloads
           )
         )
       )

@@ -173,7 +173,9 @@ ui <- fluidPage(
     id = "esquisse",
     header = list(close = FALSE), # hide the close button
     container = esquisseContainer(fixed = TRUE),
-    play_pause = FALSE
+    play_pause = FALSE,
+    controls = c("labs", "parameters", "appearance", "filters", "code", "export"),
+    layout_sidebar = TRUE
   )
 )
 
