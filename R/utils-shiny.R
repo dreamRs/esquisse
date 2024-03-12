@@ -97,16 +97,6 @@ toggleBtn <- function(inputId,
 
 
 
-#' Tag to display code
-#'
-#' @param ... Character strings
-#'
-#' @noRd
-rCodeContainer <- function(...) {
-  code <- htmltools::HTML(as.character(tags$code(class = "language-r", ...)))
-  htmltools::tags$div(htmltools::tags$pre(code))
-}
-
 
 #' @importFrom shinyWidgets prettyToggle
 #' @importFrom htmltools css

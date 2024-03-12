@@ -161,7 +161,7 @@ controls_ui <- function(id,
       },
       if (isTRUE("code" %in% controls)) {
         funControl(
-          controls_code(ns, insert_code = insert_code),
+          controls_code_ui(ns("code"), insert_code = insert_code),
           inputId = ns("controls-code"),
           class = "esquisse-controls-code",
           style = "default",
@@ -267,41 +267,12 @@ controls_server <- function(id,
         plot_r = reactive(ggplot_rv$ggobj)
       )
 
-      # Code ----
-      observeEvent(input$insert_code, {
-        context <- rstudioapi::getSourceEditorContext()
-        code <- ggplot_rv$code
-        expr <- output_filter$expr()
-        if (!is.null(expr) & !isTRUE(input$disable_filters)) {
-          code_dplyr <- deparse2(output_filter$code())
-          code_dplyr <- paste(code_dplyr, collapse = "\n")
-          nm_dat <- data_name()
-          code <- gsub(x = code, replacement = " ggplot()", pattern = sprintf("ggplot(%s)", nm_dat), fixed = TRUE)
-          code <- paste(code_dplyr, code, sep = " %>%\n")
-          if (input$insert_code == 1) {
-            code <- paste("library(dplyr)\nlibrary(ggplot2)", code, sep = "\n\n")
-          }
-        } else {
-          if (input$insert_code == 1) {
-            code <- paste("library(ggplot2)", code, sep = "\n\n")
-          }
-        }
-        rstudioapi::insertText(text = paste0("\n", code, "\n"), id = context$id)
-      })
-
-      output$code <- renderUI({
-        code <- style_code(ggplot_rv$code)
-        expr <- output_filter$expr()
-        if (!is.null(expr) & !isTRUE(input$disable_filters)) {
-          code_dplyr <- deparse2(output_filter$code())
-          nm_dat <- data_name()
-          code <- gsub(x = code, replacement = " ggplot()", pattern = sprintf("ggplot(%s)", nm_dat), fixed = TRUE)
-          code <- paste(code_dplyr, code, sep = " %>%\n")
-        }
-        htmltools::tagList(
-          rCodeContainer(id = ns("codeggplot"), code)
-        )
-      })
+      controls_code_server(
+        id = "code",
+        ggplot_rv = ggplot_rv,
+        output_filter = output_filter,
+        data_name = data_name
+      )
 
 
 
@@ -422,46 +393,6 @@ controls_server <- function(id,
     }
   )
 }
-
-
-
-
-
-
-
-
-#' Controls for code and export
-#'
-#' Display code for reproduce chart and export button
-#'
-#' @param ns Namespace from module
-#'
-#' @noRd
-#' @importFrom shiny downloadButton uiOutput actionLink
-#' @importFrom htmltools tagList tags
-#'
-controls_code <- function(ns, insert_code = FALSE) {
-  tagList(
-    tags$button(
-      class = "btn btn-link btn-xs pull-right float-end btn-copy-code",
-      i18n("Copy to clipboard"),
-      `data-clipboard-target` = paste0("#", ns("codeggplot"))
-    ), tags$script("$(function() {new ClipboardJS('.btn-copy-code');});"),
-    tags$br(),
-    tags$b(i18n("Code:")),
-    uiOutput(outputId = ns("code")),
-    tags$textarea(id = ns("holderCode"), style = "display: none;"),
-    if (insert_code) {
-      actionLink(
-        inputId = ns("insert_code"),
-        label = tagList(ph("arrow-circle-left"), i18n("Insert code in script"))
-      )
-    },
-    tags$br()
-  )
-}
-
-
 
 
 

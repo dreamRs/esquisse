@@ -21,6 +21,7 @@ Roxygen: list(markdown = TRUE)
 Imports: 
     bslib,
     datamods (>= 1.4.0),
+    downlit,
     ggplot2 (>= 3.0.0),
     grDevices,
     htmltools (>= 0.5.0),
