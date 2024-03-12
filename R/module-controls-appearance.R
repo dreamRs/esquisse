@@ -9,7 +9,7 @@
 #'
 #' @importFrom utils head
 #' @importFrom htmltools tagList tags
-#' @importFrom shinyWidgets pickerInput radioGroupButtons colorPickr
+#' @importFrom shinyWidgets radioGroupButtons colorPickr virtualSelectInput
 controls_appearance_ui <- function(id) {
 
   ns <- NS(id)
@@ -28,6 +28,7 @@ controls_appearance_ui <- function(id) {
   )
 
   tags$div(
+    class = "esquisse-controls-appearance-container",
     style = css(
       maxHeight = "80vh",
       overflowY = "auto",
@@ -78,25 +79,24 @@ controls_appearance_ui <- function(id) {
     ),
     tags$div(
       id = ns("controls-shape"), style = "display: none;",
-      pickerInput(
+      shinyWidgets::virtualSelectInput(
         inputId = ns("shape"),
         label = i18n("Point symbol:"),
         choices = shape_names,
         selected = "circle",
-        options = list(size = 10, container = "body"),
+        dropboxWrapper = ".esquisse-controls-appearance-container",
+        optionsCount = 5,
         width = "100%"
       )
     ),
-    pickerInput(
+    shinyWidgets::virtualSelectInput(
       inputId = ns("theme"),
       label = i18n("Theme:"),
       choices = themes,
       selected = getOption("esquisse.default.theme", default = "theme_minimal"),
-      options = list(size = 10, container = "body"),
+      dropboxWrapper = ".esquisse-controls-appearance-container",
+      optionsCount = 5,
       width = "100%"
-    ),
-    tags$script(
-      paste0("$('#", ns("theme"), "').addClass('dropup');")
     ),
     radioGroupButtons(
       inputId = ns("legend_position"),
