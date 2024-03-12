@@ -100,7 +100,7 @@ controls_ui <- function(id,
       },
       if (isTRUE("appearance" %in% controls)) {
         dropdown_(
-          controls_appearance(ns),
+          controls_appearance_ui(ns("appearance")),
           inputId = ns("controls-appearance"),
           class = "esquisse-controls-appearance",
           style = "default",
@@ -190,11 +190,18 @@ controls_server <- function(id,
     id = id,
     module = function(input, output, session) {
       ns <- session$ns
-      
+
       labs_r <- controls_labs_server(
         id = "labs",
-        data_table = data_table, 
+        data_table = data_table,
         aesthetics = aesthetics
+      )
+
+      appearance_r <- controls_appearance_server(
+        id = "appearance",
+        data_table = data_table,
+        aesthetics = aesthetics,
+        type = type
       )
 
       # Code ----
@@ -236,7 +243,7 @@ controls_server <- function(id,
 
 
       # Controls ----
-      
+
       observeEvent(use_facet(), {
         toggleDisplay(id = ns("controls-facet"), display = isTRUE(use_facet()))
       })
@@ -249,15 +256,7 @@ controls_server <- function(id,
         toggleDisplay(id = ns("controls-scale-trans-y"), display = isTRUE(use_transY()))
       })
 
-      observeEvent(type$palette, {
-        toggleDisplay(id = ns("controls-palette"), display = isTRUE(type$palette))
-        toggleDisplay(id = ns("controls-fill-color"), display = !isTRUE(type$palette))
-      })
 
-      observe({
-        aesthetics <- names(aesthetics())
-        toggleDisplay(id = ns("controls-shape"), display = type$controls %in% "point" & !"shape" %in% aesthetics)
-      })
 
       observeEvent(type$controls, {
         toggleDisplay(id = ns("controls-position"), display = type$controls %in% c("bar", "line", "area", "histogram"))
@@ -293,7 +292,7 @@ controls_server <- function(id,
       )
 
       outputs <- reactiveValues(
-        inputs = NULL,
+        inputs = list(),
         export_ppt = NULL,
         export_png = NULL
       )
@@ -313,33 +312,21 @@ controls_server <- function(id,
         inputs <- inputs[grep(pattern = "^labs_", x = names(inputs), invert = TRUE)]
         inputs <- inputs[grep(pattern = "^export_", x = names(inputs), invert = TRUE)]
         inputs <- inputs[order(names(inputs))]
-        aesthetics <- names(aesthetics())
-        if (!(type$controls %in% "point" & !"shape" %in% aesthetics)) {
-          inputs$shape <- NULL
-        }
-        outputs$inputs <- inputs
+
+        outputs$inputs <- modifyList(outputs$inputs, inputs)
       })
 
-      
-      observe({
+      observeEvent(appearance_r$inputs(), {
+        outputs$inputs <- modifyList(outputs$inputs, appearance_r$inputs())
+      })
+
+      observeEvent(labs_r$labs(), {
         outputs$labs <- labs_r$labs()
       })
 
-      # Colors input
-      colors_r <- palette_server("colors", reactive({
-        data_ <- data_table()
-        aesthetics_ <- aesthetics()
-        if ("fill" %in% names(aesthetics_)) {
-          return(data_[[aesthetics_$fill]])
-        }
-        if ("color" %in% names(aesthetics_)) {
-          return(data_[[aesthetics_$color]])
-        }
-        return(character(0))
-      }))
-      colors_r_d <- debounce(colors_r, millis = 1000)
-      observe({
-        outputs$colors <- colors_r_d()
+
+      observeEvent(appearance_r$colors(), {
+        outputs$colors <- appearance_r$colors()
       })
 
 
@@ -374,11 +361,13 @@ controls_server <- function(id,
       # theme input
       observe({
         theme_labs <- labs_r$theme()
+        theme_appearance <- appearance_r$inputs()
         outputs$theme <- list(
-          theme = input$theme,
+          theme = theme_appearance$theme,
           args = dropNulls(
             list(
-              legend.position = if (identical(input$legend_position, "right")) NULL else input$legend_position,
+              legend.position = theme_appearance$legend_position,
+              legend.justification = theme_appearance$legend_justification,
               plot.title = theme_labs$title,
               plot.subtitle = theme_labs$subtitle,
               plot.caption = theme_labs$caption,
@@ -446,118 +435,6 @@ controls_server <- function(id,
 }
 
 
-
-
-
-
-#' Controls for appearance
-#'
-#' Set color, palette, theme, legend position
-#'
-#' @param ns Namespace from module
-#'
-#' @noRd
-#'
-#' @importFrom utils head
-#' @importFrom htmltools tagList tags
-#' @importFrom shinyWidgets pickerInput radioGroupButtons colorPickr
-controls_appearance <- function(ns) {
-
-  themes <- get_themes()
-  cols <- get_colors()
-  pals <- get_palettes()
-
-  shape_names <- c(
-    "circle", paste("circle", c("open", "filled", "cross", "plus", "small")), "bullet",
-    "square", paste("square", c("open", "filled", "cross", "plus", "triangle")),
-    "diamond", paste("diamond", c("open", "filled", "plus")),
-    "triangle", paste("triangle", c("open", "filled", "square")),
-    paste("triangle down", c("open", "filled")),
-    "plus", "cross", "asterisk"
-  )
-
-  tagList(
-    tags$div(
-      id = ns("controls-fill-color"), style = "display: block;",
-      shinyWidgets::colorPickr(
-        inputId = ns("fill_color"),
-        label = i18n("Color:"),
-        theme = "monolith",
-        update = "changestop",
-        inline = TRUE,
-        swatches = head(unlist(cols, use.names = FALSE), 9),
-        preview = FALSE,
-        interaction = list(
-          hex = FALSE,
-          rgba = FALSE,
-          input = TRUE,
-          save = FALSE,
-          clear = FALSE
-        ),
-        width = "100%"
-      )
-    ),
-    tags$div(
-      id = ns("controls-palette"), style = "display: none;",
-      palette_ui(ns("colors"))
-    ),
-    tags$div(
-      id = ns("controls-ribbon-color"), style = "display: none;",
-      colorPickr(
-        inputId = ns("color_ribbon"),
-        selected = "#A4A4A4",
-        label = i18n("Ribbon color:"),
-        theme = "nano",
-        useAsButton = TRUE,
-        update = "save",
-        interaction = list(
-          hex = FALSE,
-          rgba = FALSE,
-          input = TRUE,
-          save = TRUE,
-          clear = FALSE
-        )
-      )
-    ),
-    tags$div(
-      id = ns("controls-shape"), style = "display: none;",
-      pickerInput(
-        inputId = ns("shape"),
-        label = i18n("Point symbol:"),
-        choices = shape_names,
-        selected = "circle",
-        options = list(size = 10, container = "body"),
-        width = "100%"
-      )
-    ),
-    pickerInput(
-      inputId = ns("theme"),
-      label = i18n("Theme:"),
-      choices = themes,
-      selected = getOption("esquisse.default.theme", default = "theme_minimal"),
-      options = list(size = 10, container = "body"),
-      width = "100%"
-    ),
-    tags$script(
-      paste0("$('#", ns("theme"), "').addClass('dropup');")
-    ),
-    radioGroupButtons(
-      inputId = ns("legend_position"),
-      label = i18n("Legend position:"),
-      choiceNames = list(
-        ph("arrow-left"),
-        ph("arrow-up"),
-        ph("arrow-down"),
-        ph("arrow-right"),
-        ph("x")
-      ),
-      choiceValues = c("left", "top", "bottom", "right", "none"),
-      selected = "right",
-      justified = TRUE,
-      size = "sm"
-    )
-  )
-}
 
 
 
