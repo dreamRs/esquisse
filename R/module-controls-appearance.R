@@ -213,12 +213,12 @@ controls_appearance_server <- function(id,
 
 get_axis_text <- function(face, size, angle, hjust, vjust, lineheight = 1) {
   options <- dropNulls(list(
-    face = if (face != "plain") face,
-    size = if (size != 10) size,
-    angle = if (angle != 0) angle,
-    hjust = if (hjust != 0) hjust,
-    vjust = if (vjust != 0) vjust,
-    lineheight = if (lineheight != 1) lineheight
+    face = if (isTRUE(face != "plain")) face,
+    size = if (isTRUE(size != 10)) size,
+    angle = if (isTRUE(angle != 0)) angle,
+    hjust = if (isTRUE(hjust != 0)) hjust,
+    vjust = if (isTRUE(vjust != 0)) vjust,
+    lineheight = if (isTRUE(lineheight != 1)) lineheight
   ))
   if (length(options) > 0) {
     call2("element_text", !!!options)
