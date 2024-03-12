@@ -95,6 +95,12 @@ esquisser <- function(data = NULL,
 }
 
 
+
+#' Bootstrap Theme for Esquisse
+#'
+#' @return A [bslib::bs_theme()].
+#' @export
+#'
 #' @importFrom bslib bs_theme bs_add_rules
 bs_theme_esquisse <- function() {
   theme <- bslib::bs_theme(

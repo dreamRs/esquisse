@@ -14,6 +14,7 @@ esquisse_ui(
   controls = c("labs", "parameters", "appearance", "filters", "code"),
   insert_code = FALSE,
   play_pause = TRUE,
+  layout_sidebar = FALSE,
   downloads = downloads_labels()
 )
 
@@ -47,6 +48,8 @@ Must be a \code{function}.}
 code in the current user script (work only in RStudio).}
 
 \item{play_pause}{Display or not the play / pause button.}
+
+\item{layout_sidebar}{Put controls in a sidebar on the left rather than below the chart in dropdowns.}
 
 \item{downloads}{Export options available or \code{NULL} for no export. See \code{\link[=downloads_labels]{downloads_labels()}}.}
 
@@ -97,35 +100,38 @@ library(shiny)
 library(esquisse)
 
 ui <- fluidPage(
+
+  theme = bs_theme_esquisse(),
+
   tags$h1("Use esquisse as a Shiny module"),
-  
+
   radioButtons(
-    inputId = "data", 
-    label = "Data to use:", 
+    inputId = "data",
+    label = "Data to use:",
     choices = c("iris", "mtcars"),
     inline = TRUE
   ),
   checkboxGroupInput(
-    inputId = "aes", 
-    label = "Aesthetics to use:", 
+    inputId = "aes",
+    label = "Aesthetics to use:",
     choices = c(
-      "fill", "color", "size", "shape", 
+      "fill", "color", "size", "shape",
       "weight", "group", "facet", "facet_row", "facet_col"
     ),
     selected = c("fill", "color", "size", "facet"),
     inline = TRUE
   ),
   esquisse_ui(
-    id = "esquisse", 
+    id = "esquisse",
     header = FALSE, # dont display gadget title
     container = esquisseContainer(height = "700px")
   )
 )
 
 server <- function(input, output, session) {
-  
+
   data_rv <- reactiveValues(data = iris, name = "iris")
-  
+
   observeEvent(input$data, {
     if (input$data == "iris") {
       data_rv$data <- iris
@@ -135,13 +141,13 @@ server <- function(input, output, session) {
       data_rv$name <- "mtcars"
     }
   })
-  
+
   esquisse_server(
-    id = "esquisse", 
-    data_rv = data_rv, 
+    id = "esquisse",
+    data_rv = data_rv,
     default_aes = reactive(input$aes)
   )
-  
+
 }
 
 if (interactive())
@@ -162,6 +168,7 @@ my_data <- data.frame(
 
 
 ui <- fluidPage(
+  theme = bs_theme_esquisse(),
   esquisse_ui(
     id = "esquisse",
     header = list(close = FALSE), # hide the close button

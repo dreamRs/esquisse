@@ -15,6 +15,7 @@
 #' @param insert_code Logical, Display or not a button to insert the ggplot
 #'  code in the current user script (work only in RStudio).
 #' @param play_pause Display or not the play / pause button.
+#' @param layout_sidebar Put controls in a sidebar on the left rather than below the chart in dropdowns.
 #' @param downloads Export options available or `NULL` for no export. See [downloads_labels()].
 #'
 #' @return A `reactiveValues` with 3 slots :
@@ -33,6 +34,7 @@
 #' @importFrom shinyWidgets prettyToggle
 #' @importFrom rlang is_list
 #' @importFrom utils modifyList
+#' @importFrom bslib layout_sidebar sidebar
 #'
 #' @example examples/esquisse-module-1.R
 #'
@@ -45,7 +47,7 @@ esquisse_ui <- function(id,
                         controls = c("labs", "parameters", "appearance", "filters", "code"),
                         insert_code = FALSE,
                         play_pause = TRUE,
-                        layout_sidebar = TRUE,
+                        layout_sidebar = FALSE,
                         downloads = downloads_labels()) {
   ns <- NS(id)
   header_btns <- list(settings = TRUE, close = TRUE, import = TRUE, show_data = TRUE)
@@ -141,7 +143,9 @@ esquisse_ui <- function(id,
         height = "100%",
         sidebar = bslib::sidebar(
           position = "right",
-          open = "always",
+          # open = "always",
+          title = "CONTROLS",
+          width = 350,
           controls_ui(
             id = ns("controls"),
             insert_code = insert_code,

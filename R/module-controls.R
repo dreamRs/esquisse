@@ -17,6 +17,8 @@ dropdown_ <- function(..., class = NULL) {
   TAG
 }
 
+#' @importFrom bslib accordion_panel
+#' @importFrom rlang have_name
 accordion_panel_ <- function(..., label, icon) {
   args <- list(...)
   args <- args[!rlang::have_name(args)]
@@ -51,7 +53,7 @@ accordion_panel_ <- function(..., label, icon) {
 #' @importFrom htmltools tags tagList HTML
 #' @importFrom shiny checkboxInput
 #' @importFrom datamods filter_data_ui
-#'
+#' @importFrom bslib accordion
 controls_ui <- function(id,
                         controls = c("labs", "parameters", "appearance", "filters", "code"),
                         insert_code = FALSE,
