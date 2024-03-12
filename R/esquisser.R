@@ -116,6 +116,7 @@ bs_theme_esquisse <- function() {
     theme = theme,
     c(
       ".modal-title { @extend .mt-0 }",
+      ".sidebar-title { @extend .mb-0 }",
       "#NotiflixNotifyWrap { inset: auto 5px 38px auto !important; }"
     )
   )

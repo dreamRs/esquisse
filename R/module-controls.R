@@ -343,7 +343,9 @@ controls_server <- function(id,
               axis.title.y = theme_labs$y,
               axis.title.x = theme_labs$x,
               axis.text.y = theme_appearance$axis_text_y,
-              axis.text.x = theme_appearance$axis_text_x
+              axis.text.x = theme_appearance$axis_text_x,
+              legend.text = theme_appearance$legend_text,
+              legend.title = theme_appearance$legend_title
             )
           )
         )
