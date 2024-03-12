@@ -22,6 +22,22 @@ controls_parameters_ui <- function(id) {
   )
 
   tagList(
+    tags$b("Dimension:"),
+    numericInputIcon(
+      inputId = ns("width"),
+      label = NULL,
+      value = NA,
+      icon = list(i18n("Width:")),
+      width = "100%"
+    ),
+    numericInputIcon(
+      inputId = ns("height"),
+      label = NULL,
+      value = NA,
+      icon = list(i18n("Height:")),
+      width = "100%"
+    ),
+    tags$hr(),
     tags$div(
       id = ns("controls-scatter"),
       style = "display: none; padding-top: 10px;",
@@ -206,12 +222,32 @@ controls_parameters_server <- function(id,
                                        use_facet = reactive(FALSE),
                                        use_transX = reactive(FALSE),
                                        use_transY = reactive(FALSE),
-                                       type = reactiveValues()) {
+                                       type = reactiveValues(),
+                                       width = reactive(NULL),
+                                       height = reactive(NULL)) {
   moduleServer(
     id = id,
     function(input, output, session) {
 
       ns <- session$ns
+
+      observeEvent(width(), {
+        # print(width())
+        updateNumericInputIcon(
+          session = session,
+          inputId = "width",
+          value = width()
+        )
+      })
+
+      observeEvent(height(), {
+        # print(height())
+        updateNumericInputIcon(
+          session = session,
+          inputId = "height",
+          value = height()
+        )
+      })
 
       observeEvent(use_facet(), {
         toggleDisplay("controls-facet", display = isTRUE(use_facet()))
@@ -317,7 +353,9 @@ controls_parameters_server <- function(id,
         limits = limits_r,
         inputs = reactive({list(
           position = input$position
-        )})
+        )}),
+        width = debounce(reactive(input$width), 800),
+        height = debounce(reactive(input$height), 800)
       ))
 
     }

@@ -237,6 +237,8 @@ controls_server <- function(id,
                             use_facet = reactive(FALSE),
                             use_transX = reactive(FALSE),
                             use_transY = reactive(FALSE),
+                            width = reactive(NULL),
+                            height = reactive(NULL),
                             drop_ids = TRUE) {
 
   callModule(
@@ -262,12 +264,16 @@ controls_server <- function(id,
         use_facet = use_facet,
         use_transX = use_transX,
         use_transY = use_transY,
+        width = width,
+        height = height,
         type = type
       )
 
       controls_export_server(
         id = "export",
-        plot_r = reactive(ggplot_rv$ggobj)
+        plot_r = reactive(ggplot_rv$ggobj),
+        width = width,
+        height = height
       )
 
       controls_code_server(
@@ -384,6 +390,16 @@ controls_server <- function(id,
       # limits input
       observeEvent(parameters_r$limits(), {
         outputs$limits <- parameters_r$limits()
+      })
+
+      # width
+      observeEvent(parameters_r$width(), {
+        outputs$width <- parameters_r$width()
+      })
+
+      # height
+      observeEvent(parameters_r$height(), {
+        outputs$height <- parameters_r$height()
       })
 
       observeEvent(output_filter$filtered(), {

@@ -118,7 +118,7 @@ esquisse_ui <- function(id,
         fillCol(
           style = "overflow-y: auto;",
           tags$div(
-            style = "height: 100%; min-height: 400px; overflow: hidden;",
+            style = "height: 100%; min-height: 400px; overflow: auto;",
             play_pause_input(ns("play_plot"), show = play_pause),
             ggplot_output(
               id = ns("plooooooot"),
@@ -177,7 +177,7 @@ esquisse_ui <- function(id,
           style = css(
             height = "calc(100% - 165px)",
             minHeight = "400px",
-            overflow = "hidden",
+            overflow = "auto",
             position = "relative"
           ),
           play_pause_input(ns("play_plot"), show = play_pause),

@@ -186,11 +186,13 @@ esquisse_server <- function(id,
             y = "continuous"
           )
         }),
+        width = reactive(rv_render_ggplot$plot_width),
+        height = reactive(rv_render_ggplot$plot_height),
         drop_ids = drop_ids
       )
 
 
-      render_ggplot("plooooooot", {
+      rv_render_ggplot <- render_ggplot("plooooooot", {
         req(input$play_plot, cancelOutput = TRUE)
         req(data_chart$data)
         req(controls_rv$data)
@@ -311,7 +313,7 @@ esquisse_server <- function(id,
           show_notification = notify_warnings %||% input$notify_warnings  %||% "once"
         )
         ggplotCall$ggobj$plot
-      }, filename = "esquisse-plot")
+      }, filename = "esquisse-plot", width = reactive(controls_rv$width), height = reactive(controls_rv$height))
 
 
       # Close addin

@@ -45,17 +45,20 @@ controls_export_ui <- function(id, downloads = downloads_labels()) {
 
 
 
-controls_export_server <- function(id, plot_r = reactive(NULL))  {
+controls_export_server <- function(id,
+                                   plot_r = reactive(NULL),
+                                   width = reactive(868),
+                                   height = reactive(400))  {
   moduleServer(
     id = id,
     function(input, output, session) {
 
       rv <- reactiveValues(plot = NULL)
 
-      output$export_png <- download_plot_r(plot_r, "png", filename = "esquisse-plot")
-      output$export_pdf <- download_plot_r(plot_r, "pdf", filename = "esquisse-plot")
-      output$export_svg <- download_plot_r(plot_r, "svg", filename = "esquisse-plot")
-      output$export_jpeg <- download_plot_r(plot_r, "jpeg", filename = "esquisse-plot")
+      output$export_png <- download_plot_r(plot_r, "png", filename = "esquisse-plot", width = width, height = height)
+      output$export_pdf <- download_plot_r(plot_r, "pdf", filename = "esquisse-plot", width = width, height = height)
+      output$export_svg <- download_plot_r(plot_r, "svg", filename = "esquisse-plot", width = width, height = height)
+      output$export_jpeg <- download_plot_r(plot_r, "jpeg", filename = "esquisse-plot", width = width, height = height)
 
       output$export_pptx <- downloadHandler(
         filename = "esquisse-plot.pptx",
@@ -110,7 +113,7 @@ controls_export_server <- function(id, plot_r = reactive(NULL))  {
 
 
 
-download_plot_r <- function(p_r = reactive(NULL), device, filename, width = 1200, height = 600) {
+download_plot_r <- function(p_r = reactive(NULL), device, filename, width = reactive(868), height = reactive(400)) {
   downloadHandler(
     filename = function() {
       if (is.reactive(filename))
@@ -128,8 +131,8 @@ download_plot_r <- function(p_r = reactive(NULL), device, filename, width = 1200
         plot = p_r()$plot,
         device = device,
         dpi = 72,
-        width = width / 72,
-        height = height / 72,
+        width = width() / 72,
+        height = height() / 72,
         scale = 1
       )
     }
