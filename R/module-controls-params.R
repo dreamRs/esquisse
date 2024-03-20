@@ -352,7 +352,9 @@ controls_parameters_server <- function(id,
         facet = facet_r,
         limits = limits_r,
         inputs = reactive({list(
-          position = input$position
+          position = input$position,
+          size = input$size,
+          linewidth = input$size
         )}),
         width = debounce(reactive(input$width), 800),
         height = debounce(reactive(input$height), 800)
