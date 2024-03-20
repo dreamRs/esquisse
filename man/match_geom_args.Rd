@@ -9,6 +9,7 @@ match_geom_args(
   args,
   add_aes = TRUE,
   mapping = list(),
+  add_mapping = FALSE,
   envir = "ggplot2"
 )
 }
@@ -20,6 +21,8 @@ match_geom_args(
 \item{add_aes}{Add aesthetics parameters (like size, fill, ...).}
 
 \item{mapping}{Mapping used in plot, to avoid setting fixed aesthetics parameters.}
+
+\item{add_mapping}{Add the mapping as an argument.}
 
 \item{envir}{Package environment to search in.}
 }

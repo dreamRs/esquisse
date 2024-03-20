@@ -145,6 +145,7 @@ potential_geoms_ref <- function() {
 #' @param args Named list, parameters to be matched to the geometry arguments.
 #' @param add_aes Add aesthetics parameters (like size, fill, ...).
 #' @param mapping Mapping used in plot, to avoid setting fixed aesthetics parameters.
+#' @param add_mapping Add the mapping as an argument.
 #' @param envir Package environment to search in.
 #'
 #' @return a \code{list}
@@ -167,7 +168,12 @@ potential_geoms_ref <- function() {
 #' match_geom_args(geom = "bar", args = params, add_aes = FALSE)
 #' match_geom_args(geom = "point", args = params)
 #' match_geom_args(geom = "point", args = params, add_aes = FALSE)
-match_geom_args <- function(geom, args, add_aes = TRUE, mapping = list(), envir = "ggplot2") {
+match_geom_args <- function(geom,
+                            args,
+                            add_aes = TRUE,
+                            mapping = list(),
+                            add_mapping = FALSE,
+                            envir = "ggplot2") {
   if (!is.null(args$fill_color)) {
     if (geom %in% c("bar", "col", "histogram", "boxplot", "violin", "density")) {
       args$fill <- args$fill_color %||% "#0C4C8A"
@@ -212,7 +218,10 @@ match_geom_args <- function(geom, args, add_aes = TRUE, mapping = list(), envir 
       geom_args <- c(geom_args, setNames(aes_args, aes_args))
     }
   }
-  args[names(args) %in% setdiff(names(geom_args), names(mapping))]
+  args <- args[names(args) %in% setdiff(names(geom_args), names(mapping))]
+  if (isTRUE(add_mapping))
+    args <- c(list(expr(aes(!!!syms2(mapping)))), args)
+  return(args)
 }
 
 
