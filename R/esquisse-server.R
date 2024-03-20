@@ -121,23 +121,20 @@ esquisse_server <- function(id,
 
 
       observeEvent(list(aes_r(), input$geom), {
+        aesthetics <- aes_r()
         geoms <- potential_geoms(
           data = data_chart$data,
           mapping = build_aes(
             data = data_chart$data,
-            x = aes_r()$xvar,
-            y = aes_r()$yvar
+            x = aesthetics$xvar,
+            y = aesthetics$yvar
           )
         )
         geom_rv$possible <- c("auto", geoms)
 
         geom_rv$controls <- select_geom_controls(input$geom, geoms)
 
-        if (!is.null(aes_r()$fill) | !is.null(aes_r()$color)) {
-          geom_rv$palette <- TRUE
-        } else {
-          geom_rv$palette <- FALSE
-        }
+        geom_rv$palette <- !is.null(aesthetics$fill) | !is.null(aesthetics$color)
       }, ignoreInit = TRUE)
 
       observeEvent(geom_rv$possible, {
@@ -245,7 +242,6 @@ esquisse_server <- function(id,
             setNames(list(geom_args), input$geom),
             list(jitter = controls_rv$jitter$args)
           )
-
         }
         if (!is.null(aes_input$ymin) & !is.null(aes_input$ymax) & input$geom %in% c("line")) {
           geom <- c("ribbon", geom)
@@ -274,15 +270,11 @@ esquisse_server <- function(id,
           scales_args <- c(scales_args, list(y_continuous = controls_rv$transY$args))
         }
 
-        if (isTRUE(controls_rv$limits$x)) {
-          xlim <- controls_rv$limits$xlim
-        } else {
-          xlim <- NULL
+        xlim <- if (isTRUE(controls_rv$limits$x)) {
+           controls_rv$limits$xlim
         }
-        if (isTRUE(controls_rv$limits$y)) {
-          ylim <- controls_rv$limits$ylim
-        } else {
-          ylim <- NULL
+        ylim <- if (isTRUE(controls_rv$limits$y)) {
+          controls_rv$limits$ylim
         }
         data_name <- data_chart$name %||% "data"
         gg_call <- ggcall(
