@@ -56,8 +56,12 @@ ggcall <- function(data = NULL,
   if (rlang::is_call(mapping)) 
     mapping <- eval(mapping)
   mapping <- dropNulls(mapping)
-  aes <- expr(aes(!!!syms2(mapping)))
-  ggcall <- expr(ggplot(!!data) + !!aes)
+  if (length(mapping) > 0) {
+    aes <- expr(aes(!!!syms2(mapping)))
+    ggcall <- expr(ggplot(!!data) + !!aes)
+  } else {
+    ggcall <- expr(ggplot(!!data))
+  }
   if (length(geom) == 1)
     geom_args <- setNames(list(geom_args), geom)
   for (g in geom) {
