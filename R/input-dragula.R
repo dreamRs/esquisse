@@ -23,7 +23,7 @@
 #' @param badge Displays choices inside a Bootstrap badge. Use `FALSE`
 #'  if you want to pass custom appearance with `choiceNames`.
 #' @param ncolSource Number of columns occupied by the source, default is `"auto"`, meaning full row.
-#' @param ncolGrid Number of columns used to place source and targets boxes, see examples.
+#' @param ncolGrid,nrowGrid Number of columns / rows used to place source and targets boxes, see examples.
 #' @param status If choices are displayed into a Bootstrap label, you can use Bootstrap
 #'  status to color them, or `NULL`.
 #' @param replace When a choice is dragged in a target container already
@@ -33,8 +33,9 @@
 #'  (see [online documentation on GitHub](https://github.com/bevacqua/dragula#dragulacontainers-options)).
 #'  Note that options `moves`, `accepts` and `invalid` must be valid JavaScript code as they are evaluated on the client.
 #' @param boxStyle CSS style string to customize source and target container.
+#' @param targetsHeight Height for the target boxes.
 #' @param width Width of the input.
-#' @param height Height of each boxes, the total input height is this parameter X 2.
+#' @param height Height of each boxes, the total input height is this parameter X 2 (unless if `targetsHeight` is set).
 #'
 #' @note The output server-side is a list with two slots: `source` and `targets`.
 #'
@@ -63,8 +64,10 @@ dragulaInput <- function(inputId,
                          badge = TRUE,
                          ncolSource = "auto",
                          ncolGrid = NULL,
+                         nrowGrid = NULL,
                          dragulaOpts = list(),
                          boxStyle = NULL,
+                         targetsHeight = NULL,
                          width = NULL,
                          height = "100px") {
 
@@ -87,6 +90,7 @@ dragulaInput <- function(inputId,
     boxStyle = boxStyle,
     badge = badge,
     status = status,
+    targetsHeight = targetsHeight,
     height = height
   )
   targetsIds <- targets$ids
@@ -113,24 +117,27 @@ dragulaInput <- function(inputId,
       class = if (is.null(label)) "shiny-label-null"
     ),
     tags$div(
-      class="form-group shiny-input-container shiny-input-dragula shiny-input-container-inline",
+      class="form-group shiny-input-container shiny-input-dragula mb-0",
       style = css(width = validateCssUnit(width)),
       id = inputId,
       tags$div(
         style = css(
           display = "-ms-grid",
           display = "grid",
-          gridTemplateColumns = "5px",
+          gridColumnGap = "5px",
           gridRowGap = "5px",
           gridTemplateColumns = sprintf("repeat(%s, 1fr)", ncolGrid),
-          "-ms-grid-columns" = rep("1fr", ncolGrid)
+          "-ms-grid-columns" = rep("1fr", ncolGrid),
+          gridTemplateRows = if (!is.null(nrowGrid)) 
+            paste(validateCssUnit(height), paste(rep(validateCssUnit(targetsHeight %||% height), nrowGrid-1), collapse = " "))
         ),
         tags$div(
+          id = paste0(inputId, "-source-container"),
           class = "container-drag-source",
           style = if (!is.null(ncolSource)) paste0("grid-area: 1 / 1 / auto / span ", ncolSource, ";"),
           style = boxStyle,
           style = make_bg_svg(sourceLabel),
-          style = if (!is.null(height)) paste("height:", validateCssUnit(height), ";"),
+          style = css(height = validateCssUnit(height)),
           tags$div(
             id = paste(inputId, "source", sep = "-"),
             class = "dragula-source",
@@ -157,7 +164,17 @@ dragulaInput <- function(inputId,
 }
 
 
-generate_targets <- function(inputId, args, targetsLabels, targetsIds, selected, replace, boxStyle, badge, status, height) {
+generate_targets <- function(inputId,
+                             args, 
+                             targetsLabels,
+                             targetsIds, 
+                             selected, 
+                             replace, 
+                             boxStyle,
+                             badge, 
+                             status,
+                             targetsHeight,
+                             height) {
   if (is.null(targetsIds)) {
     targetsIds <- targetsLabels
   }
@@ -179,8 +196,7 @@ generate_targets <- function(inputId, args, targetsLabels, targetsIds, selected,
     FUN = function(i) {
       if (is.null(selected)) {
         tags$div(
-          style = "margin: 0;",
-          style = if (!is.null(height)) paste("height:", validateCssUnit(height), ";"),
+          style = css(margin = 0, height = validateCssUnit(targetsHeight %||% height)),
           style = boxStyle,
           class = "box-dad xyvar dragula-target",
           id = paste(inputId, "target", target_ids[i], sep = "-"),
@@ -189,8 +205,7 @@ generate_targets <- function(inputId, args, targetsLabels, targetsIds, selected,
       } else {
         choicesTarget <- get_choices(args, selected[[targetsIds[i]]])
         tags$div(
-          style = "margin: 0;",
-          style = if (!is.null(height)) paste("height:", validateCssUnit(height), ";"),
+          style = css(margin = 0, height = validateCssUnit(targetsHeight %||% height)),
           style = boxStyle,
           class = "box-dad xyvar dragula-target",
           id = paste(inputId, "target", target_ids[i], sep = "-"),

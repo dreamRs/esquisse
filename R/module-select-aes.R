@@ -45,19 +45,52 @@ select_aes_server <- function(id,
           choiceNames <- ""
           selected <- NULL
         }
-        dragulaInput(
-          inputId = ns("dragvars"),
-          sourceLabel = "Variables",
-          targetsLabels = c("X", "Y", aesthetics),
-          targetsIds = c("xvar", "yvar", aesthetics),
-          choiceValues = choiceValues,
-          choiceNames = choiceNames,
-          selected = selected,
-          badge = FALSE,
-          width = "100%",
-          height = "70px",
-          replace = TRUE
-        )
+        if ("facet" %in% aesthetics) {
+          tagList(
+            tags$style(
+              HTML(sprintf(
+                "#%s-target-6661636574 {grid-area: 1 / %s / 3 / %s; height: auto !important;}", 
+                ns("dragvars"), length(aesthetics) + 2, length(aesthetics) + 2 + 1
+              )),
+              HTML(sprintf(
+                "#%s-source-container { grid-area: 1 / 1 / 2 / %s; }",
+                ns("dragvars"), length(aesthetics) + 2
+              ))
+            ),
+            dragulaInput(
+              inputId = ns("dragvars"),
+              sourceLabel = "Variables",
+              targetsLabels = c("X", "Y", aesthetics),
+              targetsIds = c("xvar", "yvar", aesthetics),
+              choiceValues = choiceValues,
+              choiceNames = choiceNames,
+              selected = selected,
+              badge = FALSE,
+              ncolGrid = length(aesthetics) + 2,
+              nrowGrid = 2,
+              ncolSource = NULL,
+              width = "100%",
+              height = "70px",
+              targetsHeight = "50px",
+              replace = TRUE
+            )
+          )
+        } else {
+          dragulaInput(
+            inputId = ns("dragvars"),
+            sourceLabel = "Variables",
+            targetsLabels = c("X", "Y", aesthetics),
+            targetsIds = c("xvar", "yvar", aesthetics),
+            choiceValues = choiceValues,
+            choiceNames = choiceNames,
+            selected = selected,
+            badge = FALSE,
+            width = "100%",
+            height = "70px",
+            targetsHeight = "50px",
+            replace = TRUE
+          )
+        }
       })
       
       # Update drag-and-drop input when data changes

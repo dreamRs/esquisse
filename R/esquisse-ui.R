@@ -103,7 +103,7 @@ esquisse_ui <- function(id,
         tags$div(
           class = "esquisse-geom-aes",
           tags$div(
-            style = "padding: 3px 3px 0 3px; height: 144px;",
+            style = "padding: 3px 3px 0 3px; height: 122px;",
             dropInput(
               inputId = ns("geom"),
               choicesNames = geomIcons()$names,
