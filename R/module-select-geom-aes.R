@@ -2,7 +2,7 @@
 #' @importFrom shiny NS
 #' @importFrom bslib nav_panel navset_pill
 #' @importFrom htmltools tags tagList
-select_geom_aes_ui <- function(id, n_geoms = 2) {
+select_geom_aes_ui <- function(id, n_geoms = 3) {
   ns <- NS(id)
   navs_geom <- lapply(
     X = seq_len(n_geoms),
@@ -36,7 +36,7 @@ select_geom_aes_ui <- function(id, n_geoms = 2) {
 
 #' @importFrom shiny reactive moduleServer reactiveValues observeEvent reactiveValuesToList
 select_geom_aes_server <- function(id,
-                                   n_geoms = 2, 
+                                   n_geoms = 3, 
                                    data_r = reactive(NULL),
                                    default_aes = c("fill", "color", "size", "group", "facet"),
                                    aesthetics_r = reactive(NULL)) {
@@ -61,6 +61,13 @@ select_geom_aes_server <- function(id,
           
           observeEvent(aes_r(), {
             rv[[paste0("aes_", i)]] <- aes_r()
+          })
+          
+          # special case: geom_sf
+          observeEvent(data_r(), {
+            if (inherits(data_r(), what = "sf")) {
+              geom_rv$possible <- c("sf", geom_rv$possible)
+            }
           })
           
           observeEvent(list(aes_r(), input[[paste0("geom_", i)]]), {

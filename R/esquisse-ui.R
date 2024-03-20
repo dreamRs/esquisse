@@ -100,20 +100,7 @@ esquisse_ui <- function(id,
 
     if (!isTRUE(layout_sidebar)) {
       tagList(
-        tags$div(
-          class = "esquisse-geom-aes",
-          tags$div(
-            style = "padding: 3px 3px 0 3px; height: 122px;",
-            dropInput(
-              inputId = ns("geom"),
-              choicesNames = geomIcons()$names,
-              choicesValues = geomIcons()$values,
-              dropWidth = "292px",
-              width = "100%"
-            )
-          ),
-          select_aes_ui(ns("aes"))
-        ),
+        select_geom_aes_ui(ns("geomaes")),
 
         fillCol(
           style = "overflow-y: auto;",
