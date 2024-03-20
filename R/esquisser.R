@@ -65,8 +65,8 @@ esquisser <- function(data = NULL,
       paste(
         "Les \u00e9toiles sont \u00e9clair\u00e9es pour que chacun puisse un jour retrouver la sienne."
       ),
-      width = 1100,
-      height = 750
+      width = 1200,
+      height = 800
     )
   }
 
@@ -117,7 +117,9 @@ bs_theme_esquisse <- function() {
     c(
       ".modal-title { @extend .mt-0 }",
       ".sidebar-title { @extend .mb-0 }",
-      "#NotiflixNotifyWrap { inset: auto 5px 38px auto !important; }"
+      "#NotiflixNotifyWrap { inset: auto 5px 38px auto !important; }",
+      ".nav-link.active { @extend .border-0; @extend .border-bottom; @extend .border-primary; @extend .border-2;}",
+      ".nav-link.active { @extend .text-primary; @extend .fw-bold}"
     )
   )
   return(theme)
