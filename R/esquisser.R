@@ -118,8 +118,9 @@ bs_theme_esquisse <- function() {
       ".modal-title { @extend .mt-0 }",
       ".sidebar-title { @extend .mb-0 }",
       "#NotiflixNotifyWrap { inset: auto 5px 38px auto !important; }",
-      ".nav-link.active { @extend .border-0; @extend .border-bottom; @extend .border-primary; @extend .border-2;}",
-      ".nav-link.active { @extend .text-primary; @extend .fw-bold}"
+      ".nav-tabs .nav-link.active { @extend .border-0; @extend .border-bottom; @extend .border-primary; @extend .border-2;}",
+      ".nav-tabs .nav-link.active { @extend .text-primary; @extend .fw-bold}",
+      ".nav-pills .nav-link { @extend .py-1 }"
     )
   )
   return(theme)
