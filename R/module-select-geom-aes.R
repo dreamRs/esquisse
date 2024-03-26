@@ -2,74 +2,91 @@
 #' @importFrom shiny NS
 #' @importFrom bslib nav_panel navset_pill
 #' @importFrom htmltools tags tagList
-select_geom_aes_ui <- function(id, n_geoms = 3) {
+select_geom_aes_ui <- function(id, n_geoms = 1) {
   ns <- NS(id)
-  navs_geom <- lapply(
-    X = seq_len(n_geoms),
-    FUN = function(i) {
-      nav_panel(
-        paste0("Geom #", i),
-        tags$div(
-          class = "esquisse-geom-aes",
-          tags$div(
-            style = "padding: 3px 3px 0 3px; height: 122px;",
-            dropInput(
-              inputId = ns(paste0("geom_", i)),
-              choicesNames = geomIcons()$names,
-              choicesValues = geomIcons()$values,
-              dropWidth = "292px",
-              width = "100%"
-            )
-          ),
-          select_aes_ui(ns(paste0("aes_", i)))
+  if (n_geoms == 1) {
+    tags$div(
+      class = "esquisse-geom-aes",
+      tags$div(
+        style = "padding: 3px 3px 0 3px; height: 122px;",
+        dropInput(
+          inputId = ns("geom_1"),
+          choicesNames = geomIcons()$names,
+          choicesValues = geomIcons()$values,
+          dropWidth = "292px",
+          width = "100%"
         )
-      )
-    }
-  )
-  tagList(
-    navset_pill(
-      id = ns("navset_geoms"),
-      !!!navs_geom
+      ),
+      select_aes_ui(ns("aes_1"))
     )
-  )
+  } else {
+    navs_geom <- lapply(
+      X = seq_len(n_geoms),
+      FUN = function(i) {
+        nav_panel(
+          paste0("Geom #", i),
+          tags$div(
+            class = "esquisse-geom-aes",
+            tags$div(
+              style = "padding: 3px 3px 0 3px; height: 122px;",
+              dropInput(
+                inputId = ns(paste0("geom_", i)),
+                choicesNames = geomIcons()$names,
+                choicesValues = geomIcons()$values,
+                dropWidth = "292px",
+                width = "100%"
+              )
+            ),
+            select_aes_ui(ns(paste0("aes_", i)))
+          )
+        )
+      }
+    )
+    tagList(
+      navset_pill(
+        id = ns("navset_geoms"),
+        !!!navs_geom
+      )
+    )
+  }
 }
 
 #' @importFrom shiny reactive moduleServer reactiveValues observeEvent reactiveValuesToList
 select_geom_aes_server <- function(id,
-                                   n_geoms = 3, 
+                                   n_geoms = 1,
                                    data_r = reactive(NULL),
                                    default_aes = c("fill", "color", "size", "group", "facet"),
                                    aesthetics_r = reactive(NULL)) {
   moduleServer(
     id,
     function(input, output, session) {
-      
+
       rv <- reactiveValues()
-      
+
       lapply(
         X = seq_len(n_geoms),
         FUN = function(i) {
-          
+
           geom_rv <- reactiveValues()
-          
+
           aes_r <- select_aes_server(
             id = paste0("aes_", i),
             data_r = data_r,
             default_aes = default_aes,
             input_aes = aesthetics_r
           )
-          
+
           observeEvent(aes_r(), {
             rv[[paste0("aes_", i)]] <- aes_r()
           })
-          
+
           # special case: geom_sf
           observeEvent(data_r(), {
             if (inherits(data_r(), what = "sf")) {
               geom_rv$possible <- c("sf", geom_rv$possible)
             }
           })
-          
+
           observeEvent(list(aes_r(), input[[paste0("geom_", i)]]), {
             aesthetics <- aes_r()
             data <- data_r()
@@ -82,12 +99,12 @@ select_geom_aes_server <- function(id,
               )
             )
             geom_rv$possible <- c("auto", geoms)
-            
+
             geom_rv$controls <- select_geom_controls(input[[paste0("geom_", i)]], geoms)
-            
+
             geom_rv$palette <- !is.null(aesthetics$fill) | !is.null(aesthetics$color)
           }, ignoreInit = TRUE)
-          
+
           observeEvent(geom_rv$possible, {
             geoms <- geomIcons()$values
             updateDropInput(
@@ -97,13 +114,13 @@ select_geom_aes_server <- function(id,
               disabled = setdiff(geoms, geom_rv$possible)
             )
           })
-          
+
           observeEvent(input[[paste0("geom_", i)]], {
             rv[[paste0("geom_", i)]] <- input[[paste0("geom_", i)]]
           })
         }
       )
-      
+
       return(reactive({
         result <- reactiveValuesToList(rv)
         result$active <- input$navset_geoms

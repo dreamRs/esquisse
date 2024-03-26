@@ -142,23 +142,7 @@ esquisse_ui <- function(id,
             downloads = downloads
           )
         ),
-        tags$div(
-          class = "esquisse-geom-aes",
-          tags$div(
-            style = css(
-              padding = "3px 3px 0 3px",
-              height = "144px"
-            ),
-            dropInput(
-              inputId = ns("geom"),
-              choicesNames = geomIcons()$names,
-              choicesValues = geomIcons()$values,
-              dropWidth = "292px",
-              width = "100%"
-            )
-          ),
-          select_aes_ui(ns("aes"))
-        ),
+        select_geom_aes_ui(ns("geomaes")),
 
         tags$div(
           style = css(
