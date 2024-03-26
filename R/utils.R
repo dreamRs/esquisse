@@ -133,15 +133,33 @@ badgeType <- function(col_name, col_type) {
       col_name_i <- col_name[i]
       col_type_i <- col_type[i]
       if (col_type_i == "discrete") {
-        tags$span(class = "label-esquisse label-discrete badge-dad", col_name_i)
+        tags$span(
+          class = "label-esquisse label-discrete badge-dad",
+          ph("text-aa", weight = "regular"),
+          col_name_i
+        )
       } else if (col_type_i == "time") {
-        tags$span(class = "label-esquisse label-datetime badge-dad", col_name_i)
+        tags$span(
+          class = "label-esquisse label-datetime badge-dad",
+          ph("calendar", weight = "regular"),
+          col_name_i
+        )
       } else if (col_type_i == "continuous") {
-        tags$span(class="label-esquisse label-continuous badge-dad", col_name_i)
+        tags$span(
+          class = "label-esquisse label-continuous badge-dad",
+          ph("hash", weight = "regular"),
+          col_name_i
+        )
       } else if (col_type_i == "id") {
-        tags$span(class = "label-esquisse label-id badge-dad", col_name_i)
+        tags$span(
+          class = "label-esquisse label-id badge-dad",
+          col_name_i
+        )
       } else {
-        tags$span(class = "label-esquisse label-other badge-dad", col_name_i)
+        tags$span(
+          class = "label-esquisse label-other badge-dad",
+          col_name_i
+        )
       }
     }
   )
