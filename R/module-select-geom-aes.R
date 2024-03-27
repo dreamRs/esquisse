@@ -6,7 +6,7 @@ select_geom_aes_ui <- function(id, n_geoms = 1) {
   ns <- NS(id)
   if (n_geoms == 1) {
     tags$div(
-      class = "esquisse-geom-aes",
+      class = "esquisse-geom-aes-main esquisse-geom-aes",
       tags$div(
         style = "padding: 3px 3px 0 3px; height: 122px;",
         dropInput(
@@ -42,7 +42,8 @@ select_geom_aes_ui <- function(id, n_geoms = 1) {
         )
       }
     )
-    tagList(
+    tags$div(
+      class = "esquisse-geom-aes-main",
       navset_pill(
         id = ns("navset_geoms"),
         !!!navs_geom

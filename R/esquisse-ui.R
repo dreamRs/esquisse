@@ -105,7 +105,6 @@ esquisse_ui <- function(id,
         fillCol(
           style = "overflow-y: auto;",
           tags$div(
-            style = "height: 100%; min-height: 400px; overflow: auto;",
             class = "ggplot-output-container",
             play_pause_input(ns("play_plot"), show = play_pause),
             ggplot_output(
@@ -143,21 +142,19 @@ esquisse_ui <- function(id,
             downloads = downloads
           )
         ),
-        select_geom_aes_ui(ns("geomaes")),
-
+        
         tags$div(
-          style = css(
-            height = "calc(100% - 165px)",
-            minHeight = "400px",
-            overflow = "auto",
-            position = "relative"
-          ),
-          play_pause_input(ns("play_plot"), show = play_pause),
-          ggplot_output(
-            id = ns("plooooooot"),
-            width = "100%",
-            height = "100%",
-            downloads = if ("export" %in% controls) NULL else downloads
+          class = "ggplot-geom-aes-container",
+          select_geom_aes_ui(ns("geomaes")),
+          tags$div(
+            class = "ggplot-output-accordion-container",
+            play_pause_input(ns("play_plot"), show = play_pause),
+            ggplot_output(
+              id = ns("plooooooot"),
+              width = "100%",
+              height = "100%",
+              downloads = if ("export" %in% controls) NULL else downloads
+            )
           )
         )
       )

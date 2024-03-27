@@ -335,6 +335,8 @@ downloads_labels <- function(label = ph("download-simple"),
 #' @param filename A string of the filename to export WITHOUT extension,
 #'  it will be added according to type of export.
 #' @param resizable Can the chart size be adjusted by the user?
+#' @param use_plotly A [shiny::reactive()] function returning `TRUE` or `FALSE` to render
+#'  the plot with `plotly::ggplotly()` or not.
 #'
 #' @rdname ggplot-output
 #'
