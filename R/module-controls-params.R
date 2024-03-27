@@ -37,6 +37,12 @@ controls_parameters_ui <- function(id) {
       icon = list(i18n("Height:")),
       width = "100%"
     ),
+    prettySwitch(
+      inputId = ns("plotly"),
+      label = "Use plotly to render plot",
+      fill = TRUE,
+      status = "primary"
+    ),
     tags$hr(),
     tags$div(
       id = ns("controls-scatter"),
@@ -357,7 +363,8 @@ controls_parameters_server <- function(id,
           linewidth = input$size
         )}),
         width = debounce(reactive(input$width), 800),
-        height = debounce(reactive(input$height), 800)
+        height = debounce(reactive(input$height), 800),
+        plotly = reactive(input$plotly)
       ))
 
     }

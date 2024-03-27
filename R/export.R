@@ -379,6 +379,12 @@ render_ggplot <- function(id,
               height = height(),
               with_moveable = resizable
             )
+            resize(
+              id = ns("ggplotly-container"),
+              width = width(),
+              height = height(),
+              with_moveable = resizable
+            )
           }
         }),
         width(),
@@ -437,7 +443,11 @@ render_ggplot <- function(id,
       if (requireNamespace(package = "plotly")) {
         output$plotly <- plotly::renderPlotly({
           rv$plot <- gg_fun()
-          rv$plot
+          plotly::ggplotly(
+            p = rv$plot, 
+            width = session$clientData[[plot_width]], 
+            height = session$clientData[[plot_height]]
+          )
         })
         observeEvent(use_plotly(), {
           if (isTRUE(use_plotly())) {

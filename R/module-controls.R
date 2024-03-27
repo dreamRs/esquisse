@@ -401,6 +401,11 @@ controls_server <- function(id,
       observeEvent(parameters_r$height(), {
         outputs$height <- parameters_r$height()
       })
+      
+      # height
+      observeEvent(parameters_r$plotly(), {
+        outputs$plotly <- parameters_r$plotly()
+      })
 
       observeEvent(output_filter$filtered(), {
         req(is.logical(input$disable_filters))
