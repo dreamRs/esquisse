@@ -17,6 +17,13 @@ dropdown_ <- function(..., class = NULL) {
   TAG
 }
 
+#' @importFrom bslib accordion_panel
+#' @importFrom rlang have_name
+accordion_panel_ <- function(..., label, icon) {
+  args <- list(...)
+  args <- args[!rlang::have_name(args)]
+  bslib::accordion_panel(title = tagList(icon, tags$b(label)), value = label, !!!args)
+}
 
 # htmltools::tagAppendAttributes(
 #   shinyWidgets::dropMenu(
@@ -46,15 +53,18 @@ dropdown_ <- function(..., class = NULL) {
 #' @importFrom htmltools tags tagList HTML
 #' @importFrom shiny checkboxInput
 #' @importFrom datamods filter_data_ui
-#'
+#' @importFrom bslib accordion
 controls_ui <- function(id,
                         controls = c("labs", "parameters", "appearance", "filters", "code"),
-                        insert_code = FALSE) {
+                        insert_code = FALSE,
+                        layout = c("dropdown", "accordion"),
+                        downloads = downloads_labels()) {
   ns <- NS(id)
+  layout <- match.arg(layout)
   if (!is.null(controls)) {
     controls <- match.arg(
       controls,
-      choices = c("labs", "parameters", "appearance", "filters", "code"),
+      choices = c("labs", "parameters", "appearance", "filters", "code", "export"),
       several.ok = TRUE
     )
   } else {
@@ -71,71 +81,114 @@ controls_ui <- function(id,
   if (isTRUE(disable_filters))
     controls <- setdiff(controls, "filters")
 
+  funControl <- switch(
+    layout,
+    "dropdown" = dropdown_,
+    "accordion" = accordion_panel_
+  )
+  containerControls <- switch(
+    layout,
+    "dropdown" = function(...) {
+      tags$div(
+        class = "btn-group-esquisse btn-group-justified-esquisse",
+        ...
+      )
+    },
+    "accordion" = function(...) {
+      bslib::accordion(..., multiple = FALSE)
+    }
+  )
+
+  listControls <- list()
+  if (isTRUE("labs" %in% controls)) {
+    listControls[[length(listControls) + 1]] <- funControl(
+      controls_labs_ui(id = ns("labs")),
+      inputId = ns("controls-labs"),
+      class = "esquisse-controls-labs",
+      style = "default",
+      label = i18n("Labels & Title"),
+      up = TRUE,
+      icon = ph("text-aa"),
+      status = "default btn-esquisse-controls btn-outline-primary text-nowrap"
+    )
+  }
+  if (isTRUE("parameters" %in% controls)) {
+    listControls[[length(listControls) + 1]] <- funControl(
+      controls_parameters_ui(ns("parameters")),
+      inputId = ns("controls-parameters"),
+      class = "esquisse-controls-parameters",
+      style = "default",
+      label = i18n("Plot options"),
+      up = TRUE,
+      icon = ph("gear"),
+      status = "default btn-esquisse-controls btn-outline-primary text-nowrap"
+    )
+  }
+  if (isTRUE("appearance" %in% controls)) {
+    listControls[[length(listControls) + 1]] <- funControl(
+      controls_appearance_ui(
+        ns("appearance"),
+        style = if (layout == "dropdown") {
+          css(
+            maxHeight = "80vh",
+            overflowY = "auto",
+            overflowX = "hidden",
+            padding = "5px 7px"
+          )
+        }
+      ),
+      inputId = ns("controls-appearance"),
+      class = "esquisse-controls-appearance",
+      style = "default",
+      label = i18n("Appearance"),
+      up = TRUE,
+      icon = ph("palette"),
+      status = "default btn-esquisse-controls btn-outline-primary text-nowrap"
+    )
+  }
+  if (isTRUE("filters" %in% controls)) {
+    listControls[[length(listControls) + 1]] <- funControl(
+      filter_data_ui(id = ns("filter-data")),
+      inputId = ns("controls-filters"),
+      class = "esquisse-controls-filters",
+      style = "default",
+      label = i18n("Data"),
+      up = TRUE,
+      icon = ph("sliders-horizontal"),
+      status = "default btn-esquisse-controls btn-outline-primary text-nowrap"
+    )
+  }
+  if (isTRUE("code" %in% controls)) {
+    listControls[[length(listControls) + 1]] <- funControl(
+      controls_code_ui(ns("code"), insert_code = insert_code),
+      inputId = ns("controls-code"),
+      class = "esquisse-controls-code",
+      style = "default",
+      label = i18n("Code"),
+      up = TRUE,
+      right = TRUE,
+      icon = ph("code"),
+      status = "default btn-esquisse-controls btn-outline-primary text-nowrap"
+    )
+  }
+  if (isTRUE("export" %in% controls)) {
+    listControls[[length(listControls) + 1]] <- funControl(
+      controls_export_ui(ns("export"), downloads = downloads),
+      inputId = ns("controls-export"),
+      class = "esquisse-controls-export",
+      style = "default",
+      label = i18n("Export"),
+      up = TRUE,
+      right = TRUE,
+      icon = ph("file-arrow-down"),
+      status = "default btn-esquisse-controls btn-outline-primary text-nowrap"
+    )
+  }
+  if (length(listControls) > 0) {
+    listControls <- containerControls(!!!listControls)
+  }
   tagList(
-    tags$div(
-      class = "btn-group-esquisse btn-group-justified-esquisse",
-      if (isTRUE("labs" %in% controls)) {
-        dropdown_(
-          controls_labs_ui(id = ns("labs")),
-          inputId = ns("controls-labs"),
-          class = "esquisse-controls-labs",
-          style = "default",
-          label = i18n("Labels & Title"),
-          up = TRUE,
-          icon = ph("text-aa"),
-          status = "default btn-esquisse-controls btn-outline-primary text-nowrap"
-        )
-      },
-      if (isTRUE("parameters" %in% controls)) {
-        dropdown_(
-          controls_parameters_ui(ns("parameters")),
-          inputId = ns("controls-parameters"),
-          class = "esquisse-controls-parameters",
-          style = "default",
-          label = i18n("Plot options"),
-          up = TRUE,
-          icon = ph("gear"),
-          status = "default btn-esquisse-controls btn-outline-primary text-nowrap"
-        )
-      },
-      if (isTRUE("appearance" %in% controls)) {
-        dropdown_(
-          controls_appearance_ui(ns("appearance")),
-          inputId = ns("controls-appearance"),
-          class = "esquisse-controls-appearance",
-          style = "default",
-          label = i18n("Appearance"),
-          up = TRUE,
-          icon = ph("palette"),
-          status = "default btn-esquisse-controls btn-outline-primary text-nowrap"
-        )
-      },
-      if (isTRUE("filters" %in% controls)) {
-        dropdown_(
-          filter_data_ui(id = ns("filter-data")),
-          inputId = ns("controls-filters"),
-          class = "esquisse-controls-filters",
-          style = "default",
-          label = i18n("Data"),
-          up = TRUE,
-          icon = ph("sliders-horizontal"),
-          status = "default btn-esquisse-controls btn-outline-primary text-nowrap"
-        )
-      },
-      if (isTRUE("code" %in% controls)) {
-        dropdown_(
-          controls_code(ns, insert_code = insert_code),
-          inputId = ns("controls-code"),
-          class = "esquisse-controls-code",
-          style = "default",
-          label = i18n("Code"),
-          up = TRUE,
-          right = TRUE,
-          icon = ph("code"),
-          status = "default btn-esquisse-controls btn-outline-primary text-nowrap"
-        )
-      }
-    ),
+    listControls,
     tags$div(
       style = "display: none;",
       checkboxInput(
@@ -184,6 +237,8 @@ controls_server <- function(id,
                             use_facet = reactive(FALSE),
                             use_transX = reactive(FALSE),
                             use_transY = reactive(FALSE),
+                            width = reactive(NULL),
+                            height = reactive(NULL),
                             drop_ids = TRUE) {
 
   callModule(
@@ -209,44 +264,24 @@ controls_server <- function(id,
         use_facet = use_facet,
         use_transX = use_transX,
         use_transY = use_transY,
+        width = width,
+        height = height,
         type = type
       )
 
-      # Code ----
-      observeEvent(input$insert_code, {
-        context <- rstudioapi::getSourceEditorContext()
-        code <- ggplot_rv$code
-        expr <- output_filter$expr()
-        if (!is.null(expr) & !isTRUE(input$disable_filters)) {
-          code_dplyr <- deparse2(output_filter$code())
-          code_dplyr <- paste(code_dplyr, collapse = "\n")
-          nm_dat <- data_name()
-          code <- gsub(x = code, replacement = " ggplot()", pattern = sprintf("ggplot(%s)", nm_dat), fixed = TRUE)
-          code <- paste(code_dplyr, code, sep = " %>%\n")
-          if (input$insert_code == 1) {
-            code <- paste("library(dplyr)\nlibrary(ggplot2)", code, sep = "\n\n")
-          }
-        } else {
-          if (input$insert_code == 1) {
-            code <- paste("library(ggplot2)", code, sep = "\n\n")
-          }
-        }
-        rstudioapi::insertText(text = paste0("\n", code, "\n"), id = context$id)
-      })
+      controls_export_server(
+        id = "export",
+        plot_r = reactive(ggplot_rv$ggobj),
+        width = width,
+        height = height
+      )
 
-      output$code <- renderUI({
-        code <- style_code(ggplot_rv$code)
-        expr <- output_filter$expr()
-        if (!is.null(expr) & !isTRUE(input$disable_filters)) {
-          code_dplyr <- deparse2(output_filter$code())
-          nm_dat <- data_name()
-          code <- gsub(x = code, replacement = " ggplot()", pattern = sprintf("ggplot(%s)", nm_dat), fixed = TRUE)
-          code <- paste(code_dplyr, code, sep = " %>%\n")
-        }
-        htmltools::tagList(
-          rCodeContainer(id = ns("codeggplot"), code)
-        )
-      })
+      controls_code_server(
+        id = "code",
+        ggplot_rv = ggplot_rv,
+        output_filter = output_filter,
+        data_name = data_name
+      )
 
 
 
@@ -279,19 +314,6 @@ controls_server <- function(id,
         outputs$code <- reactiveValues(expr = NULL, dplyr = NULL)
       })
 
-      observeEvent({
-        all_inputs <- reactiveValuesToList(input)
-        all_inputs[grep(pattern = "filter-data", x = names(all_inputs), invert = TRUE)]
-      }, {
-        all_inputs <- reactiveValuesToList(input)
-        # remove inputs from filterDataServer module with ID "filter-data"
-        inputs <- all_inputs[grep(pattern = "filter-data", x = names(all_inputs), invert = TRUE)]
-        inputs <- inputs[grep(pattern = "^labs_", x = names(inputs), invert = TRUE)]
-        inputs <- inputs[grep(pattern = "^export_", x = names(inputs), invert = TRUE)]
-        inputs <- inputs[order(names(inputs))]
-
-        outputs$inputs <- modifyList(outputs$inputs, inputs)
-      })
 
       observeEvent(appearance_r$inputs(), {
         outputs$inputs <- modifyList(outputs$inputs, appearance_r$inputs())
@@ -327,7 +349,9 @@ controls_server <- function(id,
               axis.title.y = theme_labs$y,
               axis.title.x = theme_labs$x,
               axis.text.y = theme_appearance$axis_text_y,
-              axis.text.x = theme_appearance$axis_text_x
+              axis.text.x = theme_appearance$axis_text_x,
+              legend.text = theme_appearance$legend_text,
+              legend.title = theme_appearance$legend_title
             )
           )
         )
@@ -368,6 +392,16 @@ controls_server <- function(id,
         outputs$limits <- parameters_r$limits()
       })
 
+      # width
+      observeEvent(parameters_r$width(), {
+        outputs$width <- parameters_r$width()
+      })
+
+      # height
+      observeEvent(parameters_r$height(), {
+        outputs$height <- parameters_r$height()
+      })
+
       observeEvent(output_filter$filtered(), {
         req(is.logical(input$disable_filters))
         if (!isTRUE(input$disable_filters)) {
@@ -380,46 +414,6 @@ controls_server <- function(id,
     }
   )
 }
-
-
-
-
-
-
-
-
-#' Controls for code and export
-#'
-#' Display code for reproduce chart and export button
-#'
-#' @param ns Namespace from module
-#'
-#' @noRd
-#' @importFrom shiny downloadButton uiOutput actionLink
-#' @importFrom htmltools tagList tags
-#'
-controls_code <- function(ns, insert_code = FALSE) {
-  tagList(
-    tags$button(
-      class = "btn btn-link btn-xs pull-right float-end btn-copy-code",
-      i18n("Copy to clipboard"),
-      `data-clipboard-target` = paste0("#", ns("codeggplot"))
-    ), tags$script("$(function() {new ClipboardJS('.btn-copy-code');});"),
-    tags$br(),
-    tags$b(i18n("Code:")),
-    uiOutput(outputId = ns("code")),
-    tags$textarea(id = ns("holderCode"), style = "display: none;"),
-    if (insert_code) {
-      actionLink(
-        inputId = ns("insert_code"),
-        label = tagList(ph("arrow-circle-left"), i18n("Insert code in script"))
-      )
-    },
-    tags$br()
-  )
-}
-
-
 
 
 

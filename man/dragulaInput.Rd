@@ -20,8 +20,10 @@ dragulaInput(
   badge = TRUE,
   ncolSource = "auto",
   ncolGrid = NULL,
+  nrowGrid = NULL,
   dragulaOpts = list(),
   boxStyle = NULL,
+  targetsHeight = NULL,
   width = NULL,
   height = "100px"
 )
@@ -67,7 +69,7 @@ if you want to pass custom appearance with \code{choiceNames}.}
 
 \item{ncolSource}{Number of columns occupied by the source, default is \code{"auto"}, meaning full row.}
 
-\item{ncolGrid}{Number of columns used to place source and targets boxes, see examples.}
+\item{ncolGrid, nrowGrid}{Number of columns / rows used to place source and targets boxes, see examples.}
 
 \item{dragulaOpts}{Options passed to dragula JavaScript library
 (see \href{https://github.com/bevacqua/dragula#dragulacontainers-options}{online documentation on GitHub}).
@@ -75,9 +77,11 @@ Note that options \code{moves}, \code{accepts} and \code{invalid} must be valid 
 
 \item{boxStyle}{CSS style string to customize source and target container.}
 
+\item{targetsHeight}{Height for the target boxes.}
+
 \item{width}{Width of the input.}
 
-\item{height}{Height of each boxes, the total input height is this parameter X 2.}
+\item{height}{Height of each boxes, the total input height is this parameter X 2 (unless if \code{targetsHeight} is set).}
 }
 \value{
 a UI definition

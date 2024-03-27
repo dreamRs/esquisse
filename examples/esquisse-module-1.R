@@ -5,35 +5,38 @@ library(shiny)
 library(esquisse)
 
 ui <- fluidPage(
+
+  theme = bs_theme_esquisse(),
+
   tags$h1("Use esquisse as a Shiny module"),
-  
+
   radioButtons(
-    inputId = "data", 
-    label = "Data to use:", 
+    inputId = "data",
+    label = "Data to use:",
     choices = c("iris", "mtcars"),
     inline = TRUE
   ),
   checkboxGroupInput(
-    inputId = "aes", 
-    label = "Aesthetics to use:", 
+    inputId = "aes",
+    label = "Aesthetics to use:",
     choices = c(
-      "fill", "color", "size", "shape", 
+      "fill", "color", "size", "shape",
       "weight", "group", "facet", "facet_row", "facet_col"
     ),
     selected = c("fill", "color", "size", "facet"),
     inline = TRUE
   ),
   esquisse_ui(
-    id = "esquisse", 
+    id = "esquisse",
     header = FALSE, # dont display gadget title
     container = esquisseContainer(height = "700px")
   )
 )
 
 server <- function(input, output, session) {
-  
+
   data_rv <- reactiveValues(data = iris, name = "iris")
-  
+
   observeEvent(input$data, {
     if (input$data == "iris") {
       data_rv$data <- iris
@@ -43,13 +46,13 @@ server <- function(input, output, session) {
       data_rv$name <- "mtcars"
     }
   })
-  
+
   esquisse_server(
-    id = "esquisse", 
-    data_rv = data_rv, 
+    id = "esquisse",
+    data_rv = data_rv,
     default_aes = reactive(input$aes)
   )
-  
+
 }
 
 if (interactive())

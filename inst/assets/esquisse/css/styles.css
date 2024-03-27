@@ -244,3 +244,41 @@
   background-color: #2E2E2E;
   color: #FFFFFF;
 }
+
+
+
+/* Highligh code https://github.com/r-lib/pkgdown/blob/main/inst/highlight-styles/github-light.scss */
+
+pre {background-color: #ffffff;}
+pre code         /* Normal         */ {color:#24292e}
+pre code span span.al /* Alert          */ {color:#ff5555; font-weight: bold}
+pre code span span.an /* Annotation     */ {color:#6a737d}
+pre code span span.at /* Attribute      */ {color:#d73a49}
+pre code span span.bn /* BaseN          */ {color:#005cc5}
+pre code span span.bu /* BuiltIn        */ {color:#d73a49}
+pre code span span.cf /* ControlFlow    */ {color:#d73a49}
+pre code span span.ch /* Char           */ {color:#032f62}
+pre code span span.cn /* Constant       */ {color:#005cc5}
+pre code span span.co /* Comment        */ {color:#6a737d}
+pre code span span.cv /* CommentVar     */ {color:#6a737d}
+pre code span span.do /* Documentation  */ {color:#6a737d}
+pre code span span.dt /* DataType       */ {color:#d73a49}
+pre code span span.dv /* DecVal         */ {color:#005cc5}
+pre code span span.er /* Error          */ {color:#ff5555; text-decoration: underline}
+pre code span span.ex /* Extension      */ {color:#d73a49; font-weight: bold}
+pre code span span.fl /* Float          */ {color:#005cc5}
+pre code span span.fu /* Function       */ {color:#6f42c1}
+pre code span span.im /* Import         */ {color:#032f62}
+pre code span span.in /* Information    */ {color:#6a737d}
+pre code span span.kw /* Keyword        */ {color:#d73a49}
+pre code span span.op /* Operator       */ {color:#24292e}
+pre code span span.ot /* Others         */ {color:#6f42c1}
+pre code span span.pp /* Preprocessor   */ {color:#d73a49}
+pre code span span.re /* RegionMarker   */ {color:#6a737d}
+pre code span span.sc /* SpecialChar    */ {color:#005cc5}
+pre code span span.ss /* SpecialString  */ {color:#032f62}
+pre code span span.st /* String         */ {color:#032f62}
+pre code span span.va /* Variable       */ {color:#e36209}
+pre code span span.vs /* VerbatimString */ {color:#032f62}
+pre code span span.wa /* Warning        */ {color:#ff5555}
+

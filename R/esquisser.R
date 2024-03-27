@@ -65,8 +65,8 @@ esquisser <- function(data = NULL,
       paste(
         "Les \u00e9toiles sont \u00e9clair\u00e9es pour que chacun puisse un jour retrouver la sienne."
       ),
-      width = 1100,
-      height = 750
+      width = 1200,
+      height = 800
     )
   }
 
@@ -95,6 +95,12 @@ esquisser <- function(data = NULL,
 }
 
 
+
+#' Bootstrap Theme for Esquisse
+#'
+#' @return A [bslib::bs_theme()].
+#' @export
+#'
 #' @importFrom bslib bs_theme bs_add_rules
 bs_theme_esquisse <- function() {
   theme <- bslib::bs_theme(
@@ -102,14 +108,21 @@ bs_theme_esquisse <- function() {
     primary = "#112446",
     secondary = "#cccccc",
     preset = "bootstrap",
-    font_scale = 0.8
+    font_scale = 0.8,
+    "accordion-body-padding-y" = "5px",
+    "accordion-body-padding-x" = "5px"
   )
-  bslib::bs_add_rules(
+  theme <- bslib::bs_add_rules(
     theme = theme,
     c(
       ".modal-title { @extend .mt-0 }",
-      "#NotiflixNotifyWrap { inset: auto 5px 38px auto !important; }"
+      ".sidebar-title { @extend .mb-0 }",
+      "#NotiflixNotifyWrap { inset: auto 5px 38px auto !important; }",
+      ".nav-tabs .nav-link.active { @extend .border-0; @extend .border-bottom; @extend .border-primary; @extend .border-2;}",
+      ".nav-tabs .nav-link.active { @extend .text-primary; @extend .fw-bold}",
+      ".nav-pills .nav-link { @extend .py-1 }"
     )
   )
+  return(theme)
 }
 

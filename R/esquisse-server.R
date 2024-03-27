@@ -47,7 +47,6 @@ esquisse_server <- function(id,
         showModal(modal_settings(aesthetics = input$aesthetics))
       })
 
-
       if (is.reactivevalues(data_rv)) {
         observeEvent(data_rv$data, {
           data_chart$data <- data_rv$data
@@ -104,51 +103,18 @@ esquisse_server <- function(id,
       # show data if button clicked
       show_data_server("show_data", reactive(controls_rv$data))
 
-      # special case: geom_sf
-      observeEvent(data_chart$data, {
-        if (inherits(data_chart$data, what = "sf")) {
-          geom_rv$possible <- c("sf", geom_rv$possible)
-        }
-      })
+      
 
-      # Aesthetic selector
-      aes_r <- select_aes_server(
-        id = "aes",
-        data_r = reactive(data_chart$data),
-        default_aes = default_aes,
-        input_aes = reactive(input$aesthetics)
+      
+      res_geom_aes_r <- select_geom_aes_server(
+        id = "geomaes", 
+        data_r = reactive(data_chart$data)
       )
-
-
-      observeEvent(list(aes_r(), input$geom), {
-        geoms <- potential_geoms(
-          data = data_chart$data,
-          mapping = build_aes(
-            data = data_chart$data,
-            x = aes_r()$xvar,
-            y = aes_r()$yvar
-          )
-        )
-        geom_rv$possible <- c("auto", geoms)
-
-        geom_rv$controls <- select_geom_controls(input$geom, geoms)
-
-        if (!is.null(aes_r()$fill) | !is.null(aes_r()$color)) {
-          geom_rv$palette <- TRUE
-        } else {
-          geom_rv$palette <- FALSE
-        }
-      }, ignoreInit = TRUE)
-
-      observeEvent(geom_rv$possible, {
-        geoms <- geomIcons()$values
-        updateDropInput(
-          session = session,
-          inputId = "geom",
-          selected = setdiff(geom_rv$possible, "auto")[1],
-          disabled = setdiff(geoms, geom_rv$possible)
-        )
+      aes_r <- reactive(res_geom_aes_r()$aes_1)
+      observeEvent(res_geom_aes_r()$geom_1, {
+        geom_rv$controls <- res_geom_aes_r()$geom_1
       })
+
 
       # Module chart controls : title, xlabs, colors, export...
       # paramsChart <- reactiveValues(inputs = NULL)
@@ -186,16 +152,18 @@ esquisse_server <- function(id,
             y = "continuous"
           )
         }),
+        width = reactive(rv_render_ggplot$plot_width),
+        height = reactive(rv_render_ggplot$plot_height),
         drop_ids = drop_ids
       )
 
 
-      render_ggplot("plooooooot", {
+      rv_render_ggplot <- render_ggplot("plooooooot", {
         req(input$play_plot, cancelOutput = TRUE)
         req(data_chart$data)
         req(controls_rv$data)
         req(controls_rv$inputs)
-        req(input$geom)
+        geom_ <- req(res_geom_aes_r()$geom_1)
 
         aes_input <- make_aes(aes_r())
 
@@ -204,14 +172,14 @@ esquisse_server <- function(id,
         mapping <- build_aes(
           data = data_chart$data,
           .list = aes_input,
-          geom = input$geom
+          geom = geom_
         )
 
         geoms <- potential_geoms(
           data = data_chart$data,
           mapping = mapping
         )
-        req(input$geom %in% geoms)
+        req(geom_ %in% geoms)
 
         data <- controls_rv$data
 
@@ -222,30 +190,34 @@ esquisse_server <- function(id,
           reverse = controls_rv$colors$reverse
         )
 
-        if (identical(input$geom, "auto")) {
+        if (identical(geom_, "auto")) {
           geom <- "blank"
         } else {
-          geom <- input$geom
+          geom <- geom_
         }
 
-        geom_args <- match_geom_args(input$geom, controls_rv$inputs, mapping = mapping)
+        geom_args <- match_geom_args(
+          geom_, 
+          controls_rv$inputs,
+          mapping = mapping,
+          add_mapping = FALSE
+        )
 
-        if (isTRUE(controls_rv$smooth$add) & input$geom %in% c("point", "line")) {
+        if (isTRUE(controls_rv$smooth$add) & geom_ %in% c("point", "line")) {
           geom <- c(geom, "smooth")
           geom_args <- c(
-            setNames(list(geom_args), input$geom),
+            setNames(list(geom_args), geom_),
             list(smooth = controls_rv$smooth$args)
           )
         }
-        if (isTRUE(controls_rv$jitter$add) & input$geom %in% c("boxplot", "violin")) {
+        if (isTRUE(controls_rv$jitter$add) & geom_ %in% c("boxplot", "violin")) {
           geom <- c(geom, "jitter")
           geom_args <- c(
-            setNames(list(geom_args), input$geom),
+            setNames(list(geom_args), geom_),
             list(jitter = controls_rv$jitter$args)
           )
-
         }
-        if (!is.null(aes_input$ymin) & !is.null(aes_input$ymax) & input$geom %in% c("line")) {
+        if (!is.null(aes_input$ymin) & !is.null(aes_input$ymax) & geom_ %in% c("line")) {
           geom <- c("ribbon", geom)
           mapping_ribbon <- aes_input[c("ymin", "ymax")]
           geom_args <- c(
@@ -253,7 +225,7 @@ esquisse_server <- function(id,
               mapping = expr(aes(!!!syms2(mapping_ribbon))),
               fill = controls_rv$inputs$color_ribbon
             )),
-            setNames(list(geom_args), input$geom)
+            setNames(list(geom_args), geom_)
           )
           mapping$ymin <- NULL
           mapping$ymax <- NULL
@@ -272,15 +244,11 @@ esquisse_server <- function(id,
           scales_args <- c(scales_args, list(y_continuous = controls_rv$transY$args))
         }
 
-        if (isTRUE(controls_rv$limits$x)) {
-          xlim <- controls_rv$limits$xlim
-        } else {
-          xlim <- NULL
+        xlim <- if (isTRUE(controls_rv$limits$x)) {
+           controls_rv$limits$xlim
         }
-        if (isTRUE(controls_rv$limits$y)) {
-          ylim <- controls_rv$limits$ylim
-        } else {
-          ylim <- NULL
+        ylim <- if (isTRUE(controls_rv$limits$y)) {
+          controls_rv$limits$ylim
         }
         data_name <- data_chart$name %||% "data"
         gg_call <- ggcall(
@@ -311,7 +279,7 @@ esquisse_server <- function(id,
           show_notification = notify_warnings %||% input$notify_warnings  %||% "once"
         )
         ggplotCall$ggobj$plot
-      }, filename = "esquisse-plot")
+      }, filename = "esquisse-plot", width = reactive(controls_rv$width), height = reactive(controls_rv$height))
 
 
       # Close addin

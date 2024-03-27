@@ -13,11 +13,14 @@ my_data <- data.frame(
 
 
 ui <- fluidPage(
+  theme = bs_theme_esquisse(),
   esquisse_ui(
     id = "esquisse",
     header = list(close = FALSE), # hide the close button
     container = esquisseContainer(fixed = TRUE),
-    play_pause = FALSE
+    play_pause = FALSE,
+    controls = c("labs", "parameters", "appearance", "filters", "code", "export"),
+    layout_sidebar = TRUE
   )
 )
 

@@ -113,7 +113,7 @@ default_themes <- function() {
   
   if (requireNamespace("hrbrthemes", quietly = TRUE)) {
     hrbrthemes <- c(
-      "ft_rc", "ipsum", "ipsum_ps", "ipsum_rc", "ipsum_tw", "modern_rc"
+      "ft_rc", "ipsum", "ipsum_ps", "ipsum_rc", "modern_rc"
     )
     hrbrthemes <- setNames(as.list(paste0("hrbrthemes::theme_", hrbrthemes)), hrbrthemes)
     themes$hrbrthemes <- hrbrthemes

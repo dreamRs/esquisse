@@ -170,6 +170,7 @@ labs_options_input <- function(inputId, label, placeholder, defaults = list()) {
           class = "btn-outline-primary border px-0"
         ),
         style = "width: 320px;",
+        options = shinyWidgets::dropMenuOptions(flip = TRUE, preventOverflow = TRUE),
         prettyRadioButtons(
           inputId = paste0(inputId, "_face"),
           label = i18n("Font face:"),

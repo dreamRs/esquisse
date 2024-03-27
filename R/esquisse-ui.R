@@ -15,6 +15,7 @@
 #' @param insert_code Logical, Display or not a button to insert the ggplot
 #'  code in the current user script (work only in RStudio).
 #' @param play_pause Display or not the play / pause button.
+#' @param layout_sidebar Put controls in a sidebar on the left rather than below the chart in dropdowns.
 #' @param downloads Export options available or `NULL` for no export. See [downloads_labels()].
 #'
 #' @return A `reactiveValues` with 3 slots :
@@ -33,6 +34,7 @@
 #' @importFrom shinyWidgets prettyToggle
 #' @importFrom rlang is_list
 #' @importFrom utils modifyList
+#' @importFrom bslib layout_sidebar sidebar
 #'
 #' @example examples/esquisse-module-1.R
 #'
@@ -45,6 +47,7 @@ esquisse_ui <- function(id,
                         controls = c("labs", "parameters", "appearance", "filters", "code"),
                         insert_code = FALSE,
                         play_pause = TRUE,
+                        layout_sidebar = FALSE,
                         downloads = downloads_labels()) {
   ns <- NS(id)
   header_btns <- list(settings = TRUE, close = TRUE, import = TRUE, show_data = TRUE)
@@ -95,40 +98,69 @@ esquisse_ui <- function(id,
 
     if (isTRUE(header)) tag_header,
 
-    tags$div(
-      class = "esquisse-geom-aes",
-      tags$div(
-        style = "padding: 3px 3px 0 3px; height: 144px;",
-        dropInput(
-          inputId = ns("geom"),
-          choicesNames = geomIcons()$names,
-          choicesValues = geomIcons()$values,
-          dropWidth = "292px",
-          width = "100%"
-        )
-      ),
-      select_aes_ui(ns("aes"))
-    ),
+    if (!isTRUE(layout_sidebar)) {
+      tagList(
+        select_geom_aes_ui(ns("geomaes")),
 
-    fillCol(
-      style = "overflow-y: auto;",
-      tags$div(
-        style = "height: 100%; min-height: 400px; overflow: hidden;",
-        play_pause_input(ns("play_plot"), show = play_pause),
-        ggplot_output(
-          id = ns("plooooooot"),
-          width = "100%",
-          height = "100%",
+        fillCol(
+          style = "overflow-y: auto;",
+          tags$div(
+            style = "height: 100%; min-height: 400px; overflow: auto;",
+            play_pause_input(ns("play_plot"), show = play_pause),
+            ggplot_output(
+              id = ns("plooooooot"),
+              width = "100%",
+              height = "100%",
+              downloads = if ("export" %in% controls) NULL else downloads
+            )
+          )
+        ),
+
+        controls_ui(
+          id = ns("controls"),
+          insert_code = insert_code,
+          controls = controls,
           downloads = downloads
         )
       )
-    ),
+    } else {
+      bslib::layout_sidebar(
+        padding = 0,
+        fillable = FALSE,
+        fill = FALSE,
+        height = "100%",
+        sidebar = bslib::sidebar(
+          position = "right",
+          # open = "always",
+          title = "CONTROLS",
+          width = 350,
+          controls_ui(
+            id = ns("controls"),
+            insert_code = insert_code,
+            controls = controls,
+            layout = "accordion",
+            downloads = downloads
+          )
+        ),
+        select_geom_aes_ui(ns("geomaes")),
 
-    controls_ui(
-      id = ns("controls"),
-      insert_code = insert_code,
-      controls = controls
-    )
+        tags$div(
+          style = css(
+            height = "calc(100% - 165px)",
+            minHeight = "400px",
+            overflow = "auto",
+            position = "relative"
+          ),
+          play_pause_input(ns("play_plot"), show = play_pause),
+          ggplot_output(
+            id = ns("plooooooot"),
+            width = "100%",
+            height = "100%",
+            downloads = if ("export" %in% controls) NULL else downloads
+          )
+        )
+      )
+    }
   )
 
   if (is.function(container)) {
