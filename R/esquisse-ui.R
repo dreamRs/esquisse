@@ -147,7 +147,7 @@ esquisse_ui <- function(id,
           class = "ggplot-geom-aes-container",
           select_geom_aes_ui(ns("geomaes")),
           tags$div(
-            class = "ggplot-output-accordion-container",
+            class = "ggplot-output-sidebar-container",
             play_pause_input(ns("play_plot"), show = play_pause),
             ggplot_output(
               id = ns("plooooooot"),

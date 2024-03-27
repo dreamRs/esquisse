@@ -120,20 +120,7 @@ bs_theme_esquisse <- function() {
       "#NotiflixNotifyWrap { inset: auto 5px 38px auto !important; }",
       ".nav-tabs .nav-link.active { @extend .border-0; @extend .border-bottom; @extend .border-primary; @extend .border-2;}",
       ".nav-tabs .nav-link.active { @extend .text-primary; @extend .fw-bold}",
-      ".nav-pills .nav-link { @extend .py-1 }",
-      
-      ".ggplot-output-container { height: 100%; min-height: 400px; overflow: auto; }",
-      ".ggplot-output-container .tabbable { height: inherit; }",
-      ".ggplot-output-container .tabbable .tab-content { height: inherit; }",
-      ".ggplot-output-container .tabbable .tab-content .tab-pane { height: inherit; }",
-      
-      ".ggplot-output-accordion-container { flex: 1 1 auto; height: 100%; min-height: 400px; overflow: auto; }",
-      ".ggplot-output-accordion-container .tabbable { height: inherit; }",
-      ".ggplot-output-accordion-container .tabbable .tab-content { height: inherit; }",
-      ".ggplot-output-accordion-container .tabbable .tab-content .tab-pane { height: inherit; }",
-      
-      ".ggplot-geom-aes-container { display: flex; flex-flow: column; height: 100%; }",
-      ".esquisse-geom-aes-main {flex: 0 1 130px;}"
+      ".nav-pills .nav-link { @extend .py-1 }"
     )
   )
   return(theme)
