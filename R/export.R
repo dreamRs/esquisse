@@ -210,55 +210,92 @@ save_ggplot_server <- function(id, plot_rv) {
 #' @example examples/render-ggplot.R
 ggplot_output <- function(id, width = "100%", height = "400px", downloads = downloads_labels(), ...) {
   ns <- NS(id)
-  tags$div(
-    id = ns("ggplot-container"),
-    class = "ggplot-container",
-    style = css(
-      position = "relative",
-      width = validateCssUnit(width),
-      height = validateCssUnit(height)
-    ),
-    html_dependency_moveable(),
-    if (!is.null(downloads)) {
-      e <- downloads[-1]
-      e <- e[-length(e)]
-      download_links <- lapply(
-        X = seq_along(e),
-        FUN = function(i) {
-          if (is.null(e[[i]]))
-            return(NULL)
-          tagList(
-            downloadLink(
-              outputId = ns(paste0("export_", names(e)[i])),
-              label = e[[i]]
-            ),
-            tags$br()
-          )
-        }
-      )
-      dropMenu(
-        actionButton(
-          inputId = ns("exports"),
-          label = downloads$label,
-          class = "btn-sm esquisse-export-btn btn-outline-primary",
+  tagDownload <- if (!is.null(downloads)) {
+    e <- downloads[-1]
+    e <- e[-length(e)]
+    download_links <- lapply(
+      X = seq_along(e),
+      FUN = function(i) {
+        if (is.null(e[[i]]))
+          return(NULL)
+        tagList(
+          downloadLink(
+            outputId = ns(paste0("export_", names(e)[i])),
+            label = e[[i]]
+          ),
+          tags$br()
+        )
+      }
+    )
+    dropMenu(
+      actionButton(
+        inputId = ns("exports"),
+        label = downloads$label,
+        class = "btn-sm esquisse-export-btn btn-outline-primary",
+        style = css(
+          position = "absolute",
+          top = 0,
+          right = "5px",
+          zIndex = 30
+        )
+      ),
+      placement = "bottom-end",
+      download_links,
+      if (!is.null(downloads$more)) {
+        tagList(
+          tags$hr(style = "margin: 5px 0;"),
+          actionLink(inputId = ns("more"), label = downloads$more)
+        )
+      }
+    )
+  }
+  tagPlot <- if (requireNamespace(package = "plotly")) {
+    bslib::navset_hidden(
+      id = ns("type_output"),
+      selected = "plot",
+      bslib::nav_panel(
+        title = "plot",
+        tags$div(
+          id = ns("ggplot-container"),
+          class = "ggplot-container",
           style = css(
-            position = "absolute",
-            top = 0,
-            right = "5px",
-            zIndex = 30
-          )
-        ),
-        placement = "bottom-end",
-        download_links,
-        if (!is.null(downloads$more)) {
-          tagList(
-            tags$hr(style = "margin: 5px 0;"),
-            actionLink(inputId = ns("more"), label = downloads$more)
-          )
-        }
+            position = "relative",
+            width = validateCssUnit(width),
+            height = validateCssUnit(height)
+          ),
+          plotOutput(outputId = ns("plot"), width = "100%", height = "100%", ...)
+        )
+      ),
+      bslib::nav_panel(
+        title = "plotly",
+        tags$div(
+          id = ns("ggplotly-container"),
+          class = "ggplotly-container",
+          style = css(
+            position = "relative",
+            width = validateCssUnit(width),
+            height = validateCssUnit(height)
+          ),
+          plotly::plotlyOutput(outputId = ns("plotly"), width = "100%", height = height, ...)
+        )
       )
-    },
-    plotOutput(outputId = ns("plot"), width = "100%", height = "100%", ...),
+    )
+  } else {
+    tags$div(
+      id = ns("ggplot-container"),
+      class = "ggplot-container",
+      style = css(
+        position = "relative",
+        width = validateCssUnit(width),
+        height = validateCssUnit(height)
+      ),
+      plotOutput(outputId = ns("plot"), width = "100%", height = height, ...)
+    )
+  }
+  tagList(
+    html_dependency_moveable(),
+    tagDownload,
+    tagPlot,
     tags$div(
       style = "display: none;",
       textInput(inputId = ns("hidden"), label = NULL, value = genId())
@@ -313,8 +350,11 @@ render_ggplot <- function(id,
                           quoted = FALSE,
                           filename = "export-ggplot",
                           resizable = FALSE,
+                          use_plotly = reactive(FALSE),
                           width = reactive(NULL),
                           height = reactive(NULL)) {
+  stopifnot("width must be a reactive function" = is.reactive(width))
+  stopifnot("height must be a reactive function" = is.reactive(height))
   gg_fun <- exprToFunction(expr, env, quoted)
   moduleServer(
     id = id,
@@ -331,8 +371,7 @@ render_ggplot <- function(id,
       bindEvent(
         observe({
           if (
-            (is.reactive(width) && isTruthy(width())) & 
-            (is.reactive(height) && isTruthy(height()))
+            isTruthy(width()) & isTruthy(height())
           ) {
             resize(
               id = ns("ggplot-container"),
@@ -395,6 +434,19 @@ render_ggplot <- function(id,
         rv$plot <- gg_fun()
         rv$plot
       }, ...)
+      if (requireNamespace(package = "plotly")) {
+        output$plotly <- plotly::renderPlotly({
+          rv$plot <- gg_fun()
+          rv$plot
+        })
+        observeEvent(use_plotly(), {
+          if (isTRUE(use_plotly())) {
+            bslib::nav_select(id = "type_output", selected = "plotly")
+          } else {
+            bslib::nav_select(id = "type_output", selected = "plot")
+          }
+        })
+      }
       observeEvent(input$more, {
         hideDropMenu("exports_dropmenu")
         save_ggplot_modal(

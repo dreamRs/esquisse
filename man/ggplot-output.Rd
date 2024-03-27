@@ -33,6 +33,7 @@ render_ggplot(
   quoted = FALSE,
   filename = "export-ggplot",
   resizable = FALSE,
+  use_plotly = reactive(FALSE),
   width = reactive(NULL),
   height = reactive(NULL)
 )

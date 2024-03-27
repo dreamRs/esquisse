@@ -41,5 +41,6 @@ Suggests:
     knitr,
     rmarkdown,
     ggthemes,
-    hrbrthemes
+    hrbrthemes,
+    plotly
 VignetteBuilder: knitr
