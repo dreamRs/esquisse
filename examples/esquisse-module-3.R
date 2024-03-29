@@ -8,6 +8,7 @@ library(datamods)
 
 ui <- navbarPage(
   title = "My navbar app",
+  theme = bs_theme_esquisse(),
   tabPanel(
     title = "esquisse",
     esquisse_ui(

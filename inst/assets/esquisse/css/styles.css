@@ -282,3 +282,45 @@ pre code span span.va /* Variable       */ {color:#e36209}
 pre code span span.vs /* VerbatimString */ {color:#032f62}
 pre code span span.wa /* Warning        */ {color:#ff5555}
 
+
+/* Version classique: controls dans dropdown */
+.ggplot-output-container {
+     height: 100%;
+     min-height: 400px;
+     overflow: auto;
+}
+ .ggplot-output-container .tabbable {
+     height: inherit;
+}
+ .ggplot-output-container .tabbable .tab-content {
+     height: inherit;
+}
+ .ggplot-output-container .tabbable .tab-content .tab-pane {
+     height: inherit;
+}
+
+/* Version alt: controls dans sidebar */
+ .ggplot-output-sidebar-container {
+     flex: 1 1 auto;
+     height: 100%;
+     min-height: 400px;
+     overflow: auto;
+}
+ .ggplot-output-sidebar-container .tabbable {
+     height: inherit;
+}
+ .ggplot-output-sidebar-container .tabbable .tab-content {
+     height: inherit;
+}
+ .ggplot-output-sidebar-container .tabbable .tab-content .tab-pane {
+     height: inherit;
+}
+/* Conteneur du module geom+aes et du plot */
+ .ggplot-geom-aes-container {
+     display: flex;
+     flex-flow: column;
+     height: 100%;
+}
+ .esquisse-geom-aes-main {
+    flex: 0 1 130px;
+}
