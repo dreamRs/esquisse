@@ -84,6 +84,7 @@
 <span>  quoted <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>  filename <span class="op">=</span> <span class="st">"export-ggplot"</span>,</span>
 <span>  resizable <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>  use_plotly <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/shiny/man/reactive.html" class="external-link">reactive</a></span><span class="op">(</span><span class="cn">FALSE</span><span class="op">)</span>,</span>
 <span>  width <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/shiny/man/reactive.html" class="external-link">reactive</a></span><span class="op">(</span><span class="cn">NULL</span><span class="op">)</span>,</span>
 <span>  height <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/shiny/man/reactive.html" class="external-link">reactive</a></span><span class="op">(</span><span class="cn">NULL</span><span class="op">)</span></span>
 <span><span class="op">)</span></span></code></pre></div>
@@ -140,6 +141,11 @@ it will be added according to type of export.</p></dd>
 
 <dt>resizable</dt>
 <dd><p>Can the chart size be adjusted by the user?</p></dd>
+
+
+<dt>use_plotly</dt>
+<dd><p>A <code><a href="https://rdrr.io/pkg/shiny/man/reactive.html" class="external-link">shiny::reactive()</a></code> function returning <code>TRUE</code> or <code>FALSE</code> to render
+the plot with <code><a href="https://rdrr.io/pkg/plotly/man/ggplotly.html" class="external-link">plotly::ggplotly()</a></code> or not.</p></dd>
 
 </dl></div>
     <div class="section level2">
