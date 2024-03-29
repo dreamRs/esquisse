@@ -57,7 +57,8 @@ select_geom_aes_server <- function(id,
                                    n_geoms = 1,
                                    data_r = reactive(NULL),
                                    default_aes = c("fill", "color", "size", "group", "facet"),
-                                   aesthetics_r = reactive(NULL)) {
+                                   aesthetics_r = reactive(NULL),
+                                   geom_rv = reactiveValues()) {
   moduleServer(
     id,
     function(input, output, session) {
@@ -67,8 +68,6 @@ select_geom_aes_server <- function(id,
       lapply(
         X = seq_len(n_geoms),
         FUN = function(i) {
-
-          geom_rv <- reactiveValues()
 
           aes_r <- select_aes_server(
             id = paste0("aes_", i),
