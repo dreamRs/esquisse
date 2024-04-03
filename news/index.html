@@ -155,25 +155,25 @@
 <h2 class="pkg-version" data-toc-text="0.3.0" id="esquisse-030">esquisse 0.3.0<a class="anchor" aria-label="anchor" href="#esquisse-030"></a></h2><p class="text-muted">CRAN release: 2020-01-27</p>
 <ul><li>Fixed a bug in <code>dragulaInput</code> preventing to change variable in main addin.</li>
 <li>
-<code><a href="../reference/module-chooseData.html">chooseDataServer()</a></code> has a new argument <code>selectedTypes</code> to set types of variables selected by default. <a href="https://github.com/dreamRs/esquisse/issues/95" class="external-link">#95</a>
+<code>chooseDataServer()</code> has a new argument <code>selectedTypes</code> to set types of variables selected by default. <a href="https://github.com/dreamRs/esquisse/issues/95" class="external-link">#95</a>
 </li>
 <li>Packages <a href="https://github.com/jrnold/ggthemes" class="external-link">{ggthemes}</a> and <a href="https://github.com/hrbrmstr/hrbrthemes" class="external-link">{hrbrthemes}</a> are now in Suggests.</li>
 </ul></div>
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="0.2.3" id="esquisse-023">esquisse 0.2.3<a class="anchor" aria-label="anchor" href="#esquisse-023"></a></h2><p class="text-muted">CRAN release: 2020-01-09</p>
-<ul><li>New argument <code>disable_filters</code> in <code><a href="../reference/module-esquisse.html">esquisserUI()</a></code> to disable the ability to filter data.</li>
+<ul><li>New argument <code>disable_filters</code> in <code>esquisserUI()</code> to disable the ability to filter data.</li>
 <li>Enable bookmarking for module <code>filterDF</code>.</li>
 <li>
-<code><a href="../reference/module-filterDF.html">filterDF()</a></code> module handle missing values correctly.</li>
+<code>filterDF()</code> module handle missing values correctly.</li>
 <li>
-<code><a href="../reference/module-filterDF.html">filterDF()</a></code> has two new arguments : <code>drop_ids</code> : logical, drop or not column with only unique values, <code>picker</code> allow to use <code><a href="https://dreamrs.github.io/shinyWidgets/reference/pickerInput.html" class="external-link">shinyWidgets::pickerInput</a></code>.</li>
+<code>filterDF()</code> has two new arguments : <code>drop_ids</code> : logical, drop or not column with only unique values, <code>picker</code> allow to use <code><a href="https://dreamrs.github.io/shinyWidgets/reference/pickerInput.html" class="external-link">shinyWidgets::pickerInput</a></code>.</li>
 <li>Code generated : no more affectation in {dplyr} code, a pipe is used to send code to {ggplot2} (mentioned in <a href="https://github.com/dreamRs/esquisse/issues/79" class="external-link">#79</a>)</li>
 </ul></div>
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="0.2.2" id="esquisse-022">esquisse 0.2.2<a class="anchor" aria-label="anchor" href="#esquisse-022"></a></h2><p class="text-muted">CRAN release: 2019-08-22</p>
-<ul><li>Added <code><a href="../reference/esquisse-module.html">esquisseContainer()</a></code> to better integrate esquisse module in a shiny application.</li>
+<ul><li>Added <code><a href="../reference/esquisse-deprecated.html">esquisseContainer()</a></code> to better integrate esquisse module in a shiny application.</li>
 <li>New functions <code><a href="../reference/input-colors.html">colorPicker()</a></code> and <code><a href="../reference/input-colors.html">palettePicker()</a></code> to select a color or a palette (this is the select control used in the main addin).</li>
-<li>New argument <code>insert_code</code> in <code><a href="../reference/module-esquisse.html">esquisserUI()</a></code> to hide “Insert into script button”.</li>
+<li>New argument <code>insert_code</code> in <code>esquisserUI()</code> to hide “Insert into script button”.</li>
 </ul><div class="section level3">
 <h3 id="breaking-changes-0-2-2">Breaking changes<a class="anchor" aria-label="anchor" href="#breaking-changes-0-2-2"></a></h3>
 <ul><li>
@@ -183,15 +183,15 @@
 <span><span class="co"># old</span></span>
 <span><span class="va">tags</span><span class="op">$</span><span class="fu">div</span><span class="op">(</span></span>
 <span>  style <span class="op">=</span> <span class="st">"height: 700px;"</span>,</span>
-<span>  <span class="fu"><a href="../reference/module-esquisse.html">esquisserUI</a></span><span class="op">(</span></span>
+<span>  <span class="fu">esquisserUI</span><span class="op">(</span></span>
 <span>    id <span class="op">=</span> <span class="st">"esquisse"</span></span>
 <span>  <span class="op">)</span></span>
 <span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># new </span></span>
-<span><span class="fu"><a href="../reference/module-esquisse.html">esquisserUI</a></span><span class="op">(</span></span>
+<span><span class="fu">esquisserUI</span><span class="op">(</span></span>
 <span>  id <span class="op">=</span> <span class="st">"esquisse"</span>, </span>
-<span>  container <span class="op">=</span> <span class="fu"><a href="../reference/esquisse-module.html">esquisseContainer</a></span><span class="op">(</span>height <span class="op">=</span> <span class="st">"700px"</span><span class="op">)</span></span>
+<span>  container <span class="op">=</span> <span class="fu"><a href="../reference/esquisse-deprecated.html">esquisseContainer</a></span><span class="op">(</span>height <span class="op">=</span> <span class="st">"700px"</span><span class="op">)</span></span>
 <span><span class="op">)</span></span></code></pre></div>
 </li>
 </ul></div>

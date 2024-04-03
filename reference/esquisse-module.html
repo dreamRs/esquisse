@@ -60,8 +60,8 @@
     <h2 id="ref-usage">Usage<a class="anchor" aria-label="anchor" href="#ref-usage"></a></h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">esquisse_ui</span><span class="op">(</span></span>
 <span>  <span class="va">id</span>,</span>
-<span>  header <span class="op">=</span> <span class="cn">TRUE</span>,</span>
-<span>  container <span class="op">=</span> <span class="fu">esquisseContainer</span><span class="op">(</span><span class="op">)</span>,</span>
+<span>  header <span class="op">=</span> <span class="fu">esquisse_header</span><span class="op">(</span><span class="op">)</span>,</span>
+<span>  container <span class="op">=</span> <span class="fu">esquisse_container</span><span class="op">(</span><span class="op">)</span>,</span>
 <span>  controls <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"labs"</span>, <span class="st">"parameters"</span>, <span class="st">"appearance"</span>, <span class="st">"filters"</span>, <span class="st">"code"</span><span class="op">)</span>,</span>
 <span>  insert_code <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>  play_pause <span class="op">=</span> <span class="cn">TRUE</span>,</span>
@@ -79,7 +79,14 @@
 <span>  notify_warnings <span class="op">=</span> <span class="cn">NULL</span></span>
 <span><span class="op">)</span></span>
 <span></span>
-<span><span class="fu">esquisseContainer</span><span class="op">(</span>width <span class="op">=</span> <span class="st">"100%"</span>, height <span class="op">=</span> <span class="st">"700px"</span>, fixed <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></code></pre></div>
+<span><span class="fu">esquisse_container</span><span class="op">(</span>width <span class="op">=</span> <span class="st">"100%"</span>, height <span class="op">=</span> <span class="st">"700px"</span>, fixed <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu">esquisse_header</span><span class="op">(</span></span>
+<span>  import_data <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>  show_data <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>  settings <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>  close <span class="op">=</span> <span class="cn">TRUE</span></span>
+<span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div class="section level2">
@@ -96,7 +103,7 @@ where names are : <code>settings</code>, <code>close</code>, <code>import</code>
 
 <dt>container</dt>
 <dd><p>Container in which display the addin,
-default is to use <code>esquisseContainer</code>, see examples.
+default is to use <code>esquisse_container()</code>, see examples.
 Use <code>NULL</code> for no container (behavior in versions &lt;= 0.2.1).
 Must be a <code>function</code>.</p></dd>
 
@@ -163,6 +170,22 @@ If <code>TRUE</code>, width and height are ignored. Default to <code>FALSE</code
 It's possible to use a vector of CSS unit of length 4 to specify the margins
 (top, right, bottom, left).</p></dd>
 
+
+<dt>import_data</dt>
+<dd><p>Show button to import data.</p></dd>
+
+
+<dt>show_data</dt>
+<dd><p>Show button to display data.</p></dd>
+
+
+<dt>settings</dt>
+<dd><p>Show button to open settings modal (to select aesthetics to use).</p></dd>
+
+
+<dt>close</dt>
+<dd><p>Show button to stop the app and close addin.</p></dd>
+
 </dl></div>
     <div class="section level2">
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
@@ -206,7 +229,7 @@ It's possible to use a vector of CSS unit of length 4 to specify the margins
 <span class="r-in"><span>  <span class="fu">esquisse_ui</span><span class="op">(</span></span></span>
 <span class="r-in"><span>    id <span class="op">=</span> <span class="st">"esquisse"</span>,</span></span>
 <span class="r-in"><span>    header <span class="op">=</span> <span class="cn">FALSE</span>, <span class="co"># dont display gadget title</span></span></span>
-<span class="r-in"><span>    container <span class="op">=</span> <span class="fu">esquisseContainer</span><span class="op">(</span>height <span class="op">=</span> <span class="st">"700px"</span><span class="op">)</span></span></span>
+<span class="r-in"><span>    container <span class="op">=</span> <span class="fu">esquisse_container</span><span class="op">(</span>height <span class="op">=</span> <span class="st">"700px"</span><span class="op">)</span></span></span>
 <span class="r-in"><span>  <span class="op">)</span></span></span>
 <span class="r-in"><span><span class="op">)</span></span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Loading required namespace: plotly</span>
@@ -254,8 +277,8 @@ It's possible to use a vector of CSS unit of length 4 to specify the margins
 <span class="r-in"><span>  theme <span class="op">=</span> <span class="fu"><a href="bs_theme_esquisse.html">bs_theme_esquisse</a></span><span class="op">(</span><span class="op">)</span>,</span></span>
 <span class="r-in"><span>  <span class="fu">esquisse_ui</span><span class="op">(</span></span></span>
 <span class="r-in"><span>    id <span class="op">=</span> <span class="st">"esquisse"</span>,</span></span>
-<span class="r-in"><span>    header <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>close <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span>, <span class="co"># hide the close button</span></span></span>
-<span class="r-in"><span>    container <span class="op">=</span> <span class="fu">esquisseContainer</span><span class="op">(</span>fixed <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>    header <span class="op">=</span> <span class="fu">esquisse_header</span><span class="op">(</span>close <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span>, <span class="co"># hide the close button</span></span></span>
+<span class="r-in"><span>    container <span class="op">=</span> <span class="fu">esquisse_container</span><span class="op">(</span>fixed <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>,</span></span>
 <span class="r-in"><span>    play_pause <span class="op">=</span> <span class="cn">FALSE</span>,</span></span>
 <span class="r-in"><span>    controls <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"labs"</span>, <span class="st">"parameters"</span>, <span class="st">"appearance"</span>, <span class="st">"filters"</span>, <span class="st">"code"</span>, <span class="st">"export"</span><span class="op">)</span>,</span></span>
 <span class="r-in"><span>    layout_sidebar <span class="op">=</span> <span class="cn">TRUE</span></span></span>
@@ -288,7 +311,7 @@ It's possible to use a vector of CSS unit of length 4 to specify the margins
 <span class="r-in"><span>    <span class="fu">esquisse_ui</span><span class="op">(</span></span></span>
 <span class="r-in"><span>      id <span class="op">=</span> <span class="st">"esquisse"</span>, </span></span>
 <span class="r-in"><span>      header <span class="op">=</span> <span class="cn">FALSE</span>,</span></span>
-<span class="r-in"><span>      container <span class="op">=</span> <span class="fu">esquisseContainer</span><span class="op">(</span></span></span>
+<span class="r-in"><span>      container <span class="op">=</span> <span class="fu">esquisse_container</span><span class="op">(</span></span></span>
 <span class="r-in"><span>        fixed <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">55</span>, <span class="fl">0</span>, <span class="fl">0</span>, <span class="fl">0</span><span class="op">)</span></span></span>
 <span class="r-in"><span>      <span class="op">)</span></span></span>
 <span class="r-in"><span>    <span class="op">)</span></span></span>
