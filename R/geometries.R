@@ -184,6 +184,7 @@ match_geom_args <- function(geom,
   }
   if (geom %in% c("bar", "col", "histogram", "boxplot", "violin", "density")) {
     args$size <- NULL
+    args$linewidth <- NULL
   }
   if (identical(args$position, "stack")) {
     args$position <- NULL
