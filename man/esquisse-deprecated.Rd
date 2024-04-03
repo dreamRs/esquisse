@@ -2,16 +2,20 @@
 % Please edit documentation in R/deprecated.R
 \name{esquisse-deprecated}
 \alias{esquisse-deprecated}
+\alias{esquisseContainer}
 \title{Deprecated functions}
+\usage{
+esquisseContainer(...)
+}
+\arguments{
+\item{...}{See \code{\link[=esquisse_container]{esquisse_container()}}}
+}
 \description{
 Deprecated functions
 }
 \note{
 The following functions are deprecated and will be removed in next release:
 \itemize{
-\item \code{esquisserUI} / \code{esquisserServer}: replaced by \code{esquisse_ui} / \code{esquisse_server}
-\item \code{filterDF_UI} / \code{filterDF}: moved to package \href{https://github.com/dreamRs/datamods}{datamods}
-\item \code{chooseDataUI} / \code{chooseDataServer}: moved to package \href{https://github.com/dreamRs/datamods}{datamods}
-\item \code{coerceUI} / \code{coerceServer}: moved to package \href{https://github.com/dreamRs/datamods}{datamods}
+\item \code{esquisseContainer} : replaced by \code{esquisse_container}
 }
 }

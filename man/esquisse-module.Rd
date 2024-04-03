@@ -4,13 +4,14 @@
 \alias{esquisse-module}
 \alias{esquisse_ui}
 \alias{esquisse_server}
-\alias{esquisseContainer}
+\alias{esquisse_container}
+\alias{esquisse_header}
 \title{Esquisse module}
 \usage{
 esquisse_ui(
   id,
-  header = TRUE,
-  container = esquisseContainer(),
+  header = esquisse_header(),
+  container = esquisse_container(),
   controls = c("labs", "parameters", "appearance", "filters", "code"),
   insert_code = FALSE,
   play_pause = TRUE,
@@ -28,7 +29,14 @@ esquisse_server(
   notify_warnings = NULL
 )
 
-esquisseContainer(width = "100\%", height = "700px", fixed = FALSE)
+esquisse_container(width = "100\%", height = "700px", fixed = FALSE)
+
+esquisse_header(
+  import_data = TRUE,
+  show_data = TRUE,
+  settings = TRUE,
+  close = TRUE
+)
 }
 \arguments{
 \item{id}{Module ID.}
@@ -38,7 +46,7 @@ where names are : \code{settings}, \code{close}, \code{import} and \code{show_da
 \code{FALSE} to display or not the corresponding button.}
 
 \item{container}{Container in which display the addin,
-default is to use \code{esquisseContainer}, see examples.
+default is to use \code{\link[=esquisse_container]{esquisse_container()}}, see examples.
 Use \code{NULL} for no container (behavior in versions <= 0.2.1).
 Must be a \code{function}.}
 
@@ -80,6 +88,14 @@ or \code{"100\%"}; see \code{\link[htmltools]{validateCssUnit}}.}
 If \code{TRUE}, width and height are ignored. Default to \code{FALSE}.
 It's possible to use a vector of CSS unit of length 4 to specify the margins
 (top, right, bottom, left).}
+
+\item{import_data}{Show button to import data.}
+
+\item{show_data}{Show button to display data.}
+
+\item{settings}{Show button to open settings modal (to select aesthetics to use).}
+
+\item{close}{Show button to stop the app and close addin.}
 }
 \value{
 A \code{reactiveValues} with 3 slots :
@@ -124,7 +140,7 @@ ui <- fluidPage(
   esquisse_ui(
     id = "esquisse",
     header = FALSE, # dont display gadget title
-    container = esquisseContainer(height = "700px")
+    container = esquisse_container(height = "700px")
   )
 )
 
@@ -171,8 +187,8 @@ ui <- fluidPage(
   theme = bs_theme_esquisse(),
   esquisse_ui(
     id = "esquisse",
-    header = list(close = FALSE), # hide the close button
-    container = esquisseContainer(fixed = TRUE),
+    header = esquisse_header(close = FALSE), # hide the close button
+    container = esquisse_container(fixed = TRUE),
     play_pause = FALSE,
     controls = c("labs", "parameters", "appearance", "filters", "code", "export"),
     layout_sidebar = TRUE
@@ -205,7 +221,7 @@ ui <- navbarPage(
     esquisse_ui(
       id = "esquisse", 
       header = FALSE,
-      container = esquisseContainer(
+      container = esquisse_container(
         fixed = c(55, 0, 0, 0)
       )
     )

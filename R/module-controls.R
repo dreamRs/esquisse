@@ -222,7 +222,7 @@ controls_ui <- function(id,
 #' @return A reactiveValues with all input's values
 #' @noRd
 #'
-#' @importFrom shiny observeEvent reactiveValues reactiveValuesToList
+#' @importFrom shiny observeEvent reactiveValues reactiveValuesToList observe 
 #'  downloadHandler renderUI reactive updateTextInput showNotification callModule updateSliderInput debounce
 #' @importFrom rstudioapi insertText getSourceEditorContext
 #' @importFrom htmltools tags tagList

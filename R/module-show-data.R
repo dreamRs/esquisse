@@ -8,7 +8,7 @@ show_data_ui <- function(id) {
     actionButton(
       inputId = ns("show_data"),
       label = ph("table", height = "2em", title = i18n("Show data")),
-      class = "btn-sm",
+      class = "btn-sm btn-primary",
       title = i18n("Show data")
     )
   )

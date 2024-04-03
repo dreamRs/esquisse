@@ -8,7 +8,7 @@
 #'  where names are : `settings`, `close`, `import` and `show_data` and values are `TRUE` or
 #'  `FALSE` to display or not the corresponding button.
 #' @param container Container in which display the addin,
-#'  default is to use `esquisseContainer`, see examples.
+#'  default is to use [esquisse_container()], see examples.
 #'  Use `NULL` for no container (behavior in versions <= 0.2.1).
 #'  Must be a `function`.
 #' @param controls Controls menu to be displayed. Use `NULL` to hide all menus.
@@ -42,21 +42,21 @@
 #'
 #' @example examples/esquisse-module-3.R
 esquisse_ui <- function(id,
-                        header = TRUE,
-                        container = esquisseContainer(),
+                        header = esquisse_header(),
+                        container = esquisse_container(),
                         controls = c("labs", "parameters", "appearance", "filters", "code"),
                         insert_code = FALSE,
                         play_pause = TRUE,
                         layout_sidebar = FALSE,
                         downloads = downloads_labels()) {
   ns <- NS(id)
-  header_btns <- list(settings = TRUE, close = TRUE, import = TRUE, show_data = TRUE)
+  header_btns <- esquisse_header()
   if (is_list(header)) {
     header_btns <- modifyList(header_btns, header)
     header <- TRUE
   }
   tag_header <- tags$div(
-    class = "esquisse-title-container",
+    class = "esquisse-title-container bg-primary",
     tags$h1("Esquisse", class = "esquisse-title"),
     tags$div(
       class = "pull-right float-end",
@@ -64,7 +64,7 @@ esquisse_ui <- function(id,
         actionButton(
           inputId = ns("settings"),
           label = ph("gear-six", height = "2em", title = i18n("Display settings")),
-          class = "btn-sm",
+          class = "btn-sm btn-primary",
           title = i18n("Display settings")
         )
       },
@@ -72,18 +72,18 @@ esquisse_ui <- function(id,
         actionButton(
           inputId = ns("close"),
           label = ph("x", height = "2em", title = i18n("Close Window")),
-          class = "btn-sm",
+          class = "btn-sm btn-primary",
           title = i18n("Close Window")
         )
       }
     ),
     tags$div(
       class = "pull-left",
-      if (isTRUE(header_btns$import)) {
+      if (isTRUE(header_btns$import_data)) {
         actionButton(
           inputId = ns("launch_import_data"),
           label = ph("database", height = "2em", title = i18n("Import data")),
-          class = "btn-sm",
+          class = "btn-sm btn-primary",
           title = i18n("Import data")
         )
       },
@@ -178,7 +178,7 @@ esquisse_ui <- function(id,
 #' @order 3
 #'
 #' @export
-esquisseContainer <- function(width = "100%", height = "700px", fixed = FALSE) {
+esquisse_container <- function(width = "100%", height = "700px", fixed = FALSE) {
   force(width)
   force(height)
   force(fixed)
@@ -218,5 +218,26 @@ esquisseContainer <- function(width = "100%", height = "700px", fixed = FALSE) {
       )), tag
     )
   }
+}
+
+#' @param import_data Show button to import data.
+#' @param show_data Show button to display data.
+#' @param settings Show button to open settings modal (to select aesthetics to use).
+#' @param close Show button to stop the app and close addin.
+#'
+#' @rdname esquisse-module
+#' @order 4
+#'
+#' @export
+esquisse_header <- function(import_data = TRUE,
+                            show_data = TRUE,
+                            settings = TRUE, 
+                            close = TRUE) {
+  list(
+    import_data = isTRUE(import_data),
+    show_data = isTRUE(show_data),
+    settings = isTRUE(settings),
+    close = isTRUE(close)
+  )
 }
 

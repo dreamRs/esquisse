@@ -101,7 +101,7 @@ controls_appearance_ui <- function(id, style = NULL) {
 }
 
 
-
+#' @importFrom shiny observeEvent observe req reactive
 controls_appearance_server <- function(id,
                                        data_table = reactive(NULL),
                                        aesthetics = reactive(NULL),

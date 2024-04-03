@@ -14,7 +14,7 @@ ui <- navbarPage(
     esquisse_ui(
       id = "esquisse", 
       header = FALSE,
-      container = esquisseContainer(
+      container = esquisse_container(
         fixed = c(55, 0, 0, 0)
       )
     )

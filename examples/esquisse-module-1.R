@@ -29,7 +29,7 @@ ui <- fluidPage(
   esquisse_ui(
     id = "esquisse",
     header = FALSE, # dont display gadget title
-    container = esquisseContainer(height = "700px")
+    container = esquisse_container(height = "700px")
   )
 )
 

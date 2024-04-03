@@ -8,7 +8,7 @@
 #' @noRd
 #' @importFrom shiny sliderInput conditionalPanel selectInput numericInput
 #' @importFrom htmltools tagList tags
-#' @importFrom shinyWidgets prettyRadioButtons numericRangeInput prettyToggle
+#' @importFrom shinyWidgets prettyRadioButtons numericRangeInput prettyToggle prettySwitch
 #'
 controls_parameters_ui <- function(id) {
 
