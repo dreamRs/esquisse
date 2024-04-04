@@ -55,39 +55,22 @@ esquisse_ui <- function(id,
     header_btns <- modifyList(header_btns, header)
     header <- TRUE
   }
+  if (isFALSE(header)) {
+    header_btns <- list()
+  }
+  header_btns <- make_btn_header(header_btns)
   tag_header <- tags$div(
     class = "esquisse-title-container bg-primary",
     tags$h1("Esquisse", class = "esquisse-title"),
     tags$div(
       class = "pull-right float-end",
-      if (isTRUE(header_btns$settings)) {
-        actionButton(
-          inputId = ns("settings"),
-          label = ph("gear-six", height = "2em", title = i18n("Display settings")),
-          class = "btn-sm btn-primary",
-          title = i18n("Display settings")
-        )
-      },
-      if (isTRUE(header_btns$close)) {
-        actionButton(
-          inputId = ns("close"),
-          label = ph("x", height = "2em", title = i18n("Close Window")),
-          class = "btn-sm btn-primary",
-          title = i18n("Close Window")
-        )
-      }
+      header_btns$settings(ns("settings")),
+      header_btns$close(ns("close")),
     ),
     tags$div(
       class = "pull-left",
-      if (isTRUE(header_btns$import_data)) {
-        actionButton(
-          inputId = ns("launch_import_data"),
-          label = ph("database", height = "2em", title = i18n("Import data")),
-          class = "btn-sm btn-primary",
-          title = i18n("Import data")
-        )
-      },
-      if (isTRUE(header_btns$show_data)) show_data_ui(ns("show_data"))
+      header_btns$import_data(ns("launch_import_data")),
+      header_btns$show_data(ns("show_data"))
     )
   )
 
@@ -133,7 +116,7 @@ esquisse_ui <- function(id,
           position = "right",
           # open = "always",
           title = "CONTROLS",
-          width = 350,
+          width = 400,
           controls_ui(
             id = ns("controls"),
             insert_code = insert_code,
@@ -142,7 +125,7 @@ esquisse_ui <- function(id,
             downloads = downloads
           )
         ),
-        
+
         tags$div(
           class = "ggplot-geom-aes-container",
           select_geom_aes_ui(ns("geomaes")),
@@ -231,7 +214,7 @@ esquisse_container <- function(width = "100%", height = "700px", fixed = FALSE) 
 #' @export
 esquisse_header <- function(import_data = TRUE,
                             show_data = TRUE,
-                            settings = TRUE, 
+                            settings = TRUE,
                             close = TRUE) {
   list(
     import_data = isTRUE(import_data),
@@ -241,3 +224,39 @@ esquisse_header <- function(import_data = TRUE,
   )
 }
 
+
+make_btn_header <- function(.list) {
+  list(
+    import_data = if (isTRUE(.list$import_data)) {
+      btn_header(i18n("Import data"), "database")
+    } else {
+      function(id) NULL
+    },
+    show_data = if (isTRUE(.list$show_data)) {
+      show_data_ui
+    } else {
+      function(id) NULL
+    },
+    settings = if (isTRUE(.list$settings)) {
+      btn_header(i18n("Display settings"), "gear-six")
+    } else {
+      function(id) NULL
+    },
+    close = if (isTRUE(.list$close)) {
+      btn_header(i18n("Close Window"), "x")
+    } else {
+      function(id) NULL
+    }
+  )
+}
+
+btn_header <- function(label, icon) {
+  function(id) {
+    actionButton(
+      inputId = id,
+      label = ph(icon, height = "2em", title = label),
+      class = "btn-sm btn-primary",
+      title = label
+    )
+  }
+}
