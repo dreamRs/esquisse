@@ -91,7 +91,6 @@ esquisse_server <- function(id,
           title = i18n("Import data to create a graph")
         )
       })
-
       # Data imported and update rv used
       data_imported_r <- datamods::import_server("import-data", return_class = "tbl_df")
       observeEvent(data_imported_r$data(), {
@@ -102,6 +101,28 @@ esquisse_server <- function(id,
 
       # show data if button clicked
       show_data_server("show_data", reactive(controls_rv$data))
+
+      # update variable modal
+      observeEvent(input$update_variable, {
+        showModal(modalDialog(
+          title = tagList(
+            i18n("Update & select variables"),
+            button_close_modal()
+          ),
+          datamods::update_variables_ui(ns("update_variable"), title = NULL),
+          easyClose = TRUE,
+          size = "l",
+          footer = NULL
+        ))
+      })
+      updated_data <-datamods::update_variables_server(
+        id = "update_variable",
+        data = reactive(data_chart$data)
+      )
+      observeEvent(updated_data(), {
+        data_chart$data <- updated_data()
+      })
+
 
 
 

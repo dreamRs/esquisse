@@ -34,6 +34,7 @@ esquisse_container(width = "100\%", height = "700px", fixed = FALSE)
 esquisse_header(
   import_data = TRUE,
   show_data = TRUE,
+  update_variable = TRUE,
   settings = TRUE,
   close = TRUE
 )
@@ -92,6 +93,8 @@ It's possible to use a vector of CSS unit of length 4 to specify the margins
 \item{import_data}{Show button to import data.}
 
 \item{show_data}{Show button to display data.}
+
+\item{update_variable}{Show button to update selected variables and convert them.}
 
 \item{settings}{Show button to open settings modal (to select aesthetics to use).}
 
