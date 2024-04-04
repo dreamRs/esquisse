@@ -16,10 +16,10 @@ select_aes_server <- function(id,
   moduleServer(
     id,
     function(input, output, session) {
-      
+
       ns <- session$ns
       res_rv <- reactiveValues(aes = list())
-      
+
       # Generate drag-and-drop input
       output$ui_aesthetics <- renderUI({
         if (is.reactive(default_aes)) {
@@ -49,7 +49,7 @@ select_aes_server <- function(id,
           tagList(
             tags$style(
               HTML(sprintf(
-                "#%s-target-6661636574 {grid-area: 1 / %s / 3 / %s; height: auto !important;}", 
+                "#%s-target-6661636574 {grid-area: 1 / %s / 3 / %s; height: auto !important;}",
                 ns("dragvars"), length(aesthetics) + 2, length(aesthetics) + 2 + 1
               )),
               HTML(sprintf(
@@ -92,7 +92,7 @@ select_aes_server <- function(id,
           )
         }
       })
-      
+
       # Update drag-and-drop input when data changes
       observeEvent(data_r(), {
         data <- data_r()
@@ -119,11 +119,18 @@ select_aes_server <- function(id,
           )
         }
       }, ignoreNULL = FALSE)
-      
+
       observeEvent(input$dragvars$target, {
-        res_rv$aes <- input$dragvars$target
+        res_rv$aes <- lapply(
+          X = input$dragvars$target,
+          FUN = function(x) {
+            if (!is.null(x))
+              return(as.character(x))
+            x
+          }
+        )
       })
-      
+
       return(reactive(res_rv$aes))
     }
   )
