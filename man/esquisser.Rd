@@ -6,7 +6,7 @@
 \usage{
 esquisser(
   data = NULL,
-  controls = c("labs", "parameters", "appearance", "filters", "code"),
+  controls = c("labs", "parameters", "appearance", "theme", "filters", "code"),
   viewer = getOption(x = "esquisse.viewer", default = "dialog")
 )
 }

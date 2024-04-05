@@ -22,28 +22,6 @@ controls_parameters_ui <- function(id) {
   )
 
   tagList(
-    tags$b("Dimension:"),
-    numericInputIcon(
-      inputId = ns("width"),
-      label = NULL,
-      value = NA,
-      icon = list(i18n("Width:")),
-      width = "100%"
-    ),
-    numericInputIcon(
-      inputId = ns("height"),
-      label = NULL,
-      value = NA,
-      icon = list(i18n("Height:")),
-      width = "100%"
-    ),
-    prettySwitch(
-      inputId = ns("plotly"),
-      label = "Use plotly to render plot",
-      fill = TRUE,
-      status = "primary"
-    ),
-    tags$hr(),
     tags$div(
       id = ns("controls-scatter"),
       style = "display: none; padding-top: 10px;",
@@ -100,33 +78,6 @@ controls_parameters_ui <- function(id) {
         max = 4,
         value = 1.2,
         width = "100%"
-      )
-    ),
-    tags$div(
-      id = ns("controls-facet"), style = "display: none;",
-      prettyRadioButtons(
-        inputId = ns("facet_scales"),
-        label = i18n("Facet scales:"),
-        inline = TRUE,
-        status = "primary",
-        choices = c("fixed", "free", "free_x", "free_y"),
-        outline = TRUE
-      ),
-      sliderInput(
-        inputId = ns("facet_ncol"),
-        label = i18n("Facet ncol:"),
-        min = 0,
-        max = 10,
-        value = 0,
-        step = 1
-      ),
-      sliderInput(
-        inputId = ns("facet_nrow"),
-        label = i18n("Facet nrow:"),
-        min = 0,
-        max = 10,
-        value = 0,
-        step = 1
       )
     ),
     tags$div(
@@ -225,39 +176,14 @@ controls_parameters_ui <- function(id) {
 
 
 controls_parameters_server <- function(id,
-                                       use_facet = reactive(FALSE),
                                        use_transX = reactive(FALSE),
                                        use_transY = reactive(FALSE),
-                                       type = reactiveValues(),
-                                       width = reactive(NULL),
-                                       height = reactive(NULL)) {
+                                       type = reactiveValues()) {
   moduleServer(
     id = id,
     function(input, output, session) {
 
       ns <- session$ns
-
-      observeEvent(width(), {
-        # print(width())
-        updateNumericInputIcon(
-          session = session,
-          inputId = "width",
-          value = width()
-        )
-      })
-
-      observeEvent(height(), {
-        # print(height())
-        updateNumericInputIcon(
-          session = session,
-          inputId = "height",
-          value = height()
-        )
-      })
-
-      observeEvent(use_facet(), {
-        toggleDisplay("controls-facet", display = isTRUE(use_facet()))
-      })
 
       observeEvent(use_transX(), {
         toggleDisplay("controls-scale-trans-x", display = isTRUE(use_transX()))
@@ -266,7 +192,6 @@ controls_parameters_server <- function(id,
       observeEvent(use_transY(), {
         toggleDisplay("controls-scale-trans-y", display = isTRUE(use_transY()))
       })
-
 
 
       observeEvent(type$controls, {
@@ -324,22 +249,6 @@ controls_parameters_server <- function(id,
         if (isTRUE(input$flip)) "flip" else NULL
       )
 
-      facet_r <- reactive({
-        list(
-          scales = if (identical(input$facet_scales, "fixed")) NULL else input$facet_scales,
-          ncol = if (is.null(input$facet_ncol) || input$facet_ncol == 0) {
-            NULL
-          } else {
-            input$facet_ncol
-          },
-          nrow = if (is.null(input$facet_ncol) || input$facet_nrow == 0) {
-            NULL
-          } else {
-            input$facet_nrow
-          }
-        )
-      })
-
       limits_r <- reactive({
         list(
           x = use_transX() & !anyNA(input$xlim),
@@ -355,16 +264,12 @@ controls_parameters_server <- function(id,
         jitter = jitter_r,
         transX = transX_r,
         transY = transY_r,
-        facet = facet_r,
         limits = limits_r,
         inputs = reactive({list(
           position = input$position,
           size = input$size,
           linewidth = input$size
-        )}),
-        width = debounce(reactive(input$width), 800),
-        height = debounce(reactive(input$height), 800),
-        plotly = reactive(input$plotly)
+        )})
       ))
 
     }

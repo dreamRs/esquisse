@@ -55,7 +55,7 @@ accordion_panel_ <- function(..., label, icon) {
 #' @importFrom datamods filter_data_ui
 #' @importFrom bslib accordion
 controls_ui <- function(id,
-                        controls = c("labs", "parameters", "appearance", "filters", "code"),
+                        controls = c("settings", "labs", "parameters", "appearance", "theme", "filters", "code"),
                         insert_code = FALSE,
                         layout = c("dropdown", "accordion"),
                         downloads = downloads_labels()) {
@@ -64,7 +64,7 @@ controls_ui <- function(id,
   if (!is.null(controls)) {
     controls <- match.arg(
       controls,
-      choices = c("labs", "parameters", "appearance", "filters", "code", "export"),
+      choices = c("settings", "labs", "parameters", "appearance", "theme", "filters", "code", "export"),
       several.ok = TRUE
     )
   } else {
@@ -100,6 +100,18 @@ controls_ui <- function(id,
   )
 
   listControls <- list()
+  if (isTRUE("settings" %in% controls)) {
+    listControls[[length(listControls) + 1]] <- funControl(
+      controls_settings_ui(id = ns("settings")),
+      inputId = ns("controls-settings"),
+      class = "esquisse-controls-settings",
+      style = "default",
+      label = i18n("Settings"),
+      up = TRUE,
+      icon = ph("gear"),
+      status = "default btn-esquisse-controls btn-outline-primary text-nowrap"
+    )
+  }
   if (isTRUE("labs" %in% controls)) {
     listControls[[length(listControls) + 1]] <- funControl(
       controls_labs_ui(id = ns("labs")),
@@ -143,6 +155,28 @@ controls_ui <- function(id,
       label = i18n("Appearance"),
       up = TRUE,
       icon = ph("palette"),
+      status = "default btn-esquisse-controls btn-outline-primary text-nowrap"
+    )
+  }
+  if (isTRUE("theme" %in% controls)) {
+    listControls[[length(listControls) + 1]] <- funControl(
+      controls_theme_ui(
+        ns("theme"),
+        style = if (layout == "dropdown") {
+          css(
+            maxHeight = "80vh",
+            overflowY = "auto",
+            overflowX = "hidden",
+            padding = "5px 7px"
+          )
+        }
+      ),
+      inputId = ns("controls-theme"),
+      class = "esquisse-controls-theme",
+      style = "default",
+      label = i18n("Theme"),
+      up = TRUE,
+      icon = ph("paint-roller"),
       status = "default btn-esquisse-controls btn-outline-primary text-nowrap"
     )
   }
@@ -222,7 +256,7 @@ controls_ui <- function(id,
 #' @return A reactiveValues with all input's values
 #' @noRd
 #'
-#' @importFrom shiny observeEvent reactiveValues reactiveValuesToList observe 
+#' @importFrom shiny observeEvent reactiveValues reactiveValuesToList observe
 #'  downloadHandler renderUI reactive updateTextInput showNotification callModule updateSliderInput debounce
 #' @importFrom rstudioapi insertText getSourceEditorContext
 #' @importFrom htmltools tags tagList
@@ -246,6 +280,13 @@ controls_server <- function(id,
     module = function(input, output, session) {
       ns <- session$ns
 
+      settings_r <- controls_settings_server(
+        id = "settings",
+        use_facet = use_facet,
+        width = width,
+        height = height
+      )
+
       labs_r <- controls_labs_server(
         id = "labs",
         data_table = data_table,
@@ -259,13 +300,17 @@ controls_server <- function(id,
         type = type
       )
 
+      theme_r <- controls_theme_server(
+        id = "theme",
+        data_table = data_table,
+        aesthetics = aesthetics,
+        type = type
+      )
+
       parameters_r <- controls_parameters_server(
         id = "parameters",
-        use_facet = use_facet,
         use_transX = use_transX,
         use_transY = use_transY,
-        width = width,
-        height = height,
         type = type
       )
 
@@ -319,6 +364,10 @@ controls_server <- function(id,
         outputs$inputs <- modifyList(outputs$inputs, appearance_r$inputs())
       })
 
+      observeEvent(theme_r$inputs(), {
+        outputs$inputs <- modifyList(outputs$inputs, theme_r$inputs())
+      })
+
       observeEvent(parameters_r$inputs(), {
         outputs$inputs <- modifyList(outputs$inputs, parameters_r$inputs())
       })
@@ -336,7 +385,7 @@ controls_server <- function(id,
       # theme input
       observe({
         theme_labs <- labs_r$theme()
-        theme_appearance <- appearance_r$inputs()
+        theme_appearance <- theme_r$inputs()
         outputs$theme <- list(
           theme = theme_appearance$theme,
           args = dropNulls(
@@ -382,29 +431,29 @@ controls_server <- function(id,
         outputs$transY <- parameters_r$transY()
       })
 
-      # facet input
-      observeEvent(parameters_r$facet(), {
-        outputs$facet <- parameters_r$facet()
-      })
-
       # limits input
       observeEvent(parameters_r$limits(), {
         outputs$limits <- parameters_r$limits()
       })
 
+      # facet input
+      observeEvent(settings_r$facet(), {
+        outputs$facet <- settings_r$facet()
+      })
+
       # width
-      observeEvent(parameters_r$width(), {
-        outputs$width <- parameters_r$width()
+      observeEvent(settings_r$width(), {
+        outputs$width <- settings_r$width()
       })
 
       # height
-      observeEvent(parameters_r$height(), {
-        outputs$height <- parameters_r$height()
+      observeEvent(settings_r$height(), {
+        outputs$height <- settings_r$height()
       })
-      
+
       # height
-      observeEvent(parameters_r$plotly(), {
-        outputs$plotly <- parameters_r$plotly()
+      observeEvent(settings_r$plotly(), {
+        outputs$plotly <- settings_r$plotly()
       })
 
       observeEvent(output_filter$filtered(), {

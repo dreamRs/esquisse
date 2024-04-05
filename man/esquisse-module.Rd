@@ -12,7 +12,7 @@ esquisse_ui(
   id,
   header = esquisse_header(),
   container = esquisse_container(),
-  controls = c("labs", "parameters", "appearance", "filters", "code"),
+  controls = c("labs", "parameters", "appearance", "theme", "filters", "code"),
   insert_code = FALSE,
   play_pause = TRUE,
   layout_sidebar = FALSE,

@@ -137,6 +137,10 @@
   min-width: 350px; /*430px*/
 }
 
+.esquisse-controls-theme {
+  min-width: 350px; /*430px*/
+}
+
 .esquisse-controls-filters {
   min-width: 350px;
   max-height: min(90vh, 600px);

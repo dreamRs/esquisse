@@ -14,7 +14,6 @@ controls_appearance_ui <- function(id, style = NULL) {
 
   ns <- NS(id)
 
-  themes <- get_themes()
   cols <- get_colors()
   pals <- get_palettes()
 
@@ -73,28 +72,6 @@ controls_appearance_ui <- function(id, style = NULL) {
         )
       )
     ),
-    shinyWidgets::virtualSelectInput(
-      inputId = ns("theme"),
-      label = i18n("Theme:"),
-      choices = themes,
-      selected = getOption("esquisse.default.theme", default = "theme_minimal"),
-      dropboxWrapper = ".esquisse-controls-appearance-container",
-      optionsCount = 5,
-      width = "100%"
-    ),
-    tags$div(
-      id = ns("controls-shape"), style = "display: none;",
-      shinyWidgets::virtualSelectInput(
-        inputId = ns("shape"),
-        label = i18n("Point symbol:"),
-        choices = shape_names,
-        selected = "circle",
-        dropboxWrapper = ".esquisse-controls-appearance-container",
-        optionsCount = 5,
-        width = "100%"
-      )
-    ),
-    input_legend_options(ns),
     input_axis_text("x", ns = ns),
     input_axis_text("y", ns = ns)
   )
@@ -141,9 +118,6 @@ controls_appearance_server <- function(id,
         list(
           fill_color = input$fill_color,
           color_ribbon = input$color_ribbon,
-          theme = input$theme,
-          legend_position = legend_position,
-          legend_justification = legend_justification,
           axis_text_x = get_axis_text(
             input$x_axis_text_face,
             input$x_axis_text_size,
@@ -157,16 +131,6 @@ controls_appearance_server <- function(id,
             input$y_axis_text_angle,
             input$y_axis_text_hjust,
             input$y_axis_text_vjust
-          ),
-          legend_text = get_axis_text(
-            input$legend_text_face,
-            input$legend_text_size,
-            input$legend_text_angle
-          ),
-          legend_title = get_axis_text(
-            input$legend_title_face,
-            input$legend_title_size,
-            input$legend_title_angle
           ),
           shape = shape
         )
@@ -281,79 +245,3 @@ input_axis_text <- function(axis = c("x", "y"), ns = identity) {
   )
 }
 
-input_legend_text <- function(type = c("text", "title"), ns = identity) {
-  type <- match.arg(type)
-  tagList(
-    tags$p(capitalize(type), "options:"),
-    tags$div(
-      style = css(
-        display = "grid",
-        gridTemplateColumns = "repeat(3, 1fr)",
-        gridColumnGap = "2px"
-      ),
-      shinyWidgets::virtualSelectInput(
-        inputId = ns(paste0("legend_", type, "_face")),
-        label = "Font face:",
-        choices = setNames(
-          c("plain", "italic", "bold", "bold.italic"),
-          c("Plain", "Italic", "Bold", "Bold/Italic")
-        ),
-        width = "100%"
-      ),
-      numericInput(
-        inputId = ns(paste0("legend_", type, "_size")),
-        label = "Size:",
-        value = 10,
-        min = 0,
-        width = "100%"
-      ),
-      numericInput(
-        inputId = ns(paste0("legend_", type, "_angle")),
-        label = "Angle:",
-        value = 0,
-        min = 0,
-        max = 360,
-        width = "100%"
-      )
-    )
-  )
-}
-
-input_legend_options <- function(ns) {
-  tagList(
-    tags$hr(),
-    tags$b("Legend options:"),
-    radioGroupButtons(
-      inputId = ns("legend_position"),
-      label = i18n("Position:"),
-      choiceNames = list(
-        ph("arrow-left", title = "left"),
-        ph("arrow-up", title = "top"),
-        ph("arrow-down", title = "bottom"),
-        ph("arrow-right", title = "right"),
-        ph("x", title = "none")
-      ),
-      choiceValues = c("left", "top", "bottom", "right", "none"),
-      selected = "right",
-      justified = TRUE,
-      size = "sm"
-    ),
-    radioGroupButtons(
-      inputId = ns("legend_justification"),
-      label = i18n("Justification:"),
-      choiceNames = list(
-        ph("arrow-left", title = "left"),
-        ph("arrow-up", title = "top"),
-        ph("arrow-down", title = "bottom"),
-        ph("arrow-right", title = "right"),
-        ph("arrows-in-cardinal", title = "center")
-      ),
-      choiceValues = c("left", "top", "bottom", "right", "center"),
-      selected = "center",
-      justified = TRUE,
-      size = "sm"
-    ),
-    input_legend_text("text", ns = ns),
-    input_legend_text("title", ns = ns)
-  )
-}
