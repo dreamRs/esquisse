@@ -52,6 +52,9 @@
     <loc>https://dreamrs.github.io/esquisse/reference/esquisser.html</loc>
   </url>
   <url>
+    <loc>https://dreamrs.github.io/esquisse/reference/geoms.html</loc>
+  </url>
+  <url>
     <loc>https://dreamrs.github.io/esquisse/reference/ggcall.html</loc>
   </url>
   <url>
@@ -68,9 +71,6 @@
   </url>
   <url>
     <loc>https://dreamrs.github.io/esquisse/reference/match_geom_args.html</loc>
-  </url>
-  <url>
-    <loc>https://dreamrs.github.io/esquisse/reference/potential_geoms.html</loc>
   </url>
   <url>
     <loc>https://dreamrs.github.io/esquisse/reference/safe_ggplot.html</loc>
