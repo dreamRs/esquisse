@@ -2,7 +2,16 @@
 #' @importFrom shiny NS
 #' @importFrom bslib nav_panel navset_pill
 #' @importFrom htmltools tags tagList
-select_geom_aes_ui <- function(id, n_geoms = 1) {
+select_geom_aes_ui <- function(id, n_geoms = 1, list_geoms = NULL) {
+
+  if (is.null(list_geoms)) {
+    list_geoms <- rep_len(list(geomIcons()), n_geoms)
+  }
+
+  if (!is_list(list_geoms)) {
+    list_geoms <- rep_len(list(list_geoms), n_geoms)
+  }
+
   ns <- NS(id)
   if (n_geoms == 1) {
     tags$div(
@@ -11,8 +20,8 @@ select_geom_aes_ui <- function(id, n_geoms = 1) {
         style = "padding: 3px 3px 0 3px; height: 122px;",
         dropInput(
           inputId = ns("geom_1"),
-          choicesNames = geomIcons()$names,
-          choicesValues = geomIcons()$values,
+          choicesNames = list_geoms[[1]]$names,
+          choicesValues = list_geoms[[1]]$values,
           dropWidth = "292px",
           width = "100%"
         )
@@ -31,8 +40,8 @@ select_geom_aes_ui <- function(id, n_geoms = 1) {
               style = "padding: 3px 3px 0 3px; height: 122px;",
               dropInput(
                 inputId = ns(paste0("geom_", i)),
-                choicesNames = geomIcons()$names,
-                choicesValues = geomIcons()$values,
+                choicesNames = list_geoms[[i]]$names,
+                choicesValues = list_geoms[[i]]$values,
                 dropWidth = "292px",
                 width = "100%"
               )

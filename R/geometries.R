@@ -257,6 +257,7 @@ geomIcons <- function(geoms = NULL) {
   if (is.null(geoms))
     geoms <- defaults
   geoms <- match.arg(geoms, defaults, several.ok = TRUE)
+  geoms <- unique(c("auto", geoms))
   href <- "esquisse/geomIcon/gg-%s.png"
   geomsChoices <- lapply(
     X = geoms,
