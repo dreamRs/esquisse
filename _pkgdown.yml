@@ -13,9 +13,6 @@ template:
 navbar:
   bg: primary
 
-navbar:
-  bg: primary
-
 authors:
   Victor Perrier:
     href: https://twitter.com/_pvictorr
