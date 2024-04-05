@@ -44,7 +44,7 @@
 esquisse_ui <- function(id,
                         header = esquisse_header(),
                         container = esquisse_container(),
-                        controls = c("settings", "labs", "parameters", "appearance", "theme", "filters", "code"),
+                        controls = c("settings", "labs", "axes", "geoms", "theme", "filters", "code"),
                         insert_code = FALSE,
                         play_pause = TRUE,
                         layout_sidebar = FALSE,

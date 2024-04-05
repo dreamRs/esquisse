@@ -43,7 +43,7 @@
 #'
 #' }
 esquisser <- function(data = NULL,
-                      controls = c("settings", "labs", "parameters", "appearance", "theme", "filters", "code"),
+                      controls = c("settings", "labs", "axes", "geoms", "theme", "filters", "code"),
                       viewer = getOption(x = "esquisse.viewer", default = "dialog")) {
   viewer <- match.arg(viewer, choices = c("dialog", "pane", "browser"))
 

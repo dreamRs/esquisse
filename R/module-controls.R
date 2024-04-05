@@ -55,7 +55,7 @@ accordion_panel_ <- function(..., label, icon) {
 #' @importFrom datamods filter_data_ui
 #' @importFrom bslib accordion
 controls_ui <- function(id,
-                        controls = c("settings", "labs", "parameters", "appearance", "theme", "filters", "code"),
+                        controls = c("settings", "labs", "axes", "geoms", "theme", "filters", "code"),
                         insert_code = FALSE,
                         layout = c("dropdown", "accordion"),
                         downloads = downloads_labels()) {
@@ -64,7 +64,7 @@ controls_ui <- function(id,
   if (!is.null(controls)) {
     controls <- match.arg(
       controls,
-      choices = c("settings", "labs", "parameters", "appearance", "theme", "filters", "code", "export"),
+      choices = c("settings", "labs", "axes", "geoms", "theme", "filters", "code", "export"),
       several.ok = TRUE
     )
   } else {
@@ -124,22 +124,22 @@ controls_ui <- function(id,
       status = "default btn-esquisse-controls btn-outline-primary text-nowrap"
     )
   }
-  if (isTRUE("parameters" %in% controls)) {
+  if (isTRUE("axes" %in% controls)) {
     listControls[[length(listControls) + 1]] <- funControl(
-      controls_parameters_ui(ns("parameters")),
-      inputId = ns("controls-parameters"),
-      class = "esquisse-controls-parameters",
+      controls_axes_ui(ns("axes")),
+      inputId = ns("controls-axes"),
+      class = "esquisse-controls-axes",
       style = "default",
-      label = i18n("Plot options"),
+      label = i18n("Axes"),
       up = TRUE,
-      icon = ph("gear"),
+      icon = ph("vector-two"),
       status = "default btn-esquisse-controls btn-outline-primary text-nowrap"
     )
   }
-  if (isTRUE("appearance" %in% controls)) {
+  if (isTRUE("geoms" %in% controls)) {
     listControls[[length(listControls) + 1]] <- funControl(
-      controls_appearance_ui(
-        ns("appearance"),
+      controls_geoms_ui(
+        ns("geoms"),
         style = if (layout == "dropdown") {
           css(
             maxHeight = "80vh",
@@ -149,12 +149,12 @@ controls_ui <- function(id,
           )
         }
       ),
-      inputId = ns("controls-appearance"),
-      class = "esquisse-controls-appearance",
+      inputId = ns("controls-geoms"),
+      class = "esquisse-controls-geoms",
       style = "default",
-      label = i18n("Appearance"),
+      label = i18n("Geometries"),
       up = TRUE,
-      icon = ph("palette"),
+      icon = ph("wrench"),
       status = "default btn-esquisse-controls btn-outline-primary text-nowrap"
     )
   }
@@ -293,8 +293,8 @@ controls_server <- function(id,
         aesthetics = aesthetics
       )
 
-      appearance_r <- controls_appearance_server(
-        id = "appearance",
+      geometries_r <- controls_geoms_server(
+        id = "geoms",
         data_table = data_table,
         aesthetics = aesthetics,
         type = type
@@ -307,8 +307,8 @@ controls_server <- function(id,
         type = type
       )
 
-      parameters_r <- controls_parameters_server(
-        id = "parameters",
+      axes_r <- controls_axes_server(
+        id = "axes",
         use_transX = use_transX,
         use_transY = use_transY,
         type = type
@@ -360,16 +360,16 @@ controls_server <- function(id,
       })
 
 
-      observeEvent(appearance_r$inputs(), {
-        outputs$inputs <- modifyList(outputs$inputs, appearance_r$inputs())
+      observeEvent(geometries_r$inputs(), {
+        outputs$inputs <- modifyList(outputs$inputs, geometries_r$inputs())
       })
 
       observeEvent(theme_r$inputs(), {
         outputs$inputs <- modifyList(outputs$inputs, theme_r$inputs())
       })
 
-      observeEvent(parameters_r$inputs(), {
-        outputs$inputs <- modifyList(outputs$inputs, parameters_r$inputs())
+      observeEvent(axes_r$inputs(), {
+        outputs$inputs <- modifyList(outputs$inputs, axes_r$inputs())
       })
 
       observeEvent(labs_r$labs(), {
@@ -377,8 +377,8 @@ controls_server <- function(id,
       })
 
 
-      observeEvent(appearance_r$colors(), {
-        outputs$colors <- appearance_r$colors()
+      observeEvent(geometries_r$colors(), {
+        outputs$colors <- geometries_r$colors()
       })
 
 
@@ -407,33 +407,33 @@ controls_server <- function(id,
       })
 
       # coord input
-      observeEvent(parameters_r$coord(), {
-        outputs$coord <- parameters_r$coord()
+      observeEvent(axes_r$coord(), {
+        outputs$coord <- axes_r$coord()
       }, ignoreNULL = FALSE)
 
-      # smooth input
-      observeEvent(parameters_r$smooth(), {
-        outputs$smooth <- parameters_r$smooth()
-      })
-
-      # jittered input
-      observeEvent(parameters_r$jitter(), {
-        outputs$jitter <- parameters_r$jitter()
-      })
+      # # smooth input
+      # observeEvent(axes_r$smooth(), {
+      #   outputs$smooth <- parameters_r$smooth()
+      # })
+      #
+      # # jittered input
+      # observeEvent(axes_r$jitter(), {
+      #   outputs$jitter <- parameters_r$jitter()
+      # })
 
       # transX input
-      observeEvent(parameters_r$transX(), {
-        outputs$transX <- parameters_r$transX()
+      observeEvent(axes_r$transX(), {
+        outputs$transX <- axes_r$transX()
       })
 
       # transY input
-      observeEvent(parameters_r$transY(), {
-        outputs$transY <- parameters_r$transY()
+      observeEvent(axes_r$transY(), {
+        outputs$transY <- axes_r$transY()
       })
 
       # limits input
-      observeEvent(parameters_r$limits(), {
-        outputs$limits <- parameters_r$limits()
+      observeEvent(axes_r$limits(), {
+        outputs$limits <- axes_r$limits()
       })
 
       # facet input
