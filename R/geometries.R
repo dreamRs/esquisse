@@ -1,5 +1,9 @@
 
-#' Potential geometries according to the data
+#' @title Potential geometries according to the data
+#'
+#' @description
+#' From the data and variable used in aesthetics, decide which geometry can be used and which one is used by default.
+#'
 #'
 #' @param data A \code{data.frame}
 #' @param mapping List of aesthetic mappings to use with data.
@@ -7,6 +11,8 @@
 #'
 #' @return A \code{character} vector
 #' @export
+#'
+#' @name geoms
 #'
 #' @examples
 #'
@@ -83,10 +89,17 @@ potential_geoms <- function(data, mapping, auto = FALSE) {
 
 
 
-
+#' @export
+#'
+#' @rdname geoms
 #' @importFrom ggplot2 geom_histogram geom_density geom_bar geom_sf
 #' geom_boxplot geom_bar geom_point geom_line geom_tile geom_violin
 #' geom_area geom_smooth geom_col
+#'
+#' @examples
+#' # Reference used by esquisse to select available geoms
+#' # and decide which one to use by default
+#' potential_geoms_ref()
 potential_geoms_ref <- function() {
   x <- matrix(
     data = c(
@@ -148,7 +161,7 @@ potential_geoms_ref <- function() {
 #' @param add_mapping Add the mapping as an argument.
 #' @param envir Package environment to search in.
 #'
-#' @return a \code{list}
+#' @return a `list()`.
 #' @export
 #'
 #' @examples
@@ -243,7 +256,7 @@ geomIcons <- function() {
       list(inputId = x, img = sprintf(fmt = href, x), label = capitalize(x))
     }
   )
-  
+
   geomsChoicesNames <- lapply(
     X = geomsChoices,
     FUN = function(x) {
@@ -254,7 +267,7 @@ geomIcons <- function() {
       )
     }
   )
-  
+
   list(names = geomsChoicesNames, values = geoms)
 }
 

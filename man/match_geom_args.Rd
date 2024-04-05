@@ -27,7 +27,7 @@ match_geom_args(
 \item{envir}{Package environment to search in.}
 }
 \value{
-a \code{list}
+a \code{list()}.
 }
 \description{
 Match list of arguments to arguments of geometry
