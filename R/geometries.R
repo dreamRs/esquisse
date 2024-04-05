@@ -127,12 +127,14 @@ potential_geoms_ref <- function() {
       "continuous",  "continuous",  "step",      "0",
       "continuous",  "continuous",  "path",      "0",
       "continuous",  "continuous",  "area",      "0",
+      "continuous",  "continuous",  "smooth",    "0",
       "discrete",    "discrete",    "tile",      "1",
       "time",        "continuous",  "line",      "1",
       "time",        "continuous",  "point",     "0",
       "time",        "continuous",  "step",      "0",
       "time",        "continuous",  "area",      "0",
       "time",        "continuous",  "bar",       "0",
+      "time",        "continuous",  "smooth",    "0",
       "empty",       "continuous",  "line",      "1",
       "empty",       "continuous",  "step",      "0",
       "empty",       "continuous",  "path",      "0",
@@ -243,17 +245,23 @@ match_geom_args <- function(geom,
 
 
 # utils for geom icons
-geomIcons <- function() {
-  geoms <- c(
-    "auto", "line", "step", "path", "area", "bar", "col", "histogram",
-    "point", "jitter", "boxplot", "violin", "density",
+geomIcons <- function(geoms = NULL) {
+  defaults <- c(
+    "auto", "line", "step", "path", "area",
+    "bar", "col",
+    "histogram", "density",
+    "point", "jitter", "smooth",
+    "boxplot", "violin",
     "tile", "sf"
   )
+  if (is.null(geoms))
+    geoms <- defaults
+  geoms <- match.arg(geoms, defaults, several.ok = TRUE)
   href <- "esquisse/geomIcon/gg-%s.png"
   geomsChoices <- lapply(
     X = geoms,
     FUN = function(x) {
-      list(inputId = x, img = sprintf(fmt = href, x), label = capitalize(x))
+      list(inputId = x, img = sprintf(href, x), label = capitalize(x))
     }
   )
 
@@ -263,7 +271,8 @@ geomIcons <- function() {
       list(
         style = "width: 90px;",
         tags$img(src = x$img, width = 56, height = 56),
-        tags$br(), x$label
+        tags$br(),
+        x$label
       )
     }
   )

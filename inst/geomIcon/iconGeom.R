@@ -153,7 +153,7 @@ ggplot(data = iris) + geom_histogram(mapping = aes(x = Sepal.Length), bins = 20)
 png(filename = "inst/geomIcon/www/gg-point.png", bg = "transparent")
 ggplot(data = coord_circle(centre = c(0, 0), r = 1)) + geom_polygon(aes(x = x, y = y), fill = "#02C39A") + coord_fixed() + theme_void()
 # p <- ggplot(data = mtcars) + geom_point(mapping = aes(wt, mpg), size = 10, color = "white") + theme_void()
-p <- qplot(x = 1:10, y = 1:10, size = I(10), color = I("white")) + theme_void()
+p <- ggplot() + geom_point(aes(x = 1:10, y = 1:10), size = 10, color = "white") + theme_void()
 print(p, vp = viewport(width = unit(0.6, "npc"), height = unit(0.6, "npc")))
 dev.off()
 
@@ -164,9 +164,41 @@ dev.off()
 png(filename = "inst/geomIcon/www/gg-jitter.png", bg = "transparent")
 ggplot(data = coord_circle(centre = c(0, 0), r = 1)) + geom_polygon(aes(x = x, y = y), fill = "#36D2A9") + coord_fixed() + theme_void()
 # p <- ggplot(data = mtcars) + geom_point(mapping = aes(wt, mpg), size = 10, color = "white") + theme_void()
-p <- qplot(x = 1:10, y = 1:10, size = I(10), color = I("white"), geom = "jitter", width = I(1), height = I(1)) + theme_void()
+p <- ggplot() + geom_jitter(aes(x = 1:10, y = 1:10), size = 10, color = "white", width = 1, height = 1) + theme_void()
 print(p, vp = viewport(width = unit(0.6, "npc"), height = unit(0.6, "npc")))
 dev.off()
+
+
+
+# Geom smooth -------------------------------------------------------------
+
+png(filename = "inst/geomIcon/www/gg-smooth.png", bg = "transparent")
+ggplot(data = coord_circle(centre = c(0, 0), r = 1)) + geom_polygon(aes(x = x, y = y), fill = "#04a8a8") + coord_fixed() + theme_void()
+p <- ggplot(data = mpg) +
+  aes(displ, cty) +
+  geom_point(color = "white") +
+  geom_smooth(color = "white", fill = "#FBFAFB", linewidth = 1.2, span = 0.6) + theme_void()
+print(p, vp = viewport(width = unit(0.6, "npc"), height = unit(0.6, "npc")))
+dev.off()
+
+
+library(sf)
+png(filename = "inst/geomIcon/www/gg-smooth.png", bg = "transparent")
+ggplot(data = coord_circle(centre = c(0, 0), r = 1)) + geom_polygon(aes(x = x, y = y), fill = "#04a8a8") + coord_fixed() + theme_void()
+p <- ggplot(data = cars) +
+  aes(speed, dist) +
+  geom_point(color = "#FFFFFF", size = 2) +
+  geom_smooth(color = "#FFFFFF", fill = "#FBFAFB", linewidth = 1.4, span = 0.6) + theme_void()
+print(p, vp = viewport(width = unit(0.9, "npc"), height = unit(0.9, "npc")))
+p2 <- ggplot(
+  st_difference(
+    st_as_sfc(st_bbox(st_polygon(list(as.matrix(coord_circle(centre = c(0, 0), r = 1)))))),
+    st_polygon(list(as.matrix(coord_circle(centre = c(0, 0), r = 1))))
+  ), col = "#FFFFFF"
+) + geom_sf(fill = "#FFFFFF", color = "#FFFFFF") + theme_void()
+print(p2, vp = viewport(width = unit(1, "npc"), height = unit(1, "npc")))
+dev.off()
+
 
 
 
