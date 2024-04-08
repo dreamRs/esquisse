@@ -62,7 +62,7 @@
 <span>  <span class="va">id</span>,</span>
 <span>  header <span class="op">=</span> <span class="fu">esquisse_header</span><span class="op">(</span><span class="op">)</span>,</span>
 <span>  container <span class="op">=</span> <span class="fu">esquisse_container</span><span class="op">(</span><span class="op">)</span>,</span>
-<span>  controls <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"labs"</span>, <span class="st">"parameters"</span>, <span class="st">"appearance"</span>, <span class="st">"filters"</span>, <span class="st">"code"</span><span class="op">)</span>,</span>
+<span>  controls <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"options"</span>, <span class="st">"labs"</span>, <span class="st">"axes"</span>, <span class="st">"geoms"</span>, <span class="st">"theme"</span>, <span class="st">"filters"</span>, <span class="st">"code"</span><span class="op">)</span>,</span>
 <span>  insert_code <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>  play_pause <span class="op">=</span> <span class="cn">TRUE</span>,</span>
 <span>  layout_sidebar <span class="op">=</span> <span class="cn">FALSE</span>,</span>
@@ -149,11 +149,11 @@ vector or <code>reactive</code> function returning one.</p></dd>
 
 <dt>import_from</dt>
 <dd><p>From where to import data, argument passed
-to <code><a href="https://rdrr.io/pkg/datamods/man/import-modal.html" class="external-link">datamods::import_server()</a></code>, use <code>NULL</code> to prevent the modal to appear.</p></dd>
+to <code><a href="https://dreamrs.github.io/datamods/reference/import-modal.html" class="external-link">datamods::import_server()</a></code>, use <code>NULL</code> to prevent the modal to appear.</p></dd>
 
 
 <dt>drop_ids</dt>
-<dd><p>Argument passed to <a href="https://rdrr.io/pkg/datamods/man/filter-data.html" class="external-link">datamods::filter_data_server</a>. Drop columns containing more than 90% of unique values, or than 50 distinct values.</p></dd>
+<dd><p>Argument passed to <a href="https://dreamrs.github.io/datamods/reference/filter-data.html" class="external-link">datamods::filter_data_server</a>. Drop columns containing more than 90% of unique values, or than 50 distinct values.</p></dd>
 
 
 <dt>notify_warnings</dt>
@@ -285,7 +285,7 @@ It's possible to use a vector of CSS unit of length 4 to specify the margins
 <span class="r-in"><span>    header <span class="op">=</span> <span class="fu">esquisse_header</span><span class="op">(</span>close <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span>, <span class="co"># hide the close button</span></span></span>
 <span class="r-in"><span>    container <span class="op">=</span> <span class="fu">esquisse_container</span><span class="op">(</span>fixed <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>,</span></span>
 <span class="r-in"><span>    play_pause <span class="op">=</span> <span class="cn">FALSE</span>,</span></span>
-<span class="r-in"><span>    controls <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"labs"</span>, <span class="st">"parameters"</span>, <span class="st">"appearance"</span>, <span class="st">"filters"</span>, <span class="st">"code"</span>, <span class="st">"export"</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>    controls <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"settings"</span>, <span class="st">"labs"</span>, <span class="st">"axes"</span>, <span class="st">"geoms"</span>, <span class="st">"theme"</span>, <span class="st">"filters"</span>, <span class="st">"code"</span>, <span class="st">"export"</span><span class="op">)</span>,</span></span>
 <span class="r-in"><span>    layout_sidebar <span class="op">=</span> <span class="cn">TRUE</span></span></span>
 <span class="r-in"><span>  <span class="op">)</span></span></span>
 <span class="r-in"><span><span class="op">)</span></span></span>
@@ -326,12 +326,12 @@ It's possible to use a vector of CSS unit of length 4 to specify the margins
 <span class="r-in"><span><span class="va">server</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">input</span>, <span class="va">output</span>, <span class="va">session</span><span class="op">)</span> <span class="op">{</span></span></span>
 <span class="r-in"><span>  </span></span>
 <span class="r-in"><span>  <span class="co"># lauch import data modal</span></span></span>
-<span class="r-in"><span>  <span class="fu"><a href="https://rdrr.io/pkg/datamods/man/import-modal.html" class="external-link">import_modal</a></span><span class="op">(</span></span></span>
+<span class="r-in"><span>  <span class="fu"><a href="https://dreamrs.github.io/datamods/reference/import-modal.html" class="external-link">import_modal</a></span><span class="op">(</span></span></span>
 <span class="r-in"><span>    id <span class="op">=</span> <span class="st">"import-data"</span>,</span></span>
 <span class="r-in"><span>    from <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"env"</span>, <span class="st">"file"</span>, <span class="st">"copypaste"</span><span class="op">)</span>,</span></span>
 <span class="r-in"><span>    title <span class="op">=</span> <span class="st">"Import data"</span></span></span>
 <span class="r-in"><span>  <span class="op">)</span></span></span>
-<span class="r-in"><span>  <span class="va">data_imported_r</span> <span class="op">&lt;-</span> <span class="fu">datamods</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/datamods/man/import-modal.html" class="external-link">import_server</a></span><span class="op">(</span><span class="st">"import-data"</span><span class="op">)</span></span></span>
+<span class="r-in"><span>  <span class="va">data_imported_r</span> <span class="op">&lt;-</span> <span class="fu">datamods</span><span class="fu">::</span><span class="fu"><a href="https://dreamrs.github.io/datamods/reference/import-modal.html" class="external-link">import_server</a></span><span class="op">(</span><span class="st">"import-data"</span><span class="op">)</span></span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span>  <span class="va">data_rv</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/shiny/man/reactiveValues.html" class="external-link">reactiveValues</a></span><span class="op">(</span>data <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-in"><span>  <span class="fu"><a href="https://rdrr.io/pkg/shiny/man/observeEvent.html" class="external-link">observeEvent</a></span><span class="op">(</span><span class="va">data_imported_r</span><span class="op">$</span><span class="fu">data</span><span class="op">(</span><span class="op">)</span>, <span class="op">{</span></span></span>
