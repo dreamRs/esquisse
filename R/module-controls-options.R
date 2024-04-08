@@ -1,5 +1,5 @@
 
-#' Controls for general settings
+#' Controls for general options
 #'
 #' Set bins for histogram, position for barchart, flip coordinates
 #'
@@ -10,7 +10,7 @@
 #' @importFrom htmltools tagList tags
 #' @importFrom shinyWidgets prettyRadioButtons numericRangeInput prettyToggle prettySwitch
 #'
-controls_settings_ui <- function(id) {
+controls_options_ui <- function(id) {
 
   ns <- NS(id)
 
@@ -68,10 +68,10 @@ controls_settings_ui <- function(id) {
 }
 
 
-controls_settings_server <- function(id,
-                                     use_facet = reactive(FALSE),
-                                     width = reactive(NULL),
-                                     height = reactive(NULL)) {
+controls_options_server <- function(id,
+                                    use_facet = reactive(FALSE),
+                                    width = reactive(NULL),
+                                    height = reactive(NULL)) {
   moduleServer(
     id = id,
     function(input, output, session) {

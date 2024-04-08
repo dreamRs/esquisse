@@ -55,7 +55,7 @@ accordion_panel_ <- function(..., label, icon) {
 #' @importFrom datamods filter_data_ui
 #' @importFrom bslib accordion
 controls_ui <- function(id,
-                        controls = c("settings", "labs", "axes", "geoms", "theme", "filters", "code"),
+                        controls = c("options", "labs", "axes", "geoms", "theme", "filters", "code"),
                         insert_code = FALSE,
                         layout = c("dropdown", "accordion"),
                         downloads = downloads_labels()) {
@@ -64,7 +64,7 @@ controls_ui <- function(id,
   if (!is.null(controls)) {
     controls <- match.arg(
       controls,
-      choices = c("settings", "labs", "axes", "geoms", "theme", "filters", "code", "export"),
+      choices = c("options", "labs", "axes", "geoms", "theme", "filters", "code", "export"),
       several.ok = TRUE
     )
   } else {
@@ -100,13 +100,13 @@ controls_ui <- function(id,
   )
 
   listControls <- list()
-  if (isTRUE("settings" %in% controls)) {
+  if (isTRUE("options" %in% controls)) {
     listControls[[length(listControls) + 1]] <- funControl(
-      controls_settings_ui(id = ns("settings")),
-      inputId = ns("controls-settings"),
-      class = "esquisse-controls-settings",
+      controls_options_ui(id = ns("options")),
+      inputId = ns("controls-options"),
+      class = "esquisse-controls-options",
       style = "default",
-      label = i18n("Settings"),
+      label = i18n("Options"),
       up = TRUE,
       icon = ph("gear"),
       status = "default btn-esquisse-controls btn-outline-primary text-nowrap"
@@ -280,8 +280,8 @@ controls_server <- function(id,
     module = function(input, output, session) {
       ns <- session$ns
 
-      settings_r <- controls_settings_server(
-        id = "settings",
+      options_r <- controls_options_server(
+        id = "options",
         use_facet = use_facet,
         width = width,
         height = height
@@ -437,23 +437,23 @@ controls_server <- function(id,
       })
 
       # facet input
-      observeEvent(settings_r$facet(), {
-        outputs$facet <- settings_r$facet()
+      observeEvent(options_r$facet(), {
+        outputs$facet <- options_r$facet()
       })
 
       # width
-      observeEvent(settings_r$width(), {
-        outputs$width <- settings_r$width()
+      observeEvent(options_r$width(), {
+        outputs$width <- options_r$width()
       })
 
       # height
-      observeEvent(settings_r$height(), {
-        outputs$height <- settings_r$height()
+      observeEvent(options_r$height(), {
+        outputs$height <- options_r$height()
       })
 
       # height
-      observeEvent(settings_r$plotly(), {
-        outputs$plotly <- settings_r$plotly()
+      observeEvent(options_r$plotly(), {
+        outputs$plotly <- options_r$plotly()
       })
 
       observeEvent(output_filter$filtered(), {
