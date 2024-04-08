@@ -127,13 +127,17 @@
   width: 280px;
 }
 
-.esquisse-controls-parameters {
-  min-width: 270px;
+.esquisse-controls-axes {
+  min-width: 350px;
   overflow-y: auto;
   max-height: 90vh;
 }
 
-.esquisse-controls-appearance {
+.esquisse-controls-geoms {
+  min-width: 350px; /*430px*/
+}
+
+.esquisse-controls-theme {
   min-width: 350px; /*430px*/
 }
 

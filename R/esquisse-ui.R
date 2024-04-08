@@ -44,7 +44,7 @@
 esquisse_ui <- function(id,
                         header = esquisse_header(),
                         container = esquisse_container(),
-                        controls = c("labs", "parameters", "appearance", "filters", "code"),
+                        controls = c("options", "labs", "axes", "geoms", "theme", "filters", "code"),
                         insert_code = FALSE,
                         play_pause = TRUE,
                         layout_sidebar = FALSE,
@@ -247,7 +247,7 @@ make_btn_header <- function(.list) {
       function(id) NULL
     },
     settings = if (isTRUE(.list$settings)) {
-      btn_header(i18n("Display settings"), "gear-six")
+      btn_header(i18n("Display settings"), "gear-fine")
     } else {
       function(id) NULL
     },
