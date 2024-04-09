@@ -16,6 +16,7 @@
 #' @importFrom tools toTitleCase
 #' @importFrom rlang eval_tidy
 #' @importFrom ggplot2 ggplot_build ggplot_gtable
+#' @importFrom htmltools doRenderTags HTML tagList tags
 #'
 #' @example examples/safe_ggplot.R
 safe_ggplot <- function(expr,
@@ -27,12 +28,8 @@ safe_ggplot <- function(expr,
     if (identical(show_notification, "never")) return(NULL)
     if (!is.null(session)) {
       msg <- conditionMessage(e)
-      msg <- gsub("\033[38;5;232m", "", msg, fixed = TRUE)
-      msg <- gsub("\033[39m", "", msg, fixed = TRUE)
-      msg <- gsub("\033[36m", "", msg, fixed = TRUE)
-      msg <- gsub("\033[1m", "", msg, fixed = TRUE)
-      msg <- gsub("\033[22m", "", msg, fixed = TRUE)
-      msg <- gsub("\033[33m!", "", msg, fixed = TRUE)
+      msg <- gsub("\033[\\[0-9;]*m", "", msg, fixed = FALSE)
+      msg <- gsub("\n", "<br/>", msg, fixed = FALSE)
       if (identical(show_notification, "once") && isTRUE(msg %in% session$userData$esquisse_notifications)) {
         return(NULL)
       }
@@ -40,16 +37,13 @@ safe_ggplot <- function(expr,
         session$userData$esquisse_notifications,
         msg
       )
-      text <- substr(
-        htmltools::doRenderTags(tagList(
-          tags$b(tools::toTitleCase(type), ":"), msg
-        )),
-        start = 1, stop = 200
-      )
+      text <- htmltools::doRenderTags(tagList(
+        tags$b(tools::toTitleCase(type), ":"), HTML(msg)
+      ))
       shinybusy::notify(
         position = "right-bottom",
         text = text,
-        timeout = 3000,
+        timeout = 5000,
         # closeButton = TRUE,
         showOnlyTheLastOne = TRUE,
         plainText = FALSE,
