@@ -104,6 +104,22 @@ dev.off()
 
 
 
+
+
+# Geom ribbon -------------------------------------------------------------
+
+png(filename = "inst/geomIcon/www/gg-ribbon.png", bg = "transparent")
+ggplot(data = coord_circle(centre = c(0, 0), r = 1)) + geom_polygon(aes(x = x, y = y), fill = "#4b668f") + coord_fixed() + theme_void()
+p <- ggplot(data.frame(year = 1875:1972, level = as.vector(LakeHuron)), aes(year, y = level))+
+  geom_ribbon(aes(ymin = level - 1, ymax = level + 1), fill = "#ECEFF4") +
+  theme_void()
+print(p, vp = viewport(width = unit(0.6, "npc"), height = unit(0.6, "npc")))
+dev.off()
+
+
+
+
+
 # Geom path ---------------------------------------------------------------
 
 png(filename = "inst/geomIcon/www/gg-path.png", bg = "transparent")
@@ -175,29 +191,31 @@ dev.off()
 png(filename = "inst/geomIcon/www/gg-smooth.png", bg = "transparent")
 ggplot(data = coord_circle(centre = c(0, 0), r = 1)) + geom_polygon(aes(x = x, y = y), fill = "#04a8a8") + coord_fixed() + theme_void()
 p <- ggplot(data = mpg) +
-  aes(displ, cty) +
-  geom_point(color = "white") +
-  geom_smooth(color = "white", fill = "#FBFAFB", linewidth = 1.2, span = 0.6) + theme_void()
-print(p, vp = viewport(width = unit(0.6, "npc"), height = unit(0.6, "npc")))
-dev.off()
-
-
-library(sf)
-png(filename = "inst/geomIcon/www/gg-smooth.png", bg = "transparent")
-ggplot(data = coord_circle(centre = c(0, 0), r = 1)) + geom_polygon(aes(x = x, y = y), fill = "#04a8a8") + coord_fixed() + theme_void()
-p <- ggplot(data = cars) +
-  aes(speed, dist) +
+  aes(displ, hwy) +
   geom_point(color = "#FFFFFF", size = 2) +
-  geom_smooth(color = "#FFFFFF", fill = "#FBFAFB", linewidth = 1.4, span = 0.6) + theme_void()
-print(p, vp = viewport(width = unit(0.9, "npc"), height = unit(0.9, "npc")))
-p2 <- ggplot(
-  st_difference(
-    st_as_sfc(st_bbox(st_polygon(list(as.matrix(coord_circle(centre = c(0, 0), r = 1)))))),
-    st_polygon(list(as.matrix(coord_circle(centre = c(0, 0), r = 1))))
-  ), col = "#FFFFFF"
-) + geom_sf(fill = "#FFFFFF", color = "#FFFFFF") + theme_void()
-print(p2, vp = viewport(width = unit(1, "npc"), height = unit(1, "npc")))
+  geom_smooth(color = "#FFFFFF", fill = "#FBFAFB", linewidth = 1.4, span = 0.75, level = 0.9999, fullrange = TRUE) +
+  theme_void()
+print(p, vp = viewport(width = unit(0.8, "npc"), height = unit(0.8, "npc")))
 dev.off()
+
+
+# library(sf)
+# png(filename = "inst/geomIcon/www/gg-smooth.png", bg = "transparent")
+# ggplot(data = coord_circle(centre = c(0, 0), r = 1)) + geom_polygon(aes(x = x, y = y), fill = "#04a8a8") + coord_fixed() + theme_void()
+# p <- ggplot(data = mpg) +
+#   aes(displ, hwy) +
+#   geom_point(color = "#FFFFFF", size = 2) +
+#   geom_smooth(color = "#FFFFFF", fill = "#FBFAFB", linewidth = 1.4, span = 0.75, level = 0.9999, fullrange = TRUE) +
+#   theme_void()
+# print(p, vp = viewport(width = unit(0.8, "npc"), height = unit(0.8, "npc")))
+# p2 <- ggplot(
+#   st_difference(
+#     st_as_sfc(st_bbox(st_polygon(list(as.matrix(coord_circle(centre = c(0, 0), r = 1)))))),
+#     st_polygon(list(as.matrix(coord_circle(centre = c(0, 0), r = 1))))
+#   ), col = "#FFFFFF"
+# ) + geom_sf(fill = "#FFFFFF", color = "#FFFFFF") + theme_void()
+# print(p2, vp = viewport(width = unit(1, "npc"), height = unit(1, "npc")))
+# dev.off()
 
 
 

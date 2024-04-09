@@ -14,6 +14,8 @@
 #'
 #' @name geoms
 #'
+#' @importFrom rlang has_name eval_tidy expr sym
+#'
 #' @examples
 #'
 #' library(ggplot2)
@@ -44,7 +46,7 @@
 #' )
 potential_geoms <- function(data, mapping, auto = FALSE) {
 
-  data_mapped <- lapply(mapping, rlang::eval_tidy, data = data)
+  data_mapped <- lapply(mapping, eval_tidy, data = data)
 
   x_type <- col_type(data_mapped$x, no_id = TRUE)
   y_type <- col_type(data_mapped$y, no_id = TRUE)
@@ -82,6 +84,10 @@ potential_geoms <- function(data, mapping, auto = FALSE) {
       geoms <- c(geoms, "sf")
     }
   }
+  if (isTRUE(x_type %in% c("continuous", "time")) & all(has_name(mapping, c("ymin", "ymax"))))
+    geoms <- c(geoms, "ribbon")
+  if (isTRUE(y_type %in% c("continuous", "time")) &  all(has_name(mapping, c("xmin", "xmax"))))
+    geoms <- c(geoms, "ribbon")
 
   return(geoms)
 }
@@ -190,7 +196,7 @@ match_geom_args <- function(geom,
                             add_mapping = FALSE,
                             envir = "ggplot2") {
   if (!is.null(args$fill_color)) {
-    if (geom %in% c("bar", "col", "histogram", "boxplot", "violin", "density")) {
+    if (geom %in% c("bar", "col", "histogram", "boxplot", "violin", "density", "ribbon")) {
       args$fill <- args$fill_color %||% "#0C4C8A"
     }
     if (geom %in% c("line", "step", "path", "point")) {
@@ -247,7 +253,7 @@ match_geom_args <- function(geom,
 # utils for geom icons
 geomIcons <- function(geoms = NULL) {
   defaults <- c(
-    "auto", "line", "step", "path", "area",
+    "auto", "line", "step", "path", "area", "ribbon",
     "bar", "col",
     "histogram", "density",
     "point", "jitter", "smooth",
