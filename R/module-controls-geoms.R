@@ -17,15 +17,6 @@ controls_geoms_ui <- function(id, style = NULL) {
   cols <- get_colors()
   pals <- get_palettes()
 
-  shape_names <- c(
-    "circle", paste("circle", c("open", "filled", "cross", "plus", "small")), "bullet",
-    "square", paste("square", c("open", "filled", "cross", "plus", "triangle")),
-    "diamond", paste("diamond", c("open", "filled", "plus")),
-    "triangle", paste("triangle", c("open", "filled", "square")),
-    paste("triangle down", c("open", "filled")),
-    "plus", "cross", "asterisk"
-  )
-
   tags$div(
     class = "esquisse-controls-geoms-container",
     style = style,
@@ -72,13 +63,26 @@ controls_geoms_ui <- function(id, style = NULL) {
       )
     ),
     tags$div(
-      id = ns("controls-size"), style = "display: none;",
+      id = ns("controls-points"), style = "display: none;",
       sliderInput(
         inputId = ns("size"),
-        label = i18n("Size for points/lines:"),
+        label = i18n("Size for points:"),
         min = 0.5,
         max = 5,
-        value = 1.2,
+        value = 1.5,
+        width = "100%"
+      ),
+      virtualSelectInput(
+        inputId = ns("shape"),
+        label = "Shape:",
+        choices = c(
+          "circle", paste("circle", c("open", "filled", "cross", "plus", "small")), "bullet",
+          "square", paste("square", c("open", "filled", "cross", "plus", "triangle")),
+          "diamond", paste("diamond", c("open", "filled", "plus")),
+          "triangle", paste("triangle", c("open", "filled", "square")),
+          paste("triangle down", c("open", "filled")),
+          "plus", "cross", "asterisk"
+        ),
         width = "100%"
       )
     ),
@@ -172,16 +176,10 @@ controls_geoms_server <- function(id,
         toggleDisplay("controls-histogram", type$controls %in% "histogram")
         toggleDisplay("controls-density", type$controls %in% c("density", "violin"))
         toggleDisplay("controls-scatter", type$controls %in% "point")
-        toggleDisplay("controls-size", type$controls %in% c("point", "sf"))
+        toggleDisplay("controls-points", type$controls %in% c("point"))
         toggleDisplay("controls-lines", type$controls %in% c("line", "step"))
         toggleDisplay("controls-violin", type$controls %in% "violin")
         toggleDisplay("controls-jitter", type$controls %in% c("boxplot", "violin"))
-
-        if (type$controls %in% c("point")) {
-          updateSliderInput(session = session, inputId = "size", value = 1.5)
-        } else if (type$controls %in% c("line", "step")) {
-          updateSliderInput(session = session, inputId = "size", value = 0.5)
-        }
       }), type$controls, aesthetics())
 
       observeEvent(type$palette, {
@@ -189,28 +187,18 @@ controls_geoms_server <- function(id,
         toggleDisplay("controls-fill-color", display = !isTRUE(type$palette))
       })
 
-      observe({
-        req(aesthetics())
-        aesthetics <- names(aesthetics())
-        toggleDisplay("controls-shape", display = type$controls %in% "point" & !"shape" %in% aesthetics)
-      })
-
       inputs_r <- reactive({
         aesthetics <- names(aesthetics())
-
-        shape <- input$shape
-        if (!(type$controls %in% "point" & !"shape" %in% aesthetics))
-          shape <- NULL
 
         dropNulls(list(
           adjust = input$adjust,
           position = input$position,
-          size = input$size,
+          size = if (!identical(input$size, 1.5)) input$size,
           linewidth = if (!identical(input$linewidth, 0.5)) input$linewidth,
           linetype = if (!identical(input$linetype, "solid")) input$linetype,
           fill_color = input$fill_color,
           color_ribbon = input$color_ribbon,
-          shape = shape
+          shape = if (!identical(input$shape, "circle")) input$shape
         ))
       })
 
