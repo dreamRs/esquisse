@@ -83,6 +83,27 @@ controls_geoms_ui <- function(id, style = NULL) {
       )
     ),
     tags$div(
+      id = ns("controls-lines"), style = "display: none;",
+      sliderInput(
+        inputId = ns("linewidth"),
+        label = i18n("Line width:"),
+        min = 0,
+        max = 3,
+        value = 0.5,
+        step = 0.05,
+        width = "100%"
+      ),
+      virtualSelectInput(
+        inputId = ns("linetype"),
+        label = "Line type:",
+        choices = setNames(
+          c("solid", "dashed", "dotted", "dotdash", "longdash", "twodash"),
+          c("solid", "dashed", "dotted", "dotdash", "longdash", "twodash")
+        ),
+        width = "100%"
+      )
+    ),
+    tags$div(
       id = ns("controls-histogram"), style = "display: none;",
       sliderInput(
         inputId = ns("bins"),
@@ -151,7 +172,8 @@ controls_geoms_server <- function(id,
         toggleDisplay("controls-histogram", type$controls %in% "histogram")
         toggleDisplay("controls-density", type$controls %in% c("density", "violin"))
         toggleDisplay("controls-scatter", type$controls %in% "point")
-        toggleDisplay("controls-size", type$controls %in% c("point", "line", "step", "sf"))
+        toggleDisplay("controls-size", type$controls %in% c("point", "sf"))
+        toggleDisplay("controls-lines", type$controls %in% c("line", "step"))
         toggleDisplay("controls-violin", type$controls %in% "violin")
         toggleDisplay("controls-jitter", type$controls %in% c("boxplot", "violin"))
 
@@ -180,15 +202,16 @@ controls_geoms_server <- function(id,
         if (!(type$controls %in% "point" & !"shape" %in% aesthetics))
           shape <- NULL
 
-        list(
+        dropNulls(list(
           adjust = input$adjust,
           position = input$position,
           size = input$size,
-          linewidth = input$size,
+          linewidth = if (!identical(input$linewidth, 0.5)) input$linewidth,
+          linetype = if (!identical(input$linetype, "solid")) input$linetype,
           fill_color = input$fill_color,
           color_ribbon = input$color_ribbon,
           shape = shape
-        )
+        ))
       })
 
       # Colors input
