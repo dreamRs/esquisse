@@ -96,31 +96,37 @@ select_geom_aes_server <- function(id,
             }
           })
 
-          observeEvent(list(aes_r(), input[[paste0("geom_", i)]]), {
-            aesthetics <- aes_r()
+          bindEvent(observe({
+            aesthetics <- rv[[paste0("aes_", i)]]
             data <- data_r()
             geoms <- potential_geoms(
               data = data,
               mapping = build_aes(
                 data = data,
-                x = aesthetics$xvar,
-                y = aesthetics$yvar
+                # x = aesthetics$xvar,
+                # y = aesthetics$yvar
+                .list = aesthetics
               )
             )
-            geom_rv$possible <- c("auto", geoms)
 
-            geom_rv$controls <- select_geom_controls(input[[paste0("geom_", i)]], geoms)
+            if (i == 1) {
+              geom_rv$possible <- c("auto", geoms)
+              geom_rv$controls <- select_geom_controls(input[[paste0("geom_", i)]], geoms)
+              geom_rv$palette <- !is.null(aesthetics$fill) | !is.null(aesthetics$color)
+            }
+            rv[[paste0("geom_possible", i)]] <- c("auto", geoms)
 
-            geom_rv$palette <- !is.null(aesthetics$fill) | !is.null(aesthetics$color)
-          }, ignoreInit = TRUE)
 
-          observeEvent(geom_rv$possible, {
+          }), rv[[paste0("aes_", i)]], input[[paste0("geom_", i)]])
+
+          observeEvent(rv[[paste0("geom_possible", i)]], {
             geoms <- geomIcons()$values
+            geomposs <- rv[[paste0("geom_possible", i)]]
             updateDropInput(
               session = session,
               inputId = paste0("geom_", i),
-              selected = setdiff(geom_rv$possible, "auto")[1],
-              disabled = setdiff(geoms, geom_rv$possible)
+              selected = setdiff(geomposs, "auto")[1],
+              disabled = setdiff(geoms, geomposs)
             )
           })
 
@@ -131,7 +137,14 @@ select_geom_aes_server <- function(id,
       )
 
       return(reactive({
-        result <- reactiveValuesToList(rv)
+        others <- reactiveValuesToList(rv)
+        others$aes_1 <- NULL
+        others$geom_1 <- NULL
+        others[vapply(others, FUN = identical, "auto", FUN.VALUE = logical(1))] <- NULL
+        result <- list(
+          main = list(aes = rv$aes_1, geom = rv$geom_1),
+          others = dropNullsOrEmpty(others)
+        )
         result$active <- input$navset_geoms
         return(result)
       }))

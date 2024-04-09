@@ -133,9 +133,9 @@ esquisse_server <- function(id,
         aesthetics_r = reactive(input$aesthetics),
         geom_rv = geom_rv
       )
-      aes_r <- reactive(res_geom_aes_r()$aes_1)
+      aes_r <- reactive(res_geom_aes_r()$main$aes)
       observeEvent(res_geom_aes_r()$geom_1, {
-        geom_rv$controls <- res_geom_aes_r()$geom_1
+        geom_rv$controls <- res_geom_aes_r()$main$geom
       })
 
 
@@ -188,7 +188,7 @@ esquisse_server <- function(id,
           req(data_chart$data)
           req(controls_rv$data)
           req(controls_rv$inputs)
-          geom_ <- req(res_geom_aes_r()$geom_1)
+          geom_ <- req(res_geom_aes_r()$main$geom)
 
           aes_input <- make_aes(aes_r())
 

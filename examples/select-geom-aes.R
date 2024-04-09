@@ -14,9 +14,9 @@ ui <- fluidPage(
     n_geoms = 4,
     list_geoms = list(
       geomIcons(),
-      geomIcons(c("line", "step", "jitter", "smooth")),
-      geomIcons(c("line", "step", "jitter", "smooth")),
-      geomIcons(c("line", "step", "jitter", "smooth"))
+      geomIcons(c("line", "step", "jitter", "point", "smooth", "density", "boxplot", "violin")),
+      geomIcons(c("line", "step", "jitter", "point", "smooth", "density", "boxplot", "violin")),
+      geomIcons(c("line", "step", "jitter", "point", "smooth", "density", "boxplot", "violin"))
     )
   ),
   verbatimTextOutput("result")
