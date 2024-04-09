@@ -256,6 +256,22 @@ dev.off()
 
 
 
+# Geom blank --------------------------------------------------------------
+
+png(filename = "inst/geomIcon/www/gg-blank.png", bg = "transparent")
+ggplot() +
+  geom_polygon(data = coord_circle(centre = c(0, 0), r = 1), aes(x = x, y = y), fill = "#FFFFFF", color = "#000000") +
+  coord_fixed() +
+  geom_text(mapping = aes(x = 0, y = 0, label = "blank"), color = "#000000", size = 50) +
+  theme_void()
+# p <- ggplot() + geom_text(mapping = aes(x = 0, y = 0, label = "blank"), color = "#000000", size = 50) + theme_void()
+# print(p, vp = viewport(width = unit(0.6, "npc"), height = unit(0.6, "npc")))
+dev.off()
+
+
+
+
+
 # Geom tile ---------------------------------------------------------------
 
 png(filename = "inst/geomIcon/www/gg-tile.png", bg = "transparent")

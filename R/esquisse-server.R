@@ -131,13 +131,32 @@ esquisse_server <- function(id,
         id = "geomaes",
         data_r = reactive(data_chart$data),
         aesthetics_r = reactive(input$aesthetics),
-        geom_rv = geom_rv
+        geom_rv = geom_rv,
+        n_geoms = 5
       )
       aes_r <- reactive(res_geom_aes_r()$main$aes)
-      observeEvent(res_geom_aes_r()$geom_1, {
+      aes_others_r <- reactive({
+        others <- res_geom_aes_r()$others
+        mappings <- others[grepl("aes", names(others))]
+        lapply(
+          X = mappings,
+          FUN = function(x) {
+            if (isTruthy(x)) {
+              list(mapping = expr(aes(!!!syms2(make_aes(x)))))
+            } else {
+              NULL
+            }
+          }
+        )
+      })
+      observeEvent(res_geom_aes_r(), {
         geom_rv$controls <- res_geom_aes_r()$main$geom
       })
-
+      geoms_others_r <- reactive({
+        others <- res_geom_aes_r()$others
+        geoms <- others[grepl("geom", names(others))]
+        unlist(geoms, use.names = FALSE)
+      })
 
       # Module chart controls : title, xlabs, colors, export...
       # paramsChart <- reactiveValues(inputs = NULL)
@@ -228,33 +247,33 @@ esquisse_server <- function(id,
             add_mapping = FALSE
           )
 
-          if (isTRUE(controls_rv$smooth$add) & geom_ %in% c("point", "line")) {
-            geom <- c(geom, "smooth")
+          if (isTruthy(geoms_others_r())) {
+            geom <- c(geom, geoms_others_r())
             geom_args <- c(
               setNames(list(geom_args), geom_),
-              list(smooth = controls_rv$smooth$args)
+              aes_others_r()
             )
           }
-          if (isTRUE(controls_rv$jitter$add) & geom_ %in% c("boxplot", "violin")) {
-            geom <- c(geom, "jitter")
-            geom_args <- c(
-              setNames(list(geom_args), geom_),
-              list(jitter = controls_rv$jitter$args)
-            )
-          }
-          if (!is.null(aes_input$ymin) & !is.null(aes_input$ymax) & geom_ %in% c("line")) {
-            geom <- c("ribbon", geom)
-            mapping_ribbon <- aes_input[c("ymin", "ymax")]
-            geom_args <- c(
-              list(ribbon = list(
-                mapping = expr(aes(!!!syms2(mapping_ribbon))),
-                fill = controls_rv$inputs$color_ribbon
-              )),
-              setNames(list(geom_args), geom_)
-            )
-            mapping$ymin <- NULL
-            mapping$ymax <- NULL
-          }
+          # if (isTRUE(controls_rv$jitter$add) & geom_ %in% c("boxplot", "violin")) {
+          #   geom <- c(geom, "jitter")
+          #   geom_args <- c(
+          #     setNames(list(geom_args), geom_),
+          #     list(jitter = controls_rv$jitter$args)
+          #   )
+          # }
+          # if (!is.null(aes_input$ymin) & !is.null(aes_input$ymax) & geom_ %in% c("line")) {
+          #   geom <- c("ribbon", geom)
+          #   mapping_ribbon <- aes_input[c("ymin", "ymax")]
+          #   geom_args <- c(
+          #     list(ribbon = list(
+          #       mapping = expr(aes(!!!syms2(mapping_ribbon))),
+          #       fill = controls_rv$inputs$color_ribbon
+          #     )),
+          #     setNames(list(geom_args), geom_)
+          #   )
+          #   mapping$ymin <- NULL
+          #   mapping$ymax <- NULL
+          # }
 
           scales_args <- scales$args
           scales <- scales$scales

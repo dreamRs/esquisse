@@ -74,6 +74,13 @@ select_geom_aes_server <- function(id,
 
       rv <- reactiveValues()
 
+      # special case: geom_sf
+      observeEvent(data_r(), {
+        if (inherits(data_r(), what = "sf")) {
+          geom_rv$possible <- c("sf", geom_rv$possible)
+        }
+      })
+
       lapply(
         X = seq_len(n_geoms),
         FUN = function(i) {
@@ -86,61 +93,53 @@ select_geom_aes_server <- function(id,
           )
 
           observeEvent(aes_r(), {
-            rv[[paste0("aes_", i)]] <- aes_r()
-          })
-
-          # special case: geom_sf
-          observeEvent(data_r(), {
-            if (inherits(data_r(), what = "sf")) {
-              geom_rv$possible <- c("sf", geom_rv$possible)
-            }
-          })
-
-          bindEvent(observe({
-            aesthetics <- rv[[paste0("aes_", i)]]
-            data <- data_r()
-            geoms <- potential_geoms(
-              data = data,
-              mapping = build_aes(
-                data = data,
-                # x = aesthetics$xvar,
-                # y = aesthetics$yvar
-                .list = aesthetics
-              )
-            )
-
-            if (i == 1) {
-              geom_rv$possible <- c("auto", geoms)
-              geom_rv$controls <- select_geom_controls(input[[paste0("geom_", i)]], geoms)
-              geom_rv$palette <- !is.null(aesthetics$fill) | !is.null(aesthetics$color)
-            }
-            rv[[paste0("geom_possible", i)]] <- c("auto", geoms)
-
-
-          }), rv[[paste0("aes_", i)]], input[[paste0("geom_", i)]])
-
-          observeEvent(rv[[paste0("geom_possible", i)]], {
-            geoms <- geomIcons()$values
-            geomposs <- rv[[paste0("geom_possible", i)]]
-            updateDropInput(
-              session = session,
-              inputId = paste0("geom_", i),
-              selected = setdiff(geomposs, "auto")[1],
-              disabled = setdiff(geoms, geomposs)
-            )
+            rv[[paste0("aes_", i)]] <- dropNulls(aes_r())
           })
 
           observeEvent(input[[paste0("geom_", i)]], {
             rv[[paste0("geom_", i)]] <- input[[paste0("geom_", i)]]
           })
+
         }
       )
+
+
+      bindEvent(observe({
+        aesthetics <- rv$aes_1
+        data <- data_r()
+        geoms <- potential_geoms(
+          data = data,
+          mapping = build_aes(
+            data = data,
+            .list = aesthetics
+          )
+        )
+
+        geom_rv$possible <- c("auto", geoms)
+        geom_rv$controls <- select_geom_controls(input$geom_1, geoms)
+        geom_rv$palette <- !is.null(aesthetics$fill) | !is.null(aesthetics$color)
+
+      }), rv$aes_1, input$geom_1)
+
+      observeEvent( geom_rv$possible, {
+        geoms <- geomIcons()$values
+        geomposs <-  geom_rv$possible
+        updateDropInput(
+          session = session,
+          inputId = "geom_1",
+          selected = setdiff(geomposs, "auto")[1],
+          disabled = setdiff(geoms, geomposs)
+        )
+      })
+
 
       return(reactive({
         others <- reactiveValuesToList(rv)
         others$aes_1 <- NULL
         others$geom_1 <- NULL
         others[vapply(others, FUN = identical, "auto", FUN.VALUE = logical(1))] <- NULL
+        others[vapply(others, FUN = identical, "blank", FUN.VALUE = logical(1))] <- NULL
+        others[grepl("geom_possible", names(others))] <- NULL
         result <- list(
           main = list(aes = rv$aes_1, geom = rv$geom_1),
           others = dropNullsOrEmpty(others)

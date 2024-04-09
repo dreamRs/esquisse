@@ -84,8 +84,17 @@ esquisse_ui <- function(id,
 
     if (!isTRUE(layout_sidebar)) {
       tagList(
-        select_geom_aes_ui(ns("geomaes")),
-
+        select_geom_aes_ui(
+          id = ns("geomaes"),
+          n_geoms = 5,
+          list_geoms = list(
+            geomIcons(),
+            geomIcons(c("line", "step", "jitter", "point", "smooth", "density", "boxplot", "violin"), default = "blank"),
+            geomIcons(c("line", "step", "jitter", "point", "smooth", "density", "boxplot", "violin"), default = "blank"),
+            geomIcons(c("line", "step", "jitter", "point", "smooth", "density", "boxplot", "violin"), default = "blank"),
+            geomIcons(c("line", "step", "jitter", "point", "smooth", "density", "boxplot", "violin"), default = "blank")
+          )
+        ),
         fillCol(
           style = "overflow-y: auto;",
           tags$div(
@@ -99,7 +108,6 @@ esquisse_ui <- function(id,
             )
           )
         ),
-
         controls_ui(
           id = ns("controls"),
           insert_code = insert_code,

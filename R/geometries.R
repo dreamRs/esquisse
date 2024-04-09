@@ -251,9 +251,10 @@ match_geom_args <- function(geom,
 
 
 # utils for geom icons
-geomIcons <- function(geoms = NULL) {
+geomIcons <- function(geoms = NULL, default = c("auto", "blank")) {
+  default <- match.arg(default)
   defaults <- c(
-    "auto", "line", "step", "path", "area", "ribbon",
+    "line", "step", "path", "area", "ribbon",
     "bar", "col",
     "histogram", "density",
     "point", "jitter", "smooth",
@@ -263,7 +264,7 @@ geomIcons <- function(geoms = NULL) {
   if (is.null(geoms))
     geoms <- defaults
   geoms <- match.arg(geoms, defaults, several.ok = TRUE)
-  geoms <- unique(c("auto", geoms))
+  geoms <- unique(c(default, geoms))
   href <- "esquisse/geomIcon/gg-%s.png"
   geomsChoices <- lapply(
     X = geoms,

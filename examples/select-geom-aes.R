@@ -11,12 +11,12 @@ ui <- fluidPage(
   # select_geom_aes_ui("myid", n_geoms = 1),
   select_geom_aes_ui(
     "myid",
-    n_geoms = 4,
+    n_geoms = 5,
     list_geoms = list(
       geomIcons(),
-      geomIcons(c("line", "step", "jitter", "point", "smooth", "density", "boxplot", "violin")),
-      geomIcons(c("line", "step", "jitter", "point", "smooth", "density", "boxplot", "violin")),
-      geomIcons(c("line", "step", "jitter", "point", "smooth", "density", "boxplot", "violin"))
+      geomIcons(c("line", "step", "jitter", "point", "smooth", "density", "boxplot", "violin"), default = "blank"),
+      geomIcons(c("line", "step", "jitter", "point", "smooth", "density", "boxplot", "violin"), default = "blank"),
+      geomIcons(c("line", "step", "jitter", "point", "smooth", "density", "boxplot", "violin"), default = "blank")
     )
   ),
   verbatimTextOutput("result")
