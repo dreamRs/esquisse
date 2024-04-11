@@ -55,17 +55,13 @@ controls_axes_ui <- function(id) {
         width = "100%"
       )
     ),
-    tags$label(
-      class = "control-label",
-      `for` = ns("flip"),
-      i18n("Flip coordinate:")
-    ),
-    prettyToggle(
-      inputId = ns("flip"),
-      label_on = i18n("Yes"),
-      status_on = "success",
-      status_off = "danger",
-      label_off = i18n("No"),
+    prettyRadioButtons(
+      inputId = ns("coordinates"),
+      label = "Coordinates:",
+      choiceNames = c("Cartesian", "Flip", "Fixed", "Polar"),
+      choiceValues = c("cartesian", "flip", "fixed", "polar"),
+      status = "primary",
+      outline = TRUE,
       inline = TRUE
     )
   )
@@ -109,7 +105,7 @@ controls_axes_server <- function(id,
       })
 
       coord_r <- reactive(
-        if (isTRUE(input$flip)) "flip" else NULL
+        if (identical(input$coordinates, "cartesian")) NULL else input$coordinates
       )
 
       limits_r <- reactive({
