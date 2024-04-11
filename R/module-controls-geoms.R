@@ -259,7 +259,7 @@ controls_geoms_server <- function(id,
 
 # Multi geoms -------------------------------------------------------------
 
-
+#' @importFrom bslib navset_hidden nav_panel_hidden
 controls_multigeoms_ui <- function(id, style = NULL, n_geoms = 1) {
   ns <- NS(id)
   if (n_geoms == 1) {
@@ -282,7 +282,8 @@ controls_multigeoms_ui <- function(id, style = NULL, n_geoms = 1) {
 }
 
 
-
+#' @importFrom bslib nav_select
+#' @importFrom shiny moduleServer observeEvent reactiveValues reactive
 controls_multigeoms_server <- function(id,
                                   data_table = reactive(NULL),
                                   aesthetics_r = reactive(NULL),
