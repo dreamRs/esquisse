@@ -199,7 +199,7 @@ match_geom_args <- function(geom,
     if (geom %in% c("bar", "col", "histogram", "boxplot", "violin", "density", "ribbon")) {
       args$fill <- args$fill_color %||% "#0C4C8A"
     }
-    if (geom %in% c("line", "step", "path", "point")) {
+    if (geom %in% c("line", "step", "path", "point", "smooth")) {
       args$colour <- args$fill_color %||% "#0C4C8A"
     }
   }
@@ -240,7 +240,7 @@ match_geom_args <- function(geom,
       geom_args <- c(geom_args, setNames(aes_args, aes_args))
     }
   }
-  args <- args[names(args) %in% setdiff(names(geom_args), names(mapping))]
+  args <- args[names(args) %in% setdiff(names(geom_args), names(aes(!!!syms2(mapping))))]
   if (isTRUE(add_mapping) & length(mapping) > 0)
     args <- c(list(expr(aes(!!!syms2(mapping)))), args)
   return(args)
