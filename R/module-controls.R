@@ -407,16 +407,6 @@ controls_server <- function(id,
         outputs$coord <- axes_r$coord()
       }, ignoreNULL = FALSE)
 
-      # # smooth input
-      # observeEvent(axes_r$smooth(), {
-      #   outputs$smooth <- parameters_r$smooth()
-      # })
-      #
-      # # jittered input
-      # observeEvent(axes_r$jitter(), {
-      #   outputs$jitter <- parameters_r$jitter()
-      # })
-
       # transX input
       observeEvent(axes_r$transX(), {
         outputs$transX <- axes_r$transX()

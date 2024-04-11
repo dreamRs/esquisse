@@ -21,54 +21,6 @@ controls_axes_ui <- function(id) {
   )
 
   tagList(
-    # tags$div(
-    #   id = ns("controls-scatter"),
-    #   style = "display: none; padding-top: 10px;",
-    #   tags$label(
-    #     class = "control-label",
-    #     `for` = ns("smooth_add"),
-    #     i18n("Add a smooth line:")
-    #   ),
-    #   prettyToggle(
-    #     inputId = ns("smooth_add"),
-    #     label_on = i18n("Yes"),
-    #     status_on = "success",
-    #     status_off = "danger",
-    #     label_off = i18n("No"),
-    #     inline = TRUE
-    #   ),
-    #   conditionalPanel(
-    #     condition = paste0("input.smooth_add==true"),
-    #     ns = ns,
-    #     sliderInput(
-    #       inputId = ns("smooth_span"),
-    #       label = i18n("Smooth line span:"),
-    #       min = 0.1,
-    #       max = 1,
-    #       value = 0.75,
-    #       step = 0.01,
-    #       width = "100%"
-    #     )
-    #   ),
-    # ),
-
-    # tags$div(
-    #   id = ns("controls-jitter"),
-    #   style = "display: none; padding-top: 10px;",
-    #   tags$label(
-    #     class = "control-label",
-    #     `for` = ns("jitter_add"),
-    #     i18n("Jittered points:")
-    #   ),
-    #   prettyToggle(
-    #     inputId = ns("jitter_add"),
-    #     label_on = i18n("Yes"),
-    #     status_on = "success",
-    #     status_off = "danger",
-    #     label_off = i18n("No"),
-    #     inline = TRUE
-    #   )
-    # ),
 
     input_axis_text("x", ns = ns),
     input_axis_text("y", ns = ns),
@@ -138,23 +90,6 @@ controls_axes_server <- function(id,
       })
 
 
-
-      smooth_r <- reactive({
-        list(
-          add = input$smooth_add,
-          args = list(
-            span = input$smooth_span
-          )
-        )
-      })
-
-      jitter_r <- reactive({
-        list(
-          add = input$jitter_add,
-          args = list()
-        )
-      })
-
       transX_r <- reactive({
         list(
           use = use_transX() & !identical(input$transX, "identity"),
@@ -207,9 +142,7 @@ controls_axes_server <- function(id,
 
       return(list(
         inputs = inputs_r,
-        smooth = smooth_r,
         coord = coord_r,
-        jitter = jitter_r,
         transX = transX_r,
         transY = transY_r,
         limits = limits_r

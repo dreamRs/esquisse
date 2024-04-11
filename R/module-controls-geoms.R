@@ -21,7 +21,8 @@ controls_geoms_ui <- function(id, style = NULL) {
     class = "esquisse-controls-geoms-container",
     style = style,
     tags$div(
-      id = ns("controls-fill-color"), style = "display: block;",
+      id = ns("controls-fill-color"),
+      style = "display: block;",
       shinyWidgets::colorPickr(
         inputId = ns("fill_color"),
         label = i18n("Color:"),
@@ -41,11 +42,13 @@ controls_geoms_ui <- function(id, style = NULL) {
       )
     ),
     tags$div(
-      id = ns("controls-palette"), style = "display: none;",
+      id = ns("controls-palette"),
+      style = "display: none;",
       palette_ui(ns("colors"))
     ),
     tags$div(
-      id = ns("controls-ribbon-color"), style = "display: none;",
+      id = ns("controls-ribbon-color"),
+      style = "display: none;",
       colorPickr(
         inputId = ns("color_ribbon"),
         selected = "#A4A4A4",
@@ -63,7 +66,8 @@ controls_geoms_ui <- function(id, style = NULL) {
       )
     ),
     tags$div(
-      id = ns("controls-points"), style = "display: none;",
+      id = ns("controls-points"),
+      style = "display: none;",
       sliderInput(
         inputId = ns("size"),
         label = i18n("Size for points:"),
@@ -87,7 +91,8 @@ controls_geoms_ui <- function(id, style = NULL) {
       )
     ),
     tags$div(
-      id = ns("controls-lines"), style = "display: none;",
+      id = ns("controls-lines"),
+      style = "display: none;",
       sliderInput(
         inputId = ns("linewidth"),
         label = i18n("Line width:"),
@@ -108,7 +113,30 @@ controls_geoms_ui <- function(id, style = NULL) {
       )
     ),
     tags$div(
-      id = ns("controls-histogram"), style = "display: none;",
+      id = ns("controls-smooth"),
+      style = "display: none; padding-top: 10px;",
+      sliderInput(
+        inputId = ns("span"),
+        label = i18n("Controls the amount of smoothing:"),
+        min = 0.1,
+        max = 1,
+        value = 0.75,
+        step = 0.01,
+        width = "100%"
+      ),
+      sliderInput(
+        inputId = ns("level"),
+        label = i18n("Level of confidence interval to use:"),
+        min = 0.8,
+        max = 1,
+        value = 0.95,
+        step = 0.01,
+        width = "100%"
+      )
+    ),
+    tags$div(
+      id = ns("controls-histogram"),
+      style = "display: none;",
       sliderInput(
         inputId = ns("bins"),
         label = i18n("Numbers of bins:"),
@@ -119,7 +147,8 @@ controls_geoms_ui <- function(id, style = NULL) {
       )
     ),
     tags$div(
-      id = ns("controls-violin"), style = "display: none;",
+      id = ns("controls-violin"),
+      style = "display: none;",
       prettyRadioButtons(
         inputId = ns("scale"),
         label = i18n("Scale:"),
@@ -176,7 +205,7 @@ controls_geoms_server <- function(id,
         toggleDisplay("controls-position", geom %in% c("bar", "line", "area", "histogram") & "fill" %in% aesthetics)
         toggleDisplay("controls-histogram", geom %in% "histogram")
         toggleDisplay("controls-density", geom %in% c("density", "violin"))
-        toggleDisplay("controls-scatter", geom %in% "point")
+        toggleDisplay("controls-smooth", geom %in% "smooth")
         toggleDisplay("controls-points", geom %in% c("point"))
         toggleDisplay("controls-lines", geom %in% c("line", "step"))
         toggleDisplay("controls-violin", geom %in% "violin")
@@ -201,7 +230,9 @@ controls_geoms_server <- function(id,
           linetype = if (!identical(input$linetype, "solid")) input$linetype,
           fill_color = input$fill_color,
           color_ribbon = input$color_ribbon,
-          shape = if (!identical(input$shape, "circle")) input$shape
+          shape = if (!identical(input$shape, "circle")) input$shape,
+          span = if (!identical(input$span, 0.75)) input$span,
+          level = if (!identical(input$level, 0.95)) input$level
         ))
       })
 
