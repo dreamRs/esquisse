@@ -138,7 +138,7 @@ controls_ui <- function(id,
   }
   if (isTRUE("geoms" %in% controls)) {
     listControls[[length(listControls) + 1]] <- funControl(
-      controls_geoms_ui(
+      controls_multigeoms_ui(
         ns("geoms"),
         style = if (layout == "dropdown") {
           css(
@@ -147,7 +147,8 @@ controls_ui <- function(id,
             overflowX = "hidden",
             padding = "5px 7px"
           )
-        }
+        },
+        n_geoms = 5
       ),
       inputId = ns("controls-geoms"),
       class = "esquisse-controls-geoms",
@@ -267,6 +268,8 @@ controls_server <- function(id,
                             data_name,
                             ggplot_rv,
                             geoms_r = reactive(NULL),
+                            active_geom_r = reactive("geom1"),
+                            n_geoms = 1,
                             aesthetics_r = reactive(NULL),
                             use_facet = reactive(FALSE),
                             use_transX = reactive(FALSE),
@@ -293,11 +296,13 @@ controls_server <- function(id,
         aesthetics_r = aesthetics_r
       )
 
-      geometries_r <- controls_geoms_server(
+      geometries_r <- controls_multigeoms_server(
         id = "geoms",
         data_table = data_table,
         aesthetics_r = aesthetics_r,
-        geoms_r = geoms_r
+        geoms_r = geoms_r,
+        n_geoms = n_geoms,
+        active_geom_r = active_geom_r
       )
 
       theme_r <- controls_theme_server(
@@ -356,8 +361,15 @@ controls_server <- function(id,
       })
 
 
-      observeEvent(geometries_r$inputs(), {
-        outputs$inputs <- modifyList(outputs$inputs, geometries_r$inputs())
+      observeEvent(geometries_r(), {
+        res <- geometries_r()
+        lapply(
+          X = seq_len(n_geoms),
+          FUN = function(i) {
+            outputs[[paste0("geomargs", i)]] <- res[[i]]$inputs
+            outputs[[paste0("geomcolors", i)]] <- res[[i]]$colors
+          }
+        )
       })
 
       observeEvent(theme_r$inputs(), {
@@ -370,11 +382,6 @@ controls_server <- function(id,
 
       observeEvent(labs_r$labs(), {
         outputs$labs <- labs_r$labs()
-      })
-
-
-      observeEvent(geometries_r$colors(), {
-        outputs$colors <- geometries_r$colors()
       })
 
 

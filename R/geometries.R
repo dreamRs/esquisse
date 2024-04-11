@@ -241,7 +241,7 @@ match_geom_args <- function(geom,
     }
   }
   args <- args[names(args) %in% setdiff(names(geom_args), names(mapping))]
-  if (isTRUE(add_mapping))
+  if (isTRUE(add_mapping) & length(mapping) > 0)
     args <- c(list(expr(aes(!!!syms2(mapping)))), args)
   return(args)
 }

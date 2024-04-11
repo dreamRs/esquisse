@@ -250,9 +250,89 @@ controls_geoms_server <- function(id,
       }))
       colors_r_d <- debounce(colors_r, millis = 1000)
 
-      return(list(inputs = inputs_r, colors = colors_r_d))
+      return(reactive(list(inputs = inputs_r(), colors = colors_r_d())))
     }
   )
 }
+
+
+
+# Multi geoms -------------------------------------------------------------
+
+
+controls_multigeoms_ui <- function(id, style = NULL, n_geoms = 1) {
+  ns <- NS(id)
+  if (n_geoms == 1) {
+    controls_geoms_ui(ns("geom1"), style = style)
+  } else {
+    navs_controls_geom <- lapply(
+      X = seq_len(n_geoms),
+      FUN = function(i) {
+        nav_panel_hidden(
+          value = paste0("geom", i),
+          controls_geoms_ui(ns(paste0("geom", i)), style = style)
+        )
+      }
+    )
+    navset_hidden(
+      id = ns("navset_controls_geoms"),
+      !!!navs_controls_geom
+    )
+  }
+}
+
+
+
+controls_multigeoms_server <- function(id,
+                                  data_table = reactive(NULL),
+                                  aesthetics_r = reactive(NULL),
+                                  geoms_r = reactive(NULL),
+                                  n_geoms = 1,
+                                  active_geom_r = reactive("geom1"))  {
+  moduleServer(
+    id = id,
+    function(input, output, session) {
+
+      observeEvent(active_geom_r(), {
+        nav_select(id = "navset_controls_geoms", selected = active_geom_r())
+      })
+
+      rv <- reactiveValues()
+
+      lapply(
+        X = seq_len(n_geoms),
+        FUN = function(i) {
+
+          res_r <- controls_geoms_server(
+            id = paste0("geom", i),
+            data_table = data_table,
+            aesthetics_r = aesthetics_r,
+            geoms_r = reactive({
+              geoms_r()[i]
+            })
+          )
+
+          observeEvent(res_r(), {
+            rv[[paste0("geom", i)]] <- res_r()
+          })
+
+        }
+      )
+
+      return(reactive({
+        lapply(
+          X = seq_len(n_geoms),
+          FUN = function(i) {
+            list(
+              inputs =  rv[[paste0("geom", i)]]$inputs,
+              colors =  rv[[paste0("geom", i)]]$colors
+            )
+          }
+        )
+      }))
+    }
+  )
+}
+
 
 

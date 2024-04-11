@@ -125,6 +125,7 @@ esquisse_server <- function(id,
 
 
 
+      ### Geom & aesthetics selection
 
       res_geom_aes_r <- select_geom_aes_server(
         id = "geomaes",
@@ -137,16 +138,7 @@ esquisse_server <- function(id,
       aes_others_r <- reactive({
         others <- res_geom_aes_r()$others
         mappings <- others[grepl("aes", names(others))]
-        lapply(
-          X = mappings,
-          FUN = function(x) {
-            if (isTruthy(x)) {
-              list(mapping = expr(aes(!!!syms2(make_aes(x)))))
-            } else {
-              NULL
-            }
-          }
-        )
+        lapply(mappings, make_aes)
       })
       geom_r <- reactive(res_geom_aes_r()$main$geom)
       geoms_others_r <- reactive({
@@ -155,8 +147,9 @@ esquisse_server <- function(id,
         unlist(geoms, use.names = FALSE)
       })
 
-      # Module chart controls : title, xlabs, colors, export...
-      # paramsChart <- reactiveValues(inputs = NULL)
+
+
+      ### Module chart controls : title, xlabs, colors, export...
       controls_rv <- controls_server(
         id = "controls",
         data_table = reactive(data_chart$data),
@@ -168,7 +161,11 @@ esquisse_server <- function(id,
           nm
         }),
         ggplot_rv = ggplotCall,
-        geoms_r = geom_r,
+        geoms_r = reactive({
+          c(geom_r(), geoms_others_r())
+        }),
+        n_geoms = 5,
+        active_geom_r <- reactive(res_geom_aes_r()$active),
         aesthetics_r = reactive({
           dropNullsOrEmpty(aes_r())
         }),
@@ -226,9 +223,9 @@ esquisse_server <- function(id,
 
           scales <- which_pal_scale(
             mapping = mapping,
-            palette = controls_rv$colors$colors,
+            palette = controls_rv$geomcolors1$colors,
             data = data,
-            reverse = controls_rv$colors$reverse
+            reverse = controls_rv$geomcolors1$reverse
           )
 
           if (identical(geom_, "auto")) {
@@ -237,40 +234,34 @@ esquisse_server <- function(id,
             geom <- geom_
           }
 
-          geom_args <- match_geom_args(
-            geom_,
-            controls_rv$inputs,
-            mapping = mapping,
-            add_mapping = FALSE
-          )
 
-          if (isTruthy(geoms_others_r())) {
+          if (isTruthy(setdiff(geoms_others_r(), "blank"))) {
             geom <- c(geom, geoms_others_r())
-            geom_args <- c(
-              setNames(list(geom_args), geom_),
-              aes_others_r()
+            mappings <- c(list(mapping), aes_others_r())
+            # browser()
+            geom_args <- lapply(
+              X = seq_len(5), # n_geoms
+              FUN = function(i) {
+                match_geom_args(
+                  geom[i],
+                  controls_rv[[paste0("geomargs", i)]],
+                  mapping = mappings[[i]],
+                  add_mapping = i != 1
+                )
+              }
+            )
+            blanks <- geom == "blank"
+            geom <- geom[!blanks]
+            geom_args[blanks] <- NULL
+            # browser()
+          } else {
+            geom_args <- match_geom_args(
+              geom_,
+              controls_rv$geomargs1,
+              mapping = mapping,
+              add_mapping = FALSE
             )
           }
-          # if (isTRUE(controls_rv$jitter$add) & geom_ %in% c("boxplot", "violin")) {
-          #   geom <- c(geom, "jitter")
-          #   geom_args <- c(
-          #     setNames(list(geom_args), geom_),
-          #     list(jitter = controls_rv$jitter$args)
-          #   )
-          # }
-          # if (!is.null(aes_input$ymin) & !is.null(aes_input$ymax) & geom_ %in% c("line")) {
-          #   geom <- c("ribbon", geom)
-          #   mapping_ribbon <- aes_input[c("ymin", "ymax")]
-          #   geom_args <- c(
-          #     list(ribbon = list(
-          #       mapping = expr(aes(!!!syms2(mapping_ribbon))),
-          #       fill = controls_rv$inputs$color_ribbon
-          #     )),
-          #     setNames(list(geom_args), geom_)
-          #   )
-          #   mapping$ymin <- NULL
-          #   mapping$ymax <- NULL
-          # }
 
           scales_args <- scales$args
           scales <- scales$scales

@@ -33,7 +33,8 @@ select_geom_aes_ui <- function(id, n_geoms = 1, list_geoms = NULL) {
       X = seq_len(n_geoms),
       FUN = function(i) {
         nav_panel(
-          paste0("Geom #", i),
+          title = paste0("Geom #", i),
+          value = paste0("geom", i),
           tags$div(
             class = "esquisse-geom-aes",
             tags$div(
@@ -72,6 +73,13 @@ select_geom_aes_server <- function(id,
     function(input, output, session) {
 
       rv <- reactiveValues()
+      lapply(
+        X = seq_len(n_geoms),
+        FUN = function(i) {
+          rv[[paste0("aes_", i)]] <- list()
+          rv[[paste0("geom_", i)]] <- NA_character_
+        }
+      )
 
       # special case: geom_sf
       observeEvent(data_r(), {
@@ -139,12 +147,12 @@ select_geom_aes_server <- function(id,
         others$aes_1 <- NULL
         others$geom_1 <- NULL
         others$possible <- NULL
-        others[vapply(others, FUN = identical, "auto", FUN.VALUE = logical(1))] <- NULL
-        others[vapply(others, FUN = identical, "blank", FUN.VALUE = logical(1))] <- NULL
+        # others[vapply(others, FUN = identical, "auto", FUN.VALUE = logical(1))] <- NULL
+        # others[vapply(others, FUN = identical, "blank", FUN.VALUE = logical(1))] <- NULL
         others[grepl("geom_possible", names(others))] <- NULL
         result <- list(
           main = list(aes = rv$aes_1, geom = rv$geom_1),
-          others = dropNullsOrEmpty(others)
+          others = others
         )
         result$active <- input$navset_geoms
         return(result)
