@@ -16,6 +16,7 @@ ui <- fluidPage(
       geomIcons(),
       geomIcons(c("line", "step", "jitter", "point", "smooth", "density", "boxplot", "violin"), default = "blank"),
       geomIcons(c("line", "step", "jitter", "point", "smooth", "density", "boxplot", "violin"), default = "blank"),
+      geomIcons(c("line", "step", "jitter", "point", "smooth", "density", "boxplot", "violin"), default = "blank"),
       geomIcons(c("line", "step", "jitter", "point", "smooth", "density", "boxplot", "violin"), default = "blank")
     )
   ),
@@ -26,7 +27,7 @@ server <- function(input, output, session) {
 
   res_r <- select_geom_aes_server(
     id = "myid",
-    n_geoms = 4,
+    n_geoms = 5,
     data_r = reactive(palmerpenguins::penguins)
     # data_r = reactive(apexcharter::temperatures)
   )

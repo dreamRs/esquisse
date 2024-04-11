@@ -263,11 +263,11 @@ controls_ui <- function(id,
 #' @importFrom datamods filter_data_server
 #'
 controls_server <- function(id,
-                            type,
                             data_table,
                             data_name,
                             ggplot_rv,
-                            aesthetics = reactive(NULL),
+                            geoms_r = reactive(NULL),
+                            aesthetics_r = reactive(NULL),
                             use_facet = reactive(FALSE),
                             use_transX = reactive(FALSE),
                             use_transY = reactive(FALSE),
@@ -290,28 +290,24 @@ controls_server <- function(id,
       labs_r <- controls_labs_server(
         id = "labs",
         data_table = data_table,
-        aesthetics = aesthetics
+        aesthetics_r = aesthetics_r
       )
 
       geometries_r <- controls_geoms_server(
         id = "geoms",
         data_table = data_table,
-        aesthetics = aesthetics,
-        type = type
+        aesthetics_r = aesthetics_r,
+        geoms_r = geoms_r
       )
 
       theme_r <- controls_theme_server(
-        id = "theme",
-        data_table = data_table,
-        aesthetics = aesthetics,
-        type = type
+        id = "theme"
       )
 
       axes_r <- controls_axes_server(
         id = "axes",
         use_transX = use_transX,
-        use_transY = use_transY,
-        type = type
+        use_transY = use_transY
       )
 
       controls_export_server(

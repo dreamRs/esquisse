@@ -36,19 +36,14 @@ controls_theme_ui <- function(id, style = NULL) {
 
 
 #' @importFrom shiny observeEvent observe req reactive
-controls_theme_server <- function(id,
-                                       data_table = reactive(NULL),
-                                       aesthetics = reactive(NULL),
-                                       type = reactiveValues())  {
+controls_theme_server <- function(id) {
   moduleServer(
     id = id,
     function(input, output, session) {
 
       ns <- session$ns
 
-
       inputs_r <- reactive({
-        aesthetics <- names(aesthetics())
 
         legend_position <- input$legend_position
         if (identical(legend_position, "right"))

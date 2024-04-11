@@ -122,8 +122,7 @@ controls_axes_ui <- function(id) {
 
 controls_axes_server <- function(id,
                                  use_transX = reactive(FALSE),
-                                 use_transY = reactive(FALSE),
-                                 type = reactiveValues()) {
+                                 use_transY = reactive(FALSE)) {
   moduleServer(
     id = id,
     function(input, output, session) {

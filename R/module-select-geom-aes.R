@@ -66,8 +66,7 @@ select_geom_aes_server <- function(id,
                                    n_geoms = 1,
                                    data_r = reactive(NULL),
                                    default_aes = c("fill", "color", "size", "group", "facet"),
-                                   aesthetics_r = reactive(NULL),
-                                   geom_rv = reactiveValues()) {
+                                   aesthetics_r = reactive(NULL)) {
   moduleServer(
     id,
     function(input, output, session) {
@@ -115,15 +114,17 @@ select_geom_aes_server <- function(id,
           )
         )
 
-        geom_rv$possible <- c("auto", geoms)
-        geom_rv$controls <- select_geom_controls(input$geom_1, geoms)
-        geom_rv$palette <- !is.null(aesthetics$fill) | !is.null(aesthetics$color)
+        if (inherits(data_r(), "sf")) {
+          geoms <- c(geoms, "sf")
+        }
+
+        rv$possible <- c("auto", geoms)
 
       }), rv$aes_1, input$geom_1)
 
-      observeEvent( geom_rv$possible, {
+      observeEvent( rv$possible, {
         geoms <- geomIcons()$values
-        geomposs <-  geom_rv$possible
+        geomposs <-  rv$possible
         updateDropInput(
           session = session,
           inputId = "geom_1",
@@ -137,6 +138,7 @@ select_geom_aes_server <- function(id,
         others <- reactiveValuesToList(rv)
         others$aes_1 <- NULL
         others$geom_1 <- NULL
+        others$possible <- NULL
         others[vapply(others, FUN = identical, "auto", FUN.VALUE = logical(1))] <- NULL
         others[vapply(others, FUN = identical, "blank", FUN.VALUE = logical(1))] <- NULL
         others[grepl("geom_possible", names(others))] <- NULL

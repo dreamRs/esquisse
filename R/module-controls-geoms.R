@@ -162,8 +162,8 @@ controls_geoms_ui <- function(id, style = NULL) {
 #' @importFrom shiny observeEvent observe req reactive bindEvent
 controls_geoms_server <- function(id,
                                   data_table = reactive(NULL),
-                                  aesthetics = reactive(NULL),
-                                  type = reactiveValues())  {
+                                  aesthetics_r = reactive(NULL),
+                                  geoms_r = reactive(NULL))  {
   moduleServer(
     id = id,
     function(input, output, session) {
@@ -171,24 +171,27 @@ controls_geoms_server <- function(id,
       ns <- session$ns
 
       bindEvent(observe({
-        aesthetics <- names(aesthetics())
-        toggleDisplay("controls-position", type$controls %in% c("bar", "line", "area", "histogram") & "fill" %in% aesthetics)
-        toggleDisplay("controls-histogram", type$controls %in% "histogram")
-        toggleDisplay("controls-density", type$controls %in% c("density", "violin"))
-        toggleDisplay("controls-scatter", type$controls %in% "point")
-        toggleDisplay("controls-points", type$controls %in% c("point"))
-        toggleDisplay("controls-lines", type$controls %in% c("line", "step"))
-        toggleDisplay("controls-violin", type$controls %in% "violin")
-        toggleDisplay("controls-jitter", type$controls %in% c("boxplot", "violin"))
-      }), type$controls, aesthetics())
+        aesthetics <- names(aesthetics_r())
+        geom <- geoms_r()
+        toggleDisplay("controls-position", geom %in% c("bar", "line", "area", "histogram") & "fill" %in% aesthetics)
+        toggleDisplay("controls-histogram", geom %in% "histogram")
+        toggleDisplay("controls-density", geom %in% c("density", "violin"))
+        toggleDisplay("controls-scatter", geom %in% "point")
+        toggleDisplay("controls-points", geom %in% c("point"))
+        toggleDisplay("controls-lines", geom %in% c("line", "step"))
+        toggleDisplay("controls-violin", geom %in% "violin")
+        toggleDisplay("controls-jitter", geom %in% c("boxplot", "violin"))
+      }), geoms_r(), aesthetics_r())
 
-      observeEvent(type$palette, {
-        toggleDisplay("controls-palette", display = isTRUE(type$palette))
-        toggleDisplay("controls-fill-color", display = !isTRUE(type$palette))
+      observeEvent(aesthetics_r(), {
+        aesthetics <- dropNullsOrEmpty(aesthetics_r())
+        cond <- !is.null(aesthetics$fill) | !is.null(aesthetics$color)
+        toggleDisplay("controls-palette", display = isTRUE(cond))
+        toggleDisplay("controls-fill-color", display = !isTRUE(cond))
       })
 
       inputs_r <- reactive({
-        aesthetics <- names(aesthetics())
+        aesthetics <- names(aesthetics_r())
 
         dropNulls(list(
           adjust = input$adjust,
@@ -205,7 +208,7 @@ controls_geoms_server <- function(id,
       # Colors input
       colors_r <- palette_server("colors", reactive({
         data_ <- data_table()
-        aesthetics_ <- aesthetics()
+        aesthetics_ <- aesthetics_r()
         if ("fill" %in% names(aesthetics_)) {
           return(data_[[aesthetics_$fill]])
         }

@@ -67,7 +67,7 @@ controls_labs_ui <- function(id) {
 
 controls_labs_server <- function(id,
                                  data_table = reactive(NULL),
-                                 aesthetics = reactive(NULL)) {
+                                 aesthetics_r = reactive(NULL)) {
   moduleServer(
     id = id,
     function(input, output, session) {
@@ -88,8 +88,8 @@ controls_labs_server <- function(id,
       })
 
       # display specific control according to aesthetics set
-      observeEvent(aesthetics(), {
-        aesthetics <- names(aesthetics())
+      observeEvent(aesthetics_r(), {
+        aesthetics <- names(aesthetics_r())
         toggleDisplay("controls-labs-fill", display = "fill" %in% aesthetics)
         toggleDisplay("controls-labs-color", display = "color" %in% aesthetics)
         toggleDisplay("controls-labs-size", display = "size" %in% aesthetics)
@@ -100,7 +100,7 @@ controls_labs_server <- function(id,
 
       # labs input
       labs_r <- debounce(reactive({
-        asth <- names(aesthetics())
+        asth <- names(aesthetics_r())
         labs_fill <- `if`(isTRUE("fill" %in% asth), input$labs_fill, "")
         labs_color <- `if`(isTRUE("color" %in% asth), input$labs_color, "")
         labs_size <- `if`(isTRUE("size" %in% asth), input$labs_size, "")

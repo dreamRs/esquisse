@@ -40,7 +40,6 @@ esquisse_server <- function(id,
       ns <- session$ns
       ggplotCall <- reactiveValues(code = "")
       data_chart <- reactiveValues(data = NULL, name = NULL)
-      geom_rv <- reactiveValues(possible = "auto", controls = "auto", palette = FALSE)
 
       # Settings modal (aesthetics choices)
       observeEvent(input$settings, {
@@ -131,8 +130,8 @@ esquisse_server <- function(id,
         id = "geomaes",
         data_r = reactive(data_chart$data),
         aesthetics_r = reactive(input$aesthetics),
-        geom_rv = geom_rv,
-        n_geoms = 5
+        n_geoms = 5,
+        default_aes = default_aes
       )
       aes_r <- reactive(res_geom_aes_r()$main$aes)
       aes_others_r <- reactive({
@@ -149,9 +148,7 @@ esquisse_server <- function(id,
           }
         )
       })
-      observeEvent(res_geom_aes_r(), {
-        geom_rv$controls <- res_geom_aes_r()$main$geom
-      })
+      geom_r <- reactive(res_geom_aes_r()$main$geom)
       geoms_others_r <- reactive({
         others <- res_geom_aes_r()$others
         geoms <- others[grepl("geom", names(others))]
@@ -162,7 +159,6 @@ esquisse_server <- function(id,
       # paramsChart <- reactiveValues(inputs = NULL)
       controls_rv <- controls_server(
         id = "controls",
-        type = geom_rv,
         data_table = reactive(data_chart$data),
         data_name = reactive({
           nm <- req(data_chart$name)
@@ -172,7 +168,8 @@ esquisse_server <- function(id,
           nm
         }),
         ggplot_rv = ggplotCall,
-        aesthetics = reactive({
+        geoms_r = geom_r,
+        aesthetics_r = reactive({
           dropNullsOrEmpty(aes_r())
         }),
         use_facet = reactive({
@@ -207,7 +204,7 @@ esquisse_server <- function(id,
           req(data_chart$data)
           req(controls_rv$data)
           req(controls_rv$inputs)
-          geom_ <- req(res_geom_aes_r()$main$geom)
+          geom_ <- req(geom_r())
 
           aes_input <- make_aes(aes_r())
 
