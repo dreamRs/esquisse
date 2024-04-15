@@ -249,10 +249,6 @@ controls_ui <- function(id,
 #' @param aesthetics \code{reactive} function returning aesthetic names used.
 #' @param use_facet \code{reactive} function returning
 #'  \code{TRUE} / \code{FALSE} if plot use facets.
-#' @param use_transX \code{reactive} function returning \code{TRUE} / \code{FALSE}
-#'  to use transformation on x-axis.
-#' @param use_transY \code{reactive} function returning \code{TRUE} / \code{FALSE}
-#'  to use transformation on y-axis.
 #'
 #' @return A reactiveValues with all input's values
 #' @noRd
@@ -272,8 +268,6 @@ controls_server <- function(id,
                             n_geoms = 1,
                             aesthetics_r = reactive(NULL),
                             use_facet = reactive(FALSE),
-                            use_transX = reactive(FALSE),
-                            use_transY = reactive(FALSE),
                             width = reactive(NULL),
                             height = reactive(NULL),
                             drop_ids = TRUE) {
@@ -311,8 +305,26 @@ controls_server <- function(id,
 
       axes_r <- controls_axes_server(
         id = "axes",
-        use_transX = use_transX,
-        use_transY = use_transY
+        use_transX = reactive({
+          data <- req(data_r())
+          aes1 <- aesthetics_r()[[1]]
+          if (is.null(aes1$xvar))
+            return(FALSE)
+          identical(
+            x = col_type(data[[aes1$xvar]]),
+            y = "continuous"
+          )
+        }),
+        use_transY = reactive({
+          data <- req(data_r())
+          aes1 <- aesthetics_r()[[1]]
+          if (is.null(aes1$yvar))
+            return(FALSE)
+          identical(
+            x = col_type(data[[aes1$yvar]]),
+            y = "continuous"
+          )
+        })
       )
 
       controls_export_server(

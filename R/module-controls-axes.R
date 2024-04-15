@@ -23,10 +23,11 @@ controls_axes_ui <- function(id) {
   tagList(
 
     input_axis_text("x", ns = ns),
-    input_axis_text("y", ns = ns),
 
     tags$div(
-      id = ns("controls-scale-trans-x"), style = "display: none;",
+      id = ns("controls-scale-trans-x"),
+      style = "display: none;",
+      tags$b("X", "axis options:"),
       numericRangeInput(
         inputId = ns("xlim"),
         label = i18n("X-Axis limits (empty for none):"),
@@ -40,8 +41,14 @@ controls_axes_ui <- function(id) {
         width = "100%"
       )
     ),
+    tags$hr(),
+
+    input_axis_text("y", ns = ns),
+
     tags$div(
-      id = ns("controls-scale-trans-y"), style = "display: none;",
+      id = ns("controls-scale-trans-y"),
+      style = "display: none;",
+      tags$b("Y", "axis options:"),
       numericRangeInput(
         inputId = ns("ylim"),
         label = i18n("Y-Axis limits (empty for none):"),
@@ -55,6 +62,8 @@ controls_axes_ui <- function(id) {
         width = "100%"
       )
     ),
+    tags$hr(),
+    tags$b("Coordinates system:"),
     prettyRadioButtons(
       inputId = ns("coordinates"),
       label = "Coordinates:",
@@ -235,8 +244,7 @@ input_axis_text <- function(axis = c("x", "y"), ns = identity) {
       #   step = 0.1,
       #   width = "100%"
       # )
-    ),
-    tags$hr()
+    )
   )
 }
 

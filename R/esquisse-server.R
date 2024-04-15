@@ -172,22 +172,6 @@ esquisse_server <- function(id,
         use_facet = reactive({
           !is.null(aes_r()$facet) | !is.null(aes_r()$facet_row) | !is.null(aes_r()$facet_col)
         }),
-        use_transX = reactive({
-          if (is.null(aes_r()$xvar))
-            return(FALSE)
-          identical(
-            x = col_type(data_chart$data[[aes_r()$xvar]]),
-            y = "continuous"
-          )
-        }),
-        use_transY = reactive({
-          if (is.null(aes_r()$yvar))
-            return(FALSE)
-          identical(
-            x = col_type(data_chart$data[[aes_r()$yvar]]),
-            y = "continuous"
-          )
-        }),
         width = reactive(rv_render_ggplot$plot_width),
         height = reactive(rv_render_ggplot$plot_height),
         drop_ids = drop_ids
