@@ -94,7 +94,6 @@ controls_labs_server <- function(id,
         toggleDisplay("controls-labs-color", display = "color" %in% aesthetics)
         toggleDisplay("controls-labs-size", display = "size" %in% aesthetics)
         toggleDisplay("controls-labs-shape", display = "shape" %in% aesthetics)
-        toggleDisplay("controls-ribbon-color", display = "ymin" %in% aesthetics)
       })
 
 

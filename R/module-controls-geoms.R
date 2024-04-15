@@ -214,7 +214,7 @@ controls_geoms_server <- function(id,
 
       observeEvent(aesthetics_r(), {
         aesthetics <- dropNullsOrEmpty(aesthetics_r())
-        cond <- !is.null(aesthetics$fill) | !is.null(aesthetics$color)
+        cond <- !is.null(aesthetics$fill) | !is.null(aesthetics$color) | !is.null(aesthetics$colour)
         toggleDisplay("controls-palette", display = isTRUE(cond))
         toggleDisplay("controls-fill-color", display = !isTRUE(cond))
       })
@@ -307,7 +307,9 @@ controls_multigeoms_server <- function(id,
           res_r <- controls_geoms_server(
             id = paste0("geom", i),
             data_table = data_table,
-            aesthetics_r = aesthetics_r,
+            aesthetics_r = reactive({
+              combine_aes(aesthetics_r()[[1]], aesthetics_r()[[i]])
+            }),
             geoms_r = reactive({
               geoms_r()[i]
             })

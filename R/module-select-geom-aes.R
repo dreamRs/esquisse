@@ -95,8 +95,18 @@ select_geom_aes_server <- function(id,
           aes_r <- select_aes_server(
             id = paste0("aes_", i),
             data_r = data_r,
-            default_aes = default_aes,
-            input_aes = aesthetics_r
+            default_aes = if (i > 1) {
+              grep("facet", x = default_aes, value = TRUE, invert = TRUE)
+            } else {
+              default_aes
+            },
+            input_aes = reactive({
+              aesth <- aesthetics_r()
+              if (i > 1) {
+                aesth <- grep("facet", x = aesth, value = TRUE, invert = TRUE)
+              }
+              aesth
+            })
           )
 
           observeEvent(aes_r(), {

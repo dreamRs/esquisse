@@ -79,6 +79,9 @@ ggcall <- function(data = NULL,
   if (!is.null(scales)) {
     if (length(scales) == 1 && !isTRUE(grepl(scales, names(scales_args))))
       scales_args <- setNames(list(scales_args), scales)
+    scales_dup <- duplicated(scales, fromLast = TRUE)
+    scales_args <- scales_args[!scales_dup]
+    scales <- scales[!scales_dup]
     for (s in scales) {
       s_args <- dropNulls(scales_args[[s]])
       if (grepl("::", x = s)) {

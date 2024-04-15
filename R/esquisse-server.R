@@ -167,7 +167,7 @@ esquisse_server <- function(id,
         n_geoms = 5,
         active_geom_r <- reactive(res_geom_aes_r()$active),
         aesthetics_r = reactive({
-          dropNullsOrEmpty(aes_r())
+          c(list(aes_r()), aes_others_r())
         }),
         use_facet = reactive({
           !is.null(aes_r()$facet) | !is.null(aes_r()$facet_row) | !is.null(aes_r()$facet_col)
@@ -199,41 +199,26 @@ esquisse_server <- function(id,
         {
           req(input$play_plot, cancelOutput = TRUE)
           req(data_chart$data)
-          req(controls_rv$data)
+          data <- req(controls_rv$data)
           req(controls_rv$inputs)
           geom_ <- req(geom_r())
 
           aes_input <- make_aes(aes_r())
-
           req(unlist(aes_input) %in% names(data_chart$data))
-
           mapping <- build_aes(
             data = data_chart$data,
             .list = aes_input,
             geom = geom_
           )
 
-          geoms <- potential_geoms(
-            data = data_chart$data,
-            mapping = mapping
-          )
+          geoms <- potential_geoms(data_chart$data, mapping)
           req(geom_ %in% geoms)
-
-          data <- controls_rv$data
-
-          scales <- which_pal_scale(
-            mapping = mapping,
-            palette = controls_rv$geomcolors1$colors,
-            data = data,
-            reverse = controls_rv$geomcolors1$reverse
-          )
 
           if (identical(geom_, "auto")) {
             geom <- "blank"
           } else {
             geom <- geom_
           }
-
 
           if (isTruthy(setdiff(geoms_others_r(), "blank"))) {
             geom <- c(geom, geoms_others_r())
@@ -246,14 +231,30 @@ esquisse_server <- function(id,
                   geom[i],
                   controls_rv[[paste0("geomargs", i)]],
                   mapping = mappings[[i]],
-                  add_mapping = i != 1
+                  add_mapping = i != 1 & length(mappings[[i]]) > 0,
+                  exclude_args = names(combine_aes(mappings[[1]], mappings[[i]]))
                 )
               }
             )
             blanks <- geom == "blank"
             geom <- geom[!blanks]
             geom_args[blanks] <- NULL
-            # browser()
+
+            scales_l <- dropNulls(lapply(
+              X = seq_len(5),
+              FUN = function(i) {
+                mapping <- mappings[[i]]
+                if (length(mapping) < 1) return(NULL)
+                which_pal_scale(
+                  mapping = mapping,
+                  palette = controls_rv[[paste0("geomcolors", i)]]$colors,
+                  data = data,
+                  reverse = controls_rv[[paste0("geomcolors", i)]]$reverse
+                )
+              }
+            ))
+            scales_args <- unlist(lapply(scales_l, `[[`, "args"), recursive = FALSE)
+            scales <- unlist(lapply(scales_l, `[[`, "scales"))
           } else {
             geom_args <- match_geom_args(
               geom_,
@@ -261,10 +262,15 @@ esquisse_server <- function(id,
               mapping = mapping,
               add_mapping = FALSE
             )
+            scales <- which_pal_scale(
+              mapping = mapping,
+              palette = controls_rv$geomcolors1$colors,
+              data = data,
+              reverse = controls_rv$geomcolors1$reverse
+            )
+            scales_args <- scales$args
+            scales <- scales$scales
           }
-
-          scales_args <- scales$args
-          scales <- scales$scales
 
           if (isTRUE(controls_rv$transX$use)) {
             scales <- c(scales, "x_continuous")

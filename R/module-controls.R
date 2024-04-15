@@ -293,7 +293,7 @@ controls_server <- function(id,
       labs_r <- controls_labs_server(
         id = "labs",
         data_table = data_table,
-        aesthetics_r = aesthetics_r
+        aesthetics_r = reactive(aesthetics_r()[[1]])
       )
 
       geometries_r <- controls_multigeoms_server(

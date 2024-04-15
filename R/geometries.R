@@ -194,7 +194,10 @@ match_geom_args <- function(geom,
                             add_aes = TRUE,
                             mapping = list(),
                             add_mapping = FALSE,
+                            exclude_args = NULL,
                             envir = "ggplot2") {
+  if (is.null(exclude_args))
+    exclude_args <- names(aes(!!!syms2(mapping)))
   if (!is.null(args$fill_color)) {
     if (geom %in% c("bar", "col", "histogram", "boxplot", "violin", "density", "ribbon")) {
       args$fill <- args$fill_color %||% "#0C4C8A"
@@ -240,7 +243,7 @@ match_geom_args <- function(geom,
       geom_args <- c(geom_args, setNames(aes_args, aes_args))
     }
   }
-  args <- args[names(args) %in% setdiff(names(geom_args), names(aes(!!!syms2(mapping))))]
+  args <- args[names(args) %in% setdiff(names(geom_args), exclude_args)]
   if (isTRUE(add_mapping) & length(mapping) > 0)
     args <- c(list(expr(aes(!!!syms2(mapping)))), args)
   return(args)
