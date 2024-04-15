@@ -167,6 +167,7 @@ potential_geoms_ref <- function() {
 #' @param add_aes Add aesthetics parameters (like size, fill, ...).
 #' @param mapping Mapping used in plot, to avoid setting fixed aesthetics parameters.
 #' @param add_mapping Add the mapping as an argument.
+#' @param exclude_args Character vector of arguments to exclude, default is to exclude aesthetics names.
 #' @param envir Package environment to search in.
 #'
 #' @return a `list()`.

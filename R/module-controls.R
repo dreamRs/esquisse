@@ -243,7 +243,7 @@ controls_ui <- function(id,
 #'
 #' @param id Module's ID.
 #' @param type \code{reactiveValues} indicating the type of chart.
-#' @param data_table \code{reactive} function returning data used in plot.
+#' @param data_r \code{reactive} function returning data used in plot.
 #' @param data_name \code{reactive} function returning data name.
 #' @param ggplot_rv \code{reactiveValues} with ggplot object (for export).
 #' @param aesthetics \code{reactive} function returning aesthetic names used.
@@ -264,7 +264,7 @@ controls_ui <- function(id,
 #' @importFrom datamods filter_data_server
 #'
 controls_server <- function(id,
-                            data_table,
+                            data_r,
                             data_name,
                             ggplot_rv,
                             geoms_r = reactive(NULL),
@@ -292,13 +292,13 @@ controls_server <- function(id,
 
       labs_r <- controls_labs_server(
         id = "labs",
-        data_table = data_table,
+        data_r = data_r,
         aesthetics_r = reactive(aesthetics_r()[[1]])
       )
 
       geometries_r <- controls_multigeoms_server(
         id = "geoms",
-        data_table = data_table,
+        data_r = data_r,
         aesthetics_r = aesthetics_r,
         geoms_r = geoms_r,
         n_geoms = n_geoms,
@@ -335,12 +335,12 @@ controls_server <- function(id,
       output_filter <- filter_data_server(
         id = "filter-data",
         data = reactive({
-          req(data_table())
-          req(names(data_table()))
+          req(data_r())
+          req(names(data_r()))
           if (isTRUE(input$disable_filters)) {
             return(NULL)
           } else {
-            data_table()
+            data_r()
           }
         }),
         name = data_name,
@@ -355,8 +355,8 @@ controls_server <- function(id,
         export_png = NULL
       )
 
-      observeEvent(data_table(), {
-        outputs$data <- data_table()
+      observeEvent(data_r(), {
+        outputs$data <- data_r()
         outputs$code <- reactiveValues(expr = NULL, dplyr = NULL)
       })
 

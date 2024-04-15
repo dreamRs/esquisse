@@ -190,7 +190,7 @@ controls_geoms_ui <- function(id, style = NULL) {
 
 #' @importFrom shiny observeEvent observe req reactive bindEvent
 controls_geoms_server <- function(id,
-                                  data_table = reactive(NULL),
+                                  data_r = reactive(NULL),
                                   aesthetics_r = reactive(NULL),
                                   geoms_r = reactive(NULL))  {
   moduleServer(
@@ -238,7 +238,7 @@ controls_geoms_server <- function(id,
 
       # Colors input
       colors_r <- palette_server("colors", reactive({
-        data_ <- data_table()
+        data_ <- data_r()
         aesthetics_ <- aesthetics_r()
         if ("fill" %in% names(aesthetics_)) {
           return(data_[[aesthetics_$fill]])
@@ -285,11 +285,11 @@ controls_multigeoms_ui <- function(id, style = NULL, n_geoms = 1) {
 #' @importFrom bslib nav_select
 #' @importFrom shiny moduleServer observeEvent reactiveValues reactive
 controls_multigeoms_server <- function(id,
-                                  data_table = reactive(NULL),
-                                  aesthetics_r = reactive(NULL),
-                                  geoms_r = reactive(NULL),
-                                  n_geoms = 1,
-                                  active_geom_r = reactive("geom1"))  {
+                                       data_r = reactive(NULL),
+                                       aesthetics_r = reactive(NULL),
+                                       geoms_r = reactive(NULL),
+                                       n_geoms = 1,
+                                       active_geom_r = reactive("geom1"))  {
   moduleServer(
     id = id,
     function(input, output, session) {
@@ -306,7 +306,7 @@ controls_multigeoms_server <- function(id,
 
           res_r <- controls_geoms_server(
             id = paste0("geom", i),
-            data_table = data_table,
+            data_r = data_r,
             aesthetics_r = reactive({
               combine_aes(aesthetics_r()[[1]], aesthetics_r()[[i]])
             }),

@@ -66,7 +66,7 @@ controls_labs_ui <- function(id) {
 
 
 controls_labs_server <- function(id,
-                                 data_table = reactive(NULL),
+                                 data_r = reactive(NULL),
                                  aesthetics_r = reactive(NULL)) {
   moduleServer(
     id = id,
@@ -75,7 +75,7 @@ controls_labs_server <- function(id,
       ns <- session$ns
 
       # Reset labs ----
-      observeEvent(data_table(), {
+      observeEvent(data_r(), {
         updateTextInput(session = session, inputId = "labs_title", value = character(0))
         updateTextInput(session = session, inputId = "labs_subtitle", value = character(0))
         updateTextInput(session = session, inputId = "labs_caption", value = character(0))

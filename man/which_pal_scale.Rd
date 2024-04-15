@@ -37,29 +37,29 @@ library(ggplot2)
 
 # Automatic guess according to data
 which_pal_scale(
-  mapping = aes(fill = Sepal.Length), 
-  palette = "ggplot2", 
+  mapping = aes(fill = Sepal.Length),
+  palette = "ggplot2",
   data = iris
 )
 which_pal_scale(
   mapping = aes(fill = Species),
-  palette = "ggplot2", 
+  palette = "ggplot2",
   data = iris
 )
 
 
 # Explicitly specify type
 which_pal_scale(
-  mapping = aes(color = variable), 
-  palette = "Blues", 
+  mapping = aes(color = variable),
+  palette = "Blues",
   color_type = "discrete"
 )
 
 
 # Both scales
 which_pal_scale(
-  mapping = aes(color = var1, fill = var2), 
-  palette = "Blues", 
+  mapping = aes(color = var1, fill = var2),
+  palette = "Blues",
   color_type = "discrete",
   fill_type = "continuous"
 )

@@ -152,7 +152,7 @@ esquisse_server <- function(id,
       ### Module chart controls : title, xlabs, colors, export...
       controls_rv <- controls_server(
         id = "controls",
-        data_table = reactive(data_chart$data),
+        data_r = reactive(data_chart$data),
         data_name = reactive({
           nm <- req(data_chart$name)
           if (is_call(nm)) {
