@@ -247,8 +247,6 @@ controls_ui <- function(id,
 #' @param data_name \code{reactive} function returning data name.
 #' @param ggplot_rv \code{reactiveValues} with ggplot object (for export).
 #' @param aesthetics \code{reactive} function returning aesthetic names used.
-#' @param use_facet \code{reactive} function returning
-#'  \code{TRUE} / \code{FALSE} if plot use facets.
 #'
 #' @return A reactiveValues with all input's values
 #' @noRd
@@ -267,7 +265,6 @@ controls_server <- function(id,
                             active_geom_r = reactive("geom1"),
                             n_geoms = 1,
                             aesthetics_r = reactive(NULL),
-                            use_facet = reactive(FALSE),
                             width = reactive(NULL),
                             height = reactive(NULL),
                             drop_ids = TRUE) {
@@ -279,7 +276,10 @@ controls_server <- function(id,
 
       options_r <- controls_options_server(
         id = "options",
-        use_facet = use_facet,
+        use_facet = reactive({
+          aesth1 <- aesthetics_r()[[1]]
+          !is.null(aesth1$facet) | !is.null(aesth1$facet_row) | !is.null(aesth1$facet_col)
+        }),
         width = width,
         height = height
       )

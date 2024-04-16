@@ -170,9 +170,6 @@ esquisse_server <- function(id,
         aesthetics_r = reactive({
           c(list(aes_r()), aes_others_r())
         }),
-        use_facet = reactive({
-          !is.null(aes_r()$facet) | !is.null(aes_r()$facet_row) | !is.null(aes_r()$facet_col)
-        }),
         width = reactive(rv_render_ggplot$plot_width),
         height = reactive(rv_render_ggplot$plot_height),
         drop_ids = drop_ids
