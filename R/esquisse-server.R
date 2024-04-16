@@ -262,12 +262,6 @@ esquisse_server <- function(id,
             scales_args <- c(scales_args, list(y_continuous = controls_rv$transY$args))
           }
 
-          xlim <- if (isTRUE(controls_rv$limits$x)) {
-            controls_rv$limits$xlim
-          }
-          ylim <- if (isTRUE(controls_rv$limits$y)) {
-            controls_rv$limits$ylim
-          }
           data_name <- data_chart$name %||% "data"
           gg_call <- ggcall(
             data = data_name,
@@ -284,8 +278,8 @@ esquisse_server <- function(id,
             facet_row = aes_r()$facet_row,
             facet_col = aes_r()$facet_col,
             facet_args = controls_rv$facet,
-            xlim = xlim,
-            ylim = ylim
+            xlim = controls_rv$limits$xlim,
+            ylim = controls_rv$limits$ylim
           )
 
           ggplotCall$code <- deparse2(gg_call)

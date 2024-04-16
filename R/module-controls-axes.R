@@ -119,10 +119,8 @@ controls_axes_server <- function(id,
 
       limits_r <- reactive({
         list(
-          x = use_transX() & !anyNA(input$xlim),
-          xlim = input$xlim,
-          y = use_transY() & !anyNA(input$ylim),
-          ylim = input$ylim
+          xlim = if (use_transX() & !anyNA(input$xlim)) input$xlim,
+          ylim = if (use_transY() & !anyNA(input$ylim)) input$ylim
         )
       })
 
