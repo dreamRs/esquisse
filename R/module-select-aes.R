@@ -25,7 +25,7 @@ select_aes_server <- function(id,
         if (is.reactive(default_aes)) {
           aesthetics <- default_aes()
         } else {
-          if (is.null(input_aes())) {
+          if (length(input_aes()) < 1) {
             aesthetics <- default_aes
           } else {
             aesthetics <- input_aes()

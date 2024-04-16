@@ -11,51 +11,52 @@
 #'
 #' @return a \code{list}
 #' @export
-#' 
+#'
 #' @importFrom ggplot2 scale_fill_hue scale_color_hue scale_fill_gradient scale_color_gradient
 #'  scale_fill_brewer scale_color_brewer scale_fill_distiller scale_color_distiller
 #'  scale_fill_viridis_c scale_color_viridis_c scale_fill_viridis_d scale_color_viridis_d
 #' @importFrom rlang is_named
-#' 
+#'
 #' @examples
 #' library(ggplot2)
-#' 
+#'
 #' # Automatic guess according to data
 #' which_pal_scale(
-#'   mapping = aes(fill = Sepal.Length), 
-#'   palette = "ggplot2", 
+#'   mapping = aes(fill = Sepal.Length),
+#'   palette = "ggplot2",
 #'   data = iris
 #' )
 #' which_pal_scale(
 #'   mapping = aes(fill = Species),
-#'   palette = "ggplot2", 
+#'   palette = "ggplot2",
 #'   data = iris
 #' )
-#' 
-#' 
+#'
+#'
 #' # Explicitly specify type
 #' which_pal_scale(
-#'   mapping = aes(color = variable), 
-#'   palette = "Blues", 
+#'   mapping = aes(color = variable),
+#'   palette = "Blues",
 #'   color_type = "discrete"
 #' )
-#' 
-#' 
+#'
+#'
 #' # Both scales
 #' which_pal_scale(
-#'   mapping = aes(color = var1, fill = var2), 
-#'   palette = "Blues", 
+#'   mapping = aes(color = var1, fill = var2),
+#'   palette = "Blues",
 #'   color_type = "discrete",
 #'   fill_type = "continuous"
 #' )
-which_pal_scale <- function(mapping, 
-                            palette = "ggplot2", 
+which_pal_scale <- function(mapping,
+                            palette = "ggplot2",
                             data = NULL,
-                            fill_type = c("continuous", "discrete"), 
+                            fill_type = c("continuous", "discrete"),
                             color_type = c("continuous", "discrete"),
                             reverse = FALSE) {
   if (length(palette) < 1)
     return(list())
+  mapping <- aes(!!!syms2(mapping))
   args <- list()
   fill_type <- match.arg(fill_type)
   color_type <- match.arg(color_type)
@@ -72,7 +73,7 @@ which_pal_scale <- function(mapping,
       color_type <- "continuous"
     }
   }
-  
+
   # Option 1: manual color palette
   if (rlang::is_named(palette)) {
     if (!is.null(mapping$fill)) {
@@ -108,7 +109,7 @@ which_pal_scale <- function(mapping,
       args = args
     ))
   }
-  
+
   # Option 2: known palette
   palettes <- unlist(lapply(default_pals()$choices, names), recursive = TRUE, use.names = FALSE)
   if (isTRUE(palette %in% palettes)) {
@@ -156,7 +157,7 @@ which_pal_scale <- function(mapping,
       )
       if (!identical(palette, "ggplot2")) {
         args[[fill_scale]] <- setNames(
-          object = list(palette), 
+          object = list(palette),
           nm = ifelse(grepl("viridis", fill_scale), "option", "palette")
         )
         if (palette %in% c("ipsum", "ft")) {
@@ -180,7 +181,7 @@ which_pal_scale <- function(mapping,
       )
       if (!identical(palette, "ggplot2")) {
         args[[color_scale]] <- setNames(
-          object = list(palette), 
+          object = list(palette),
           nm = ifelse(grepl("viridis", color_scale), "option", "palette")
         )
         if (palette %in% c("ipsum", "ft")) {
@@ -201,7 +202,7 @@ which_pal_scale <- function(mapping,
       args = args
     ))
   }
-  
+
   # Option 3: custom palette
   palettes <- get_palettes()$choices
   if (isTRUE(palette %in% names(palettes))) {

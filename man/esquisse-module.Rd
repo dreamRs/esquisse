@@ -16,7 +16,8 @@ esquisse_ui(
   insert_code = FALSE,
   play_pause = TRUE,
   layout_sidebar = FALSE,
-  downloads = downloads_labels()
+  downloads = downloads_labels(),
+  n_geoms = 8
 )
 
 esquisse_server(
@@ -25,6 +26,7 @@ esquisse_server(
   name = "data",
   default_aes = c("fill", "color", "size", "group", "facet"),
   import_from = c("env", "file", "copypaste", "googlesheets", "url"),
+  n_geoms = 8,
   drop_ids = TRUE,
   notify_warnings = NULL
 )
@@ -61,6 +63,8 @@ code in the current user script (work only in RStudio).}
 \item{layout_sidebar}{Put controls in a sidebar on the left rather than below the chart in dropdowns.}
 
 \item{downloads}{Export options available or \code{NULL} for no export. See \code{\link[=downloads_labels]{downloads_labels()}}.}
+
+\item{n_geoms}{Number of geoms the user can use.}
 
 \item{data_rv}{Either:
 \itemize{

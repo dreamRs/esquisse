@@ -138,7 +138,7 @@ controls_ui <- function(id,
   }
   if (isTRUE("geoms" %in% controls)) {
     listControls[[length(listControls) + 1]] <- funControl(
-      controls_geoms_ui(
+      controls_multigeoms_ui(
         ns("geoms"),
         style = if (layout == "dropdown") {
           css(
@@ -147,7 +147,8 @@ controls_ui <- function(id,
             overflowX = "hidden",
             padding = "5px 7px"
           )
-        }
+        },
+        n_geoms = 5
       ),
       inputId = ns("controls-geoms"),
       class = "esquisse-controls-geoms",
@@ -242,16 +243,12 @@ controls_ui <- function(id,
 #'
 #' @param id Module's ID.
 #' @param type \code{reactiveValues} indicating the type of chart.
-#' @param data_table \code{reactive} function returning data used in plot.
+#' @param data_r \code{reactive} function returning data used in plot.
 #' @param data_name \code{reactive} function returning data name.
 #' @param ggplot_rv \code{reactiveValues} with ggplot object (for export).
 #' @param aesthetics \code{reactive} function returning aesthetic names used.
 #' @param use_facet \code{reactive} function returning
 #'  \code{TRUE} / \code{FALSE} if plot use facets.
-#' @param use_transX \code{reactive} function returning \code{TRUE} / \code{FALSE}
-#'  to use transformation on x-axis.
-#' @param use_transY \code{reactive} function returning \code{TRUE} / \code{FALSE}
-#'  to use transformation on y-axis.
 #'
 #' @return A reactiveValues with all input's values
 #' @noRd
@@ -263,14 +260,14 @@ controls_ui <- function(id,
 #' @importFrom datamods filter_data_server
 #'
 controls_server <- function(id,
-                            type,
-                            data_table,
+                            data_r,
                             data_name,
                             ggplot_rv,
-                            aesthetics = reactive(NULL),
+                            geoms_r = reactive(NULL),
+                            active_geom_r = reactive("geom1"),
+                            n_geoms = 1,
+                            aesthetics_r = reactive(NULL),
                             use_facet = reactive(FALSE),
-                            use_transX = reactive(FALSE),
-                            use_transY = reactive(FALSE),
                             width = reactive(NULL),
                             height = reactive(NULL),
                             drop_ids = TRUE) {
@@ -289,29 +286,45 @@ controls_server <- function(id,
 
       labs_r <- controls_labs_server(
         id = "labs",
-        data_table = data_table,
-        aesthetics = aesthetics
+        data_r = data_r,
+        aesthetics_r = reactive(aesthetics_r()[[1]])
       )
 
-      geometries_r <- controls_geoms_server(
+      geometries_r <- controls_multigeoms_server(
         id = "geoms",
-        data_table = data_table,
-        aesthetics = aesthetics,
-        type = type
+        data_r = data_r,
+        aesthetics_r = aesthetics_r,
+        geoms_r = geoms_r,
+        n_geoms = n_geoms,
+        active_geom_r = active_geom_r
       )
 
       theme_r <- controls_theme_server(
-        id = "theme",
-        data_table = data_table,
-        aesthetics = aesthetics,
-        type = type
+        id = "theme"
       )
 
       axes_r <- controls_axes_server(
         id = "axes",
-        use_transX = use_transX,
-        use_transY = use_transY,
-        type = type
+        use_transX = reactive({
+          data <- req(data_r())
+          aes1 <- aesthetics_r()[[1]]
+          if (is.null(aes1$xvar))
+            return(FALSE)
+          identical(
+            x = col_type(data[[aes1$xvar]]),
+            y = "continuous"
+          )
+        }),
+        use_transY = reactive({
+          data <- req(data_r())
+          aes1 <- aesthetics_r()[[1]]
+          if (is.null(aes1$yvar))
+            return(FALSE)
+          identical(
+            x = col_type(data[[aes1$yvar]]),
+            y = "continuous"
+          )
+        })
       )
 
       controls_export_server(
@@ -334,12 +347,12 @@ controls_server <- function(id,
       output_filter <- filter_data_server(
         id = "filter-data",
         data = reactive({
-          req(data_table())
-          req(names(data_table()))
+          req(data_r())
+          req(names(data_r()))
           if (isTRUE(input$disable_filters)) {
             return(NULL)
           } else {
-            data_table()
+            data_r()
           }
         }),
         name = data_name,
@@ -354,14 +367,21 @@ controls_server <- function(id,
         export_png = NULL
       )
 
-      observeEvent(data_table(), {
-        outputs$data <- data_table()
+      observeEvent(data_r(), {
+        outputs$data <- data_r()
         outputs$code <- reactiveValues(expr = NULL, dplyr = NULL)
       })
 
 
-      observeEvent(geometries_r$inputs(), {
-        outputs$inputs <- modifyList(outputs$inputs, geometries_r$inputs())
+      observeEvent(geometries_r(), {
+        res <- geometries_r()
+        lapply(
+          X = seq_len(n_geoms),
+          FUN = function(i) {
+            outputs[[paste0("geomargs", i)]] <- res[[i]]$inputs
+            outputs[[paste0("geomcolors", i)]] <- res[[i]]$colors
+          }
+        )
       })
 
       observeEvent(theme_r$inputs(), {
@@ -374,11 +394,6 @@ controls_server <- function(id,
 
       observeEvent(labs_r$labs(), {
         outputs$labs <- labs_r$labs()
-      })
-
-
-      observeEvent(geometries_r$colors(), {
-        outputs$colors <- geometries_r$colors()
       })
 
 
@@ -410,16 +425,6 @@ controls_server <- function(id,
       observeEvent(axes_r$coord(), {
         outputs$coord <- axes_r$coord()
       }, ignoreNULL = FALSE)
-
-      # # smooth input
-      # observeEvent(axes_r$smooth(), {
-      #   outputs$smooth <- parameters_r$smooth()
-      # })
-      #
-      # # jittered input
-      # observeEvent(axes_r$jitter(), {
-      #   outputs$jitter <- parameters_r$jitter()
-      # })
 
       # transX input
       observeEvent(axes_r$transX(), {

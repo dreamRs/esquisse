@@ -167,6 +167,7 @@ potential_geoms_ref <- function() {
 #' @param add_aes Add aesthetics parameters (like size, fill, ...).
 #' @param mapping Mapping used in plot, to avoid setting fixed aesthetics parameters.
 #' @param add_mapping Add the mapping as an argument.
+#' @param exclude_args Character vector of arguments to exclude, default is to exclude aesthetics names.
 #' @param envir Package environment to search in.
 #'
 #' @return a `list()`.
@@ -194,12 +195,15 @@ match_geom_args <- function(geom,
                             add_aes = TRUE,
                             mapping = list(),
                             add_mapping = FALSE,
+                            exclude_args = NULL,
                             envir = "ggplot2") {
+  if (is.null(exclude_args))
+    exclude_args <- names(aes(!!!syms2(mapping)))
   if (!is.null(args$fill_color)) {
     if (geom %in% c("bar", "col", "histogram", "boxplot", "violin", "density", "ribbon")) {
       args$fill <- args$fill_color %||% "#0C4C8A"
     }
-    if (geom %in% c("line", "step", "path", "point")) {
+    if (geom %in% c("line", "step", "path", "point", "smooth")) {
       args$colour <- args$fill_color %||% "#0C4C8A"
     }
   }
@@ -240,8 +244,8 @@ match_geom_args <- function(geom,
       geom_args <- c(geom_args, setNames(aes_args, aes_args))
     }
   }
-  args <- args[names(args) %in% setdiff(names(geom_args), names(mapping))]
-  if (isTRUE(add_mapping))
+  args <- args[names(args) %in% setdiff(names(geom_args), exclude_args)]
+  if (isTRUE(add_mapping) & length(mapping) > 0)
     args <- c(list(expr(aes(!!!syms2(mapping)))), args)
   return(args)
 }
@@ -251,9 +255,10 @@ match_geom_args <- function(geom,
 
 
 # utils for geom icons
-geomIcons <- function(geoms = NULL) {
+geomIcons <- function(geoms = NULL, default = c("auto", "blank", "select")) {
+  default <- match.arg(default)
   defaults <- c(
-    "auto", "line", "step", "path", "area", "ribbon",
+    "line", "step", "path", "area", "ribbon",
     "bar", "col",
     "histogram", "density",
     "point", "jitter", "smooth",
@@ -263,12 +268,12 @@ geomIcons <- function(geoms = NULL) {
   if (is.null(geoms))
     geoms <- defaults
   geoms <- match.arg(geoms, defaults, several.ok = TRUE)
-  geoms <- unique(c("auto", geoms))
+  geoms <- unique(c(default, geoms))
   href <- "esquisse/geomIcon/gg-%s.png"
   geomsChoices <- lapply(
     X = geoms,
     FUN = function(x) {
-      list(inputId = x, img = sprintf(href, x), label = capitalize(x))
+      list(inputId = x, img = sprintf(href, x), label = if (x != "select") capitalize(x))
     }
   )
 
@@ -283,7 +288,7 @@ geomIcons <- function(geoms = NULL) {
       )
     }
   )
-
+  geoms[!geoms %in% defaults] <- "blank"
   list(names = geomsChoicesNames, values = geoms)
 }
 

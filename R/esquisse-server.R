@@ -30,6 +30,7 @@ esquisse_server <- function(id,
                             name = "data",
                             default_aes = c("fill", "color", "size", "group", "facet"),
                             import_from = c("env", "file", "copypaste", "googlesheets", "url"),
+                            n_geoms = 8,
                             drop_ids = TRUE,
                             notify_warnings = NULL) {
 
@@ -40,7 +41,6 @@ esquisse_server <- function(id,
       ns <- session$ns
       ggplotCall <- reactiveValues(code = "")
       data_chart <- reactiveValues(data = NULL, name = NULL)
-      geom_rv <- reactiveValues(possible = "auto", controls = "auto", palette = FALSE)
 
       # Settings modal (aesthetics choices)
       observeEvent(input$settings, {
@@ -126,25 +126,34 @@ esquisse_server <- function(id,
 
 
 
+      ### Geom & aesthetics selection
 
       res_geom_aes_r <- select_geom_aes_server(
         id = "geomaes",
         data_r = reactive(data_chart$data),
         aesthetics_r = reactive(input$aesthetics),
-        geom_rv = geom_rv
+        n_geoms = n_geoms,
+        default_aes = default_aes
       )
       aes_r <- reactive(res_geom_aes_r()$main$aes)
-      observeEvent(res_geom_aes_r()$geom_1, {
-        geom_rv$controls <- res_geom_aes_r()$main$geom
+      aes_others_r <- reactive({
+        others <- res_geom_aes_r()$others
+        mappings <- others[grepl("aes", names(others))]
+        lapply(mappings, make_aes)
+      })
+      geom_r <- reactive(res_geom_aes_r()$main$geom)
+      geoms_others_r <- reactive({
+        others <- res_geom_aes_r()$others
+        geoms <- others[grepl("geom", names(others))]
+        unlist(geoms, use.names = FALSE)
       })
 
 
-      # Module chart controls : title, xlabs, colors, export...
-      # paramsChart <- reactiveValues(inputs = NULL)
+
+      ### Module chart controls : title, xlabs, colors, export...
       controls_rv <- controls_server(
         id = "controls",
-        type = geom_rv,
-        data_table = reactive(data_chart$data),
+        data_r = reactive(data_chart$data),
         data_name = reactive({
           nm <- req(data_chart$name)
           if (is_call(nm)) {
@@ -153,27 +162,16 @@ esquisse_server <- function(id,
           nm
         }),
         ggplot_rv = ggplotCall,
-        aesthetics = reactive({
-          dropNullsOrEmpty(aes_r())
+        geoms_r = reactive({
+          c(geom_r(), geoms_others_r())
+        }),
+        n_geoms = n_geoms,
+        active_geom_r <- reactive(res_geom_aes_r()$active),
+        aesthetics_r = reactive({
+          c(list(aes_r()), aes_others_r())
         }),
         use_facet = reactive({
           !is.null(aes_r()$facet) | !is.null(aes_r()$facet_row) | !is.null(aes_r()$facet_col)
-        }),
-        use_transX = reactive({
-          if (is.null(aes_r()$xvar))
-            return(FALSE)
-          identical(
-            x = col_type(data_chart$data[[aes_r()$xvar]]),
-            y = "continuous"
-          )
-        }),
-        use_transY = reactive({
-          if (is.null(aes_r()$yvar))
-            return(FALSE)
-          identical(
-            x = col_type(data_chart$data[[aes_r()$yvar]]),
-            y = "continuous"
-          )
         }),
         width = reactive(rv_render_ggplot$plot_width),
         height = reactive(rv_render_ggplot$plot_height),
@@ -186,78 +184,73 @@ esquisse_server <- function(id,
         {
           req(input$play_plot, cancelOutput = TRUE)
           req(data_chart$data)
-          req(controls_rv$data)
+          data <- req(controls_rv$data)
           req(controls_rv$inputs)
-          geom_ <- req(res_geom_aes_r()$main$geom)
+          geom <- req(geom_r())
 
           aes_input <- make_aes(aes_r())
-
           req(unlist(aes_input) %in% names(data_chart$data))
-
           mapping <- build_aes(
             data = data_chart$data,
             .list = aes_input,
-            geom = geom_
+            geom = geom
           )
 
-          geoms <- potential_geoms(
-            data = data_chart$data,
-            mapping = mapping
-          )
-          req(geom_ %in% geoms)
+          geoms <- potential_geoms(data_chart$data, mapping)
+          req(geom %in% geoms)
 
-          data <- controls_rv$data
 
-          scales <- which_pal_scale(
-            mapping = mapping,
-            palette = controls_rv$colors$colors,
-            data = data,
-            reverse = controls_rv$colors$reverse
-          )
+          if (isTruthy(setdiff(geoms_others_r(), "blank"))) {
+            geom <- c(geom, geoms_others_r())
+            mappings <- c(list(mapping), aes_others_r())
+            # browser()
+            geom_args <- lapply(
+              X = seq_len(n_geoms), # n_geoms
+              FUN = function(i) {
+                match_geom_args(
+                  geom[i],
+                  controls_rv[[paste0("geomargs", i)]],
+                  mapping = mappings[[i]],
+                  add_mapping = i != 1 & length(mappings[[i]]) > 0,
+                  exclude_args = names(combine_aes(mappings[[1]], mappings[[i]]))
+                )
+              }
+            )
+            blanks <- geom == "blank"
+            geom <- geom[!blanks]
+            geom_args[blanks] <- NULL
 
-          if (identical(geom_, "auto")) {
-            geom <- "blank"
+            scales_l <- dropNulls(lapply(
+              X = seq_len(n_geoms),
+              FUN = function(i) {
+                mapping <- mappings[[i]]
+                if (length(mapping) < 1) return(NULL)
+                which_pal_scale(
+                  mapping = mapping,
+                  palette = controls_rv[[paste0("geomcolors", i)]]$colors,
+                  data = data,
+                  reverse = controls_rv[[paste0("geomcolors", i)]]$reverse
+                )
+              }
+            ))
+            scales_args <- unlist(lapply(scales_l, `[[`, "args"), recursive = FALSE)
+            scales <- unlist(lapply(scales_l, `[[`, "scales"))
           } else {
-            geom <- geom_
-          }
-
-          geom_args <- match_geom_args(
-            geom_,
-            controls_rv$inputs,
-            mapping = mapping,
-            add_mapping = FALSE
-          )
-
-          if (isTRUE(controls_rv$smooth$add) & geom_ %in% c("point", "line")) {
-            geom <- c(geom, "smooth")
-            geom_args <- c(
-              setNames(list(geom_args), geom_),
-              list(smooth = controls_rv$smooth$args)
+            geom_args <- match_geom_args(
+              geom,
+              controls_rv$geomargs1,
+              mapping = mapping,
+              add_mapping = FALSE
             )
-          }
-          if (isTRUE(controls_rv$jitter$add) & geom_ %in% c("boxplot", "violin")) {
-            geom <- c(geom, "jitter")
-            geom_args <- c(
-              setNames(list(geom_args), geom_),
-              list(jitter = controls_rv$jitter$args)
+            scales <- which_pal_scale(
+              mapping = mapping,
+              palette = controls_rv$geomcolors1$colors,
+              data = data,
+              reverse = controls_rv$geomcolors1$reverse
             )
+            scales_args <- scales$args
+            scales <- scales$scales
           }
-          if (!is.null(aes_input$ymin) & !is.null(aes_input$ymax) & geom_ %in% c("line")) {
-            geom <- c("ribbon", geom)
-            mapping_ribbon <- aes_input[c("ymin", "ymax")]
-            geom_args <- c(
-              list(ribbon = list(
-                mapping = expr(aes(!!!syms2(mapping_ribbon))),
-                fill = controls_rv$inputs$color_ribbon
-              )),
-              setNames(list(geom_args), geom_)
-            )
-            mapping$ymin <- NULL
-            mapping$ymax <- NULL
-          }
-
-          scales_args <- scales$args
-          scales <- scales$scales
 
           if (isTRUE(controls_rv$transX$use)) {
             scales <- c(scales, "x_continuous")

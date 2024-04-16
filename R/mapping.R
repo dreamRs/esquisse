@@ -89,5 +89,10 @@ make_aes <- function(.list) {
 }
 
 
-
+combine_aes <- function(...) {
+  mapping <- c(...)
+  mapping <- mapping[!duplicated(names(mapping), fromLast = TRUE)]
+  mapping <- aes(!!!syms2(mapping))
+  mapping[!duplicated(names(mapping), fromLast = TRUE)]
+}
 

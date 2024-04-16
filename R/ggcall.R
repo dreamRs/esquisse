@@ -21,21 +21,21 @@
 #'
 #' @return a \code{call} that can be evaluated with \code{eval}.
 #' @export
-#' 
+#'
 #' @importFrom stats setNames
 #' @importFrom rlang sym syms expr as_name is_call call2 has_length
 #' @importFrom ggplot2 ggplot aes theme facet_wrap vars coord_flip labs
 #'
 #' @example examples/ex-ggcall.R
 ggcall <- function(data = NULL,
-                   mapping = NULL, 
-                   geom = NULL, 
+                   mapping = NULL,
+                   geom = NULL,
                    geom_args = list(),
-                   scales = NULL, 
+                   scales = NULL,
                    scales_args = list(),
-                   coord = NULL, 
-                   labs = list(), 
-                   theme = NULL, 
+                   coord = NULL,
+                   labs = list(),
+                   theme = NULL,
                    theme_args = list(),
                    facet = NULL,
                    facet_row = NULL,
@@ -48,12 +48,12 @@ ggcall <- function(data = NULL,
   if (!is_call(data)) {
     data <- as.character(data)
     if (grepl("::", data)) {
-      data <- str2lang(data) 
+      data <- str2lang(data)
     } else {
       data <- sym(data)
     }
   }
-  if (rlang::is_call(mapping)) 
+  if (rlang::is_call(mapping))
     mapping <- eval(mapping)
   mapping <- dropNulls(mapping)
   if (length(mapping) > 0) {
@@ -63,17 +63,25 @@ ggcall <- function(data = NULL,
     ggcall <- expr(ggplot(!!data))
   }
   if (length(geom) == 1)
-    geom_args <- setNames(list(geom_args), geom)
-  for (g in geom) {
-    g_args <- dropNulls(geom_args[[g]])
-    if (!grepl("^geom_", g))
-      g <- paste0("geom_", g)
-    geom <- call2(g, !!!g_args)
-    ggcall <- expr(!!ggcall + !!geom)
+    geom_args <- list(geom_args)
+  for (ig in seq_along(geom)) {
+    g_nm <- geom[ig]
+    if (ig <= length(geom_args)) {
+      g_args <- dropNulls(geom_args[[ig]])
+    } else {
+      g_args <- list()
+    }
+    if (!grepl("^geom_", g_nm))
+      g_nm <- paste0("geom_", g_nm)
+    geomcall <- call2(g_nm, !!!g_args)
+    ggcall <- expr(!!ggcall + !!geomcall)
   }
   if (!is.null(scales)) {
     if (length(scales) == 1 && !isTRUE(grepl(scales, names(scales_args))))
       scales_args <- setNames(list(scales_args), scales)
+    scales_dup <- duplicated(scales, fromLast = TRUE)
+    scales_args <- scales_args[!scales_dup]
+    scales <- scales[!scales_dup]
     for (s in scales) {
       s_args <- dropNulls(scales_args[[s]])
       if (grepl("::", x = s)) {
@@ -138,7 +146,7 @@ ggcall <- function(data = NULL,
       ggcall <- expr(!!ggcall + !!facet)
     }
   }
-  
+
   if (has_length(xlim, 2)) {
     xlim <- expr(xlim(!!!as.list(xlim)))
     ggcall <- expr(!!ggcall + !!xlim)
@@ -147,7 +155,7 @@ ggcall <- function(data = NULL,
     ylim <- expr(ylim(!!!as.list(ylim)))
     ggcall <- expr(!!ggcall + !!ylim)
   }
-  
+
   ggcall
 }
 

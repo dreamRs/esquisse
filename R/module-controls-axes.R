@@ -21,60 +21,13 @@ controls_axes_ui <- function(id) {
   )
 
   tagList(
-    # tags$div(
-    #   id = ns("controls-scatter"),
-    #   style = "display: none; padding-top: 10px;",
-    #   tags$label(
-    #     class = "control-label",
-    #     `for` = ns("smooth_add"),
-    #     i18n("Add a smooth line:")
-    #   ),
-    #   prettyToggle(
-    #     inputId = ns("smooth_add"),
-    #     label_on = i18n("Yes"),
-    #     status_on = "success",
-    #     status_off = "danger",
-    #     label_off = i18n("No"),
-    #     inline = TRUE
-    #   ),
-    #   conditionalPanel(
-    #     condition = paste0("input.smooth_add==true"),
-    #     ns = ns,
-    #     sliderInput(
-    #       inputId = ns("smooth_span"),
-    #       label = i18n("Smooth line span:"),
-    #       min = 0.1,
-    #       max = 1,
-    #       value = 0.75,
-    #       step = 0.01,
-    #       width = "100%"
-    #     )
-    #   ),
-    # ),
-
-    # tags$div(
-    #   id = ns("controls-jitter"),
-    #   style = "display: none; padding-top: 10px;",
-    #   tags$label(
-    #     class = "control-label",
-    #     `for` = ns("jitter_add"),
-    #     i18n("Jittered points:")
-    #   ),
-    #   prettyToggle(
-    #     inputId = ns("jitter_add"),
-    #     label_on = i18n("Yes"),
-    #     status_on = "success",
-    #     status_off = "danger",
-    #     label_off = i18n("No"),
-    #     inline = TRUE
-    #   )
-    # ),
 
     input_axis_text("x", ns = ns),
-    input_axis_text("y", ns = ns),
 
     tags$div(
-      id = ns("controls-scale-trans-x"), style = "display: none;",
+      id = ns("controls-scale-trans-x"),
+      style = "display: none;",
+      tags$b("X", "axis options:"),
       numericRangeInput(
         inputId = ns("xlim"),
         label = i18n("X-Axis limits (empty for none):"),
@@ -88,8 +41,14 @@ controls_axes_ui <- function(id) {
         width = "100%"
       )
     ),
+    tags$hr(),
+
+    input_axis_text("y", ns = ns),
+
     tags$div(
-      id = ns("controls-scale-trans-y"), style = "display: none;",
+      id = ns("controls-scale-trans-y"),
+      style = "display: none;",
+      tags$b("Y", "axis options:"),
       numericRangeInput(
         inputId = ns("ylim"),
         label = i18n("Y-Axis limits (empty for none):"),
@@ -103,17 +62,15 @@ controls_axes_ui <- function(id) {
         width = "100%"
       )
     ),
-    tags$label(
-      class = "control-label",
-      `for` = ns("flip"),
-      i18n("Flip coordinate:")
-    ),
-    prettyToggle(
-      inputId = ns("flip"),
-      label_on = i18n("Yes"),
-      status_on = "success",
-      status_off = "danger",
-      label_off = i18n("No"),
+    tags$hr(),
+    tags$b("Coordinates system:"),
+    prettyRadioButtons(
+      inputId = ns("coordinates"),
+      label = "Coordinates:",
+      choiceNames = c("Cartesian", "Flip", "Fixed", "Polar"),
+      choiceValues = c("cartesian", "flip", "fixed", "polar"),
+      status = "primary",
+      outline = TRUE,
       inline = TRUE
     )
   )
@@ -122,8 +79,7 @@ controls_axes_ui <- function(id) {
 
 controls_axes_server <- function(id,
                                  use_transX = reactive(FALSE),
-                                 use_transY = reactive(FALSE),
-                                 type = reactiveValues()) {
+                                 use_transY = reactive(FALSE)) {
   moduleServer(
     id = id,
     function(input, output, session) {
@@ -138,23 +94,6 @@ controls_axes_server <- function(id,
         toggleDisplay("controls-scale-trans-y", display = isTRUE(use_transY()))
       })
 
-
-
-      smooth_r <- reactive({
-        list(
-          add = input$smooth_add,
-          args = list(
-            span = input$smooth_span
-          )
-        )
-      })
-
-      jitter_r <- reactive({
-        list(
-          add = input$jitter_add,
-          args = list()
-        )
-      })
 
       transX_r <- reactive({
         list(
@@ -175,7 +114,7 @@ controls_axes_server <- function(id,
       })
 
       coord_r <- reactive(
-        if (isTRUE(input$flip)) "flip" else NULL
+        if (identical(input$coordinates, "cartesian")) NULL else input$coordinates
       )
 
       limits_r <- reactive({
@@ -208,9 +147,7 @@ controls_axes_server <- function(id,
 
       return(list(
         inputs = inputs_r,
-        smooth = smooth_r,
         coord = coord_r,
-        jitter = jitter_r,
         transX = transX_r,
         transY = transY_r,
         limits = limits_r
@@ -307,8 +244,7 @@ input_axis_text <- function(axis = c("x", "y"), ns = identity) {
       #   step = 0.1,
       #   width = "100%"
       # )
-    ),
-    tags$hr()
+    )
   )
 }
 

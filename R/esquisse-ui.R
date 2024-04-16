@@ -17,6 +17,7 @@
 #' @param play_pause Display or not the play / pause button.
 #' @param layout_sidebar Put controls in a sidebar on the left rather than below the chart in dropdowns.
 #' @param downloads Export options available or `NULL` for no export. See [downloads_labels()].
+#' @param n_geoms Number of geoms the user can use.
 #'
 #' @return A `reactiveValues` with 3 slots :
 #'   * **code_plot** : code to generate plot.
@@ -48,7 +49,8 @@ esquisse_ui <- function(id,
                         insert_code = FALSE,
                         play_pause = TRUE,
                         layout_sidebar = FALSE,
-                        downloads = downloads_labels()) {
+                        downloads = downloads_labels(),
+                        n_geoms = 8) {
   ns <- NS(id)
   header_btns <- esquisse_header()
   if (is_list(header)) {
@@ -84,8 +86,16 @@ esquisse_ui <- function(id,
 
     if (!isTRUE(layout_sidebar)) {
       tagList(
-        select_geom_aes_ui(ns("geomaes")),
-
+        select_geom_aes_ui(
+          id = ns("geomaes"),
+          n_geoms = n_geoms,
+          list_geoms = c(
+            list(geomIcons()),
+            rep_len(list(
+              geomIcons(c("line", "step", "jitter", "point", "smooth", "density", "boxplot", "violin"), default = "select")
+            ), n_geoms)
+          )
+        ),
         fillCol(
           style = "overflow-y: auto;",
           tags$div(
@@ -99,7 +109,6 @@ esquisse_ui <- function(id,
             )
           )
         ),
-
         controls_ui(
           id = ns("controls"),
           insert_code = insert_code,
@@ -129,7 +138,16 @@ esquisse_ui <- function(id,
 
         tags$div(
           class = "ggplot-geom-aes-container",
-          select_geom_aes_ui(ns("geomaes")),
+          select_geom_aes_ui(
+            id = ns("geomaes"),
+            n_geoms = n_geoms,
+            list_geoms = c(
+              list(geomIcons()),
+              rep_len(list(
+                geomIcons(c("line", "step", "jitter", "point", "smooth", "density", "boxplot", "violin"), default = "select")
+              ), n_geoms)
+            )
+          ),
           tags$div(
             class = "ggplot-output-sidebar-container",
             play_pause_input(ns("play_plot"), show = play_pause),
