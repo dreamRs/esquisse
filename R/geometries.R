@@ -255,7 +255,7 @@ match_geom_args <- function(geom,
 
 
 # utils for geom icons
-geomIcons <- function(geoms = NULL, default = c("auto", "blank")) {
+geomIcons <- function(geoms = NULL, default = c("auto", "blank", "select")) {
   default <- match.arg(default)
   defaults <- c(
     "line", "step", "path", "area", "ribbon",
@@ -273,7 +273,7 @@ geomIcons <- function(geoms = NULL, default = c("auto", "blank")) {
   geomsChoices <- lapply(
     X = geoms,
     FUN = function(x) {
-      list(inputId = x, img = sprintf(href, x), label = capitalize(x))
+      list(inputId = x, img = sprintf(href, x), label = if (x != "select") capitalize(x))
     }
   )
 
@@ -288,7 +288,7 @@ geomIcons <- function(geoms = NULL, default = c("auto", "blank")) {
       )
     }
   )
-
+  geoms[!geoms %in% defaults] <- "blank"
   list(names = geomsChoicesNames, values = geoms)
 }
 

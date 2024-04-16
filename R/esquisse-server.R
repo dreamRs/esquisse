@@ -30,6 +30,7 @@ esquisse_server <- function(id,
                             name = "data",
                             default_aes = c("fill", "color", "size", "group", "facet"),
                             import_from = c("env", "file", "copypaste", "googlesheets", "url"),
+                            n_geoms = 8,
                             drop_ids = TRUE,
                             notify_warnings = NULL) {
 
@@ -131,7 +132,7 @@ esquisse_server <- function(id,
         id = "geomaes",
         data_r = reactive(data_chart$data),
         aesthetics_r = reactive(input$aesthetics),
-        n_geoms = 5,
+        n_geoms = n_geoms,
         default_aes = default_aes
       )
       aes_r <- reactive(res_geom_aes_r()$main$aes)
@@ -164,7 +165,7 @@ esquisse_server <- function(id,
         geoms_r = reactive({
           c(geom_r(), geoms_others_r())
         }),
-        n_geoms = 5,
+        n_geoms = n_geoms,
         active_geom_r <- reactive(res_geom_aes_r()$active),
         aesthetics_r = reactive({
           c(list(aes_r()), aes_others_r())
@@ -185,31 +186,26 @@ esquisse_server <- function(id,
           req(data_chart$data)
           data <- req(controls_rv$data)
           req(controls_rv$inputs)
-          geom_ <- req(geom_r())
+          geom <- req(geom_r())
 
           aes_input <- make_aes(aes_r())
           req(unlist(aes_input) %in% names(data_chart$data))
           mapping <- build_aes(
             data = data_chart$data,
             .list = aes_input,
-            geom = geom_
+            geom = geom
           )
 
           geoms <- potential_geoms(data_chart$data, mapping)
-          req(geom_ %in% geoms)
+          req(geom %in% geoms)
 
-          if (identical(geom_, "auto")) {
-            geom <- "blank"
-          } else {
-            geom <- geom_
-          }
 
           if (isTruthy(setdiff(geoms_others_r(), "blank"))) {
             geom <- c(geom, geoms_others_r())
             mappings <- c(list(mapping), aes_others_r())
             # browser()
             geom_args <- lapply(
-              X = seq_len(5), # n_geoms
+              X = seq_len(n_geoms), # n_geoms
               FUN = function(i) {
                 match_geom_args(
                   geom[i],
@@ -225,7 +221,7 @@ esquisse_server <- function(id,
             geom_args[blanks] <- NULL
 
             scales_l <- dropNulls(lapply(
-              X = seq_len(5),
+              X = seq_len(n_geoms),
               FUN = function(i) {
                 mapping <- mappings[[i]]
                 if (length(mapping) < 1) return(NULL)
@@ -241,7 +237,7 @@ esquisse_server <- function(id,
             scales <- unlist(lapply(scales_l, `[[`, "scales"))
           } else {
             geom_args <- match_geom_args(
-              geom_,
+              geom,
               controls_rv$geomargs1,
               mapping = mapping,
               add_mapping = FALSE
