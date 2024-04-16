@@ -1,25 +1,26 @@
 
-#' Generate code to create a \code{ggplot2}
+#' Generate code to create a `ggplot2`
 #'
-#' @param data Character. Name of the \code{data.frame}.
+#' @param data Character. Name of the `data.frame`.
 #' @param mapping List. Named list of aesthetics.
 #' @param geom Character. Name of the geom to use (with or without "geom_").
 #' @param geom_args List. Arguments to use in the geom.
 #' @param scales Character vector. Scale(s) to use (with or without "scale_").
 #' @param scales_args List. Arguments to use in scale(s),
-#'  if \code{scales} is length > 1, must be a named list with \code{scales} names.
+#'  if `scales` is length > 1, must be a named list with `scales` names.
 #' @param coord Character. Coordinates to use (with or without "coord_").
+#' @param coord_args Arguments for coordinates function.
 #' @param labs List. Named list of labels to use for title, subtitle, x & y axis, legends.
 #' @param theme Character. Name of the theme to use (with or without "theme_").
-#' @param theme_args Named list. Arguments for \code{\link[ggplot2:theme]{theme}}.
-#' @param facet Character vector. Names of variables to use in \code{\link[ggplot2]{facet_wrap}}.
-#' @param facet_row Character vector. Names of row variables to use in \code{\link[ggplot2]{facet_grid}}.
-#' @param facet_col Character vector. Names of col variables to use in \code{\link[ggplot2]{facet_grid}}.
-#' @param facet_args Named list. Arguments for \code{\link[ggplot2:facet_wrap]{facet_wrap}}.
+#' @param theme_args Named list. Arguments for [ggplot2::theme()].
+#' @param facet Character vector. Names of variables to use in [ggplot2::facet_wrap].
+#' @param facet_row Character vector. Names of row variables to use in [ggplot2::facet_grid()].
+#' @param facet_col Character vector. Names of col variables to use in [ggplot2::facet_grid()].
+#' @param facet_args Named list. Arguments for [ggplot2::facet_wrap()].
 #' @param xlim A vector of length 2 representing limits on x-axis.
 #' @param ylim A vector of length 2 representing limits on y-axis.
 #'
-#' @return a \code{call} that can be evaluated with \code{eval}.
+#' @return a `call` that can be evaluated with `eval`.
 #' @export
 #'
 #' @importFrom stats setNames
@@ -34,6 +35,7 @@ ggcall <- function(data = NULL,
                    scales = NULL,
                    scales_args = list(),
                    coord = NULL,
+                   coord_args = list(),
                    labs = list(),
                    theme = NULL,
                    theme_args = list(),
@@ -103,7 +105,7 @@ ggcall <- function(data = NULL,
   if (!is.null(coord)) {
     if (!grepl("^coord_", coord))
       coord <- paste0("coord_", coord)
-    coord <- call2(coord)
+    coord <- call2(coord, !!!coord_args)
     ggcall <- expr(!!ggcall + !!coord)
   }
   if (!is.null(theme)) {

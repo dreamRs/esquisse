@@ -63,7 +63,7 @@ controls_axes_ui <- function(id) {
       )
     ),
     tags$hr(),
-    tags$b("Coordinates system:"),
+    tags$b("Coordinate system:"),
     prettyRadioButtons(
       inputId = ns("coordinates"),
       label = "Coordinates:",
@@ -72,6 +72,27 @@ controls_axes_ui <- function(id) {
       status = "primary",
       outline = TRUE,
       inline = TRUE
+    ),
+    conditionalPanel(
+      condition = "input.coordinates == 'fixed'",
+      ns = ns,
+      numericInput(
+        inputId = ns("fixed_ratio"),
+        label = "Aspect ratio:",
+        value = 1,
+        width = "100%"
+      )
+    ),
+    conditionalPanel(
+      condition = "input.coordinates == 'polar'",
+      ns = ns,
+      prettyRadioButtons(
+        inputId = ns("polar_theta"),
+        label = "Variable to map angle to:",
+        choices = c("x", "y"),
+        inline = TRUE,
+        width = "100%"
+      )
     )
   )
 }
@@ -114,7 +135,13 @@ controls_axes_server <- function(id,
       })
 
       coord_r <- reactive(
-        if (identical(input$coordinates, "cartesian")) NULL else input$coordinates
+        list(
+          fun = if (!identical(input$coordinates, "cartesian")) input$coordinates,
+          args = dropNulls(list(
+            ratio = if (identical(input$coordinates, "fixed")) input$fixed_ratio,
+            theta = if (identical(input$coordinates, "polar")) input$polar_theta
+          ))
+        )
       )
 
       limits_r <- reactive({

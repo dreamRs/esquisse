@@ -12,6 +12,7 @@ ggcall(
   scales = NULL,
   scales_args = list(),
   coord = NULL,
+  coord_args = list(),
   labs = list(),
   theme = NULL,
   theme_args = list(),
@@ -39,19 +40,21 @@ if \code{scales} is length > 1, must be a named list with \code{scales} names.}
 
 \item{coord}{Character. Coordinates to use (with or without "coord_").}
 
+\item{coord_args}{Arguments for coordinates function.}
+
 \item{labs}{List. Named list of labels to use for title, subtitle, x & y axis, legends.}
 
 \item{theme}{Character. Name of the theme to use (with or without "theme_").}
 
-\item{theme_args}{Named list. Arguments for \code{\link[ggplot2:theme]{theme}}.}
+\item{theme_args}{Named list. Arguments for \code{\link[ggplot2:theme]{ggplot2::theme()}}.}
 
-\item{facet}{Character vector. Names of variables to use in \code{\link[ggplot2]{facet_wrap}}.}
+\item{facet}{Character vector. Names of variables to use in \link[ggplot2:facet_wrap]{ggplot2::facet_wrap}.}
 
-\item{facet_row}{Character vector. Names of row variables to use in \code{\link[ggplot2]{facet_grid}}.}
+\item{facet_row}{Character vector. Names of row variables to use in \code{\link[ggplot2:facet_grid]{ggplot2::facet_grid()}}.}
 
-\item{facet_col}{Character vector. Names of col variables to use in \code{\link[ggplot2]{facet_grid}}.}
+\item{facet_col}{Character vector. Names of col variables to use in \code{\link[ggplot2:facet_grid]{ggplot2::facet_grid()}}.}
 
-\item{facet_args}{Named list. Arguments for \code{\link[ggplot2:facet_wrap]{facet_wrap}}.}
+\item{facet_args}{Named list. Arguments for \code{\link[ggplot2:facet_wrap]{ggplot2::facet_wrap()}}.}
 
 \item{xlim}{A vector of length 2 representing limits on x-axis.}
 
@@ -130,5 +133,21 @@ ggcall(
     color_distiller = list(palette = "Greens"),
     size_continuous = list(range = c(1, 20))
   )
+)
+
+
+# Coordinates
+ggcall(
+  data = "mtcars",
+  mapping = list(x = "mpg", y = "wt"),
+  geom = "point",
+  coord = "fixed"
+)
+ggcall(
+  data = "mtcars",
+  mapping = list(x = "mpg", y = "wt"),
+  geom = "point",
+  coord = "fixed",
+  coord_args = list(ratio = 5)
 )
 }

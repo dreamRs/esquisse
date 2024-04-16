@@ -65,3 +65,19 @@ ggcall(
     size_continuous = list(range = c(1, 20))
   )
 )
+
+
+# Coordinates
+ggcall(
+  data = "mtcars",
+  mapping = list(x = "mpg", y = "wt"),
+  geom = "point",
+  coord = "fixed"
+)
+ggcall(
+  data = "mtcars",
+  mapping = list(x = "mpg", y = "wt"),
+  geom = "point",
+  coord = "fixed",
+  coord_args = list(ratio = 5)
+)
