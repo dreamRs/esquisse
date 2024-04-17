@@ -260,7 +260,7 @@ make_btn_header <- function(.list) {
       function(id) NULL
     },
     update_variable = if (isTRUE(.list$update_variable)) {
-      btn_header(i18n("Update variable"), "brackets-angle")
+      update_vars_ui
     } else {
       function(id) NULL
     },
