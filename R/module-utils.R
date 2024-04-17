@@ -56,17 +56,48 @@ update_vars_server <- function(id, data_r = reactive(NULL)) {
             i18n("Update & select variables"),
             button_close_modal()
           ),
-          datamods::update_variables_ui(ns("update_variable"), title = NULL),
+          datamods::update_variables_ui(ns("mod"), title = NULL),
           easyClose = TRUE,
           size = "l",
           footer = NULL
         ))
       })
-      updated_data <-datamods::update_variables_server(
-        id = "update_variable",
+      res <- datamods::update_variables_server(
+        id = "mod",
         data = data_r
       )
-      return(updated_data)
+      return(res)
     }
   )
 }
+
+
+
+
+
+# Create column ---------------------------------------------------------------------
+
+#' @importFrom shiny NS
+create_col_ui <- function(id) {
+  ns <- NS(id)
+  btn_header(i18n("Create column"), "columns-plus-right")(ns("btn"))
+}
+
+#' @importFrom shiny moduleServer observeEvent modalDialog showModal reactive
+#' @importFrom datamods update_variables_ui update_variables_server
+create_col_server <- function(id, data_r = reactive(NULL)) {
+  moduleServer(
+    id,
+    function(input, output, session) {
+      ns <- session$ns
+      observeEvent(input$btn, datamods::modal_create_column(ns("mod")))
+      res <-datamods::create_column_server(
+        id = "mod",
+        data = data_r
+      )
+      return(res)
+    }
+  )
+}
+
+

@@ -107,7 +107,12 @@ esquisse_server <- function(id,
       observeEvent(updated_data(), {
         data_chart$data <- updated_data()
       })
-
+      
+      # create column modal
+      created_col <- create_col_server("create_col", reactive(data_chart$data))
+      observeEvent(created_col(), {
+        data_chart$data <- created_col()
+      })
 
 
 

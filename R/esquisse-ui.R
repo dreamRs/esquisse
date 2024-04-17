@@ -73,7 +73,8 @@ esquisse_ui <- function(id,
       class = "pull-left",
       header_btns$import_data(ns("launch_import_data")),
       header_btns$show_data(ns("show_data")),
-      header_btns$update_variable(ns("update_variable"))
+      header_btns$update_variable(ns("update_variable")),
+      header_btns$create_column(ns("create_col"))
     )
   )
 
@@ -225,6 +226,7 @@ esquisse_container <- function(width = "100%", height = "700px", fixed = FALSE) 
 #' @param import_data Show button to import data.
 #' @param show_data Show button to display data.
 #' @param update_variable Show button to update selected variables and convert them.
+#' @param create_column Show button to create a new column based on an expression.
 #' @param settings Show button to open settings modal (to select aesthetics to use).
 #' @param close Show button to stop the app and close addin.
 #'
@@ -235,12 +237,14 @@ esquisse_container <- function(width = "100%", height = "700px", fixed = FALSE) 
 esquisse_header <- function(import_data = TRUE,
                             show_data = TRUE,
                             update_variable = TRUE,
+                            create_column = TRUE,
                             settings = TRUE,
                             close = TRUE) {
   list(
     import_data = isTRUE(import_data),
     show_data = isTRUE(show_data),
     update_variable = isTRUE(update_variable),
+    create_column = isTRUE(create_column),
     settings = isTRUE(settings),
     close = isTRUE(close)
   )
@@ -261,6 +265,11 @@ make_btn_header <- function(.list) {
     },
     update_variable = if (isTRUE(.list$update_variable)) {
       update_vars_ui
+    } else {
+      function(id) NULL
+    },
+    create_column = if (isTRUE(.list$create_column)) {
+      create_col_ui
     } else {
       function(id) NULL
     },
