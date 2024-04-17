@@ -40,7 +40,17 @@ build_aes <- function(data, ..., .list = NULL, geom = NULL) {
 
   if (is.null(geom))
     geom <- "auto"
-  args <- syms(args)
+  # args <- syms(args)
+  # args <- lapply(
+  #   args,
+  #   function(x) {
+  #     if (x == "") {
+  #       x <- I("")
+  #     }
+  #     x
+  #   }
+  # )
+  args <- eval(expr(aes(!!!syms2(args))))
   data_mapped <- lapply(args, rlang::eval_tidy, data = data)
   x_type <- col_type(data_mapped$x, no_id = TRUE)
   y_type <- col_type(data_mapped$y, no_id = TRUE)

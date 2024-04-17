@@ -168,6 +168,8 @@ syms2 <- function(x) {
     FUN = function(y) {
       if (inherits(y, "AsIs")) {
         as.character(y)
+      } else if (identical(y, "")) {
+        y
       } else {
         sym(as_name(y))
       }

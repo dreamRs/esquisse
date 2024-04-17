@@ -62,8 +62,11 @@ select_aes_server <- function(id,
               sourceLabel = "Variables",
               targetsLabels = c("X", "Y", aesthetics),
               targetsIds = c("xvar", "yvar", aesthetics),
-              choiceValues = choiceValues,
-              choiceNames = choiceNames,
+              choiceValues = c(choiceValues, ""),
+              choiceNames = c(choiceNames, list(tags$span(
+                class = "label-esquisse label-other badge-dad",
+                '""'
+              ))),
               selected = selected,
               badge = FALSE,
               ncolGrid = length(aesthetics) + 2,
@@ -110,10 +113,16 @@ select_aes_server <- function(id,
             session = session,
             inputId = "dragvars",
             status = NULL,
-            choiceValues = var_choices,
-            choiceNames = badgeType(
-              col_name = var_choices,
-              col_type = col_type(data[, var_choices, drop = TRUE])
+            choiceValues = c(var_choices, ""),
+            choiceNames = c(
+              badgeType(
+                col_name = var_choices,
+                col_type = col_type(data[, var_choices, drop = TRUE])
+              ),
+              list(tags$span(
+                class = "label-esquisse label-other badge-dad",
+                '""'
+              ))
             ),
             badge = FALSE
           )
