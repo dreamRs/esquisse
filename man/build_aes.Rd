@@ -40,5 +40,5 @@ build_aes(df, x = "LET", y = "VAL", geom = "bar")
 library(ggplot2)
 ggplot(df) +
   build_aes(df, x = "LET", y = "VAL", geom = "bar") +
-  geom_bar()
+  geom_bar(stat = "summary", fun = "mean")
 }

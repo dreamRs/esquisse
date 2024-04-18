@@ -12,26 +12,7 @@
 #' @importFrom rlang syms expr
 #' @importFrom ggplot2 aes
 #'
-#' @examples
-#' # Classic
-#' build_aes(iris, x = "Sepal.Width")
-#' build_aes(iris, x = "Sepal.Width", y = "Sepal.Width")
-#'
-#' # Explicit geom : no change
-#' build_aes(iris, x = "Species", geom = "bar")
-#'
-#' # Little trick if data is count data
-#' df <- data.frame(
-#'   LET = c("A", "B"),
-#'   VAL = c(4, 7)
-#' )
-#' build_aes(df, x = "LET", y = "VAL", geom = "bar")
-#'
-#' # e.g. :
-#' library(ggplot2)
-#' ggplot(df) +
-#'   build_aes(df, x = "LET", y = "VAL", geom = "bar") +
-#'   geom_bar()
+#' @example examples/build_aes.R
 build_aes <- function(data, ..., .list = NULL, geom = NULL) {
   if (is.null(data))
     return(aes())
@@ -55,17 +36,6 @@ build_aes <- function(data, ..., .list = NULL, geom = NULL) {
     tmp <- args$y
     args$y <- args$x
     args$x <- tmp
-  }
-  if (!is.null(args$x) & !is.null(args$y) & geom == "bar") {
-    if (x_type == "continuous" & y_type == "discrete") {
-      args$weight <- args$x
-      args$x <- args$y
-      args$y <- NULL
-    }
-    if (x_type %in% c("discrete", "time") & y_type == "continuous") {
-      args$weight <- args$y
-      args$y <- NULL
-    }
   }
   eval(expr(aes(!!!args)))
 }

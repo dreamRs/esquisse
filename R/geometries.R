@@ -215,11 +215,9 @@ match_geom_args <- function(geom,
     args$size <- NULL
     args$linewidth <- NULL
   }
-  if (identical(args$position, "stack")) {
-    args$position <- NULL
-  }
-  if (!geom %in% c("bar", "histogram")) {
-    args$position <- NULL
+  if (geom %in% c("col")) {
+    args$stat <- NULL
+    args$fun <- NULL
   }
   pkg_envir <- getNamespace(envir)
   if (!grepl(pattern = "^geom_", x = geom))
@@ -227,9 +225,9 @@ match_geom_args <- function(geom,
   geom_args <- try(formals(fun = get(geom, envir = pkg_envir)), silent = TRUE)
   if (inherits(geom_args, "try-error"))
     stop(paste(geom, "not found in", envir), call. = FALSE)
-  if (!is.null(geom_args$stat)) {
+  if (!is.null(args$stat)) {
     stat_args <- try(
-      formals(fun = get(paste0("stat_", geom_args$stat), envir = pkg_envir)),
+      formals(fun = get(paste0("stat_", args$stat), envir = pkg_envir)),
       silent = TRUE
     )
     if (!inherits(stat_args, "try-error")) {

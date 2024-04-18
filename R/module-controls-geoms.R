@@ -174,6 +174,18 @@ controls_geoms_ui <- function(id, style = NULL) {
       )
     ),
     tags$div(
+      id = ns("controls-bar"),
+      style = "display: none;",
+      prettyRadioButtons(
+        inputId = ns("stat_fun"),
+        label = i18n("Stat summary function:"),
+        inline = TRUE,
+        status = "primary",
+        choices = c("sum", "mean", "min", "max"),
+        outline = TRUE
+      )
+    ),
+    tags$div(
       id = ns("controls-density"),
       style = "display: none;",
       sliderInput(
@@ -217,7 +229,7 @@ controls_geoms_server <- function(id,
       bindEvent(observe({
         aesthetics <- names(aesthetics_r())
         geom <- geoms_r()
-        toggleDisplay("controls-position", geom %in% c("bar", "line", "area", "histogram") & "fill" %in% aesthetics)
+        toggleDisplay("controls-position", geom %in% c("bar", "col", "line", "area", "histogram") & "fill" %in% aesthetics)
         toggleDisplay("controls-histogram", geom %in% "histogram")
         toggleDisplay("controls-density", geom %in% c("density", "violin"))
         toggleDisplay("controls-smooth", geom %in% "smooth")
@@ -225,6 +237,7 @@ controls_geoms_server <- function(id,
         toggleDisplay("controls-lines", geom %in% c("line", "step"))
         toggleDisplay("controls-violin", geom %in% "violin")
         toggleDisplay("controls-jitter", geom %in% c("boxplot", "violin"))
+        toggleDisplay("controls-bar", geom %in% c("bar"))
       }), geoms_r(), aesthetics_r())
 
       observeEvent(aesthetics_r(), {
@@ -235,11 +248,18 @@ controls_geoms_server <- function(id,
       })
 
       inputs_r <- reactive({
+        geom <- geoms_r()
         aesthetics <- names(aesthetics_r())
 
         dropNulls(list(
+          stat = if (geom == "bar" & "yvar" %in% aesthetics) "summary",
+          fun = if (geom == "bar" & "yvar" %in% aesthetics) input$stat_fun,
           adjust = input$adjust,
-          position = input$position,
+          position = if (
+            !identical(input$position, "stack") &
+            geom %in% c("bar", "col", "line", "area", "histogram") &
+            "fill" %in% aesthetics
+          ) input$position,
           size = if (!identical(input$size, 1.5)) input$size,
           linewidth = if (!identical(input$linewidth, 0.5)) input$linewidth,
           linetype = if (!identical(input$linetype, "solid")) input$linetype,
