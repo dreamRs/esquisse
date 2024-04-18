@@ -401,6 +401,7 @@ controls_server <- function(id,
       observe({
         theme_labs <- labs_r$theme()
         theme_appearance <- theme_r$inputs()
+        axes_appearance <- axes_r$inputs()
         outputs$theme <- list(
           theme = theme_appearance$theme,
           args = dropNulls(
@@ -412,8 +413,8 @@ controls_server <- function(id,
               plot.caption = theme_labs$caption,
               axis.title.y = theme_labs$y,
               axis.title.x = theme_labs$x,
-              axis.text.y = theme_appearance$axis_text_y,
-              axis.text.x = theme_appearance$axis_text_x,
+              axis.text.y = axes_appearance$axis_text_y,
+              axis.text.x = axes_appearance$axis_text_x,
               legend.text = theme_appearance$legend_text,
               legend.title = theme_appearance$legend_title
             )
