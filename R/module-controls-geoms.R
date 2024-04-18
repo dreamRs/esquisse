@@ -9,7 +9,7 @@
 #'
 #' @importFrom utils head
 #' @importFrom htmltools tagList tags
-#' @importFrom shinyWidgets radioGroupButtons colorPickr virtualSelectInput
+#' @importFrom shinyWidgets radioGroupButtons colorPickr virtualSelectInput prettyCheckbox
 controls_geoms_ui <- function(id, style = NULL) {
 
   ns <- NS(id)
@@ -132,6 +132,21 @@ controls_geoms_ui <- function(id, style = NULL) {
         value = 0.95,
         step = 0.01,
         width = "100%"
+      ),
+      prettyRadioButtons(
+        inputId = ns("method"),
+        label = i18n("Smoothing method:"),
+        choices = c("loess", "lm", "gam"),
+        selected = "loess",
+        status = "primary",
+        outline = TRUE,
+        inline = TRUE
+      ),
+      prettyCheckbox(
+        inputId = ns("se"),
+        label = i18n("Display confidence interval around smooth"),
+        value = TRUE,
+        status = "primary"
       )
     ),
     tags$div(
@@ -177,7 +192,7 @@ controls_geoms_ui <- function(id, style = NULL) {
       prettyRadioButtons(
         inputId = ns("position"),
         label = i18n("Position:"),
-        choices = c("stack", "dodge", "fill"),
+        choices = c("stack", "dodge", "dodge2", "fill"),
         inline = TRUE,
         selected = "stack",
         status = "primary",
@@ -232,7 +247,9 @@ controls_geoms_server <- function(id,
           color_ribbon = input$color_ribbon,
           shape = if (!identical(input$shape, "circle")) input$shape,
           span = if (!identical(input$span, 0.75)) input$span,
-          level = if (!identical(input$level, 0.95)) input$level
+          level = if (!identical(input$level, 0.95)) input$level,
+          method = if (!identical(input$method, "loess")) input$method,
+          se = input$se
         ))
       })
 

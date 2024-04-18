@@ -358,6 +358,8 @@ png(filename = "inst/geomIcon/www/gg-text.png", bg = "transparent")
 ggplot(data = coord_circle(centre = c(0, 0), r = 1)) + geom_polygon(aes(x = x, y = y), fill = "#CD2EFB") + coord_fixed() + theme_void()
 p <- ggplot(mtcars, aes(wt, mpg, label = rownames(mtcars))) +
   geom_text(color = "white", size = 9) +
+  xlim(0, 8) +
+  ylim(7, 40) +
   theme_void()
 print(p, vp = viewport(width = unit(0.8, "npc"), height = unit(0.8, "npc")))
 dev.off()
