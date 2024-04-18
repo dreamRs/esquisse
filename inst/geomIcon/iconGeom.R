@@ -169,8 +169,9 @@ ggplot(data = iris) + geom_histogram(mapping = aes(x = Sepal.Length), bins = 20)
 png(filename = "inst/geomIcon/www/gg-point.png", bg = "transparent")
 ggplot(data = coord_circle(centre = c(0, 0), r = 1)) + geom_polygon(aes(x = x, y = y), fill = "#02C39A") + coord_fixed() + theme_void()
 # p <- ggplot(data = mtcars) + geom_point(mapping = aes(wt, mpg), size = 10, color = "white") + theme_void()
-p <- ggplot() + geom_point(aes(x = 1:10, y = 1:10), size = 10, color = "white") + theme_void()
-print(p, vp = viewport(width = unit(0.6, "npc"), height = unit(0.6, "npc")))
+# p <- ggplot() + geom_point(aes(x = 1:10, y = 1:10), size = 10, color = "white") + theme_void()
+p <- ggplot(mtcars, aes(wt, mpg)) + geom_point(size = 10, color = "white") + theme_void()
+print(p, vp = viewport(width = unit(0.5, "npc"), height = unit(0.5, "npc")))
 dev.off()
 
 
@@ -351,3 +352,26 @@ dev.off()
 
 
 
+# Geom text ---------------------------------------------------------------
+
+png(filename = "inst/geomIcon/www/gg-text.png", bg = "transparent")
+ggplot(data = coord_circle(centre = c(0, 0), r = 1)) + geom_polygon(aes(x = x, y = y), fill = "#CD2EFB") + coord_fixed() + theme_void()
+p <- ggplot(mtcars, aes(wt, mpg, label = rownames(mtcars))) +
+  geom_text(color = "white", size = 9) +
+  theme_void()
+print(p, vp = viewport(width = unit(0.8, "npc"), height = unit(0.8, "npc")))
+dev.off()
+
+
+
+# Geom label --------------------------------------------------------------
+
+png(filename = "inst/geomIcon/www/gg-label.png", bg = "transparent")
+ggplot(data = coord_circle(centre = c(0, 0), r = 1)) + geom_polygon(aes(x = x, y = y), fill = "#AC59FB") + coord_fixed() + theme_void()
+p <- ggplot(mtcars, aes(wt, mpg, label = rownames(mtcars))) +
+  geom_label(color = "black", size = 9) +
+  xlim(0, 8) +
+  ylim(7, 40) +
+  theme_void()
+print(p, vp = viewport(width = unit(0.8, "npc"), height = unit(0.8, "npc")))
+dev.off()

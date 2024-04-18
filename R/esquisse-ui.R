@@ -93,7 +93,10 @@ esquisse_ui <- function(id,
           list_geoms = c(
             list(geomIcons()),
             rep_len(list(
-              geomIcons(c("line", "step", "jitter", "point", "smooth", "density", "boxplot", "violin"), default = "select")
+              geomIcons(
+                c("line", "step", "jitter", "point", "smooth", "density", "boxplot", "violin", "text", "label"),
+                default = "select"
+              )
             ), n_geoms)
           )
         ),
@@ -145,7 +148,10 @@ esquisse_ui <- function(id,
             list_geoms = c(
               list(geomIcons()),
               rep_len(list(
-                geomIcons(c("line", "step", "jitter", "point", "smooth", "density", "boxplot", "violin"), default = "select")
+                geomIcons(
+                  c("line", "step", "jitter", "point", "smooth", "density", "boxplot", "violin", "text", "label"),
+                  default = "select"
+                )
               ), n_geoms)
             )
           ),

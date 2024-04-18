@@ -127,6 +127,8 @@ potential_geoms_ref <- function() {
       "discrete",    "continuous",  "point",     "0",
       "discrete",    "continuous",  "jitter",    "0",
       "discrete",    "continuous",  "violin",    "0",
+      "discrete",    "continuous",  "text",      "0",
+      "discrete",    "continuous",  "label",     "0",
       "continuous",  "continuous",  "point",     "1",
       "continuous",  "continuous",  "jitter",    "0",
       "continuous",  "continuous",  "line",      "0",
@@ -134,6 +136,8 @@ potential_geoms_ref <- function() {
       "continuous",  "continuous",  "path",      "0",
       "continuous",  "continuous",  "area",      "0",
       "continuous",  "continuous",  "smooth",    "0",
+      "continuous",  "continuous",  "text",      "0",
+      "continuous",  "continuous",  "label",     "0",
       "discrete",    "discrete",    "tile",      "1",
       "time",        "continuous",  "line",      "1",
       "time",        "continuous",  "point",     "0",
@@ -263,7 +267,8 @@ geomIcons <- function(geoms = NULL, default = c("auto", "blank", "select")) {
     "histogram", "density",
     "point", "jitter", "smooth",
     "boxplot", "violin",
-    "tile", "sf"
+    "tile", "sf",
+    "text", "label"
   )
   if (is.null(geoms))
     geoms <- defaults

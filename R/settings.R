@@ -29,6 +29,7 @@ modal_settings <- function(aesthetics = NULL, session = shiny::getDefaultReactiv
         tagList(tags$b("shape:"), i18n("shape of the points")),
         tagList(tags$b("weight:"), i18n("frequency weights")),
         tagList(tags$b("alpha:"), i18n("alpha transparency")),
+        tagList(tags$b("label:"), i18n("text to use as label on plot")),
         tagList(tags$b("group:"), i18n("identifies series of points with a grouping variable")),
         tagList(tags$b("ymin:"), tags$span(i18n("used in ribbons charts with ymax to display an interval between two lines"))),
         tagList(tags$b("ymax:"), i18n("used in ribbons charts with ymin to display an interval between two lines")),
@@ -36,7 +37,7 @@ modal_settings <- function(aesthetics = NULL, session = shiny::getDefaultReactiv
         tagList(tags$b("facet row:"), i18n("create small multiples by rows")),
         tagList(tags$b("facet col:"), i18n("create small multiples by columns"))
       ),
-      choiceValues = c("fill", "color", "size", "shape", "weight", "alpha", "group", "ymin", "ymax", "facet", "facet_row", "facet_col"),
+      choiceValues = c("fill", "color", "size", "shape", "weight", "alpha", "label", "group", "ymin", "ymax", "facet", "facet_row", "facet_col"),
       selected = aesthetics %||% c("fill", "color", "size", "facet"),
       status = "primary",
       outline = TRUE
