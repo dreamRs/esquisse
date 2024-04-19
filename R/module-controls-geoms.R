@@ -269,7 +269,8 @@ controls_geoms_server <- function(id,
           span = if (!identical(input$span, 0.75)) input$span,
           level = if (!identical(input$level, 0.95)) input$level,
           method = if (!identical(input$method, "loess")) input$method,
-          se = input$se
+          se = input$se,
+          bins = input$bins
         ))
       })
 
