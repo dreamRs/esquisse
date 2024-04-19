@@ -2,9 +2,22 @@
 # Show data -------------------------------------------------------------------------
 
 #' @importFrom shiny NS
+#' @importFrom htmltools tags css
+#' @importFrom phosphoricons ph
 show_data_ui <- function(id) {
   ns <- NS(id)
-  btn_header(i18n("Show data"), "table")(ns("btn"))
+  icon <- tags$div(
+    style = css(position = "relative", width = "35px"),
+    ph("table", height = "2em", title = i18n("Show data")),
+    ph(
+      "eye",
+      style = css(position = "absolute", top = 0, right = 0),
+      height = "1.2em",
+      weight = "bold",
+      title = i18n("Show data")
+    )
+  )
+  btn_header(i18n("Show data"), icon, class = " px-0")(ns("btn"))
 }
 
 #' @importFrom shiny moduleServer observeEvent showNotification reactive
@@ -13,7 +26,7 @@ show_data_server <- function(id, data_r = reactive(NULL)) {
   moduleServer(
     id,
     function(input, output, session) {
-      
+
       observeEvent(input$btn, {
         data <- data_r()
         if (!is.data.frame(data)) {
@@ -27,7 +40,7 @@ show_data_server <- function(id, data_r = reactive(NULL)) {
           show_data(data, title = i18n("Dataset"), type = "modal")
         }
       })
-      
+
     }
   )
 }
@@ -38,9 +51,22 @@ show_data_server <- function(id, data_r = reactive(NULL)) {
 # Update vars -----------------------------------------------------------------------
 
 #' @importFrom shiny NS
+#' @importFrom htmltools tags css
+#' @importFrom phosphoricons ph
 update_vars_ui <- function(id) {
   ns <- NS(id)
-  btn_header(i18n("Update variables"), "brackets-angle")(ns("btn"))
+  icon <- tags$div(
+    style = css(position = "relative", width = "35px"),
+    ph("table", height = "2em", title = i18n("Update variables")),
+    ph(
+      "gear",
+      style = css(position = "absolute", top = 0, right = 0),
+      height = "1.2em",
+      weight = "bold",
+      title = i18n("Update variables")
+    )
+  )
+  btn_header(i18n("Update variables"), icon, class = " px-0")(ns("btn"))
 }
 
 #' @importFrom shiny moduleServer observeEvent modalDialog showModal reactive
@@ -91,7 +117,7 @@ create_col_server <- function(id, data_r = reactive(NULL)) {
     function(input, output, session) {
       ns <- session$ns
       observeEvent(input$btn, datamods::modal_create_column(ns("mod")))
-      res <-datamods::create_column_server(
+      res <- datamods::create_column_server(
         id = "mod",
         data = data_r
       )
@@ -101,3 +127,44 @@ create_col_server <- function(id, data_r = reactive(NULL)) {
 }
 
 
+
+
+
+# Cut variable ------------------------------------------------------------
+
+#' @importFrom shiny NS
+#' @importFrom htmltools tags css
+#' @importFrom phosphoricons ph
+cut_var_ui <- function(id) {
+  ns <- NS(id)
+  icon <- tags$div(
+    style = css(position = "relative", width = "35px"),
+    ph("list-numbers", height = "2em", title = i18n("Cut numeric variable into factors")),
+    ph(
+      "scissors",
+      style = css(position = "absolute", top = 0, right = 0, transform = "scale(-1, 1)"),
+      height = "1.2em",
+      weight = "bold",
+      title = i18n("Cut numeric variable into factors")
+    )
+  )
+  btn_header(i18n("Cut numeric variable into factors"), class = " px-0", icon)(ns("btn"))
+}
+
+#' @importFrom shiny moduleServer observeEvent modalDialog showModal reactive
+#' @importFrom datamods cut_variable_ui cut_variable_server
+cut_var_server <- function(id, data_r = reactive(NULL)) {
+  moduleServer(
+    id,
+    function(input, output, session) {
+      ns <- session$ns
+      observeEvent(input$btn, datamods::modal_cut_variable(ns("mod")))
+      observeEvent(res(), shiny::removeModal())
+      res <- datamods::cut_variable_server(
+        id = "mod",
+        data = data_r
+      )
+      return(res)
+    }
+  )
+}

@@ -74,7 +74,8 @@ esquisse_ui <- function(id,
       header_btns$import_data(ns("launch_import_data")),
       header_btns$show_data(ns("show_data")),
       header_btns$update_variable(ns("update_variable")),
-      header_btns$create_column(ns("create_col"))
+      header_btns$create_column(ns("create_col")),
+      header_btns$cut_variable(ns("cut_var"))
     )
   )
 
@@ -233,6 +234,7 @@ esquisse_container <- function(width = "100%", height = "700px", fixed = FALSE) 
 #' @param show_data Show button to display data.
 #' @param update_variable Show button to update selected variables and convert them.
 #' @param create_column Show button to create a new column based on an expression.
+#' @param cut_variable Show button to allow to convert a numeric variable into factors.
 #' @param settings Show button to open settings modal (to select aesthetics to use).
 #' @param close Show button to stop the app and close addin.
 #'
@@ -244,6 +246,7 @@ esquisse_header <- function(import_data = TRUE,
                             show_data = TRUE,
                             update_variable = TRUE,
                             create_column = TRUE,
+                            cut_variable = TRUE,
                             settings = TRUE,
                             close = TRUE) {
   list(
@@ -251,6 +254,7 @@ esquisse_header <- function(import_data = TRUE,
     show_data = isTRUE(show_data),
     update_variable = isTRUE(update_variable),
     create_column = isTRUE(create_column),
+    cut_variable = isTRUE(cut_variable),
     settings = isTRUE(settings),
     close = isTRUE(close)
   )
@@ -279,6 +283,11 @@ make_btn_header <- function(.list) {
     } else {
       function(id) NULL
     },
+    cut_variable = if (isTRUE(.list$cut_variable)) {
+      cut_var_ui
+    } else {
+      function(id) NULL
+    },
     settings = if (isTRUE(.list$settings)) {
       btn_header(i18n("Display settings"), "gear-fine")
     } else {
@@ -292,13 +301,14 @@ make_btn_header <- function(.list) {
   )
 }
 
-btn_header <- function(label, icon) {
+btn_header <- function(label, icon, class = NULL) {
   function(id) {
     actionButton(
       inputId = id,
-      label = ph(icon, height = "2em", title = label),
+      label = if (is.character(icon)) ph(icon, height = "2em", title = label) else icon,
       class = "btn-sm btn-primary",
-      title = label
+      title = label,
+      class = class
     )
   }
 }
