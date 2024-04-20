@@ -120,7 +120,7 @@ bs_theme_esquisse <- function() {
       "#NotiflixNotifyWrap { inset: auto 5px 38px auto !important; }",
       ".nav-tabs .nav-link.active { @extend .border-0; @extend .border-bottom; @extend .border-primary; @extend .border-2;}",
       ".nav-tabs .nav-link.active { @extend .text-primary; @extend .fw-bold}",
-      ".nav-pills .nav-link { @extend .py-1 }"
+      ".esquisse-geom-aes-main .nav-pills .nav-link { @extend .py-1 }"
     )
   )
   return(theme)
