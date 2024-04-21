@@ -90,7 +90,9 @@
 <span>  create_column <span class="op">=</span> <span class="cn">TRUE</span>,</span>
 <span>  cut_variable <span class="op">=</span> <span class="cn">TRUE</span>,</span>
 <span>  settings <span class="op">=</span> <span class="cn">TRUE</span>,</span>
-<span>  close <span class="op">=</span> <span class="cn">TRUE</span></span>
+<span>  close <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>  .before <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  .after <span class="op">=</span> <span class="cn">NULL</span></span>
 <span><span class="op">)</span></span></code></pre></div>
     </div>
 
@@ -207,6 +209,10 @@ It's possible to use a vector of CSS unit of length 4 to specify the margins
 <dt>close</dt>
 <dd><p>Show button to stop the app and close addin.</p></dd>
 
+
+<dt>.before, .after</dt>
+<dd><p>Custom content to put in the header, typically buttons.</p></dd>
+
 </dl></div>
     <div class="section level2">
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
@@ -298,7 +304,14 @@ It's possible to use a vector of CSS unit of length 4 to specify the margins
 <span class="r-in"><span>  theme <span class="op">=</span> <span class="fu"><a href="bs_theme_esquisse.html">bs_theme_esquisse</a></span><span class="op">(</span><span class="op">)</span>,</span></span>
 <span class="r-in"><span>  <span class="fu">esquisse_ui</span><span class="op">(</span></span></span>
 <span class="r-in"><span>    id <span class="op">=</span> <span class="st">"esquisse"</span>,</span></span>
-<span class="r-in"><span>    header <span class="op">=</span> <span class="fu">esquisse_header</span><span class="op">(</span>close <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span>, <span class="co"># hide the close button</span></span></span>
+<span class="r-in"><span>    header <span class="op">=</span> <span class="fu">esquisse_header</span><span class="op">(</span></span></span>
+<span class="r-in"><span>      close <span class="op">=</span> <span class="cn">FALSE</span>, <span class="co"># hide the close button</span></span></span>
+<span class="r-in"><span>      .after <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/shiny/man/actionButton.html" class="external-link">actionButton</a></span><span class="op">(</span> <span class="co"># custom button</span></span></span>
+<span class="r-in"><span>        inputId <span class="op">=</span> <span class="st">"open_modal"</span>,</span></span>
+<span class="r-in"><span>        label <span class="op">=</span> <span class="cn">NULL</span>,</span></span>
+<span class="r-in"><span>        icon <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/shiny/man/icon.html" class="external-link">icon</a></span><span class="op">(</span><span class="st">"plus"</span><span class="op">)</span></span></span>
+<span class="r-in"><span>      <span class="op">)</span></span></span>
+<span class="r-in"><span>    <span class="op">)</span>,</span></span>
 <span class="r-in"><span>    container <span class="op">=</span> <span class="fu">esquisse_container</span><span class="op">(</span>fixed <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>,</span></span>
 <span class="r-in"><span>    play_pause <span class="op">=</span> <span class="cn">FALSE</span>,</span></span>
 <span class="r-in"><span>    controls <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"settings"</span>, <span class="st">"labs"</span>, <span class="st">"axes"</span>, <span class="st">"geoms"</span>, <span class="st">"theme"</span>, <span class="st">"filters"</span>, <span class="st">"code"</span>, <span class="st">"export"</span><span class="op">)</span>,</span></span>
@@ -310,6 +323,10 @@ It's possible to use a vector of CSS unit of length 4 to specify the margins
 <span class="r-in"><span></span></span>
 <span class="r-in"><span>  <span class="fu">esquisse_server</span><span class="op">(</span>id <span class="op">=</span> <span class="st">"esquisse"</span><span class="op">)</span></span></span>
 <span class="r-in"><span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span>  <span class="fu"><a href="https://rdrr.io/pkg/shiny/man/observeEvent.html" class="external-link">observeEvent</a></span><span class="op">(</span><span class="va">input</span><span class="op">$</span><span class="va">open_modal</span>, <span class="op">{</span></span></span>
+<span class="r-in"><span>    <span class="fu"><a href="https://rdrr.io/pkg/shiny/man/showModal.html" class="external-link">showModal</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/pkg/shiny/man/modalDialog.html" class="external-link">modalDialog</a></span><span class="op">(</span><span class="st">"Some content"</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-in"><span>  <span class="op">}</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="op">}</span></span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="kw">if</span> <span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/interactive.html" class="external-link">interactive</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span></span>
