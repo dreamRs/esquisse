@@ -40,7 +40,9 @@ esquisse_header(
   create_column = TRUE,
   cut_variable = TRUE,
   settings = TRUE,
-  close = TRUE
+  close = TRUE,
+  .before = NULL,
+  .after = NULL
 )
 }
 \arguments{
@@ -109,6 +111,8 @@ It's possible to use a vector of CSS unit of length 4 to specify the margins
 \item{settings}{Show button to open settings modal (to select aesthetics to use).}
 
 \item{close}{Show button to stop the app and close addin.}
+
+\item{.before, .after}{Custom content to put in the header, typically buttons.}
 }
 \value{
 A \code{reactiveValues} with 3 slots :
@@ -200,7 +204,14 @@ ui <- fluidPage(
   theme = bs_theme_esquisse(),
   esquisse_ui(
     id = "esquisse",
-    header = esquisse_header(close = FALSE), # hide the close button
+    header = esquisse_header(
+      close = FALSE, # hide the close button
+      .after = actionButton( # custom button
+        inputId = "open_modal",
+        label = NULL,
+        icon = icon("plus")
+      )
+    ),
     container = esquisse_container(fixed = TRUE),
     play_pause = FALSE,
     controls = c("settings", "labs", "axes", "geoms", "theme", "filters", "code", "export"),
@@ -212,6 +223,10 @@ server <- function(input, output, session) {
 
   esquisse_server(id = "esquisse")
 
+
+  observeEvent(input$open_modal, {
+    showModal(modalDialog("Some content"))
+  })
 }
 
 if (interactive())

@@ -67,10 +67,12 @@ esquisse_ui <- function(id,
     tags$div(
       class = "pull-right float-end",
       header_btns$settings(ns("settings")),
+      header_btns$.after,
       header_btns$close(ns("close")),
     ),
     tags$div(
       class = "pull-left",
+      header_btns$.before,
       header_btns$import_data(ns("launch_import_data")),
       header_btns$show_data(ns("show_data")),
       header_btns$update_variable(ns("update_variable")),
@@ -237,6 +239,7 @@ esquisse_container <- function(width = "100%", height = "700px", fixed = FALSE) 
 #' @param cut_variable Show button to allow to convert a numeric variable into factors.
 #' @param settings Show button to open settings modal (to select aesthetics to use).
 #' @param close Show button to stop the app and close addin.
+#' @param .before,.after Custom content to put in the header, typically buttons.
 #'
 #' @rdname esquisse-module
 #' @order 4
@@ -248,7 +251,9 @@ esquisse_header <- function(import_data = TRUE,
                             create_column = TRUE,
                             cut_variable = TRUE,
                             settings = TRUE,
-                            close = TRUE) {
+                            close = TRUE,
+                            .before = NULL,
+                            .after = NULL) {
   list(
     import_data = isTRUE(import_data),
     show_data = isTRUE(show_data),
@@ -256,7 +261,9 @@ esquisse_header <- function(import_data = TRUE,
     create_column = isTRUE(create_column),
     cut_variable = isTRUE(cut_variable),
     settings = isTRUE(settings),
-    close = isTRUE(close)
+    close = isTRUE(close),
+    .before = .before,
+    .after = .after
   )
 }
 
@@ -297,7 +304,9 @@ make_btn_header <- function(.list) {
       btn_header(i18n("Close Window"), "x")
     } else {
       function(id) NULL
-    }
+    },
+    .before = .list$.before,
+    .after = .list$.after
   )
 }
 
