@@ -81,13 +81,6 @@ select_geom_aes_server <- function(id,
         }
       )
 
-      # special case: geom_sf
-      observeEvent(data_r(), {
-        if (inherits(data_r(), what = "sf")) {
-          geom_rv$possible <- c("sf", geom_rv$possible)
-        }
-      })
-
       lapply(
         X = seq_len(n_geoms),
         FUN = function(i) {
