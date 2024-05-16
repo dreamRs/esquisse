@@ -3,10 +3,7 @@
 
 # esquisse <img src="man/figures/logo.png" width=200 align="right" />
 
-> The purpose of this add-in is to let you explore your data quickly to
-> extract the information they hold. You can create visualization with
-> [{ggplot2}](https://ggplot2.tidyverse.org/), filter data with
-> [{dplyr}](https://dplyr.tidyverse.org/) and retrieve generated code.
+**Try online : <https://dreamrs.shinyapps.io/esquisse/>**
 
 <!-- badges: start -->
 
@@ -25,6 +22,8 @@ or retrieve the code to reproduce the graph.
 
 See online documentation :
 <https://dreamrs.github.io/esquisse/index.html>
+
+Use esquisse online : <https://dreamrs.shinyapps.io/esquisse/>
 
 If you find bugs, please open an
 [issue](https://github.com/dreamRs/esquisse/issues)
