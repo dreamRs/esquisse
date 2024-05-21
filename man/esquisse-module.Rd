@@ -39,6 +39,7 @@ esquisse_header(
   update_variable = TRUE,
   create_column = TRUE,
   cut_variable = TRUE,
+  update_factor = TRUE,
   settings = TRUE,
   close = TRUE,
   .before = NULL,
@@ -106,7 +107,9 @@ It's possible to use a vector of CSS unit of length 4 to specify the margins
 
 \item{create_column}{Show button to create a new column based on an expression.}
 
-\item{cut_variable}{Show button to allow to convert a numeric variable into factors.}
+\item{cut_variable}{Show button to allow to convert a numeric variable into factor.}
+
+\item{update_factor}{Show button to open window to reorder factor levels and update them.}
 
 \item{settings}{Show button to open settings modal (to select aesthetics to use).}
 

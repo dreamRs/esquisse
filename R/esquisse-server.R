@@ -120,6 +120,12 @@ esquisse_server <- function(id,
         data_chart$data <- cutted_var()
       })
 
+      # update factor modal
+      updated_fct <- update_fct_server("up_fct", reactive(data_chart$data))
+      observeEvent(updated_fct(), {
+        data_chart$data <- updated_fct()
+      })
+
 
 
       ### Geom & aesthetics selection

@@ -133,7 +133,7 @@ select_geom_aes_server <- function(id,
 
       }), rv$aes_1, input$geom_1)
 
-      observeEvent( rv$possible, {
+      observeEvent(rv$possible, {
         geoms <- geomIcons()$values
         geomposs <-  rv$possible
         updateDropInput(

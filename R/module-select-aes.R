@@ -106,15 +106,28 @@ select_aes_server <- function(id,
           )
         } else {
           var_choices <- get_col_names(data)
+          var_badges <- badgeType(
+            col_name = var_choices,
+            col_type = col_type(data[, var_choices, drop = TRUE])
+          )
+          selected <- dropNulls(isolate(input$dragvars$target))
+          var_selected <- unlist(selected, use.names = FALSE)
+          if (!all(var_selected %in% var_choices))
+            var_selected <- NULL
           updateDragulaInput(
             session = session,
             inputId = "dragvars",
             status = NULL,
             choiceValues = var_choices,
-            choiceNames = badgeType(
-              col_name = var_choices,
-              col_type = col_type(data[, var_choices, drop = TRUE])
+            choiceNames = var_badges,
+            # selected = shiny::isolate(input$dragvars$target),
+            selectedNames = if (length(var_selected) > 0) lapply(
+              X = selected,
+              function(x) {
+                var_badges[var_choices == x]
+              }
             ),
+            selectedValues = if (length(var_selected) > 0) selected,
             badge = FALSE
           )
         }

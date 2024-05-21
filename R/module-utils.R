@@ -139,16 +139,16 @@ cut_var_ui <- function(id) {
   ns <- NS(id)
   icon <- tags$div(
     style = css(position = "relative", width = "35px"),
-    ph("list-numbers", height = "2em", title = i18n("Cut numeric variable into factors")),
+    ph("list-numbers", height = "2em", title = i18n("Cut numeric variable into factor")),
     ph(
       "scissors",
       style = css(position = "absolute", top = 0, right = 0, transform = "scale(-1, 1)"),
       height = "1.2em",
       weight = "bold",
-      title = i18n("Cut numeric variable into factors")
+      title = i18n("Cut numeric variable into factor")
     )
   )
-  btn_header(i18n("Cut numeric variable into factors"), class = " px-0", icon)(ns("btn"))
+  btn_header(i18n("Cut numeric variable into factor"), class = "px-0", icon)(ns("btn"))
 }
 
 #' @importFrom shiny moduleServer observeEvent modalDialog showModal reactive
@@ -168,3 +168,46 @@ cut_var_server <- function(id, data_r = reactive(NULL)) {
     }
   )
 }
+
+
+
+
+# Update factor -----------------------------------------------------------
+
+#' @importFrom shiny NS
+#' @importFrom htmltools tags css
+#' @importFrom phosphoricons ph
+update_fct_ui <- function(id) {
+  ns <- NS(id)
+  icon <- tags$div(
+    style = css(position = "relative", width = "35px"),
+    ph("list-dashes", height = "2em", title = i18n("Update factor")),
+    ph(
+      "arrows-down-up",
+      style = css(position = "absolute", top = 0, right = 0, transform = "scale(-1, 1)"),
+      height = "1.2em",
+      weight = "bold",
+      title = i18n("Update factor")
+    )
+  )
+  btn_header(i18n("Update factor"), class = "px-0", icon)(ns("btn"))
+}
+
+#' @importFrom shiny moduleServer observeEvent modalDialog showModal reactive
+#' @importFrom datamods cut_variable_ui cut_variable_server
+update_fct_server <- function(id, data_r = reactive(NULL)) {
+  moduleServer(
+    id,
+    function(input, output, session) {
+      ns <- session$ns
+      observeEvent(input$btn, datamods::modal_update_factor(ns("mod")))
+      observeEvent(res(), shiny::removeModal())
+      res <- datamods::update_factor_server(
+        id = "mod",
+        data = data_r
+      )
+      return(res)
+    }
+  )
+}
+
