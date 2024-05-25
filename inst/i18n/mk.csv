@@ -1,90 +1,116 @@
-label,translation
-"Update Preview","Ажурирај го прегледот"
-"Height:","Висина:"
-"Width:","Ширина:"
-"Filename:","Име на датотека:"
-"Filename","Име на датотека"
-"Close","Затвори"
-"More options","Повеќе опции"
-"Export chart","Извези график"
-"Export to PowerPoint failed...","Извези во PowerPoint"
-"Export format:","Формат за извоз:"
-"Import data to create a graph","Увези податоци за креирање на график"
-"Display settings","Поставки за приказот"
-"Close Window","Затвори го прозорецот"
-"Import data","Увези податоци"
-"Show data","Прикажи ги податоците"
-"Labels & Title","Ознаки и наслов"
-"Plot options","Опции на графикот"
-"Appearance","Изглед"
-"Data","Податоци"
-"Code","Код"
-"Title:","Наслов:"
-"Title","Наслов"
-"Subtitle:","Поднаслов:"
-"Subtitle","Поднаслов"
-"Caption:","Легенда:"
-"Caption","Легенда"
-"X label:","Текст на X оска:"
-"X label","Текст на X оска"
-"Y label:","Текст на Y оска:"
-"Y label","Текст на Y оска"
-"Fill label:","Текст за боја за исполнување:"
-"Fill label","Текст за боја за исполнување"
-"Color label:","Текст за боја:"
-"Color label","Текст за боја"
-"Size label:","Текст за големина:"
-"Size label","Текст за големина"
-"Shape label:","Текст за форма:"
-"Shape label","Текст за форма"
-"Font face:","Фонт:"
-"Font size:","Големина на фонт:"
-"Align:","Порамнување:"
-"Left","Лево"
-"Center","Централно"
-"Right","Десно"
-"Color:","Боја:"
-"Ribbon color:","Боја на лента:"
-"Point symbol:","Симбол на точки:"
-"Theme:","Тема:"
-"Legend position:","Позиција на легендата:"
-"Add a smooth line:","Додади линија на тренд:"
-"Yes","Да"
-"No","Не"
-"Smooth line span:","Опсег на линијата за тренд"
-"Size for points/lines:","Големина на точки/линии:"
-"Facet scales:","Скала на панелите:"
-"Facet ncol:","Број на колони:"
-"Facet nrow:","Број на редови:"
-"Numbers of bins:","Број на столбчиња:"
-"Scale:","Скала:"
-"X-Axis limits (empty for none):","Гранци на X оската:"
-"X-Axis transform:","Трансформација на X оската:"
-"Y-Axis limits (empty for none):","Гранци на Y оската:"
-"Y-Axis transform:","Трансформација на Y оската:"
-"Bandwidth adjustment:","Прилагодување на густината:"
-"Position:","Позиција:"
-"Flip coordinate:","Инверзни координати:"
-"Copy to clipboard","Копирај на таблата со исечоци:"
-"Code:","Код:"
-"Insert code in script","Внеси код за скрипта"
-"Esquisse settings","Поставки на Esquisse"
-"Select aesthetics to be used to build a graph:","Избери естетика за креирање на график"
-"Aesthetic mappings describe how variables in the data are mapped to visual properties (aesthetics) of geoms.","Поставките на естетиката опишуваат како податоците треба да се поврзат со визуелните елементи"
-"fill color for shapes","боја на полнење на облици"
-"color points and lines","боја на точки и линии"
-"size of the points","големина на точките"
-"shape of the points","форма на точките"
-"frequency weights","пондерирање"
-"identifies series of points with a grouping variable","означува точки со променлива за групирање"
-"used in ribbons charts with ymax to display an interval between two lines","се користи во графикони со ymax за да прикаже интервал помеѓу две линии"
-"used in ribbons charts with ymin to display an interval between two lines","се користи во графикони со ymin за да прикаже интервал помеѓу две линии"
-"create small multiples","Креирај повеќе графици"
-"create small multiples by rows","Креирај повеќе графици по редови"
+"label","translation","comment"
+"Align:","Порамнување:",
+"Bandwidth adjustment:","Прилагодување на густината:",
+"Caption","Легенда",
+"Caption:","Легенда:",
+"Center","Централно",
+"Close","Затвори",
+"Close Window","Затвори го прозорецот",
+"Code","Код",
+"Code:","Код:",
+"Color label","Текст за боја",
+"Color label:","Текст за боја:",
+"Color:","Боја:",
+"Copy to clipboard","Копирај на таблата со исечоци:",
+"Data","Податоци",
+"Dataset","Податочен сет",
+"Display settings","Поставки за приказот",
+"Esquisse settings","Поставки на Esquisse",
+"Export chart","Извези график",
+"Export format:","Формат за извоз:",
+"Export to PowerPoint failed...","Извези во PowerPoint",
+"Facet ncol:","Број на колони:",
+"Facet nrow:","Број на редови:",
+"Facet scales:","Скала на панелите:",
+"Filename","Име на датотека",
+"Filename:","Име на датотека:",
+"Fill label","Текст за боја за исполнување",
+"Fill label:","Текст за боја за исполнување:",
+"Font face:","Фонт:",
+"Font size:","Големина на фонт:",
+"Height:","Висина:",
+"Import data","Увези податоци",
+"Import data to create a graph","Увези податоци за креирање на график",
+"Insert code in script","Внеси код за скрипта",
+"Labels & Title","Ознаки и наслов",
+"Left","Лево",
+"More options","Повеќе опции",
+"Numbers of bins:","Број на столбчиња:",
+"Position:","Позиција:",
+"Reverse the order of colors?","Обратен редослед на бои?",
+"Ribbon color:","Боја на лента:",
+"Right","Десно",
+"Scale:","Скала:",
+"Select aesthetics to be used to build a graph:","Избери естетика за креирање на график",
+"Shape label","Текст за форма",
+"Shape label:","Текст за форма:",
+"Show data","Прикажи ги податоците",
+"Size label","Текст за големина",
+"Size label:","Текст за големина:",
+"Subtitle","Поднаслов",
+"Subtitle:","Поднаслов:",
+"Theme:","Тема:",
+"Title","Наслов",
+"Title:","Наслов:",
+"Update Preview","Ажурирај го прегледот",
+"Use a color palette:","Користете палета на бои:",
+"Use specific colors:","Користете специфични бои:",
+"Width:","Ширина:",
+"X label","Текст на X оска",
+"X label:","Текст на X оска:",
+"X-Axis transform:","Трансформација на X оската:",
+"Y label","Текст на Y оска",
+"Y label:","Текст на Y оска:",
+"Y-Axis transform:","Трансформација на Y оската:",
+"color points and lines","боја на точки и линии",
+"create small multiples","Креирај повеќе графици",
 "create small multiples by columns","
-Креирај повеќе графици по колони"
-"Dataset","Податочен сет"
-"Jittered points:","Jittered points:"
-"Use a color palette:","Користете палета на бои:"
-"Reverse the order of colors?","Обратен редослед на бои?"
-"Use specific colors:","Користете специфични бои:"
+Креирај повеќе графици по колони",
+"create small multiples by rows","Креирај повеќе графици по редови",
+"fill color for shapes","боја на полнење на облици",
+"frequency weights","пондерирање",
+"identifies series of points with a grouping variable","означува точки со променлива за групирање",
+"shape of the points","форма на точките",
+"size of the points","големина на точките",
+"used in ribbons charts with ymax to display an interval between two lines","се користи во графикони со ymax за да прикаже интервал помеѓу две линии",
+"used in ribbons charts with ymin to display an interval between two lines","се користи во графикони со ymin за да прикаже интервал помеѓу две линии",
+"Aesthetic mappings describe how variables in the data are mapped to visual properties aesthetics of geoms.","Естетските мапирања опишуваат како променливите во податоците се пресликуваат со естетиката на визуелните својства на геомите.","Automatically translated"
+"Always","Секогаш","Automatically translated"
+"Angle:","Агол:","Automatically translated"
+"Axes","Секири","Automatically translated"
+"Controls the amount of smoothing:","Ја контролира количината на измазнување:","Automatically translated"
+"Create column","Креирај колона","Automatically translated"
+"Cut numeric variable into factor","Пресечете ја нумеричката променлива во фактор","Automatically translated"
+"Display confidence interval around smooth","Прикажи интервал на доверба околу мазни","Automatically translated"
+"Export","Извоз","Automatically translated"
+"Geometries","Геометрии","Automatically translated"
+"Horizontal justification:","Хоризонтално оправдување:","Automatically translated"
+"Justification:","Оправдување:","Automatically translated"
+"Level of confidence interval to use:","Ниво на интервал на доверба за користење:","Automatically translated"
+"Line width:","Ширина на линијата:","Automatically translated"
+"Never","Никогаш","Automatically translated"
+"No data to display","Нема податоци за прикажување","Automatically translated"
+"Once per warning","Еднаш по предупредување","Automatically translated"
+"Options","Опции","Automatically translated"
+"Show notifications when the plot generate a warning:","Прикажи известувања кога заплетот генерира предупредување:","Automatically translated"
+"Size for points:","Големина за поени:","Automatically translated"
+"Size:","Големина:","Automatically translated"
+"Smoothing method:","Метод на измазнување:","Automatically translated"
+"Stat summary function:","Функција за резиме на статистика:","Automatically translated"
+"Theme","Тема","Automatically translated"
+"Update & select variables","Ажурирајте и изберете променливи","Automatically translated"
+"Update factor","Фактор за ажурирање","Automatically translated"
+"Update variables","Ажурирајте ги променливите","Automatically translated"
+"Use {plotly} to render plot","Користете {plotly} за прикажување на заплетот","Automatically translated"
+"Vertical justification:","Вертикално оправдување:","Automatically translated"
+"X-Axis limits empty for none:","Границите на X-оската се празни за ниеден:","Automatically translated"
+"Y-Axis limits empty for none:","Границите на Y-оската се празни за ниеден:","Automatically translated"
+"alpha transparency","алфа транспарентност","Automatically translated"
+"axis text options:","Опции за текст на оската:","Automatically translated"
+"bottom","дното","Automatically translated"
+"center","центар","Automatically translated"
+"left","лево","Automatically translated"
+"none","ниеден","Automatically translated"
+"right","право","Automatically translated"
+"text to use as label on plot","текст за употреба како ознака на заплетот","Automatically translated"
+"top","врв","Automatically translated"

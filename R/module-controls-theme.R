@@ -88,7 +88,7 @@ input_legend_text <- function(type = c("text", "title"), ns = identity) {
       ),
       shinyWidgets::virtualSelectInput(
         inputId = ns(paste0("legend_", type, "_face")),
-        label = "Font face:",
+        label = i18n("Font face:"),
         choices = setNames(
           c("plain", "italic", "bold", "bold.italic"),
           c("Plain", "Italic", "Bold", "Bold/Italic")
@@ -97,14 +97,14 @@ input_legend_text <- function(type = c("text", "title"), ns = identity) {
       ),
       numericInput(
         inputId = ns(paste0("legend_", type, "_size")),
-        label = "Size:",
+        label = i18n("Size:"),
         value = 10,
         min = 0,
         width = "100%"
       ),
       numericInput(
         inputId = ns(paste0("legend_", type, "_angle")),
-        label = "Angle:",
+        label = i18n("Angle:"),
         value = 0,
         min = 0,
         max = 360,
@@ -122,11 +122,11 @@ input_legend_options <- function(ns) {
       inputId = ns("legend_position"),
       label = i18n("Position:"),
       choiceNames = list(
-        ph("arrow-left", title = "left"),
-        ph("arrow-up", title = "top"),
-        ph("arrow-down", title = "bottom"),
-        ph("arrow-right", title = "right"),
-        ph("x", title = "none")
+        ph("arrow-left", title = i18n("left")),
+        ph("arrow-up", title = i18n("top")),
+        ph("arrow-down", title = i18n("bottom")),
+        ph("arrow-right", title = i18n("right")),
+        ph("x", title = i18n("none"))
       ),
       choiceValues = c("left", "top", "bottom", "right", "none"),
       selected = "right",
@@ -137,11 +137,11 @@ input_legend_options <- function(ns) {
       inputId = ns("legend_justification"),
       label = i18n("Justification:"),
       choiceNames = list(
-        ph("arrow-left", title = "left"),
-        ph("arrow-up", title = "top"),
-        ph("arrow-down", title = "bottom"),
-        ph("arrow-right", title = "right"),
-        ph("arrows-in-cardinal", title = "center")
+        ph("arrow-left", title = i18n("left")),
+        ph("arrow-up", title = i18n("top")),
+        ph("arrow-down", title = i18n("bottom")),
+        ph("arrow-right", title = i18n("right")),
+        ph("arrows-in-cardinal", title = i18n("center"))
       ),
       choiceValues = c("left", "top", "bottom", "right", "center"),
       selected = "center",

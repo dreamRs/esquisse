@@ -1,89 +1,115 @@
-label,translation
-Update Preview,Përditëso pamjen
-Height:,Lartësia:
-Width:,Gjerësia:
-Filename:,Emri i skedarit:
-Filename,Emri i skedarit
-Close,Mbylle
-More options,Më shumë opsione
-Export chart,Eksporto grafikun
-Export to PowerPoint failed...,Eksportimi në PowerPoint dështoi
-Export format:,Formati i eksportit:
-Import data to create a graph,Importo të dhëna për të krijuar një grafik
-Display settings,Cilësitë e paraqitjes
-Close Window,Mbylle dritaren
-Import data,Importo të dhëna
-Show data,Trego të dhënat
-Labels & Title,Etiketat dhe titulli
-Plot options,Opsionet e grafikut
-Appearance,Pamja
-Data,Të dhënat
-Code,Kodi
-Title:,Titulli:
-Title,Titulli
-Subtitle:,Nëntitulli:
-Subtitle,Nëntitulli
-Caption:,Legjenda:
-Caption,Legjenda
-X label:,Emërtimi i boshtit X:
-X label,Emërtimi i boshtit X
-Y label:,Emërtimi i boshtit Y:
-Y label,Emërtimi i boshtit Y
-Fill label:,Teksti për variablin mbushje:
-Fill label,Teksti për variablin mbushje
-Color label:,Teksti për variablin ngjyrë:
-Color label,Teksti për variablin ngjyrë:
-Size label:,Teksti për variablin madhësi:
-Size label,Teksti për variablin madhësi:
-Shape label:,Teksti për variablin formë:
-Shape label,Teksti për variablin formën:
-Font face:,Shkrimi:
-Font size:,Madhësia e shkrimit:
-Align:,Radhitja:
-Left,Majtas:
-Center,Në qëndër:
-Right,Djathtas
-Color:,Ngjyra:
-Ribbon color:,Ngjyra e shiritit:
-Point symbol:,Simboli i pikës:
-Theme:,Modeli i paraqitjes:
-Legend position:,Pozicioni i legjendës:
-Add a smooth line:,Shtoni një vijë të sheshimit
-Yes,Po
-No,Jo
-Smooth line span:,Spektri i linjës së sheshimit
-Size for points/lines:,Madhësia e pikave/vijave:
-Facet scales:,Shkalla e kategorive:
-Facet ncol:,Numri i shtyllave të kategorive:
-Facet nrow:,Numri i rreshtave të kategorive:
-Numbers of bins:,Numri i shtyllave:
-Scale:,Shkalla:
-X-Axis limits (empty for none):,Kufijtë e boshtit X (bosh për asnjë):
-X-Axis transform:,Transformimi i boshtit X:
-Y-Axis limits (empty for none):,Kufijtë e boshtit Y (bosh për asnjë):
-Y-Axis transform:,Transformimi i boshtit Y:
-Bandwidth adjustment:,Rregullimi i densitetit:
-Position:,Pozicioni:
-Flip coordinate:, Shkëmbe koordinatat:
-Copy to clipboard,Kopjo në kujtesën e fragmenteve:
-Code:,Kodi:
-Insert code in script, Përfshi kodin në skript
-Esquisse settings,Cilësimet e Esquisse
-Select aesthetics to be used to build a graph:,Zgjidh estetikën për të krijuar grafikun
-Aesthetic mappings describe how variables in the data are mapped to visual properties (aesthetics) of geoms.,Cilësimet estetike përshkruajnë se si variablat në të dhënat janë hartuar me qëllim vizualizimin e vetive të objekteve gjeometrike
-fill color for shapes,ngjyra e mbushjes së formave
-color points and lines,ngjyra e pikave dhe vijave
-size of the points,madhësia e pikave
-shape of the points,forma e pikave
-frequency weights,peshat e frekuencave
-identifies series of points with a grouping variable,identifikon serinë e pikave me një ndryshore grupimi
-used in ribbons charts with ymax to display an interval between two lines,përdoret në grafikët fjongo me ymax për të shfaqur një interval midis dy vijave
-used in ribbons charts with ymin to display an interval between two lines,përdoret në grafikët fjongo me ymin për të shfaqur një interval midis dy vijave
-create small multiples,Krijoni më shumë grafikë
-create small multiples by rows,Krijoni më shumë grafikë sipas rreshtave
-create small multiples by columns,"Krijoni më shumë grafikë sipas shtyllave"
-Dataset,Të dhënat
-"Jittered points:","Jittered points:"
-"Use a color palette:","Përdorni një gamë ngjyrash:"
-"Reverse the order of colors?","Ngjyra të kundërta?"
-"Use specific colors:","Përdorni ngjyra specifike:"
+"label","translation","comment"
+"Align:","Radhitja:",
+"Bandwidth adjustment:","Rregullimi i densitetit:",
+"Caption","Legjenda",
+"Caption:","Legjenda:",
+"Center","Në qëndër:",
+"Close","Mbylle",
+"Close Window","Mbylle dritaren",
+"Code","Kodi",
+"Code:","Kodi:",
+"Color label","Teksti për variablin ngjyrë:",
+"Color label:","Teksti për variablin ngjyrë:",
+"Color:","Ngjyra:",
+"Copy to clipboard","Kopjo në kujtesën e fragmenteve:",
+"Data","Të dhënat",
+"Dataset","Të dhënat",
+"Display settings","Cilësitë e paraqitjes",
+"Esquisse settings","Cilësimet e Esquisse",
+"Export chart","Eksporto grafikun",
+"Export format:","Formati i eksportit:",
+"Export to PowerPoint failed...","Eksportimi në PowerPoint dështoi",
+"Facet ncol:","Numri i shtyllave të kategorive:",
+"Facet nrow:","Numri i rreshtave të kategorive:",
+"Facet scales:","Shkalla e kategorive:",
+"Filename","Emri i skedarit",
+"Filename:","Emri i skedarit:",
+"Fill label","Teksti për variablin mbushje",
+"Fill label:","Teksti për variablin mbushje:",
+"Font face:","Shkrimi:",
+"Font size:","Madhësia e shkrimit:",
+"Height:","Lartësia:",
+"Import data","Importo të dhëna",
+"Import data to create a graph","Importo të dhëna për të krijuar një grafik",
+"Insert code in script","Përfshi kodin në skript",
+"Labels & Title","Etiketat dhe titulli",
+"Left","Majtas:",
+"More options","Më shumë opsione",
+"Numbers of bins:","Numri i shtyllave:",
+"Position:","Pozicioni:",
+"Reverse the order of colors?","Ngjyra të kundërta?",
+"Ribbon color:","Ngjyra e shiritit:",
+"Right","Djathtas",
+"Scale:","Shkalla:",
+"Select aesthetics to be used to build a graph:","Zgjidh estetikën për të krijuar grafikun",
+"Shape label","Teksti për variablin formën:",
+"Shape label:","Teksti për variablin formë:",
+"Show data","Trego të dhënat",
+"Size label","Teksti për variablin madhësi:",
+"Size label:","Teksti për variablin madhësi:",
+"Subtitle","Nëntitulli",
+"Subtitle:","Nëntitulli:",
+"Theme:","Modeli i paraqitjes:",
+"Title","Titulli",
+"Title:","Titulli:",
+"Update Preview","Përditëso pamjen",
+"Use a color palette:","Përdorni një gamë ngjyrash:",
+"Use specific colors:","Përdorni ngjyra specifike:",
+"Width:","Gjerësia:",
+"X label","Emërtimi i boshtit X",
+"X label:","Emërtimi i boshtit X:",
+"X-Axis transform:","Transformimi i boshtit X:",
+"Y label","Emërtimi i boshtit Y",
+"Y label:","Emërtimi i boshtit Y:",
+"Y-Axis transform:","Transformimi i boshtit Y:",
+"color points and lines","ngjyra e pikave dhe vijave",
+"create small multiples","Krijoni më shumë grafikë",
+"create small multiples by columns","Krijoni më shumë grafikë sipas shtyllave",
+"create small multiples by rows","Krijoni më shumë grafikë sipas rreshtave",
+"fill color for shapes","ngjyra e mbushjes së formave",
+"frequency weights","peshat e frekuencave",
+"identifies series of points with a grouping variable","identifikon serinë e pikave me një ndryshore grupimi",
+"shape of the points","forma e pikave",
+"size of the points","madhësia e pikave",
+"used in ribbons charts with ymax to display an interval between two lines","përdoret në grafikët fjongo me ymax për të shfaqur një interval midis dy vijave",
+"used in ribbons charts with ymin to display an interval between two lines","përdoret në grafikët fjongo me ymin për të shfaqur një interval midis dy vijave",
+"Aesthetic mappings describe how variables in the data are mapped to visual properties aesthetics of geoms.","Hartimet estetike përshkruajnë se si variablat në të dhëna janë të lidhura me estetikën e vetive vizuale të gjeomëve.","Automatically translated"
+"Always","Gjithmonë","Automatically translated"
+"Angle:","Këndi:","Automatically translated"
+"Axes","Sëpata","Automatically translated"
+"Controls the amount of smoothing:","Kontrollon sasinë e zbutjes:","Automatically translated"
+"Create column","Krijo kolonë","Automatically translated"
+"Cut numeric variable into factor","Pritini ndryshoren numerike në faktor","Automatically translated"
+"Display confidence interval around smooth","Shfaqni intervalin e besimit rreth qetë","Automatically translated"
+"Export","Eksporto","Automatically translated"
+"Geometries","Gjeometritë","Automatically translated"
+"Horizontal justification:","Arsyetimi horizontal:","Automatically translated"
+"Justification:","Justifikim:","Automatically translated"
+"Level of confidence interval to use:","Intervali i nivelit të besimit për t'u përdorur:","Automatically translated"
+"Line width:","Gjerësia e linjës:","Automatically translated"
+"Never","kurrë","Automatically translated"
+"No data to display","Nuk ka të dhëna për të shfaqur","Automatically translated"
+"Once per warning","Një herë për paralajmërim","Automatically translated"
+"Options","Opsione","Automatically translated"
+"Show notifications when the plot generate a warning:","Shfaq njoftimet kur komploti gjeneron një paralajmërim:","Automatically translated"
+"Size for points:","Madhësia për pikë:","Automatically translated"
+"Size:","Madhësia:","Automatically translated"
+"Smoothing method:","Metoda e zbutjes:","Automatically translated"
+"Stat summary function:","Funksioni i përmbledhjes së statistikave:","Automatically translated"
+"Theme","Tema","Automatically translated"
+"Update & select variables","Përditësoni dhe zgjidhni variablat","Automatically translated"
+"Update factor","Faktori i përditësimit","Automatically translated"
+"Update variables","Përditëso variablat","Automatically translated"
+"Use {plotly} to render plot","Përdorni {plotly} për të dhënë grafikun","Automatically translated"
+"Vertical justification:","Arsyetimi vertikal:","Automatically translated"
+"X-Axis limits empty for none:","Kufijtë e boshtit X janë bosh për asnjë:","Automatically translated"
+"Y-Axis limits empty for none:","Kufijtë e boshtit Y janë bosh për asnjë:","Automatically translated"
+"alpha transparency","transparenca alfa","Automatically translated"
+"axis text options:","opsionet e tekstit të boshtit:","Automatically translated"
+"bottom","fund","Automatically translated"
+"center","qendër","Automatically translated"
+"left","majtas","Automatically translated"
+"none","asnje","Automatically translated"
+"right","drejtë","Automatically translated"
+"text to use as label on plot","tekst për t'u përdorur si etiketë në komplot","Automatically translated"
+"top","krye","Automatically translated"

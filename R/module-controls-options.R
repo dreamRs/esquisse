@@ -32,7 +32,7 @@ controls_options_ui <- function(id) {
     ),
     prettySwitch(
       inputId = ns("plotly"),
-      label = "Use {plotly} to render plot",
+      label = i18n("Use {plotly} to render plot"),
       fill = TRUE,
       status = "primary"
     ),

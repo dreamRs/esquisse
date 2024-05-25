@@ -1,89 +1,115 @@
-label,translation
-"Update Preview","Vorschau aktualisieren"
-"Height:","Höhe:"
-"Width:","Breite:"
-"Filename:","Dateiname:"
-"Filename","Dateiname"
-"Close","Schließen"
-"More options","Weitere Einstellungen"
-"Export chart","Diagramm exportieren"
-"Export to PowerPoint failed...","Export als PowerPoint fehlgeschlagen ..."
-"Export format:","Exportieren als:"
-"Import data to create a graph","Daten für Diagramm importieren"
-"Display settings","Anzeigeeinstellungen"
-"Close Window","Fenster schließen"
-"Import data","Daten importieren"
-"Show data","Daten anzeigen"
-"Labels & Title","Beschriftungen & Titel"
-"Plot options","Diagrammoptionen"
-"Appearance","Darstellung"
-"Data","Daten"
-"Code","Code"
-"Title:","Titel:"
-"Title","Titel"
-"Subtitle:","Untertitlel:"
-"Subtitle","Untertitel"
-"Caption:","Legende:"
-"Caption","Legende"
-"X label:","Achsentitel (x):"
-"X label","Achsentitel (x)"
-"Y label:","Achsentitel (y):"
-"Y label","Achsentitel (y)"
-"Fill label:","Legendentitel Füllfarbe:"
-"Fill label","Legendentitel Füllfarbe"
-"Color label:","Legendentitel Linienfarbe:"
-"Color label","Legendentitel Linienfarbe"
-"Size label:","Legendentitel Größe:"
-"Size label","Legendentitel Größe"
-"Shape label:","Legendentitel Symbol:"
-"Shape label","Legendentitel Symbol"
-"Font face:","Schriftart:"
-"Font size:","Schriftgröße:"
-"Align:","Ausrichtung:"
-"Left","Links"
-"Center","Zentriert"
-"Right","Rechts"
-"Color:","Farbe:"
-"Ribbon color:","Farbe Flächendiagramm:"
-"Point symbol:","Punktsymbol:"
-"Theme:","Design:"
-"Legend position:","Legenden-Platzierung:"
-"Add a smooth line:","gleitende Trendlinie hinzufügen:"
-"Yes","Ja"
-"No","Nein"
-"Smooth line span:","Glättungs-Spannweite (window):"
-"Size for points/lines:","Punktgröße/Liniendicke:"
-"Facet scales:","Achsenskalierung der Kacheln:"
-"Facet ncol:","Kacheln pro Zeile:"
-"Facet nrow:","Kacheln pro Spalte:"
-"Numbers of bins:","Anzahl Klassen:"
-"Scale:","Skalentyp:"
-"X-Axis limits (empty for none):","Begrenzung x-Achse (Voreinstellung: automatisch):"
-"X-Axis transform:","Transformation x-Achse:"
-"Y-Axis limits (empty for none):","Begrenzung y-Achse (Voreinstellung: automatisch):"
-"Y-Axis transform:","Transformation y-Achse:"
-"Bandwidth adjustment:","Integrierspanne f. Dichtediagramm anpassen:"
-"Position:","Position:"
-"Flip coordinate:","x/y-Achsen vertauschen:"
-"Copy to clipboard","in Zwischenablage"
-"Code:","Code:"
-"Insert code in script","Code in Skript einfügen"
-"Esquisse settings","Einstellungen f. Esquisse"
-"Select aesthetics to be used to build a graph:","Visuelle Codierung (aesthetics) für Diagramm wählen:"
-"Aesthetic mappings describe how variables in the data are mapped to visual properties (aesthetics) of geoms.","Die visuelle Codierung legt fest, wie Variablenwerte im Diagramm optisch wiedergegeben werden."
-"fill color for shapes","Symbolfüllung"
-"color points and lines","Symbole/Linien einfärben"
-"size of the points","Symbolgröße"
-"shape of the points","Symbole"
-"frequency weights","Häufigkeits-Gewichtung"
-"identifies series of points with a grouping variable","nach Gruppenvariable getrennte Darstellung"
-"used in ribbons charts with ymax to display an interval between two lines","in Kombination mit ymax zur Darstellung von Bandbreiten (Flächendiagramm)"
-"used in ribbons charts with ymin to display an interval between two lines","in Kombination mit ymin zur Darstellung von Bandbreiten (Flächendiagramm)"
-"create small multiples","zu Diagrammserie (small multiples) auflösen"
-"create small multiples by rows","zu Diagrammserie (small multiples) auflösen (zeilenweise)"
-"create small multiples by columns","zu Diagrammserie (small multiples) auflösen (spaltenweise)"
-"Dataset","Datensatz"
-"Jittered points:","Symbole entklumpen:"
-"Use a color palette:","Palette auswählen:"
-"Reverse the order of colors?","Farbfolge umkehren?"
-"Use specific colors:","Farben auswählen:"
+"label","translation","comment"
+"Align:","Ausrichtung:",
+"Bandwidth adjustment:","Integrierspanne f. Dichtediagramm anpassen:",
+"Caption","Legende",
+"Caption:","Legende:",
+"Center","Zentriert",
+"Close","Schließen",
+"Close Window","Fenster schließen",
+"Code","Code",
+"Code:","Code:",
+"Color label","Legendentitel Linienfarbe",
+"Color label:","Legendentitel Linienfarbe:",
+"Color:","Farbe:",
+"Copy to clipboard","in Zwischenablage",
+"Data","Daten",
+"Dataset","Datensatz",
+"Display settings","Anzeigeeinstellungen",
+"Esquisse settings","Einstellungen f. Esquisse",
+"Export chart","Diagramm exportieren",
+"Export format:","Exportieren als:",
+"Export to PowerPoint failed...","Export als PowerPoint fehlgeschlagen ...",
+"Facet ncol:","Kacheln pro Zeile:",
+"Facet nrow:","Kacheln pro Spalte:",
+"Facet scales:","Achsenskalierung der Kacheln:",
+"Filename","Dateiname",
+"Filename:","Dateiname:",
+"Fill label","Legendentitel Füllfarbe",
+"Fill label:","Legendentitel Füllfarbe:",
+"Font face:","Schriftart:",
+"Font size:","Schriftgröße:",
+"Height:","Höhe:",
+"Import data","Daten importieren",
+"Import data to create a graph","Daten für Diagramm importieren",
+"Insert code in script","Code in Skript einfügen",
+"Labels & Title","Beschriftungen & Titel",
+"Left","Links",
+"More options","Weitere Einstellungen",
+"Numbers of bins:","Anzahl Klassen:",
+"Position:","Position:",
+"Reverse the order of colors?","Farbfolge umkehren?",
+"Ribbon color:","Farbe Flächendiagramm:",
+"Right","Rechts",
+"Scale:","Skalentyp:",
+"Select aesthetics to be used to build a graph:","Visuelle Codierung (aesthetics) für Diagramm wählen:",
+"Shape label","Legendentitel Symbol",
+"Shape label:","Legendentitel Symbol:",
+"Show data","Daten anzeigen",
+"Size label","Legendentitel Größe",
+"Size label:","Legendentitel Größe:",
+"Subtitle","Untertitel",
+"Subtitle:","Untertitlel:",
+"Theme:","Design:",
+"Title","Titel",
+"Title:","Titel:",
+"Update Preview","Vorschau aktualisieren",
+"Use a color palette:","Palette auswählen:",
+"Use specific colors:","Farben auswählen:",
+"Width:","Breite:",
+"X label","Achsentitel (x)",
+"X label:","Achsentitel (x):",
+"X-Axis transform:","Transformation x-Achse:",
+"Y label","Achsentitel (y)",
+"Y label:","Achsentitel (y):",
+"Y-Axis transform:","Transformation y-Achse:",
+"color points and lines","Symbole/Linien einfärben",
+"create small multiples","zu Diagrammserie (small multiples) auflösen",
+"create small multiples by columns","zu Diagrammserie (small multiples) auflösen (spaltenweise)",
+"create small multiples by rows","zu Diagrammserie (small multiples) auflösen (zeilenweise)",
+"fill color for shapes","Symbolfüllung",
+"frequency weights","Häufigkeits-Gewichtung",
+"identifies series of points with a grouping variable","nach Gruppenvariable getrennte Darstellung",
+"shape of the points","Symbole",
+"size of the points","Symbolgröße",
+"used in ribbons charts with ymax to display an interval between two lines","in Kombination mit ymax zur Darstellung von Bandbreiten (Flächendiagramm)",
+"used in ribbons charts with ymin to display an interval between two lines","in Kombination mit ymin zur Darstellung von Bandbreiten (Flächendiagramm)",
+"Aesthetic mappings describe how variables in the data are mapped to visual properties aesthetics of geoms.","Ästhetische Zuordnungen beschreiben, wie Variablen in den Daten den visuellen Eigenschaften und der Ästhetik von Geomen zugeordnet werden.","Automatically translated"
+"Always","Stets","Automatically translated"
+"Angle:","Winkel:","Automatically translated"
+"Axes","Äxte","Automatically translated"
+"Controls the amount of smoothing:","Steuert den Grad der Glättung:","Automatically translated"
+"Create column","Spalte erstellen","Automatically translated"
+"Cut numeric variable into factor","Numerische Variable in Faktor zerlegen","Automatically translated"
+"Display confidence interval around smooth","Konfidenzintervall um glatt anzeigen","Automatically translated"
+"Export","Export","Automatically translated"
+"Geometries","Geometrien","Automatically translated"
+"Horizontal justification:","Horizontale Ausrichtung:","Automatically translated"
+"Justification:","Rechtfertigung:","Automatically translated"
+"Level of confidence interval to use:","Zu verwendendes Konfidenzintervallniveau:","Automatically translated"
+"Line width:","Linienbreite:","Automatically translated"
+"Never","Niemals","Automatically translated"
+"No data to display","Keine Daten zum Anzeigen","Automatically translated"
+"Once per warning","Einmal pro Warnung","Automatically translated"
+"Options","Optionen","Automatically translated"
+"Show notifications when the plot generate a warning:","Benachrichtigungen anzeigen, wenn der Plot eine Warnung generiert:","Automatically translated"
+"Size for points:","Größe für Punkte:","Automatically translated"
+"Size:","Größe:","Automatically translated"
+"Smoothing method:","Glättungsmethode:","Automatically translated"
+"Stat summary function:","Statistikzusammenfassungsfunktion:","Automatically translated"
+"Theme","Thema","Automatically translated"
+"Update & select variables","Variablen aktualisieren und auswählen","Automatically translated"
+"Update factor","Aktualisierungsfaktor","Automatically translated"
+"Update variables","Variablen aktualisieren","Automatically translated"
+"Use {plotly} to render plot","Verwenden Sie {plotly}, um den Plot zu rendern","Automatically translated"
+"Vertical justification:","Vertikale Ausrichtung:","Automatically translated"
+"X-Axis limits empty for none:","X-Achsen-Grenzwerte leer für keine:","Automatically translated"
+"Y-Axis limits empty for none:","Y-Achsen-Grenzwerte leer für keine:","Automatically translated"
+"alpha transparency","Alpha-Transparenz","Automatically translated"
+"axis text options:","Achsentextoptionen:","Automatically translated"
+"bottom","unten","Automatically translated"
+"center","Center","Automatically translated"
+"left","links","Automatically translated"
+"none","keiner","Automatically translated"
+"right","Rechts","Automatically translated"
+"text to use as label on plot","Text, der als Beschriftung auf dem Plot verwendet werden soll","Automatically translated"
+"top","Spitze","Automatically translated"

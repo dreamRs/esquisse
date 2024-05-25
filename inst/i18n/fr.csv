@@ -1,93 +1,115 @@
-label,translation
-"Update Preview","Actualiser la vue"
-"Height:","Hauteur :"
-"Width:","Largeur :"
-"Filename:","Nom de fichier :"
-"Filename","Nom de fichier"
-"Close","Fermer"
-"More options","Plus d'options"
-"Export chart","Export graphique"
-"Export to PowerPoint failed...","Echec de l'export en PowerPoint"
-"Export format:","Type de fichier :"
-"Import data to create a graph","Importer des données"
-"Display settings","Afficher les paramètres"
-"Close Window","Fermer la fenêtre"
-"Import data","Importer des données"
-"Show data","Afficher les données"
-"Labels & Title","Titre & libellés"
-"Plot options","Options graphiques"
-"Appearance","Apparence"
-"Data","Données"
-"Code","Code"
-"Title:","Titre :"
-"Title","Titre"
-"Subtitle:","Sous-titre :"
-"Subtitle","Sous-titre"
-"Caption:","Légende :"
-"Caption","Légende"
-"X label:","Titre des abscisses :"
-"X label","Titre des abscisses"
-"Y label:","Titre des ordonnées :"
-"Y label","Titre des ordonnées"
-"Fill label:","Titre couleur remplissage :"
-"Fill label","Titre couleur remplissage"
-"Color label:","Titre couleur :"
-"Color label","Titre couleur"
-"Size label:","Titre taille :"
-"Size label","Titre taille"
-"Shape label:","Titre forme :"
-"Shape label","Titre forme"
-"Font face:","Police de caractères :"
-"Font size:","Taille de la police :"
-"Align:","Alignement :"
-"Left","Gauche"
-"Center","Centré"
-"Right","Droite"
-"Color:","Couleur :"
-"Ribbon color:","Couleur du ruban :"
-"Point symbol:","Symbole des points :"
-"Theme:","Thème :"
-"Legend position:","Position de la légende :"
-"Add a smooth line:","Ajouter une droite de tendance :"
-"Yes","Oui"
-"No","Non"
-"Smooth line span:","Quantité de lissage de la droite de tendance :"
-"Size for points/lines:","Taille des points / lignes :"
-"Facet scales:","Echelle des facettes :"
-"Facet ncol:","Nombre de colonnes :"
-"Facet nrow:","Nombre de lignes :"
-"Numbers of bins:","Nombre d'emplacements :"
-"Scale:","Echelle :"
-"X-Axis limits (empty for none):","Limite des abscisses (vide pour pas de limite) :"
-"X-Axis transform:","Transformation des abscisses :"
-"Y-Axis limits (empty for none):","Limite des ordonnées (vide pour pas de limite) :"
-"Y-Axis transform:","Transformation des ordonnées :"
-"Bandwidth adjustment:","Ajustement de la densité :"
-"Position:","Position :"
-"Flip coordinate:","Inverser les coordonnées :"
-"Copy to clipboard","Copier dans le presse-papier"
-"Code:","Code :"
-"Insert code in script","Insérer le code dans le script"
-"Esquisse settings","Paramètres d'Esquisse"
-"Select aesthetics to be used to build a graph:","Sélectionner les aesthetics à utiliser pour construire un graphique"
-"Aesthetic mappings describe how variables in the data are mapped to visual properties (aesthetics) of geoms.","Les caesthetics décrivent comment les variables des données sont mises en correspondance avec les propriétés visuelles (aesthetics) dans le graphique."
-"fill color for shapes","couleur de remplissage des formes"
-"color points and lines","couleur pour les points et lignes"
-"size of the points","taille des points"
-"shape of the points","forme des points"
-"frequency weights","pondération"
-"identifies series of points with a grouping variable","identifie des séries de points avec une variable de regroupement"
-"used in ribbons charts with ymax to display an interval between two lines","utilisé avec ymax pour afficher un intervalle entre deux lignes"
-"used in ribbons charts with ymin to display an interval between two lines","utilisé avec ymin pour afficher un intervalle entre deux lignes"
-"create small multiples","pour créer de petits multiples"
-"create small multiples by rows","création d'une matrice de petits multiples par lignes"
-"create small multiples by columns","création d'une matrice de petits multiples par colonnes"
-"Dataset","Jeu de données"
-"Jittered points:","Ajouter les points (dispersés) :"
-"Use a color palette:","Utiliser une palette :"
-"Reverse the order of colors?","Inverser l'ordre des couleurs ?"
-"Use specific colors:","Utiliser des couleurs spécifiques :"
-"Show notifications when the plot generate a warning:","Afficher les notifications lorsque le graphiique génère un avertissement :"
-"Always","Toujours"
-"Once per warning","Une seule fois par avertissement"
-"Never","Jamais"
+"label","translation","comment"
+"Align:","Alignement :",
+"Always","Toujours",
+"Bandwidth adjustment:","Ajustement de la densité :",
+"Caption","Légende",
+"Caption:","Légende :",
+"Center","Centré",
+"Close","Fermer",
+"Close Window","Fermer la fenêtre",
+"Code","Code",
+"Code:","Code :",
+"Color label","Titre couleur",
+"Color label:","Titre couleur :",
+"Color:","Couleur :",
+"Copy to clipboard","Copier dans le presse-papier",
+"Data","Données",
+"Dataset","Jeu de données",
+"Display settings","Afficher les paramètres",
+"Esquisse settings","Paramètres d'Esquisse",
+"Export chart","Export graphique",
+"Export format:","Type de fichier :",
+"Export to PowerPoint failed...","Echec de l'export en PowerPoint",
+"Facet ncol:","Nombre de colonnes :",
+"Facet nrow:","Nombre de lignes :",
+"Facet scales:","Echelle des facettes :",
+"Filename","Nom de fichier",
+"Filename:","Nom de fichier :",
+"Fill label","Titre couleur remplissage",
+"Fill label:","Titre couleur remplissage :",
+"Font face:","Police de caractères :",
+"Font size:","Taille de la police :",
+"Height:","Hauteur :",
+"Import data","Importer des données",
+"Import data to create a graph","Importer des données",
+"Insert code in script","Insérer le code dans le script",
+"Labels & Title","Titre & libellés",
+"Left","Gauche",
+"More options","Plus d'options",
+"Never","Jamais",
+"Numbers of bins:","Nombre d'emplacements :",
+"Once per warning","Une seule fois par avertissement",
+"Position:","Position :",
+"Reverse the order of colors?","Inverser l'ordre des couleurs ?",
+"Ribbon color:","Couleur du ruban :",
+"Right","Droite",
+"Scale:","Echelle :",
+"Select aesthetics to be used to build a graph:","Sélectionner les aesthetics à utiliser pour construire un graphique",
+"Shape label","Titre forme",
+"Shape label:","Titre forme :",
+"Show data","Afficher les données",
+"Show notifications when the plot generate a warning:","Afficher les notifications lorsque le graphiique génère un avertissement :",
+"Size label","Titre taille",
+"Size label:","Titre taille :",
+"Subtitle","Sous-titre",
+"Subtitle:","Sous-titre :",
+"Theme:","Thème :",
+"Title","Titre",
+"Title:","Titre :",
+"Update Preview","Actualiser la vue",
+"Use a color palette:","Utiliser une palette :",
+"Use specific colors:","Utiliser des couleurs spécifiques :",
+"Width:","Largeur :",
+"X label","Titre des abscisses",
+"X label:","Titre des abscisses :",
+"X-Axis transform:","Transformation des abscisses :",
+"Y label","Titre des ordonnées",
+"Y label:","Titre des ordonnées :",
+"Y-Axis transform:","Transformation des ordonnées :",
+"color points and lines","couleur pour les points et lignes",
+"create small multiples","pour créer de petits multiples",
+"create small multiples by columns","création d'une matrice de petits multiples par colonnes",
+"create small multiples by rows","création d'une matrice de petits multiples par lignes",
+"fill color for shapes","couleur de remplissage des formes",
+"frequency weights","pondération",
+"identifies series of points with a grouping variable","identifie des séries de points avec une variable de regroupement",
+"shape of the points","forme des points",
+"size of the points","taille des points",
+"used in ribbons charts with ymax to display an interval between two lines","utilisé avec ymax pour afficher un intervalle entre deux lignes",
+"used in ribbons charts with ymin to display an interval between two lines","utilisé avec ymin pour afficher un intervalle entre deux lignes",
+"Aesthetic mappings describe how variables in the data are mapped to visual properties aesthetics of geoms.","Les mappages esthétiques décrivent comment les variables des données sont mappées aux propriétés visuelles esthétiques des géoms.","Automatically translated"
+"Angle:","Angle:","Automatically translated"
+"Axes","Axes",""
+"Controls the amount of smoothing:","Contrôle la quantité de lissage :","Automatically translated"
+"Create column","Créer une colonne","Automatically translated"
+"Cut numeric variable into factor","Couper la variable numérique en facteur","Automatically translated"
+"Display confidence interval around smooth","Afficher l'intervalle de confiance autour de la douceur","Automatically translated"
+"Export","Exporter","Automatically translated"
+"Geometries","Géométries","Automatically translated"
+"Horizontal justification:","Justification horizontale :","Automatically translated"
+"Justification:","Justification:","Automatically translated"
+"Level of confidence interval to use:","Niveau d’intervalle de confiance à utiliser :","Automatically translated"
+"Line width:","Largeur de ligne:","Automatically translated"
+"No data to display","aucune donnée à afficher","Automatically translated"
+"Options","Options",""
+"Size for points:","Taille des points :","Automatically translated"
+"Size:","Taille:","Automatically translated"
+"Smoothing method:","Méthode de lissage :","Automatically translated"
+"Stat summary function:","Fonction de résumé des statistiques :","Automatically translated"
+"Theme","Thème","Automatically translated"
+"Update & select variables","Mettre à jour et sélectionner des variables","Automatically translated"
+"Update factor","Facteur de mise à jour","Automatically translated"
+"Update variables","Mettre à jour les variables","Automatically translated"
+"Use {plotly} to render plot","Utilisez {plotly} pour afficher l'intrigue","Automatically translated"
+"Vertical justification:","Justification verticale :","Automatically translated"
+"X-Axis limits empty for none:","Limites de l'axe X vides pour aucune :","Automatically translated"
+"Y-Axis limits empty for none:","Limites de l'axe Y vides pour aucune :","Automatically translated"
+"alpha transparency","transparence alpha","Automatically translated"
+"axis text options:","options de texte de l'axe :","Automatically translated"
+"bottom","bas","Automatically translated"
+"center","centre","Automatically translated"
+"left","gauche","Automatically translated"
+"none","aucun","Automatically translated"
+"right","droite","Automatically translated"
+"text to use as label on plot","texte à utiliser comme étiquette sur le tracé","Automatically translated"
+"top","haut","Automatically translated"

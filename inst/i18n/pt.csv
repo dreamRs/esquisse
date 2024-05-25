@@ -1,88 +1,115 @@
-label,translation
-"Update Preview","Atualizar pré-visualização"
-"Height:","Altura:"
-"Width:","Largura:"
-"Filename:","Nome do arquivo:"
-"Filename","Nome do arquivo"
-"Close","Fechar"
-"More options","Mais opções"
-"Export chart","Exportar gráfico"
-"Export to PowerPoint failed...","Exportação para o PowerPoint falhou.."
-"Export format:","Formato de arquivo:"
-"Import data to create a graph","Importar dados"
-"Display settings","Visualizar configurações"
-"Close Window","Fechar a janela"
-"Import data","Importar dados"
-"Show data","Mostrar os dados"
-"Labels & Title","Título & legendas"
-"Plot options","Opções do gráfico"
-"Appearance","Aparência"
-"Data","Dados"
-"Code","Código"
-"Title:","Título:"
-"Title","Título"
-"Subtitle:","Subtítulo:"
-"Subtitle","Subtítulo"
-"Caption:","Legenda:"
-"Caption","Legenda"
-"X label:","Título do eixo X:"
-"X label","Título do eixo X"
-"Y label:","Título do eixo Y:"
-"Y label","Título do eixo Y"
-"Fill label:","Legenda do preenchimento:"
-"Fill label","Legenda do preenchimento"
-"Color label:","Legenda de cor:"
-"Color label","Legenda de cor"
-"Size label:","Legenda de tamanho:"
-"Size label","Legenda de tamanho"
-"Shape label:","Legenda da forma:"
-"Shape label","Legenda da forma"
-"Font face:","Tipo da fonte:"
-"Font size:","Tamanho da fonte:"
-"Align:","Alinhamento:"
-"Left","Esquerda"
-"Center","Centro"
-"Right","Direita"
-"Color:","Cor:"
-"Ribbon color:","Cor da fita:"
-"Point symbol:","Forma dos pontos:"
-"Theme:","Tema:"
-"Legend position:","Posição da legenda:"
-"Add a smooth line:","Adicionar linha de tendência:"
-"Yes","Sim"
-"No","Não"
-"Smooth line span:","Quantidade de suavização da linha de tendência:"
-"Size for points/lines:","Tamanho dos pontos/linhas:"
-"Facet scales:","Escalas para faceta:"
-"Facet ncol:","Número de colunas para faceta:"
-"Facet nrow:","Número de linhas para faceta:"
-"Numbers of bins:","Número de bins:"
-"Scale:","Escala:"
-"X-Axis limits (empty for none):","Limite do eixo X (vazio para nenhum):"
-"X-Axis transform:","Transformação do eixo X:"
-"Y-Axis limits (empty for none):","Limite do eixo Y (vazio para nenhum):"
-"Y-Axis transform:","Transformação do eixo Y:"
-"Bandwidth adjustment:","Ajuste de largura:"
-"Position:","Posição:"
-"Flip coordinate:","Inverter coordenadas:"
-"Copy to clipboard","Copiar"
-"Code:","Código:"
-"Insert code in script","Inserir código no script"
-"Esquisse settings","Configurações do Esquisse"
-"Select aesthetics to be used to build a graph:","Selecione a estética a ser usada para construir um gráfico:"
-"Aesthetic mappings describe how variables in the data are mapped to visual properties (aesthetics) of geoms.","Os mapeamentos estéticos descrevem como as variáveis nos dados são mapeadas para propriedades visuais (estéticas) de geometrias."
-"color points and lines","cor dos pontos e linhas"
-"size of the points","tamanho dos pontos"
-"shape of the points","forma dos pontos"
-"frequency weights","pesos de frequência"
-"identifies series of points with a grouping variable","identificar séries de pontos com uma variável de agrupamento"
-"used in ribbons charts with ymax to display an interval between two lines","utilizado em gráficos de fita com ymax para mostrar um intervalo entre duas linhas"
-"used in ribbons charts with ymin to display an interval between two lines","utilizado em gráficos de fita com ymin para mostrar um intervalo entre duas linhas"
-"create small multiples","criar pequenos múltiplos"
-"create small multiples by rows","criar pequenos múltiplos por linhas"
-"create small multiples by columns","criar pequenos múltiplos por colunas"
-"Dataset","Conjunto de dados"
-"Jittered points:","Adicionar pontos (jitter):"
-"Use a color palette:","Use uma paleta de cores:"
-"Reverse the order of colors?","Inverter a ordem das cores?"
-"Use specific colors:","Use cores específicas:"
+"label","translation","comment"
+"Align:","Alinhamento:",
+"Bandwidth adjustment:","Ajuste de largura:",
+"Caption","Legenda",
+"Caption:","Legenda:",
+"Center","Centro",
+"Close","Fechar",
+"Close Window","Fechar a janela",
+"Code","Código",
+"Code:","Código:",
+"Color label","Legenda de cor",
+"Color label:","Legenda de cor:",
+"Color:","Cor:",
+"Copy to clipboard","Copiar",
+"Data","Dados",
+"Dataset","Conjunto de dados",
+"Display settings","Visualizar configurações",
+"Esquisse settings","Configurações do Esquisse",
+"Export chart","Exportar gráfico",
+"Export format:","Formato de arquivo:",
+"Export to PowerPoint failed...","Exportação para o PowerPoint falhou..",
+"Facet ncol:","Número de colunas para faceta:",
+"Facet nrow:","Número de linhas para faceta:",
+"Facet scales:","Escalas para faceta:",
+"Filename","Nome do arquivo",
+"Filename:","Nome do arquivo:",
+"Fill label","Legenda do preenchimento",
+"Fill label:","Legenda do preenchimento:",
+"Font face:","Tipo da fonte:",
+"Font size:","Tamanho da fonte:",
+"Height:","Altura:",
+"Import data","Importar dados",
+"Import data to create a graph","Importar dados",
+"Insert code in script","Inserir código no script",
+"Labels & Title","Título & legendas",
+"Left","Esquerda",
+"More options","Mais opções",
+"Numbers of bins:","Número de bins:",
+"Position:","Posição:",
+"Reverse the order of colors?","Inverter a ordem das cores?",
+"Ribbon color:","Cor da fita:",
+"Right","Direita",
+"Scale:","Escala:",
+"Select aesthetics to be used to build a graph:","Selecione a estética a ser usada para construir um gráfico:",
+"Shape label","Legenda da forma",
+"Shape label:","Legenda da forma:",
+"Show data","Mostrar os dados",
+"Size label","Legenda de tamanho",
+"Size label:","Legenda de tamanho:",
+"Subtitle","Subtítulo",
+"Subtitle:","Subtítulo:",
+"Theme:","Tema:",
+"Title","Título",
+"Title:","Título:",
+"Update Preview","Atualizar pré-visualização",
+"Use a color palette:","Use uma paleta de cores:",
+"Use specific colors:","Use cores específicas:",
+"Width:","Largura:",
+"X label","Título do eixo X",
+"X label:","Título do eixo X:",
+"X-Axis transform:","Transformação do eixo X:",
+"Y label","Título do eixo Y",
+"Y label:","Título do eixo Y:",
+"Y-Axis transform:","Transformação do eixo Y:",
+"color points and lines","cor dos pontos e linhas",
+"create small multiples","criar pequenos múltiplos",
+"create small multiples by columns","criar pequenos múltiplos por colunas",
+"create small multiples by rows","criar pequenos múltiplos por linhas",
+"frequency weights","pesos de frequência",
+"identifies series of points with a grouping variable","identificar séries de pontos com uma variável de agrupamento",
+"shape of the points","forma dos pontos",
+"size of the points","tamanho dos pontos",
+"used in ribbons charts with ymax to display an interval between two lines","utilizado em gráficos de fita com ymax para mostrar um intervalo entre duas linhas",
+"used in ribbons charts with ymin to display an interval between two lines","utilizado em gráficos de fita com ymin para mostrar um intervalo entre duas linhas",
+"Aesthetic mappings describe how variables in the data are mapped to visual properties aesthetics of geoms.","Os mapeamentos estéticos descrevem como as variáveis ​​​​nos dados são mapeadas para as propriedades visuais estéticas dos geoms.","Automatically translated"
+"Always","Sempre","Automatically translated"
+"Angle:","Ângulo:","Automatically translated"
+"Axes","Eixos","Automatically translated"
+"Controls the amount of smoothing:","Controla a quantidade de suavização:","Automatically translated"
+"Create column","Criar coluna","Automatically translated"
+"Cut numeric variable into factor","Corte a variável numérica em fator","Automatically translated"
+"Display confidence interval around smooth","Exibir intervalo de confiança em torno de suavidade","Automatically translated"
+"Export","Exportar","Automatically translated"
+"Geometries","Geometrias","Automatically translated"
+"Horizontal justification:","Justificação horizontal:","Automatically translated"
+"Justification:","Justificação:","Automatically translated"
+"Level of confidence interval to use:","Nível de intervalo de confiança a ser usado:","Automatically translated"
+"Line width:","Espessura da linha:","Automatically translated"
+"Never","Nunca","Automatically translated"
+"No data to display","Não há dados para exibir","Automatically translated"
+"Once per warning","Uma vez por aviso","Automatically translated"
+"Options","Opções","Automatically translated"
+"Show notifications when the plot generate a warning:","Mostrar notificações quando o gráfico gerar um aviso:","Automatically translated"
+"Size for points:","Tamanho para pontos:","Automatically translated"
+"Size:","Tamanho:","Automatically translated"
+"Smoothing method:","Método de suavização:","Automatically translated"
+"Stat summary function:","Função de resumo de estatísticas:","Automatically translated"
+"Theme","Tema","Automatically translated"
+"Update & select variables","Atualizar e selecionar variáveis","Automatically translated"
+"Update factor","Fator de atualização","Automatically translated"
+"Update variables","Atualizar variáveis","Automatically translated"
+"Use {plotly} to render plot","Use {plotly} para renderizar o gráfico","Automatically translated"
+"Vertical justification:","Justificativa vertical:","Automatically translated"
+"X-Axis limits empty for none:","Limites do eixo X vazios para nenhum:","Automatically translated"
+"Y-Axis limits empty for none:","Limites do eixo Y vazios para nenhum:","Automatically translated"
+"alpha transparency","transparência alfa","Automatically translated"
+"axis text options:","opções de texto do eixo:","Automatically translated"
+"bottom","fundo","Automatically translated"
+"center","Centro","Automatically translated"
+"fill color for shapes","preencher cor para formas","Automatically translated"
+"left","esquerda","Automatically translated"
+"none","nenhum","Automatically translated"
+"right","certo","Automatically translated"
+"text to use as label on plot","texto para usar como rótulo no gráfico","Automatically translated"
+"top","principal","Automatically translated"

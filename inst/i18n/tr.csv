@@ -1,89 +1,115 @@
-label,translation
-"Update Preview","Özizlemeyi Güncelle"
-"Height:","Yükseklik :"
-"Width:","Genişlik :"
-"Filename:","Dosya Adı :"
-"Filename","Dosya Adı"
-"Close","Kapat"
-"More options","DAha fazla seçenek"
-"Export chart","Grafiği dışa aktar"
-"Export to PowerPoint failed...","PowerPoint'e aktarım başarısız..."
-"Export format:","Dışa aktarım şekli :"
-"Import data to create a graph","Grafik oluşturmak için veri aktarın"
-"Display settings","Görüntü ayarları"
-"Close Window","Pencereyi Kapat"
-"Import data","Veri Aktar"
-"Show data","Veriyi Göster"
-"Labels & Title","Etiketler & Başlık"
-"Plot options","Çizim seçenekleri"
-"Appearance","Görünüm"
-"Data","Veri"
-"Code","Kod"
-"Title:","Başlık :"
-"Title","Başlık"
-"Subtitle:","Altbaşlık :"
-"Subtitle","Altbaşlık"
-"Caption:","Altyazı :"
-"Caption","Altyazı"
-"X label:","X etiketi :"
-"X label","X etiketi"
-"Y label:","Y etiketi :"
-"Y label","Y etiketi"
-"Fill label:","Dolgu etiketi :"
-"Fill label","Dolgu etiketi"
-"Color label:","Renk etiketi :"
-"Color label","Renk etiketi"
-"Size label:","Boyut etiketi :"
-"Size label","Boyut etiketi"
-"Shape label:","Şekil etiketi :"
-"Shape label","Şekil etiketi"
-"Font face:","Yazı tipi :"
-"Font size:","Yazı boyutu :"
-"Align:","Hizalama :"
-"Left","Sol"
-"Center","Orta"
-"Right","Sağ"
-"Color:","Renk :"
-"Ribbon color:","Çubuk rengi :"
-"Point symbol:","Nokta sembolü :"
-"Theme:","Tema :"
-"Legend position:","Açıklama konumu :"
-"Add a smooth line:","Düzgün bir çizgi ekle :"
-"Yes","Evet"
-"No","Hayır"
-"Smooth line span:","Düzgün çizgi aralığı :"
-"Size for points/lines:","Noktalar/çizgilerin boyutu :"
-"Facet scales:","Faset ölçekleri :"
-"Facet ncol:","Faset sütun sayısı :"
-"Facet nrow:","Faset satır sayısı :"
-"Numbers of bins:","Bin sayısı :"
-"Scale:","Ölçek :"
-"X-Axis limits (empty for none):","X-Ekseni sınırları (seçmemek için boş bırakın) :"
-"X-Axis transform:","X-Ekseni dönüşümü :"
-"Y-Axis limits (empty for none):","Y-Ekseni sınırları (seçmemek için boş bırakın) :"
-"Y-Axis transform:","Y-Ekseni dönüşümü :"
-"Bandwidth adjustment:","Bant genişliği ayarı :"
-"Position:","Konum :"
-"Flip coordinate:","Koordinatı çevir :"
-"Copy to clipboard","Panoya kopyala"
-"Code:","Kod :"
-"Insert code in script","Kodu betiğe ekle"
-"Esquisse settings","Esquisse ayarları"
-"Select aesthetics to be used to build a graph:","Grafik oluşturmak için kullanılacak görünümü seçin :"
-"Aesthetic mappings describe how variables in the data are mapped to visual properties (aesthetics) of geoms.","Görünüm özellikleri değişkenlerin geom'lar üzerine nasıl yansıyacağını belirler."
-"fill color for shapes","Şekil dolguları için renk"
-"color points and lines","Noktaların ve çizgilerin rengi"
-"size of the points","Noktaların boyutu"
-"shape of the points","Noktaların şekli"
-"frequency weights","Frekans ağırlıkları"
-"identifies series of points with a grouping variable","Grup değişkeniyle noktaların bir serisi"
-"used in ribbons charts with ymax to display an interval between two lines","ymax içeren grafiklerde iki çizgi arasındaki aralığı göstermek için kullanılır"
-"used in ribbons charts with ymin to display an interval between two lines","ymin içeren grafiklerde iki çizgi arasındaki aralığı göstermek için kullanılır"
-"create small multiples","küçük parçalar oluştur"
-"create small multiples by rows","satırlara göre küçük parçalar oluştur"
-"create small multiples by columns","sütunlara göre küçük parçalar oluştur"
-"Dataset","Veri seti"
-"Jittered points:","Yerleştirilmiş noktalar :"
-"Use a color palette:","Bir renk paleti kullanın:"
-"Reverse the order of colors?","Renklerin sırasını tersine çevirmek mi?"
-"Use specific colors:","Belirli renkleri kullanın:"
+"label","translation","comment"
+"Align:","Hizalama :",
+"Bandwidth adjustment:","Bant genişliği ayarı :",
+"Caption","Altyazı",
+"Caption:","Altyazı :",
+"Center","Orta",
+"Close","Kapat",
+"Close Window","Pencereyi Kapat",
+"Code","Kod",
+"Code:","Kod :",
+"Color label","Renk etiketi",
+"Color label:","Renk etiketi :",
+"Color:","Renk :",
+"Copy to clipboard","Panoya kopyala",
+"Data","Veri",
+"Dataset","Veri seti",
+"Display settings","Görüntü ayarları",
+"Esquisse settings","Esquisse ayarları",
+"Export chart","Grafiği dışa aktar",
+"Export format:","Dışa aktarım şekli :",
+"Export to PowerPoint failed...","PowerPoint'e aktarım başarısız...",
+"Facet ncol:","Faset sütun sayısı :",
+"Facet nrow:","Faset satır sayısı :",
+"Facet scales:","Faset ölçekleri :",
+"Filename","Dosya Adı",
+"Filename:","Dosya Adı :",
+"Fill label","Dolgu etiketi",
+"Fill label:","Dolgu etiketi :",
+"Font face:","Yazı tipi :",
+"Font size:","Yazı boyutu :",
+"Height:","Yükseklik :",
+"Import data","Veri Aktar",
+"Import data to create a graph","Grafik oluşturmak için veri aktarın",
+"Insert code in script","Kodu betiğe ekle",
+"Labels & Title","Etiketler & Başlık",
+"Left","Sol",
+"More options","DAha fazla seçenek",
+"Numbers of bins:","Bin sayısı :",
+"Position:","Konum :",
+"Reverse the order of colors?","Renklerin sırasını tersine çevirmek mi?",
+"Ribbon color:","Çubuk rengi :",
+"Right","Sağ",
+"Scale:","Ölçek :",
+"Select aesthetics to be used to build a graph:","Grafik oluşturmak için kullanılacak görünümü seçin :",
+"Shape label","Şekil etiketi",
+"Shape label:","Şekil etiketi :",
+"Show data","Veriyi Göster",
+"Size label","Boyut etiketi",
+"Size label:","Boyut etiketi :",
+"Subtitle","Altbaşlık",
+"Subtitle:","Altbaşlık :",
+"Theme:","Tema :",
+"Title","Başlık",
+"Title:","Başlık :",
+"Update Preview","Özizlemeyi Güncelle",
+"Use a color palette:","Bir renk paleti kullanın:",
+"Use specific colors:","Belirli renkleri kullanın:",
+"Width:","Genişlik :",
+"X label","X etiketi",
+"X label:","X etiketi :",
+"X-Axis transform:","X-Ekseni dönüşümü :",
+"Y label","Y etiketi",
+"Y label:","Y etiketi :",
+"Y-Axis transform:","Y-Ekseni dönüşümü :",
+"color points and lines","Noktaların ve çizgilerin rengi",
+"create small multiples","küçük parçalar oluştur",
+"create small multiples by columns","sütunlara göre küçük parçalar oluştur",
+"create small multiples by rows","satırlara göre küçük parçalar oluştur",
+"fill color for shapes","Şekil dolguları için renk",
+"frequency weights","Frekans ağırlıkları",
+"identifies series of points with a grouping variable","Grup değişkeniyle noktaların bir serisi",
+"shape of the points","Noktaların şekli",
+"size of the points","Noktaların boyutu",
+"used in ribbons charts with ymax to display an interval between two lines","ymax içeren grafiklerde iki çizgi arasındaki aralığı göstermek için kullanılır",
+"used in ribbons charts with ymin to display an interval between two lines","ymin içeren grafiklerde iki çizgi arasındaki aralığı göstermek için kullanılır",
+"Aesthetic mappings describe how variables in the data are mapped to visual properties aesthetics of geoms.","Estetik eşlemeler, verilerdeki değişkenlerin geomların görsel özellik estetiğiyle nasıl eşlendiğini açıklar.","Automatically translated"
+"Always","Her zaman","Automatically translated"
+"Angle:","Açı:","Automatically translated"
+"Axes","Eksenler","Automatically translated"
+"Controls the amount of smoothing:","Yumuşatma miktarını kontrol eder:","Automatically translated"
+"Create column","Sütun oluştur","Automatically translated"
+"Cut numeric variable into factor","Sayısal değişkeni faktöre ayırın","Automatically translated"
+"Display confidence interval around smooth","Düzgün civarındaki güven aralığını göster","Automatically translated"
+"Export","İhracat","Automatically translated"
+"Geometries","Geometriler","Automatically translated"
+"Horizontal justification:","Yatay gerekçe:","Automatically translated"
+"Justification:","Meşrulaştırma:","Automatically translated"
+"Level of confidence interval to use:","Kullanılacak güven aralığı düzeyi:","Automatically translated"
+"Line width:","Hat genişliği:","Automatically translated"
+"Never","Asla","Automatically translated"
+"No data to display","gösterilecek bilgi yok","Automatically translated"
+"Once per warning","Uyarı başına bir kez","Automatically translated"
+"Options","Seçenekler","Automatically translated"
+"Show notifications when the plot generate a warning:","Grafik bir uyarı oluşturduğunda bildirimleri göster:","Automatically translated"
+"Size for points:","Noktalar için boyut:","Automatically translated"
+"Size:","Boyut:","Automatically translated"
+"Smoothing method:","Pürüzsüzleştirme yöntemi:","Automatically translated"
+"Stat summary function:","İstatistik özeti işlevi:","Automatically translated"
+"Theme","Tema","Automatically translated"
+"Update & select variables","Değişkenleri güncelle ve seç","Automatically translated"
+"Update factor","Güncelleme faktörü","Automatically translated"
+"Update variables","Değişkenleri güncelle","Automatically translated"
+"Use {plotly} to render plot","Konuyu oluşturmak için {plotly} kullanın","Automatically translated"
+"Vertical justification:","Dikey gerekçe:","Automatically translated"
+"X-Axis limits empty for none:","X Ekseni sınırları hiçbiri için boş:","Automatically translated"
+"Y-Axis limits empty for none:","Y Ekseni sınırları hiçbiri için boş:","Automatically translated"
+"alpha transparency","alfa şeffaflığı","Automatically translated"
+"axis text options:","eksen metni seçenekleri:","Automatically translated"
+"bottom","alt","Automatically translated"
+"center","merkez","Automatically translated"
+"left","sol","Automatically translated"
+"none","hiçbiri","Automatically translated"
+"right","Sağ","Automatically translated"
+"text to use as label on plot","arsa üzerinde etiket olarak kullanılacak metin","Automatically translated"
+"top","tepe","Automatically translated"

@@ -27,7 +27,6 @@ controls_axes_ui <- function(id) {
     tags$div(
       id = ns("controls-scale-trans-x"),
       style = "display: none;",
-      tags$b("X", "axis options:"),
       numericRangeInput(
         inputId = ns("xlim"),
         label = i18n("X-Axis limits (empty for none):"),
@@ -206,7 +205,7 @@ get_axis_text <- function(face, size, angle, hjust = 0, vjust = 0, lineheight = 
 input_axis_text <- function(axis = c("x", "y"), ns = identity) {
   axis <- match.arg(axis)
   tagList(
-    tags$b(toupper(axis), "axis text options:"),
+    tags$b(toupper(axis), i18n("axis text options:")),
     tags$div(
       style = css(
         display = "grid",
@@ -215,7 +214,7 @@ input_axis_text <- function(axis = c("x", "y"), ns = identity) {
       ),
       shinyWidgets::virtualSelectInput(
         inputId = ns(paste0(axis, "_axis_text_face")),
-        label = "Font face:",
+        label = i18n("Font face:"),
         choices = setNames(
           c("plain", "italic", "bold", "bold.italic"),
           c("Plain", "Italic", "Bold", "Bold/Italic")
@@ -224,14 +223,14 @@ input_axis_text <- function(axis = c("x", "y"), ns = identity) {
       ),
       numericInput(
         inputId = ns(paste0(axis, "_axis_text_size")),
-        label = "Size:",
+        label = i18n("Size:"),
         value = 10,
         min = 0,
         width = "100%"
       ),
       numericInput(
         inputId = ns(paste0(axis, "_axis_text_angle")),
-        label = "Angle:",
+        label = i18n("Angle:"),
         value = 0,
         min = 0,
         max = 360,
@@ -246,7 +245,7 @@ input_axis_text <- function(axis = c("x", "y"), ns = identity) {
       ),
       numericInput(
         inputId = ns(paste0(axis, "_axis_text_hjust")),
-        label = "Horizontal justification:",
+        label = i18n("Horizontal justification:"),
         value = 0,
         min = 0,
         step = 0.1,
@@ -255,7 +254,7 @@ input_axis_text <- function(axis = c("x", "y"), ns = identity) {
       ),
       numericInput(
         inputId = ns(paste0(axis, "_axis_text_vjust")),
-        label = "Vertical justification:",
+        label = i18n("Vertical justification:"),
         value = 0,
         min = 0,
         step = 0.1,

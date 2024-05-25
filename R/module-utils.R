@@ -31,7 +31,7 @@ show_data_server <- function(id, data_r = reactive(NULL)) {
         data <- data_r()
         if (!is.data.frame(data)) {
           showNotification(
-            ui = "No data to display",
+            ui = i18n("No data to display"),
             duration = 700,
             id = paste("esquisse", sample.int(1e6, 1), sep = "-"),
             type = "warning"

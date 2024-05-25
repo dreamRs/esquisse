@@ -1,89 +1,115 @@
-label,translation
-Update Preview,업데이트 미리보기
-Height:,높이:
-Width:,길이:
-Filename:,파일 이름:
-Filename,파일 이름:
-Close,닫기
-More options,더 보기
-Export chart,차트 내보내기
-Export to PowerPoint failed...,PPT 내보내기
-Export format:,포맷 내보내기
-Import data to create a graph,데이터 불러오기
-Display settings,보기 설정
-Close Window,화면 닫기
-Import data,데이터 불러오기
-Show data,데이터 보기
-Labels & Title,레이블 & 제목
-Plot options,그래프 옵션
-Appearance,보기 설정
-Data,데이터
-Code,코드
-Title:,제목:
-Title,제목:
-Subtitle:,부제목:
-Subtitle,부제목:
-Caption:,주석:
-Caption,주석:
-X label:,X 레이블:
-X label,X 레이블:
-Y label:,Y 레이블:
-Y label,Y 레이블:
-Fill label:,레이블 채우기:
-Fill label,레이블 채우기:
-Color label:,레이블 색:
-Color label,레이블 색:
-Size label:,레이블 사이즈:
-Size label,레이블 사이즈:
-Shape label:,레이블 모양:
-Shape label,레이블 모양:
-Font face:,폰트:
-Font size:,폰트 크기:
-Align:,정렬:
-Left,왼쪽
-Center,가운데
-Right,오른쪽
-Color:,색:
-Ribbon color:,리본 색:
-Point symbol:,점 스타일:
-Theme:,테마:
-Legend position:,범례 위치:
-Add a smooth line:,Smooth line 추가
-Yes,예
-No,아니오
-Smooth line span:,Smooth line 폭
-Size for points/lines:,점/선 크기
-Facet scales:,다중 보기 축척:
-Facet ncol:,다중 보기 행 수:
-Facet nrow:,다중 보기 열 수:
-Numbers of bins:,Numbers of bins:
-Scale:,축척:
-X-Axis limits (empty for none):,X축 제한 (없을 경우 비움):
-X-Axis transform:,X축 변형:
-Y-Axis limits (empty for none):,Y축 제한 (없을 경우 비움):
-Y-Axis transform:,Y축 변형:
-Bandwidth adjustment:,대역폭 조정:
-Position:,위치:
-Flip coordinate:,축 뒤집기:
-Copy to clipboard,클립보드로 복사
-Code:,코드:
-Insert code in script,스크립트에 코드 추가
-Esquisse settings,Esquisse 설정
-Select aesthetics to be used to build a graph:,그래프 꾸미기 설정
-Aesthetic mappings describe how variables in the data are mapped to visual properties (aesthetics) of geoms.,그래프 꾸미기는 데이터의 변수들이 그래프에서 어떻게 보일지 설정합니다.
-fill color for shapes,모양에 색 채우기
-color points and lines,점과 선애 색 사용
-size of the points,점 크기
-shape of the points,점 모양
-frequency weights,빈도 가중치
-identifies series of points with a grouping variable,그룹화 변수로 점 식별
-used in ribbons charts with ymax to display an interval between two lines,리본 차트에서 두 줄 사이의 간격을 표시하기 위해 ymax 사용
-used in ribbons charts with ymin to display an interval between two lines,리본 차트에서 두 줄 사이의 간격을 표시하기 위해 ymin 사용
-create small multiples,차트를 여러개로 나눔
-create small multiples by rows,열을 기준으로 차트를 여러개로 나눔
-create small multiples by columns,행을 기준으로 차트를 여러개로 나눔
-Dataset,데이터 셋
-Jittered points:,Jitter 점:
-Use a color palette:,색상 팔레트 사용:
-Reverse the order of colors?,색상 순서를 반대로 하시겠습니까?
-Use specific colors:,특정 색상 사용:
+"label","translation","comment"
+"Align:","정렬:",
+"Bandwidth adjustment:","대역폭 조정:",
+"Caption","주석:",
+"Caption:","주석:",
+"Center","가운데",
+"Close","닫기",
+"Close Window","화면 닫기",
+"Code","코드",
+"Code:","코드:",
+"Color label","레이블 색:",
+"Color label:","레이블 색:",
+"Color:","색:",
+"Copy to clipboard","클립보드로 복사",
+"Data","데이터",
+"Dataset","데이터 셋",
+"Display settings","보기 설정",
+"Esquisse settings","Esquisse 설정",
+"Export chart","차트 내보내기",
+"Export format:","포맷 내보내기",
+"Export to PowerPoint failed...","PPT 내보내기",
+"Facet ncol:","다중 보기 행 수:",
+"Facet nrow:","다중 보기 열 수:",
+"Facet scales:","다중 보기 축척:",
+"Filename","파일 이름:",
+"Filename:","파일 이름:",
+"Fill label","레이블 채우기:",
+"Fill label:","레이블 채우기:",
+"Font face:","폰트:",
+"Font size:","폰트 크기:",
+"Height:","높이:",
+"Import data","데이터 불러오기",
+"Import data to create a graph","데이터 불러오기",
+"Insert code in script","스크립트에 코드 추가",
+"Labels & Title","레이블 & 제목",
+"Left","왼쪽",
+"More options","더 보기",
+"Numbers of bins:","Numbers of bins:",
+"Position:","위치:",
+"Reverse the order of colors?","색상 순서를 반대로 하시겠습니까?",
+"Ribbon color:","리본 색:",
+"Right","오른쪽",
+"Scale:","축척:",
+"Select aesthetics to be used to build a graph:","그래프 꾸미기 설정",
+"Shape label","레이블 모양:",
+"Shape label:","레이블 모양:",
+"Show data","데이터 보기",
+"Size label","레이블 사이즈:",
+"Size label:","레이블 사이즈:",
+"Subtitle","부제목:",
+"Subtitle:","부제목:",
+"Theme:","테마:",
+"Title","제목:",
+"Title:","제목:",
+"Update Preview","업데이트 미리보기",
+"Use a color palette:","색상 팔레트 사용:",
+"Use specific colors:","특정 색상 사용:",
+"Width:","길이:",
+"X label","X 레이블:",
+"X label:","X 레이블:",
+"X-Axis transform:","X축 변형:",
+"Y label","Y 레이블:",
+"Y label:","Y 레이블:",
+"Y-Axis transform:","Y축 변형:",
+"color points and lines","점과 선애 색 사용",
+"create small multiples","차트를 여러개로 나눔",
+"create small multiples by columns","행을 기준으로 차트를 여러개로 나눔",
+"create small multiples by rows","열을 기준으로 차트를 여러개로 나눔",
+"fill color for shapes","모양에 색 채우기",
+"frequency weights","빈도 가중치",
+"identifies series of points with a grouping variable","그룹화 변수로 점 식별",
+"shape of the points","점 모양",
+"size of the points","점 크기",
+"used in ribbons charts with ymax to display an interval between two lines","리본 차트에서 두 줄 사이의 간격을 표시하기 위해 ymax 사용",
+"used in ribbons charts with ymin to display an interval between two lines","리본 차트에서 두 줄 사이의 간격을 표시하기 위해 ymin 사용",
+"Aesthetic mappings describe how variables in the data are mapped to visual properties aesthetics of geoms.","誘몄쟻 留ㅽ븨� �곗씠�곗쓽 蹂�섍� �뺤긽�� 誘몄쟻 �쒓컖�� �띿꽦�� 留ㅽ븨�섎뒗 諛⑹떇�� �ㅻ챸�⑸땲��.","Automatically translated"
+"Always","�몄젣��","Automatically translated"
+"Angle:","媛곷룄:","Automatically translated"
+"Axes","異�","Automatically translated"
+"Controls the amount of smoothing:","�ㅻТ�� �뺣룄瑜� �쒖뼱�⑸땲��.","Automatically translated"
+"Create column","�� �앹꽦","Automatically translated"
+"Cut numeric variable into factor","�レ옄 蹂�섎� �붿냼濡� �섎씪�닿린","Automatically translated"
+"Display confidence interval around smooth","留ㅻ걚�ъ슫 二쇰��� �좊ː 援ш컙 �쒖떆","Automatically translated"
+"Export","�대낫�대떎","Automatically translated"
+"Geometries","湲고븯��","Automatically translated"
+"Horizontal justification:","�섑룊 留욎땄:","Automatically translated"
+"Justification:","�뺣떦��:","Automatically translated"
+"Level of confidence interval to use:","�ъ슜�� �좊ː 援ш컙 �섏�:","Automatically translated"
+"Line width:","�좎쓽 ��:","Automatically translated"
+"Never","�덈�","Automatically translated"
+"No data to display","�쒖떆 �� �댁슜�� �놁뒿�덈떎","Automatically translated"
+"Once per warning","寃쎄퀬 �� �� 踰�","Automatically translated"
+"Options","�듭뀡","Automatically translated"
+"Show notifications when the plot generate a warning:","�뚮’�먯꽌 寃쎄퀬媛 �앹꽦�섎㈃ �뚮┝�� �쒖떆�⑸땲��.","Automatically translated"
+"Size for points:","�ъ씤�� �ш린:","Automatically translated"
+"Size:","�ш린:","Automatically translated"
+"Smoothing method:","�ㅻТ�� 諛⑸쾿:","Automatically translated"
+"Stat summary function:","�듦퀎 �붿빟 湲곕뒫:","Automatically translated"
+"Theme","二쇱젣","Automatically translated"
+"Update & select variables","蹂�� �낅뜲�댄듃 諛� �좏깮","Automatically translated"
+"Update factor","�낅뜲�댄듃 �붿냼","Automatically translated"
+"Update variables","蹂�� �낅뜲�댄듃","Automatically translated"
+"Use {plotly} to render plot","�뚮’�� �뚮뜑留곹븯�ㅻ㈃ {plotly}瑜� �ъ슜�섏꽭��.","Automatically translated"
+"Vertical justification:","�섏쭅 留욎땄:","Automatically translated"
+"X-Axis limits empty for none:","�놁쓬�� 寃쎌슦 X異� �쒗븳�� 鍮꾩뼱 �덉뒿�덈떎.","Automatically translated"
+"Y-Axis limits empty for none:","Y異� �쒗븳�� 鍮꾩뼱 �덈뒗 寃쎌슦:","Automatically translated"
+"alpha transparency","�뚰뙆 �щ챸��","Automatically translated"
+"axis text options:","異� �띿뒪�� �듭뀡:","Automatically translated"
+"bottom","留� �꾨옒","Automatically translated"
+"center","�쇳꽣","Automatically translated"
+"left","�쇱そ","Automatically translated"
+"none","�놁쓬","Automatically translated"
+"right","�ㅻⅨ履�","Automatically translated"
+"text to use as label on plot","�뚮’�먯꽌 �덉씠釉붾줈 �ъ슜�� �띿뒪��","Automatically translated"
+"top","留� ��","Automatically translated"
