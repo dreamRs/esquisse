@@ -61,9 +61,18 @@ esquisser <- function(data = NULL,
   } else if (viewer == "pane") {
     inviewer <- paneViewer(minHeight = "maximize")
   } else {
+    # v0.1.6 "Dessine-moi un mouton..."
+    # v0.2.0
+    # v0.3.1 "C'est le temps que tu as perdu pour ta rose qui rend ta rose importante.",
+    # v1.0.0
+    # v1.1.1  "Les grandes personnes ne comprennent jamais rien toutes seules, et c'est fatigant,",
+    #         "pour les enfants, de toujours et toujours leur donner des explications."
+    # v1.1.2 "Le petit prince, qui me posait beaucoup de questions, ne semblait jamais entendre les miennes."
+    # v1.2.0 "Les \u00e9toiles sont \u00e9clair\u00e9es pour que chacun puisse un jour retrouver la sienne."
     inviewer <- dialogViewer(
       paste(
-        "Les \u00e9toiles sont \u00e9clair\u00e9es pour que chacun puisse un jour retrouver la sienne."
+        "\u2014 Quand tu regarderas le ciel, la nuit, puisque j'habiterai dans l'une d'elles,",
+        "puisque je rirai dans l'une d'elles, alors ce sera pour toi comme si riaient toutes les \u00e9toiles."
       ),
       width = 1200,
       height = 800
