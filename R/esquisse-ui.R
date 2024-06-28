@@ -62,16 +62,9 @@ esquisse_ui <- function(id,
   }
   header_btns <- make_btn_header(header_btns)
   tag_header <- tags$div(
-    class = "esquisse-title-container bg-primary",
-    tags$h1("Esquisse", class = "esquisse-title"),
+    class = "esquisse-title-container bg-primary d-flex justify-content-between",
     tags$div(
-      class = "pull-right float-end",
-      header_btns$settings(ns("settings")),
-      header_btns$.after,
-      header_btns$close(ns("close")),
-    ),
-    tags$div(
-      class = "pull-left",
+      class = "esquisse-header-btns-left",
       header_btns$.before,
       header_btns$import_data(ns("launch_import_data")),
       header_btns$show_data(ns("show_data")),
@@ -79,7 +72,14 @@ esquisse_ui <- function(id,
       header_btns$create_column(ns("create_col")),
       header_btns$cut_variable(ns("cut_var")),
       header_btns$update_factor(ns("up_fct"))
-    )
+    ),
+    tags$h1("Esquisse", class = "esquisse-title"),
+    tags$div(
+      class = "esquisse-header-btns-right",
+      header_btns$settings(ns("settings")),
+      header_btns$.after,
+      header_btns$close(ns("close")),
+    ),
   )
 
   ui <- tags$div(
