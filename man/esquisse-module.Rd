@@ -92,7 +92,7 @@ to \code{\link[datamods:import-modal]{datamods::import_server()}}, use \code{NUL
 \item{notify_warnings}{See \code{\link[=safe_ggplot]{safe_ggplot()}}. If \code{NULL}, the user can make his or her own choice via the settings menu, default is to show warnings once.}
 
 \item{width, height}{The width and height of the container, e.g. \code{"400px"},
-or \code{"100\%"}; see \code{\link[htmltools]{validateCssUnit}}.}
+or \code{"100\%"}; see \code{\link[htmltools:validateCssUnit]{htmltools::validateCssUnit()}}.}
 
 \item{fixed}{Use a fixed container, e.g. to use use esquisse full page.
 If \code{TRUE}, width and height are ignored. Default to \code{FALSE}.

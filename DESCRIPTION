@@ -16,7 +16,7 @@ URL: https://dreamrs.github.io/esquisse/, https://github.com/dreamRs/esquisse
 BugReports: https://github.com/dreamRs/esquisse/issues
 License: GPL-3 | file LICENSE
 Encoding: UTF-8
-RoxygenNote: 7.3.1
+RoxygenNote: 7.3.2
 Roxygen: list(markdown = TRUE)
 Imports: 
     bslib,

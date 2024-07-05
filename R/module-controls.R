@@ -58,7 +58,8 @@ controls_ui <- function(id,
                         controls = c("options", "labs", "axes", "geoms", "theme", "filters", "code"),
                         insert_code = FALSE,
                         layout = c("dropdown", "accordion"),
-                        downloads = downloads_labels()) {
+                        downloads = downloads_labels(),
+                        n_geoms = 1) {
   ns <- NS(id)
   layout <- match.arg(layout)
   if (!is.null(controls)) {
@@ -148,7 +149,7 @@ controls_ui <- function(id,
             padding = "5px 7px"
           )
         },
-        n_geoms = 5
+        n_geoms = n_geoms
       ),
       inputId = ns("controls-geoms"),
       class = "esquisse-controls-geoms",
@@ -242,11 +243,15 @@ controls_ui <- function(id,
 #' Dropup buttons to hide chart's controls
 #'
 #' @param id Module's ID.
-#' @param type \code{reactiveValues} indicating the type of chart.
-#' @param data_r \code{reactive} function returning data used in plot.
-#' @param data_name \code{reactive} function returning data name.
-#' @param ggplot_rv \code{reactiveValues} with ggplot object (for export).
-#' @param aesthetics \code{reactive} function returning aesthetic names used.
+#' @param data_r `reactive` function returning data used in plot.
+#' @param data_name `reactive` function returning data name.
+#' @param ggplot_rv `reactiveValues` with ggplot object (for export).
+#' @param aesthetics_r `reactive` function returning aesthetic names used.
+#' @param geoms_r `reactive` function returning geoms selected.
+#' @param active_geom_r `reactive` function returning the current geom.
+#' @param n_geoms Number of geoms possible.
+#' @param width,height Width and height of the chart.
+#' @param drop_ids Drop or not IDs in filter module.
 #'
 #' @return A reactiveValues with all input's values
 #' @noRd

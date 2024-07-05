@@ -121,7 +121,8 @@ esquisse_ui <- function(id,
           id = ns("controls"),
           insert_code = insert_code,
           controls = controls,
-          downloads = downloads
+          downloads = downloads,
+          n_geoms = n_geoms
         )
       )
     } else {
@@ -140,7 +141,8 @@ esquisse_ui <- function(id,
             insert_code = insert_code,
             controls = controls,
             layout = "accordion",
-            downloads = downloads
+            downloads = downloads,
+            n_geoms = n_geoms
           )
         ),
 
@@ -181,7 +183,7 @@ esquisse_ui <- function(id,
 }
 
 #' @param width,height The width and height of the container, e.g. `"400px"`,
-#'  or `"100%"`; see \code{\link[htmltools]{validateCssUnit}}.
+#'  or `"100%"`; see [htmltools::validateCssUnit()].
 #' @param fixed Use a fixed container, e.g. to use use esquisse full page.
 #'  If `TRUE`, width and height are ignored. Default to `FALSE`.
 #'  It's possible to use a vector of CSS unit of length 4 to specify the margins

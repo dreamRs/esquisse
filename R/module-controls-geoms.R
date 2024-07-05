@@ -252,8 +252,8 @@ controls_geoms_server <- function(id,
         aesthetics <- names(aesthetics_r())
 
         dropNulls(list(
-          stat = if (geom == "bar" & "yvar" %in% aesthetics) "summary",
-          fun = if (geom == "bar" & "yvar" %in% aesthetics) input$stat_fun,
+          stat = if (identical(geom, "bar") & isTRUE("yvar" %in% aesthetics)) "summary",
+          fun = if (identical(geom, "bar") & isTRUE("yvar" %in% aesthetics)) input$stat_fun,
           adjust = input$adjust,
           position = if (
             !identical(input$position, "stack") &

@@ -198,11 +198,9 @@ esquisse_server <- function(id,
           geoms <- potential_geoms(data_chart$data, mapping)
           req(geom %in% geoms)
 
-
           if (isTruthy(setdiff(geoms_others_r(), "blank"))) {
             geom <- c(geom, geoms_others_r())
             mappings <- c(list(mapping), aes_others_r())
-            # browser()
             geom_args <- lapply(
               X = seq_len(n_geoms), # n_geoms
               FUN = function(i) {
