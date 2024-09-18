@@ -301,39 +301,42 @@ palette_server <- function(id, variable) {
           colors_id <- paste0("colors_", makeId(values))
           colors_manual$x <- setNames(as.list(colors_id), values)
           colors_manual$type <- "discrete"
-          lapply(
-            X = seq_along(values),
-            FUN = function(i) {
-              tagList(
-                tags$span(
-                  tagAppendAttributes(
-                    colorPickr(
-                      inputId = ns(colors_id[i]),
-                      selected = colors[i],
-                      label = NULL,
-                      theme = "classic",
-                      useAsButton = TRUE,
-                      update = "save",
-                      interaction = list(
-                        hex = FALSE,
-                        rgba = FALSE,
-                        input = TRUE,
-                        save = TRUE,
-                        clear = FALSE
+          tags$div(
+            class = "mb-3",
+            lapply(
+              X = seq_along(values),
+              FUN = function(i) {
+                tagList(
+                  tags$span(
+                    tagAppendAttributes(
+                      colorPickr(
+                        inputId = ns(colors_id[i]),
+                        selected = colors[i],
+                        label = NULL,
+                        theme = "classic",
+                        useAsButton = TRUE,
+                        update = "save",
+                        interaction = list(
+                          hex = FALSE,
+                          rgba = FALSE,
+                          input = TRUE,
+                          save = TRUE,
+                          clear = FALSE
+                        )
+                      ),
+                      style = htmltools::css(
+                        display = "inline-block",
+                        width = "auto",
+                        marginBottom = 0,
+                        verticalAlign = "middle"
                       )
                     ),
-                    style = htmltools::css(
-                      display = "inline-block",
-                      width = "auto",
-                      marginBottom = 0,
-                      verticalAlign = "middle"
-                    )
+                    values[i]
                   ),
-                  values[i]
-                ),
-                tags$br()
-              )
-            }
+                  tags$br()
+                )
+              }
+            )
           )
         } else if (identical(type, "continuous")) {
           colors <- palettes[[input$palette]]
@@ -342,7 +345,8 @@ palette_server <- function(id, variable) {
           }
           colors_manual$x <- list(low = "low", high = "high")
           colors_manual$type <- "continuous"
-          tagList(
+          tags$div(
+            class = "mb-3",
             tags$span(
               tagAppendAttributes(
                 colorPickr(

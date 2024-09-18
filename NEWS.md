@@ -1,3 +1,11 @@
+# esquisse 2.0.1
+
+* Fixed bug with Use Specific Colors when mapping a variable to color [#276](https://github.com/dreamRs/esquisse/issues/276).
+* Fixed bug with `n_geoms` different between ui and server [#272](https://github.com/dreamRs/esquisse/issues/272).
+* Update manual Chinese translation in cn.csv by [@YaoxiangLi](https://github.com/YaoxiangLi) in [#273](https://github.com/dreamRs/esquisse/pull/273).
+
+
+
 # esquisse 2.0.0
 
 * New app to use esquisse online: https://dreamrs.shinyapps.io/esquisse/.

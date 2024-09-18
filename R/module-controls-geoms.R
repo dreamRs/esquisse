@@ -278,13 +278,14 @@ controls_geoms_server <- function(id,
       colors_r <- palette_server("colors", reactive({
         data_ <- data_r()
         aesthetics_ <- aesthetics_r()
+        variable <- character(0)
         if ("fill" %in% names(aesthetics_)) {
-          return(data_[[aesthetics_$fill]])
+          variable <- eval_tidy(aesthetics_$fill, data = data_)
         }
-        if ("color" %in% names(aesthetics_)) {
-          return(data_[[aesthetics_$color]])
+        if ("colour" %in% names(aesthetics_)) {
+          variable <- eval_tidy(aesthetics_$colour, data = data_)
         }
-        return(character(0))
+        return(variable)
       }))
       colors_r_d <- debounce(colors_r, millis = 1000)
 
