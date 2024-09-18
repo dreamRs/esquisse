@@ -27,7 +27,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">esquisse</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">2.0.0.9010</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">2.0.0.9100</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -83,7 +83,7 @@ img {
 <h2 id="launch-the-addin">Launch the addin<a class="anchor" aria-label="anchor" href="#launch-the-addin"></a>
 </h2>
 <p>In RStudio, you can use the <em>Addins</em> menu :</p>
-<p><img src="figures/launch-addin.png"></p>
+<p><img src="figures%2Flaunch-addin.png"></p>
 <p>Or in the R console :</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/esquisser.html">esquisser</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
@@ -101,7 +101,7 @@ in source editor before launching addin. Otherwise, pass the
 addin, a window to import data will appear.</p>
 <p>This feature comes from package <a href="https://github.com/dreamRs/datamods" class="external-link">{datamods}</a>, you can find
 more documentation about it <a href="https://dreamrs.github.io/datamods/articles/datamods.html" class="external-link">here</a>.</p>
-<p><img src="figures/import-data.png"></p>
+<p><img src="figures%2Fimport-data.png"></p>
 </div>
 <div class="section level2">
 <h2 id="create-a-plot">Create a plot<a class="anchor" aria-label="anchor" href="#create-a-plot"></a>
@@ -109,15 +109,15 @@ more documentation about it <a href="https://dreamrs.github.io/datamods/articles
 <p>This is the main interface and the most interesting part of the addin
 (in example below, we use <code>penguins</code> dataset from <a href="https://github.com/allisonhorst/palmerpenguins" class="external-link">{palmerpenguins}</a>)
 :</p>
-<p><img src="figures/esquisse.png"></p>
+<p><img src="figures%2Fesquisse.png"></p>
 <p>You can select aesthetics to used by clicking the gear icon in top
 right corner, then drag-and-drop into aesthetics boxes to create a
 plot:</p>
-<p><img src="figures/aesthetics.png"></p>
+<p><img src="figures%2Faesthetics.png"></p>
 <p>A <code>geometry</code> is automatically picked to represent the
 data, according to data type. You can select an other <code>geom</code>
 with button in top right corner :</p>
-<p><img src="figures/geometries.png"></p>
+<p><img src="figures%2Fgeometries.png"></p>
 </div>
 <div class="section level2">
 <h2 id="controls">Controls<a class="anchor" aria-label="anchor" href="#controls"></a>
@@ -129,26 +129,26 @@ filter data and retrieve code to generate the plot.</p>
 </h3>
 <p>This menu allow to set plot’s title, subtitle, caption, axis and
 aesthetics labels :</p>
-<p><img src="figures/controls-labels.png"></p>
+<p><img src="figures%2Fcontrols-labels.png"></p>
 </div>
 <div class="section level3">
 <h3 id="plot-options">Plot options<a class="anchor" aria-label="anchor" href="#plot-options"></a>
 </h3>
 <p>Here you can modify plot parameters, options available in the menu
 depends on type of plot :</p>
-<p><img src="figures/controls-plot-options.png"></p>
+<p><img src="figures%2Fcontrols-plot-options.png"></p>
 </div>
 <div class="section level3">
 <h3 id="appearance">Appearance<a class="anchor" aria-label="anchor" href="#appearance"></a>
 </h3>
 <p>Here you can modify colors used and global theme :</p>
-<p><img src="figures/controls-appearance.png"></p>
+<p><img src="figures%2Fcontrols-appearance.png"></p>
 </div>
 <div class="section level3">
 <h3 id="filter">Filter<a class="anchor" aria-label="anchor" href="#filter"></a>
 </h3>
 <p>Widgets to interactively filter data used in plot :</p>
-<p><img src="figures/controls-filters.png"></p>
+<p><img src="figures%2Fcontrols-filters.png"></p>
 <p>The filter module is available in package <a href="https://dreamrs.github.io/datamods/articles/datamods.html#filter" class="external-link">{datamods}</a>.</p>
 <p>The code used to filter the data will be available in the following
 menu.</p>
@@ -158,7 +158,7 @@ menu.</p>
 </h3>
 <p>In this menu, you can retrieve the code used to produce the plot, as
 well as the code used to filter the data.</p>
-<p><img src="figures/controls-code.png"></p>
+<p><img src="figures%2Fcontrols-code.png"></p>
 <p>You can copy code to clipboard, or insert it in your current
 script.</p>
 </div>
@@ -168,10 +168,10 @@ script.</p>
 </h2>
 <p>You can save the plot created in various format by clicking the
 button in plot area’s top-right corner:</p>
-<p><img src="figures/export.png"></p>
+<p><img src="figures%2Fexport.png"></p>
 <p>With “More options”, you can access a new window with more parameters
 to export the plot:</p>
-<p><img src="figures/export-options.png"></p>
+<p><img src="figures%2Fexport-options.png"></p>
 </div>
 <div class="section level2">
 <h2 id="addin-options">Addin options<a class="anchor" aria-label="anchor" href="#addin-options"></a>
@@ -190,10 +190,10 @@ Viewer pane.</p>
 <h3 id="internationalization">Internationalization<a class="anchor" aria-label="anchor" href="#internationalization"></a>
 </h3>
 <p>Currently you can use {esquisse} in the following language:
-<img src="figures/i18n/gb.svg" height="16"> english (default),
-<img src="figures/i18n/fr.svg" height="16"> french (<code>"fr"</code>),
-<img src="figures/i18n/mk.svg" height="16"> macedonian
-(<code>"mk"</code>), <img src="figures/i18n/al.svg" height="16">
+<img src="figures%2Fi18n%2Fgb.svg" height="16"> english (default),
+<img src="figures%2Fi18n%2Ffr.svg" height="16"> french (<code>"fr"</code>),
+<img src="figures%2Fi18n%2Fmk.svg" height="16"> macedonian
+(<code>"mk"</code>), <img src="figures%2Fi18n%2Fal.svg" height="16">
 albanian (<code>"sq"</code>). Activate with:</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://dreamrs.github.io/esquisse/">esquisse</a></span><span class="op">)</span></span>
@@ -218,7 +218,7 @@ vignette</a> for more on this topic.</p>
 </div>
 
 <div class="pkgdown-footer-right">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.1.0.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.1.1.</p>
 </div>
 
     </footer>
