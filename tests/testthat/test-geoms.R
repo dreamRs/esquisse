@@ -24,7 +24,7 @@ test_that("match_geom_args works", {
   histo_params <- match_geom_args(geom = "histogram", args = params, add_aes = FALSE)
   expect_length(histo_params, 2)
   histo_params <- match_geom_args(geom = "violin", args = params)
-  expect_length(histo_params, 3)
+  expect_length(histo_params, 4)
 })
 
 

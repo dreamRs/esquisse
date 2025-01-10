@@ -233,6 +233,14 @@ match_geom_args <- function(geom,
     if (!inherits(stat_args, "try-error")) {
       geom_args <- c(geom_args, stat_args)
     }
+  } else if (!is.null(geom_args$stat)) {
+    stat_args <- try(
+      formals(fun = get(paste0("stat_", geom_args$stat), envir = pkg_envir)),
+      silent = TRUE
+    )
+    if (!inherits(stat_args, "try-error")) {
+      geom_args <- c(geom_args, stat_args)
+    }
   }
   # browser()
   if (isTRUE(add_aes)) {
