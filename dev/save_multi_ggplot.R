@@ -5,24 +5,33 @@ library(phosphoricons)
 library(ggplot2)
 library(shinyWidgets)
 library(rlang)
+library(esquisse)
 
 p1 <- ggplot(mtcars) + geom_point(aes(mpg, disp))
 p2 <- ggplot(mtcars) + geom_boxplot(aes(gear, disp, group = gear))
 p3 <- ggplot(mtcars) + geom_smooth(aes(disp, qsec))
 p4 <- ggplot(mtcars) + geom_bar(aes(carb))
+p5 <- ggplot(presidential) +
+  geom_segment(aes(y = name, x = start, xend = end)) +
+  geom_point(aes(y = name, x = start)) +
+  geom_point(aes(y = name, x = end))
 
 
 plot_list_test <- list(
   list(ggobj = p1, code = "ggplot(mtcars) + geom_point(aes(mpg, disp))", label = "Plot 1"),
   list(ggobj = p2, code = "ggplot(mtcars) + geom_boxplot(aes(gear, disp, group = gear))", label = "Plot 2"),
   list(ggobj = p3, code = "ggplot(mtcars) + geom_smooth(aes(disp, qsec))", label = "Plot 3"),
-  list(ggobj = p4, code = "ggplot(mtcars) + geom_bar(aes(carb))", label = "Plot 4")
+  list(ggobj = p4, code = "ggplot(mtcars) + geom_bar(aes(carb))", label = "Plot 4"),
+  list(ggobj = p5, code = "ggplot(presidential) +
+  geom_segment(aes(y = name, x = start, xend = end)) +
+  geom_point(aes(y = name, x = start)) +
+  geom_point(aes(y = name, x = end))", label = "Plot 5")
 )
 
 
 card_plot <- function(id, obj) {
   tags$div(
-    class = "col",
+    class = "col mb-2",
     tags$div(
       class = "card h-100",
       renderPlot(obj$ggobj),
@@ -38,20 +47,26 @@ card_plot <- function(id, obj) {
         )
       ),
       tags$div(
-        class = "card-footer",
+        class = "card-footer d-flex py-2",
         htmltools::tagAppendAttributes(
           prettyToggle(
             inputId = id,
             value = TRUE,
-            label_on = "Included in export",
+            label_on = "Export",
             icon_on = icon("check"),
             status_on = "success",
             status_off = "danger",
-            label_off = "Not included in export", 
-            icon_off = icon("xmark"), 
-            bigger = TRUE
+            label_off = "Don't export",
+            icon_off = icon("xmark"),
+            bigger = TRUE,
+            inline = TRUE
           ),
-          class = "my-2"
+          class = "flex-grow-1 mb-0 mt-2"
+        ),
+        tags$button(
+          type = "button",
+          class = "btn btn-outline-primary",
+          ph("download")
         )
       )
     )
@@ -61,8 +76,8 @@ card_plot <- function(id, obj) {
 save_multi_ggplot_ui <- function(id, file_format = c("png", "pdf", "svg", "jpeg", "pptx")) {
   ns <- NS(id)
   file_format <- match.arg(
-    arg = file_format, 
-    choices = c("png", "pdf", "svg", "jpeg", "pptx"), 
+    arg = file_format,
+    choices = c("png", "pdf", "svg", "jpeg", "pptx"),
     several.ok = TRUE
   )
   download_links <- lapply(
@@ -79,65 +94,52 @@ save_multi_ggplot_ui <- function(id, file_format = c("png", "pdf", "svg", "jpeg"
       )
     }
   )
-  
+
   tags$div(
     class = "save-multi-ggplot-container",
-    tags$div(
-      class = "save-multi-ggplot-controls",
-      downloadButton(
-        outputId = ns("dl_code"),
-        label = tagList(ph("code"), "Download code"),
-        class = "btn-outline-primary",
-        icon = NULL
-      ),
-      htmltools::tagAppendAttributes(
-        dropMenu(
-          actionButton(
-            inputId = ns("dl_plots_drop"),
-            label = tagList("Download plots", ph("caret-circle-down")),
-            class = "btn-outline-primary",
-          ),
-          placement = "bottom-end",
-          tags$div(
-            style = htmltools::css(
-              display = "grid",
-              gridTemplateColumns = "repeat(2, 1fr)",
-              gridGap = "10px"
-            ),
-            tags$div(
-              class = "pe-2 border-end",
-              numericInputIcon(
-                inputId = ns("width"),
-                label = "Default width:",
-                value = 868,
-                icon = list(NULL, "px"),
-                width = "100%"
-              ),
-              numericInputIcon(
-                inputId = ns("height"),
-                label = "Default height:",
-                value = 400,
-                icon = list(NULL, "px"),
-                width = "100%"
-              )
-            ),
-            tags$div(
-              download_links
-            )
-          )
+    card(
+      fill = FALSE,
+      layout_sidebar(
+        uiOutput(
+          outputId = ns("plots_container"),
+          class = "row row-cols-md-3 mt-3"
         ),
-        class = "d-inline-block"
-      ),
-      actionButton(
-        inputId = ns("select_all"),
-        label = tagList("(Un)select all"),
-        class = "btn-outline-primary float-end"
+        sidebar = sidebar(
+          position = "right",
+          open = "always",
+          tags$div(
+            class = "save-multi-ggplot-controls",
+            actionButton(
+              inputId = ns("select_all"),
+              label = tagList(ph("selection-inverse"), "(Un)select all"),
+              class = "btn-outline-primary w-100"
+            ),
+            tags$hr(),
+            downloadButton(
+              outputId = ns("dl_code"),
+              label = tagList(ph("code"), "Download code"),
+              class = "btn-outline-primary w-100",
+              icon = NULL
+            ),
+            tags$hr(),
+            numericInputIcon(
+              inputId = ns("width"),
+              label = "Default width:",
+              value = 868,
+              icon = list(NULL, "px"),
+              width = "100%"
+            ),
+            numericInputIcon(
+              inputId = ns("height"),
+              label = "Default height:",
+              value = 400,
+              icon = list(NULL, "px"),
+              width = "100%"
+            ),
+            download_links
+          )
+        )
       )
-    ),
-    tags$div(class = "clearfix"),
-    uiOutput(
-      outputId = ns("plots_container"),
-      class = "row row-cols-md-3 mt-3"
     )
   )
 }
@@ -149,9 +151,9 @@ save_multi_ggplot_server <- function(id,
   moduleServer(
     id,
     function(input, output, session) {
-      
+
       ns <- session$ns
-      
+
       observeEvent(input$select_all, {
         plot_list <- plot_list_r()
         value <- isTRUE(input$select_all %% 2 == 0)
@@ -160,13 +162,13 @@ save_multi_ggplot_server <- function(id,
           FUN = function(i) {
             updatePrettyToggle(
               session = session,
-              inputId = paste0("include_plot_", i), 
+              inputId = paste0("include_plot_", i),
               value = value
             )
           }
         )
       }, ignoreInit = TRUE)
-      
+
       output$plots_container <- renderUI({
         plot_list <- plot_list_r()
         lapply(
@@ -179,13 +181,13 @@ save_multi_ggplot_server <- function(id,
           }
         )
       })
-      
+
       output$dl_code <- downloadHandler(
         filename = function() {
           if (is.reactive(filename_code))
             filename_code <- filename_code()
           filename_code
-        }, 
+        },
         content = function(file) {
           plot_list <- plot_list_r()
           code_file <- tempfile(fileext = ".R")
@@ -218,18 +220,18 @@ save_multi_ggplot_server <- function(id,
           file.copy(from = code_file, to = file)
         }
       )
-      
+
       output$export_png <- download_multi_plot_handler(input, plot_list_r, "png", filename_zip)
       output$export_pdf <- download_multi_plot_handler(input, plot_list_r, "pdf", filename_zip)
       output$export_svg <- download_multi_plot_handler(input, plot_list_r, "svg", filename_zip)
       output$export_jpeg <- download_multi_plot_handler(input, plot_list_r, "jpeg", filename_zip)
-      
+
     }
   )
 }
 
 
-export_multi_ggplot <- function(plot_list, 
+export_multi_ggplot <- function(plot_list,
                                 zipfile,
                                 device = c("png", "pdf", "svg", "jpeg"),
                                 width = 868,
@@ -250,13 +252,13 @@ export_multi_ggplot <- function(plot_list,
     )
   }
   zip::zip(
-    zipfile = zipfile, 
-    files = list.files(plot_dir, full.names = TRUE), 
+    zipfile = zipfile,
+    files = list.files(plot_dir, full.names = TRUE),
     mode = "cherry-pick"
   )
 }
 
-download_multi_plot_handler <- function(input, 
+download_multi_plot_handler <- function(input,
                                         plot_list_r,
                                         device,
                                         filename_zip = "ggplot.zip") {
@@ -273,10 +275,10 @@ download_multi_plot_handler <- function(input,
           plot_list[[i]] <- NULL
       }
       export_multi_ggplot(
-        plot_list = plot_list_test, 
-        device = device, 
-        zipfile = file, 
-        width = input$width, 
+        plot_list = plot_list_test,
+        device = device,
+        zipfile = file,
+        width = input$width,
         height = input$height
       )
     }
@@ -286,11 +288,12 @@ download_multi_plot_handler <- function(input,
 
 shinyApp(
   ui = page_fluid(
+    theme = bs_theme_esquisse(),
     save_multi_ggplot_ui("mod")
   ),
   server = function(...) {
     save_multi_ggplot_server(
-      id = "mod", 
+      id = "mod",
       plot_list_r = reactive(plot_list_test)
     )
   }
