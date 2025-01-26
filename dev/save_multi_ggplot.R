@@ -175,8 +175,7 @@ save_multi_ggplot_ui <- function(id,
 
 save_multi_ggplot_server <- function(id,
                                      plot_list_r = reactive(NULL),
-                                     filename_code = "code-ggplot.R",
-                                     filename_zip = "ggplot.zip") {
+                                     filename = "code-ggplot") {
   moduleServer(
     id,
     function(input, output, session) {
@@ -226,9 +225,9 @@ save_multi_ggplot_server <- function(id,
       # Donwload code
       output$dl_code <- downloadHandler(
         filename = function() {
-          if (is.reactive(filename_code))
-            filename_code <- filename_code()
-          filename_code
+          if (is.reactive(filename))
+            filename <- filename()
+          paste0(filename, ".R")
         },
         content = function(file) {
           plot_list <- plot_list_r()
@@ -264,10 +263,56 @@ save_multi_ggplot_server <- function(id,
       )
 
       # Download multi plots
-      output$export_png <- download_multi_plot_handler(input, plot_list_r, "png", filename_zip)
-      output$export_pdf <- download_multi_plot_handler(input, plot_list_r, "pdf", filename_zip)
-      output$export_svg <- download_multi_plot_handler(input, plot_list_r, "svg", filename_zip)
-      output$export_jpeg <- download_multi_plot_handler(input, plot_list_r, "jpeg", filename_zip)
+      output$export_png <- download_multi_plot_handler(input, plot_list_r, "png", filename)
+      output$export_pdf <- download_multi_plot_handler(input, plot_list_r, "pdf", filename)
+      output$export_svg <- download_multi_plot_handler(input, plot_list_r, "svg", filename)
+      output$export_jpeg <- download_multi_plot_handler(input, plot_list_r, "jpeg", filename)
+
+      output$export_pptx <- downloadHandler(
+        filename = function() {
+          if (is.reactive(filename))
+            filename <- filename()
+          paste0(filename, ".pptx")
+        },
+        content = function(file) {
+          if (requireNamespace(package = "rvg") & requireNamespace(package = "officer")) {
+            plot_list <- plot_list_r()
+            ppt <- officer::read_pptx()
+            ppt <- try({
+              for (index in seq_along(plot_list)) {
+                if (!isTRUE(input[[paste0("include_plot_", index)]]))
+                  next
+                ppt <- officer::add_slide(x = ppt, layout = "Blank")
+                ppt <- officer::ph_with(
+                  x = ppt,
+                  value = rvg::dml(ggobj = plot_list[[index]]$ggobj),
+                  location = officer::ph_location_fullsize()
+                )
+              }
+              ppt
+            }, silent = FALSE)
+            if (inherits(ppt, "try-error")) {
+              shiny::showNotification(
+                ui = i18n("Export to PowerPoint failed..."),
+                type = "error",
+                id = paste("esquisse", sample.int(1e6, 1), sep = "-")
+              )
+            } else {
+              tmp <- tempfile(pattern = "esquisse", fileext = ".pptx")
+              print(ppt, target = tmp)
+              file.copy(from = tmp, to = file)
+            }
+          } else {
+            warn <- "Packages 'officer' and 'rvg' are required to use this functionality."
+            warning(warn, call. = FALSE)
+            shiny::showNotification(
+              ui = warn,
+              type = "warning",
+              id = paste("esquisse", sample.int(1e6, 1), sep = "-")
+            )
+          }
+        }
+      )
 
     }
   )
@@ -304,12 +349,12 @@ export_multi_ggplot <- function(plot_list,
 download_multi_plot_handler <- function(input,
                                         plot_list_r,
                                         device,
-                                        filename_zip = "ggplot.zip") {
+                                        filename = "export-ggplot") {
   downloadHandler(
     filename = function() {
-      if (is.reactive(filename_zip))
-        filename_zip <- filename_zip()
-      filename_zip
+      if (is.reactive(filename))
+        filename <- filename()
+      paste0(filename, ".zip")
     },
     content = function(file) {
       plot_list <- plot_list_r()
