@@ -29,7 +29,10 @@ plot_list_test <- list(
 )
 
 
-card_plot <- function(id, obj) {
+card_plot <- function(index,
+                      obj,
+                      export_btn_id = "export",
+                      ns = identity) {
   tags$div(
     class = "col mb-2",
     tags$div(
@@ -50,7 +53,7 @@ card_plot <- function(id, obj) {
         class = "card-footer d-flex py-2",
         htmltools::tagAppendAttributes(
           prettyToggle(
-            inputId = id,
+            inputId = ns(paste0("include_plot_", index)),
             value = TRUE,
             label_on = "Export",
             icon_on = icon("check"),
@@ -66,14 +69,19 @@ card_plot <- function(id, obj) {
         tags$button(
           type = "button",
           class = "btn btn-outline-primary",
-          ph("download")
+          ph("download"),
+          onclick = sprintf(
+            "Shiny.setInputValue('%s', %s, {priority: 'event'})",
+            ns(export_btn_id), index
+          )
         )
       )
     )
   )
 }
 
-save_multi_ggplot_ui <- function(id, file_format = c("png", "pdf", "svg", "jpeg", "pptx")) {
+save_multi_ggplot_ui <- function(id,
+                                 file_format = c("png", "pdf", "svg", "jpeg", "pptx")) {
   ns <- NS(id)
   file_format <- match.arg(
     arg = file_format,
@@ -153,6 +161,7 @@ save_multi_ggplot_server <- function(id,
     function(input, output, session) {
 
       ns <- session$ns
+      rv <- reactiveValues()
 
       observeEvent(input$select_all, {
         plot_list <- plot_list_r()
@@ -175,13 +184,25 @@ save_multi_ggplot_server <- function(id,
           X = seq_along(plot_list),
           FUN = function(i) {
             card_plot(
-              id = ns(paste0("include_plot_", i)),
-              obj = plot_list[[i]]
+              index = i,
+              obj = plot_list[[i]],
+              ns = ns,
+              export_btn_id = "export_plot"
             )
           }
         )
       })
 
+      # Export individual plots
+      observeEvent(input$export_plot, {
+        plot_list <- plot_list_r()
+        rv$plot <- plot_list[[input$export_plot]]$ggobj
+        save_ggplot_modal(ns("export_plot"), "Export plot")
+      })
+      save_ggplot_server("export_plot", rv)
+
+
+      # Donwload code
       output$dl_code <- downloadHandler(
         filename = function() {
           if (is.reactive(filename_code))
@@ -221,6 +242,7 @@ save_multi_ggplot_server <- function(id,
         }
       )
 
+      # Download multi plots
       output$export_png <- download_multi_plot_handler(input, plot_list_r, "png", filename_zip)
       output$export_pdf <- download_multi_plot_handler(input, plot_list_r, "pdf", filename_zip)
       output$export_svg <- download_multi_plot_handler(input, plot_list_r, "svg", filename_zip)
