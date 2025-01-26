@@ -69,7 +69,7 @@ export_multi_plot_card <- function(index,
         dropMenu(
           actionButton(
             inputId = ns(paste0("setting_plot_", index)),
-            label = tagList(ph("gear")),
+            label = tagList(ph("gear", title = "Settings for this plot")),
             class = "btn-outline-primary me-2"
           ),
           numericInputIcon(
@@ -90,7 +90,7 @@ export_multi_plot_card <- function(index,
         tags$button(
           type = "button",
           class = "btn btn-outline-primary",
-          ph("download"),
+          ph("download", title = "Export this plot"),
           onclick = sprintf(
             "Shiny.setInputValue('%s', %s, {priority: 'event'})",
             ns(export_btn_id), index
@@ -141,7 +141,9 @@ save_multi_ggplot_ui <- function(id,
             actionButton(
               inputId = ns("select_all"),
               label = tagList(ph("selection-inverse"), "(Un)select all"),
-              class = "btn-outline-primary w-100"
+              class = "btn-outline-primary w-100 active",
+              `data-bs-toggle` = "button",
+              `aria-pressed` = "true"
             ),
             tags$hr(),
             downloadButton(
@@ -238,16 +240,16 @@ save_multi_ggplot_server <- function(id,
           )
           lapply(
             X = seq_along(plot_list),
-            FUN = function(i) {
-              if (!isTRUE(input[[paste0("include_plot_", i)]]))
+            FUN = function(index) {
+              if (!isTRUE(input[[paste0("include_plot_", index)]]))
                 return(NULL)
               cat(
-                sprintf("# %s ----\n\n", plot_list[[i]]$label),
+                sprintf("# %s ----\n\n", plot_list[[index]]$label),
                 file = code_file,
                 append = TRUE
               )
               cat(
-                plot_list[[i]]$code,
+                plot_list[[index]]$code,
                 file = code_file,
                 append = TRUE
               )
