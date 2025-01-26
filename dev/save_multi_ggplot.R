@@ -29,10 +29,10 @@ plot_list_test <- list(
 )
 
 
-card_plot <- function(index,
-                      obj,
-                      export_btn_id = "export",
-                      ns = identity) {
+export_multi_plot_card <- function(index,
+                                   obj,
+                                   export_btn_id = "export",
+                                   ns = identity) {
   tags$div(
     class = "col mb-2",
     tags$div(
@@ -65,6 +65,27 @@ card_plot <- function(index,
             inline = TRUE
           ),
           class = "flex-grow-1 mb-0 mt-2"
+        ),
+        dropMenu(
+          actionButton(
+            inputId = ns(paste0("setting_plot_", index)),
+            label = tagList(ph("gear")),
+            class = "btn-outline-primary me-2"
+          ),
+          numericInputIcon(
+            inputId = ns(paste0("width_plot_", index)),
+            label = "Width:",
+            value = NA,
+            icon = list(NULL, "px"),
+            width = "100%"
+          ),
+          numericInputIcon(
+            inputId = ns(paste0("height_plot_", index)),
+            label = "Height:",
+            value = NA,
+            icon = list(NULL, "px"),
+            width = "100%"
+          )
         ),
         tags$button(
           type = "button",
@@ -183,7 +204,7 @@ save_multi_ggplot_server <- function(id,
         lapply(
           X = seq_along(plot_list),
           FUN = function(i) {
-            card_plot(
+            export_multi_plot_card(
               index = i,
               obj = plot_list[[i]],
               ns = ns,
@@ -292,12 +313,18 @@ download_multi_plot_handler <- function(input,
     },
     content = function(file) {
       plot_list <- plot_list_r()
-      for (i in seq_along(plot_list)) {
-        if (!isTRUE(input[[paste0("include_plot_", i)]]))
-          plot_list[[i]] <- NULL
+      for (index in seq_along(plot_list)) {
+        if (isTruthy(input[[paste0("height_plot_", index)]]))
+          plot_list[[index]]$height <- input[[paste0("height_plot_", index)]]
+        if (isTruthy(input[[paste0("width_plot_", index)]]))
+          plot_list[[index]]$width <- input[[paste0("width_plot_", index)]]
+      }
+      for (index in seq_along(plot_list)) {
+        if (!isTRUE(input[[paste0("include_plot_", index)]]))
+          plot_list[[index]] <- NULL
       }
       export_multi_ggplot(
-        plot_list = plot_list_test,
+        plot_list = plot_list,
         device = device,
         zipfile = file,
         width = input$width,
