@@ -9,7 +9,7 @@
 #' @param id Module ID.
 #' @param output_format Output formats offered to the user.
 #'
-#' @return No value. Use in UI & server of shiny application.
+#' @returns No value. Use in UI & server in shiny application.
 #' @export
 #'
 #' @name save-ggplot-module
@@ -364,12 +364,12 @@ render_ggplot <- function(id,
       ns <- session$ns
       plot_width <- paste0("output_", ns("plot"), "_width")
       plot_height <- paste0("output_", ns("plot"), "_height")
-      
+
       observeEvent(input$hidden, {
-        if (isTRUE(resizable)) 
+        if (isTRUE(resizable))
           activate_resizer(id = ns("ggplot-container"), modal = FALSE)
       })
-      
+
       bindEvent(
         observe({
           if (
@@ -392,7 +392,7 @@ render_ggplot <- function(id,
         width(),
         height()
       )
-      
+
       output$export_png <- download_plot_fun(gg_fun, "png", filename, session)
       output$export_pdf <- download_plot_fun(gg_fun, "pdf", filename, session)
       output$export_svg <- download_plot_fun(gg_fun, "svg", filename, session)
@@ -446,8 +446,8 @@ render_ggplot <- function(id,
         output$plotly <- plotly::renderPlotly({
           rv$plot <- gg_fun()
           plotly::ggplotly(
-            p = rv$plot, 
-            width = session$clientData[[plot_width]], 
+            p = rv$plot,
+            width = session$clientData[[plot_width]],
             height = session$clientData[[plot_height]]
           )
         })

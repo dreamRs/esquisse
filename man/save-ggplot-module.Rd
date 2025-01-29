@@ -30,7 +30,7 @@ save_ggplot_server(id, plot_rv)
 \item{plot_rv}{A \code{reactiveValues} with a slot \code{plot} containing a \code{ggplot} object.}
 }
 \value{
-No value. Use in UI & server of shiny application.
+No value. Use in UI & server in shiny application.
 }
 \description{
 Save a \code{ggplot} object in various format and resize it before saving.
