@@ -400,7 +400,7 @@ download_multi_plot_handler <- function(input,
 }
 
 
-
+#' @importFrom rlang %||%
 paste_code <- function(plot_list, .input = list()) {
   Reduce(
     function(...) paste(..., sep = "\n\n\n"),
