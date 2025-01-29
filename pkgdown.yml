@@ -4,7 +4,7 @@ pkgdown_sha: ~
 articles:
   get-started: get-started.html
   shiny-usage: shiny-usage.html
-last_built: 2025-01-29T16:37Z
+last_built: 2025-01-29T17:06Z
 urls:
   reference: https://dreamrs.github.io/esquisse/reference
   article: https://dreamrs.github.io/esquisse/articles
