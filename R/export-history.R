@@ -1,135 +1,45 @@
 
-library(shiny)
-library(bslib)
-library(phosphoricons)
-library(ggplot2)
-library(shinyWidgets)
-library(rlang)
-library(esquisse)
-
-p1 <- ggplot(mtcars) + geom_point(aes(mpg, disp))
-p2 <- ggplot(mtcars) + geom_boxplot(aes(gear, disp, group = gear))
-p3 <- ggplot(mtcars) + geom_smooth(aes(disp, qsec))
-p4 <- ggplot(mtcars) + geom_bar(aes(carb))
-p5 <- ggplot(presidential) +
-  geom_segment(aes(y = name, x = start, xend = end)) +
-  geom_point(aes(y = name, x = start)) +
-  geom_point(aes(y = name, x = end))
-
-
-plot_list_test <- list(
-  list(ggobj = p1, code = "ggplot(mtcars) + geom_point(aes(mpg, disp))", label = "Plot 1"),
-  list(ggobj = p2, code = "ggplot(mtcars) + geom_boxplot(aes(gear, disp, group = gear))", label = "Plot 2"),
-  list(ggobj = p3, code = "ggplot(mtcars) + geom_smooth(aes(disp, qsec))", label = "Plot 3"),
-  list(ggobj = p4, code = "ggplot(mtcars) + geom_bar(aes(carb))", label = "Plot 4"),
-  list(ggobj = p5, code = "ggplot(presidential) +
-  geom_segment(aes(y = name, x = start, xend = end)) +
-  geom_point(aes(y = name, x = start)) +
-  geom_point(aes(y = name, x = end))", label = "Plot 5")
-)
-
-
-export_multi_plot_card <- function(index,
-                                   obj,
-                                   export_btn_id = "export",
-                                   ns = identity) {
-  tags$div(
-    class = "col mb-2",
-    tags$div(
-      class = "card h-100",
-      renderPlot(obj$ggobj),
-      tags$div(
-        class = "card-body",
-        tags$h5(
-          class = "card-title",
-          obj$label
-        ),
-        if (!is.null(obj$code)) {
-          HTML(downlit::highlight(
-            obj$code,
-            pre_class = "esquisse-code",
-            code = TRUE,
-            classes = downlit::classes_pandoc()
-          ))
-        }
-      ),
-      tags$div(
-        class = "card-footer d-flex py-2",
-        htmltools::tagAppendAttributes(
-          prettyToggle(
-            inputId = ns(paste0("include_plot_", index)),
-            value = TRUE,
-            label_on = "Export",
-            icon_on = icon("check"),
-            status_on = "success",
-            status_off = "danger",
-            label_off = "Don't export",
-            icon_off = icon("xmark"),
-            bigger = TRUE,
-            inline = TRUE
-          ),
-          class = "flex-grow-1 mb-0 mt-2"
-        ),
-        dropMenu(
-          actionButton(
-            inputId = ns(paste0("setting_plot_", index)),
-            label = tagList(ph("gear", title = "Settings for this plot")),
-            class = "btn-outline-primary me-2"
-          ),
-          numericInputIcon(
-            inputId = ns(paste0("width_plot_", index)),
-            label = "Width:",
-            value = NA,
-            icon = list(NULL, "px"),
-            width = "100%"
-          ),
-          numericInputIcon(
-            inputId = ns(paste0("height_plot_", index)),
-            label = "Height:",
-            value = NA,
-            icon = list(NULL, "px"),
-            width = "100%"
-          )
-        ),
-        tags$button(
-          type = "button",
-          class = "btn btn-outline-primary",
-          ph("download", title = "Export this plot"),
-          onclick = sprintf(
-            "Shiny.setInputValue('%s', %s, {priority: 'event'})",
-            ns(export_btn_id), index
-          )
-        )
-      )
-    )
-  )
-}
-
+#' @title Save multiple `ggplot` module
+#'
+#' @description Save multiple `ggplot` objects in various format and retrieve code.
+#'
+#' @param id Module ID.
+#' @param output_format Output formats offered to the user.
+#'
+#' @returns No value. Use in UI & server in shiny application.
+#' @export
+#'
+#' @importFrom shiny downloadButton actionButton uiOutput
+#' @importFrom htmltools tagList tags
+#' @importFrom bslib card layout_sidebar sidebar
+#' @importFrom shinyWidgets numericInputIcon
+#'
+#' @name save-ggplot-multi-module
+#'
+#' @example examples/save-ggplot-multi-module.R
 save_multi_ggplot_ui <- function(id,
-                                 file_format = c("png", "pdf", "svg", "jpeg", "pptx")) {
+                                 output_format = c("png", "pdf", "svg", "jpeg", "pptx")) {
   ns <- NS(id)
-  file_format <- match.arg(
-    arg = file_format,
+  output_format <- match.arg(
+    arg = output_format,
     choices = c("png", "pdf", "svg", "jpeg", "pptx"),
     several.ok = TRUE
   )
   download_links <- lapply(
-    X = seq_along(file_format),
+    X = seq_along(output_format),
     FUN = function(i) {
-      tagList(
-        downloadButton(
-          outputId = ns(paste0("export_", file_format[i])),
-          label = tagList(ph("download"), file_format[[i]]),
-          class = "btn-outline-primary d-block my-1",
-          icon = NULL,
-          style = htmltools::css(width = "100%")
-        )
+      downloadButton(
+        outputId = ns(paste0("export_", output_format[i])),
+        label = tagList(ph("download"), output_format[[i]]),
+        class = "btn-outline-primary d-block my-1 w-100",
+        icon = NULL
       )
     }
   )
 
   tags$div(
     class = "save-multi-ggplot-container",
+    html_dependency_esquisse(),
     card(
       fill = FALSE,
       layout_sidebar(
@@ -184,6 +94,21 @@ save_multi_ggplot_ui <- function(id,
   )
 }
 
+#' @param plot_list_r A `reactive` function returning a list of plots and codes to export.
+#'  Sub list items can have following names:
+#'   * `ggobj`: the `ggplot` object producing the plot
+#'   * `code`: code to produce the chart (optional)
+#'   * `label`: a label to identify the plot
+#' @param filename Name for the file exported.
+#'
+#' @export
+#'
+#' @importFrom shiny moduleServer reactiveValues observeEvent renderUI downloadHandler showModal modalDialog
+#'  showNotification
+#' @importFrom shinyWidgets updatePrettyToggle
+#' @importFrom htmltools HTML
+#'
+#' @rdname save-ggplot-multi-module
 save_multi_ggplot_server <- function(id,
                                      plot_list_r = reactive(NULL),
                                      filename = "code-ggplot") {
@@ -260,7 +185,7 @@ save_multi_ggplot_server <- function(id,
       observeEvent(input$view_code, {
         plot_list <- plot_list_r()
         showModal(modalDialog(
-          title = tagList("Code", esquisse:::button_close_modal()),
+          title = tagList("Code", button_close_modal()),
           footer = NULL,
           size = "l",
           easyClose = TRUE,
@@ -330,6 +255,89 @@ save_multi_ggplot_server <- function(id,
 }
 
 
+#' @importFrom shiny renderPlot actionButton
+#' @importFrom shinyWidgets prettyToggle dropMenu numericInputIcon
+#' @importFrom htmltools tagAppendAttributes tags HTML tagList
+#' @importFrom phosphoricons ph
+export_multi_plot_card <- function(index,
+                                   obj,
+                                   export_btn_id = "export",
+                                   ns = identity) {
+  tags$div(
+    class = "col mb-2",
+    tags$div(
+      class = "card h-100",
+      renderPlot(obj$ggobj),
+      tags$div(
+        class = "card-body",
+        tags$h5(
+          class = "card-title",
+          obj$label
+        ),
+        if (!is.null(obj$code)) {
+          HTML(downlit::highlight(
+            obj$code,
+            pre_class = "esquisse-code",
+            code = TRUE,
+            classes = downlit::classes_pandoc()
+          ))
+        }
+      ),
+      tags$div(
+        class = "card-footer d-flex py-2",
+        tagAppendAttributes(
+          prettyToggle(
+            inputId = ns(paste0("include_plot_", index)),
+            value = TRUE,
+            label_on = "Export",
+            icon_on = icon("check"),
+            status_on = "success",
+            status_off = "danger",
+            label_off = "Don't export",
+            icon_off = icon("xmark"),
+            bigger = TRUE,
+            inline = TRUE
+          ),
+          class = "flex-grow-1 mb-0 mt-2"
+        ),
+        dropMenu(
+          actionButton(
+            inputId = ns(paste0("setting_plot_", index)),
+            label = tagList(ph("gear", title = "Settings for this plot")),
+            class = "btn-outline-primary me-2"
+          ),
+          numericInputIcon(
+            inputId = ns(paste0("width_plot_", index)),
+            label = "Width:",
+            value = NA,
+            icon = list(NULL, "px"),
+            width = "100%"
+          ),
+          numericInputIcon(
+            inputId = ns(paste0("height_plot_", index)),
+            label = "Height:",
+            value = NA,
+            icon = list(NULL, "px"),
+            width = "100%"
+          )
+        ),
+        tags$button(
+          type = "button",
+          class = "btn btn-outline-primary",
+          ph("download", title = "Export this plot"),
+          onclick = sprintf(
+            "Shiny.setInputValue('%s', %s, {priority: 'event'})",
+            ns(export_btn_id), index
+          )
+        )
+      )
+    )
+  )
+}
+
+
+#' @importFrom ggplot2 ggsave
+#' @importFrom zip zip
 export_multi_ggplot <- function(plot_list,
                                 zipfile,
                                 device = c("png", "pdf", "svg", "jpeg"),
@@ -357,6 +365,7 @@ export_multi_ggplot <- function(plot_list,
   )
 }
 
+#' @importFrom shiny downloadHandler isTruthy
 download_multi_plot_handler <- function(input,
                                         plot_list_r,
                                         device,
@@ -395,13 +404,13 @@ download_multi_plot_handler <- function(input,
 paste_code <- function(plot_list, .input = list()) {
   Reduce(
     function(...) paste(..., sep = "\n\n\n"),
-    esquisse:::dropNulls(lapply(
+    dropNulls(lapply(
       X = seq_along(plot_list),
       FUN = function(index) {
         if (!isTRUE(.input[[paste0("include_plot_", index)]]))
           return(NULL)
         paste(
-          sprintf("# %s ----\n", plot_list[[index]]$label %||% ""),
+          sprintf("# %s ----\n", plot_list[[index]]$label %||% paste("Plot", index)),
           plot_list[[index]]$code,
           sep = "\n"
         )
@@ -411,18 +420,4 @@ paste_code <- function(plot_list, .input = list()) {
 }
 
 
-
-shinyApp(
-  ui = page_fluid(
-    theme = bs_theme_esquisse(),
-    esquisse:::html_dependency_esquisse(),
-    save_multi_ggplot_ui("mod")
-  ),
-  server = function(...) {
-    save_multi_ggplot_server(
-      id = "mod",
-      plot_list_r = reactive(plot_list_test)
-    )
-  }
-)
 
