@@ -44,10 +44,14 @@ export_multi_plot_card <- function(index,
           class = "card-title",
           obj$label
         ),
-        tags$p(
-          class = "card-text font-monospace bg-body-secondary rounded-2 p-1",
-          obj$code
-        )
+        if (!is.null(obj$code)) {
+          HTML(downlit::highlight(
+            obj$code,
+            pre_class = "esquisse-code",
+            code = TRUE,
+            classes = downlit::classes_pandoc()
+          ))
+        }
       ),
       tags$div(
         class = "card-footer d-flex py-2",
@@ -149,8 +153,13 @@ save_multi_ggplot_ui <- function(id,
             downloadButton(
               outputId = ns("dl_code"),
               label = tagList(ph("code"), "Download code"),
-              class = "btn-outline-primary w-100",
+              class = "btn-outline-primary w-100 mb-1",
               icon = NULL
+            ),
+            actionButton(
+              inputId = ns("view_code"),
+              label = tagList(ph("eye"), "View all code"),
+              class = "btn-outline-primary w-100"
             ),
             tags$hr(),
             numericInputIcon(
@@ -235,34 +244,34 @@ save_multi_ggplot_server <- function(id,
           plot_list <- plot_list_r()
           code_file <- tempfile(fileext = ".R")
           cat(
-            "# Code ----\n\n\n",
+            "# esquisse code -------\n\n\n",
             file = code_file
           )
-          lapply(
-            X = seq_along(plot_list),
-            FUN = function(index) {
-              if (!isTRUE(input[[paste0("include_plot_", index)]]))
-                return(NULL)
-              cat(
-                sprintf("# %s ----\n\n", plot_list[[index]]$label),
-                file = code_file,
-                append = TRUE
-              )
-              cat(
-                plot_list[[index]]$code,
-                file = code_file,
-                append = TRUE
-              )
-              cat(
-                "\n\n\n",
-                file = code_file,
-                append = TRUE
-              )
-            }
+          cat(
+            paste_code(plot_list, .input = input),
+            file = code_file,
+            append = TRUE
           )
           file.copy(from = code_file, to = file)
         }
       )
+
+      # View code
+      observeEvent(input$view_code, {
+        plot_list <- plot_list_r()
+        showModal(modalDialog(
+          title = tagList("Code", esquisse:::button_close_modal()),
+          footer = NULL,
+          size = "l",
+          easyClose = TRUE,
+          HTML(downlit::highlight(
+            paste_code(plot_list, .input = input),
+            pre_class = "esquisse-code",
+            code = TRUE,
+            classes = downlit::classes_pandoc()
+          ))
+        ))
+      })
 
       # Download multi plots
       output$export_png <- download_multi_plot_handler(input, plot_list_r, "png", filename)
@@ -382,9 +391,31 @@ download_multi_plot_handler <- function(input,
 }
 
 
+
+paste_code <- function(plot_list, .input = list()) {
+  Reduce(
+    function(...) paste(..., sep = "\n\n\n"),
+    esquisse:::dropNulls(lapply(
+      X = seq_along(plot_list),
+      FUN = function(index) {
+        if (!isTRUE(.input[[paste0("include_plot_", index)]]))
+          return(NULL)
+        paste(
+          sprintf("# %s ----\n", plot_list[[index]]$label %||% ""),
+          plot_list[[index]]$code,
+          sep = "\n"
+        )
+      }
+    ))
+  )
+}
+
+
+
 shinyApp(
   ui = page_fluid(
     theme = bs_theme_esquisse(),
+    esquisse:::html_dependency_esquisse(),
     save_multi_ggplot_ui("mod")
   ),
   server = function(...) {
