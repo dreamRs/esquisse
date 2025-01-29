@@ -118,11 +118,12 @@ It's possible to use a vector of CSS unit of length 4 to specify the margins
 \item{.before, .after}{Custom content to put in the header, typically buttons.}
 }
 \value{
-A \code{reactiveValues} with 3 slots :
+A \code{reactiveValues} with 4 slots :
 \itemize{
-\item \strong{code_plot} : code to generate plot.
-\item \strong{code_filters} : a list of length two with code to reproduce filters.
-\item \strong{data} : \code{data.frame} used in plot (with filters applied).
+\item \strong{ggobj}: the ggplot object
+\item \strong{code_plot}: code to generate plot.
+\item \strong{code_filters}: a list of length two with code to reproduce filters.
+\item \strong{data}: \code{data.frame} used in plot (with filters applied).
 }
 }
 \description{

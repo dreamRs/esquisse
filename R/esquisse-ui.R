@@ -19,10 +19,11 @@
 #' @param downloads Export options available or `NULL` for no export. See [downloads_labels()].
 #' @param n_geoms Number of geoms the user can use.
 #'
-#' @return A `reactiveValues` with 3 slots :
-#'   * **code_plot** : code to generate plot.
-#'   * **code_filters** : a list of length two with code to reproduce filters.
-#'   * **data** : `data.frame` used in plot (with filters applied).
+#' @return A `reactiveValues` with 4 slots :
+#'   * **ggobj**: the ggplot object
+#'   * **code_plot**: code to generate plot.
+#'   * **code_filters**: a list of length two with code to reproduce filters.
+#'   * **data**: `data.frame` used in plot (with filters applied).
 #'
 #'
 #' @export

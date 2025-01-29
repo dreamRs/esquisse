@@ -304,6 +304,7 @@ esquisse_server <- function(id,
       output_module <- reactiveValues(code_plot = NULL, code_filters = NULL, data = NULL)
       observeEvent(ggplotCall$code, {
         output_module$code_plot <- ggplotCall$code
+        output_module$ggobj <- ggplotCall$ggobj$plot
       }, ignoreInit = TRUE)
       observeEvent(controls_rv$data, {
         output_module$code_filters <- controls_rv$code
