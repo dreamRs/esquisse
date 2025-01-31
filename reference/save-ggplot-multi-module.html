@@ -51,7 +51,9 @@
 <span><span class="fu">save_multi_ggplot_server</span><span class="op">(</span></span>
 <span>  <span class="va">id</span>,</span>
 <span>  plot_list_r <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/shiny/man/reactive.html" class="external-link">reactive</a></span><span class="op">(</span><span class="cn">NULL</span><span class="op">)</span>,</span>
-<span>  filename <span class="op">=</span> <span class="st">"code-ggplot"</span></span>
+<span>  filename <span class="op">=</span> <span class="st">"code-ggplot"</span>,</span>
+<span>  placeholder <span class="op">=</span> <span class="st">"No plots to display"</span>,</span>
+<span>  code_pre <span class="op">=</span> <span class="st">"library(ggplot2)"</span></span>
 <span><span class="op">)</span></span></code></pre></div>
     </div>
 
@@ -77,6 +79,14 @@ Sub list items can have following names:</p><ul><li><p><code>ggobj</code>: the <
 
 <dt id="arg-filename">filename<a class="anchor" aria-label="anchor" href="#arg-filename"></a></dt>
 <dd><p>Name for the file exported.</p></dd>
+
+
+<dt id="arg-placeholder">placeholder<a class="anchor" aria-label="anchor" href="#arg-placeholder"></a></dt>
+<dd><p>A placeholder message to be displayed if <code>plot_list_r</code> return an empty list.</p></dd>
+
+
+<dt id="arg-code-pre">code_pre<a class="anchor" aria-label="anchor" href="#arg-code-pre"></a></dt>
+<dd><p>Some code to put before plots code.</p></dd>
 
 </dl></div>
     <div class="section level2">
