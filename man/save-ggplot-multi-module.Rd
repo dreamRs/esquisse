@@ -14,7 +14,9 @@ save_multi_ggplot_ui(
 save_multi_ggplot_server(
   id,
   plot_list_r = reactive(NULL),
-  filename = "code-ggplot"
+  filename = "code-ggplot",
+  placeholder = "No plots to display",
+  code_pre = "library(ggplot2)"
 )
 }
 \arguments{
@@ -31,6 +33,10 @@ Sub list items can have following names:
 }}
 
 \item{filename}{Name for the file exported.}
+
+\item{placeholder}{A placeholder message to be displayed if \code{plot_list_r} return an empty list.}
+
+\item{code_pre}{Some code to put before plots code.}
 }
 \value{
 No value. Use in UI & server in shiny application.

@@ -45,7 +45,7 @@ save_multi_ggplot_ui <- function(id,
       layout_sidebar(
         uiOutput(
           outputId = ns("plots_container"),
-          class = "row row-cols-md-3 mt-3"
+          class = "row"
         ),
         sidebar = sidebar(
           position = "right",
@@ -100,6 +100,8 @@ save_multi_ggplot_ui <- function(id,
 #'   * `code`: code to produce the chart (optional)
 #'   * `label`: a label to identify the plot
 #' @param filename Name for the file exported.
+#' @param placeholder A placeholder message to be displayed if `plot_list_r` return an empty list.
+#' @param code_pre Some code to put before plots code.
 #'
 #' @export
 #'
@@ -111,7 +113,9 @@ save_multi_ggplot_ui <- function(id,
 #' @rdname save-ggplot-multi-module
 save_multi_ggplot_server <- function(id,
                                      plot_list_r = reactive(NULL),
-                                     filename = "code-ggplot") {
+                                     filename = "code-ggplot",
+                                     placeholder = "No plots to display",
+                                     code_pre = "library(ggplot2)") {
   moduleServer(
     id,
     function(input, output, session) {
@@ -136,6 +140,8 @@ save_multi_ggplot_server <- function(id,
 
       output$plots_container <- renderUI({
         plot_list <- plot_list_r()
+        if (length(plot_list) < 1)
+          return(placeholder)
         lapply(
           X = seq_along(plot_list),
           FUN = function(i) {
@@ -173,7 +179,7 @@ save_multi_ggplot_server <- function(id,
             file = code_file
           )
           cat(
-            paste_code(plot_list, .input = input),
+            paste_code(plot_list, .input = input, code_pre = code_pre),
             file = code_file,
             append = TRUE
           )
@@ -190,7 +196,7 @@ save_multi_ggplot_server <- function(id,
           size = "l",
           easyClose = TRUE,
           HTML(downlit::highlight(
-            paste_code(plot_list, .input = input),
+            paste_code(plot_list, .input = input, code_pre = code_pre),
             pre_class = "esquisse-code",
             code = TRUE,
             classes = downlit::classes_pandoc()
@@ -264,7 +270,7 @@ export_multi_plot_card <- function(index,
                                    export_btn_id = "export",
                                    ns = identity) {
   tags$div(
-    class = "col mb-2",
+    class = "col-4 mb-2",
     tags$div(
       class = "card h-100",
       renderPlot(obj$ggobj),
@@ -401,8 +407,8 @@ download_multi_plot_handler <- function(input,
 
 
 #' @importFrom rlang %||%
-paste_code <- function(plot_list, .input = list()) {
-  Reduce(
+paste_code <- function(plot_list, .input = list(), code_pre = "") {
+  code <- Reduce(
     function(...) paste(..., sep = "\n\n\n"),
     dropNulls(lapply(
       X = seq_along(plot_list),
@@ -417,6 +423,7 @@ paste_code <- function(plot_list, .input = list()) {
       }
     ))
   )
+  paste(code_pre, code, sep = "\n\n\n")
 }
 
 
