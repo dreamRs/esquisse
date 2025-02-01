@@ -374,7 +374,7 @@ controls_server <- function(id,
 
       observeEvent(data_r(), {
         outputs$data <- data_r()
-        outputs$code <- reactiveValues(expr = NULL, dplyr = NULL)
+        outputs$code <- data_name()
       })
 
 

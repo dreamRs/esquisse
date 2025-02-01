@@ -31,7 +31,7 @@ ui <- fluidPage(
     header = FALSE, # dont display gadget title
     container = esquisse_container(height = "700px")
   ),
-  tags$b("Output fo the module:"),
+  tags$b("Output of the module:"),
   verbatimTextOutput("out")
 )
 
@@ -56,7 +56,7 @@ server <- function(input, output, session) {
   )
 
   output$out <- renderPrint({
-    str(reactiveValuesToList(esquisse_out), max.level = 2)
+    str(reactiveValuesToList(esquisse_out), max.level = 1)
   })
 }
 
