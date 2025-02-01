@@ -88,10 +88,19 @@ toggleDisplay <- function(id,
 #' @noRd
 toggleBtn <- function(inputId,
                       type = "disable",
+                      condition = NULL,
+                      prop = TRUE,
                       session = shiny::getDefaultReactiveDomain()) {
+  if (!is.null(condition)) {
+    type <- if (isTRUE(condition)) "enable" else "disable"
+  }
   session$sendCustomMessage(
     type = "togglewidget",
-    message = list(inputId = inputId, type = type)
+    message = list(
+      inputId = session$ns(inputId),
+      type = type,
+      prop = prop
+    )
   )
 }
 

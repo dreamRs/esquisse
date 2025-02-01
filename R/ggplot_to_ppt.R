@@ -89,7 +89,7 @@ ggplot_to_ppt <- function(gg = NULL) {
         icon = icon("check")
       ),
       tags$div(
-        id = "ppt-pb", 
+        id = "ppt-pb",
         style = "display: none;",
         progressBar(id = "progress-ppt", value = 0, display_pct = TRUE)
       ),
@@ -107,21 +107,23 @@ ggplot_to_ppt <- function(gg = NULL) {
 
       observeEvent(input$all, {
         updatePrettyCheckboxGroup(
-          session = session, inputId = "select_gg", selected = ggplots
+          session = session,
+          inputId = "select_gg",
+          selected = ggplots
         )
       })
 
       observeEvent(input$select_gg, {
         if (length(input$select_gg) > 0) {
-          toggleBtn(session = session, inputId = "export", type = "enable")
+          toggleBtn(inputId = "export", type = "enable")
         } else {
-          toggleBtn(session = session, inputId = "export", type = "disable")
+          toggleBtn(inputId = "export", type = "disable")
         }
       }, ignoreNULL = FALSE)
 
       observeEvent(input$export, {
 
-        toggleDisplay(session = session, id = "ppt-pb", display = "block")
+        toggleDisplay(id = "ppt-pb", display = "block")
 
         if (length(input$select_gg) > 0) {
 

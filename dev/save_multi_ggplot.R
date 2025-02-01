@@ -27,7 +27,17 @@ plot_list_test <- list(
   geom_point(aes(y = name, x = start)) +
   geom_point(aes(y = name, x = end))", label = "Plot 5")
 )
+for (i in seq_along(plot_list_test)) {
+  plot_list_test[[i]]$code <- NULL
+}
 
+vapply(
+  X = plot_list_test,
+  FUN = function(x) {
+    length(x$code) > 0
+  },
+  FUN.VALUE = logical(1)
+)
 
 export_multi_plot_card <- function(index,
                                    obj,

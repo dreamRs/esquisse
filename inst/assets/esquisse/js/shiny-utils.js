@@ -21,12 +21,16 @@ $(function() {
 
   // Disable / enable a button
   Shiny.addCustomMessageHandler("togglewidget", function(data) {
+    var prop = true;
+    if (data.hasOwnProperty("prop")) {
+      prop = data.prop;
+    }
     if (data.type == "disable") {
-      $("#" + data.inputId).prop("disabled", true);
+      if (prop) $("#" + data.inputId).prop("disabled", true);
       $("#" + data.inputId).addClass("disabled");
     }
     if (data.type == "enable") {
-      $("#" + data.inputId).prop("disabled", false);
+      if (prop) $("#" + data.inputId).prop("disabled", false);
       $("#" + data.inputId).removeClass("disabled");
     }
   });

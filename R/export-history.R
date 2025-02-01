@@ -60,18 +60,21 @@ save_multi_ggplot_ui <- function(id,
               `aria-pressed` = "true"
             ),
             tags$hr(),
-            downloadButton(
-              outputId = ns("dl_code"),
-              label = tagList(ph("code"), "Download code"),
-              class = "btn-outline-primary w-100 mb-1",
-              icon = NULL
+            tags$div(
+              id = ns("container_code_btns"),
+              downloadButton(
+                outputId = ns("dl_code"),
+                label = tagList(ph("code"), "Download code"),
+                class = "btn-outline-primary w-100 mb-1",
+                icon = NULL
+              ),
+              actionButton(
+                inputId = ns("view_code"),
+                label = tagList(ph("eye"), "View all code"),
+                class = "btn-outline-primary w-100"
+              ),
+              tags$hr()
             ),
-            actionButton(
-              inputId = ns("view_code"),
-              label = tagList(ph("eye"), "View all code"),
-              class = "btn-outline-primary w-100"
-            ),
-            tags$hr(),
             numericInputIcon(
               inputId = ns("width"),
               label = "Default width:",
@@ -123,6 +126,24 @@ save_multi_ggplot_server <- function(id,
       ns <- session$ns
       rv <- reactiveValues()
 
+      output$plots_container <- renderUI({
+        plot_list <- plot_list_r()
+        if (length(plot_list) < 1)
+          return(placeholder)
+        toggleDisplay("container_code_btns", has_plot_code(plot_list))
+        lapply(
+          X = seq_along(plot_list),
+          FUN = function(i) {
+            export_multi_plot_card(
+              index = i,
+              obj = plot_list[[i]],
+              ns = ns,
+              export_btn_id = "export_plot"
+            )
+          }
+        )
+      })
+
       observeEvent(input$select_all, {
         plot_list <- plot_list_r()
         value <- isTRUE(input$select_all %% 2 == 0)
@@ -137,23 +158,6 @@ save_multi_ggplot_server <- function(id,
           }
         )
       }, ignoreInit = TRUE)
-
-      output$plots_container <- renderUI({
-        plot_list <- plot_list_r()
-        if (length(plot_list) < 1)
-          return(placeholder)
-        lapply(
-          X = seq_along(plot_list),
-          FUN = function(i) {
-            export_multi_plot_card(
-              index = i,
-              obj = plot_list[[i]],
-              ns = ns,
-              export_btn_id = "export_plot"
-            )
-          }
-        )
-      })
 
       # Export individual plots
       observeEvent(input$export_plot, {
@@ -415,6 +419,8 @@ paste_code <- function(plot_list, .input = list(), code_pre = "") {
       FUN = function(index) {
         if (!isTRUE(.input[[paste0("include_plot_", index)]]))
           return(NULL)
+        if (is.null(plot_list[[index]]$code))
+          return(NULL)
         paste(
           sprintf("# %s ----\n", plot_list[[index]]$label %||% paste("Plot", index)),
           plot_list[[index]]$code,
@@ -427,4 +433,13 @@ paste_code <- function(plot_list, .input = list(), code_pre = "") {
 }
 
 
-
+has_plot_code <- function(plot_list) {
+  has_code <- vapply(
+    X = plot_list,
+    FUN = function(x) {
+      length(x$code) > 0
+    },
+    FUN.VALUE = logical(1)
+  )
+  any(has_code)
+}
