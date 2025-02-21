@@ -1,3 +1,9 @@
+# esquisse 2.1.0
+
+* New module `save_multi_ggplot_ui()` / `save_multi_ggplot_server()` to export (plot and/or code) several plots at once.
+
+
+
 # esquisse 2.0.1
 
 * Fixed bug with Use Specific Colors when mapping a variable to color [#276](https://github.com/dreamRs/esquisse/issues/276).

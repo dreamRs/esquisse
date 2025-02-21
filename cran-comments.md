@@ -7,7 +7,7 @@
 
 0 errors | 0 warnings | 0 note
 
-* Bugs fixes.
+* New features.
 
 Thanks,
 
