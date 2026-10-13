@@ -1,0 +1,261 @@
+# =====================================================================
+#  ShinyApps app-layer bundle builder (Route A) -- HARDENED.
+#  Builds prebuilt desktop bundles (win-x64, mac-arm64) for an R/Shiny app
+#  and attaches them to a GitHub Release. No shell rebuild. R 4.6.1.
+#
+#  Reliability design (learned from real onboardings):
+#   * dependency graph from the SOURCE index (binary index is incomplete on
+#     a brand-new R and silently drops edges)
+#   * per-package binary->source install (Bioc annotations/TxDb have no
+#     binaries for a new R)
+#   * fix-up loop over installed DESCRIPTIONs (catches dropped transitive deps)
+#   * load validation: every required seed package must load from rlib
+#   * base-priority packages are excluded from the required check
+#   * macOS: optional source rebuild + otool portability audit (CRAN macOS
+#     binaries can hard-link XQuartz/Homebrew)
+#   * size guard against the 2 GiB GitHub Release asset limit
+#
+#  Modes (auto-detected when APP_MODE=auto):
+#   * flat           - the repo IS the app (app.R, or ui.R+server.R, or legacy
+#                      shinyUI/shinyServer). Sources are copied verbatim; the
+#                      runtime runs the directory. No entry is synthesized.
+#   * package-fn     - the app is an R package whose exported function returns
+#                      a shinyApp object; ENTRY_FN is that call.
+#   * package-deploy - the app is a dir inside an R package that reads package
+#                      internals; the app files are copied + library() lines
+#                      prepended + data supplied via an RData (mirrors the
+#                      package's own deploy_*() helper).
+# =====================================================================
+name: Build app bundle
+
+on:
+  push:
+    tags: ['v*']
+  release:
+    types: [published]
+  workflow_dispatch:
+    inputs:
+      tag:
+        description: "Existing tag to attach bundles to (e.g. v0.1.0)"
+        required: false
+        type: string
+
+permissions:
+  contents: write
+
+env:
+  APP_ID: "esquisse"
+  APP_NAME: "esquisse"
+  APP_AUTHOR: "Fanny Meyer, Victor Perrier (dreamRs)"
+  APP_DESC: "Explore and visualize your data interactively - build ggplot2 figures with drag-and-drop mapping, then export or copy the reproducible code"
+  APP_HOMEPAGE: "https://dreamrs.github.io/esquisse/"
+  APP_LICENSE: "GPL-3.0"
+  APP_MODE: "auto"
+  APP_SUBDIR: "."
+  PKG_SUBDIR: "."
+  ENTRY_FN: "library(esquisse); shiny::shinyApp(ui = esquisse_ui(id = 'esquisse', insert_code = FALSE, container = function(...) shiny::fillPage(theme = bs_theme_esquisse(), ...), controls = c('options','labs','axes','geoms','theme','filters','code')), server = function(input, output, session) esquisse_server(id = 'esquisse', data_rv = iris, import_from = c('env','file','copypaste','url')))"
+  UI_LIBS: ""
+  SERVER_LIBS: ""
+  DEMO_RDA: ""
+  DEMO_OBJECT: ""
+  DEMO_SAVE_AS: ""
+  DEMO_RDATA: ""
+  EXTRA_PKGS: "ggthemes,hrbrthemes,plotly"
+  EXCLUDE: ""
+  ARCHIVE_URLS: ""
+  EXTRA_REPOS: ""
+  SOFT_PKGS: ""
+  SOURCE_REBUILD: ""
+  APP_NOTES: "Packaged as a package-fn app: the entry builds a shinyApp from the exported esquisse_ui()/esquisse_server() module (esquisser() itself only calls shiny::runGadget). Starts with the built-in iris dataset; import your own data via file/copypaste/url. RStudio-only features (insert code into the current script, read the editor selection) are unavailable in the desktop app; viewing and copying the generated code works. plotly (interactive plot) and ggthemes/hrbrthemes (extra themes) are bundled; PowerPoint export is not bundled (its rvg/gdtools dependency links non-portable macOS libraries)."
+  MAX_REQUEST_MB: "1024"
+  R_VERSION: "4.6.1"
+
+jobs:
+  bundle:
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - { os: windows-latest, platform: "win-x64" }
+          - { os: macos-14,       platform: "mac-arm64" }
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: r-lib/actions/setup-r@v2
+        with:
+          r-version: ${{ env.R_VERSION }}
+          use-public-rspm: true
+
+      - name: Install build helpers
+        shell: bash
+        run: Rscript -e 'install.packages(c("jsonlite","zip","digest","BiocManager"), repos="https://cloud.r-project.org")'
+
+      - name: Resolve store version
+        shell: bash
+        run: |
+          V="${{ github.event.release.tag_name }}${{ github.ref_name }}${{ inputs.tag }}"
+          V="${V#v}"
+          if [ -z "$V" ]; then V="0.1.0"; fi
+          echo "VERSION=$V" >> "$GITHUB_ENV"
+
+      - name: Assemble bundle (app/ + rlib/ + manifest.json)
+        shell: Rscript {0}
+        env:
+          GITHUB_PAT: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          app_id  <- Sys.getenv("APP_ID")
+          mode    <- Sys.getenv("APP_MODE"); if (!nzchar(mode)) mode <- "auto"
+          sub_    <- Sys.getenv("APP_SUBDIR"); if (!nzchar(sub_)) sub_ <- "."
+          pkg_sub <- Sys.getenv("PKG_SUBDIR"); if (!nzchar(pkg_sub)) pkg_sub <- "."
+          root    <- getwd()
+          bundle  <- file.path(root, "bundle"); unlink(bundle, recursive = TRUE); dir.create(bundle, recursive = TRUE)
+          appdir  <- file.path(bundle, "app"); dir.create(appdir, recursive = TRUE)
+          lib     <- file.path(bundle, "rlib"); dir.create(lib, recursive = TRUE)
+          .libPaths(c(lib, .libPaths()))
+          base_pkgs <- rownames(installed.packages(priority = "base"))
+          split_pkgs <- function(x) { p <- strsplit(trimws(x), "[ ,]+")[[1]]; p[nzchar(p)] }
+          dcf_deps <- function(dcf, fields = c("Depends","Imports","LinkingTo")) {
+            f <- intersect(fields, colnames(dcf)); if (!length(f)) return(character())
+            v <- na.omit(unlist(dcf[1, f]))
+            v <- trimws(sub("[[:space:]]*\\(.*\\)$", "", trimws(unlist(strsplit(paste(v, collapse = ","), ",")))))
+            v[nzchar(v) & v != "R"]
+          }
+          opt <- function() sprintf("options(shiny.launch.browser = FALSE, shiny.maxRequestSize = %s * 1024^2)", Sys.getenv("MAX_REQUEST_MB"))
+          pkgroot <- normalizePath(file.path(root, pkg_sub), winslash = "/", mustWork = FALSE)
+          has_pkg <- file.exists(file.path(pkgroot, "DESCRIPTION"))
+          if (mode == "auto") mode <- if (!has_pkg) "flat" else if (nzchar(Sys.getenv("ENTRY_FN"))) "package-fn" else "package-deploy"
+
+          seed <- character(); pkg_name <- ""
+          if (mode == "flat") {
+            src <- normalizePath(file.path(root, sub_), winslash = "/", mustWork = TRUE)
+            for (p in list.files(src, all.files = TRUE, no.. = TRUE, full.names = TRUE))
+              if (!basename(p) %in% c(".git", ".github")) file.copy(p, appdir, recursive = TRUE)
+            for (e in split_pkgs(Sys.getenv("EXCLUDE"))) { t <- file.path(appdir, e); if (file.exists(t)) unlink(t, recursive = TRUE) }
+            if (file.exists(file.path(appdir, "app.R"))) {
+              if (any(grepl("runApp[[:space:]]*\\(", readLines(file.path(appdir, "app.R"), warn = FALSE)))) {
+                file.rename(file.path(appdir, "app.R"), file.path(appdir, paste0(app_id, "-app.R")))
+                writeLines(c(opt(), sprintf("app <- source(\"%s-app.R\")$value", app_id),
+                  "if (!inherits(app, \"shiny.appobj\")) stop(\"app.R did not return a shiny app object\")", "app"),
+                  file.path(appdir, "app.R"))
+              }
+            } else if (!file.exists(file.path(appdir, "ui.R"))) stop("flat mode: no app.R or ui.R in ", src)
+            sf <- list.files(appdir, pattern = "[.](R|r|Rmd|rmd)$", recursive = TRUE, full.names = TRUE)
+            txt <- paste(unlist(lapply(sf, function(f) tryCatch(readLines(f, warn = FALSE), error = function(e) character()))), collapse = "\n")
+            grab <- function(pat) { x <- regmatches(txt, gregexpr(pat, txt))[[1]]; if (length(x)) gsub("[()\"']", "", sub(".*?(library|require)", "", x)) else character() }
+            seed <- unique(c(grab("library\\([A-Za-z0-9._\"']+"), grab("require\\([A-Za-z0-9._\"']+"),
+                             sub("::.*$", "", regmatches(txt, gregexpr("([A-Za-z][A-Za-z0-9._]+)::", txt))[[1]])),
+                             split_pkgs(Sys.getenv("EXTRA_PKGS")), "shiny")
+          } else if (mode == "package-fn") {
+            dcf <- read.dcf(file.path(pkgroot, "DESCRIPTION")); pkg_name <- unname(dcf[1, "Package"])
+            writeLines(c(opt(), Sys.getenv("ENTRY_FN")), file.path(appdir, "app.R"))
+            seed <- c(dcf_deps(dcf), split_pkgs(Sys.getenv("EXTRA_PKGS")), pkg_name)
+          } else {
+            dcf <- read.dcf(file.path(pkgroot, "DESCRIPTION")); pkg_name <- unname(dcf[1, "Package"])
+            psrc <- normalizePath(file.path(pkgroot, "inst", sub_), winslash = "/", mustWork = TRUE)
+            for (p in list.files(psrc, all.files = TRUE, no.. = TRUE, full.names = TRUE)) file.copy(p, appdir, recursive = TRUE)
+            prepend <- function(f, lines) if (file.exists(f) && length(lines)) { txt <- readLines(f, warn = FALSE); writeLines(c(lines, txt), f) }
+            rda <- Sys.getenv("DEMO_RDA")
+            if (nzchar(rda)) {
+              e <- new.env(); load(file.path(root, rda), envir = e)
+              save_as <- Sys.getenv("DEMO_SAVE_AS"); if (!nzchar(save_as)) save_as <- ".SHINYSTAN_OBJECT"
+              rdata <- Sys.getenv("DEMO_RDATA"); if (!nzchar(rdata)) rdata <- "sso.RData"
+              assign(save_as, get(Sys.getenv("DEMO_OBJECT"), envir = e)); save(list = save_as, file = file.path(appdir, rdata))
+              prepend(file.path(appdir, "global.R"), sprintf("load(\"%s\")", rdata))
+            }
+            ui_libs <- split_pkgs(Sys.getenv("UI_LIBS")); srv_libs <- split_pkgs(Sys.getenv("SERVER_LIBS"))
+            prepend(file.path(appdir, "ui.R"), paste0("library(", ui_libs, ");"))
+            prepend(file.path(appdir, "server.R"), paste0("library(", srv_libs, ");"))
+            seed <- unique(c(ui_libs, srv_libs, dcf_deps(dcf), split_pkgs(Sys.getenv("EXTRA_PKGS"))))
+          }
+          seed <- setdiff(seed, base_pkgs)
+          cat("mode:", mode, "| seed:", paste(sort(seed), collapse = ", "), "\n")
+
+          er <- split_pkgs(Sys.getenv("EXTRA_REPOS"))
+          repos <- unique(c(er, BiocManager::repositories())); options(repos = repos)
+          db <- available.packages(repos = repos, type = "source")
+          closure <- unique(c(seed, unlist(tools::package_dependencies(seed, db = db, recursive = TRUE))))
+          closure <- setdiff(closure, base_pkgs); closure <- intersect(closure, rownames(db))
+          cat("closure size:", length(closure), "\n")
+
+          options(pkgType = "both")
+          soft <- split_pkgs(Sys.getenv("SOFT_PKGS"))
+          have <- function() basename(list.dirs(lib, recursive = FALSE))
+          ins <- function(p, type = "both", deps = NA) if (length(p)) install.packages(p, lib = lib, repos = repos, type = type, dependencies = deps, Ncpus = 2)
+          ins(closure)
+          nb <- setdiff(closure, have()); if (length(nb)) { cat("source retry:", length(nb), "\n"); ins(nb, type = "source", deps = FALSE) }
+          if (mode == "package-fn") { install.packages(pkgroot, lib = lib, repos = NULL, type = "source", dependencies = FALSE); if (!pkg_name %in% have()) stop("app package failed to install: ", pkg_name) }
+          for (u in split_pkgs(Sys.getenv("ARCHIVE_URLS"))) { f <- tempfile(fileext = ".tar.gz"); download.file(u, f, mode = "wb", quiet = TRUE); try(install.packages(f, lib = lib, repos = NULL, type = "source", dependencies = FALSE), silent = TRUE) }
+
+          for (i in 1:5) {
+            installed <- have(); need <- character()
+            for (p in installed) { d <- tryCatch(read.dcf(file.path(lib, p, "DESCRIPTION")), error = function(e) NULL); if (!is.null(d)) need <- c(need, dcf_deps(d)) }
+            need <- setdiff(unique(intersect(need, rownames(db))), c(installed, base_pkgs))
+            if (!length(need)) break
+            cat("fix-up round", i, ":", paste(need, collapse = ", "), "\n"); ins(need)
+          }
+
+          if (identical(unname(Sys.info()[["sysname"]]), "Darwin")) {
+            sr <- split_pkgs(Sys.getenv("SOURCE_REBUILD"))
+            if (length(sr)) { cat("macOS source rebuild:", paste(sr, collapse = ", "), "\n"); ins(sr, type = "source", deps = FALSE) }
+            bins <- list.files(lib, pattern = "[.](so|dylib)$", recursive = TRUE, full.names = TRUE); bad <- character()
+            for (b in bins) { o <- suppressWarnings(system2("otool", c("-L", shQuote(b)), stdout = TRUE, stderr = FALSE)); if (any(grepl("(/opt/X11|/opt/homebrew|/usr/local/opt)", o))) bad <- c(bad, b) }
+            if (length(bad)) stop("non-portable dylib references: ", paste(unique(basename(bad)), collapse = ", "))
+          }
+
+          required <- setdiff(seed, c(soft, base_pkgs)); miss <- setdiff(required, have())
+          if (length(miss)) stop("missing required packages: ", paste(miss, collapse = ", "))
+          for (p in required) { ok <- tryCatch({ loadNamespace(p, lib.loc = lib); TRUE }, error = function(e) { cat("LOAD FAILED:", p, "->", conditionMessage(e), "\n"); FALSE }); if (!ok) stop("seed package cannot be loaded from rlib: ", p) }
+          soft_missing <- setdiff(intersect(soft, seed), c(have(), base_pkgs))
+          cat("rlib packages:", length(have()), "| soft missing:", paste(soft_missing, collapse = ","), "\n")
+
+          entry <- if (file.exists(file.path(appdir, "app.R"))) "app/app.R" else "app/ui.R"
+          pkgs <- as.data.frame(installed.packages(lib.loc = lib), stringsAsFactors = FALSE)
+          notes <- Sys.getenv("APP_NOTES"); if (length(soft_missing)) notes <- paste0(notes, " Not bundled: ", paste(soft_missing, collapse = ", "), ".")
+          man <- list(schema = 1L, id = app_id, name = Sys.getenv("APP_NAME"), version = Sys.getenv("VERSION"),
+            author = Sys.getenv("APP_AUTHOR"), description = Sys.getenv("APP_DESC"), homepage = Sys.getenv("APP_HOMEPAGE"),
+            license = Sys.getenv("APP_LICENSE"), runtime = "r-shiny", entry = entry, platform = "${{ matrix.platform }}",
+            r_version = Sys.getenv("R_VERSION"), min_shell_version = "0.1.0", notes = notes,
+            packages = lapply(seq_len(nrow(pkgs)), function(i) list(name = pkgs$Package[i], version = pkgs$Version[i], path = file.path("rlib", pkgs$Package[i]), source = "cran")))
+          jsonlite::write_json(man, file.path(bundle, "manifest.json"), pretty = TRUE, auto_unbox = TRUE)
+
+      - name: Zip + sha256 + size guard
+        shell: Rscript {0}
+        run: |
+          out <- sprintf("%s-%s-%s.zip", Sys.getenv("APP_ID"), Sys.getenv("VERSION"), "${{ matrix.platform }}")
+          bundle <- file.path(getwd(), "bundle"); old <- setwd(bundle); on.exit(setwd(old))
+          zip::zipr(out, files = list.files(".", all.files = TRUE, no.. = TRUE))
+          entries <- utils::unzip(out, list = TRUE)$Name
+          if (!any(grepl("^rlib/", entries))) stop("zip is missing rlib/ -- aborting")
+          if (!any(grepl("^app/(app[.]R|ui[.]R)$", entries))) stop("zip is missing app/app.R or app/ui.R -- aborting")
+          setwd(old); file.rename(file.path(bundle, out), out)
+          sha <- digest::digest(out, algo = "sha256", file = TRUE); sz <- file.size(out)
+          cat("bundle zip size (bytes):", sz, "\n")
+          if (sz > 2 * 1024^3) stop("bundle exceeds the 2 GiB GitHub Release asset limit; trim modules or use a smaller closure.")
+          writeLines(sprintf('{"platform":"%s","file":"%s","sha256":"%s","size":%d}', "${{ matrix.platform }}", out, sha, sz),
+                     sprintf("meta-%s.json", "${{ matrix.platform }}"))
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: bundle-${{ matrix.platform }}
+          path: |
+            *.zip
+            meta-*.json
+
+  release:
+    needs: bundle
+    if: github.event_name == 'release' || startsWith(github.ref, 'refs/tags/v') || inputs.tag != ''
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/download-artifact@v4
+        with:
+          path: artifacts
+          merge-multiple: true
+      - uses: softprops/action-gh-release@v2
+        with:
+          tag_name: ${{ inputs.tag || github.ref_name }}
+          name: ${{ inputs.tag || github.ref_name }}
+          files: artifacts/*.zip
